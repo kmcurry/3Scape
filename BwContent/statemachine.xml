@@ -1,0 +1,11 @@
+<StateMachine>
+    <State event="MButton1.Click">
+        <AutoInterpolate target="" dissolve=".1"/>
+    </State>
+    <State event="MButton1.DoubleClick">
+        <AutoInterpolate target="" dissolve=".5"/>
+    </State>
+    <State event="MButton3.Click">
+        <AutoInterpolate target="" dissolve="1"/>
+    </State>
+</StateMachine>
