@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>BWJS Demo</title>
-
+    <!--<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">-->
     <script type="text/javascript" src="./javascripts/bridgeworks.js"></script>
     
     <link type="text/css" rel="stylesheet" href="stylesheets/style.css" />
@@ -10,11 +10,12 @@
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script src="./javascripts/BwHelper.js"></script>
+
     
     <!-- application scripts -->
     <script type="text/javascript" src="./javascripts/crossbrowser.js"></script>
-    <script type="text/javascript" src="./javascripts/controls.js"></script>
     <script type="text/javascript" src="./javascripts/editor.js"></script>
+    <script type="text/javascript" src="./javascripts/controls.js"></script>
     <link type="text/css" rel="StyleSheet" href="stylesheets/bootstrap.min.css"/>
     
   </head> 
@@ -95,7 +96,7 @@
           function handleEvent(e)
           {
               bridgeworks.handleEvent(e);
-              
+
               switch(e.type) {
                 case "mousedown": {
                     capture = true;
@@ -105,6 +106,9 @@
                     capture = false;
                     break;
                 case "click": {
+                    //Dishing out the event client x and y cordinates of the mouse for testing purposes
+                    console.log("Hi this is the mouseclick. My X position is: "+ event.clientX);
+                    console.log("Hi this is the mouseclick. My Y position is: "+ event.clientY);
                     if (!e.metaKey && !e.ctrlKey) {
                         selectedModel = bridgeworks.selector.selections.models[0];
                         if (selectedModel) {
@@ -126,7 +130,8 @@
                     capture = false;
                 }
                 break;
-                case "dblclick": {
+                case "dblclick":
+                {
                     var name = selectedModel.name.getValueDirect().join("");
                     var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
                     var cmd = "";
@@ -152,6 +157,7 @@
                     if (e.metaKey || e.ctrlKey){
                         e.preventDefault();
                         copy();
+                        copy();
                     }      // c
                 }
                 break;
@@ -176,9 +182,8 @@
           }
           
       </script>
-      
-            <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
 
+            <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
       
     <div id="ControlPanel" class="container container-fluid">
         <div class="row" style="border:1px none;">
@@ -331,6 +336,12 @@
             }
         }
         </script>
+      <!--These are at the bottom because they must be run after everything is read in from this page-->
+      <!--These are the scripts to call the gestures functions-->
+      <script type="text/javascript" src="./javascripts/hammer.js"></script>
+      <script src="./javascripts/hammer.fakemultitouch.js"></script>
+      <script src="./javascripts/hammer.showtouches.js"></script>
+      <script src="./javascripts/TestingTouch.js"></script>
 
   </body>
 </html>
