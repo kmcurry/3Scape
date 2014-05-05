@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <title>BWJS Demo</title>
+
+    <script type="text/javascript" src="./javascripts/Bridgeworks.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="stylesheets/style.css" />
+    <!-- jquery stuff -->
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="./javascripts/BwHelper.js"></script>
+    
+    <!-- application scripts -->
+    <script type="text/javascript" src="./javascripts/crossbrowser.js"></script>
+    <script type="text/javascript" src="./javascripts/controls.js"></script>
+    <script type="text/javascript" src="./javascripts/editor.js"></script>
+    <link type="text/css" rel="StyleSheet" href="stylesheets/bootstrap.min.css"/>
+    <script>
+    // This function makes it so that mouse interaction with the scene
+    // continues when the cursor moves out of the Bridgeworks frame.
+    function handleDocMove(event)
+    {
+        if (capture) bridgeworks.handleEvent(event);
+    }
+
+    function handleEvent(e)
+    {
+        bridgeworks.handleEvent(e);
+        
+        switch(e.type) {
+          case "mousedown": {
+              capture = true;
+          }
+              break;
+          case "mouseup":
+              capture = false;
+              break;
+          case "click": {
+              capture = false;
+          }
+          break;
+          case "dblclick": {
+              var name = selectedModel.name.getValueDirect().join("");
+              var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+          }
+          break;
+        }
+        
+    }
+    </script>
+  </head> 
+  <body onresize="resize();">
+      
+     
+      
+            <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
+
+      
+    <div id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+      <canvas id="Canvas">
+      </canvas>     
+    </div>
+
+    
+    <!--<video controls="controls" src="http://localhost/bwjs/bwcontent/images/quake.mpg">
+    Your browser does not support the video tag.
+    </video>-->
+        
+        <script type="text/javascript">
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                
+                bridgeworks = init("grid.xml", document.getElementById("BwContainer"));
+                
+                
+            }
+        }
+        </script>
+
+  </body>
+</html>
