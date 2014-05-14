@@ -88,8 +88,11 @@ function init(scene, container)
     bridgeworks.bgImage             = bg;
     
     bridgeworks.updateScene(scene);          
-	
-	addTouchEvents();
+
+    //------------------------------------------------------------------------------
+    //This calls the touch function that was already built into this project
+    //I disabled this because I am implementing hammer.js in order to have better gesture control
+	//addTouchEvents();
 	
 	// gesture
 	/*document.addEventListener("gesturestart", function(event) {
@@ -129,6 +132,7 @@ function showBG()
 }
 
 // temporary, transitional re-factor
+
 function addTouchEvents()
 {
 	// touch
@@ -173,7 +177,7 @@ function addTouchEvents()
 			case 1: break;
 			case 2: //break;
 			case 3: //break;
-			case 4: return;//break; 
+			case 4: return;//break;
 		}
 		var mouseEvent = new MouseEvent("mouseup", 0, 0, 0, 0, 0, null);
 		mouseEvent.button = button-1;
