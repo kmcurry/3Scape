@@ -1,4 +1,4 @@
-ï»¿function Base() 
+function Base() 
 {
     this.userData = "";
     this.className = "";
@@ -4511,15 +4511,15 @@ function rayTriangleIntersection(rayOrig, rayDir, v0, v1, v2, skipPosDet, skipNe
  * destination point (x1, y1, z1), and represented by the parametric equations: 
  * x = x0 + t(x1 - x0), y = y0 + t(y1 - y0), z = z0 + t(z1 - z0),
  * determine if the ray intersects the sphere defined by center (a, b, c) and
- * radius r, and represented by the equation (x - a)Â² + (y - b)Â² + (z - c)Â² = rÂ²;
+ * radius r, and represented by the equation (x - a)² + (y - b)² + (z - c)² = r²;
  *
  * For convenience, define dx = x1 - x0, dy = y1 - y0, dz = z1 - z0;
  *
  * The intersection is found by substituting x, y, and z from the ray equations
  * into the sphere equation, and solving for t (after term collection):
  * 
- * (dxÂ² + dyÂ² + dzÂ²)tÂ² + 2[dx(x0 - a) + dy(y0 - b) + dz(z0 - c)]t
- *    + (x0 - a)Â² + (y0 - b)Â² + (z0 - c)Â² - rÂ² = 0
+ * (dx² + dy² + dz²)t² + 2[dx(x0 - a) + dy(y0 - b) + dz(z0 - c)]t
+ *    + (x0 - a)² + (y0 - b)² + (z0 - c)² - r² = 0
  *
  * Algorithm adapted from:
  *    Computer Graphics: Principles and Practice, 2nd Edition, Foley, et al., pp. 702-703
