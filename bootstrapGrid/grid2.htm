@@ -24,10 +24,30 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-  <style type="text/css"></style><style id="holderjs-style" type="text/css"></style></head>
+  <style type="text/css"></style>
+  <style id="holderjs-style" type="text/css"></style>
+
+  </head>
 
   <body>
-
+    <!-- top-level modal markup -->
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Note #{{notes.length + 1}}</h4>
+          </div>
+          <div class="modal-body">
+            <p>One fine body&hellip;</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -76,6 +96,19 @@
                 <li class="dropdown-header">Nav header</li>
                 <li><a href="http://getbootstrap.com/examples/sticky-footer-navbar/#">Separated link</a></li>
                 <li><a href="http://getbootstrap.com/examples/sticky-footer-navbar/#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><p class="navbar-text">Current Slide: X</p></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a id="ex1" href="#">Note1</a></li>
+                <li><a id="ex2" href="#">Note2</a></li>
+                <li><a id="ex3" href="#">Note3</a></li>
+                <li class="divider"></li>
+                <li><a href="#" data-toggle="modal" data-target="#myModal">New Note</a></li>
               </ul>
             </li>
           </ul>
@@ -253,6 +286,33 @@
     <script src="./Dashboard Template for Bootstrap_files/jquery.min.js"></script>
     <script src="./Dashboard Template for Bootstrap_files/bootstrap.min.js"></script>
     <script src="./Dashboard Template for Bootstrap_files/docs.min.js"></script>
+    <script type="text/javascript">
+      $(function () {
+                      var showPopover = function () {
+                          $(this).popover('show');
+                      }
+                      , hidePopover = function () {
+                          $(this).popover('hide');
+                      };
+              $('#ex1').popover({
+                          content: 'An Example1 popover',
+                          trigger: 'hover',
+                          placement:'left'
+                      })
+              $('#ex2').popover({
+                          content: 'An Example2 popover',
+                          trigger: 'hover',
+                          placement:'left'
+                      }) 
+
+              $('#ex3').popover({
+                          content: 'An Example3 popover',
+                          trigger: 'hover',
+                          placement:'left'
+                      })         
+
+      });
+    </script>
   
 
 </body></html>
