@@ -1,7 +1,5 @@
-#Build artifacts
-.idea/
-
-# Project Files#
-.idea/
-
+.DS_Store
+Thumbs.db
 web.config
+.idea/
+
