@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<Scene>
+    <Isolator name="Root">
+        <Selector name="Cameras">
+            <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="1000000">
+                <position x="4.5" y="1.5" z="-4.5"/>
+                <rotation x="15" y="-45" z="0"/>
+            </PerspectiveCamera>
+        </Selector>
+        <Group name="Lights">
+            <GlobalIllumination name="AmbientLight">
+                <ambient r="0.25" g="0.25" b="0.25"/>
+            </GlobalIllumination>
+            <PointLight name="Light" range="3.40282" parent="Camera">
+                <position x="26.2248" y="73.9201" z="-93.7113"/>
+                <rotation x="35.6879" y="4.34871" z="0.723227"/>
+                <ambient r="0.05" g="0.05" b="0.05"/>
+                <diffuse r="1" g="1" b="1"/>
+                <specular r=".1" g=".1" b=".1"/>
+            </PointLight>
+        </Group>
+        <Group name="Models">
+            <Model name="Grid" url="objects/Grid.lwo">
+                <scale x="100" y="100" z="100"/>
+            </Model>
+        </Group>
+    </Isolator>
+    <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+</Scene>

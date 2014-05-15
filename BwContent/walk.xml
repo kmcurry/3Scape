@@ -1,0 +1,6 @@
+<Update>
+	<Set target="SceneInspector" evaluate="false"/>
+	<Set target="ObjectInspector" evaluate="false"/>
+	<Set target="FlightSimulator" evaluate="false"/>
+	<Set target="WalkSimulator" evaluate="true"/>
+</Update>

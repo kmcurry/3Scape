@@ -1,0 +1,347 @@
+<html>
+  <head>
+    <title>BWJS Demo</title>
+
+    <script type="text/javascript" src="./javascripts/Bridgeworks.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="stylesheets/style.css" />
+    <!-- jquery stuff -->
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="./javascripts/BwHelper.js"></script>
+
+    
+    <!-- application scripts -->
+    <script type="text/javascript" src="./javascripts/crossbrowser.js"></script>
+    <script type="text/javascript" src="./javascripts/editor.js"></script>
+    <script type="text/javascript" src="./javascripts/controls.js"></script>
+    <link type="text/css" rel="StyleSheet" href="stylesheets/bootstrap.min.css"/>
+    
+  </head> 
+  <body onresize="resize();">
+      
+      <script type="text/javascript">
+          var bridgeworks = null;
+          
+          var g_labelCount = 0;
+          var g_labelName = null;
+          var g_countStr = "";
+          
+          var selectedModel = null;
+          
+          var capture = false;
+          
+            function addRecord()
+            {
+                var title = $( "#title" ).val();
+                if (title != "") {
+                    var update = "\<Set target='Label_" + g_labelName + "' text='" + title + "' show='true'/>";
+                    console.debug(update);
+                    bridgeworks.updateScene(update);
+
+                    // This flag is checked on dialog close. If true on close
+                    // then there are some things to undo.
+                    // If we made it this far then there is nothing to undo.
+                    adding = false;
+                }
+                $( "#dialog" ).dialog("close");
+            }
+            
+          function createRecord()
+          {
+              $( "#dialog" ).dialog("open");
+              
+              adding = true;
+              
+              
+              var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+                          
+              g_labelCount = g_labelCount + 1;
+              g_countStr = g_labelCount.toString();
+              
+              g_labelName = "L-" + g_countStr;
+              
+              var xml = loadXMLFile("bwcontent/label.xml");
+              
+              var name = xml.getElementsByTagName("Model")[0].attributes[0];
+              name.value = g_labelName;
+              
+              var pos = xml.getElementsByTagName("position")[0];
+              pos.attributes["x"].value = pointWorld.x.toString();
+              pos.attributes["y"].value = pointWorld.y.toString();
+              pos.attributes["z"].value = pointWorld.z.toString();
+              
+              var label = xml.getElementsByTagName("Label")[0];
+              label.attributes["name"].value = "Label_" + name.value;
+              label.attributes["parent"].value = name.value;
+              
+              name = xml.getElementsByTagName("Group")[0].attributes[0];
+              name.value = "Group_" + g_labelName;
+              
+              
+              var xstr = (new XMLSerializer()).serializeToString(xml);
+              console.debug(xstr);
+              bridgeworks.updateScene(xstr);
+          }
+          
+          
+          // This function makes it so that mouse interaction with the scene
+          // continues when the cursor moves out of the Bridgeworks frame.
+          function handleDocMove(event)
+          {
+              if (capture) bridgeworks.handleEvent(event);
+          }
+
+          function handleEvent(e)
+          {
+              bridgeworks.handleEvent(e);
+
+              switch(e.type) {
+                case "mousedown": {
+                    capture = true;
+                }
+                    break;
+                case "mouseup":
+                    capture = false;
+                    break;
+                case "click": {
+                    //Dishing out the event client x and y cordinates of the mouse for testing purposes
+                    console.log("Hi this is the mouseclick. My X position is: "+ event.clientX);
+                    console.log("Hi this is the mouseclick. My Y position is: "+ event.clientY);
+                    if (!e.metaKey && !e.ctrlKey) {
+                        selectedModel = bridgeworks.selector.selections.models[0];
+                        if (selectedModel) {
+                            var pos = selectedModel.position.getValueDirect();
+                            $("#positionX").spinner("value", pos.x);
+                            $("#positionY").spinner("value", pos.y);
+                            $("#positionZ").spinner("value", pos.z);
+                            
+                            var rot = selectedModel.rotation.getValueDirect();
+                            $("#rotationX").spinner("value", rot.x);
+                            $("#rotationY").spinner("value", rot.y);
+                            $("#rotationZ").spinner("value", rot.z);
+                            
+                            $("#scale").spinner("value", selectedModel.scale.getValueDirect().x);
+                            $('#objectname').val(selectedModel.name.getValueDirect().join(""))
+                            
+                        }
+                    }
+                    capture = false;
+                }
+                break;
+                case "dblclick":
+                {
+                    var name = selectedModel.name.getValueDirect().join("");
+                    var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+                    var cmd = "";
+                    if (e.metaKey || e.ctrlKey) {
+                        cmd = "\<AutoInterpolate target='" + name + "'>";
+                        cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
+                        cmd += "\</AutoInterpolate>";
+                    }
+                    else {
+                        cmd = "\<Locate target='" + name + "'/>";
+                    }
+                    bridgeworks.updateScene(cmd);
+                }
+                break;
+              }
+              
+          }
+          
+          function handleKey(e)
+          {
+              switch(e.keyCode) {
+                case 'C'.charCodeAt(0): {
+                    if (e.metaKey || e.ctrlKey){
+                        e.preventDefault();
+                        copy();
+                        copy();
+                    }      // c
+                }
+                break;
+                case 'V'.charCodeAt(0): {      // v
+                    if (e.metaKey || e.ctrlKey){
+                        if (document.activeElement.id != 'url') {
+                            e.preventDefault();
+                            paste();
+                        }
+                    }
+                }
+                break;
+                case 'X'.charCodeAt(0): {      // x
+                    if (e.metaKey || e.ctrlKey) {
+                        e.preventDefault();
+                        cut();
+                    }
+                }
+                break;
+                
+              }
+          }
+          
+      </script>
+
+            <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
+      
+    <div id="ControlPanel" class="container container-fluid">
+        <div class="row" style="border:1px none;">
+            <div id="PanelSceneControllers" class="col-sm-2">
+                <input id="objectname"/><button onclick="locate();">Locate</button>
+                    <button onclick="showHome();">Home</button>
+                    <br/>
+                    <!--
+                    
+                    <button onclick="bridgeworks.updateScene('ObjectInspection.xml');">Move Objects</button>
+                    <button onclick="bridgeworks.updateScene('SceneInspection.xml');">Move Camera</button>
+                    
+                        <button onclick="showTop();">Top</button>
+                        <button onclick="showBottom();">Bottom</button>
+                        <button onclick="showLeft();">Left</button>
+                        <button onclick="showRight();">Right</button>
+                        -->
+                    <!-- <a href="javascript:showHelp();">Instructions</a> -->
+                    <br/>
+                    <button onclick="bridgeworks.renderController.pause();">Pause</button>
+                    <button onclick="bridgeworks.renderController.play();">Play</button>
+                    <button onclick="bridgeworks.renderController.stop();">Stop</button>
+            </div>
+            <div id="PanelObjectControllers" class="col-sm-4">
+                <table>
+                        <tr>
+                            <td>rotate it</td>
+                            <td><input class="spin" id="rotationX" name="rotationX"></input></td>
+                            <td><input class="spin" id="rotationY" name="rotationY"></input></td>
+                            <td><input class="spin" id="rotationZ" name="rotationZ"></input></td>
+                            
+                        </tr>
+                        <tr>
+                            <td>move it</td>
+                            <td><input class="spin" id="positionX" name="positionX"></input></td>
+                            <td><input class="spin" id="positionY" name="positionY"></input></td>
+                            <td><input class="spin" id="positionZ" name="positionZ"></input></td>
+                        </tr>
+                        <tr>
+                            <td>size it</td>
+                            <td><input class="spin" id="scale" name="scale"></input></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <!--
+                        <tr>
+                            <td>global light</td>
+                            <td><input class="spin" id="ambientR" name="ambientR"></input></td>
+                            <td><input class="spin" id="ambientG" name="ambientG"></input></td>
+                            <td><input class="spin" id="ambientB" name="ambientB"></input></td>
+                        </tr>
+                        <tr>
+                            <td>model color</td>
+                            <td><input class="spin" id="modelR" name="modelR"></input></td>
+                            <td><input class="spin" id="modelG" name="modelG"></input></td>
+                            <td><input class="spin" id="modelB" name="modelB"></input></td>
+                        </tr>
+                        -->
+                    </table>
+
+            </div>
+            <div id="panel-lib-objects" class="col-sm-2">
+                <h4>Models</h4>
+            </div>
+            <div id="panel-lib-motions" class="col-sm-2">
+                <h4>Motions</h4>
+            </div>
+            <div id="panel-curr-scene" class="col-sm-2">
+                <h4>Current Scene</h4>
+            </div>
+        </div>
+        <div class="row" style="border:1px none;">
+            <div class="col-sm-6">
+                <input id="url" size="60"/><button onclick="load();">Load</button>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+    </div>
+    <center>
+    <div class="slide"><a href="#" class="btn-slide">Tools</a></div>
+    </center>
+    <div id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+      <canvas id="Canvas">
+      </canvas>     
+    </div>
+    
+
+<div id="dialog" title="Name that part!">
+    <form id="my-form" enctype="multipart/form-data" method="post">
+        <p>Title: <input type="text" id="title"></p>
+        <p><input type="button" value="Submit" onclick="addRecord()"></p>
+    </form>
+</div>
+
+    
+    <!--<video controls="controls" src="http://localhost/bwjs/bwcontent/images/quake.mpg">
+    Your browser does not support the video tag.
+    </video>-->
+        
+        <script type="text/javascript">
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                
+                bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
+                
+                listLibrary();
+                
+                
+                $('html').bind('keypress', function(e)
+                {
+                   if(e.keyCode == 13)
+                   {
+                       if ($("#dialog").dialog( "isOpen" )===true) {
+                           addRecord();
+                       }
+                       return false;
+                   }
+                });
+                
+                
+                $( "#dialog" ).dialog({ autoOpen: false });
+            
+                $( "#dialog" ).dialog({ show: { effect: "blind", duration: 200 } });
+            
+                $( "#dialog" ).dialog({ hide: { effect: "blind", duration: 200 } });
+          
+                $( "#dialog" ).dialog({
+                  close: function( event, ui ) {
+                      if (adding) {
+                          // if in the middle of adding and closed w/o submitting
+                          bridgeworks.updateScene("\<Remove target='" + "Group_L-" + g_countStr + "'/>");
+                      }
+                      adding = false;
+                  }
+                });
+                
+                
+                $(".btn-slide").click(function(){
+                		$("#ControlPanel").slideToggle("medium");
+                		$(this).toggleClass("active"); return false;
+                	});
+                
+                window.onkeydown = handleKey;
+                //window.onkeyup = handleKey;
+                
+                $('.ui-spinner-button').click(function() { $(this).siblings('input').change(); });
+                
+                
+            }
+        }
+        </script>
+      <!--These are at the bottom because they must be run after everything is read in from this page-->
+      <!--These are the scripts to call the gestures functions-->
+      <script type="text/javascript" src="./javascripts/hammer.js"></script>
+      <script src="./javascripts/hammer.fakemultitouch.js"></script>
+      <script src="./javascripts/hammer.showtouches.js"></script>
+      <script src="./javascripts/TestingTouch.js"></script>
+
+  </body>
+</html>
