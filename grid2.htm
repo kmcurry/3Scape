@@ -50,7 +50,6 @@
   </head>
 
   <body>
-    <!-- top-level modal markup -->
     <script type="text/javascript">
         var bridgeworks = null;
 
@@ -283,6 +282,27 @@
                 <li><a href="#">One more separated link</a></li>
               </ul>
             </li>
+            <li><p class="navbar-text">Current Object: X</p></li>
+            <li>
+                <!-- <button type="button" class="btn btn-default navbar-btn dropdown">Add Label</button> -->
+                <div class="dropdown">
+                  <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+                    Add Label
+                  </button>
+
+
+            <div class='dropdown-menu' id='signin-dropdown'>
+              <form>
+                <fieldset class='textbox'>
+                    <input type="text" placeholder="Enter Label"/>
+                </fieldset>
+                <fieldset class='subchk'>
+                  <input name="commit" type="submit" value="Save" />
+                </fieldset>
+              </form>
+            </div>
+                </div>
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><p class="navbar-text">Current Slide: X</p></li>
@@ -305,6 +325,9 @@
       <div class="row">
         <!-- Left side slide preview space -->
         <div class="col-sm-3 col-md-2 sidebar">
+            <span class="glyphicon glyphicon-play" style="font-size:1.4em"></span>
+            <span class="glyphicon glyphicon-pause" style="font-size:1.4em"></span>
+            <span class="glyphicon glyphicon-stop" style="font-size:1.4em"></span>
           <ul class="nav nav-tabs">
             <li class="active"><a href="#slides" data-toggle="tab">Slides</a></li>
             <li><a href="#animate" data-toggle="tab">Animate</a></li>
@@ -330,18 +353,18 @@
             </div>
           </div>
         </div>
+
         <!--Where the canvas will be-->
-        <div class="col-sm-11 col-sm-offset-1 main panel-body" id="BwContainer" style="height:500px" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-           <!-- <div id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">-->
-                <canvas id="Canvas">
-                </canvas>
-           <!-- </div>-->
-          <!--<div class="table-responsive">
-          </div>-->
-        </div>
+           <div class="col-sm-11 col-sm-offset-1 main panel-body" id="BwContainer" style="height:500px" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+                <div id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+                    <canvas id="Canvas">
+                    </canvas>
+               </div>
+              <!-- <div class="table-responsive">
+              </div> -->
+            </div>
       </div>
     </div>
-    <!--</div>-->
 
     <script type="text/javascript">
         document.onreadystatechange = function () {
@@ -395,38 +418,41 @@
             }
         }
     </script>
-    <!-- Bootstrap core JavaScript
+    <!-- Bootstrap core JavaScript 
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="bootstrapGrid/Dashboard%20Template%20for%20Bootstrap_files/jquery.min.js"></script>
     <script src="bootstrapGrid/Dashboard%20Template%20for%20Bootstrap_files/bootstrap.min.js"></script>
     <script src="bootstrapGrid/Dashboard%20Template%20for%20Bootstrap_files/docs.min.js"></script>
     <script type="text/javascript">
-      $(function () {
-                      var showPopover = function () {
-                          $(this).popover('show');
-                      }
-                      , hidePopover = function () {
-                          $(this).popover('hide');
-                      };
-              $('#ex1').popover({
-                          content: 'An Example1 popover',
-                          trigger: 'hover',
-                          placement:'left'
-                      })
-              $('#ex2').popover({
-                          content: 'An Example2 popover',
-                          trigger: 'hover',
-                          placement:'left'
-                      }) 
+        $(function () {
+                        var showPopover = function () {
+                            $(this).popover('show');
+                        }
+                        , hidePopover = function () {
+                            $(this).popover('hide');
+                        };
+                $('#ex1').popover({
+                            content: 'An Example1 popover',
+                            trigger: 'hover',
+                            placement:'left'
+                        })
+                $('#ex2').popover({
+                            content: 'An Example2 popover',
+                            trigger: 'hover',
+                            placement:'left'
+                        }) 
 
-              $('#ex3').popover({
-                          content: 'An Example3 popover',
-                          trigger: 'hover',
-                          placement:'left'
-                      })         
+                $('#ex3').popover({
+                            content: 'An Example3 popover',
+                            trigger: 'hover',
+                            placement:'left'
+                        })         
 
-      });
+        });
+        $('.dropdown-menu').find('form').click(function (e) {
+            e.stopPropagation();
+          });
     </script>
   
 
