@@ -31,6 +31,7 @@ function listLibrary()
     listDirectory(url + "objects/", panel);
     listDirectory(url + "Animals/objects/", panel);
     listDirectory(url + "Buildings/objects/", panel);
+    listDirectory(url + "Egypt/objects/", panel);
     listDirectory(url + "Vehicles/objects/", panel);
     
     url = document.location.href + "/../../Entymology/BwContent/"
