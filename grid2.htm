@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://getbootstrap.com/examples/dashboard/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="http://getbootstrap.com/assets/ico/favicon.ico">
+
+    <title>3Scape</title>
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <script type="text/javascript" src="./js/Bridgeworks.js"></script>
+
+    <!--<link type="text/css" rel="stylesheet" href="css/style.css" />-->
+    <!-- jquery stuff -->
+    <!--<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>-->
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="./js/BwHelper.js"></script>
+
+
+    <!-- application scripts -->
+    <script type="text/javascript" src="./js/crossbrowser.js"></script>
+    <script type="text/javascript" src="./js/editor.js"></script>
+    <script type="text/javascript" src="./js/controls.js"></script>
+    <!--<link type="text/css" rel="StyleSheet" href="css/bootstrap.min.css"/>-->
+
+
+  <style type="text/css"></style>
+  <style id="holderjs-style" type="text/css"></style>
+  <style type="text/css">
+    body.modal-open {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow-y: scroll;
+    }
+  </style>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+        var bridgeworks = null;
+
+        var g_labelCount = 0;
+        var g_labelName = null;
+        var g_countStr = "";
+
+        var selectedModel = null;
+
+        var capture = false;
+
+        function addRecord()
+        {
+            var title = $( "#title" ).val();
+            if (title != "") {
+                var update = "\<Set target='Label_" + g_labelName + "' text='" + title + "' show='true'/>";
+                console.debug(update);
+                bridgeworks.updateScene(update);
+
+                // This flag is checked on dialog close. If true on close
+                // then there are some things to undo.
+                // If we made it this far then there is nothing to undo.
+                adding = false;
+            }
+            $( "#dialog" ).dialog("close");
+        }
+
+        function createRecord()
+        {
+            $( "#dialog" ).dialog("open");
+
+            adding = true;
+
+
+            var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+
+            g_labelCount = g_labelCount + 1;
+            g_countStr = g_labelCount.toString();
+
+            g_labelName = "L-" + g_countStr;
+
+            var xml = loadXMLFile("bwcontent/label.xml");
+
+            var name = xml.getElementsByTagName("Model")[0].attributes[0];
+            name.value = g_labelName;
+
+            var pos = xml.getElementsByTagName("position")[0];
+            pos.attributes["x"].value = pointWorld.x.toString();
+            pos.attributes["y"].value = pointWorld.y.toString();
+            pos.attributes["z"].value = pointWorld.z.toString();
+
+            var label = xml.getElementsByTagName("Label")[0];
+            label.attributes["name"].value = "Label_" + name.value;
+            label.attributes["parent"].value = name.value;
+
+            name = xml.getElementsByTagName("Group")[0].attributes[0];
+            name.value = "Group_" + g_labelName;
+
+
+            var xstr = (new XMLSerializer()).serializeToString(xml);
+            console.debug(xstr);
+            bridgeworks.updateScene(xstr);
+        }
+
+
+        // This function makes it so that mouse interaction with the scene
+        // continues when the cursor moves out of the Bridgeworks frame.
+        function handleDocMove(event)
+        {
+            if (capture) bridgeworks.handleEvent(event);
+        }
+
+        function handleEvent(e)
+        {
+            bridgeworks.handleEvent(e);
+
+            switch(e.type) {
+                case "mousedown": {
+                    capture = true;
+                }
+                    break;
+                case "mouseup":
+                    capture = false;
+                    break;
+                case "click": {
+                    //Dishing out the event client x and y cordinates of the mouse for testing purposes
+                    console.log("Hi this is the mouseclick. My X position is: "+ event.clientX);
+                    console.log("Hi this is the mouseclick. My Y position is: "+ event.clientY);
+                    if (!e.metaKey && !e.ctrlKey) {
+                        selectedModel = bridgeworks.selector.selections.models[0];
+                        if (selectedModel) {
+                            var pos = selectedModel.position.getValueDirect();
+                            $("#positionX").spinner("value", pos.x);
+                            $("#positionY").spinner("value", pos.y);
+                            $("#positionZ").spinner("value", pos.z);
+
+                            var rot = selectedModel.rotation.getValueDirect();
+                            $("#rotationX").spinner("value", rot.x);
+                            $("#rotationY").spinner("value", rot.y);
+                            $("#rotationZ").spinner("value", rot.z);
+
+                            $("#scale").spinner("value", selectedModel.scale.getValueDirect().x);
+                            $('#objectname').val(selectedModel.name.getValueDirect().join(""))
+
+                        }
+                    }
+                    capture = false;
+                }
+                    break;
+                case "dblclick":
+                {
+                    var name = selectedModel.name.getValueDirect().join("");
+                    var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+                    var cmd = "";
+                    if (e.metaKey || e.ctrlKey) {
+                        cmd = "\<AutoInterpolate target='" + name + "'>";
+                        cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
+                        cmd += "\</AutoInterpolate>";
+                    }
+                    else {
+                        cmd = "\<Locate target='" + name + "'/>";
+                    }
+                    bridgeworks.updateScene(cmd);
+                }
+                    break;
+            }
+
+        }
+
+        function handleKey(e)
+        {
+            switch(e.keyCode) {
+                case 'C'.charCodeAt(0): {
+                    if (e.metaKey || e.ctrlKey){
+                        e.preventDefault();
+                        copy();
+                        copy();
+                    }      // c
+                }
+                    break;
+                case 'V'.charCodeAt(0): {      // v
+                    if (e.metaKey || e.ctrlKey){
+                        if (document.activeElement.id != 'url') {
+                            e.preventDefault();
+                            paste();
+                        }
+                    }
+                }
+                    break;
+                case 'X'.charCodeAt(0): {      // x
+                    if (e.metaKey || e.ctrlKey) {
+                        e.preventDefault();
+                        cut();
+                    }
+                }
+                    break;
+
+            }
+        }
+
+    </script>
+
+    <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
+
+
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Note #{{notes.length + 1}}</h4>
+          </div>
+          <div class="modal-body">
+            <textarea class="form-control" rows="3" placeholder="Enter Note"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://www.github.com/kmcurry/3scape">3Scape</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">File<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">View<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">New Object<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+            <li><p class="navbar-text">Current Object: X</p></li>
+            <li>
+                <!-- <button type="button" class="btn btn-default navbar-btn dropdown">Add Label</button> -->
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+                        Add Label
+                    </button>
+                    <div class='dropdown-menu' id='signin-dropdown'>
+                      <form>
+                        <fieldset class='textbox'>
+                            <input type="text" placeholder="Enter Label"/>
+                        </fieldset>
+                        <fieldset class='subchk'>
+                          <input name="commit" type="submit" value="Save" />
+                        </fieldset>
+                      </form>
+                    </div>
+                </div>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><p class="navbar-text">Current Slide: X</p></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a id="ex1" href="#">Note1</a></li>
+                <li><a id="ex2" href="#">Note2</a></li>
+                <li><a id="ex3" href="#">Note3</a></li>
+                <li class="divider"></li>
+                <li><a href="#" data-toggle="modal" data-target="#myModal">New Note</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Left side slide preview space -->
+        <div class="col-sm-3 col-md-2 sidebar">
+            <span class="glyphicon glyphicon-play" style="font-size:1.4em"></span>
+            <span class="glyphicon glyphicon-pause" style="font-size:1.4em"></span>
+            <span class="glyphicon glyphicon-stop" style="font-size:1.4em"></span>
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#slides" data-toggle="tab">Slides</a></li>
+            <li><a href="#animate" data-toggle="tab">Animate</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="slides">
+              Hello!
+            </div>
+            <div class="tab-pane" id="animate">
+              Goodbye!
+              <ul class="nav nav-sidebar">
+                <li><a href="">Nav item</a></li>
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+                <li><a href="">More navigation</a></li>
+              </ul>
+              <ul class="nav nav-sidebar">
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!--Where the canvas will be-->
+           <div class="col-sm-11 col-sm-offset-1 main panel-body" id="BwContainer" style="height:500px" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+                <div id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+                    <canvas id="Canvas">
+                    </canvas>
+               </div>
+              <!-- <div class="table-responsive">
+              </div> -->
+            </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+
+                bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
+
+                listLibrary();
+
+
+                $('html').bind('keypress', function(e)
+                {
+                    if(e.keyCode == 13)
+                    {
+                        if ($("#dialog").dialog( "isOpen" )===true) {
+                            addRecord();
+                        }
+                        return false;
+                    }
+                });
+
+
+                $( "#dialog" ).dialog({ autoOpen: false });
+
+                $( "#dialog" ).dialog({ show: { effect: "blind", duration: 200 } });
+
+                $( "#dialog" ).dialog({ hide: { effect: "blind", duration: 200 } });
+
+                $( "#dialog" ).dialog({
+                    close: function( event, ui ) {
+                        if (adding) {
+                            // if in the middle of adding and closed w/o submitting
+                            bridgeworks.updateScene("\<Remove target='" + "Group_L-" + g_countStr + "'/>");
+                        }
+                        adding = false;
+                    }
+                });
+
+
+                $(".btn-slide").click(function(){
+                    $("#ControlPanel").slideToggle("medium");
+                    $(this).toggleClass("active"); return false;
+                });
+
+                window.onkeydown = handleKey;
+                //window.onkeyup = handleKey;
+
+                $('.ui-spinner-button').click(function() { $(this).siblings('input').change(); });
+
+
+            }
+        }
+    </script>
+    <!-- Bootstrap core JavaScript 
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="bootstrapGrid/Dashboard%20Template%20for%20Bootstrap_files/jquery.min.js"></script>
+    <script src="bootstrapGrid/Dashboard%20Template%20for%20Bootstrap_files/bootstrap.min.js"></script>
+    <script src="bootstrapGrid/Dashboard%20Template%20for%20Bootstrap_files/docs.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+                        var showPopover = function () {
+                            $(this).popover('show');
+                        }
+                        , hidePopover = function () {
+                            $(this).popover('hide');
+                        };
+                $('#ex1').popover({
+                            content: 'An Example1 popover',
+                            trigger: 'hover',
+                            placement:'left'
+                        })
+                $('#ex2').popover({
+                            content: 'An Example2 popover',
+                            trigger: 'hover',
+                            placement:'left'
+                        }) 
+
+                $('#ex3').popover({
+                            content: 'An Example3 popover',
+                            trigger: 'hover',
+                            placement:'left'
+                        })         
+
+        });
+        $('.dropdown-menu').find('form').click(function (e) {
+            e.stopPropagation();
+          });
+    </script>
+  
+
+</body></html>
