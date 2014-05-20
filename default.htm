@@ -115,7 +115,7 @@
           {
               if (capture) bridgeworks.handleEvent(event);
           }
-          function setIt(Object)
+          function setObject(Object)
           {
               var p = document.getElementById('Current_Object');
               switch(Object)
@@ -211,19 +211,19 @@
                     var WALL = name.search("wall");
 
                     if(CUBE != -1){
-                            setIt(0);
+                            setObject(0);
                     }
                     else if(SPHERE != -1){
-                            setIt(1);
+                            setObject(1);
                     }
                     else if(TUBE != -1){
-                            setIt(2);
+                            setObject(2);
                     }
                     else if(WALL != -1){
-                            setIt(3);
+                            setObject(3);
                     }
                     else if(name.search("Grid" != -1)){
-                            setIt(4);
+                            setObject(4);
                     }
                 }
                 break;
@@ -335,10 +335,10 @@
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">New Object<b class="caret"></b></a>
                           <ul class="dropdown-menu">
-                              <li><a onclick="load(cube),setIt(0);">Cube</a></li>
-                              <li><a onclick="load(sphere),setIt(1);">Sphere</a></li>
-                              <li><a onclick="load(tube),setIt(2);">Tube</a></li>
-                              <li><a onclick="load(wall),setIt(3);">Wall</a></li>
+                              <li><a onclick="load(cube),setObject(0);">Cube</a></li>
+                              <li><a onclick="load(sphere),setObject(1);">Sphere</a></li>
+                              <li><a onclick="load(tube),setObject(2);">Tube</a></li>
+                              <li><a onclick="load(wall),setObject(3);">Wall</a></li>
                               <li class="divider"></li>
                               <li class="dropdown-header">Nav header</li>
                               <li><a href="#">Separated link</a></li>
