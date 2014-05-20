@@ -145,6 +145,26 @@
 
               }
           }
+          function setScene(Scene) {
+              var P = document.getElementById('Current_Scene');
+              switch(Scene){
+                  case 1:
+                      P.innerHTML = "Current Slide: 1";
+                      break;
+                  case 2:
+                      P.innerHTML = "Current Slide: 2";
+                      break;
+                  case 3:
+                      P.innerHTML = "Current Slide: 3";
+                      break;
+                  case 4:
+                      P.innerHTML = "Current Slide: 4";
+                      break;
+                  case 5:
+                      P.innerHTML = "Current Slide: 5";
+                      break;
+              }
+          }
           //Mock Up of How Search would work
           function Search()
           {
@@ -168,8 +188,6 @@
                     break;
                 case "click": {
                     //Dishing out the event client x and y cordinates of the mouse for testing purposes
-                    console.log("Hi this is the mouseclick. My X position is: "+ event.clientX);
-                    console.log("Hi this is the mouseclick. My Y position is: "+ event.clientY);
                     if (!e.metaKey && !e.ctrlKey) {
                         selectedModel = bridgeworks.selector.selections.models[0];
                         if (selectedModel) {
@@ -206,6 +224,7 @@
                     }
                     console.debug(cmd);
                     bridgeworks.updateScene(cmd);
+
                     var CUBE = name.search("Cube");
                     var SPHERE = name.search("Sphere");
                     var TUBE = name.search("Tube");
@@ -366,7 +385,7 @@
                       </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                      <li><p class="navbar-text">Current Slide: X</p></li>
+                      <li><p class="navbar-text" id="Current_Scene">Current Slide: X</p></li>
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
@@ -395,11 +414,11 @@
                   <div class="tab-content">
                       <div class="tab-pane active" id="slides">
                           <ul class="nav nav-sidebar">
-                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt/';bridgeworks.updateScene('Egypt-Models.xml')">Slide 1</a></li>
-                              <li><a href="javascript:bridgeworks.updateScene('Slide2.xml')">Slide 2</a></li>
-                              <li><a href="javascript:bridgeworks.updateScene('Slide3.xml')">Slide 3</a></li>
-                              <li><a href="javascript:bridgeworks.updateScene('Slide4.xml')">Slide 4</a></li>
-                              <li><a href="javascript:bridgeworks.updateScene('Slide5.xml')">Slide 5</a></li>
+                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt/';bridgeworks.updateScene('Egypt-Models.xml'), setScene(1);">Slide 1</a></li>
+                              <li><a href="javascript:bridgeworks.updateScene('Slide2.xml'), setScene(2);">Slide 2</a></li>
+                              <li><a href="javascript:bridgeworks.updateScene('Slide3.xml'), setScene(3);">Slide 3</a></li>
+                              <li><a href="javascript:bridgeworks.updateScene('Slide4.xml'), setScene(4);">Slide 4</a></li>
+                              <li><a href="javascript:bridgeworks.updateScene('Slide5.xml'), setScene(5);">Slide 5</a></li>
                           </ul>
                       </div>
                       <div class="tab-pane" id="animate">
@@ -443,7 +462,8 @@
                 //document.getElementById('Current_Object').firstChild.nodeValue='bold bit of text';
 
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
-                
+                //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
+
                 //listLibrary();
                 
                 

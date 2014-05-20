@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <Update>
-		        <LabelStyle name="myStyle">
+		  <LabelStyle name="myStyle">
 	         <labelStyle>
 	            <fontStyle>
 	                 <size>16</size>
 	             </fontStyle>
 	        </labelStyle>
-	       </LabelStyle>
+	      </LabelStyle>
         <!--Spacing -->
     <Label name="Pyramids" parent="Great Pyramid" text="The Great Pyramid" show="true">
          <labelStyle ref="myStyle"/>
