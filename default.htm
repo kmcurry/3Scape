@@ -115,13 +115,35 @@
           {
               if (capture) bridgeworks.handleEvent(event);
           }
-          function set(Object)
+          function setIt(Object)
           {
-            //  if(cube == Object){
-                  currentObj = "Current Object: Cube";
-                  var p = document.getElementById('Current_Object').innerHTML;
-              p.concat(currentObj);
-            //  }
+              var p = document.getElementById('Current_Object');
+              switch(Object)
+              {
+                  case 0:
+                      currentObj = "Current Object: Cube";
+                      p.innerHTML = currentObj;
+                      break;
+
+                  case 1:
+                      currentObj = "Current Object: Sphere";
+                      p.innerHTML = currentObj;
+                      break;
+
+                  case 2:
+                      currentObj = "Current Object: Tube";
+                      p.innerHTML = currentObj;
+                      break;
+
+                  case 3:
+                      currentObj = "Current Object: Wall";
+                      p.innerHTML = currentObj;
+                      break;
+                  case 4:
+                      currentObj = "Current Object: Grid";
+                      p.innerHTML = currentObj;
+
+              }
           }
 
           function handleEvent(e)
@@ -174,7 +196,28 @@
                     else {
                         cmd = "\<Locate target='" + name + "'/>";
                     }
+                    console.debug(cmd);
                     bridgeworks.updateScene(cmd);
+                    var CUBE = name.search("Cube");
+                    var SPHERE = name.search("Sphere");
+                    var TUBE = name.search("Tube");
+                    var WALL = name.search("wall");
+
+                    if(CUBE != -1){
+                            setIt(0);
+                    }
+                    else if(SPHERE != -1){
+                            setIt(1);
+                    }
+                    else if(TUBE != -1){
+                            setIt(2);
+                    }
+                    else if(WALL != -1){
+                            setIt(3);
+                    }
+                    else if(name.search("Grid" != -1)){
+                            setIt(4);
+                    }
                 }
                 break;
               }
@@ -285,10 +328,10 @@
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">New Object<b class="caret"></b></a>
                           <ul class="dropdown-menu">
-                              <li><a onclick="load(cube);set(cube);">Cube</a></li>
-                              <li><a onclick="load(sphere);">Sphere</a></li>
-                              <li><a onclick="load(tube);">Tube</a></li>
-                              <li><a onclick="load(wall);">Wall</a></li>
+                              <li><a onclick="load(cube),setIt(0);">Cube</a></li>
+                              <li><a onclick="load(sphere),setIt(1);">Sphere</a></li>
+                              <li><a onclick="load(tube),setIt(2);">Tube</a></li>
+                              <li><a onclick="load(wall),setIt(3);">Wall</a></li>
                               <li class="divider"></li>
                               <li class="dropdown-header">Nav header</li>
                               <li><a href="#">Separated link</a></li>
@@ -297,7 +340,7 @@
                       </li>
                       <li><p class="navbar-text" id="Current_Object">Current Object: X</p></li>
                       <li>
-                          <div class="dropdown">
+                              <div class="dropdown">
                               <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" > <!--data-toggle="dropdown" data-target="#" href="/page.html" onclick="createRecord();"-->
                                   Add Label
                               </button>
@@ -377,7 +420,7 @@
 
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 
-                listLibrary();
+                //listLibrary();
                 
                 
                 $('html').bind('keypress', function(e)

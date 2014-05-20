@@ -147,10 +147,10 @@ function loadModel(url)
     a.setAttribute("onclick", "show('" + name + "');")
     a.innerText = name;
     
-    p.appendChild(a);
+    //p.appendChild(a);
     
     var panel = document.getElementById("panel-curr-scene");
-    panel.appendChild(p);
+    //panel.appendChild(p);
     
     
 }
