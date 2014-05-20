@@ -145,7 +145,14 @@
 
               }
           }
-
+          //Mock Up of How Search would work
+          function Search()
+          {
+              var Search = $( "#Search" ).val();
+              var cmd = "\<Locate target='" + Search + "'/>";
+              bridgeworks.updateScene(cmd);
+              console.debug(cmd);
+          }
           function handleEvent(e)
           {
               bridgeworks.handleEvent(e);
@@ -345,6 +352,16 @@
                                   Add Label
                               </button>
                           </div>
+                      </li>
+                      <li>
+                        <div class="navbar-form" style="width:200px;">
+                          <div class="input-group">
+                            <input type="text" class="form-control" id="Search">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" onclick="Search();"><span class="glyphicon glyphicon-search" style="font-size:1.4em;"></span></button>
+                            </span>
+                          </div><!-- /input-group -->
+                        </div>
                       </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
