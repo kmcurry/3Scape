@@ -131,7 +131,7 @@ function formatPath(url)
                 // could be a relative path
                 var href = document.location.href;
                 
-                validPath = href.substring(0, href.lastIndexOf("/")) + "/bwcontent/" + url;
+                validPath = href.substring(0, href.lastIndexOf("/")) + "/" + bridgeworks.contentDir + "/" + url;
                 
                 console.debug("Trying: " + validPath);
                 
@@ -25805,6 +25805,7 @@ Bridgeworks.prototype.updateScene = function(xml)
 {
     var xmlString = new String(xml);
     var extension = xmlString.substr(xmlString.length - 3, 3);
+    console.debug("Updating scene with contentDir: " + this.contentDir);
     if (extension == "xml")
     {
         xml = loadXMLResource(this.contentDir + "/" + xml);
