@@ -113,7 +113,7 @@ var count = 1;
 function loadModel(url)
 {
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
-    name = count.toString() + ". " + name;
+    name = name + count.toString();
     count++;
     
     var xml = loadXMLFile("bwcontent/model.xml");
