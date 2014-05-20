@@ -145,7 +145,14 @@
 
               }
           }
-
+          //Mock Up of How Search would work
+          function Search()
+          {
+              var Search = $( "#Search" ).val();
+              var cmd = "\<Locate target='" + Search + "'/>";
+              bridgeworks.updateScene(cmd);
+              console.debug(cmd);
+          }
           function handleEvent(e)
           {
               bridgeworks.handleEvent(e);
@@ -346,6 +353,9 @@
                               </button>
                           </div>
                       </li>
+                      <!--MAKE THIS SEARCH BAR REALLY PRETTY JON-->
+                      <li> <input type="text" id="Search"></li>
+                      <li> <input type="button" value="Submit" onclick="Search();"> </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                       <li><p class="navbar-text">Current Slide: X</p></li>
