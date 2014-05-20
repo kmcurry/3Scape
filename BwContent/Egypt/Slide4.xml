@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Update>
+	<AutoInterpolate target="Camera">
+        <position x="100" y="1000" z="-750"/>
+         <rotation x="90" y="0" z="0"/>
+    </AutoInterpolate>
+
+    <AutoInterpolate target="Camera">
+        <position x="500" y="150" z="-800"/>
+         <rotation x="10" y="-40" z="0"/>
+    </AutoInterpolate>
+</Update>
