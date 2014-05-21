@@ -459,8 +459,16 @@
         <script type="text/javascript">
         document.onreadystatechange = function () {
             if (document.readyState == "complete") {
-                //document.getElementById('Current_Object').firstChild.nodeValue='bold bit of text';
+                //This is changing the background of the slides navbar to active and non active to give it the selected effect.
+                    $('.nav li a').click(function(e) {
 
+                        $('.nav li').removeClass('active');
+
+                        var $parent = $(this).parent();
+                        if (!$parent.hasClass('active')) {
+                            $parent.addClass('active');
+                        }
+                    });
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
 
