@@ -21,31 +21,41 @@ function cut()
         panel.removeChild(link);
     }
 }
-
+var loaded = 0;
 function listLibrary()
 {
     var url = document.location.href + "/../BwContent/";
-    
-    var panel = document.getElementById("panel-lib-objects");
-    
-    listDirectory(url + "objects/", panel);
-    listDirectory(url + "Animals/objects/", panel);
-    listDirectory(url + "Buildings/objects/", panel);
-    listDirectory(url + "Egypt/objects/", panel);
-    listDirectory(url + "Vehicles/objects/", panel);
-    
+    if(loaded == 0)
+    {
+        //Seperating the libs out and changing which panel they are loaded into.
+        var panel = document.getElementById("panel-lib-shapeObjects");
+        listDirectory(url + "objects/", panel);
+
+        panel = document.getElementById("panel-lib-animalObjects");
+        listDirectory(url + "Animals/objects/", panel);
+
+        panel = document.getElementById("panel-lib-buildingObjects");
+        listDirectory(url + "Buildings/objects/", panel);
+
+        panel = document.getElementById("panel-lib-vehicleObjects");
+        listDirectory(url + "Vehicles/objects/", panel);
+
+        panel = document.getElementById("panel-lib-egyptObjects");
+        listDirectory(url + "Egypt/objects/", panel);
+    }
+    /*
     url = document.location.href + "/../../Entymology/BwContent/"
     listDirectory(url + "objects/", panel);
     
     url = document.location.href + "/../../Paleontology/BwContent/"
-    listDirectory(url + "objects/", panel);
+    listDirectory(url + "objects/", panel);*/
     
-    panel = document.getElementById("panel-lib-motions");
+    //panel = document.getElementById("panel-lib-motions");
     
-    url = document.location.href + "/../BwContent/";
+    //url = document.location.href + "/../BwContent/";
     
-    listDirectory(url + "motions/", panel);
-    listDirectory(url + "Vehicles/motions/", panel);
+    //listDirectory(url + "motions/", panel);
+    //listDirectory(url + "Vehicles/motions/", panel);
 }
 
 function listDirectory(url, panel)
@@ -59,7 +69,7 @@ function listDirectory(url, panel)
     var objects = dom.getElementsByTagName("a");
     var object = null;
     var onclick = null;
-    var href = ""
+    var href = "";
     
     var i = 0;
     
@@ -78,10 +88,13 @@ function listDirectory(url, panel)
         ndx = href.lastIndexOf('/');
         
         href = ndx == -1 ? href : href.substring(ndx+1);
-        
+
         object.removeAttribute("href");
         object.setAttribute("onclick", "load('" + url + href + "');");
-        
+
+        //This takes care of the file having the lwo attached to it.
+        object.innerText = object.innerText.substring(0,object.innerText.indexOf('.'));
+
         panel.appendChild(object);
         var br = document.createElement("br");
         panel.appendChild(br);

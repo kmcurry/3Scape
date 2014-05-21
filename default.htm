@@ -179,6 +179,13 @@
               bridgeworks.updateScene(cmd);
               console.debug(cmd);
           }
+          //Sets the file in which to load after file browser file is chosen.
+          function setLoad(){
+              var file = $("#file").val();//$( "#title" ).val();
+              if(file !=""){
+                  load(file);
+              }
+          }
           function handleEvent(e)
           {
               bridgeworks.handleEvent(e);
@@ -298,18 +305,33 @@
             <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
 
       <div class="modal fade" id="myModal">
-          <div class="modal-dialog">
+          <div class="modal-dialog" style="width: 900px">
               <div class="modal-content">
                   <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <h4 class="modal-title">Note #{{notes.length + 1}}</h4>
+                      <h4 class="modal-title">List of Objects</h4>
                   </div>
-                  <div class="modal-body">
-                      <textarea class="form-control" rows="3" placeholder="Enter Note"></textarea>
+                  <!--Loading all the Libs and putting them in their respective places-->
+                  <div class="modal-body row">
+                      <div class="col-md-2" id="panel-lib-shapeObjects">
+                          <H3>Shapes</H3>
+                      </div>
+                      <div class="col-md-2" id="panel-lib-animalObjects">
+                          <H3>Animals</H3>
+                      </div>
+                      <div class="col-md-3" id="panel-lib-buildingObjects">
+                          <H3>Buildings</H3>
+                      </div>
+                      <div class="col-md-3" id="panel-lib-vehicleObjects">
+                          <H3>Vehicles</H3>
+                      </div>
+                      <div class="col-md-2" id="panel-lib-egyptObjects">
+                          <H3>Egypt</H3>
+                      </div>
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+                      <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                   </div>
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -371,9 +393,9 @@
                               <li><a onclick="load(tube),setObject(2);">Tube</a></li>
                               <li><a onclick="load(wall),setObject(3);">Wall</a></li>
                               <li class="divider"></li>
-                              <li class="dropdown-header">Nav header</li>
-                              <li><a href="#">Separated link</a></li>
-                              <li><a href="#">One more separated link</a></li>
+                              <li><a href="#" data-toggle="modal" data-target="#myModal">List of Objects</a></li>
+                              <!--<li><a href="#">Select a File</a></li>
+                              <li><a href="#">One more separated link</a></li>-->
                           </ul>
                       </li>
                       <li><p class="navbar-text" id="Current_Object">Current Object: X</p></li>
@@ -404,7 +426,7 @@
                               <li><a id="ex2" href="#">Note2</a></li>
                               <li><a id="ex3" href="#">Note3</a></li>
                               <li class="divider"></li>
-                              <li><a href="#" data-toggle="modal" data-target="#myModal">New Note</a></li>
+                              <!--<li><a href="#" data-toggle="modal" data-target="#myModal">New Note</a></li>-->
                           </ul>
                       </li>
                   </ul>
@@ -412,7 +434,7 @@
           </div>
       </div>
 
-          <div class="row">
+              <div class="row">
               <!-- Left side slide preview space -->
               <div class="col-sm-3 col-md-2 sidebar">
                   <span class="glyphicon glyphicon-play" style="font-size:1.4em"></span>
@@ -485,7 +507,7 @@
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
 
-                //listLibrary();
+                listLibrary();
                 
                 
                 $('html').bind('keypress', function(e)
