@@ -27,7 +27,27 @@
 4. Trying it out 
   * Open your browser of choice and type in localhost/*youralias*/ 
 
+##TroubleShooting 
 
+ 1. Restarting the Default Website in IIS  
+   *Click on your default website and select "Restart" on the right side 
+  
+ 2. Adding the .lwo MIME type 
+    * With 3Scape selected in IIS, double click MIME types and search for the extension ".lwo"
+    * If it is not there click "Add". Under File name extension type ".lwo" and in MIME type insert "image-x/lwo"  
+ 
+ 3. Giving IIS full access permissions 
+    * Right click on 3Scape and select edit permissions and select the Security tab
+    * Click Edit then Add 
+    * Type in the following: IIS_IUSRS and hit OK
+    * Select IIS_IUSRS in group and users then ,under Permissions, select Full Controll 
+    * Click Apply then OK.
+    * 
+    Note:
+    You may have to add another permission in order for the #3 to work properly.
+    Simply repeat the steps in #3, but instead type IUSR
+    
+    
 #Reference Models 
 1. Here are some ideas of the kind of feel we want to capture with 3Scape
   * [Google Presentation] (https://docs.google.com/presentation/d/10zfW9MqQ2XwvuePpfwbyMDsJmNhrtWYPYszwVk47XGo/edit)
