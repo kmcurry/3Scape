@@ -8,10 +8,12 @@
     <!-- jquery stuff -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
     <script src="./js/BwHelper.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="js/nicEdit.js"></script>
+
 
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -55,7 +57,9 @@
           
             function addRecord()
             {
-                var title = $( "#title" ).val();
+                var nicE = new nicEditors.findEditor('title');
+                var title = nicE.getContent();
+                //var title = $( "#title" ).val();
                 if (title != "") {
                     var update = "\<Set target='Label_" + g_labelName + "' text='" + title + "' show='true'/>";
                     console.debug(update);
@@ -71,7 +75,7 @@
             
           function createRecord()
           {
-              $( "#dialog" ).dialog("open");
+
               
               adding = true;
               
@@ -104,7 +108,7 @@
               var xstr = (new XMLSerializer()).serializeToString(xml);
               console.debug(xstr);
               bridgeworks.updateScene(xstr);
-
+              $( "#dialog" ).dialog("open");
               //addRecord();
           }
           
@@ -444,12 +448,14 @@
               </div>
           </div>
 
-<div id="dialog" title="Name that part!">
-    <form id="my-form" enctype="multipart/form-data" method="post">
-        <p>Title: <input type="text" id="title"></p>
-        <p><input type="button" value="Submit" onclick="addRecord()"></p>
-    </form>
-</div>
+      <div id="dialog" title="Please enter your description for this item below">
+          <form method="post"> <!--id="my-form" enctype="multipart/form-data" -->
+              <textarea name="title" id="title" style="width:100%"></textarea>
+              <!-- <input type="text" id="title">-->
+              <p><input type="button" value="Submit" onclick="addRecord()"></p>
+          </form>
+      </div>
+
 
     
     <!--<video controls="controls" src="http://localhost/bwjs/bwcontent/images/quake.mpg">
@@ -492,6 +498,15 @@
                 $( "#dialog" ).dialog({ show: { effect: "blind", duration: 200 } });
             
                 $( "#dialog" ).dialog({ hide: { effect: "blind", duration: 200 } });
+
+                $( "#dialog").dialog({open: function(event,ui) {
+
+                    new nicEditor({
+                        fullPanel : true,
+                        iconsPath : 'nicEditorIcons.gif'
+                    }).panelInstance('title');
+                }
+                });
           
                 $( "#dialog" ).dialog({
                   close: function( event, ui ) {
