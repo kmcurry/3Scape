@@ -47,16 +47,6 @@
     You may have to add another permission in order for the #3 to work properly.
     Simply repeat the steps in #3, but instead type IUSR
     
-    
-#Reference Models 
-1. Here are some ideas of the kind of feel we want to capture with 3Scape
-  * [Google Presentation] (https://docs.google.com/presentation/d/10zfW9MqQ2XwvuePpfwbyMDsJmNhrtWYPYszwVk47XGo/edit)
-  * [Prezi] (http://www.prezi.com)
-  * [Powerpoint] (http://office.microsoft.com/en-us/powerpoint/) "on steroids"
-  * [ESRI ArcGIS Explorer] (http://kcurry.blogs.bridgeborn.com/esris-killer-feature/) 
-
-2. Things we don't want 3Scape to be (i.e. a 3D modeling tool)
-  * [Three.js Editor] (http://threejs.org/editor/)
-  * [Blender] (http://www.blender.org/)
+   
 
 
