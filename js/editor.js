@@ -2,6 +2,12 @@
 
 var copiedUrl = "";
 
+function setObject(Object)
+{
+    var p = document.getElementById('Current_Object');
+    p.innerHTML = "Current Object: " + Object;
+}
+
 function copy()
 {
     if (selectedModel) {
@@ -131,6 +137,8 @@ function loadModel(url)
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
     name = count.toString()+". "+name;
     count++;
+
+    setObject(name);
 
     var objectPanel = document.getElementById("object-list");
     a = document.createElement('a');

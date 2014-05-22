@@ -121,70 +121,22 @@
               $( "#dialog" ).dialog("open");
               //addRecord();
           }
-          
-          
+
           // This function makes it so that mouse interaction with the scene
           // continues when the cursor moves out of the Bridgeworks frame.
           function handleDocMove(event)
           {
               if (capture) bridgeworks.handleEvent(event);
           }
-          function setObject(Object)
-          {
-              var p = document.getElementById('Current_Object');
-              switch(Object)
-              {
-                  case 0:
-                      currentObj = "Current Object: Cube";
-                      p.innerHTML = currentObj;
-                      break;
 
-                  case 1:
-                      currentObj = "Current Object: Sphere";
-                      p.innerHTML = currentObj;
-                      break;
-
-                  case 2:
-                      currentObj = "Current Object: Tube";
-                      p.innerHTML = currentObj;
-                      break;
-
-                  case 3:
-                      currentObj = "Current Object: Wall";
-                      p.innerHTML = currentObj;
-                      break;
-                  case 4:
-                      currentObj = "Current Object: Grid";
-                      p.innerHTML = currentObj;
-
-              }
-          }
-          /*
-          function setScene(Scene) {
-              var P = document.getElementById('Current_Scene');
-              switch(Scene){
-                  case 1:
-                      P.innerHTML = "Current Slide: 1";
-                      break;
-                  case 2:
-                      P.innerHTML = "Current Slide: 2";
-                      break;
-                  case 3:
-                      P.innerHTML = "Current Slide: 3";
-                      break;
-                  case 4:
-                      P.innerHTML = "Current Slide: 4";
-                      break;
-                  case 5:
-                      P.innerHTML = "Current Slide: 5";
-                      break;
-              }
-          }*/
-          //Mock Up of How Search would work
+          //Locates the target given the name and also sets current object to be the object located
           function locate(name){
               var cmd = "\<Locate target='" + name + "'/>";
               bridgeworks.updateScene(cmd);
+              setObject(name);
           }
+
+          //Mock Up of How Search would work
           function Search()
           {
               var Search = $( "#Search" ).val();
@@ -250,27 +202,7 @@
                     }
                     console.debug(cmd);
                     bridgeworks.updateScene(cmd);
-
-                    var CUBE = name.search("Cube");
-                    var SPHERE = name.search("Sphere");
-                    var TUBE = name.search("Tube");
-                    var WALL = name.search("wall");
-
-                    if(CUBE != -1){
-                            setObject(0);
-                    }
-                    else if(SPHERE != -1){
-                            setObject(1);
-                    }
-                    else if(TUBE != -1){
-                            setObject(2);
-                    }
-                    else if(WALL != -1){
-                            setObject(3);
-                    }
-                    else if(name.search("Grid" != -1)){
-                            setObject(4);
-                    }
+                    setObject(name);
                 }
                 break;
               }
@@ -401,9 +333,9 @@
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add<b class="caret"></b></a>
                           <ul class="dropdown-menu">
-                              <li><a onclick="load(cube),setObject(0);">Cube</a></li>
-                              <li><a onclick="load(sphere),setObject(1);">Sphere</a></li>
-                              <li><a onclick="load(tube),setObject(2);">Tube</a></li>
+                              <li><a onclick="load(cube);">Cube</a></li>
+                              <li><a onclick="load(sphere);">Sphere</a></li>
+                              <li><a onclick="load(tube);">Tube</a></li>
                               <li class="divider"></li>
                               <li><a href="#">New Scene</a></li>
                               <li class="divider"></li>
@@ -464,11 +396,12 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="slides">
                                     <ul class="nav nav-sidebar">
-                                    <li><a href="javascript:bridgeworks.contentDir+='/Egypt/';bridgeworks.updateScene('Egypt-Models.xml'), setScene(1);">Slide 1</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide2.xml'), setScene(2);">Slide 2</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide3.xml'), setScene(3);">Slide 3</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide4.xml'), setScene(4);">Slide 4</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide5.xml'), setScene(5);">Slide 5</a></li>
+                                    <li><a href="javascript:bridgeworks.contentDir+='/Egypt/';bridgeworks.updateScene('Egypt-Models.xml')">Slide 1</a></li>
+                                    <li><a href="javascript:bridgeworks.updateScene('Slide2.xml')">Slide 2</a></li>
+                                    <li><a href="javascript:bridgeworks.updateScene('Slide3.xml')">Slide 3</a></li>
+                                    <li><a href="javascript:bridgeworks.updateScene('Slide4.xml')">Slide 4</a></li>
+                                    <li><a href="javascript:bridgeworks.updateScene('Slide5.xml')">Slide 5</a></li>
+                                    <li><a href="javascript:bridgeworks.updateScene('Slide6.xml')">Slide 6</a></li>
                                     </ul>
                                     </div>
                                     <div class="tab-pane" id="animate">
@@ -488,7 +421,7 @@
                                     </div>
                                     <div class="tab-pane" id="object-list">
                                         <ul class="nav nav-sidebar">
-                                            
+
                                         </ul>
                                     </div>
                                 </div>
