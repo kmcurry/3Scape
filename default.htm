@@ -419,7 +419,6 @@
                         </div>
                       </li>
                   </ul>
-                  <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav">Test Collapse</button>
                   <ul class="nav navbar-nav navbar-right">
                       <li><p class="navbar-text" id="Current_Scene">Current Slide: X</p></li>
                       <li class="dropdown">
@@ -444,7 +443,8 @@
                     <span class="glyphicon glyphicon-play" style="font-size:1.4em"></span>
                     <span class="glyphicon glyphicon-pause" style="font-size:1.4em"></span>
                     <span class="glyphicon glyphicon-stop" style="font-size:1.4em"></span>
-                    <ul class="nav nav-tabs">
+                    <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;">Hide</button>
+                    <ul class="nav nav-tabs" style="clear:both">
                         <li class="active"><a href="#slides" data-toggle="tab">Slides</a></li>
                         <li><a href="#animate" data-toggle="tab">Animate</a></li>
                         <li><a href="#object-list" data-toggle="tab">Objects</a></li>
@@ -460,7 +460,7 @@
                             </ul>
                         </div>
                         <div class="tab-pane" id="animate">
-                            Goodbye!
+                            Animations
                             <ul class="nav nav-sidebar">
                                 <li><a href="">Nav item</a></li>
                                 <li><a href="">Nav item again</a></li>
@@ -475,7 +475,7 @@
                             </ul>
                         </div>
                         <div class="tab-pane" id="object-list">
-                            Goodbye!
+                            Objects
                             <ul class="nav nav-sidebar">
                                 <li><a href="">Nav item</a></li>
                                 <li><a href="">Nav item again</a></li>
@@ -493,8 +493,9 @@
                   </div>
                 </div>
               <div class="col-sm-12" style="height:100%" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                  <!-- <canvas id="Canvas">
-                  </canvas> -->
+                  <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                  <canvas id="Canvas">
+                  </canvas>
               </div>
             </div>
 
