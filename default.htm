@@ -449,6 +449,12 @@
     <!--<video controls="controls" src="http://localhost/bwjs/bwcontent/images/quake.mpg">
     Your browser does not support the video tag.
     </video>-->
+
+      <script>
+          function modalHide(){
+                  $('#myModal').modal('hide');
+          }
+      </script>
       
         <script>
         //Getting sidebar tabs to work again. Not sure why they broke//
@@ -472,6 +478,7 @@
                             $parent.addClass('active');
                         }
                     });
+
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
 

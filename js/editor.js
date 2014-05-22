@@ -96,10 +96,13 @@ function listDirectory(url, panel)
         
         href = ndx == -1 ? href : href.substring(ndx+1);
 
-        object.removeAttribute("href");
-        object.setAttribute("onclick", "load('" + url + href + "');");
-        //This takes care of the file having the lwo attached to it.
         object.innerText = object.innerText.substring(0,object.innerText.indexOf('.'));
+
+        object.setAttribute("id",object.innerText);
+        object.removeAttribute("href");
+        object.setAttribute("onclick", "load('" + url + href + "'),modalHide();");
+        //This takes care of the file having the lwo attached to it.
+        //console.debug(object.innerText);
 
         panel.appendChild(object);
         var br = document.createElement("br");
