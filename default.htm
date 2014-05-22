@@ -443,7 +443,7 @@
                     <span class="glyphicon glyphicon-play" style="font-size:1.4em"></span>
                     <span class="glyphicon glyphicon-pause" style="font-size:1.4em"></span>
                     <span class="glyphicon glyphicon-stop" style="font-size:1.4em"></span>
-                    <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;">Hide</button>
+                    <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
                     <ul class="nav nav-tabs" style="clear:both">
                         <li class="active"><a href="#slides" data-toggle="tab">Slides</a></li>
                         <li><a href="#animate" data-toggle="tab">Animate</a></li>
@@ -493,7 +493,7 @@
                   </div>
                 </div>
               <div class="col-sm-12" style="height:100%" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                  <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                  <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:20px;"><span class="glyphicon glyphicon-chevron-right"></span></button>
                   <canvas id="Canvas">
                   </canvas>
               </div>
@@ -514,6 +514,7 @@
     </video>-->
       
         <script>
+        //Getting sidebar tabs to work again. Not sure why they broke//
         $(function(){ 
             $('.nav-tabs a').on('click', function (e) {
                 e.preventDefault();
