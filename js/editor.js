@@ -15,8 +15,9 @@ function cut()
         var name = selectedModel.name.getValueDirect().join("");
         var c = "\<Remove target='" + name + "'/>"
         bridgeworks.updateScene(c);
-        
-        var panel = document.getElementById("panel-curr-scene");
+        console.log(name);
+
+        var panel = document.getElementById("object-list");
         var link = document.getElementById(name);
         panel.removeChild(link);
     }
@@ -91,7 +92,6 @@ function listDirectory(url, panel)
 
         object.removeAttribute("href");
         object.setAttribute("onclick", "load('" + url + href + "');");
-
         //This takes care of the file having the lwo attached to it.
         object.innerText = object.innerText.substring(0,object.innerText.indexOf('.'));
 
@@ -107,7 +107,10 @@ function load(u)
 {
     var url = u == null ? $('#url').val() : u;
     var ext = getFileExtension(url);
-    console.debug(ext);
+    var name = url;
+
+
+    console.debug(name);
     switch(ext) {
     case "lwo":
         loadModel(url);
@@ -126,8 +129,17 @@ var count = 1;
 function loadModel(url)
 {
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
-    name = name + count.toString();
+    name = count.toString()+". "+name;
     count++;
+
+    var objectPanel = document.getElementById("object-list");
+    a = document.createElement('a');
+    a.setAttribute("onclick", "locate('" + name + "');");; // Insted of calling setAttribute
+    a.setAttribute("id", name);
+    a.innerHTML = name + "<br>"; // <a>INNER_TEXT</a>
+    objectPanel.appendChild(a); // Append the link to the div
+    //var br = document.createElement("br");
+   // objectPanel.appendChild(br);
     
     var xml = loadXMLFile("bwcontent/model.xml");
     
