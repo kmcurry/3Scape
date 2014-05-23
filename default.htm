@@ -431,7 +431,7 @@
       </div>
       <div class="row">
         <div id="container" style="width:300px;">
-            <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:2001">
+            <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
                 <div style="padding: 20px; overflow:hidden; width:300px;">
                         <div>
                             <span class="glyphicon glyphicon-play" style="font-size:1.4em"></span>
@@ -474,8 +474,8 @@
                 </div>
             </div>
         </div>
-          <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:2000"><span class="glyphicon glyphicon-chevron-right"></span></button>
-          <div id="candiv" class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+          <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:1028"><span class="glyphicon glyphicon-chevron-right"></span></button>
+          <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
                   <canvas id="Canvas">
                   </canvas>
           </div>
@@ -508,7 +508,7 @@
           function preHide(){
               $('#container').hide();
               $('#Navbar').hide();
-              $('#collapse').hide();
+              $('#expand').hide();
               $('#dialog').hide();
               slideCount = 1;
 
@@ -529,7 +529,7 @@
           function preUnhide(){
               $('#container').show();
               $('#Navbar').show();
-              $('#collapse').show();
+              $('#expand').show();
               $('#dialog').show();
           }
       </script>
@@ -639,10 +639,6 @@
           $('.dropdown-menu').find('form').click(function (e) {
               e.stopPropagation();
           });
-      </script>
-      <script type="text/javascript">
-        var myVar = $('#candiv').css('position');
-        console.log(myVar)
       </script>
 
   </body>
