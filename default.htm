@@ -61,6 +61,7 @@
           var wall = "objects/wall.lwo";
           var currentObj = "Current Object: X";
           var editorOpen = 0;
+          var slideCount = 1;
 
           var g_labelCount = 0;
           var g_labelName = null;
@@ -149,12 +150,32 @@
               bridgeworks.updateScene(cmd);
               console.debug(cmd);
           }
-          //Sets the file in which to load after file browser file is chosen.
-          function setLoad(){
-              var file = $("#file").val();//$( "#title" ).val();
-              if(file !=""){
-                  load(file);
+
+          //Hacks in loadslides function. Right now you send it the number of slides you want loaded. And they have to be named SlideX in order for this to work
+          function loadSlides(num){
+              //slideCount = 1;
+              while(slideCount<=num) {
+                  var slidePanel = document.getElementById("slidePanel");
+                  var Li = document.createElement('li');
+                  var S = document.createElement('a');
+                  S.setAttribute("href", "javascript:bridgeworks.updateScene('Slide"+(slideCount+1)+".xml')");
+                  S.setAttribute("id", "Slide " + slideCount);
+                  S.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
+                  Li.appendChild(S);
+                  slidePanel.appendChild(Li);
+                  slideCount++;
               }
+
+              //This makes it so the slides can be changed from active to non active to represent what slide we are on
+              $('.nav li a').click(function(e) {
+                  console.log("THIS WORKS");
+                  $('.nav li').removeClass('active');
+
+                  var $parent = $(this).parent();
+                  if (!$parent.hasClass('active')) {
+                      $parent.addClass('active');
+                  }
+              });
           }
           function handleEvent(e)
           {
@@ -233,6 +254,25 @@
                                 e.preventDefault();
                                 paste();
                             }
+                        }
+                    }
+                        break;
+                    case 39:
+                    {
+                        if (slideCount <= 5) {
+
+                            bridgeworks.updateScene('Slide' + (slideCount + 1) + '.xml');
+                            slideCount++;
+                            console.log("SLIDE NUMBER = "+slideCount);
+                        }
+                    }
+                        break;
+                    case 37:
+                    {
+                        if (slideCount > 2 && slideCount <= 6) {
+                            slideCount--;
+                            bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
+                            console.log("SLIDE NUMBER = "+slideCount);
                         }
                     }
                         break;
@@ -342,6 +382,8 @@
                               <li><a onclick="load(tube);">Tube</a></li>
                               <li class="divider"></li>
                               <li><a href="#">New Scene</a></li>
+                              <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
+                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(5)">Ancient Egypt</a></li>
                               <li class="divider"></li>
                               <li><a href="#" data-toggle="modal" data-target="#myModal">Browse</a></li>
                           </ul>
@@ -403,14 +445,9 @@
                              </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="slides">
-                                    <ul class="nav nav-sidebar">
-                                    <li><a href="javascript:bridgeworks.contentDir+='/Egypt/';bridgeworks.updateScene('Egypt-Models.xml')">Slide 1</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide2.xml')">Slide 2</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide3.xml')">Slide 3</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide4.xml')">Slide 4</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide5.xml')">Slide 5</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide6.xml')">Slide 6</a></li>
-                                    </ul>
+                                        <ul class="nav nav-sidebar" id="slidePanel">
+                                            <!--This is where the slides get loaded into-->
+                                        </ul>
                                     </div>
                                     <div class="tab-pane" id="animate">
                                         Animations
@@ -473,6 +510,7 @@
               $('#Navbar').hide();
               $('#collapse').hide();
               $('#dialog').hide();
+              slideCount = 1;
 
               var docElement
               var request;
@@ -483,6 +521,10 @@
               if(typeof request!="undefined" && request){
                   request.call(docElement);
               }
+             // bridgeworks.updateScene('Slide2.xml')
+              bridgeworks.updateScene('Slide'+(slideCount+1)+'.xml');
+              slideCount++;
+
           }
           function preUnhide(){
               $('#container').show();
@@ -506,15 +548,6 @@
         document.onreadystatechange = function () {
             if (document.readyState == "complete") {
                 //This is changing the background of the slides navbar to active and non active to give it the selected effect.
-                    $('.nav li a').click(function(e) {
-
-                        $('.nav li').removeClass('active');
-
-                        var $parent = $(this).parent();
-                        if (!$parent.hasClass('active')) {
-                            $parent.addClass('active');
-                        }
-                    });
 
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));

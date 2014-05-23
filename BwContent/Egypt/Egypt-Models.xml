@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Group name="Models">
-    <Model name="EGYPT" url="objects/EGYPT.lwo"/>
-    <Model name="Great Pyramid" url="objects/GreatPyramid.lwo"/>
-    <Model name="Khafre Pyramid" url="objects/KhafrePyramid.lwo"/>
-    <Model name="Menkaure Pyramid" url="objects/MenkaurePyramid.lwo"/>
-</Group>
+<Update>
+    <Remove target = "Grid"/>
+    <AutoInterpolate target= "Camera">
+        <position x="0" y="3000" z="-1000"/>
+        <rotation x="90" y="0" z="0"/>
+    </AutoInterpolate>
+
+    <Group name="Models">
+        <Model name="EGYPT" url="objects/EGYPT.lwo"/>
+        <Model name="Great Pyramid" url="objects/GreatPyramid.lwo"/>
+        <Model name="Khafre Pyramid" url="objects/KhafrePyramid.lwo"/>
+        <Model name="Menkaure Pyramid" url="objects/MenkaurePyramid.lwo"/>
+    </Group>
+</Update>
