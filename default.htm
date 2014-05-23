@@ -45,6 +45,9 @@
               -o-transition: width 0.35s ease;
               transition: width 0.35s ease;
           }
+          .popover {
+              z-index: 2000; /* Popovers don't get hidden behind elements. */
+          }
       </style>
       <link rel="stylesheet" type="text/css" href="style.css">
   </head> 
@@ -403,11 +406,15 @@
                           </div>
                         </div>
                       </li>
-                      <li>
-                          <button type="button" class="btn navbar-btn" id="Presentation" role="button" onclick="preHide()">Presentation</button>
-                      </li>
+                      
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
+                      <li>
+                        <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
+                      </li>
+                      <li>
+                          <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()"><span class="glyphicon glyphicon-play"></span> Presentation</button>
+                      </li>
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
@@ -417,6 +424,7 @@
                               <li class="divider"></li>
                           </ul>
                       </li>
+
                   </ul>
               </div>
           </div>
