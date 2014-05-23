@@ -2,6 +2,12 @@
 
 var copiedUrl = "";
 
+function setObject(Object)
+{
+    var p = document.getElementById('Current_Object');
+    p.innerHTML = "Current Object: " + Object;
+}
+
 function copy()
 {
     if (selectedModel) {
@@ -15,37 +21,48 @@ function cut()
         var name = selectedModel.name.getValueDirect().join("");
         var c = "\<Remove target='" + name + "'/>"
         bridgeworks.updateScene(c);
-        
-        var panel = document.getElementById("panel-curr-scene");
+        console.log(name);
+
+        var panel = document.getElementById("object-list");
         var link = document.getElementById(name);
         panel.removeChild(link);
     }
 }
-
+var loaded = 0;
 function listLibrary()
 {
     var url = document.location.href + "/../BwContent/";
-    
-    var panel = document.getElementById("panel-lib-objects");
-    
-    listDirectory(url + "objects/", panel);
-    listDirectory(url + "Animals/objects/", panel);
-    listDirectory(url + "Buildings/objects/", panel);
-    listDirectory(url + "Egypt/objects/", panel);
-    listDirectory(url + "Vehicles/objects/", panel);
-    
+    if(loaded == 0)
+    {
+        //Seperating the libs out and changing which panel they are loaded into.
+        var panel = document.getElementById("panel-lib-shapeObjects");
+        listDirectory(url + "objects/", panel);
+
+        panel = document.getElementById("panel-lib-animalObjects");
+        listDirectory(url + "Animals/objects/", panel);
+
+        panel = document.getElementById("panel-lib-buildingObjects");
+        listDirectory(url + "Buildings/objects/", panel);
+
+        panel = document.getElementById("panel-lib-vehicleObjects");
+        listDirectory(url + "Vehicles/objects/", panel);
+
+        panel = document.getElementById("panel-lib-egyptObjects");
+        listDirectory(url + "Egypt/objects/", panel);
+    }
+    /*
     url = document.location.href + "/../../Entymology/BwContent/"
     listDirectory(url + "objects/", panel);
     
     url = document.location.href + "/../../Paleontology/BwContent/"
-    listDirectory(url + "objects/", panel);
+    listDirectory(url + "objects/", panel);*/
     
-    panel = document.getElementById("panel-lib-motions");
+    //panel = document.getElementById("panel-lib-motions");
     
-    url = document.location.href + "/../BwContent/";
+    //url = document.location.href + "/../BwContent/";
     
-    listDirectory(url + "motions/", panel);
-    listDirectory(url + "Vehicles/motions/", panel);
+    //listDirectory(url + "motions/", panel);
+    //listDirectory(url + "Vehicles/motions/", panel);
 }
 
 function listDirectory(url, panel)
@@ -59,7 +76,7 @@ function listDirectory(url, panel)
     var objects = dom.getElementsByTagName("a");
     var object = null;
     var onclick = null;
-    var href = ""
+    var href = "";
     
     var i = 0;
     
@@ -78,10 +95,15 @@ function listDirectory(url, panel)
         ndx = href.lastIndexOf('/');
         
         href = ndx == -1 ? href : href.substring(ndx+1);
-        
+
+        object.innerText = object.innerText.substring(0,object.innerText.indexOf('.'));
+
+        object.setAttribute("id",object.innerText);
         object.removeAttribute("href");
-        object.setAttribute("onclick", "load('" + url + href + "');");
-        
+        object.setAttribute("onclick", "load('" + url + href + "'),modalHide();");
+        //This takes care of the file having the lwo attached to it.
+        //console.debug(object.innerText);
+
         panel.appendChild(object);
         var br = document.createElement("br");
         panel.appendChild(br);
@@ -94,7 +116,10 @@ function load(u)
 {
     var url = u == null ? $('#url').val() : u;
     var ext = getFileExtension(url);
-    console.debug(ext);
+    var name = url;
+
+
+    console.debug(name);
     switch(ext) {
     case "lwo":
         loadModel(url);
@@ -113,8 +138,19 @@ var count = 1;
 function loadModel(url)
 {
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
-    name = count.toString() + ". " + name;
+    name = count.toString()+". "+name;
     count++;
+
+    setObject(name);
+
+    var objectPanel = document.getElementById("object-list");
+    a = document.createElement('a');
+    a.setAttribute("onclick", "locate('" + name + "');");; // Insted of calling setAttribute
+    a.setAttribute("id", name);
+    a.innerHTML = name + "<br>"; // <a>INNER_TEXT</a>
+    objectPanel.appendChild(a); // Append the link to the div
+    //var br = document.createElement("br");
+   // objectPanel.appendChild(br);
     
     var xml = loadXMLFile("bwcontent/model.xml");
     

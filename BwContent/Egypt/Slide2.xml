@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Update>
+	<Remove target = "Grid"/>
+	<AutoInterpolate target= "Camera">
+	      <position x="0" y="3000" z="-1000"/>
+	       <rotation x="90" y="0" z="0"/>
+	   </AutoInterpolate>
+
+</Update>

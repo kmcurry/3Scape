@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?bw onLoad="initialize"?>
-<?bwinclude url="../DefaultPreferences.xml"?>
+<?bwinclude url="DefaultPreferences.xml"?>
 <Scene>
     <Isolator name="Root">
         <Selector name="Cameras">
@@ -23,8 +23,19 @@
         </Group>
         <Group name="Models">
             <Model name="EGYPT" url="objects/EGYPT.lwo"/>
+            <Model name="GreatPyramid" url="objects/GreatPyramid.lwo"/>
+            <Model name="KhafrePyramid" url="objects/KhafrePyramid.lwo"/>
+            <Model name="MenkaurePyramid" url="objects/MenkaurePyramid.lwo"/>
         </Group>
     </Isolator>
     <RenderDirective name="RenderDirective"/>
+    <Animations>
+        <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
+        <KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
+        <KeyframeInterpolator name="EGYPTMotion" url="motions/EGYPT.mot" target="EGYPT"/>
+        <KeyframeInterpolator name="GreatPyramidMotion" url="motions/GreatPyramid.mot" target="GreatPyramid"/>
+        <KeyframeInterpolator name="KhafrePyramidMotion" url="motions/KhafrePyramid.mot" target="KhafrePyramid"/>
+        <KeyframeInterpolator name="MenkaurePyramidMotion" url="motions/MenkaurePyramid.mot" target="MenkaurePyramid"/>
+    </Animations>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 </Scene>
