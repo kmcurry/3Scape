@@ -14,7 +14,6 @@
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script src="js/nicEdit.js"></script>
 
-
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
@@ -27,6 +26,10 @@
       <style type="text/css"></style>
       <style id="holderjs-style" type="text/css"></style>
       <style type="text/css">
+          body{
+              padding:0;
+              overflow: hidden;
+          }
           body.modal-open {
               position: fixed;
               top: 0;
@@ -82,10 +85,9 @@
                 }
                 $( "#dialog" ).dialog("close");
             }
-            
+
           function createRecord()
           {
-
               
               adding = true;
               editorOpen = 1;
@@ -208,7 +210,6 @@
               }
               
           }
-
           function handleKey(e)
           {
             if(editorOpen == 0) {
@@ -247,7 +248,7 @@
           
       </script>
 
-            <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
+      <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
 
       <div class="modal fade" id="myModal">
           <div class="modal-dialog" style="width: 900px">
@@ -340,14 +341,12 @@
                               <li><a href="#">New Scene</a></li>
                               <li class="divider"></li>
                               <li><a href="#" data-toggle="modal" data-target="#myModal">Browse</a></li>
-                              <!--<li><a href="#">Select a File</a></li>
-                              <li><a href="#">One more separated link</a></li>-->
                           </ul>
                       </li>
                       <li><p class="navbar-text" id="Current_Object">Current Object: X</p></li>
                       <li>
                               <div class="dropdown">
-                              <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" > <!--data-toggle="dropdown" data-target="#" href="/page.html" onclick="createRecord();"-->
+                              <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
                                   Add Label
                               </button>
                           </div>
@@ -359,12 +358,14 @@
                             <span class="input-group-btn">
                               <button class="btn btn-default" type="button" onclick="Search();"><span class="glyphicon glyphicon-search" style="font-size:1.4em;"></span></button>
                             </span>
-                          </div><!-- /input-group -->
+                          </div>
                         </div>
+                      </li>
+                      <li>
+                          <button type="button" class="btn navbar-btn" id="Presentation" role="button" onclick="preHide()">Presentation</button>
                       </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                      <!--<li><p class="navbar-text" id="Current_Scene">Current Slide: X</p></li>-->
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
@@ -372,11 +373,10 @@
                               <li><a id="ex2" href="#">Note2</a></li>
                               <li><a id="ex3" href="#">Note3</a></li>
                               <li class="divider"></li>
-                              <!-- <li><a href="#" data-toggle="modal" data-target="#myModal">New Note</a></li> -->
                           </ul>
                       </li>
                   </ul>
-              </div><!--/.nav-collapse -->
+              </div>
           </div>
       </div>
       <div class="row">
@@ -429,8 +429,8 @@
                 </div>
             </div>
         </div>
-          <button id="collapse" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:20px 0 0 13px;"><span class="glyphicon glyphicon-chevron-right"></span></button>
-          <div class="col-sm-12" style="height:100%; width:100%" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+          <button id="collapse" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px;"><span class="glyphicon glyphicon-chevron-right"></span></button>
+          <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
                   <canvas id="Canvas">
                   </canvas>
           </div>
@@ -451,8 +451,36 @@
     </video>-->
 
       <script>
+          $(window).resize(function(){
+              if(!document.webkitIsFullScreen){
+                  preUnhide();
+              }
+          });
+
           function modalHide(){
                   $('#myModal').modal('hide');
+          }
+          function preHide(){
+              $('#container').hide();
+              $('#Navbar').hide();
+              $('#collapse').hide();
+              $('#dialog').hide();
+
+              var docElement
+              var request;
+
+              docElement = document.documentElement;
+              request = docElement.webkitRequestFullScreen //|| docElement.requestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
+
+              if(typeof request!="undefined" && request){
+                  request.call(docElement);
+              }
+          }
+          function preUnhide(){
+              $('#container').show();
+              $('#Navbar').show();
+              $('#collapse').show();
+              $('#dialog').show();
           }
       </script>
       
@@ -464,6 +492,7 @@
                 $(this).tab('show');
             });  
         });
+
         </script>
         <script type="text/javascript">
         document.onreadystatechange = function () {
@@ -478,17 +507,11 @@
                             $parent.addClass('active');
                         }
                     });
-                
-                //Put this into a function to hide windows to put to presentation mode
-                //$('#container').hide();
-                //$('#Navbar').hide();
-                //$('#collapse').hide();
 
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
 
                 listLibrary();
-                
                 
                 $('html').bind('keypress', function(e)
                 {
