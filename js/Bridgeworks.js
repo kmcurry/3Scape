@@ -24828,6 +24828,8 @@ LWSceneBuilder.prototype.allocateSceneElement = function(tokens)
         break;
         case "NumChannels":
         {
+            if (this.evaluators.length <= 0) break;
+            
             var numChannels = parseInt(tokens[1], 10);
             
             var eval = this.evaluators[this.evaluators.length-1];
@@ -24858,6 +24860,8 @@ LWSceneBuilder.prototype.allocateSceneElement = function(tokens)
         
         case "Key":
         {
+            if (this.evaluators.length <= 0) break;
+            
             var keyframes = this.evaluators[this.evaluators.length-1].getAttribute("channels").getAt(this.currChannel);
             
             var keyframe = new KeyframeAttr();
@@ -24932,6 +24936,8 @@ LWSceneBuilder.prototype.allocateSceneElement = function(tokens)
         
         case "Behaviors":
         {
+            if (this.evaluators.length <= 0) break;
+            
             var pre = parseInt(tokens[1], 10);
             var post = parseInt(tokens[2], 10);
             

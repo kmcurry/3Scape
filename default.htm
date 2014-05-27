@@ -14,7 +14,6 @@
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script src="js/nicEdit.js"></script>
 
-
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
@@ -27,6 +26,10 @@
       <style type="text/css"></style>
       <style id="holderjs-style" type="text/css"></style>
       <style type="text/css">
+          body{
+              padding:0;
+              overflow: hidden;
+          }
           body.modal-open {
               position: fixed;
               top: 0;
@@ -42,6 +45,9 @@
               -o-transition: width 0.35s ease;
               transition: width 0.35s ease;
           }
+          .popover {
+              z-index: 2000; /* Popovers don't get hidden behind elements. */
+          }
       </style>
       <link rel="stylesheet" type="text/css" href="style.css">
   </head> 
@@ -55,6 +61,7 @@
           var wall = "objects/wall.lwo";
           var currentObj = "Current Object: X";
           var editorOpen = 0;
+          var slideCount = 1;
 
           var g_labelCount = 0;
           var g_labelName = null;
@@ -82,10 +89,9 @@
                 }
                 $( "#dialog" ).dialog("close");
             }
-            
+
           function createRecord()
           {
-
               
               adding = true;
               editorOpen = 1;
@@ -144,12 +150,32 @@
               bridgeworks.updateScene(cmd);
               console.debug(cmd);
           }
-          //Sets the file in which to load after file browser file is chosen.
-          function setLoad(){
-              var file = $("#file").val();//$( "#title" ).val();
-              if(file !=""){
-                  load(file);
+
+          //Hacks in loadslides function. Right now you send it the number of slides you want loaded. And they have to be named SlideX in order for this to work
+          function loadSlides(num){
+              //slideCount = 1;
+              while(slideCount<=num) {
+                  var slidePanel = document.getElementById("slidePanel");
+                  var Li = document.createElement('li');
+                  var S = document.createElement('a');
+                  S.setAttribute("href", "javascript:bridgeworks.updateScene('Slide"+(slideCount+1)+".xml')");
+                  S.setAttribute("id", "Slide " + slideCount);
+                  S.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
+                  Li.appendChild(S);
+                  slidePanel.appendChild(Li);
+                  slideCount++;
               }
+
+              //This makes it so the slides can be changed from active to non active to represent what slide we are on
+              $('.nav li a').click(function(e) {
+                  console.log("THIS WORKS");
+                  $('.nav li').removeClass('active');
+
+                  var $parent = $(this).parent();
+                  if (!$parent.hasClass('active')) {
+                      $parent.addClass('active');
+                  }
+              });
           }
           function handleEvent(e)
           {
@@ -208,7 +234,6 @@
               }
               
           }
-
           function handleKey(e)
           {
             if(editorOpen == 0) {
@@ -232,6 +257,25 @@
                         }
                     }
                         break;
+                    case 39:
+                    {
+                        if (slideCount <= 5) {
+
+                            bridgeworks.updateScene('Slide' + (slideCount + 1) + '.xml');
+                            slideCount++;
+                            console.log("SLIDE NUMBER = "+slideCount);
+                        }
+                    }
+                        break;
+                    case 37:
+                    {
+                        if (slideCount > 2 && slideCount <= 6) {
+                            slideCount--;
+                            bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
+                            console.log("SLIDE NUMBER = "+slideCount);
+                        }
+                    }
+                        break;
                     case 'X'.charCodeAt(0):
                     {      // x
                         if (e.metaKey || e.ctrlKey) {
@@ -247,7 +291,7 @@
           
       </script>
 
-            <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
+      <img id="BackgroundImage" style="position: absolute;" src="bwcontent/images/white.png"/>
 
       <div class="modal fade" id="myModal">
           <div class="modal-dialog" style="width: 900px">
@@ -281,7 +325,7 @@
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <div class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation" id="Navbar">
           <div class="container-fluid">
               <div class="navbar-header">
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -338,16 +382,16 @@
                               <li><a onclick="load(tube);">Tube</a></li>
                               <li class="divider"></li>
                               <li><a href="#">New Scene</a></li>
+                              <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
+                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(5)">Ancient Egypt</a></li>
                               <li class="divider"></li>
                               <li><a href="#" data-toggle="modal" data-target="#myModal">Browse</a></li>
-                              <!--<li><a href="#">Select a File</a></li>
-                              <li><a href="#">One more separated link</a></li>-->
                           </ul>
                       </li>
                       <li><p class="navbar-text" id="Current_Object">Current Object: X</p></li>
                       <li>
                               <div class="dropdown">
-                              <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" > <!--data-toggle="dropdown" data-target="#" href="/page.html" onclick="createRecord();"-->
+                              <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
                                   Add Label
                               </button>
                           </div>
@@ -359,12 +403,18 @@
                             <span class="input-group-btn">
                               <button class="btn btn-default" type="button" onclick="Search();"><span class="glyphicon glyphicon-search" style="font-size:1.4em;"></span></button>
                             </span>
-                          </div><!-- /input-group -->
+                          </div>
                         </div>
                       </li>
+                      
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                      <!--<li><p class="navbar-text" id="Current_Scene">Current Slide: X</p></li>-->
+                      <li>
+                        <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
+                      </li>
+                      <li>
+                          <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()"><span class="glyphicon glyphicon-play"></span> Presentation</button>
+                      </li>
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
@@ -372,16 +422,16 @@
                               <li><a id="ex2" href="#">Note2</a></li>
                               <li><a id="ex3" href="#">Note3</a></li>
                               <li class="divider"></li>
-                              <!-- <li><a href="#" data-toggle="modal" data-target="#myModal">New Note</a></li> -->
                           </ul>
                       </li>
+
                   </ul>
-              </div><!--/.nav-collapse -->
+              </div>
           </div>
       </div>
       <div class="row">
         <div id="container" style="width:300px;">
-            <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;">
+            <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
                 <div style="padding: 20px; overflow:hidden; width:300px;">
                         <div>
                             <span class="glyphicon glyphicon-play" style="font-size:1.4em"></span>
@@ -395,14 +445,9 @@
                              </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="slides">
-                                    <ul class="nav nav-sidebar">
-                                    <li><a href="javascript:bridgeworks.contentDir+='/Egypt/';bridgeworks.updateScene('Egypt-Models.xml')">Slide 1</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide2.xml')">Slide 2</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide3.xml')">Slide 3</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide4.xml')">Slide 4</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide5.xml')">Slide 5</a></li>
-                                    <li><a href="javascript:bridgeworks.updateScene('Slide6.xml')">Slide 6</a></li>
-                                    </ul>
+                                        <ul class="nav nav-sidebar" id="slidePanel">
+                                            <!--This is where the slides get loaded into-->
+                                        </ul>
                                     </div>
                                     <div class="tab-pane" id="animate">
                                         Animations
@@ -429,8 +474,8 @@
                 </div>
             </div>
         </div>
-          <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:20px 0 0 13px;"><span class="glyphicon glyphicon-chevron-right"></span></button>
-          <div class="col-sm-12" style="height:100%; width:100%" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+          <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:1028"><span class="glyphicon glyphicon-chevron-right"></span></button>
+          <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
                   <canvas id="Canvas">
                   </canvas>
           </div>
@@ -451,8 +496,41 @@
     </video>-->
 
       <script>
+          $(window).resize(function(){
+              if(!document.webkitIsFullScreen){
+                  preUnhide();
+              }
+          });
+
           function modalHide(){
                   $('#myModal').modal('hide');
+          }
+          function preHide(){
+              $('#container').hide();
+              $('#Navbar').hide();
+              $('#expand').hide();
+              $('#dialog').hide();
+              slideCount = 1;
+
+              var docElement
+              var request;
+
+              docElement = document.documentElement;
+              request = docElement.webkitRequestFullScreen //|| docElement.requestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
+
+              if(typeof request!="undefined" && request){
+                  request.call(docElement);
+              }
+             // bridgeworks.updateScene('Slide2.xml')
+              bridgeworks.updateScene('Slide'+(slideCount+1)+'.xml');
+              slideCount++;
+
+          }
+          function preUnhide(){
+              $('#container').show();
+              $('#Navbar').show();
+              $('#expand').show();
+              $('#dialog').show();
           }
       </script>
       
@@ -464,26 +542,17 @@
                 $(this).tab('show');
             });  
         });
+
         </script>
         <script type="text/javascript">
         document.onreadystatechange = function () {
             if (document.readyState == "complete") {
                 //This is changing the background of the slides navbar to active and non active to give it the selected effect.
-                    $('.nav li a').click(function(e) {
-
-                        $('.nav li').removeClass('active');
-
-                        var $parent = $(this).parent();
-                        if (!$parent.hasClass('active')) {
-                            $parent.addClass('active');
-                        }
-                    });
 
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
 
                 listLibrary();
-                
                 
                 $('html').bind('keypress', function(e)
                 {
