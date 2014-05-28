@@ -434,9 +434,9 @@
             <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
                 <div style="padding: 20px; overflow:hidden; width:300px;">
                         <div>
-                            <span class="glyphicon glyphicon-play" style="font-size:1.4em"></span>
-                            <span class="glyphicon glyphicon-pause" style="font-size:1.4em"></span>
-                            <span class="glyphicon glyphicon-stop" style="font-size:1.4em"></span>
+                            <span class="glyphicon glyphicon-play" style="font-size:1.4em" onclick="bridgeworks.renderController.play();"></span>
+                            <span class="glyphicon glyphicon-pause" style="font-size:1.4em" onclick="bridgeworks.renderController.pause();"></span>
+                            <span class="glyphicon glyphicon-stop" style="font-size:1.4em" onclick="bridgeworks.renderController.stop();"></span>
                             <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
                             <ul class="nav nav-tabs" style="clear:both">
                                 <li class="active"><a href="#slides" data-toggle="tab">Slides</a></li>
@@ -522,7 +522,7 @@
                   request.call(docElement);
               }
              // bridgeworks.updateScene('Slide2.xml')
-              bridgeworks.updateScene('Slide'+(slideCount+1)+'.xml');
+             //bridgeworks.updateScene('Slide'+(slideCount+1)+'.xml');
               slideCount++;
 
           }
@@ -594,8 +594,7 @@
                       editorOpen = 0;
                   }
                 });
-                
-                
+
                 $(".btn-slide").click(function(){
                 		$("#ControlPanel").slideToggle("medium");
                 		$(this).toggleClass("active"); return false;
