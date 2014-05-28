@@ -51,7 +51,7 @@
           #present-tray {
             z-index: 2000;
           }
-          #present-tray span {
+          .dvd{
             cursor: pointer;
             font-size: 1.4em;
           }
@@ -441,9 +441,11 @@
             <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
                 <div style="padding: 20px; overflow:hidden; width:300px;">
                         <div>
-                            <span class="glyphicon glyphicon-play" style="font-size:1.4em" onclick="bridgeworks.renderController.play();"></span>
-                            <span class="glyphicon glyphicon-pause" style="font-size:1.4em" onclick="bridgeworks.renderController.pause();"></span>
-                            <span class="glyphicon glyphicon-stop" style="font-size:1.4em" onclick="bridgeworks.renderController.stop();"></span>
+                          <span class="glyphicon glyphicon-play dvd" title="Play" onclick="bridgeworks.renderController.play();"></span>
+                          <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
+                          <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();"></span>
+                          <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide"></span>
+                          <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide"></span> 
                             <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
                             <ul class="nav nav-tabs" style="clear:both">
                                 <li class="active"><a href="#slides" data-toggle="tab">Slides</a></li>
@@ -487,12 +489,12 @@
                   </canvas>
           </div>
           <div id="present-tray" style="display: none; position:fixed; bottom: 10px; left:100px; background-color:gray; height:50px; width:250px; border-radius: 10px; padding: 13px; color:white">
-            <span class="glyphicon glyphicon-play" title="Play" onclick="bridgeworks.renderController.play();"></span>
-            <span class="glyphicon glyphicon-pause" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
-            <span class="glyphicon glyphicon-stop" title="Stop" onclick="bridgeworks.renderController.stop();"></span>
-            <span class="glyphicon glyphicon-arrow-left" title="Previous Slide"></span>
-            <span class="glyphicon glyphicon-arrow-right" title="Next Slide"></span>  
-            <span class="dropdown dropup">
+            <span class="glyphicon glyphicon-play dvd" title="Play" onclick="bridgeworks.renderController.play();"></span>
+            <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
+            <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();"></span>
+            <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide"></span>
+            <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide"></span>  
+            <span class="dropdown dropup dvd">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-left: 10px; margin-bottom: 2px; text-decoration: none; color: white">Slide<b class="caret"></b></a>
               <ul class="dropdown-menu">
                   <li><a href="#">Slide 1</a></li>
@@ -500,7 +502,7 @@
                   <li><a href="#">Slide 3</a></li>
               </ul>
             </span>
-            <span class="glyphicon glyphicon-resize-small" title="Exit Fullscreen" style="float: right"></span>
+            <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right"></span>
           </div>
       </div>
 
