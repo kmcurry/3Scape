@@ -48,6 +48,13 @@
           .popover {
               z-index: 2000; /* Popovers don't get hidden behind elements. */
           }
+          #present-tray {
+            z-index: 2000;
+          }
+          #present-tray span {
+            cursor: pointer;
+            font-size: 1.4em;
+          }
       </style>
       <link rel="stylesheet" type="text/css" href="style.css">
   </head> 
@@ -479,6 +486,22 @@
                   <canvas id="Canvas">
                   </canvas>
           </div>
+          <div id="present-tray" style="display: none; position:fixed; bottom: 10px; left:100px; background-color:gray; height:50px; width:250px; border-radius: 10px; padding: 13px; color:white">
+            <span class="glyphicon glyphicon-play" title="Play" onclick="bridgeworks.renderController.play();"></span>
+            <span class="glyphicon glyphicon-pause" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
+            <span class="glyphicon glyphicon-stop" title="Stop" onclick="bridgeworks.renderController.stop();"></span>
+            <span class="glyphicon glyphicon-arrow-left" title="Previous Slide"></span>
+            <span class="glyphicon glyphicon-arrow-right" title="Next Slide"></span>  
+            <span class="dropdown dropup">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-left: 10px; margin-bottom: 2px; text-decoration: none; color: white">Slide<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                  <li><a href="#">Slide 1</a></li>
+                  <li><a href="#">Slide 2</a></li>
+                  <li><a href="#">Slide 3</a></li>
+              </ul>
+            </span>
+            <span class="glyphicon glyphicon-resize-small" title="Exit Fullscreen" style="float: right"></span>
+          </div>
       </div>
 
       <div id="dialog" title="Please enter your description for this item below">
@@ -510,6 +533,7 @@
               $('#Navbar').hide();
               $('#expand').hide();
               $('#dialog').hide();
+              $('#present-tray').show();
               slideCount = 1;
 
               var docElement
@@ -531,6 +555,7 @@
               $('#Navbar').show();
               $('#expand').show();
               $('#dialog').show();
+              $('#present-tray').hide();
           }
       </script>
       
