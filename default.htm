@@ -530,10 +530,13 @@
     </video>-->
 
       <script>
-          $(window).resize(function(){
-              if(!document.webkitIsFullScreen){
-                  preUnhide();
-              }
+          // Cross-browser fullscreen check breaks preHide();
+
+          $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange msfullscreenchange', function (){
+            var isFullScreen = document.mozFullScreen || document.webkitIsFullScreen || document.fullscreen || document.msFullscreenElement;
+            if(!isFullScreen){
+              preUnhide();
+            }
           });
 
           function modalHide(){
@@ -551,7 +554,7 @@
               var request;
 
               docElement = document.documentElement;
-              request = docElement.webkitRequestFullScreen //|| docElement.requestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
+              request = docElement.webkitRequestFullScreen || docElement.requestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
 
               if(typeof request!="undefined" && request){
                   request.call(docElement);
