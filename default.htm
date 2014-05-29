@@ -185,6 +185,13 @@
                   }
               });
           }
+/*
+          function playing(t) {
+              if(t == 1) {
+                  console.log();
+              }
+          }
+*/
           function handleEvent(e)
           {
               bridgeworks.handleEvent(e);
@@ -391,7 +398,7 @@
                               <li class="divider"></li>
                               <li><a href="#">New Scene</a></li>
                               <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
-                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(5)">Ancient Egypt</a></li>
+                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(5);">Ancient Egypt</a></li>
                               <li class="divider"></li>
                               <li><a href="#" data-toggle="modal" data-target="#myModal">Browse</a></li>
                           </ul>
@@ -503,7 +510,7 @@
                   <li><a href="#">Slide 3</a></li>
               </ul>
             </span>
-            <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right"></span>
+            <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right" onclick="document.webkitExitFullscreen();"></span>
           </div>
       </div>
 
