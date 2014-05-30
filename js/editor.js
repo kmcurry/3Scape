@@ -152,7 +152,7 @@ function loadModel(url)
     //var br = document.createElement("br");
    // objectPanel.appendChild(br);
     
-    var xml = loadXMLFile("bwcontent/model.xml");
+    var xml = loadXMLFile("BwContent/model.xml");
     
     var model = xml.getElementsByTagName("Model")[0];
     
@@ -195,7 +195,7 @@ function loadMotion(url)
 {
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
     
-    var xml = loadXMLFile("bwcontent/motion.xml");
+    var xml = loadXMLFile("BwContent/motion.xml");
     
     var kfi = xml.getElementsByTagName("KeyframeInterpolator")[0];
     

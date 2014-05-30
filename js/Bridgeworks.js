@@ -10381,7 +10381,7 @@ MediaPlayback.prototype.loadImage = function(url)
                 //this.htmlImageElement.onload = MediaTexture_OnVideoLoad;
 
                 //this.onVideoPlay();
-                this.htmlImageElement.src = "http://localhost/bwjs/bwcontent/images/Bear.ogg"; //url;
+                this.htmlImageElement.src = "http://localhost/bwjs/BwContent/images/Bear.ogg"; //url;
 
                 this.video = true;
                 this.onVideoLoad();
@@ -17036,7 +17036,7 @@ function CreateHTMLLabel(id, labelId, iconId)
                 {
                     newIconImg.setAttribute("class", "labelIcon");
                     newIconImg.style.visibility = "hidden";
-                    newIconImg.src = "bwcontent/images/1x1.png";
+                    newIconImg.src = "BwContent/images/1x1.png";
                     //newIconImg.onmousedown = function(){onMouseDown();};
                     newIconImg.onmouseup = function() { /*onMouseUp();*/ };
                     newIconImg.onmousemove = function() { /*onMouseMove();*/ };
@@ -17221,7 +17221,7 @@ function Label_IconStyleUrlModifiedCB(attribute, container)
         break;
 
     default:
-        container.htmlIconImg.src = document.location.href + "/../bwcontent/" + url;
+        container.htmlIconImg.src = document.location.href + "/../BwContent/" + url;
         break;
     }
 }
@@ -25630,7 +25630,7 @@ function Bridgeworks(canvas, bgImage, contentDir)
     this.renderContext =  newRenderContext("webgl", canvas, bgImage);
     if (!this.renderContext) return;
 
-    contentDir = contentDir == null? "bwcontent" : contentDir;
+    contentDir = contentDir == null? "BwContent" : contentDir;
 
     this.canvas = canvas;
     this.contentDir = contentDir;
