@@ -193,7 +193,8 @@
                   var slidePanel = document.getElementById("slidePanel");
                   var Li = document.createElement('li');
                   var S = document.createElement('a');
-                  S.setAttribute("href", "javascript:bridgeworks.updateScene('Slide"+(slideCount+1)+".xml')");
+                  S.setAttribute("style", "cursor: pointer;");
+                  S.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount+1)+".xml')");
                   S.setAttribute("id", "Slide " + slideCount);
                   S.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
                   Li.appendChild(S);
@@ -204,7 +205,8 @@
                   var popUp = document.getElementById("dropUpTray")
                   var Li2 = document.createElement('li');
                   var S2 = document.createElement('a');
-                  S2.setAttribute("href", "javascript:bridgeworks.updateScene('Slide"+(slideCount+1)+".xml')");
+                  S2.setAttribute("style", "cursor: pointer;");
+                  S2.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount+1)+".xml')");
                   S2.setAttribute("id", "TraySlide " + slideCount);
                   S2.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
                   Li2.appendChild(S2);
@@ -549,7 +551,7 @@
             <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
             <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>  
             <span class="dropdown dropup dvd">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-left: 10px; margin-bottom: 2px; text-decoration: none; color: white">Slide<b class="caret"></b></a>
+              <a class="dropdown-toggle" data-toggle="dropdown" style="margin-left: 10px; margin-bottom: 2px; text-decoration: none; color: white">Slide<b class="caret"></b></a>
               <ul class="dropdown-menu" id="dropUpTray">
                 <!-- Populated by slides on scene -->
               </ul>
