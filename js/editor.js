@@ -31,24 +31,23 @@ function cut()
 var loaded = 0;
 function listLibrary()
 {
-    var url = document.location.href + "/../BwContent/";
     if(loaded == 0)
     {
         //Seperating the libs out and changing which panel they are loaded into.
         var panel = document.getElementById("panel-lib-shapeObjects");
-        listDirectory(url + "objects/", panel);
+        listDirectory("./BwContent/objects/", panel);
 
         panel = document.getElementById("panel-lib-animalObjects");
-        listDirectory(url + "Animals/objects/", panel);
+        listDirectory("./BwContent/Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-buildingObjects");
-        listDirectory(url + "Buildings/objects/", panel);
+        listDirectory("./BwContent/Buildings/objects/", panel);
 
         panel = document.getElementById("panel-lib-vehicleObjects");
-        listDirectory(url + "Vehicles/objects/", panel);
+        listDirectory("./BwContent/Vehicles/objects/", panel);
 
         panel = document.getElementById("panel-lib-egyptObjects");
-        listDirectory(url + "Egypt/objects/", panel);
+        listDirectory("./BwContent/Egypt/objects/", panel);
     }
     /*
     url = document.location.href + "/../../Entymology/BwContent/"
