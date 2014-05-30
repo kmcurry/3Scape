@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Update>
-    <Remove target = "Grid"/>
-    <AutoInterpolate target= "Camera">
-        <position x="0" y="3000" z="-1000"/>
-        <rotation x="90" y="0" z="0"/>
-    </AutoInterpolate>
-
+    <Remove target="Grid"/>
+    <Set target="AmbientLight">
+        <ambient r="0.341765" g="0.311569" b="0.292353"/>
+    </Set>
+    <Set name="Light" range="3.40282e+038">
+        <position x="-186.701" y="66052" z="-14287.5"/>
+        <rotation x="88.2" y="0.5" z="0"/>
+        <ambient r="0.0488236" g="0.0445098" b="0.0417647"/>
+        <diffuse r="0.976471" g="0.890196" b="0.835294"/>
+        <specular r="0.976471" g="0.890196" b="0.835294"/>
+    </Set>
     <Group name="Models">
         <Model name="EGYPT" url="objects/EGYPT.lwo"/>
         <Model name="GreatPyramid" url="objects/GreatPyramid.lwo">
@@ -29,19 +34,20 @@
             <position x="-435.347" y="9" z="-1249.14"/>
             <rotation x="0" y="142.3" z="0"/>
         </Model>
-        <Animations>
-            <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
-            <KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
-            <KeyframeInterpolator name="EGYPTMotion" url="motions/EGYPT.mot" target="EGYPT"/>
-            <KeyframeInterpolator name="GreatPyramidMotion" url="motions/GreatPyramid.mot" target="GreatPyramid"/>
-            <KeyframeInterpolator name="KhafrePyramidMotion" url="motions/KhafrePyramid.mot" target="KhafrePyramid"/>
-            <KeyframeInterpolator name="MenkaurePyramidMotion" url="motions/MenkaurePyramid.mot" target="MenkaurePyramid"/>
-            <KeyframeInterpolator name="Site_SkyDomeMotion" url="motions/Site_SkyDome.mot" target="Site_SkyDome"/>
-            <KeyframeInterpolator name="Artifact_01Motion" url="motions/Artifact_01.mot" target="Artifact_01"/>
-            <KeyframeInterpolator name="Artifact_01Dissolve" url="envelopes/Artifact_01.env" target="Artifact_01" targetConnectionType="dissolve"/>
-            <KeyframeInterpolator name="Artifact_02Motion" url="motions/Artifact_02.mot" target="Artifact_02"/>
-            <KeyframeInterpolator name="Artifact_02Dissolve" url="envelopes/Artifact_02.env" target="Artifact_02" targetConnectionType="dissolve"/>
-            <KeyframeInterpolator name="Artifact_03Motion" url="motions/Artifact_03.mot" target="Artifact_03"/>
-            <KeyframeInterpolator name="Artifact_03Dissolve" url="envelopes/Artifact_03.env" target="Artifact_03" targetConnectionType="dissolve"/>
-        </Animations>
+    </Group>
+    <Animations>
+        <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
+        <KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
+        <KeyframeInterpolator name="EGYPTMotion" url="motions/EGYPT.mot" target="EGYPT"/>
+        <KeyframeInterpolator name="GreatPyramidMotion" url="motions/GreatPyramid.mot" target="GreatPyramid"/>
+        <KeyframeInterpolator name="KhafrePyramidMotion" url="motions/KhafrePyramid.mot" target="KhafrePyramid"/>
+        <KeyframeInterpolator name="MenkaurePyramidMotion" url="motions/MenkaurePyramid.mot" target="MenkaurePyramid"/>
+        <KeyframeInterpolator name="Site_SkyDomeMotion" url="motions/Site_SkyDome.mot" target="Site_SkyDome"/>
+        <KeyframeInterpolator name="Artifact_01Motion" url="motions/Artifact_01.mot" target="Artifact_01"/>
+        <KeyframeInterpolator name="Artifact_01Dissolve" url="envelopes/Artifact_01.env" target="Artifact_01" targetConnectionType="dissolve"/>
+        <KeyframeInterpolator name="Artifact_02Motion" url="motions/Artifact_02.mot" target="Artifact_02"/>
+        <KeyframeInterpolator name="Artifact_02Dissolve" url="envelopes/Artifact_02.env" target="Artifact_02" targetConnectionType="dissolve"/>
+        <KeyframeInterpolator name="Artifact_03Motion" url="motions/Artifact_03.mot" target="Artifact_03"/>
+        <KeyframeInterpolator name="Artifact_03Dissolve" url="envelopes/Artifact_03.env" target="Artifact_03" targetConnectionType="dissolve"/>
+    </Animations>
 </Update>
