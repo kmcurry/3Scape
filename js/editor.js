@@ -31,7 +31,8 @@ function cut()
 var loaded = 0;
 function listLibrary()
 {
-    var url = "https://github.com/kmcurry/3Scape/blob/gh-pages/BwContent/";
+    var href = document.location.href;
+    var url = href.substring(0, href.lastIndexOf('/')) + "/BwContent/";
     if(loaded == 0)
     {
         //Seperating the libs out and changing which panel they are loaded into.
