@@ -31,23 +31,24 @@ function cut()
 var loaded = 0;
 function listLibrary()
 {
+    var url = "https://github.com/kmcurry/3Scape/blob/gh-pages/BwContent/";
     if(loaded == 0)
     {
         //Seperating the libs out and changing which panel they are loaded into.
         var panel = document.getElementById("panel-lib-shapeObjects");
-        listDirectory("./BwContent/objects/", panel);
+        listDirectory(url + "objects/", panel);
 
         panel = document.getElementById("panel-lib-animalObjects");
-        listDirectory("./BwContent/Animals/objects/", panel);
+        listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-buildingObjects");
-        listDirectory("./BwContent/Buildings/objects/", panel);
+        listDirectory(url + "Buildings/objects/", panel);
 
         panel = document.getElementById("panel-lib-vehicleObjects");
-        listDirectory("./BwContent/Vehicles/objects/", panel);
+        listDirectory(url + "Vehicles/objects/", panel);
 
         panel = document.getElementById("panel-lib-egyptObjects");
-        listDirectory("./BwContent/Egypt/objects/", panel);
+        listDirectory(url + "Egypt/objects/", panel);
     }
     /*
     url = document.location.href + "/../../Entymology/BwContent/"
