@@ -54,13 +54,10 @@
     </Group>
     <Group name="Labels">
         <Label name="Pyramid1" parent="Great Pyramid" text="The Great Pyramid" show="false">
-            <labelStyle ref="myStyle"/>
         </Label>
         <Label name="Pyramid2" parent="Khafre Pyramid" text="The Khafre Pyramid" show="false">
-            <labelStyle ref="myStyle"/>
         </Label>
         <Label name="Pyramid2" parent="Menkaure Pyramid" text="The Menkaure Pyramid" show="false">
-            <labelStyle ref="myStyle"/>
         </Label>
     </Group>
     <Animations>

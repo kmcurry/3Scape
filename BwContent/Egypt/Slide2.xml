@@ -4,5 +4,6 @@
     <Set target="CameraMotion" time="5"></Set>
     <Play></Play>
     <Pause trigger="CameraMotion/time=15"/>
+    <!--Some Text Here when labels are working-->
 
 </Update>

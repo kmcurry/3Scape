@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<Update>
+    <Set target="CameraMotion" time="63"></Set>
+    <Play></Play>
+    <Pause trigger="CameraMotion/time=80"/>
+</Update>

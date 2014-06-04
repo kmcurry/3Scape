@@ -96,6 +96,7 @@
           var currentObj = "Current Object: X";
           var editorOpen = 0;
           var slideCount = 1;
+          var numSlides = 9;
 
           var g_labelCount = 0;
           var g_labelName = null;
@@ -294,7 +295,7 @@
 
           function nextSlide(){
               console.debug("Slide Count: "+slideCount);
-            if (slideCount <= 6) {
+            if (slideCount <= numSlides) {
 
                 bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
                 slideCount++;
@@ -304,7 +305,7 @@
 
           function previousSlide(){
               console.debug("Slide Count: "+slideCount);
-            if (slideCount > 1 && slideCount <= 6) {
+            if (slideCount > 1 && slideCount <= numSlides) {
                 slideCount--;
                 bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
                 console.log("SLIDE NUMBER = "+slideCount);
@@ -447,7 +448,7 @@
                               <li class="divider"></li>
                               <li><a href="#">New Scene</a></li>
                               <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
-                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(6);setTime();">Ancient Egypt</a></li>
+                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);setTime();">Ancient Egypt</a></li>
                               <li class="divider"></li>
                               <li><a href="#" data-toggle="modal" data-target="#myModal">Browse</a></li>
                           </ul>
@@ -643,6 +644,18 @@
         document.onreadystatechange = function () {
             if (document.readyState == "complete") {
                 //This is changing the background of the slides navbar to active and non active to give it the selected effect.
+
+                if (!window.WebGLRenderingContext) {
+                    // browser supports WebGL
+                    document.location.href = "http://get.webgl.org/";
+                } else {
+                    var canvas = document.getElementById("Canvas");
+                    var ctx = canvas.getContext("webgl");
+                    if (!ctx) {
+                        // browser supports WebGL but initialization failed.
+                        window.location = "NoWebGL.html";
+                    }
+                }
 
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <Update>
 
+    <!--Add Labels about the artifact-->
     <Set target="CameraMotion" time="15"></Set>
     <Play></Play>
     <Pause trigger="CameraMotion/time=22"/>
