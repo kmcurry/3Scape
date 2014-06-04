@@ -217,7 +217,6 @@
 
               //This makes it so the slides can be changed from active to non active to represent what slide we are on
               $('.nav li a').click(function(e) {
-                  console.log("THIS WORKS");
                   $('.nav li').removeClass('active');
 
                   var $parent = $(this).parent();
@@ -445,7 +444,7 @@
                               <li class="divider"></li>
                               <li><a href="#">New Scene</a></li>
                               <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
-                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(5);">Ancient Egypt</a></li>
+                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(5);setTime();">Ancient Egypt</a></li>
                               <li class="divider"></li>
                               <li><a href="#" data-toggle="modal" data-target="#myModal">Browse</a></li>
                           </ul>
@@ -647,7 +646,6 @@
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
 
-                //console.debug(bridgeworks.contentDir+='/Egypt');
 
                 listLibrary();
                 

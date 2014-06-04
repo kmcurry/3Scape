@@ -20515,8 +20515,6 @@ CommandMgr.prototype.createCommandTrigger = function(command, trigger)
     triggerString = trigger.getValueDirect().join("");
  	attrNdx = triggerString.lastIndexOf('/');
 
-     console.debug(triggerString);
-
  	if (attrNdx != -1)
  	{
  		var objectName = triggerString.substring(0, attrNdx);
@@ -20559,8 +20557,6 @@ CommandMgr.prototype.createCommandTrigger = function(command, trigger)
  				// value is the string between '=' && (',' || end of string)
  				valueString = triggerString.substring(valueNdx+1, valueNdx+(rangeNdx-valueNdx));
 
-                console.debug(objectName);
-                console.debug(valueString);
  			}
  			else //TEMPEST
  			{
@@ -20573,8 +20569,6 @@ CommandMgr.prototype.createCommandTrigger = function(command, trigger)
  			}
  			valueNdx = itemNdx == -1 ? (valueNdx == -1 ? triggerString.length() : valueNdx) : itemNdx;
  			attrName = triggerString.substring(attrNdx+1, valueNdx);
-
-            console.debug(attrName);
 
  			var input = resource.getAttribute(attrName);
 
@@ -20595,8 +20589,6 @@ CommandMgr.prototype.createCommandTrigger = function(command, trigger)
  			}
  			triggerString = objectName + "/" + attrName;
 
-            //newTrigger.execute();
-            //command.execute(trigger);
  			console.debug(trigger);
  			console.debug("\n");
  		}		
@@ -20659,12 +20651,8 @@ function AttributeTrigger(input, trigger, target, item, _not, _executionCount)
     this.input = input;
     this.trigger = trigger;
     this.target = target;
-//    console.debug(input);
-//    console.debug(trigger);
-//    console.debug(target);
 
     this.lastValues = [];
-    //this.lastValues[] = this.input.getValueDirect();
 
 	this.input.getValue(this.lastValues);
 	
@@ -20674,17 +20662,8 @@ function AttributeTrigger(input, trigger, target, item, _not, _executionCount)
 
 
     this.executionCount = _executionCount;
-    
-    //this.executionCount = new NumberAttr(this.executionCount);
-
-	//this.input.addRef();
 
 	this.input.addModifiedCB(AttributeTrigger_InputModifiedCB, this);
-
-	//this.target.setUndoable(false);
-
-	//this.input.getValue(this.lastValues);
-  //  this.lastValues = this.input.getValueDirect();
 
 	var len = this.input.getLength();
 
@@ -20706,7 +20685,6 @@ AttributeTrigger.prototype.execute = function()
 
         case eAttrType.StringAttr:
             {
-                //console.debug("THIS HITS STRINGATTR");
                 var vIn = [];
                 var vTrig = [];
             
@@ -20717,8 +20695,8 @@ AttributeTrigger.prototype.execute = function()
                 pass = this.not ? !pass : pass;
                 if (pass)
                 {
-					//err = this.target.execute();
-					this.executionCount.setValueDirect(--this.executionCount);
+                    var count = this.executionCount.getValueDirect() - 1;
+                    this.executionCount.setValueDirect(count);
                 }
 
                 if (this.executionCount == 0)
@@ -20730,7 +20708,6 @@ AttributeTrigger.prototype.execute = function()
 
         default:
             {
-                //console.debug("THIS HITS DEFAULT");
                 var vIn = [];
                 var vTrig = [];
 
@@ -20777,9 +20754,10 @@ AttributeTrigger.prototype.execute = function()
 			        }
 		        }
 
-		        if (this.executionCount == 0)
+		        if (this.executionCount.getValueDirect() == 0)
 		        {
 			        this.target = null;
+                    this.input.removeModifiedCB(AttributeTrigger_InputModifiedCB,this);
 		        }
 		        else
 		        {

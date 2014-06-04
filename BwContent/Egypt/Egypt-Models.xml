@@ -11,6 +11,7 @@
         <diffuse r="0.976471" g="0.890196" b="0.835294"/>
         <specular r="0.976471" g="0.890196" b="0.835294"/>
     </Set>
+    <Set target="RenderAgent" globalTimeInSecs="0"></Set>
     <Group name="Models">
         <Model name="EGYPT" url="objects/EGYPT.lwo"/>
         <Model name="GreatPyramid" url="objects/GreatPyramid.lwo">
@@ -50,4 +51,5 @@
         <KeyframeInterpolator name="Artifact_03Motion" url="motions/Artifact_03.mot" target="Artifact_03"/>
         <KeyframeInterpolator name="Artifact_03Dissolve" url="envelopes/Artifact_03.env" target="Artifact_03" targetConnectionType="dissolve"/>
     </Animations>
+    <Pause name="foo" trigger="CameraMotion/time=5"/>
 </Update>
