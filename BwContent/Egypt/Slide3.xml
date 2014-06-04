@@ -1,20 +1,8 @@
 <?xml version="1.0"?>
 <Update>
-		  <LabelStyle name="myStyle">
-	         <labelStyle>
-	            <fontStyle>
-	                 <size>16</size>
-	             </fontStyle>
-	        </labelStyle>
-	      </LabelStyle>
-        <!--Spacing -->
-    <Label name="Pyramids" parent="Great Pyramid" text="The Great Pyramid" show="true">
-         <labelStyle ref="myStyle"/>
-    </Label>
-    <Label name="Pyramids" parent="Khafre Pyramid" text="The Khafre Pyramid" show="true">
-         <labelStyle ref="myStyle"/>
-    </Label>
-    <Label name="Pyramids" parent="Menkaure Pyramid" text="The Menkaure Pyramid" show="true">
-         <labelStyle ref="myStyle"/>
-    </Label>
+
+    <Set target="CameraMotion" time="15"></Set>
+    <Play></Play>
+    <Pause trigger="CameraMotion/time=22"/>
+
 </Update>

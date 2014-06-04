@@ -194,7 +194,7 @@
                   var Li = document.createElement('li');
                   var S = document.createElement('a');
                   S.setAttribute("style", "cursor: pointer;");
-                  S.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount+1)+".xml')");
+                  S.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount)+".xml')");
                   S.setAttribute("id", "Slide " + slideCount);
                   S.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
                   Li.appendChild(S);
@@ -206,7 +206,7 @@
                   var Li2 = document.createElement('li');
                   var S2 = document.createElement('a');
                   S2.setAttribute("style", "cursor: pointer;");
-                  S2.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount+1)+".xml')");
+                  S2.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount)+".xml')");
                   S2.setAttribute("id", "TraySlide " + slideCount);
                   S2.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
                   Li2.appendChild(S2);
@@ -214,6 +214,7 @@
 
                   slideCount++;
               }
+                  slideCount = 1;
 
               //This makes it so the slides can be changed from active to non active to represent what slide we are on
               $('.nav li a').click(function(e) {
@@ -292,16 +293,18 @@
           }
 
           function nextSlide(){
-            if (slideCount <= 5) {
+              console.debug("Slide Count: "+slideCount);
+            if (slideCount <= 6) {
 
-                bridgeworks.updateScene('Slide' + (slideCount + 1) + '.xml');
+                bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
                 slideCount++;
                 console.log("SLIDE NUMBER = "+slideCount);
             }
           };
 
           function previousSlide(){
-            if (slideCount > 2 && slideCount <= 6) {
+              console.debug("Slide Count: "+slideCount);
+            if (slideCount > 1 && slideCount <= 6) {
                 slideCount--;
                 bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
                 console.log("SLIDE NUMBER = "+slideCount);
@@ -444,7 +447,7 @@
                               <li class="divider"></li>
                               <li><a href="#">New Scene</a></li>
                               <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
-                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(5);setTime();">Ancient Egypt</a></li>
+                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(6);setTime();">Ancient Egypt</a></li>
                               <li class="divider"></li>
                               <li><a href="#" data-toggle="modal" data-target="#myModal">Browse</a></li>
                           </ul>
@@ -603,7 +606,6 @@
               $('#expand').hide();
               $('#dialog').hide();
               $('#present-tray').show();
-              slideCount = 1; //Creates a bug allowing me to load Slides 2-5 from Egypt again
 
               var docElement
               var request;
@@ -616,7 +618,6 @@
               }
              // bridgeworks.updateScene('Slide2.xml')
              //bridgeworks.updateScene('Slide'+(slideCount+1)+'.xml');
-              slideCount++;
 
           }
           function preUnhide(){

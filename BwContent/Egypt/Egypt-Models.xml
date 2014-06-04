@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Update>
+    <LabelStyle name="myStyle">
+        <labelStyle>
+            <fontStyle>
+                <size>16</size>
+            </fontStyle>
+        </labelStyle>
+    </LabelStyle>
     <Remove target="Grid"/>
 	<Set target="Camera" zoom="3.2" nearDistance="5" farDistance="50000">
 		<position x="-203.119" y="14020.4" z="-839.134"/>
@@ -44,6 +51,17 @@
 		<Model name="GreatSphinx" url="objects/GreatSphinx.lwo">
 			<position x="502.1" y="0" z="-975.513"/>
 		</Model>
+    </Group>
+    <Group name="Labels">
+        <Label name="Pyramid1" parent="Great Pyramid" text="The Great Pyramid" show="false">
+            <labelStyle ref="myStyle"/>
+        </Label>
+        <Label name="Pyramid2" parent="Khafre Pyramid" text="The Khafre Pyramid" show="false">
+            <labelStyle ref="myStyle"/>
+        </Label>
+        <Label name="Pyramid2" parent="Menkaure Pyramid" text="The Menkaure Pyramid" show="false">
+            <labelStyle ref="myStyle"/>
+        </Label>
     </Group>
     <Animations>
         <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>

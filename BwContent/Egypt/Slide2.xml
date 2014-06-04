@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <Update>
-    <Remove target="foo"></Remove>
+
+    <Set target="CameraMotion" time="5"></Set>
     <Play></Play>
-    <Pause trigger="CameraMotion/time=10"/>
+    <Pause trigger="CameraMotion/time=15"/>
 
 </Update>
