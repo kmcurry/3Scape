@@ -59,6 +59,14 @@
         </Label>
         <Label name="Pyramid3" parent="MenkaurePyramid" text="The Menkaure Pyramid" show="false">
         </Label>
+        <Label name="P1_Description" parent="GreatPyramid" text="This is the Great Pyramid" show="false"></Label>
+        <Label name="A1_Description" parent="GreatPyramid" text="This is the first Artifact" show="false"></Label>
+        <Label name="P2_Description" parent="KhafrePyramid" text="This is the Second Pyramid" show="false"></Label>
+        <Label name="A2_Description" parent="KhafrePyramid" text="This is the Second Artifact" show="false"></Label>
+        <Label name="P3_Description" parent="MenkaurePyramid" text="This is the Third Pyramid" show="false"></Label>
+        <Label name="A3_Description" parent="MenkaurePyramid" text="This is the Third Artifact" show="false"></Label>
+        <Label name="S_Description" parent="GreatSphinx" text="This is the Sphinx" show="false"></Label>
+        <Label name="A4_Description" parent="GreatSphinx" text="This is the Fourth Artifact" show="false"></Label>
     </Group>
     <Animations>
         <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>

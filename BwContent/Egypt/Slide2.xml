@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <Update>
-
+    <Set target="Pyramid1" show="false"></Set>
+    <Set target="Pyramid2" show="false"></Set>
+    <Set target="Pyramid3" show="false"></Set>
     <Set target="CameraMotion" time="5"></Set>
     <Play></Play>
     <Pause trigger="CameraMotion/time=15"/>
-    <!--Some Text Here when labels are working-->
-
+    <Set trigger="CameraMotion/time=14" target="P1_Description" show="true"></Set>
 </Update>
