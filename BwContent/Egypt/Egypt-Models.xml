@@ -53,11 +53,11 @@
 		</Model>
     </Group>
     <Group name="Labels">
-        <Label name="Pyramid1" parent="Great Pyramid" text="The Great Pyramid" show="false">
+        <Label name="Pyramid1" parent="GreatPyramid" text="The Great Pyramid" show="false">
         </Label>
-        <Label name="Pyramid2" parent="Khafre Pyramid" text="The Khafre Pyramid" show="false">
+        <Label name="Pyramid2" parent="KhafrePyramid" text="The Khafre Pyramid" show="false">
         </Label>
-        <Label name="Pyramid2" parent="Menkaure Pyramid" text="The Menkaure Pyramid" show="false">
+        <Label name="Pyramid3" parent="MenkaurePyramid" text="The Menkaure Pyramid" show="false">
         </Label>
     </Group>
     <Animations>
