@@ -131,7 +131,7 @@ function formatPath(url)
                 // could be a relative path
                 var href = document.location.href;
                 
-                validPath = href.substring(0, href.lastIndexOf("/")) + "/bwcontent/" + url;
+                validPath = href.substring(0, href.lastIndexOf("/")) + "/" + bridgeworks.contentDir + "/" + url;
                 
                 console.debug("Trying: " + validPath);
                 
