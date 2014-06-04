@@ -5,7 +5,7 @@ NumChannels 9
 Channel 0
 { Envelope
   1
-  Key 0 0 0 0 0 0 0 0 0
+  Key 502.10049 0 0 0 0 0 0 0 0
   Behaviors 1 1
 }
 Channel 1
@@ -17,7 +17,7 @@ Channel 1
 Channel 2
 { Envelope
   1
-  Key 0 0 0 0 0 0 0 0 0
+  Key -975.51263 0 0 0 0 0 0 0 0
   Behaviors 1 1
 }
 Channel 3
