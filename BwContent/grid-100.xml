@@ -25,7 +25,11 @@
             <Model name="Grid" url="objects/Grid.lwo">
                 <scale x="100" y="100" z="100"/>
             </Model>
+         <!--   <Model name="Cube" url="objects/Cube.lwo">
+                <position x="15" y="0" z="0"/>
+            </Model> -->
         </Group>
+       <!-- <Label text="Working??" parent="Cube"></Label> -->
     </Isolator>
     <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>

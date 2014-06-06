@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Update>
+
+    <Set target="P3_Description" show="false"></Set>
+    <Set target="CameraMotion" time="56"></Set>
+    <Play></Play>
+    <Pause trigger="CameraMotion/time=63"/>
+    <Set trigger="CameraMotion/time=62" target="A3_Description" show="true"></Set>
+
+</Update>

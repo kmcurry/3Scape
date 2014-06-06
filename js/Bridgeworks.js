@@ -1,4 +1,4 @@
-function Base() 
+ï»¿function Base() 
 {
     this.userData = "";
     this.className = "";
@@ -131,7 +131,7 @@ function formatPath(url)
                 // could be a relative path
                 var href = document.location.href;
                 
-                validPath = href.substring(0, href.lastIndexOf("/")) + "/bwcontent/" + url;
+                validPath = href.substring(0, href.lastIndexOf("/")) + "/" + bridgeworks.contentDir + "/" + url;
                 
                 console.debug("Trying: " + validPath);
                 
@@ -4511,15 +4511,15 @@ function rayTriangleIntersection(rayOrig, rayDir, v0, v1, v2, skipPosDet, skipNe
  * destination point (x1, y1, z1), and represented by the parametric equations: 
  * x = x0 + t(x1 - x0), y = y0 + t(y1 - y0), z = z0 + t(z1 - z0),
  * determine if the ray intersects the sphere defined by center (a, b, c) and
- * radius r, and represented by the equation (x - a)² + (y - b)² + (z - c)² = r²;
+ * radius r, and represented by the equation (x - a)Â² + (y - b)Â² + (z - c)Â² = rÂ²;
  *
  * For convenience, define dx = x1 - x0, dy = y1 - y0, dz = z1 - z0;
  *
  * The intersection is found by substituting x, y, and z from the ray equations
  * into the sphere equation, and solving for t (after term collection):
  * 
- * (dx² + dy² + dz²)t² + 2[dx(x0 - a) + dy(y0 - b) + dz(z0 - c)]t
- *    + (x0 - a)² + (y0 - b)² + (z0 - c)² - r² = 0
+ * (dxÂ² + dyÂ² + dzÂ²)tÂ² + 2[dx(x0 - a) + dy(y0 - b) + dz(z0 - c)]t
+ *    + (x0 - a)Â² + (y0 - b)Â² + (z0 - c)Â² - rÂ² = 0
  *
  * Algorithm adapted from:
  *    Computer Graphics: Principles and Practice, 2nd Edition, Foley, et al., pp. 702-703
@@ -4668,6 +4668,7 @@ var eAttrType = {
     KeyframeAttr                :0,
     KeyframesAttr               :0,
     LabelStyleAttr              :0,
+    HTMLLabelStyleAttr          :0,
     NumberArrayAttr             :0,
     NumberAttr                  :0,
     Matrix4x4Attr               :0,
@@ -4722,6 +4723,7 @@ var eAttrType = {
     NullObject                  :0,
     
     Label                       :0,
+    HTMLLabel                   :0,
     
     PathTrace                   :0,
     
@@ -4745,6 +4747,28 @@ var eAttrType = {
     UserDefined                 :2000
 };
 
+var eAttrElemType = {
+    // unknown
+    eAttrElemType_Unknown               :0,	///
+
+    // standard C-types
+    eAttrElemType_Int                   :0,							///
+    eAttrElemType_UnsignedInt           :0,					///
+    eAttrElemType_Char                  :0,							///
+    eAttrElemType_UnsignedChar          :0,					///
+    eAttrElemType_Float                 :0,						///
+    eAttrElemType_Double                :0,						///
+
+    // attribute
+    eAttrElemType_Attribute             :0,					///
+
+    // user-defined
+    eAttrElemType_UserDefined           :0x000000FF,		///
+    
+    // force enumeration to 32-bits
+    eAttrElemType_FORCE_DWORD           :0x7FFFFFFF		///
+};
+
 function enumerateAttributeTypes()
 {
     var count = 0; 
@@ -4754,9 +4778,16 @@ function enumerateAttributeTypes()
             eAttrType[i] = count++;
     }
 }
-Attribute.prototype = new Base();
-Attribute.prototype.constructor = Attribute;
 
+function enumerateAttributeElementTypes()
+{
+    var count = 0;
+    for (var i in eAttrElemType)
+    {
+        if (eAttrElemType[i] == 0)
+            eAttrElemType[i] = count++;
+    }
+}
 var eAttrSetOp = {
     Replace         :0,  
     Add				:1,
@@ -4816,13 +4847,16 @@ function AttributeSetParams(elementIndex,
     this.updateTargets = updateTargets != undefined ? updateTargets : true;
     this.alertModifiedCBs = alertModifiedCBs != undefined ? alertModifiedCBs : true;
 }
-
+                            
+Attribute.prototype = new Base();
+Attribute.prototype.constructor = Attribute;
 
 function Attribute() 
 {
     Base.call(this);
     this.className = "Attribute";
     this.attrType = eAttrType.Attribute;
+    this.attrElemType = eAttrElemType.eAttrElemType_Attribute;
     
     this.values = [];
     this.modifiedCBs = [];
@@ -8393,13 +8427,11 @@ function webglRC(canvas, background)
     gl.cullFace(gl.BACK);
    
     // create shaders
-    var vShader = getVertexShader(gl);
-    if (!vShader) return;
-    var fShader = getFragmentShader(gl);
-    if (!fShader) return;
+    var shaders = getShaders(gl, eShaderType.VertexLighting);
+    if (!shaders.vertex || !shaders.fragment) return;
 
     // create program
-    var program = getProgram(gl, vShader, fShader);
+    var program = getProgram(gl, shaders.vertex, shaders.fragment);
     if (!program) return;
 
     // set valid flag
@@ -8892,307 +8924,6 @@ function getWebGLContext(canvas, debug)
     return gl;
 }
 
-function getVertexShader(gl)
-{
-    var shader = gl.createShader(gl.VERTEX_SHADER); 
-    if (!shader) return null;
-
-    var source = [
-        "attribute vec3 aVertexPosition;",
-        "attribute vec3 aVertexNormal;",
-        "attribute vec2 aTextureCoord0;",   // attributes cannot be arrays and must be specified
-        "attribute vec2 aTextureCoord1;",   // attributes cannot be arrays and must be specified      
-        "", 
-        "uniform mat4 uProjectionMatrix;",
-        "uniform mat4 uModelViewMatrix;",
-        "uniform mat4 uNormalMatrix;",
-        "",
-        "varying vec4 vVertexPosition;",
-        "varying vec4 vTransformedNormal;",
-        "varying vec4 vViewPosition;",
-        "varying vec4 vViewDirection;",
-        "varying vec2 vTextureCoord[" + gl_MaxTextureStages + "];",
-        "",
-        "void main()",
-        "{",
-        "   vVertexPosition = uModelViewMatrix * vec4(aVertexPosition, 1);",
-        "   vTransformedNormal = normalize(uNormalMatrix * vec4(aVertexNormal, 0));",
-        "   vViewPosition = uModelViewMatrix * vec4(0, 0, 0, 1);",
-        "   vViewDirection = normalize(-vViewPosition);",
-        "   vTextureCoord[0] = aTextureCoord0;",
-        "   vTextureCoord[1] = aTextureCoord1;",        
-        "   gl_Position = uProjectionMatrix * vVertexPosition;",
-        "}"
-        ].join("\n");
-        
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
-    {
-        alert(gl.getShaderInfoLog(shader));
-        return null;
-    }
-    
-    return shader;
-}
-
-function getFragmentShader(gl)
-{
-    var shader = gl.createShader(gl.FRAGMENT_SHADER); 
-    if (!shader) return null;
-
-    var source = [
-        "#ifdef GL_ES",
-        "precision highp float;",
-        "#endif",
-        "",
-        "vec4 gAmbient;",
-        "vec4 gDiffuse;",
-        "vec4 gSpecular;",
-        "",
-        "uniform vec4 uGlobalAmbientLight;",
-        "",
-//        IE 11 doesn't currently support structs
-//        "struct lightSourceParameters",
-//        "{",
-//        "   int enabled;",
-//        "   vec4 ambient;",
-//        "   vec4 diffuse;",
-//        "   vec4 specular;",
-//        "   vec4 position;",
-//        "   vec4 halfVector;",
-//        "   vec4 spotDirection;",
-//        "   float spotExponent;",
-//        "   float spotCutoff;",
-//        "   float spotCosCutoff;",
-//        "   float constantAttenuation;",
-//        "   float linearAttenuation;",
-//        "   float quadraticAttenuation;",
-//        "};",
-//        "",
-//        "uniform lightSourceParameters uLightSource[" + gl_MaxLights + "];",
-        "",
-        "uniform int uLightSource_enabled[" + gl_MaxLights + "];",
-        "uniform vec4 uLightSource_ambient["  + gl_MaxLights + "];",
-        "uniform vec4 uLightSource_diffuse["  + gl_MaxLights + "];",
-        "uniform vec4 uLightSource_specular["  + gl_MaxLights + "];",
-        "uniform vec4 uLightSource_position["  + gl_MaxLights + "];",
-        "uniform vec4 uLightSource_halfVector["  + gl_MaxLights + "];",
-        "uniform vec4 uLightSource_spotDirection["  + gl_MaxLights + "];",
-        "uniform float uLightSource_spotExponent["  + gl_MaxLights + "];",
-        "uniform float uLightSource_spotCutoff["  + gl_MaxLights + "];",
-        "uniform float uLightSource_spotCosCutoff["  + gl_MaxLights + "];",
-        "uniform float uLightSource_constantAttenuation["  + gl_MaxLights + "];",
-        "uniform float uLightSource_linearAttenuation["  + gl_MaxLights + "];",
-        "uniform float uLightSource_quadraticAttenuation["  + gl_MaxLights + "];",
-        "",
-//        IE 11 doesn't currently support structs
-//        "struct materialParameters",
-//        "{",
-//        "   vec4 ambient;",
-//        "   vec4 diffuse;",
-//        "   vec4 specular;",
-//        "   vec4 emission;",
-//        "   float shininess;",
-//        "};",
-//        "",
-//        "uniform materialParameters uFrontMaterial;",
-        "uniform vec4 uFrontMaterial_ambient;",
-        "uniform vec4 uFrontMaterial_diffuse;",
-        "uniform vec4 uFrontMaterial_specular;",
-        "uniform vec4 uFrontMaterial_emission;",
-        "uniform float uFrontMaterial_shininess;",
-        "",
-        "uniform int uLightingEnabled;",
-        "uniform int uTexturesEnabled;",
-        "uniform int uTextureStageEnabled[" + gl_MaxTextureStages + "];",       
-        "uniform sampler2D uTextureSamplerColor[" + gl_MaxTextureStages + "];",
-        "uniform sampler2D uTextureSamplerAlpha[" + gl_MaxTextureStages + "];",
-        "uniform int uTextureBlendOp;",
-        "",
-        "varying vec4 vVertexPosition;",
-        "varying vec4 vTransformedNormal;",
-        "varying vec4 vViewPosition;",
-        "varying vec4 vViewDirection;",
-        "varying vec2 vTextureCoord[" + gl_MaxTextureStages + "];",
-        "",
-        "void directionalLight(vec4 position, vec4 ambient, vec4 diffuse, vec4 specular, vec3 normal, vec3 halfVector)",
-        "{",
-        "   vec3 lightDir;",
-        "   float nDotL;",      // normal . light direction
-        "   float nDotHV;",     // normal . half-vector
-        "   float pf;",         // power factor
-        "",
-	"   lightDir = normalize(vec3(position));",
-        "",	
-	"   nDotL = max(dot(normal, lightDir), 0.0);",
-	"   if (nDotL == 0.0)",
-        "   {",
-        "       pf = 0.0;",
-        "   }",
-        "   else",
-        "   {",
-        "       nDotHV = max(0.0, dot(normal, halfVector));",
-        "       pf = pow(nDotHV, uFrontMaterial_shininess);",
-        "   }",
-        "",
-        "   gAmbient  += ambient * uFrontMaterial_ambient;",
-        "   gDiffuse  += diffuse * uFrontMaterial_diffuse * nDotL;",
-        "   gSpecular += specular * uFrontMaterial_specular * pf;",
-        "}",
-        "",
-        "void pointLight(vec4 position, float constantAttenuation, float linearAttenuation, float quadraticAttenuation,",
-        "                vec4 ambient, vec4 diffuse, vec4 specular, vec3 normal, vec3 eye, vec3 vPosition)",
-        "{",
-        "   float nDotL;",      // normal . light direction
-        "   float nDotHV;",     // normal . light half vector
-        "   float pf;",         // power factor
-        "   float attenuation;",// computed attenuation factor
-        "   float d;",          // distance from surface to light source
-        "   vec3  L;",          // direction from surface to light position
-        "   vec3  halfVector;", //
-        "",
-        "", // Compute vector from surface to light position
-        "   L = vec3(position) - vPosition;",
-        "",
-        "", // Compute distance between surface and light position
-        "   d = length(L);",
-        "",
-        "", // Normalize the vector from surface to light position,
-        "   L = normalize(L);",
-        "",
-        "", // Compute attenuation,
-        "   attenuation = 1.0 / (constantAttenuation +",
-        "      linearAttenuation * d +",
-        "      quadraticAttenuation * d * d);",
-        "",
-        "   nDotL = max(0.0, dot(normal, L));",
-        "   nDotHV = max(0.0, dot(normal, normalize(L + eye)));",
-        "",
-        "   if (nDotL == 0.0)",
-        "   {",
-        "       pf = 0.0;",
-        "   }",
-        "   else",
-        "   {",
-        "       pf = pow(nDotHV, uFrontMaterial_shininess);",
-        "   }",
-        "",    
-        "   gAmbient  += ambient * uFrontMaterial_ambient * attenuation;",
-        "   gDiffuse  += diffuse * uFrontMaterial_diffuse * nDotL * attenuation;",
-        "   gSpecular += specular * uFrontMaterial_specular * pf * attenuation;",
-        "}",
-        "",
-        "void main()",
-        "{",
-        "   vec4 lightingFactor;",
-        "   if (uLightingEnabled != 0)",
-        "   {",
-        "       gAmbient = vec4(0, 0, 0, 0);",
-        "       gDiffuse = vec4(0, 0, 0, 0);",
-        "       gSpecular = vec4(0, 0, 0, 0);",
-        "",
-        "       for (int i=0; i < " + gl_MaxLights + "; i++)",
-        "       {",
-        "           if (uLightSource_enabled[i] != 0)",
-        "           {",
-        "               if (uLightSource_position[i][3] == 0.0)", // directional light
-        "               {",
-        "                   directionalLight(uLightSource_position[i], uLightSource_ambient[i],",
-        "                       uLightSource_diffuse[i], uLightSource_specular[i],",
-        "                       normalize(vec3(vTransformedNormal)),",
-        "                       normalize(vec3(vViewDirection) + vec3(uLightSource_position[i])));",
-        "               }",
-        "               else if (uLightSource_spotCutoff[i] > 90.0)", // point light
-        "               {",
-        "                   pointLight(uLightSource_position[i], uLightSource_constantAttenuation[i],",
-        "                       uLightSource_linearAttenuation[i], uLightSource_quadraticAttenuation[i],",
-        "                       uLightSource_ambient[i], uLightSource_diffuse[i], uLightSource_specular[i],",
-        "                       normalize(vec3(vTransformedNormal)),",
-        "                       vec3(vViewDirection), vec3(vVertexPosition));",
-        "               }",
-        "               else", // spotlight
-        "               {",
-        "               }",   
-        "           }",
-        "       }",
-        "",
-        "       lightingFactor  = uGlobalAmbientLight * uFrontMaterial_ambient;", // global ambient contribution
-        "       lightingFactor += gAmbient + gDiffuse + gSpecular;", // light contribution(s)
-        "       lightingFactor.a  = uFrontMaterial_ambient.a / 3.0 + ",
-        "                           uFrontMaterial_diffuse.a / 3.0 + ",
-        "                           uFrontMaterial_specular.a / 3.0;",
-        "   }",
-        "   else", // uLightingEnabled == 0
-        "   {",
-        "",     // TODO: use vertex color
-        "       lightingFactor = vec4(1, 1, 1, 1);",
-        "   }",
-        "",
-        "   vec4 fragmentColor;",
-        "   vec4 fragmentColor1;",
-        "   vec4 fragmentColor2;",
-        "   if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 0)",
-        "   {",
-        "       fragmentColor = texture2D(uTextureSamplerColor[0], vec2(vTextureCoord[0].s, vTextureCoord[0].t));",
-        "       if (uTextureBlendOp == " + RC_MODULATE + ")",
-        "       {",
-        "           if (fragmentColor.a == 0.0) discard;",
-        "           else gl_FragColor = fragmentColor * lightingFactor;",
-        "           gl_FragColor = vec4(gl_FragColor.r, gl_FragColor.g, gl_FragColor.b, fragmentColor.a);",
-        "       }",
-        "       else if (uTextureBlendOp == " + RC_REPLACE + ")",
-        "       {",
-        "           gl_FragColor = fragmentColor;",
-        "       }",
-        "       else",
-        "       {",
-        "           fragmentColor = vec4(1, 1, 1, 1);",
-        "           gl_FragColor = fragmentColor * lightingFactor;",
-        "       }",
-        "   }",
-        "   else if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 1)",
-        "   {",
-        "       fragmentColor1 = texture2D(uTextureSamplerColor[0], vec2(vTextureCoord[0].s, vTextureCoord[0].t));",
-        "       fragmentColor2 = texture2D(uTextureSamplerColor[1], vec2(vTextureCoord[1].s, vTextureCoord[1].t));",
-        "       if (uTextureBlendOp == " + RC_MODULATE + ")",
-        "       {",
-        "           fragmentColor1.a = fragmentColor2.a;",
-        "           if (fragmentColor1.a == 0.0) discard;",
-        "           else gl_FragColor = fragmentColor1 * lightingFactor;",
-        "           gl_FragColor = vec4(gl_FragColor.r, gl_FragColor.g, gl_FragColor.b, fragmentColor1.a);",
-        "       }",
-        "       else if (uTextureBlendOp == " + RC_REPLACE + ")",
-        "       {",
-        "           gl_FragColor = fragmentColor1 * fragmentColor2;",
-        "       }",
-        "       else",
-        "       {",
-        "           fragmentColor = vec4(1, 1, 1, 1);",
-        "           gl_FragColor = fragmentColor * lightingFactor;",
-        "       }",
-        "   }",
-        "   else", // uTexturesEnabled == 0
-        "   {",
-        "       fragmentColor = vec4(1, 1, 1, 1);",
-        "       gl_FragColor = fragmentColor * lightingFactor;",
-        "   }",
-        "}"
-        ].join("\n");
-        
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
-    {
-        alert(gl.getShaderInfoLog(shader));
-        return null;
-    }
-    
-    return shader;
-}
-
 function getProgram(gl, vShader, fShader)
 {
     var program = gl.createProgram();
@@ -9638,6 +9369,560 @@ function nextHighestPowerOfTwo(x)
         x = x | x >> i;
     }
     return x + 1;
+}
+var eShaderType =
+{
+    VertexLighting: 0,
+    FragmentLighting: 1
+};
+
+function getShaders(gl, type)
+{
+    var source_vs = null;
+    var source_fs = null;
+    
+    switch (type)
+    {
+        case eShaderType.VertexLighting:
+            {
+                source_vs = [
+                    "#ifdef GL_ES",
+                    "precision highp float;",
+                    "#endif",
+                    "",
+                    "vec4 gAmbient;",
+                    "vec4 gDiffuse;",
+                    "vec4 gSpecular;",
+                    "",
+                    "attribute vec3 aVertexPosition;",
+                    "attribute vec3 aVertexNormal;",
+                    "attribute vec2 aTextureCoord0;",   // attributes cannot be arrays and must be specified
+                    "attribute vec2 aTextureCoord1;",   // attributes cannot be arrays and must be specified      
+                    "", 
+                    "uniform mat4 uProjectionMatrix;",
+                    "uniform mat4 uModelViewMatrix;",
+                    "uniform mat4 uNormalMatrix;",
+                    "",
+                    "uniform vec4 uGlobalAmbientLight;",
+                    "",
+                    "uniform int uLightSource_enabled[" + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_ambient["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_diffuse["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_specular["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_position["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_halfVector["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_spotDirection["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_spotExponent["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_spotCutoff["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_spotCosCutoff["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_constantAttenuation["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_linearAttenuation["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_quadraticAttenuation["  + gl_MaxLights + "];",
+                    "",
+                    "uniform vec4 uFrontMaterial_ambient;",
+                    "uniform vec4 uFrontMaterial_diffuse;",
+                    "uniform vec4 uFrontMaterial_specular;",
+                    "uniform vec4 uFrontMaterial_emission;",
+                    "uniform float uFrontMaterial_shininess;",
+                    "",
+                    "uniform int uLightingEnabled;",
+                    "",
+                    "varying vec4 vLightingFactor;",
+                    "varying vec2 vTextureCoord[" + gl_MaxTextureStages + "];",
+                    "",
+                    "void directionalLight(vec4 position, vec4 ambient, vec4 diffuse, vec4 specular, vec3 normal, vec3 halfVector)",
+                    "{",
+                    "   vec3 lightDir;",
+                    "   float nDotL;",      // normal . light direction
+                    "   float nDotHV;",     // normal . half-vector
+                    "   float pf;",         // power factor
+                    "",
+                    "   lightDir = normalize(vec3(position));",
+                    "",	
+                    "   nDotL = max(dot(normal, lightDir), 0.0);",
+                    "   if (nDotL == 0.0)",
+                    "   {",
+                    "       pf = 0.0;",
+                    "   }",
+                    "   else",
+                    "   {",
+                    "       nDotHV = max(0.0, dot(normal, halfVector));",
+                    "       pf = pow(nDotHV, uFrontMaterial_shininess);",
+                    "   }",
+                    "",
+                    "   gAmbient  += ambient * uFrontMaterial_ambient;",
+                    "   gDiffuse  += diffuse * uFrontMaterial_diffuse * nDotL;",
+                    "   gSpecular += specular * uFrontMaterial_specular * pf;",
+                    "}",
+                    "",
+                    "void pointLight(vec4 position, float constantAttenuation, float linearAttenuation, float quadraticAttenuation,",
+                    "                vec4 ambient, vec4 diffuse, vec4 specular, vec3 normal, vec3 eye, vec3 vPosition)",
+                    "{",
+                    "   float nDotL;",      // normal . light direction
+                    "   float nDotHV;",     // normal . light half vector
+                    "   float pf;",         // power factor
+                    "   float attenuation;",// computed attenuation factor
+                    "   float d;",          // distance from surface to light source
+                    "   vec3  L;",          // direction from surface to light position
+                    "   vec3  halfVector;", //
+                    "",
+                    "", // Compute vector from surface to light position
+                    "   L = vec3(position) - vPosition;",
+                    "",
+                    "", // Compute distance between surface and light position
+                    "   d = length(L);",
+                    "",
+                    "", // Normalize the vector from surface to light position,
+                    "   L = normalize(L);",
+                    "",
+                    "", // Compute attenuation,
+                    "   attenuation = 1.0 / (constantAttenuation +",
+                    "      linearAttenuation * d +",
+                    "      quadraticAttenuation * d * d);",
+                    "",
+                    "   nDotL = max(0.0, dot(normal, L));",
+                    "   nDotHV = max(0.0, dot(normal, normalize(L + eye)));",
+                    "",
+                    "   if (nDotL == 0.0)",
+                    "   {",
+                    "       pf = 0.0;",
+                    "   }",
+                    "   else",
+                    "   {",
+                    "       pf = pow(nDotHV, uFrontMaterial_shininess);",
+                    "   }",
+                    "",    
+                    "   gAmbient  += ambient * uFrontMaterial_ambient * attenuation;",
+                    "   gDiffuse  += diffuse * uFrontMaterial_diffuse * nDotL * attenuation;",
+                    "   gSpecular += specular * uFrontMaterial_specular * pf * attenuation;",
+                    "}",
+                    "",
+                    "void main()",
+                    "{",
+                    "   vec4 vertexPosition;",
+                    "   vec4 transformedNormal;",
+                    "   vec4 viewPosition;",
+                    "   vec4 viewDirection;",
+                    "",
+                    "   if (uLightingEnabled != 0)",
+                    "   {",
+                    "       vertexPosition = uModelViewMatrix * vec4(aVertexPosition, 1);",
+                    "       transformedNormal = normalize(uNormalMatrix * vec4(aVertexNormal, 0));",
+                    "       viewPosition = uModelViewMatrix * vec4(0, 0, 0, 1);",
+                    "       viewDirection = normalize(-viewPosition);",
+                    
+                    "       gAmbient = vec4(0, 0, 0, 0);",
+                    "       gDiffuse = vec4(0, 0, 0, 0);",
+                    "       gSpecular = vec4(0, 0, 0, 0);",
+                    "",
+                    "       for (int i=0; i < " + gl_MaxLights + "; i++)",
+                    "       {",
+                    "           if (uLightSource_enabled[i] != 0)",
+                    "           {",
+                    "               if (uLightSource_position[i][3] == 0.0)", // directional light
+                    "               {",
+                    "                   directionalLight(uLightSource_position[i], uLightSource_ambient[i],",
+                    "                       uLightSource_diffuse[i], uLightSource_specular[i],",
+                    "                       normalize(vec3(transformedNormal)),",
+                    "                       normalize(vec3(viewDirection) + vec3(uLightSource_position[i])));",
+                    "               }",
+                    "               else if (uLightSource_spotCutoff[i] > 90.0)", // point light
+                    "               {",
+                    "                   pointLight(uLightSource_position[i], uLightSource_constantAttenuation[i],",
+                    "                       uLightSource_linearAttenuation[i], uLightSource_quadraticAttenuation[i],",
+                    "                       uLightSource_ambient[i], uLightSource_diffuse[i], uLightSource_specular[i],",
+                    "                       normalize(vec3(transformedNormal)),",
+                    "                       vec3(viewDirection), vec3(vertexPosition));",
+                    "               }",
+                    "               else", // spotlight
+                    "               {",
+                    "               }",   
+                    "           }",
+                    "       }",
+                    "",
+                    "       vLightingFactor  = uGlobalAmbientLight * uFrontMaterial_ambient;", // global ambient contribution
+                    "       vLightingFactor += gAmbient + gDiffuse + gSpecular;", // light contribution(s)
+                    "       vLightingFactor.a = uFrontMaterial_ambient.a / 3.0 + ",
+                    "                           uFrontMaterial_diffuse.a / 3.0 + ",
+                    "                           uFrontMaterial_specular.a / 3.0;",
+                    "   }",
+                    "   else", // uLightingEnabled == 0
+                    "   {",
+                    "",     // TODO: use vertex color
+                    "       vLightingFactor = vec4(1, 1, 1, 1);",
+                    "   }",
+                    "",
+                    "   vTextureCoord[0] = aTextureCoord0;",
+                    "   vTextureCoord[1] = aTextureCoord1;",        
+                    "   gl_Position = uProjectionMatrix * vertexPosition;",
+                    "}"
+                    ].join("\n");
+                    
+                source_fs = [
+                    "#ifdef GL_ES",
+                    "precision highp float;",
+                    "#endif",
+                    "",
+                    "uniform int uTexturesEnabled;",
+                    "uniform int uTextureStageEnabled[" + gl_MaxTextureStages + "];",       
+                    "uniform sampler2D uTextureSamplerColor[" + gl_MaxTextureStages + "];",
+                    "uniform sampler2D uTextureSamplerAlpha[" + gl_MaxTextureStages + "];",
+                    "uniform int uTextureBlendOp;",
+                    "",
+                    "varying vec4 vLightingFactor;",
+                    "varying vec2 vTextureCoord[" + gl_MaxTextureStages + "];",
+                    "",
+                    "void main()",
+                    "{",
+                    "   vec4 fragmentColor;",
+                    "   vec4 fragmentColor1;",
+                    "   vec4 fragmentColor2;",
+                    "   if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 0)",
+                    "   {",
+                    "       fragmentColor = texture2D(uTextureSamplerColor[0], vec2(vTextureCoord[0].s, vTextureCoord[0].t));",
+                    "       if (uTextureBlendOp == " + RC_MODULATE + ")",
+                    "       {",
+                    "           if (fragmentColor.a == 0.0) discard;",
+                    "           else gl_FragColor = fragmentColor * vLightingFactor;",
+                    "       }",
+                    "       else if (uTextureBlendOp == " + RC_REPLACE + ")",
+                    "       {",
+                    "           gl_FragColor = fragmentColor;",
+                    "       }",
+                    "       else",
+                    "       {",
+                    "           fragmentColor = vec4(1, 1, 1, 1);",
+                    "           gl_FragColor = fragmentColor * vLightingFactor;",
+                    "       }",
+                    "   }",
+                    "   else if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 1)",
+                    "   {",
+                    "       fragmentColor1 = texture2D(uTextureSamplerColor[0], vec2(vTextureCoord[0].s, vTextureCoord[0].t));",
+                    "       fragmentColor2 = texture2D(uTextureSamplerColor[1], vec2(vTextureCoord[1].s, vTextureCoord[1].t));",
+                    "       if (uTextureBlendOp == " + RC_MODULATE + ")",
+                    "       {",
+                    "           fragmentColor1.a = fragmentColor2.a;",
+                    "           if (fragmentColor1.a == 0.0) discard;",
+                    "           else gl_FragColor = fragmentColor1 * vLightingFactor;",
+                    "       }",
+                    "       else if (uTextureBlendOp == " + RC_REPLACE + ")",
+                    "       {",
+                    "           gl_FragColor = fragmentColor1 * fragmentColor2;",
+                    "       }",
+                    "       else",
+                    "       {",
+                    "           fragmentColor = vec4(1, 1, 1, 1);",
+                    "           gl_FragColor = fragmentColor * vLightingFactor;",
+                    "       }",
+                    "   }",
+                    "   else", // uTexturesEnabled == 0
+                    "   {",
+                    "       fragmentColor = vec4(1, 1, 1, 1);",
+                    "       gl_FragColor = fragmentColor * vLightingFactor;",
+                    "   }",
+                    "}"
+                    ].join("\n");
+            }
+            break;
+            
+        case eShaderType.FragmentLighting:
+            {
+                source_vs = [
+                    "attribute vec3 aVertexPosition;",
+                    "attribute vec3 aVertexNormal;",
+                    "attribute vec2 aTextureCoord0;",   // attributes cannot be arrays and must be specified
+                    "attribute vec2 aTextureCoord1;",   // attributes cannot be arrays and must be specified      
+                    "", 
+                    "uniform mat4 uProjectionMatrix;",
+                    "uniform mat4 uModelViewMatrix;",
+                    "uniform mat4 uNormalMatrix;",
+                    "",
+                    "varying vec4 vVertexPosition;",
+                    "varying vec4 vTransformedNormal;",
+                    "varying vec4 vViewPosition;",
+                    "varying vec4 vViewDirection;",
+                    "varying vec2 vTextureCoord[" + gl_MaxTextureStages + "];",
+                    "",
+                    "void main()",
+                    "{",
+                    "   vVertexPosition = uModelViewMatrix * vec4(aVertexPosition, 1);",
+                    "   vTransformedNormal = normalize(uNormalMatrix * vec4(aVertexNormal, 0));",
+                    "   vViewPosition = uModelViewMatrix * vec4(0, 0, 0, 1);",
+                    "   vViewDirection = normalize(-vViewPosition);",
+                    "   vTextureCoord[0] = aTextureCoord0;",
+                    "   vTextureCoord[1] = aTextureCoord1;",        
+                    "   gl_Position = uProjectionMatrix * vVertexPosition;",
+                    "}"
+                    ].join("\n");
+                
+                source_fs = [
+                    "#ifdef GL_ES",
+                    "precision highp float;",
+                    "#endif",
+                    "",
+                    "vec4 gAmbient;",
+                    "vec4 gDiffuse;",
+                    "vec4 gSpecular;",
+                    "",
+                    "uniform vec4 uGlobalAmbientLight;",
+                    "",
+            //        IE 11 doesn't currently support structs
+            //        "struct lightSourceParameters",
+            //        "{",
+            //        "   int enabled;",
+            //        "   vec4 ambient;",
+            //        "   vec4 diffuse;",
+            //        "   vec4 specular;",
+            //        "   vec4 position;",
+            //        "   vec4 halfVector;",
+            //        "   vec4 spotDirection;",
+            //        "   float spotExponent;",
+            //        "   float spotCutoff;",
+            //        "   float spotCosCutoff;",
+            //        "   float constantAttenuation;",
+            //        "   float linearAttenuation;",
+            //        "   float quadraticAttenuation;",
+            //        "};",
+            //        "",
+            //        "uniform lightSourceParameters uLightSource[" + gl_MaxLights + "];",
+                    "",
+                    "uniform int uLightSource_enabled[" + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_ambient["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_diffuse["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_specular["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_position["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_halfVector["  + gl_MaxLights + "];",
+                    "uniform vec4 uLightSource_spotDirection["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_spotExponent["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_spotCutoff["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_spotCosCutoff["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_constantAttenuation["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_linearAttenuation["  + gl_MaxLights + "];",
+                    "uniform float uLightSource_quadraticAttenuation["  + gl_MaxLights + "];",
+                    "",
+            //        IE 11 doesn't currently support structs
+            //        "struct materialParameters",
+            //        "{",
+            //        "   vec4 ambient;",
+            //        "   vec4 diffuse;",
+            //        "   vec4 specular;",
+            //        "   vec4 emission;",
+            //        "   float shininess;",
+            //        "};",
+            //        "",
+            //        "uniform materialParameters uFrontMaterial;",
+                    "uniform vec4 uFrontMaterial_ambient;",
+                    "uniform vec4 uFrontMaterial_diffuse;",
+                    "uniform vec4 uFrontMaterial_specular;",
+                    "uniform vec4 uFrontMaterial_emission;",
+                    "uniform float uFrontMaterial_shininess;",
+                    "",
+                    "uniform int uLightingEnabled;",
+                    "uniform int uTexturesEnabled;",
+                    "uniform int uTextureStageEnabled[" + gl_MaxTextureStages + "];",       
+                    "uniform sampler2D uTextureSamplerColor[" + gl_MaxTextureStages + "];",
+                    "uniform sampler2D uTextureSamplerAlpha[" + gl_MaxTextureStages + "];",
+                    "uniform int uTextureBlendOp;",
+                    "",
+                    "varying vec4 vVertexPosition;",
+                    "varying vec4 vTransformedNormal;",
+                    "varying vec4 vViewPosition;",
+                    "varying vec4 vViewDirection;",
+                    "varying vec2 vTextureCoord[" + gl_MaxTextureStages + "];",
+                    "",
+                    "void directionalLight(vec4 position, vec4 ambient, vec4 diffuse, vec4 specular, vec3 normal, vec3 halfVector)",
+                    "{",
+                    "   vec3 lightDir;",
+                    "   float nDotL;",      // normal . light direction
+                    "   float nDotHV;",     // normal . half-vector
+                    "   float pf;",         // power factor
+                    "",
+                    "   lightDir = normalize(vec3(position));",
+                    "",	
+                    "   nDotL = max(dot(normal, lightDir), 0.0);",
+                    "   if (nDotL == 0.0)",
+                    "   {",
+                    "       pf = 0.0;",
+                    "   }",
+                    "   else",
+                    "   {",
+                    "       nDotHV = max(0.0, dot(normal, halfVector));",
+                    "       pf = pow(nDotHV, uFrontMaterial_shininess);",
+                    "   }",
+                    "",
+                    "   gAmbient  += ambient * uFrontMaterial_ambient;",
+                    "   gDiffuse  += diffuse * uFrontMaterial_diffuse * nDotL;",
+                    "   gSpecular += specular * uFrontMaterial_specular * pf;",
+                    "}",
+                    "",
+                    "void pointLight(vec4 position, float constantAttenuation, float linearAttenuation, float quadraticAttenuation,",
+                    "                vec4 ambient, vec4 diffuse, vec4 specular, vec3 normal, vec3 eye, vec3 vPosition)",
+                    "{",
+                    "   float nDotL;",      // normal . light direction
+                    "   float nDotHV;",     // normal . light half vector
+                    "   float pf;",         // power factor
+                    "   float attenuation;",// computed attenuation factor
+                    "   float d;",          // distance from surface to light source
+                    "   vec3  L;",          // direction from surface to light position
+                    "   vec3  halfVector;", //
+                    "",
+                    "", // Compute vector from surface to light position
+                    "   L = vec3(position) - vPosition;",
+                    "",
+                    "", // Compute distance between surface and light position
+                    "   d = length(L);",
+                    "",
+                    "", // Normalize the vector from surface to light position,
+                    "   L = normalize(L);",
+                    "",
+                    "", // Compute attenuation,
+                    "   attenuation = 1.0 / (constantAttenuation +",
+                    "      linearAttenuation * d +",
+                    "      quadraticAttenuation * d * d);",
+                    "",
+                    "   nDotL = max(0.0, dot(normal, L));",
+                    "   nDotHV = max(0.0, dot(normal, normalize(L + eye)));",
+                    "",
+                    "   if (nDotL == 0.0)",
+                    "   {",
+                    "       pf = 0.0;",
+                    "   }",
+                    "   else",
+                    "   {",
+                    "       pf = pow(nDotHV, uFrontMaterial_shininess);",
+                    "   }",
+                    "",    
+                    "   gAmbient  += ambient * uFrontMaterial_ambient * attenuation;",
+                    "   gDiffuse  += diffuse * uFrontMaterial_diffuse * nDotL * attenuation;",
+                    "   gSpecular += specular * uFrontMaterial_specular * pf * attenuation;",
+                    "}",
+                    "",
+                    "void main()",
+                    "{",
+                    "   vec4 lightingFactor;",
+                    "   if (uLightingEnabled != 0)",
+                    "   {",
+                    "       gAmbient = vec4(0, 0, 0, 0);",
+                    "       gDiffuse = vec4(0, 0, 0, 0);",
+                    "       gSpecular = vec4(0, 0, 0, 0);",
+                    "",
+                    "       for (int i=0; i < " + gl_MaxLights + "; i++)",
+                    "       {",
+                    "           if (uLightSource_enabled[i] != 0)",
+                    "           {",
+                    "               if (uLightSource_position[i][3] == 0.0)", // directional light
+                    "               {",
+                    "                   directionalLight(uLightSource_position[i], uLightSource_ambient[i],",
+                    "                       uLightSource_diffuse[i], uLightSource_specular[i],",
+                    "                       normalize(vec3(vTransformedNormal)),",
+                    "                       normalize(vec3(vViewDirection) + vec3(uLightSource_position[i])));",
+                    "               }",
+                    "               else if (uLightSource_spotCutoff[i] > 90.0)", // point light
+                    "               {",
+                    "                   pointLight(uLightSource_position[i], uLightSource_constantAttenuation[i],",
+                    "                       uLightSource_linearAttenuation[i], uLightSource_quadraticAttenuation[i],",
+                    "                       uLightSource_ambient[i], uLightSource_diffuse[i], uLightSource_specular[i],",
+                    "                       normalize(vec3(vTransformedNormal)),",
+                    "                       vec3(vViewDirection), vec3(vVertexPosition));",
+                    "               }",
+                    "               else", // spotlight
+                    "               {",
+                    "               }",   
+                    "           }",
+                    "       }",
+                    "",
+                    "       lightingFactor  = uGlobalAmbientLight * uFrontMaterial_ambient;", // global ambient contribution
+                    "       lightingFactor += gAmbient + gDiffuse + gSpecular;", // light contribution(s)
+                    "       lightingFactor.a  = uFrontMaterial_ambient.a / 3.0 + ",
+                    "                           uFrontMaterial_diffuse.a / 3.0 + ",
+                    "                           uFrontMaterial_specular.a / 3.0;",
+                    "   }",
+                    "   else", // uLightingEnabled == 0
+                    "   {",
+                    "",     // TODO: use vertex color
+                    "       lightingFactor = vec4(1, 1, 1, 1);",
+                    "   }",
+                    "",
+                    "   vec4 fragmentColor;",
+                    "   vec4 fragmentColor1;",
+                    "   vec4 fragmentColor2;",
+                    "   if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 0)",
+                    "   {",
+                    "       fragmentColor = texture2D(uTextureSamplerColor[0], vec2(vTextureCoord[0].s, vTextureCoord[0].t));",
+                    "       if (uTextureBlendOp == " + RC_MODULATE + ")",
+                    "       {",
+                    "           if (fragmentColor.a == 0.0) discard;",
+                    "           else gl_FragColor = fragmentColor * lightingFactor;",
+                    "       }",
+                    "       else if (uTextureBlendOp == " + RC_REPLACE + ")",
+                    "       {",
+                    "           gl_FragColor = fragmentColor;",
+                    "       }",
+                    "       else",
+                    "       {",
+                    "           fragmentColor = vec4(1, 1, 1, 1);",
+                    "           gl_FragColor = fragmentColor * lightingFactor;",
+                    "       }",
+                    "   }",
+                    "   else if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 1)",
+                    "   {",
+                    "       fragmentColor1 = texture2D(uTextureSamplerColor[0], vec2(vTextureCoord[0].s, vTextureCoord[0].t));",
+                    "       fragmentColor2 = texture2D(uTextureSamplerColor[1], vec2(vTextureCoord[1].s, vTextureCoord[1].t));",
+                    "       if (uTextureBlendOp == " + RC_MODULATE + ")",
+                    "       {",
+                    "           fragmentColor1.a = fragmentColor2.a;",
+                    "           if (fragmentColor1.a == 0.0) discard;",
+                    "           else gl_FragColor = fragmentColor1 * lightingFactor;",
+                    "       }",
+                    "       else if (uTextureBlendOp == " + RC_REPLACE + ")",
+                    "       {",
+                    "           gl_FragColor = fragmentColor1 * fragmentColor2;",
+                    "       }",
+                    "       else",
+                    "       {",
+                    "           fragmentColor = vec4(1, 1, 1, 1);",
+                    "           gl_FragColor = fragmentColor * lightingFactor;",
+                    "       }",
+                    "   }",
+                    "   else", // uTexturesEnabled == 0
+                    "   {",
+                    "       fragmentColor = vec4(1, 1, 1, 1);",
+                    "       gl_FragColor = fragmentColor * lightingFactor;",
+                    "   }",
+                    "}"
+                    ].join("\n");
+            }
+            break;
+        
+        default:
+            return { vertex: null, fragment: null };
+            break;
+    }
+    
+    var vs = gl.createShader(gl.VERTEX_SHADER); 
+    if (vs)
+    {
+        gl.shaderSource(vs, source_vs);
+        gl.compileShader(vs);
+
+        if (!gl.getShaderParameter(vs, gl.COMPILE_STATUS))
+        {
+            alert(gl.getShaderInfoLog(vs));
+        }
+    }
+    
+    var fs = gl.createShader(gl.FRAGMENT_SHADER); 
+    if (fs) 
+    {
+        gl.shaderSource(fs, source_fs);
+        gl.compileShader(fs);
+        if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS))
+        {
+            alert(gl.getShaderInfoLog(fs));
+        }
+    }
+                    
+    return { vertex: vs, fragment: fs };
 }
 ContentHandler.prototype = new AttributeContainer();
 ContentHandler.prototype.constructor = ContentHandler;
@@ -10381,7 +10666,7 @@ MediaPlayback.prototype.loadImage = function(url)
                 //this.htmlImageElement.onload = MediaTexture_OnVideoLoad;
 
                 //this.onVideoPlay();
-                this.htmlImageElement.src = "http://localhost/bwjs/bwcontent/images/Bear.ogg"; //url;
+                this.htmlImageElement.src = "http://localhost/bwjs/BwContent/images/Bear.ogg"; //url;
 
                 this.video = true;
                 this.onVideoLoad();
@@ -11030,7 +11315,7 @@ function Node()
     this.name = new StringAttr("");
     this.enabled = new BooleanAttr(true);
     this.orphan = new BooleanAttr(false);
-
+    
     this.registerAttribute(this.name, "name");
     this.registerAttribute(this.enabled, "enabled");
     this.registerAttribute(this.orphan, "orphan");
@@ -15404,10 +15689,9 @@ Evaluator.prototype.constructor = Evaluator;
 function Evaluator()
 {
     Node.call(this);
-
     this.className = "Evaluator";
     this.attrType = eAttrType.Evaluator;
-
+    
     this.expired = new BooleanAttr(false);
     
     this.registerAttribute(this.expired, "expired");
@@ -16984,7 +17268,7 @@ Label.prototype.labelStyleFontBorderModified = function()
                           + color.a + ")" + " 0px 0px " + width * 2 + "px";
     }
  
-    this.htmlLabel.style.setProperty("text-shadow", shadow, "normal");
+    this.htmlLabel.style.textShadow = shadow;
 }
 
 function CreateHTMLLabel(id, labelId, iconId)
@@ -17036,7 +17320,7 @@ function CreateHTMLLabel(id, labelId, iconId)
                 {
                     newIconImg.setAttribute("class", "labelIcon");
                     newIconImg.style.visibility = "hidden";
-                    newIconImg.src = "bwcontent/images/1x1.png";
+                    newIconImg.src = "BwContent/images/1x1.png";
                     //newIconImg.onmousedown = function(){onMouseDown();};
                     newIconImg.onmouseup = function() { /*onMouseUp();*/ };
                     newIconImg.onmousemove = function() { /*onMouseMove();*/ };
@@ -17127,12 +17411,10 @@ function Label_LabelStyleBackgroundColorModifiedCB(attribute, container)
 {
     var color = attribute.getValueDirect();
     color.a *= attribute.getContainer().getAttribute("backgroundOpacity").getValueDirect();
-    container.htmlLabel.style.setProperty("background-color", 
-                                          "rgba(" + color.r * 255 + "," 
-                                                  + color.g * 255 + "," 
-                                                  + color.b * 255 + ","
-                                                  + color.a + ")", 
-                                          "normal");
+    container.htmlLabel.style.backgroundColor = "rgba(" + color.r * 255 + "," 
+                                                        + color.g * 255 + "," 
+                                                        + color.b * 255 + ","
+                                                        + color.a + ")";
 }
 
 function Label_LabelStyleBackgroundOpacityModifiedCB(attribute, container)
@@ -17149,17 +17431,15 @@ function Label_LabelStyleFontStyleColorModifiedCB(attribute, container)
 {
     var color = attribute.getValueDirect();
     color.a *= attribute.getContainer().getAttribute("opacity").getValueDirect();
-    container.htmlLabel.style.setProperty("color", 
-                                          "rgba(" + color.r * 255 + "," 
-                                                  + color.g * 255 + "," 
-                                                  + color.b * 255 + ","
-                                                  + color.a + ")", 
-                                          "normal");     
+    container.htmlLabel.style.color = "rgba(" + color.r * 255 + "," 
+                                              + color.g * 255 + "," 
+                                              + color.b * 255 + ","
+                                              + color.a + ")";
 }
 
 function Label_LabelStyleFontStyleFontModifiedCB(attribute, container)
 {
-    container.htmlLabel.style.setProperty("font-family", attribute.getValueDirect().join(""), "normal");
+    container.htmlLabel.style.fontFamily = attribute.getValueDirect().join("");
 }
 
 function Label_LabelStyleFontStyleOpacityModifiedCB(attribute, container)
@@ -17170,7 +17450,7 @@ function Label_LabelStyleFontStyleOpacityModifiedCB(attribute, container)
 
 function Label_LabelStyleFontStyleSizeModifiedCB(attribute, container)
 {
-    container.htmlLabel.style.setProperty("font-size", attribute.getValueDirect() + "pt", "normal");   
+    container.htmlLabel.style.fontSize = attribute.getValueDirect() + "pt";
 }
 
 function Label_LabelStyleFontStyleStyleModifiedCB(attribute, container)
@@ -17178,19 +17458,19 @@ function Label_LabelStyleFontStyleStyleModifiedCB(attribute, container)
     switch (attribute.getValueDirect().join(""))
     {
     case "Bold":
-        container.htmlLabel.style.setProperty("font-weight", "bold", "normal");
+        container.htmlLabel.style.fontWeight = "bold";
         break;
         
     case "Heavy":
-        container.htmlLabel.style.setProperty("font-weight", "bolder", "normal");    
+        container.htmlLabel.style.fontWeight = "bolder";  
         break;
         
     case "Normal":
-        container.htmlLabel.style.setProperty("font-weight", "normal", "normal");    
+        container.htmlLabel.style.fontWeight = "normal";
         break;
         
     case "Thin":
-        container.htmlLabel.style.setProperty("font-weight", "lighter", "normal");    
+        container.htmlLabel.style.fontWeight = "lighter";
         break;
     }
 }
@@ -17198,17 +17478,17 @@ function Label_LabelStyleFontStyleStyleModifiedCB(attribute, container)
 function Label_LabelStyleFormatModifiedCB(attribute, container)
 {
     var format = attribute.getValueDirect().join("");
-    //container.htmlLabel.style.setProperty("text-align", format, "normal");
+    //container.htmlLabel.style.setProperty("textAlign", format, "normal");
     // TODO
 }
 
 function Label_LabelStylePaddingModifiedCB(attribute, container)
 {
     var padding = attribute.getValueDirect() + "px";
-    container.htmlLabel.style.setProperty("padding-left", padding, "normal");
-    container.htmlLabel.style.setProperty("padding-right", padding, "normal");
-    container.htmlLabel.style.setProperty("padding-top", padding, "normal");
-    container.htmlLabel.style.setProperty("padding-bottom", padding, "normal");    
+    container.htmlLabel.style.paddingLeft = padding;
+    container.htmlLabel.style.paddingRight = padding;
+    container.htmlLabel.style.paddingTop = padding;
+    container.htmlLabel.style.paddingBottom = padding;    
 }
 
 function Label_IconStyleUrlModifiedCB(attribute, container)
@@ -17221,7 +17501,7 @@ function Label_IconStyleUrlModifiedCB(attribute, container)
         break;
 
     default:
-        container.htmlIconImg.src = document.location.href + "/../bwcontent/" + url;
+        container.htmlIconImg.src = document.location.href + "/../BwContent/" + url;
         break;
     }
 }
@@ -17884,15 +18164,12 @@ function DistanceSortAgent_CompareSortRecs(rec1, rec2)
 {
     return rec2.distance - rec1.distance;
 }
-MapProjectionCalculator.prototype = new Evaluator();
-MapProjectionCalculator.prototype.constructor = MapProjectionCalculator;
-
 /// <b>Approximate</b> radius of Earth at the equator (in Km).
 /// For a more precise value, use either the Ellipsoid corresponding to a
 /// particular datum or calculate the radius for a given latitude using
 /// Synder's Formula
 /// @see
-//var EARTH_RADIUS_KM_EQ = 6378;
+var EARTH_RADIUS_KM_EQ = 6378;
 
 /// <b>Approximate</b> radius of Earth at the poles (in Km).
 var EARTH_RADIUS_KM_P = 6377;
@@ -17911,6 +18188,9 @@ var EQ_ARC_WIDTH_MI       = 24902.0;
 var EQ_ARC_HEIGHT_MI      = 24900.0;
 var EQ_ARC_ONE_DEG_LAT_MI = EQ_ARC_HEIGHT_MI / 360;
 var EQ_ARC_ONE_DEG_LON_MI = EQ_ARC_WIDTH_MI / 360;
+
+MapProjectionCalculator.prototype = new Evaluator();
+MapProjectionCalculator.prototype.constructor = MapProjectionCalculator;
 
 function MapProjectionCalculator()
 {
@@ -18769,6 +19049,17 @@ EventListener.prototype.eventPerformed = function(event)
         this.numResponses.setValueDirect(numResponses-1);
     }
 }
+EventListener.prototype.getTrigger = function()
+{
+        this.trigger;
+}
+EventListener.prototype.setTrigger = function(trigger)
+{
+    if(trigger)
+    {
+        this.trigger = trigger;
+    }
+}
 
 function EventListener_EventModifiedCB(attribute, container)
 {
@@ -19105,7 +19396,6 @@ ConnectAttributesCommand.prototype.eventPerformed = function(event)
     // call base-class implementation
     Command.prototype.eventPerformed.call(this, event);
 }
-
 
 ConnectAttributesCommand.prototype.execute = function()
 {
@@ -20190,8 +20480,8 @@ CommandMgr.prototype.addCommand = function(command)
     }
     else if (trigger.getLength() > 0)
     {
-        // TODO
-        console.debug("TODO: ");
+		trigger.addModifiedCB(CommandMgr_CommandTriggerModifiedCB, this);
+		this.createCommandTrigger(command, trigger);
     }
     else // no events -- execute and remove
     {
@@ -20201,6 +20491,295 @@ CommandMgr.prototype.addCommand = function(command)
     
     setAttributeBin(null);
 }
+
+CommandMgr.prototype.createCommandTrigger = function(command, trigger) 
+ {
+
+ 	// TODO: Support Commands that Execute from Events AND Triggers
+
+ 	// trigger syntax based on Attributes:
+ 	// ObjectName/Attribute=value
+ 	// ObjectName/Attribute[item]=value
+ 	// ObjectName/Attribute=value,value,value,...,value
+ 	// Where "ObjectName" may be an XPath-like expression
+ 	var attrNdx = 0;
+    var valueNdx = 0;
+    var rangeNdx = 0;
+    var itemNdx = 0;
+
+    var triggerString = "";
+    triggerString = trigger.getValueDirect().join("");
+ 	attrNdx = triggerString.lastIndexOf('/');
+
+ 	if (attrNdx != -1)
+ 	{
+ 		var objectName = triggerString.substring(0, attrNdx);
+ 		var resource = bridgeworks.registry.find(objectName);
+ 		if(resource)
+ 		{
+ 			var not = false;
+
+            var attrName = "";
+            var itemString = "";
+            var valueString = "";
+            var rangeString = "";
+            
+ 			valueNdx = triggerString.lastIndexOf('!');
+ 			if (valueNdx > 0)
+ 			{
+ 			    triggerString.replace("!", ""); // erase the '!' for subsequent processing
+ 			    not = true;
+ 			}
+
+ 			valueNdx = triggerString.lastIndexOf('=');
+
+ 			if(valueNdx > 0) 
+ 			{
+ 				itemNdx = triggerString.lastIndexOf('[');
+ 				if(itemNdx > 0) 
+ 				{
+ 					var itemNdx2 = triggerString.lastIndexOf(']', itemNdx); 
+ 					itemString = triggerString.substring(itemNdx+1, itemNdx2 - itemNdx - 1); 
+ 				}
+
+ 				var range = FLT_MAX; 
+ 				var rangeNdx = triggerString.lastIndexOf(',');
+ 				if(rangeNdx > 0)
+ 				{
+ 					var rangeString = triggerString.substring(rangeNdx+1, trigger.length()-rangeNdx-1);
+ 					range = rangeString.parseFloat(); 
+ 				}
+ 				rangeNdx = rangeNdx == -1 ? triggerString.length : rangeNdx;
+ 				// value is the string between '=' && (',' || end of string)
+ 				valueString = triggerString.substring(valueNdx+1, valueNdx+(rangeNdx-valueNdx));
+
+ 			}
+ 			else //TEMPEST
+ 			{
+ 				itemNdx = triggerString.lastIndexOf('[');
+ 				if(itemNdx > 0) 
+ 				{
+ 					var itemNdx2 = triggerString.lastIndexOf(']', itemNdx);
+ 					itemString = triggerString.substring(itemNdx+1, itemNdx2-itemNdx-1);
+ 				}
+ 			}
+ 			valueNdx = itemNdx == -1 ? (valueNdx == -1 ? triggerString.length() : valueNdx) : itemNdx;
+ 			attrName = triggerString.substring(attrNdx+1, valueNdx);
+
+ 			var input = resource.getAttribute(attrName);
+
+ 			var attr = this.createAttribute(input, valueString);
+
+ 			if(attr)
+ 			{
+ 				var item = -1; 
+ 				if(itemString != "")
+ 				{
+ 					item = parseInt(itemString);
+ 				}
+
+ 				var numExecutions = command.numResponses;
+ 				var newTrigger = new AttributeTrigger(input, attr, command, item, not, numExecutions);
+
+ 				command.setTrigger(newTrigger);
+ 			}
+ 			triggerString = objectName + "/" + attrName;
+
+ 			console.debug(trigger);
+ 			console.debug("\n");
+ 		}		
+ 	}
+ }
+
+CommandMgr.prototype.createAttribute = function(attribute, value)
+{
+	var newAttribute = null;
+	if(attribute)
+	{
+        //console.debug(attribute);
+		var etype = attribute.attrType;
+		var len = attribute.getLength();
+        //console.debug(etype);
+//			switch (etype)
+//			{
+//
+//			case eAttrType.BooleanAttr:
+//				{
+//					newAttribute = new NumberAttr();
+//		            newAttribute.setValueDirect(parseInt(value));
+//				}
+//				break;
+//            case eAttrType.NumberAttr:
+//
+//				{
+					newAttribute = new NumberAttr();
+		            newAttribute.setValueDirect(parseFloat(value));
+//				}
+//				break;
+//
+//            case eAttrType.StringAttr:
+//				{
+//					newAttribute = new StringAttr();
+//                    newAttribute.setValueDirect(value);
+//				}
+//				break;
+//
+//			default:
+//				newAttribute = null;
+//				break;
+//			}
+		  }
+        //console.debug(newAttribute);
+		return newAttribute; 
+}
+
+function CommandMgr_CommandTriggerModifiedCB(attribute, container)
+{
+	this.createCommandTrigger(attribute, container);
+}
+
+AttributeTrigger.prototype = new Command();
+AttributeTrigger.prototype.constructor = AttributeTrigger;
+
+
+function AttributeTrigger(input, trigger, target, item, _not, _executionCount)
+{
+    this.input = input;
+    this.trigger = trigger;
+    this.target = target;
+
+    this.lastValues = [];
+
+	this.input.getValue(this.lastValues);
+	
+    this.item = item;
+    
+    this.not = _not;
+
+
+    this.executionCount = _executionCount;
+
+	this.input.addModifiedCB(AttributeTrigger_InputModifiedCB, this);
+
+	var len = this.input.getLength();
+
+	if (len == 1)
+	{
+		this.item = 0;
+	}
+}
+
+
+AttributeTrigger.prototype.execute = function()
+{
+	if (this.target)
+	{
+        var type = this.trigger.attrType;
+
+        switch (type)
+        {
+
+        case eAttrType.StringAttr:
+            {
+                var vIn = [];
+                var vTrig = [];
+            
+                this.input.getValue(vIn);
+                this.trigger.getValue(vTrig);
+
+                var pass = vIn[0] == vTrig[0] ? true : false;
+                pass = this.not ? !pass : pass;
+                if (pass)
+                {
+                    var count = this.executionCount.getValueDirect() - 1;
+                    this.executionCount.setValueDirect(count);
+                }
+
+                if (this.executionCount == 0)
+		        {
+			        this.target = null;
+		        }
+            }
+            break;
+
+        default:
+            {
+                var vIn = [];
+                var vTrig = [];
+
+		        this.input.getValue(vIn);
+		        this.trigger.getValue(vTrig);
+
+		        // match single-item Attribute OR single item of a multi-item Attribute
+		        if (this.item != -1)
+		        {
+			        // if equal OR descending past OR ascending past
+                    var pass = ((vIn[this.item] == vTrig[0]) ||
+			                     (this.lastValues[this.item] > vIn[this.item] && vIn[this.item] < vTrig[0]) ||
+			                     (this.lastValues[this.item] < vIn[this.item] && vIn[this.item] > vTrig[0]));
+                    pass = this.not ? !pass : pass;
+                    if (pass)
+			        {
+						this.target.execute();
+                        var count = this.executionCount.getValueDirect() - 1;
+				        this.executionCount.setValueDirect(count);
+			        }
+		        }
+		        else	// match every item in a multi-item Attribute
+		        {
+			        var len = this.input.getLength();
+			        var matches = 0;
+			        for (var i = 0; i < len; ++i)
+			        {
+				        // if equal OR descending past OR ascending past
+				        var pass = ((vIn[i] == vTrig[i]) ||
+				                     (this.lastValues[i] > vIn[i] && vIn[i] < vTrig[i]) ||
+				                     (this.lastValues[i] < vIn[i] && vIn[i] > vTrig[i]));
+                        pass = this.not ? !pass : pass;
+                        if (pass)
+				        {
+					        ++matches;
+				        }
+			        }
+
+			        // if every item matches simultaneously
+			        if (matches = len)
+			        {
+						err = this.target.execute();
+						this.executionCount.setValueDirect(--this.executionCount);
+			        }
+		        }
+
+		        if (this.executionCount.getValueDirect() == 0)
+		        {
+			        this.target = null;
+                    this.input.removeModifiedCB(AttributeTrigger_InputModifiedCB,this);
+		        }
+		        else
+		        {
+			        this.lastValues = vIn;
+		        }
+            }
+            break;
+        }
+	}
+
+	return;
+}
+
+function AttributeTrigger_InputModifiedCB(attribute, container)
+{
+	container.execute();
+
+	// TODO:  Expand to also support EventListener::EventPerformed
+}
+/*
+void AttributeTrigger_InputModifiedTaskProc(void* data, const bool & run)
+{
+	TAttributeTrigger* pTrigger = static_cast<TAttributeTrigger*>(data);
+	pTrigger.Execute();
+}
+*/
 BwRegistry.prototype = new AttributeRegistry();
 BwRegistry.prototype.constructor = BwRegistry;
 
@@ -21391,7 +21970,10 @@ function ConnectionMgr()
     
     this.registerAttribute(this.name, "name");
     
+    // TODO: finish adding connection helpers
+    //registerConnectionHelper("DisconnectAllSources", null, ConnectionMgr.prototype.disconnectAllSources);
     registerConnectionHelper("DisconnectAllTargets", null, ConnectionMgr.prototype.disconnectAllTargets);
+    registerConnectionHelper("dissolve", ConnectionMgr.prototype.connectDissolve, ConnectionMgr.prototype.disconnectDissolve);
 }
 
 ConnectionMgr.prototype.connectSceneInspection = function(inspector, camera)
@@ -21463,6 +22045,43 @@ ConnectionMgr.prototype.disconnectMapProjectionCalculator = function(mpc, pme)
     mpc.getAttribute("resultPosition").removeTarget(pme.getAttribute("position"));
 }
 
+ConnectionMgr.prototype.connectDissolve = function(evaluator, target)
+{
+    if (!evaluator || !target) return;
+    
+    var dissolve = target.getAttribute("dissolve");
+    if (dissolve)
+    {
+        var resultValues = evaluator.getAttribute("resultValues");
+        if (resultValues)
+        {
+            var resultValue = resultValues.getAt(0);
+            if (resultValue)
+            {
+                resultValue.addTarget(dissolve);
+            }
+        }
+    }
+}
+
+ConnectionMgr.prototype.disconnectDissolve = function(evaluator, target)
+{
+    if (!evaluator || !target) return;
+    
+    var dissolve = target.getAttribute("dissolve");
+    if (dissolve)
+    {
+        var resultValues = evaluator.getAttribute("resultValues");
+        if (resultValues)
+        {
+            var resultValue = resultValues.getAt(0);
+            if (resultValue)
+            {
+                resultValue.removeTarget(dissolve);
+            }
+        }
+    }
+}
 
 RenderAgent.prototype = new Agent();
 RenderAgent.prototype.constructor = RenderAgent;
@@ -22824,54 +23443,167 @@ function Util_InspectionGroup_RotationQuatModifiedCB(attribute, container)
 	}
     */
 }
-SerializeCommand.prototype = new Command();
-SerializeCommand.prototype.constructor = SerializeCommand;
-
 
 function SerializeCommand()
 {
-    Command.call(this);
-    this.className = "SerializeCommand";
-    
-    this.targetResource = null;
-    
-    this.target.addModifiedCB(SerializeCommand_TargetModifiedCB, this);
+	this.typeString = "Serialize";
+    this.target = null; 
+	AddPrototype = this.AddPrototype;
+    this.directive = null; 
+    this.serialized("");
 }
 
-SerializeCommand.prototype.execute = function()
+SerializeCommand.prototype.ClonePrototype = function()
 {
-	if (this.directive)
+    var c = ++s_count;
+    return c;
+}
+
+SerializeCommand.prototype.Execute = function()
+{
+    if (this.directive)
     {
-	    if (this.targetResource)
+	    if (this.target && this.directive)
 	    {
-            if (this.directive.execute(this.targetResource) == 0)
+            if (this.directive.execute(this.target === 0))
             {
                 this.serialized = this.directive.getSerialized();
-                console.debug(this.serialized);
             }
 	    }
         else // !this.target
         {
-            serializeScene();
+            SerializeScene();
         }
     }
 
-	return;
+	return ;
 }
 
-SerializeCommand.prototype.serializeScene = function()
+SerializeCommand.prototype.SerializeScene = function()
 {
-    var i = 0;
-    var container = null;
-    var node = null;
-    //TContext context;
+    var i;
+    var container = NULL;
+    var node = NULL;
+    var context;
 
     // root element open tag
     this.serialized = "<Session broadcast='false'>";
 
-    if (this.registry)
+    var attrContainerRegistry = this.registry.find(attrContainerRegistry);
+    if (attrContainerRegistry)
     {
+        var serializer = new XMLSerializer();
+        // set minimum flag so that only the minimum required for recreation is serialized
+        //var serializeMinimum = serializer.getAttribute("serializeMinimum");
+        //serializeMinimum.setValueDirect(true);
 
+        var count = attrContainerRegistry.getObjectCount();
+
+        // serialize device handlers
+        for (i=0; i < count; i++)
+        {
+            container = attrContainerRegistry.getObject(i);
+            if (container)
+            {
+                context.attribute = container;
+                var buffer = "";
+
+                // serialize
+                serializer.Serialize(context, buffer);
+                this.serialized += buffer;
+            }
+        }
+
+        // serialize root nodes (nodes without parents)
+        for (i=0; i < count; i++)
+        {
+            if (node = attrContainerRegistry.getObject(i) &&
+                !node.getParent(0))
+            {
+                this.directive.Execute(node);
+                this.serialized += this.directive.getSerialized();
+            }
+        }
+
+        // serialize non-device handlers, non-nodes, non-commands (commands need to be serialized last so that the objects
+        // they affect will be declared first)
+        for (i=0; i < count; i++)
+        {
+            container = attrContainerRegistry.getObject(i); if (!container) continue;
+            if (!container && !container && !container)
+            {
+                if (!strcmp(container.getTypeString(), "SelectionListener"))
+                {
+                    var computePivotDistance = container.getAttribute("computePivotDistance")
+                       .getValueDirect();
+
+                    this.serialized += ".set target=\"Selector\" computePivotDistance=\"";
+                    this.serialized += (computePivotDistance ? "true" : "false");
+                    this.serialized += "\"/>";
+                }
+                else
+                {
+                    context.attribute = container;
+                    var buffer = "";
+
+                    // serialize
+                    serializer.Serialize(context, buffer);
+                    this.serialized += buffer;
+                }
+            }
+        }
+
+        // serialize any DisconnectAttributes commands (must come before ConnectAttributes in DefaultPreferences.xml)
+        for (i=0; i < count; i++)
+        {
+            container = attrContainerRegistry.getObject(i); if (!container) continue;
+            if (container && !strcmp(container.getTypeString(), "DisconnectAttributes"))
+            {
+                context.attribute = container;
+                var buffer = "";
+
+                // serialize
+                serializer.Serialize(context, buffer);
+                this.serialized += buffer;
+            }
+        }
+
+        // serialize remaining commands (DisconnectAttributes already serialized above)
+        for (i=0; i < count; i++)
+        {
+            container = attrContainerRegistry.getObject(i); if (!container) continue;
+            if (container && strcmp(container.getTypeString(), "DisconnectAttributes"))
+            {
+                context.attribute = container;
+                var buffer = "";
+
+                // serialize
+                serializer.Serialize(context, buffer);
+                this.serialized += buffer;
+            }
+        }
+        /*
+        // updateSectorOrigin
+        const char* substr = NULL;
+        std.prototype.string name = "";
+        if ((substr = strstr(this.serialized.c_str(), "PerspectiveCamera")) ||
+            (substr = strstr(this.serialized.c_str(), "OrthographicCamera")))
+        {
+            if (substr = strstr(substr, "<name>"))
+            {
+                substr += 6; // skip "<name>"
+                while (*substr != '<')
+                {
+                    name += *substr++;
+                }
+
+                this.serialized += ".set target=\"";
+                this.serialized += name;
+                this.serialized += "\" updateSectorOrigin=\"true\"/>";
+            }
+        }
+        */
+        // TODO: pivotCone
     }
 
     // root element close tag
@@ -22880,14 +23612,55 @@ SerializeCommand.prototype.serializeScene = function()
     return;
 }
 
-function SerializeCommand_TargetModifiedCB(attribute, container)
+SerializeCommand.prototype.Undo = function()
 {
-    var target = attribute.getValueDirect().join("");
-    var resource = container.registry.find(target);
-    if (resource)
-    {
-        container.targetResource = resource;
-    }
+	return ;
+}
+
+SerializeCommand.prototype.MatchesType = function(type) 
+{
+	var matches = 0;
+    matches = !(_stricmp(type, "Serialize"));
+    return matches;
+}
+
+SerializeCommand.prototype.setRegistr = function(registry)
+{
+    // create serialize directive
+	var sg = NULL;
+	var graphMgr = NULL;
+    var resource = NULL;
+	if (registry.Find("DefaultFactory", resource))
+	{
+		var defaultFactory = resource;
+		if (defaultFactory && (sg = defaultFactory.getSceneGraph()) != NULL &&
+		   (graphMgr = sg.getGraphMgr()) != NULL)
+		{
+			if (this.directive == graphMgr) //New<GcSerializeDirective, GcGraphMgr&>(*graphMgr))
+            {
+                this.directive.setRegistry(registry);
+            }
+		}
+	}
+
+    // call base-class implementation
+	CCommand.prototype.setRegistry(registry);
+}
+
+SerializeCommand.prototype.SerializeCommand_TargetModifiedCB = function(attr, data)
+{
+	var command = data;
+	var target = attr;
+	var registry = command.this.registry;
+	if (target && registry)
+	{
+		var name = [256];
+		target.getValueDirect(name, sizeof(name));
+
+		if (_SUCCEEDED(registry.Find(name, command.this.target)))
+        {
+        }
+	}
 }
 // TODO
 var eLWObjectTokens = 
@@ -24858,7 +25631,10 @@ LWSceneBuilder.prototype.allocateSceneElement = function(tokens)
         
         case "Key":
         {
+            if (this.evaluators.length <= 0) break;
+            
             var keyframes = this.evaluators[this.evaluators.length-1].getAttribute("channels").getAt(this.currChannel);
+            if (!keyframes) break;
             
             var keyframe = new KeyframeAttr();
             for (var i=1; i < tokens.length; i++)
@@ -24932,11 +25708,17 @@ LWSceneBuilder.prototype.allocateSceneElement = function(tokens)
         
         case "Behaviors":
         {
+            if (this.evaluators.length <= 0) break;
+            
+            var preBehaviors = this.evaluators[this.evaluators.length-1].getAttribute("preBehaviors").getAt(this.currChannel);
+            var postBehaviors = this.evaluators[this.evaluators.length-1].getAttribute("postBehaviors").getAt(this.currChannel);
+            if (!preBehaviors || !postBehaviors) break;
+            
             var pre = parseInt(tokens[1], 10);
             var post = parseInt(tokens[2], 10);
             
-            this.evaluators[this.evaluators.length-1].getAttribute("preBehaviors").getAt(this.currChannel).setValueDirect(pre);
-            this.evaluators[this.evaluators.length-1].getAttribute("postBehaviors").getAt(this.currChannel).setValueDirect(post);            
+            preBehaviors.setValueDirect(pre);
+            postBehaviors.setValueDirect(post);            
         }
         break;
     }
@@ -25099,6 +25881,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["Group"] = newSGNode;
     this.newResourceProcs["Isolator"] = newSGNode;
     this.newResourceProcs["Label"] = newSGNode;
+    this.newResourceProcs["HTMLLabel"] = newSGNode;
     this.newResourceProcs["LineList"] = newSGNode;
     this.newResourceProcs["MediaTexture"] = newSGNode;
     this.newResourceProcs["Model"] = newModel;
@@ -25236,6 +26019,7 @@ function newSGNode(name, factory)
     case "Group":               resource = new Group(); break;
     case "Isolator":            resource = new Isolator(); break;
     case "Label":               resource = new Label(); break;
+    case "HTMLLabel":           resource = new HTMLLabel(); break;
     case "LineList":            resource = new LineList(); break;
     case "MediaTexture":        resource = new MediaTexture(); break;
     case "OrthographicCamera":  resource = new OrthographicCamera(); registerParentableAttributes(resource, factory); break;
@@ -25511,6 +26295,7 @@ function finalizeEvaluator(evaluator, factory)
             
             contentHandler.parseFileStream(pathInfo[0]); 
         }
+        AttributeFactory_EvaluatorTargetConnectionTypeModifiedCB(evaluator.getAttribute("targetConnectionType"), factory);
         break;
     }
 }
@@ -25518,26 +26303,21 @@ function finalizeEvaluator(evaluator, factory)
 function registerEvaluatorAttributes(evaluator, factory)
 {
     // url
-	var url = new StringAttr("");
-	evaluator.registerAttribute(url, "url");
-	
-	// target
-	var target = new StringAttr("");
-	evaluator.registerAttribute(target, "target");
+    var url = new StringAttr("");
+    evaluator.registerAttribute(url, "url");
 
-	// renderAndRelease
-	var renderAndRelease = new BooleanAttr(false);
-	evaluator.registerAttribute(renderAndRelease, "renderAndRelease");
+    // target
+    var target = new StringAttr("");
+    evaluator.registerAttribute(target, "target");
+
+    // renderAndRelease
+    var renderAndRelease = new BooleanAttr(false);
+    evaluator.registerAttribute(renderAndRelease, "renderAndRelease");
 	
-    // TODO
-    console.debug("TODO: " + arguments.callee.name);
-    /*
     // targetConnectionType
-	CStringAttr* targetConnectionType = new CStringAttr("transform");
-	targetConnectionType->AddModifiedCB(DefaultFactory_EvaluatorTargetConnectionTypeModifiedCB, factory);
-	evaluator->RegisterAttribute(targetConnectionType, "targetConnectionType");
-
-    */
+    var targetConnectionType = new StringAttr("transform");
+    targetConnectionType.addModifiedCB(AttributeFactory_EvaluatorTargetConnectionTypeModifiedCB, factory);
+    evaluator.registerAttribute(targetConnectionType, "targetConnectionType");
 }
 
 function registerParentableAttributes(pme, factory)
@@ -25613,6 +26393,19 @@ function AttributeFactory_ParentableWorldPositionModifiedCB(attribute, container
     //console.debug("TODO: " + arguments.callee.name);
 }
 
+function AttributeFactory_EvaluatorTargetConnectionTypeModifiedCB(attribute, container)
+{  
+    var evaluator = attribute.getContainer();
+    if (evaluator)
+    {
+        var connect = new ConnectAttributesCommand();
+        connect.setRegistry(container.registry);
+        connect.getAttribute("sourceContainer").copyValue(evaluator.getAttribute("name"));
+        connect.getAttribute("targetContainer").copyValue(evaluator.getAttribute("target"));
+        connect.getAttribute("connectionType").copyValue(attribute);
+        connect.execute();
+    }
+}
 Bridgeworks.prototype = new AttributeContainer();
 Bridgeworks.prototype.constructor = Bridgeworks;
 
@@ -25624,7 +26417,7 @@ function Bridgeworks(canvas, bgImage, contentDir)
     this.renderContext =  newRenderContext("webgl", canvas, bgImage);
     if (!this.renderContext) return;
 
-    contentDir = contentDir == null? "bwcontent" : contentDir;
+    contentDir = contentDir == null? "BwContent" : contentDir;
 
     this.canvas = canvas;
     this.contentDir = contentDir;
@@ -25682,6 +26475,7 @@ function Bridgeworks(canvas, bgImage, contentDir)
     this.viewportMgr.getAttribute("layout").setValueDirect(this.layout);
     
     enumerateAttributeTypes();
+    enumerateAttributeElementTypes();
     
     // TODO: remove the following when onLoadModified is defined
     console.debug("TODO: " + arguments.callee.name);

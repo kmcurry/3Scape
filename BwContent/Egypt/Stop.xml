@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<Update>
+	<Stop target="Camera"/>
+</Update>
