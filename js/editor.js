@@ -37,33 +37,71 @@ function listLibrary()
     {
         //Seperating the libs out and changing which panel they are loaded into.
         var panel = document.getElementById("panel-lib-shapeObjects");
-        listDirectory(url + "objects/", panel);
+        loadDirectoryObject(url,"objects/Cube.lwo",panel,"Cube");
+        loadDirectoryObject(url,"objects/Grid.lwo",panel,"Grid");
+        loadDirectoryObject(url,"objects/Sphere.lwo",panel,"Sphere");
+        loadDirectoryObject(url,"objects/Terrain.lwo",panel,"Terrain");
+        loadDirectoryObject(url,"objects/Tube.lwo",panel,"Tube");
+        loadDirectoryObject(url,"objects/Wall.lwo",panel,"Wall");
+        loadDirectoryObject(url,"objects/Water.lwo",panel,"Water");
+
+        //listDirectory(url + "objects/", panel);
 
         panel = document.getElementById("panel-lib-animalObjects");
-        listDirectory(url + "Animals/objects/", panel);
+        loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");
+       // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-buildingObjects");
-        listDirectory(url + "Buildings/objects/", panel);
+        loadDirectoryObject(url,"Buildings/objects/Building.lwo",panel,"Building1");
+        loadDirectoryObject(url,"Buildings/objects/building1.lwo",panel,"Building2");
+        loadDirectoryObject(url,"Buildings/objects/City_buildings.lwo",panel,"City_buildings");
+        loadDirectoryObject(url,"Buildings/objects/shed.lwo",panel,"Shed");
+        loadDirectoryObject(url,"Buildings/objects/shed2.lwo",panel,"Shed2");
+        loadDirectoryObject(url,"Buildings/objects/shed3.lwo",panel,"Shed3");
+       // listDirectory(url + "Buildings/objects/", panel);
 
         panel = document.getElementById("panel-lib-vehicleObjects");
-        listDirectory(url + "Vehicles/objects/", panel);
+        loadDirectoryObject(url,"Vehicles/objects/AirfieldFlat.lwo",panel,"AirfieldFlat");
+        loadDirectoryObject(url,"Vehicles/objects/C2V.lwo",panel,"C2V");
+        loadDirectoryObject(url,"Vehicles/objects/Fishing Boat.lwo",panel,"Fishing Boat");
+        loadDirectoryObject(url,"Vehicles/objects/Humvee_Medical.lwo",panel,"Humvee_Medical");
+        loadDirectoryObject(url,"Vehicles/objects/Landing-Pad.lwo",panel,"Landing-Pad");
+       // listDirectory(url + "Vehicles/objects/", panel);
 
         panel = document.getElementById("panel-lib-egyptObjects");
-        listDirectory(url + "Egypt/objects/", panel);
+        loadDirectoryObject(url,"Egypt/objects/Artifact_01.lwo",panel,"Artifact_01");
+        loadDirectoryObject(url,"Egypt/objects/Artifact_02.lwo",panel,"Artifact_02");
+        loadDirectoryObject(url,"Egypt/objects/Artifact_03.lwo",panel,"Artifact_03");
+        loadDirectoryObject(url,"Egypt/objects/EGYPT.lwo",panel,"EGYPT");
+        loadDirectoryObject(url,"Egypt/objects/GreatPyramid.lwo",panel,"GreatPyramid");
+        loadDirectoryObject(url,"Egypt/objects/GreatSphinx.lwo",panel,"GreatSphinx");
+        loadDirectoryObject(url,"Egypt/objects/KhafrePyramid.lwo",panel,"KhafrePyramid");
+        loadDirectoryObject(url,"Egypt/objects/MenkaurePyramid.lwo",panel,"MenkaurePyramid");
+        loadDirectoryObject(url,"Egypt/objects/Site_SkyDome.lwo",panel,"Site_SkyDome");
+       // listDirectory(url + "Egypt/objects/", panel);
     }
     /*
     url = document.location.href + "/../../Entymology/BwContent/"
     listDirectory(url + "objects/", panel);
-    
+
     url = document.location.href + "/../../Paleontology/BwContent/"
     listDirectory(url + "objects/", panel);*/
-    
+
     //panel = document.getElementById("panel-lib-motions");
-    
+
     //url = document.location.href + "/../BwContent/";
-    
+
     //listDirectory(url + "motions/", panel);
     //listDirectory(url + "Vehicles/motions/", panel);
+}
+function loadDirectoryObject(url,href,panel,name){
+    var A = document.createElement('a');
+    A.setAttribute("onclick", "load('" + url + href + "'),modalHide();");
+    A.setAttribute("id", name);
+    A.innerHTML = name;
+    panel.appendChild(A);
+    var br = document.createElement("br");
+    panel.appendChild(br);
 }
 
 function listDirectory(url, panel)

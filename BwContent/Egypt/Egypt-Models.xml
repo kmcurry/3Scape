@@ -47,7 +47,12 @@
 			<position x="-435.347" y="9" z="-1249.14"/>
 			<rotation x="0" y="142.3" z="0"/>
 		</Model>
-		<NullObject name="GreatPyramid (2)"/>
+		<NullObject name="Pyramid1_Label_1">
+            <position x="100" y="150" z="-492"/>
+		</NullObject>
+        <NullObject name="Artifact1_Label_1">
+            <position x="200" y="10" z="-299"/>
+        </NullObject>
 		<Model name="GreatSphinx" url="objects/GreatSphinx.lwo">
 			<position x="502.1" y="0" z="-975.513"/>
 		</Model>
@@ -59,8 +64,8 @@
         </Label>
         <Label name="Pyramid3" parent="MenkaurePyramid" text="The Menkaure Pyramid" show="false">
         </Label>
-        <Label name="P1_Description" parent="GreatPyramid" text="This is the Great Pyramid" show="false"></Label>
-        <Label name="A1_Description" parent="GreatPyramid" text="This is the first Artifact" show="false"></Label>
+        <Label name="P1_Description" parent="Pyramid1_Label_1" text="This is the Great Pyramid" show="false"></Label>
+        <Label name="A1_Description" parent="Artifact1_label_1" text="This is the first Artifact" show="false"></Label>
         <Label name="P2_Description" parent="KhafrePyramid" text="This is the Second Pyramid" show="false"></Label>
         <Label name="A2_Description" parent="KhafrePyramid" text="This is the Second Artifact" show="false"></Label>
         <Label name="P3_Description" parent="MenkaurePyramid" text="This is the Third Pyramid" show="false"></Label>

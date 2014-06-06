@@ -5,6 +5,6 @@
     <Set target="CameraMotion" time="15"></Set>
     <Play></Play>
     <Pause trigger="CameraMotion/time=22"/>
-    <Set trigger="CameraMotion/time=21" target="A1_Description" show="true"></Set>
+    <Set trigger="CameraMotion/time=19" target="A1_Description" show="true"></Set>
 
 </Update>
