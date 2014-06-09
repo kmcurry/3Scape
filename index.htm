@@ -381,18 +381,41 @@
                               <li><a href="#">One more separated link</a></li>
                           </ul>
                       </li>-->
+
                       <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add<b class="caret"></b></a>
-                          <ul class="dropdown-menu">
-                              <li><a onclick="load(cube);">Cube</a></li>
-                              <li><a onclick="load(sphere);">Sphere</a></li>
-                              <li><a onclick="load(tube);">Tube</a></li>
-                              <li class="divider"></li>
-                              <li><a href="#">New Scene</a></li>
-                              <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
-                              <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);">Ancient Egypt</a></li>
-                              <li class="divider"></li>
-                              <li><a href="#" data-toggle="modal" data-target="#myModal">Browse</a></li>
+                          <a id="dLabel" data-toggle="dropdown" data-target="#" href="/page.html">
+                              Add <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <li><a href="#">New Scene</a></li>
+                            <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
+                            <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);">Ancient Egypt</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="#">Objects</a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#" onclick="load(cube);">Cube</a></li>
+                                <li><a href="#" onclick="load(sphere);">Sphere</a></li>
+                                <li><a href="#" onclick="load(tube);">Tube</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="#">Animations</a>
+                              <ul class="dropdown-menu">
+                                <li><a tabindex="-1" href="#">Second level</a></li>
+                                <li class="dropdown-submenu">
+                                  <a href="#">Even More..</a>
+                                  <ul class="dropdown-menu">
+                                      <li><a href="#">3rd level</a></li>
+                                      <li><a href="#">3rd level</a></li>
+                                  </ul>
+                                </li>
+                                <li><a href="#">Second level</a></li>
+                                <li><a href="#">Second level</a></li>
+                              </ul>
+                            </li>
                           </ul>
                       </li>
                       <li><p class="navbar-text" id="Current_Object">Current Object: X</p></li>
