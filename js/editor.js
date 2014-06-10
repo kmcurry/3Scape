@@ -52,6 +52,7 @@ function listLibrary()
         loadDirectoryObject(url,"Animals/objects/trex.lwo",panel,"Trex");
         loadDirectoryObject(url,"Animals/objects/Ant.lwo",panel,"Ant");
        // listDirectory(url + "Animals/objects/", panel);
+       // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-buildingObjects");
         loadDirectoryObject(url,"Buildings/objects/Building.lwo",panel,"Building1");
@@ -186,7 +187,7 @@ function loadModel(url)
 
     var objectPanel = document.getElementById("object-list");
     a = document.createElement('a');
-    a.setAttribute("onclick", "locate('" + name + "');");; // Insted of calling setAttribute
+    a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
     a.setAttribute("id", name);
     a.innerHTML = name + "<br>"; // <a>INNER_TEXT</a>
     objectPanel.appendChild(a); // Append the link to the div
@@ -257,7 +258,29 @@ function loadMotion(url)
 function locate()
 {
     var xml = "\<Locate target='" + $('#objectname').val() + "'/>";
-    console.debug(xml);
+    console.log(xml);
+    bridgeworks.updateScene(xml);
+}
+
+//Locates the target given the name and also sets current object to be the object located
+function locate(name){
+    var cmd = "\<Locate target='" + name + "'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+    setObject(name);
+}
+
+function setModel()
+{
+    var xml = "\<Set target='" + $('#objectname').val() + "'/>";
+    console.log(xml);
+    bridgeworks.updateScene(xml);
+}
+
+function setModel(name)
+{
+    var xml = "\<Set target='" + name + "'/>";
+    console.log(xml);
     bridgeworks.updateScene(xml);
 }
 
