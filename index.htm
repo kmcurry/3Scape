@@ -112,13 +112,6 @@
               if (capture) bridgeworks.handleEvent(event);
           }
 
-          //Locates the target given the name and also sets current object to be the object located
-          function locate(name){
-              var cmd = "\<Locate target='" + name + "'/>";
-              bridgeworks.updateScene(cmd);
-              setObject(name);
-          }
-
           //Mock Up of How Search would work
           function Search()
           {
