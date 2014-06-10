@@ -208,6 +208,7 @@
                     capture = false;
                 }
                 break;
+                
                 case "dblclick":
                 {
                     var name = selectedModel.name.getValueDirect().join("");
@@ -221,6 +222,7 @@
                     else {
                         cmd = "\<Locate target='" + name + "'/>";
                     }
+                    console.log(name);
                     console.debug(cmd);
                     bridgeworks.updateScene(cmd);
                     setObject(name);
@@ -442,6 +444,9 @@
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                       <li>
+                        <button type="button" class="btn navbar-btn btn-info" id="apply-color" style="margin-right:3px" onclick="applyColor();">Apply Color</button>
+                      </li>
+                      <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li>
                       <li>
@@ -501,7 +506,10 @@ function updateInfo(color) {
 Color: <input class="color {onImmediateChange:'updateInfo(this);'}" value="66ff00">
 R: <input id="info-r" size="2" />,
 G: <input id="info-g" size="2" />,
-B: <input id="info-b" size="2" />                                        
+B: <input id="info-b" size="2" />
+
+
+
                                     </div>                                    
                                     <div class="tab-pane" id="animate">
                                         Animations
@@ -728,6 +736,7 @@ B: <input id="info-b" size="2" />
           $('.dropdown-menu').find('form').click(function (e) {
               e.stopPropagation();
           });
+
       </script>
 
 	<script>
