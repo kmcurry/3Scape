@@ -49,6 +49,8 @@ function listLibrary()
 
         panel = document.getElementById("panel-lib-animalObjects");
         loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");
+        loadDirectoryObject(url,"Animals/objects/trex.lwo",panel,"Trex");
+        loadDirectoryObject(url,"Animals/objects/Ant.lwo",panel,"Ant");
        // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-buildingObjects");
