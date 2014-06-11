@@ -192,7 +192,8 @@
                 case "click": {
                     //Dishing out the event client x and y cordinates of the mouse for testing purposes
                     // if (!e.metaKey && !e.ctrlKey) {
-                         selectedModel = bridgeworks.selector.selections.models[0];
+                    selectedModel = bridgeworks.selector.selections.models[0];
+                    var name = selectedModel.name.getValueDirect().join("");
                     //     if (selectedModel) {
                     //         var pos = selectedModel.position.getValueDirect();
                     //         $("#positionX").spinner("value", pos.x);
@@ -209,6 +210,8 @@
                             
                     //     }
                     // }
+                    setObject(name);
+                    setColorPicker();
                     capture = false;
                 }
                 break;
