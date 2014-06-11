@@ -476,11 +476,17 @@
                   <ul class="nav navbar-nav navbar-right">
                       <li>                                          
                           <% if(user) { %>
-                            <button type="button" class="btn navbar-btn btn-info" style="margin-right:3px">
-                            <%= user.local.email %>
-                            </button>
+                            <div>
+                              <a type="button" class="btn navbar-btn btn-danger" style="margin-right:3px" href="/profile">
+                              Welcome, <%= user.local.email %>!
+                              </a>
+                            </div>
                           <% }else { %>
-                            
+                            <div>
+                              <a type="button" class="btn navbar-btn btn-danger" style="margin-right:3px" href="/login">
+                                Please Login
+                              </a>
+                            </div>
                           <% } %>
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
