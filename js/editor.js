@@ -265,6 +265,7 @@ function locate()
 //Locates the target given the name and also sets current object to be the object located
 function locate(name){
     var cmd = "\<Locate target='" + name + "'/>";
+    selectedModel = bridgeworks.registry.find(name); //Sets the selectedModel to whatever the name is of the model you click in the list.
     console.log(cmd);
     bridgeworks.updateScene(cmd);
     setObject(name);
@@ -283,7 +284,6 @@ function setModel(name)
     console.log(xml);
     bridgeworks.updateScene(xml);
 }
-
 function paste()
 {
     load(copiedUrl);
@@ -294,6 +294,18 @@ function show(name)
     var xml = "\<Locate target='" + name + "'/>";
     console.debug(xml);
     bridgeworks.updateScene(xml);
+}
+//Apply Color function takes the selected model and sets its color to whatever the color is
+//in the color patch
+function applyColor() 
+{
+    var name = selectedModel.name.getValueDirect().join("");
+    $('#object-list a').attr('id')
+    var b = $('#info-b').val();
+    var g = $('#info-g').val();
+    var r = $('#info-r').val();
+    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '"+b+"'/>" +"</Set>";
+    bridgeworks.updateScene(cmd);
 }
 
 function showTop()
