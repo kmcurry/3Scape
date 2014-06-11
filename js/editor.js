@@ -82,6 +82,13 @@ function listLibrary()
         loadDirectoryObject(url,"Egypt/objects/MenkaurePyramid.lwo",panel,"MenkaurePyramid");
         loadDirectoryObject(url,"Egypt/objects/Site_SkyDome.lwo",panel,"Site_SkyDome");
        // listDirectory(url + "Egypt/objects/", panel);
+
+        panel = document.getElementById("panel-motions");
+        loadDirectoryObject(url,"motions/fly-loop.mot",panel,"Fly-loop");
+        loadDirectoryObject(url,"motions/fly-loop-roll.mot",panel,"Fly-loop-roll");
+        loadDirectoryObject(url,"motions/oscillate-dissolve.mot",panel,"Oscillate Dissolve");
+        loadDirectoryObject(url,"motions/oscillate-scale.mot",panel,"Oscillate Scale");
+        loadDirectoryObject(url,"motions/spin-y.mot",panel,"Spin");
     }
     /*
     url = document.location.href + "/../../Entymology/BwContent/"
@@ -176,6 +183,7 @@ function load(u)
 }
 
 var count = 1;
+var motionCount = 1;
 
 function loadModel(url)
 {
@@ -235,6 +243,17 @@ function loadModel(url)
 
 function loadMotion(url)
 {
+    var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
+    name = motionCount.toString()+". "+name;
+    motionCount++;
+
+    var animationPanel = document.getElementById("animate");
+    var a = document.createElement('a');
+    //a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
+    a.setAttribute("id", name);
+    a.innerHTML = name + "<br>"; // <a>INNER_TEXT</a>
+    animationPanel.appendChild(a); // Append the link to the div
+
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
     
     var xml = loadXMLFile("BwContent/motion.xml");
