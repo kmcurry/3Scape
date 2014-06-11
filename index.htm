@@ -230,6 +230,7 @@
                     console.debug(cmd);
                     bridgeworks.updateScene(cmd);
                     setObject(name);
+                    setColorPicker();
                 }
                 break;
               }
@@ -442,7 +443,7 @@
                             }
                             </script>
 
-                            Color: <input class="color {onImmediateChange:'updateInfo(this);'}" value="FFFFFF" onchange="applyColor();">
+                            Color: <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();">
                             <br>
                             R: <input id="info-r" size="2" />
                             G: <input id="info-g" size="2" />

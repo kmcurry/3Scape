@@ -266,9 +266,21 @@ function locate()
 function locate(name){
     var cmd = "\<Locate target='" + name + "'/>";
     selectedModel = bridgeworks.registry.find(name); //Sets the selectedModel to whatever the name is of the model you click in the list.
+    setColorPicker();
     console.log(cmd);
     bridgeworks.updateScene(cmd);
     setObject(name);
+}
+
+function setColorPicker()
+{
+    var g;
+    var r;
+    var b;
+    r = selectedModel.color.values[0];
+    g = selectedModel.color.values[1];
+    b = selectedModel.color.values[2];
+    document.getElementById('myColor').color.fromRGB(r, g, b);
 }
 
 function setModel()
