@@ -4650,89 +4650,90 @@ var eAttrType = {
     
     Attribute                   :0,
     
-    AttributeContainer          :0,
+    AttributeContainer          :1,
     
-    AttributeVector             :0,
+    AttributeVector             :2,
     
-    AttributeFactory            :0,
+    AttributeFactory            :3,
     
-    AttributeRegistry           :0,
+    AttributeRegistry           :4,
     
-    BalloonTipLabelStyleAttr    :0,
-    BBoxAttr                    :0,
-    BooleanAttr                 :0,
-    ColorAttr                   :0,
-    FontStyleAttr               :0,
-    IconStyleAttr               :0,
-    ImageAttr                   :0,
-    KeyframeAttr                :0,
-    KeyframesAttr               :0,
-    LabelStyleAttr              :0,
-    HTMLLabelStyleAttr          :0,
-    NumberArrayAttr             :0,
-    NumberAttr                  :0,
-    Matrix4x4Attr               :0,
-    PlaneAttr                   :0,
-    PulseAttr                   :0,
-    RectAttr                    :0,
-    ReferenceAttr               :0,
-    StringAttr                  :0,
-    StyleAttr                   :0,
-    StylesAttr                  :0,
-    StyleMapAttr                :0,
-    StylesMapAttr               :0,
-    Vector3DAttr                :0,
-    ViewportAttr                :0,
-    ViewVolumeAttr              :0,
+    BalloonTipLabelStyleAttr    :5,
+    BBoxAttr                    :6,
+    BooleanAttr                 :7,
+    ColorAttr                   :8,
+    FontStyleAttr               :9,
+    IconStyleAttr               :10,
+    ImageAttr                   :11,
+    KeyframeAttr                :12,
+    KeyframesAttr               :13,
+    LabelStyleAttr              :14,
+    HTMLLabelStyleAttr          :15,
+    NumberArrayAttr             :16,
+    NumberAttr                  :17,
+    Matrix4x4Attr               :18,
+    PlaneAttr                   :19,
+    PulseAttr                   :20,
+    RectAttr                    :21,
+    ReferenceAttr               :22,
+    StringAttr                  :23,
+    StyleAttr                   :24,
+    StylesAttr                  :25,
+    StyleMapAttr                :26,
+    StylesMapAttr               :27,
+    Vector3DAttr                :28,
+    ViewportAttr                :29,
+    ViewVolumeAttr              :30,
     
-    Node                        :0,
+    Node                        :31,
     
-    ParentableMotionElement     :0,
-    Camera                      :0,
-    PerspectiveCamera           :0,
-    OrthographicCamera          :0,
-    Light                       :0,
-    DirectionalLight            :0,
-    PointLight                  :0,
-    SpotLight                   :0, 
-    GlobalIllumination          :0,           
+    ParentableMotionElement     :32,
+    Camera                      :33,
+    PerspectiveCamera           :34,
+    OrthographicCamera          :35,
+    Light                       :36,
+    DirectionalLight            :37,
+    PointLight                  :38,
+    SpotLight                   :39, 
+    GlobalIllumination          :40,           
     
-    Material                    :0,
-    Texture                     :0,
+    Material                    :41,
+    Texture                     :42,
     
-    RenderableElement           :0,
-    Geometry                    :0,
-    VertexGeoemtry              :0,
-    TriList                     :0,
+    RenderableElement           :43,
+    Geometry                    :44,
+    VertexGeoemtry              :45,
+    TriList                     :46,
     
-    Group                       :0,
-    Isolator                    :0,
+    Group                       :47,
+    Isolator                    :48,
     
-    Dissolve                    :0,
+    Dissolve                    :49,
     
-    Transform                   :0,
+    Transform                   :50,
     
-    QuaternionRotate            :0,
-    Scale                       :0,
-    Rotate                      :0,
-    Translate                   :0,
+    QuaternionRotate            :51,
+    Scale                       :52,
+    Rotate                      :53,
+    Translate                   :54,
     
-    Model                       :0,
-    Surface                     :0,
-    MediaTexture                :0,
-    NullObject                  :0,
+    Model                       :55,
+    Surface                     :56,
+    MediaTexture                :57,
+    NullObject                  :58,
     
-    Label                       :0,
-    HTMLLabel                   :0,
+    Label                       :59,
+    HTMLLabel                   :60,
+    BalloonTipLabel             :61,
     
-    PathTrace                   :0,
+    PathTrace                   :62,
     
-    Directive                   :0,
-    UpdateDirective             :0,
-    RenderDirective             :0,
-    RayPickDirective            :0,
-    BBoxDirective               :0,
-    SerializeDirective          :0,
+    Directive                   :63,
+    UpdateDirective             :64,
+    RenderDirective             :65,
+    RayPickDirective            :66,
+    BBoxDirective               :67,
+    SerializeDirective          :68,
     
     Evaluator                   :1000,
     SceneInspector              :1001,
@@ -4752,15 +4753,15 @@ var eAttrElemType = {
     eAttrElemType_Unknown               :0,	///
 
     // standard C-types
-    eAttrElemType_Int                   :0,							///
-    eAttrElemType_UnsignedInt           :0,					///
-    eAttrElemType_Char                  :0,							///
-    eAttrElemType_UnsignedChar          :0,					///
-    eAttrElemType_Float                 :0,						///
-    eAttrElemType_Double                :0,						///
+    eAttrElemType_Int                   :1,							///
+    eAttrElemType_UnsignedInt           :2,					///
+    eAttrElemType_Char                  :3,							///
+    eAttrElemType_UnsignedChar          :4,					///
+    eAttrElemType_Float                 :5,						///
+    eAttrElemType_Double                :6,						///
 
     // attribute
-    eAttrElemType_Attribute             :0,					///
+    eAttrElemType_Attribute             :7,					///
 
     // user-defined
     eAttrElemType_UserDefined           :0x000000FF,		///
@@ -16150,6 +16151,15 @@ function ArcballInspector_ViewTransformModifiedCB(attribute, container)
 KeyframeInterpolator.prototype = new Evaluator();
 KeyframeInterpolator.prototype.constructor = KeyframeInterpolator;
 
+function EndState()
+ {
+    this.initialized = false;
+    this.startKeyIts = []; // one for each channel
+    this.endKeyIts = [];  // one for each channel
+    this.startTime = -FLT_MAX;    // across all channels
+    this.endTime = FLT_MAX;     // across all channels
+ }
+    
 function KeyframeInterpolator()
 {
     Evaluator.call(this);
@@ -16158,6 +16168,7 @@ function KeyframeInterpolator()
 
     this.lastTime = 0;
     this.evaluated = false;
+    this.endState =  new EndState();
     
     this.time = new NumberAttr(0);
     this.channels = new AttributeVector();
@@ -16201,71 +16212,18 @@ KeyframeInterpolator.prototype.setNumChannels = function(numChannels)
 
 KeyframeInterpolator.prototype.evaluate = function()
 {
+    // initialize end state if not already initialized
+    if (!this.endState.initialized)
+    {
+        // initialize
+        this.updateEndState();
+        this.endState.initialized = true;
+    }
+    
     // get input values
 
     // time
     var time = this.time.getValueDirect();
-    /*
-    std::vector<float> fvalues(1);
-
-    // for each channel...
-    CKeyframesAttr* keyframes = NULL;
-    unsigned int numChannels = m_channels->GetSize()->GetValueDirect();
-    unsigned int numKeyframes = 0;
-    int key = 0, startKey = -1, endKey = -1;
-    CKeyframesAttr::const_iterator first, last;
-    eEndBehavior preBehavior = eEndBehavior_Reset;
-    eEndBehavior postBehavior = eEndBehavior_Reset;
-    for (unsigned int channel = 0; channel < numChannels; channel++)
-    {
-    keyframes = (*m_channels)[channel];
-    if (!keyframes || !(numKeyframes = keyframes->GetSize()->GetValueDirect()))
-    {
-    continue;
-    }
-
-        startKey = m_startKeys->GetSize()->GetValueDirect() > channel ? 
-    (*m_startKeys)[channel]->GetValueDirect() : -1;
-    endKey = m_endKeys->GetSize()->GetValueDirect() > channel ?
-    (*m_endKeys)[channel]->GetValueDirect() : -1;
-    preBehavior = m_preBehaviors->GetSize()->GetValueDirect() > channel ?
-    (eEndBehavior) (*m_preBehaviors)[channel]->GetValueDirect() : eEndBehavior_Reset;
-    postBehavior = m_postBehaviors->GetSize()->GetValueDirect() > channel ?
-    (eEndBehavior) (*m_postBehaviors)[channel]->GetValueDirect() : eEndBehavior_Reset;
-
-        if (endKey < startKey)
-    {
-    endKey = startKey;
-    }
-
-        // set first/last keys to evaluate
-    first = keyframes->begin();
-    last = keyframes->end();
-    last--;
-
-        if (startKey >= 0 && startKey < (int) keyframes->size())
-    {
-    for (key=0; key < startKey; key++, first++)
-    ;
-    }
-
-        if (endKey >= 0 && endKey < (int) keyframes->size())
-    {
-    last = keyframes->begin();
-    for (key=0; key < endKey; key++, last++)
-    ;
-    }
-
-        // interpolate
-    fvalues[0] = Interpolate(time, *keyframes, first, last, preBehavior, postBehavior);
-
-        // output result
-    Output((*m_resultValues)[channel], fvalues);
-    }
-
-	m_lastTime = time;
-    m_evaluated = true;
-    */
 
     var first, last;
     var pre, post;
@@ -16276,8 +16234,8 @@ KeyframeInterpolator.prototype.evaluate = function()
         var keyframes = this.channels.getAt(i);
         if (keyframes.vector.length == 0) continue;
 
-        first = keyframes.getAt(0); // TODO
-        last = keyframes.getAt(keyframes.vector.length - 1); // TODO
+        first = this.endState.startKeyIts[i];
+        last = this.endState.endKeyIts[i];
 
         pre = this.preBehaviors.getAt(i).getValueDirect();
         post = this.postBehaviors.getAt(i).getValueDirect();
@@ -16301,129 +16259,117 @@ KeyframeInterpolator.prototype.timeModified = function()
 KeyframeInterpolator.prototype.updateExpired = function()
 {
     // determine if kfi has "expired"
-	this.expired.setValueDirect(false);
+    this.expired.setValueDirect(false);
 
-	// don't expire without evaluating at least once
-	if (!this.evaluated)
-	{
-		return;
-	}
+    // NOTE: this code moved from RenderAgent
 
-	// NOTE: this code moved from RenderAgent
+    // an multi-channel Evaluator (i.e., KeyframeInterpolator) is considered
+    // animating if any 1 of its channels meet the requirements for determining
+    // whether or not Evaluate is called.  For KeyframeInterpolators, "at least
+    // one channel is animating" if any one of the channels' keys has a time 
+    // value greater than the current time.
+    var bAtLeastOneChannelAnimating = false;
 
-	// an multi-channel Evaluator (i.e., KeyframeInterpolator) is considered
-	// animating if any 1 of its channels meet the requirements for determining
-	// whether or not Evaluate is called.  For KeyframeInterpolators, "at least
-	// one channel is animating" if any one of the channels' keys has a time 
-	// value greater than the current time.
-	var bAtLeastOneChannelAnimating = false;
+    // for each channel in the interpolator, compare current time
+    // with both end behavior and stop time to determine whether or 
+    // not this kfi should continue to be evaluated
+    var fEvalTime = this.time.getValueDirect();
+    var iPost = 0;
+    var postBehavior = null;
+    var numChannels = this.channels.vector.length;
+    for (var i=0; i < numChannels; i++)
+    {
+        postBehavior = this.postBehaviors.getAt(i);
+        if (postBehavior)
+        {
+            iPost = postBehavior.getValueDirect();
+        }
 
-	// for each channel in the interpolator, compare current time
-	// with both end behavior and stop time to determine whether or 
-	// not this kfi should continue to be evaluated
-	var fEvalTime = this.time.getValueDirect();
-	var fStartTime = -1;
-	var fEndTime  = -1;
-	var fShortest = FLT_MAX;
-	var fLongest = -FLT_MAX;
-	var iStartKey = 0;
-	var iEndKey = 0;
-	var iPost = 0;
-	var keyframes = null;
-	var keyframe = null;
-	var startKey = null;
-	var endKey = null;
-	var postBehavior = null;
-	var numChannels = this.channels.vector.length;
-	for (var i = 0; i < numChannels; i++)
-	{
-		// Check for start and end times set for this eval
-		// Use them if set.  Note:  the SG handles rendering
-		// according to the set start and end time, but we also
-		// need to manage it here in order to NOT call evaluate
-		// when the time is out of range
+        // if *expression* is TRUE then the end behavior is 
+        // repeat, oscillate, or some other continuous behavior
+        if (iPost != eEndBehavior.Constant)
+        {
+            bAtLeastOneChannelAnimating = true;
+            break;
+        }
+    }
 
-		keyframes = this.channels.getAt(i);
-		/*
-		startKey = GetStartKey(i);
-		if (startKey)
-		{
-			iStartKey = startKey->GetValueDirect();
-		}
+    // if the eval's current time either:
+    // 1. has advanced passed its longest keyframe OR
+    // 2. is not yet at its start time
+    // then stop evaluating it.
+    // NOTE: only check Constant end behaviors b/c Repeats and
+    // Oscillators should keep running.  By definition, scenes w/
+    // non-constant end behaviors will never AA
+    if (!bAtLeastOneChannelAnimating &&
+        (fEvalTime < this.endState.startTime || fEvalTime > this.endState.endTime))
+    {
+        // set expired flag
+        this.expired.setValueDirect(true);
+    }
+}
 
-		if (iStartKey != -1)
-		{
-			keyframe = (*keyframes)[iStartKey];
-		}
-		else*/
-		{
-			keyframe = keyframes.getAt(0);
-		}
+KeyframeInterpolator.prototype.updateEndState = function()
+{
+    var fStartTime = -1;
+    var fEndTime = -1;
+    var fShortest = FLT_MAX;
+    var fLongest = -FLT_MAX;
+    var startKey = -1, endKey = -1;
+    var keyframes = null;
+    var numChannels = this.channels.vector.length;
+    
+    this.startKeys.resize(numChannels);
+    this.endKeys.resize(numChannels);
+    
+    for (var i=0; i < numChannels; i++)
+    {
+        keyframes = this.channels.getAt(i);
+        
+        startKey = this.startKeys.vector.length > i ? this.startKeys.getAt(i).getValueDirect() : -1;
+        endKey = this.endKeys.vector.length > i ? this.endKeys.getAt(i).getValueDirect() : -1;
+        
+        if (endKey < startKey)
+        {
+            endKey = startKey;
+        }
+        
+        // set first/last keys to evaluate
+        this.endState.startKeyIts[i] = keyframes.getAt(0);
+        this.endState.endKeyIts[i] = keyframes.getAt(keyframes.vector.length - 1);
 
-		fStartTime = keyframe != null ? keyframe.getTime() : fStartTime;
+        if (startKey >= 0 && startKey < keyframes.vector.length)
+        {
+            this.endState.startKeyIts[i] = keyframes.getAt(startKey);
+        }
 
-		// save the smallest start time for all channels
-		fShortest = fStartTime < fShortest ? fStartTime : fShortest;
-		/*
-		endKey = GetEndKey(i);
-		if (endKey)
-		{
-			iEndKey = endKey->GetValueDirect();
-		}
+        if (endKey >= 0 && endKey < keyframes.vector.length)
+        {
+            this.endState.endKeyIts[i] = keyframes.getAt(endKey);
+        }
 
-		// the end time for this animation is located either at the
-		// user-specified location returned from GetEndKey OR it is
-		// the last Keyframe (frame?) of the animation
-		if (iEndKey != -1)
-		{
-			keyframe = (*keyframes)[iEndKey];
-		}
-		else*/
-		{
-			keyframe = keyframes.getAt(keyframes.vector.length - 1);
-		}
+	fStartTime = this.endState.startKeyIts[i].getTime();
+        fEndTime = this.endState.endKeyIts[i].getTime();
 
-		// whichever keyframe was retreived
-		fEndTime = keyframe != null ? keyframe.getTime() : fEndTime;
+	// save the smallest start time for all channels
+	fShortest = fStartTime < fShortest ? fStartTime : fShortest;
 
-		// save the longest end time for all channels
-		fLongest = fEndTime >= fLongest ? fEndTime : fLongest;
-
-		postBehavior = this.postBehaviors.getAt(i);
-		if (postBehavior)
-		{
-			iPost = postBehavior.getValueDirect();
-		}
-
-		// if *expression* is TRUE then the end behavior is 
-		// repeat, oscillate, or some other continuous behavior
-		if (iPost != eEndBehavior.Constant)
-		{
-			bAtLeastOneChannelAnimating = true;
-		}
-	}
-
-	// if the eval's current time either:
-	// 1. has advanced passed its longest keyframe OR
-	// 2. is not yet at its start time
-	// then stop evaluating it.
-	// NOTE: only check Constant end behaviors b/c Repeats and
-	// Oscillators should keep running.  By definition, scenes w/
-	// non-constant end behaviors will never AA
-	// NOTE: check against m_lastTime to make sure we have evaluated the end (or beginning)
-	// of the KFI before expiring
-	if (!bAtLeastOneChannelAnimating &&
-	   ((fShortest > fEvalTime && this.lastTime <= fShortest) ||
-	    (fLongest  < fEvalTime && this.lastTime >= fLongest)))
-	{
-		// set expired flag
-		this.expired.setValueDirect(true);
-	}
+	// save the longest end time for all channels
+	fLongest = fEndTime >= fLongest ? fEndTime : fLongest;
+    }
+    
+    this.endState.startTime = fShortest;
+    this.endState.endTime = fLongest;
 }
 
 function KeyframeInterpolator_TimeModifiedCB(attribute, container)
 {
     container.timeModified();
+}
+
+function KeyframeInterpolator_EndStateModifiedCB(attribute, container)
+{
+    container.updateEndState();
 }
 BBoxLocator.prototype = new Evaluator();
 BBoxLocator.prototype.constructor = BBoxLocator;
@@ -25882,6 +25828,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["Isolator"] = newSGNode;
     this.newResourceProcs["Label"] = newSGNode;
     this.newResourceProcs["HTMLLabel"] = newSGNode;
+    this.newResourceProcs["BalloonTipLabel"] = newSGNode;
     this.newResourceProcs["LineList"] = newSGNode;
     this.newResourceProcs["MediaTexture"] = newSGNode;
     this.newResourceProcs["Model"] = newModel;
@@ -26020,6 +25967,7 @@ function newSGNode(name, factory)
     case "Isolator":            resource = new Isolator(); break;
     case "Label":               resource = new Label(); break;
     case "HTMLLabel":           resource = new HTMLLabel(); break;
+    case "BalloonTipLabel":     resource = new BalloonTipLabel(); break;
     case "LineList":            resource = new LineList(); break;
     case "MediaTexture":        resource = new MediaTexture(); break;
     case "OrthographicCamera":  resource = new OrthographicCamera(); registerParentableAttributes(resource, factory); break;
