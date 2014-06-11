@@ -436,7 +436,7 @@
                           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
                             Color <span class="caret"></span>
                           </button>
-                          <ul class="dropdown-menu" role="menu" id="color-dropdown" style="width: 205px;">
+                          <ul class="dropdown-menu" role="menu" id="color-dropdown">
                             <!-- Color Picker Script - ColorCodeHex.COM -->
                             <script type="text/javascript">
                             function updateInfo(color) {
@@ -446,11 +446,10 @@
                             }
                             </script>
 
-                            Color: <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();">
-                            <br>
-                            R: <input id="info-r" size="2" />
-                            G: <input id="info-g" size="2" />
-                            B: <input id="info-b" size="2" />
+                            <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
+                            <input id="info-r" size="2" type="hidden"/>
+                            <input id="info-g" size="2" type="hidden"/>
+                            <input id="info-b" size="2" type="hidden"/>
                           </ul>
                         </div>
                       </li>
