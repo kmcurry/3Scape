@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwplugin url="BBD3D8Engine" action="load"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<Scene>
+	<Isolator name="Root">
+		<Selector name="Cameras">
+			<PerspectiveCamera name="Camera" zoom="3.2" nearDistance="0.02" farDistance="200">
+				<position x="0.000884984" y="0.158622" z="-0.918326"/>
+			</PerspectiveCamera>
+		</Selector>
+		<Group name="Lights">
+			<GlobalIllumination name="AmbientLight">
+				<ambient r="0.2" g="0.2" b="0.2"/>
+			</GlobalIllumination>
+			<PointLight name="Light" range="3.40282e+038" parent="Camera">
+				<position x="0.680453" y="6.35138" z="-16.7254"/>
+				<rotation x="15.5" y="4.4" z="-5.16739e-007"/>
+				<ambient r="0.05" g="0.05" b="0.05"/>
+				<diffuse r="1" g="1" b="1"/>
+				<specular r="1" g="1" b="1"/>
+			</PointLight>
+		</Group>
+		<Group name="Models">
+			<Model name="bobble-body" url="objects/bobble-body.lwo">
+				<position x="-0.083781" y="0.00146509" z="0.352966"/>
+				<rotation x="0" y="270" z="0"/>
+				<pivot x="0" y="0.121096" z="0"/>
+			</Model>
+			<Model name="DanPatrick" url="objects/DanPatrick.lwo">
+				<position x="-0.078729" y="0.210445" z="0.364109"/>
+				<rotation x="0" y="270" z="0"/>
+				<pivot x="0" y="0.35" z="0"/>
+			</Model>
+		</Group>
+	</Isolator>
+	<RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
+	<Animations>
+		<KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
+		<KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
+		<KeyframeInterpolator name="bobble-bodyMotion" url="motions/bobble-body.mot" target="bobble-body"/>
+		<KeyframeInterpolator name="DanPatrickMotion" url="motions/DanPatrick.mot" target="DanPatrick"/>
+	</Animations>
+	<ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+	<Set target="Selector" computePivotDistance="true"/>
+</Scene>

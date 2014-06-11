@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Update>
+
+    <Set target="Pyramid1" show="true"></Set>
+    <Set target="Pyramid2" show="true"></Set>
+    <Set target="Pyramid3" show="true"></Set>
+
+</Update>

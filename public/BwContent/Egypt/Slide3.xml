@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<Update>
+
+    <Set target="S_Description" show="false"></Set>
+    <Set target="P2_Description" show="false"></Set>
+    <Set target="P1_Description" show="false"></Set>
+    <Set target="A2_Description" show="false"></Set>
+    <Set target="A3_Description" show="false"></Set>
+    <Set target="P3_Description" show="false"></Set>
+    <Set target="CameraMotion" time="15"></Set>
+    <Play></Play>
+    <!--<Pause trigger="CameraMotion/time=22"/>-->
+    <Set trigger="CameraMotion/time=19" target="A1_Description" show="true"></Set>
+    <Set target="Artifact_01Dissolve" time="17.5"></Set>
+    <Pause trigger="Artifact_01Dissolve/time=23"/>
+
+</Update>

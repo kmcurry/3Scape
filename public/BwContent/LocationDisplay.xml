@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Update>
+	<Remove target="posHeader"/>
+	<Remove target="posLabel"/>
+  <Remove target="geoPosHeader"/>
+  <Remove target="geoPosLabel"/>
+	<Remove target="rotHeader"/>
+	<Remove target="rotLabel"/>
+	<Remove target="pointWorldHeader"/>
+	<Remove target="pointWorldLabel"/>
+	<Remove target="pointGeoHeader"/>
+	<Remove target="pointGeoLabel"/>
+	<Remove target="pivotDistanceHeader"/>
+	<Remove target="pivotDistanceLabel"/>
+	<!-- Add position labels -->
+	<Label name="posHeader">
+		<text>Camera Position:</text>
+	</Label>
+	<Label name="posLabel" >
+		<position x="0" y="16" z="0"/>
+	</Label>
+	<ConnectAttributes sourceContainer="Camera" targetContainer="posLabel">
+		<sourceAttribute>position</sourceAttribute>
+		<targetAttribute>text</targetAttribute>
+	</ConnectAttributes>
+  <!-- Add position labels -->
+  <Label name="geoPosHeader">
+    <position x="0" y="32" z="0"/>
+    <text>Camera Position Geo:</text>
+  </Label>
+  <Label name="geoPosLabel" >
+    <position x="0" y="48" z="0"/>
+  </Label>
+  <ConnectAttributes sourceContainer="Camera" targetContainer="geoPosLabel">
+    <sourceAttribute>geoPosition</sourceAttribute>
+    <targetAttribute>text</targetAttribute>
+  </ConnectAttributes>
+	<!-- Add rotation labels -->
+	<Label name="rotHeader">
+		<position x="0" y="64" z="0"/>
+		<text>Camera Rotation:</text>
+	</Label>
+	<Label name="rotLabel">
+		<position x="0" y="80" z="0"/>
+	</Label>
+	<ConnectAttributes sourceContainer="Camera" targetContainer="rotLabel">
+		<sourceAttribute>rotation</sourceAttribute>
+		<targetAttribute>text</targetAttribute>
+	</ConnectAttributes>
+	<!-- Add pointWorld labels -->
+	<Label name="pointWorldHeader">
+		<position x="0" y="96" z="0"/>
+		<text>Selected Point World:</text>
+	</Label>
+	<Label name="pointWorldLabel">
+		<position x="0" y="112" z="0"/>
+	</Label>
+	<ConnectAttributes sourceContainer="Selector" targetContainer="pointWorldLabel">
+		<sourceAttribute>pointWorld</sourceAttribute>
+		<targetAttribute>text</targetAttribute>
+	</ConnectAttributes>
+	<!-- Add pointGeo labels -->
+	<Label name="pointGeoHeader">
+		<position x="0" y="128" z="0"/>
+		<text>Selected Point Geo:</text>
+	</Label>
+	<Label name="pointGeoLabel">
+		<position x="0" y="144" z="0"/>
+	</Label>
+	<ConnectAttributes sourceContainer="Selector" targetContainer="pointGeoLabel">
+		<sourceAttribute>pointGeo</sourceAttribute>
+		<targetAttribute>text</targetAttribute>
+	</ConnectAttributes>
+	<!-- Add pivotDistance -->
+	<Label name="pivotDistanceHeader">
+		<position x="0" y="160" z="0"/>
+		<text>pivotDistance: </text>
+	</Label>
+	<Label name="pivotDistanceLabel">
+		<position x="93" y="160" z="0"/>
+	</Label>
+	<ConnectAttributes sourceContainer="SceneInspector" targetContainer="pivotDistanceLabel">
+		<sourceAttribute>pivotDistance</sourceAttribute>
+		<targetAttribute>text</targetAttribute>
+	</ConnectAttributes>
+	<Model name="Pivot" url="objects/pivotCone.lwo" parent="Camera" selectable="false">
+		<position x="0" y="0" z="0"/>
+		<scale x=".1" y=".1" z=".1"/>
+	</Model>
+	<ConnectAttributes sourceContainer="SceneInspector" targetContainer="Pivot">
+		<sourceAttribute>pivotDistance</sourceAttribute>
+		<targetAttribute>position:2</targetAttribute>
+	</ConnectAttributes>
+  <ConnectAttributes persist="false" sourceContainer="Camera" targetContainer="Camera">
+    <sourceAttribute>worldPosition</sourceAttribute>
+    <targetAttribute>worldCenter</targetAttribute>
+  </ConnectAttributes>
+</Update>

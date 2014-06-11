@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Update>
+    <LabelStyle name="myStyle">
+        <labelStyle>
+            <fontStyle>
+                <size>16</size>
+            </fontStyle>
+        </labelStyle>
+    </LabelStyle>
+    <Remove target="Grid"/>
+	<Set target="Camera" zoom="3.2" nearDistance="5" farDistance="50000">
+		<position x="-203.119" y="14020.4" z="-839.134"/>
+		<rotation x="90" y="0" z="0"/>
+	</Set>
+    <Set target="AmbientLight">
+       <ambient r="0.341765" g="0.311569" b="0.292353"/>
+    </Set>
+    <Set name="Light" range="3.40282e+038">
+        <position x="-186.701" y="66052" z="-14287.5"/>
+        <rotation x="88.2" y="0.5" z="0"/>
+        <ambient r="0.0488236" g="0.0445098" b="0.0417647"/>
+        <diffuse r="0.976471" g="0.890196" b="0.835294"/>
+        <specular r="0.976471" g="0.890196" b="0.835294"/>
+    </Set>
+    <Set target="RenderAgent" globalTimeInSecs="0"></Set>
+    <Group name="Models">
+        <Model name="EGYPT" url="objects/EGYPT.lwo"/>
+		<Model name="GreatPyramid" url="objects/GreatPyramid.lwo">
+			<position x="116.492" y="0" z="-492.851"/>
+		</Model>
+		<Model name="KhafrePyramid" url="objects/KhafrePyramid.lwo">
+			<position x="-247.374" y="0" z="-889.919"/>
+		</Model>
+		<Model name="MenkaurePyramid" url="objects/MenkaurePyramid.lwo">
+			<position x="-521.325" y="0" z="-1328.76"/>
+		</Model>
+		<Model name="Site_SkyDome" url="objects/Site_SkyDome.lwo"/>
+		<Model name="Artifact_01" url="objects/Artifact_01.lwo" dissolve="1">
+			<position x="244.377" y="20" z="-299.878"/>
+			<rotation x="-14.6" y="146" z="6.1"/>
+		</Model>
+		<Model name="Artifact_02" url="objects/Artifact_02.lwo" dissolve="1">
+			<position x="-130.198" y="34.8224" z="-724.492"/>
+			<rotation x="0" y="-47.6" z="0"/>
+		</Model>
+		<Model name="Artifact_03" url="objects/Artifact_03.lwo" dissolve="1">
+			<position x="-435.347" y="9" z="-1249.14"/>
+			<rotation x="0" y="142.3" z="0"/>
+		</Model>
+		<NullObject name="Pyramid1_Label_1">
+            <position x="100" y="150" z="-492"/>
+		</NullObject>
+        <NullObject name="Artifact1_Label_1">
+            <position x="200" y="10" z="-299"/>
+        </NullObject>
+		<Model name="GreatSphinx" url="objects/GreatSphinx.lwo">
+			<position x="502.1" y="0" z="-975.513"/>
+		</Model>
+    </Group>
+    <Group name="Labels">
+        <Label name="Pyramid1" parent="GreatPyramid" text="The Great Pyramid" show="false">
+        </Label>
+        <Label name="Pyramid2" parent="KhafrePyramid" text="The Khafre Pyramid" show="false">
+        </Label>
+        <Label name="Pyramid3" parent="MenkaurePyramid" text="The Menkaure Pyramid" show="false">
+        </Label>
+        <Label name="P1_Description" parent="Pyramid1_Label_1" text="This is the Great Pyramid" show="false"></Label>
+        <Label name="A1_Description" parent="Artifact1_label_1" text="This is the first Artifact" show="false"></Label>
+        <Label name="P2_Description" parent="KhafrePyramid" text="This is the Second Pyramid" show="false"></Label>
+        <Label name="A2_Description" parent="KhafrePyramid" text="This is the Second Artifact" show="false"></Label>
+        <Label name="P3_Description" parent="MenkaurePyramid" text="This is the Third Pyramid" show="false"></Label>
+        <Label name="A3_Description" parent="MenkaurePyramid" text="This is the Third Artifact" show="false"></Label>
+        <Label name="S_Description" parent="GreatSphinx" text="This is the Sphinx" show="false"></Label>
+        <Label name="A4_Description" parent="GreatSphinx" text="This is the Fourth Artifact" show="false"></Label>
+    </Group>
+    <Animations>
+        <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
+		<KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
+		<KeyframeInterpolator name="EGYPTMotion" url="motions/EGYPT.mot" target="EGYPT"/>
+		<KeyframeInterpolator name="Site_SkyDomeMotion" url="motions/Site_SkyDome.mot" target="Site_SkyDome"/>
+		<KeyframeInterpolator name="Artifact_01Dissolve" url="envelopes/Artifact_01.env" target="Artifact_01" targetConnectionType="dissolve"/>
+		<KeyframeInterpolator name="Artifact_02Dissolve" url="envelopes/Artifact_02.env" target="Artifact_02" targetConnectionType="dissolve"/>
+		<KeyframeInterpolator name="Artifact_03Dissolve" url="envelopes/Artifact_03.env" target="Artifact_03" targetConnectionType="dissolve"/>
+    </Animations>
+    <Pause name="foo" trigger="CameraMotion/time=5"/>
+</Update>
