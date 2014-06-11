@@ -13,8 +13,12 @@
     <script src="./js/BwHelper.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script src="js/nicEdit.js"></script>
-    <!-- Color Picker -->
+    <!-- jsColor Color Picker -->
     <script type="text/javascript" src="jscolor/jscolor.js"></script>
+    <!-- RightJS Color Picker -->
+    <script src="/javascript/right.js"></script>
+    <script src="/javascript/right-colorpicker.js"></script>
+
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -187,28 +191,28 @@
                     break;
                 case "click": {
                     //Dishing out the event client x and y cordinates of the mouse for testing purposes
-                    if (!e.metaKey && !e.ctrlKey) {
-                        selectedModel = bridgeworks.selector.selections.models[0];
-                        if (selectedModel) {
-                            var pos = selectedModel.position.getValueDirect();
-                            $("#positionX").spinner("value", pos.x);
-                            $("#positionY").spinner("value", pos.y);
-                            $("#positionZ").spinner("value", pos.z);
+                    // if (!e.metaKey && !e.ctrlKey) {
+                         selectedModel = bridgeworks.selector.selections.models[0];
+                    //     if (selectedModel) {
+                    //         var pos = selectedModel.position.getValueDirect();
+                    //         $("#positionX").spinner("value", pos.x);
+                    //         $("#positionY").spinner("value", pos.y);
+                    //         $("#positionZ").spinner("value", pos.z);
                             
-                            var rot = selectedModel.rotation.getValueDirect();
-                            $("#rotationX").spinner("value", rot.x);
-                            $("#rotationY").spinner("value", rot.y);
-                            $("#rotationZ").spinner("value", rot.z);
+                    //         var rot = selectedModel.rotation.getValueDirect();
+                    //         $("#rotationX").spinner("value", rot.x);
+                    //         $("#rotationY").spinner("value", rot.y);
+                    //         $("#rotationZ").spinner("value", rot.z);
                             
-                            $("#scale").spinner("value", selectedModel.scale.getValueDirect().x);
-                            $('#objectname').val(selectedModel.name.getValueDirect().join(""))
+                    //         $("#scale").spinner("value", selectedModel.scale.getValueDirect().x);
+                    //         $('#objectname').val(selectedModel.name.getValueDirect().join(""))
                             
-                        }
-                    }
+                    //     }
+                    // }
                     capture = false;
                 }
                 break;
-                
+
                 case "dblclick":
                 {
                     var name = selectedModel.name.getValueDirect().join("");
@@ -424,6 +428,29 @@
                       </li>
                       <li><p class="navbar-text" id="Current_Object">Current Object: X</p></li>
                       <li>
+                        <div class="btn-group dropdown keep-open">
+                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                            Color <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu" id="color-dropdown" style="width: 205px;">
+                            <!-- Color Picker Script - ColorCodeHex.COM -->
+                            <script type="text/javascript">
+                            function updateInfo(color) {
+                              document.getElementById('info-r').value = color.rgb[0];
+                              document.getElementById('info-g').value = color.rgb[1];
+                              document.getElementById('info-b').value = color.rgb[2];
+                            }
+                            </script>
+
+                            Color: <input class="color {onImmediateChange:'updateInfo(this);'}" value="FFFFFF" onchange="applyColor();">
+                            <br>
+                            R: <input id="info-r" size="2" />
+                            G: <input id="info-g" size="2" />
+                            B: <input id="info-b" size="2" />
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
                               <div class="dropdown">
                               <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
                                   Add Label
@@ -443,9 +470,6 @@
                       
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                      <li>
-                        <button type="button" class="btn navbar-btn btn-info" id="apply-color" style="margin-right:3px" onclick="applyColor();">Apply Color</button>
-                      </li>
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li>
@@ -490,26 +514,8 @@
                                         </ul>
                                     </div>
                                     <div class="tab-pane" id="object-list">
-
-                                        <ul class="nav nav-sidebar">
-
-                                        </ul>
-                                        <!-- Color Picker Script - ColorCodeHex.COM -->
-<script type="text/javascript">
-function updateInfo(color) {
-  document.getElementById('info-r').value = color.rgb[0];
-  document.getElementById('info-g').value = color.rgb[1];
-  document.getElementById('info-b').value = color.rgb[2];
-}
-</script>
-
-Color: <input class="color {onImmediateChange:'updateInfo(this);'}" value="66ff00">
-R: <input id="info-r" size="2" />,
-G: <input id="info-g" size="2" />,
-B: <input id="info-b" size="2" />
-
-
-
+                                      <ul class="nav nav-sidebar">
+                                      </ul>
                                     </div>                                    
                                     <div class="tab-pane" id="animate">
                                         Animations
@@ -708,6 +714,7 @@ B: <input id="info-b" size="2" />
         }
         </script>
       <script type="text/javascript">
+      // Presentation notes display correctly.
           $(function () {
               var showPopover = function () {
                           $(this).popover('show');
@@ -737,6 +744,26 @@ B: <input id="info-b" size="2" />
               e.stopPropagation();
           });
 
+        //Color picker dropdown doesn't close on click
+          $('#color-dropdown').click(function(event){
+               event.stopPropagation();
+           });
+          $('#color-dropdown').on('hide.bs.dropdown', function () {
+              return false;
+          });
+$(function () {
+    $('.dropdown.keep-open').on({
+        "shown.bs.dropdown": function() {
+            $(this).data('closable', false);
+        },
+        "click": function() {
+            $(this).data('closable', true);
+        },
+        "hide.bs.dropdown": function() {
+            return $(this).data('closable');
+        }
+    });
+});      
       </script>
 
 	<script>
