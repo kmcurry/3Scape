@@ -40,6 +40,9 @@
           var cube ="objects/Cube.lwo";
           var sphere = "objects/Sphere.lwo";
           var tube = "objects/Tube.lwo";
+          var Spin = "motions/spin-y.mot";
+          var Diss = "motions/oscillate-dissolve.mot";
+          var Scal = "motions/oscillate-scale.mot"
           var wall = "objects/wall.lwo";
           var currentObj = "Current Object: X";
           var editorOpen = 0;
@@ -344,6 +347,25 @@
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+      <div class="modal fade" id="motionsModal">
+          <div class="modal-dialog" style="width: 900px">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">List of Animations</h4>
+                  </div>
+                  <!--Loading all the Libs and putting them in their respective places-->
+                  <div class="modal-body row">
+                      <div class="col-md-8" id="panel-motions">
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                  </div>
+              </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
       <div class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation" id="Navbar">
           <div class="container-fluid">
               <div class="navbar-header">
@@ -416,16 +438,11 @@
                             <li class="dropdown-submenu">
                               <a tabindex="-1" href="#">Animations</a>
                               <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#">Second level</a></li>
-                                <li class="dropdown-submenu">
-                                  <a href="#">Even More..</a>
-                                  <ul class="dropdown-menu">
-                                      <li><a href="#">3rd level</a></li>
-                                      <li><a href="#">3rd level</a></li>
-                                  </ul>
-                                </li>
-                                <li><a href="#">Second level</a></li>
-                                <li><a href="#">Second level</a></li>
+                                <li><a tabindex="-1" href="#"onclick="load(Diss);">dissolve</a></li>
+                                  <li><a tabindex="-1" href="#"onclick="load(Scal);">scale</a></li>
+                                  <li><a tabindex="-1" href="#"onclick="load(Spin);">spin</a></li>
+                                  <li class="divider"></li>
+                                  <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Antimations...</a></li>
                               </ul>
                             </li>
                           </ul>
@@ -519,21 +536,12 @@
                                     </div>
                                     <div class="tab-pane" id="object-list">
                                       <ul class="nav nav-sidebar">
+                                            <!--This is where the objects get loaded into the list-->
                                       </ul>
                                     </div>                                    
                                     <div class="tab-pane" id="animate">
-                                        Animations
                                         <ul class="nav nav-sidebar">
-                                            <li><a href="">Nav item</a></li>
-                                            <li><a href="">Nav item again</a></li>
-                                            <li><a href="">One more nav</a></li>
-                                            <li><a href="">Another nav item</a></li>
-                                            <li><a href="">More navigation</a></li>
-                                        </ul>
-                                        <ul class="nav nav-sidebar">
-                                            <li><a href="">Nav item again</a></li>
-                                            <li><a href="">One more nav</a></li>
-                                            <li><a href="">Another nav item</a></li>
+                                            <!--This is where the animations get loaded into the list-->
                                         </ul>
                                     </div>
                                 </div>
@@ -599,6 +607,7 @@
 
           function modalHide(){
                   $('#myModal').modal('hide');
+                  $('#motionsModal').modal('hide');
           }
           function preHide(){
               $('#container').hide();
