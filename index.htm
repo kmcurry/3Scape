@@ -31,6 +31,22 @@
     <script type="text/javascript" src="./js/crossbrowser.js"></script>
     <script type="text/javascript" src="./js/editor.js"></script>
     <script type="text/javascript" src="./js/controls.js"></script>
+
+    <style type="text/css">
+        #wrap{
+            margin: 50px;
+        }
+        #buttons{
+            margin: 10px 0px 0px 0px;
+        }
+        #progress_bar_wrap{
+            position: fixed;
+            bottom: 75px;
+            width: 95%;
+            height:30px;
+            border: solid 1px #222;
+        }
+    </style>
     <!--<link type="text/css" rel="StyleSheet" href="css/bootstrap.min.css"/>-->
       <style id="holderjs-style" type="text/css"></style>
       <script>
@@ -580,6 +596,14 @@
           </div>
       </div>
 
+      <!-- Progress Bar -->
+      <div id="wrap">
+          <div id="progress_bar_wrap" style="display: none">
+          </div>
+      </div>
+      <!-- Progress Bar -->
+
+
       <div id="dialog" title="Please enter your description for this item below">
           <form method="post"> <!--id="my-form" enctype="multipart/form-data" -->
               <textarea name="title" id="title" style="width:100%"></textarea>
@@ -619,12 +643,37 @@
                   $('#myModal').modal('hide');
                   $('#motionsModal').modal('hide');
           }
+
+          //Progress Bar ========================
+          function progress_bar(container){
+              var bar = document.createElement('div');
+
+              bar.style.width = '0%';
+              bar.style.height = '100%';
+              bar.style.background = '#696969';
+              container.appendChild(bar);
+
+              this.set_percentage = function(percentage){
+                  for(var i = 0; i <= percentage; i++) {
+                      bar.style.width = i + "%";
+                  }
+              }
+
+          }
+          //=========================================
+
+          //Progress Bar ===========================================================
+          var bar = new progress_bar(document.getElementById('progress_bar_wrap'));
+          var interval;
+          //========================================================================
+
           function preHide(){
               $('#container').hide();
               $('#Navbar').hide();
               $('#expand').hide();
               $('#dialog').hide();
               $('#present-tray').show();
+              $('#progress_bar_wrap').show();
 
               var docElement
               var request;
@@ -632,22 +681,36 @@
               docElement = document.documentElement;
               request = docElement.requestFullScreen || docElement.webkitRequestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
 
-             // if(typeof request!="undefined" && request){
-                  request.call(docElement);
-            //  }
-             // bridgeworks.updateScene('Slide2.xml')
-             //bridgeworks.updateScene('Slide'+(slideCount+1)+'.xml');
+              // if(typeof request!="undefined" && request){
+              request.call(docElement);
+              //  }
 
+              //Progress Bar ====================================
+              var elapsedTime = 0;
+              interval = window.setInterval(function () {
+                  //if (elapsedTime >= 100) {
+                    //  window.clearInterval(interval);
+                  //}
+                  //elapsedTime = kfi.time.getValueDirect(); This does not work...Need to know how to get the keyframes time!!!
+                  //bar.set_percentage(elapsedTime);
+                  console.log(elapsedTime);
+                  //console.log(elapsedTime);
+              }, 150);
+              //=================================================
           }
+
           function preUnhide(){
               $('#container').show();
               $('#Navbar').show();
               $('#expand').show();
               $('#dialog').show();
               $('#present-tray').hide();
+              $('#progress_bar_wrap').hide();
+
+              window.clearInterval(interval);
           }
       </script>
-      
+
         <script>
         //Getting sidebar tabs to work again. Not sure why they broke//
         $(function(){ 
@@ -662,7 +725,6 @@
         document.onreadystatechange = function () {
             if (document.readyState == "complete") {
                 //This is changing the background of the slides navbar to active and non active to give it the selected effect.
-
                 if (!window.WebGLRenderingContext) {
                     // browser supports WebGL
                     document.location.href = "http://get.webgl.org/";
