@@ -33,6 +33,16 @@
     <script type="text/javascript" src="./js/controls.js"></script>
     <!--<link type="text/css" rel="StyleSheet" href="css/bootstrap.min.css"/>-->
       <style id="holderjs-style" type="text/css"></style>
+      <script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-26989160-4', 'kmcurry.github.io');
+	ga('require', 'displayfeatures');
+	ga('require', 'linkid', 'linkid.js');
+	ga('send', 'pageview');
+	</script>
   </head> 
   <body onresize="resize();">
       
@@ -376,7 +386,7 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="http://www.github.com/kmcurry/3scape" target="_blank">3Scape</a>
+                  <a class="navbar-brand" href="http://3scape.me" target="_blank">3Scape</a>
               </div>
               <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav">
@@ -454,7 +464,7 @@
                           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
                             Color <span class="caret"></span>
                           </button>
-                          <ul class="dropdown-menu" role="menu" id="color-dropdown" style="width: 205px;">
+                          <ul class="dropdown-menu" role="menu" id="color-dropdown">
                             <!-- Color Picker Script - ColorCodeHex.COM -->
                             <script type="text/javascript">
                             function updateInfo(color) {
@@ -464,11 +474,10 @@
                             }
                             </script>
 
-                            Color: <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();">
-                            <br>
-                            R: <input id="info-r" size="2" />
-                            G: <input id="info-g" size="2" />
-                            B: <input id="info-b" size="2" />
+                            <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
+                            <input id="info-r" size="2" type="hidden"/>
+                            <input id="info-g" size="2" type="hidden"/>
+                            <input id="info-b" size="2" type="hidden"/>
                           </ul>
                         </div>
                       </li>
@@ -779,17 +788,6 @@ $(function () {
     });
 });      
       </script>
-
-	<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-26989160-4', '3Scape.me');
-	ga('require', 'displayfeatures');
-	ga('require', 'linkid', 'linkid.js');
-	ga('send', 'pageview');
-	</script>
 
   </body>
 </html>
