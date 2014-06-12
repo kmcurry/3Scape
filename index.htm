@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>BWJS Demo</title>
+    <title>3Scape</title>
     <meta name="google-site-verification" content="HshVtf6HnSfl2YCmfMSpPEkQJT4lwYlxWt1x5XSbjoo" />
 
     <script type="text/javascript" src="./js/Bridgeworks.js"></script>
@@ -621,11 +621,11 @@
               var request;
 
               docElement = document.documentElement;
-              request = docElement.webkitRequestFullScreen || docElement.requestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
+              request = docElement.requestFullScreen || docElement.webkitRequestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
 
-              if(typeof request!="undefined" && request){
+             // if(typeof request!="undefined" && request){
                   request.call(docElement);
-              }
+            //  }
              // bridgeworks.updateScene('Slide2.xml')
              //bridgeworks.updateScene('Slide'+(slideCount+1)+'.xml');
 
