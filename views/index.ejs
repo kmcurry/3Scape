@@ -1,4 +1,4 @@
-<html>
+<html ng-app="scotchTodo">
   <head>
     <title>BWJS Demo</title>
 
@@ -19,6 +19,9 @@
     <script src="/javascript/right.js"></script>
     <script src="/javascript/right-colorpicker.js"></script>
 
+    <!-- Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+    <script src="core.js"></script>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -33,7 +36,7 @@
     <!--<link type="text/css" rel="StyleSheet" href="css/bootstrap.min.css"/>-->
       <style id="holderjs-style" type="text/css"></style>
   </head> 
-  <body onresize="resize();">
+  <body onresize="resize();" ng-controller="mainController">
       
       <script type="text/javascript">
           var bridgeworks = null;
@@ -474,6 +477,9 @@
                       
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
+                      <li>
+                        <button type="button" class="btn navbar-btn btn-info" >{{ todos.length }}</button>
+                      </li>
                       <li>                                          
                           <% if(user) { %>
                             <div>
