@@ -19,9 +19,7 @@
     <script src="/javascript/right.js"></script>
     <script src="/javascript/right-colorpicker.js"></script>
 
-    <!-- Angular -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
-    <script src="core.js"></script>
+    
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -35,6 +33,9 @@
     <script type="text/javascript" src="./js/controls.js"></script>
     <!--<link type="text/css" rel="StyleSheet" href="css/bootstrap.min.css"/>-->
       <style id="holderjs-style" type="text/css"></style>
+    <!-- Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+    <script src="core.js"></script>
   </head> 
   <body onresize="resize();" ng-controller="mainController">
       
@@ -476,10 +477,7 @@
                       </li>
                       
                   </ul>
-                  <ul class="nav navbar-nav navbar-right">
-                      <li>
-                        <button type="button" class="btn navbar-btn btn-info" >{{ todos.length }}</button>
-                      </li>
+                  <ul class="nav navbar-nav navbar-right">  
                       <li>                                          
                           <% if(user) { %>
                             <div>
@@ -534,7 +532,22 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="slides">
                                         <ul class="nav nav-sidebar" id="slidePanel">
-                                            <!--This is where the slides get loaded into-->
+                                          <div class="checkbox" ng-repeat="todo in todos">
+                                            <label>
+                                              <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
+                                            </label>
+                                          </div>
+                                          <form>
+                                            <div class="form-group">
+
+                                              <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.text">
+                                            </div>
+
+                                            <!-- createToDo() WILL CREATE NEW TODOS -->
+                                            <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+                                          </form>                                          
+                                          <button type="button" class="btn btn-info" style="margin-right: 3px">Todo Counter:{{ todos.length }}</button>
                                         </ul>
                                     </div>
                                     <div class="tab-pane" id="object-list">

@@ -1,7 +1,7 @@
-
+express = require('express');
+var Todo = require('./models/todo');
 
 module.exports = function(app, passport) {
-	express = require('express');
 	var main = express.Router();
 	// =====================================
 	// HOME PAGE (with login links) ========
@@ -63,12 +63,7 @@ module.exports = function(app, passport) {
 		res.redirect('/');
 	});
 
-	app.use('/', main);
-
-
-	//Todo test
-
-	app.get('/api/todos', function(req, res) {
+	main.get('/api/todos', function(req, res) {
 
 		// use mongoose to get all todos in the database
 		Todo.find(function(err, todos) {
@@ -82,7 +77,7 @@ module.exports = function(app, passport) {
 	});
 
 	// create todo and send back all todos after creation
-	app.post('/api/todos', function(req, res) {
+	main.post('/api/todos', function(req, res) {
 
 		// create a todo, information comes from AJAX request from Angular
 		Todo.create({
@@ -103,7 +98,7 @@ module.exports = function(app, passport) {
 	});
 
 	// delete a todo
-	app.delete('/api/todos/:todo_id', function(req, res) {
+	main.delete('/api/todos/:todo_id', function(req, res) {
 		Todo.remove({
 			_id : req.params.todo_id
 		}, function(err, todo) {
@@ -119,6 +114,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.use('/', main);
 };
 
 // route middleware to make sure a user is logged in
