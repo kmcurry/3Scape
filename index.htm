@@ -33,16 +33,12 @@
     <script type="text/javascript" src="./js/controls.js"></script>
 
     <style type="text/css">
-        #wrap{
-            margin: 50px;
-        }
-        #buttons{
-            margin: 10px 0px 0px 0px;
-        }
-        #progress_bar_wrap{
+        .clickable {
+            margin: 20px;
+            right: 25px;
             position: fixed;
-            bottom: 75px;
-            width: 95%;
+            bottom: 50px;
+            width: 90%;
             height:30px;
             border: solid 1px #222;
         }
@@ -63,6 +59,7 @@
   <body onresize="resize();">
       
       <script type="text/javascript">
+          //A group of global variables
           var bridgeworks = null;
           var cube ="objects/Cube.lwo";
           var sphere = "objects/Sphere.lwo";
@@ -74,7 +71,9 @@
           var currentObj = "Current Object: X";
           var editorOpen = 0;
           var slideCount = 1;
-          var numSlides = 9;
+          var numSlides = 10;
+          var elapsedTime = 0;
+          var CameraMotion = "CameraMotion";
 
           var g_labelCount = 0;
           var g_labelName = null;
@@ -543,6 +542,7 @@
             <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
                 <div style="padding: 20px; overflow:hidden; width:300px;">
                         <div>
+                            <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->
                           <span class="glyphicon glyphicon-play dvd" title="Play" onclick="bridgeworks.renderController.play();"></span>
                           <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
                           <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();"></span>
@@ -597,9 +597,7 @@
       </div>
 
       <!-- Progress Bar -->
-      <div id="wrap">
-          <div id="progress_bar_wrap" style="display: none">
-          </div>
+      <div class="clickable" id="click" style="display:none">
       </div>
       <!-- Progress Bar -->
 
@@ -647,6 +645,8 @@
           //Progress Bar ========================
           function progress_bar(container){
               var bar = document.createElement('div');
+              bar.setAttribute("class",".progress");
+              bar.setAttribute("id","progress_bar");
 
               bar.style.width = '0%';
               bar.style.height = '100%';
@@ -663,7 +663,7 @@
           //=========================================
 
           //Progress Bar ===========================================================
-          var bar = new progress_bar(document.getElementById('progress_bar_wrap'));
+          var bar = new progress_bar(document.getElementById('click'));
           var interval;
           //========================================================================
 
@@ -673,7 +673,7 @@
               $('#expand').hide();
               $('#dialog').hide();
               $('#present-tray').show();
-              $('#progress_bar_wrap').show();
+              $('#click').show();
 
               var docElement
               var request;
@@ -685,19 +685,40 @@
               request.call(docElement);
               //  }
 
+              kfi = bridgeworks.registry.find("CameraMotion");
               //Progress Bar ====================================
-              var elapsedTime = 0;
               interval = window.setInterval(function () {
-                  //if (elapsedTime >= 100) {
-                    //  window.clearInterval(interval);
-                  //}
-                  //elapsedTime = kfi.time.getValueDirect(); This does not work...Need to know how to get the keyframes time!!!
-                  //bar.set_percentage(elapsedTime);
+                  elapsedTime = kfi.time.getValueDirect();
+                  elapsedTime = elapsedTime * 1.07;
+                  bar.set_percentage(elapsedTime);
                   console.log(elapsedTime);
                   //console.log(elapsedTime);
-              }, 150);
-              //=================================================
+              }, 50);
           }
+          $('.clickable').bind('click', function (ev) {
+              console.log("Click");
+              var $div = $(ev.target);
+              // var $display = $div.find('.display');
+
+              var offset = $div.offset();
+              var x = ev.clientX - offset.left;
+
+              newbar = document.getElementById('progress_bar');
+
+              newbar.style.width = (x/11.18) + "%";
+
+              elapsedTime = (x/11.9);
+
+              var cmd = "\<Set target='"+CameraMotion+"' time='"+elapsedTime+"'/>";
+              var cmd2 = "\<Play/>";
+              console.log(cmd);
+              bridgeworks.updateScene(cmd);
+              bridgeworks.updateScene(cmd2);
+
+              //console.log(bar.style.width);
+              //console.log(x);
+              //=================================================
+          });
 
           function preUnhide(){
               $('#container').show();
@@ -705,7 +726,7 @@
               $('#expand').show();
               $('#dialog').show();
               $('#present-tray').hide();
-              $('#progress_bar_wrap').hide();
+              $('#click').hide();
 
               window.clearInterval(interval);
           }
