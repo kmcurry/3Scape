@@ -2,19 +2,20 @@
   "name": "node-authentication",
   "main": "server.js",
   "dependencies" : {
-    "express" : "~4.0.0",
-    "express-session" : "*",
-    "ejs" : "~0.8.5", 				
-    "mongoose" : "~3.8.1", 
-    "morgan" : "*",			
-    "passport" : "~0.1.17", 		
-    "passport-local" : "~0.1.6", 	
-    "passport-facebook" : "~1.0.2", 
-    "passport-twitter" : "~1.0.2", 	
-    "passport-google-oauth" : "~0.1.5",
-    "connect-flash" : "~0.1.1", 	
+    "express" : "latest",
+    "express-session" : "latest",
+    "ejs" : "latest", 				
+    "mongoose" : "latest", 
+    "morgan" : "latest",			
+    "passport" : "latest", 		
+    "passport-local" : "latest", 	
+    "passport-facebook" : "latest", 
+    "passport-twitter" : "latest", 	
+    "passport-google-oauth" : "latest",
+    "connect-flash" : "latest", 	
     "bcrypt-nodejs" : "latest",
-    "cookie-parser" : "*",
-    "body-parser" : "*"
+    "cookie-parser" : "latest",
+    "body-parser" : "latest",
+    "method-override": "latest"
   }
 }
