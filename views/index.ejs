@@ -524,7 +524,7 @@
                           <% if(user) { %>
                             <div>
                               <a type="button" class="btn navbar-btn btn-danger" style="margin-right:0px" href="/profile">
-                              Welcome, <%= user.local.email %>!
+                              Welcome, <%= user.local.email %>! Note: <%= user.note %>
                               </a>
                               <a href="/logout" class="btn btn-default navbar-btn" style="margin-right:3px">Logout</a>
                             </div>
