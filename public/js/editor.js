@@ -55,13 +55,16 @@ function listLibrary()
        // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-buildingObjects");
+        loadDirectoryObject(url,"Barnville/objects/Barn.lwo",panel,"Barn");
         loadDirectoryObject(url,"Buildings/objects/Building.lwo",panel,"Building1");
         loadDirectoryObject(url,"Buildings/objects/building1.lwo",panel,"Building2");
+        loadDirectoryObject(url,"Barnville/objects/Church.lwo",panel,"Church");
         loadDirectoryObject(url,"Buildings/objects/City_buildings.lwo",panel,"City_buildings");
         loadDirectoryObject(url,"Buildings/objects/shed.lwo",panel,"Shed");
         loadDirectoryObject(url,"Buildings/objects/shed2.lwo",panel,"Shed2");
         loadDirectoryObject(url,"Buildings/objects/shed3.lwo",panel,"Shed3");
-       // listDirectory(url + "Buildings/objects/", panel);
+        loadDirectoryObject(url,"Barnville/objects/Well.lwo",panel,"Well");
+        // listDirectory(url + "Buildings/objects/", panel);
 
         panel = document.getElementById("panel-lib-vehicleObjects");
         loadDirectoryObject(url,"Vehicles/objects/AirfieldFlat.lwo",panel,"AirfieldFlat");
@@ -82,6 +85,13 @@ function listLibrary()
         loadDirectoryObject(url,"Egypt/objects/MenkaurePyramid.lwo",panel,"MenkaurePyramid");
         loadDirectoryObject(url,"Egypt/objects/Site_SkyDome.lwo",panel,"Site_SkyDome");
        // listDirectory(url + "Egypt/objects/", panel);
+
+        panel = document.getElementById("panel-motions");
+        loadDirectoryObject(url,"motions/fly-loop.mot",panel,"Fly-loop");
+        loadDirectoryObject(url,"motions/fly-loop-roll.mot",panel,"Fly-loop-roll");
+        loadDirectoryObject(url,"motions/oscillate-dissolve.mot",panel,"Oscillate Dissolve");
+        loadDirectoryObject(url,"motions/oscillate-scale.mot",panel,"Oscillate Scale");
+        loadDirectoryObject(url,"motions/spin-y.mot",panel,"Spin");
     }
     /*
     url = document.location.href + "/../../Entymology/BwContent/"
@@ -176,6 +186,7 @@ function load(u)
 }
 
 var count = 1;
+var motionCount = 1;
 
 function loadModel(url)
 {
@@ -235,6 +246,17 @@ function loadModel(url)
 
 function loadMotion(url)
 {
+    var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
+    name = motionCount.toString()+". "+name;
+    motionCount++;
+
+    var animationPanel = document.getElementById("animate");
+    var a = document.createElement('a');
+    //a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
+    a.setAttribute("id", name);
+    a.innerHTML = name + "<br>"; // <a>INNER_TEXT</a>
+    animationPanel.appendChild(a); // Append the link to the div
+
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
     
     var xml = loadXMLFile("BwContent/motion.xml");
