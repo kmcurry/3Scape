@@ -110,7 +110,7 @@ module.exports = function(app, passport) {
 			if (err)
 				res.send(err);
 
-			// get and return all the todos after you create another
+			// get and return all the todos after you delete one
 			Todo.find(function(err, todos) {
 				if (err)
 					res.send(err)
@@ -136,10 +136,55 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	//Show a single project
+	main.get('/api/projects/:project_id', function(req, res) {
+		Project.findById(req.params.project_id, function(err, project) {
+			if (err)
+				res.send(err);
+			res.json(project);
+		});
+	});)
+
 	main.post('/api/projects/', function(req, res) {
 
 		Project.create({
 			title : req.body.title
+		}, function(err, project) {
+			if (err)
+				res.send(err);
+
+			// get and return all the projects after you delete one
+			Project.find(function(err, projects) {
+				if (err)
+					res.send(err)
+				res.json(projects);
+		});
+	});
+
+	main.put('/api/projects/:project_id', function(req, res) {
+
+		// use our project model to find the project we want
+		Project.findById(req.params.project_id, function(err, project) {
+
+			if (err)
+				res.send(err);
+
+			project.title = req.body.title; 	// update the projects info
+
+			// save the bear
+			project.save(function(err) {
+				if (err)
+					res.send(err);
+
+				res.json({ message: 'Project updated!' });
+			});
+
+		});
+	});
+
+	main.delete('/api/projects/:project_id', function(req, res) {
+		Project.remove({
+			_id : req.params.project_id
 		}, function(err, project) {
 			if (err)
 				res.send(err);
@@ -149,21 +194,6 @@ module.exports = function(app, passport) {
 				if (err)
 					res.send(err)
 				res.json(projects);
-		});
-	});
-
-	main.delete('/api/todos/:todo_id', function(req, res) {
-		Todo.remove({
-			_id : req.params.todo_id
-		}, function(err, todo) {
-			if (err)
-				res.send(err);
-
-			// get and return all the todos after you create another
-			Todo.find(function(err, todos) {
-				if (err)
-					res.send(err)
-				res.json(todos);
 			});
 		});
 	});
