@@ -344,7 +344,6 @@
       </div>
 
       <img id="BackgroundImage" style="position: absolute;" src="BwContent/images/white.png"/>
-
       <div class="modal fade" id="myModal">
           <div class="modal-dialog" style="width: 900px">
               <div class="modal-content">
@@ -585,7 +584,7 @@
                                             <div class="form-group">
 
                                               <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.text">
+                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.foo">
                                             </div>
 
                                             <!-- createToDo() WILL CREATE NEW TODOS -->
@@ -608,9 +607,23 @@
                                             <li><a href="">Another nav item</a></li>
                                             <li><a href="">More navigation</a></li>
                                         </ul>
+                                        <p>My Projects:</p>
+                                        <!--PROJECT SCOPE BEGINS-->
                                         <div ng-controller="projectController">
-                                          {{message}}
+                                            <div class="checkbox" ng-repeat="project in projects">
+                                              <label>
+                                                <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.text}}
+                                              </label>
+                                            </div>
+                                          <form>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control input-lg text-center" placeholder="Project Name" ngmodel="formData.foo">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
+                                          </form>
+                                          Project Counter: {{projects.length}}
                                         </div>
+                                        <!--PROJECT SCOPE ENDS-->
                                     </div>
                                 </div>
                         </div>

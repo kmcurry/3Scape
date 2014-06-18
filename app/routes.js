@@ -86,7 +86,7 @@ module.exports = function(app, passport) {
 
 		// create a todo, information comes from AJAX request from Angular
 		Todo.create({
-			text : req.body.text,
+			text : req.body.foo,
 			done : false
 		}, function(err, todo) {
 			if (err)
@@ -151,8 +151,9 @@ module.exports = function(app, passport) {
 
 		// create a todo, information comes from AJAX request from Angular
 		Project.create({
-			title : req.body.title,
-		}, function(err, project) {
+			text : req.body.foo,
+			done : false,
+		}, function(err, todo) {
 			if (err)
 				res.send(err);
 
@@ -163,29 +164,30 @@ module.exports = function(app, passport) {
 				res.json(projects);
 			});
 		});
+
 	});
 
 	//update a project
-	main.put('/api/projects/:project_id', function(req, res) {
+	// main.put('/api/projects/:project_id', function(req, res) {
 
-		// use our project model to find the project we want
-		Project.findById(req.params.project_id, function(err, project) {
+	// 	// use our project model to find the project we want
+	// 	Project.findById(req.params.project_id, function(err, project) {
 
-			if (err)
-				res.send(err);
+	// 		if (err)
+	// 			res.send(err);
 
-			project.title = req.body.title; 	// update the projects info
+	// 		project.title = req.body.title; 	// update the projects info
 
-			// save the bear
-			project.save(function(err) {
-				if (err)
-					res.send(err);
+	// 		// save the bear
+	// 		project.save(function(err) {
+	// 			if (err)
+	// 				res.send(err);
 
-				res.json({ message: 'Project updated!' });
-			});
+	// 			res.json({ message: 'Project updated!' });
+	// 		});
 
-		});
-	});
+	// 	});
+	// });
 
 	//delete a project
 	main.delete('/api/projects/:project_id', function(req, res) {
