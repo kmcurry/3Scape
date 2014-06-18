@@ -1,5 +1,6 @@
 express = require('express');
 var Todo = require('./models/todo');
+var Project = require('./models/project');
 
 module.exports = function(app, passport) {
 	var main = express.Router();
@@ -63,6 +64,10 @@ module.exports = function(app, passport) {
 		res.redirect('/');
 	});
 
+	// =====================================
+	// TODOS ===============================
+	// =====================================
+
 	main.get('/api/todos', function(req, res) {
 
 		// use mongoose to get all todos in the database
@@ -98,6 +103,55 @@ module.exports = function(app, passport) {
 	});
 
 	// delete a todo
+	main.delete('/api/todos/:todo_id', function(req, res) {
+		Todo.remove({
+			_id : req.params.todo_id
+		}, function(err, todo) {
+			if (err)
+				res.send(err);
+
+			// get and return all the todos after you create another
+			Todo.find(function(err, todos) {
+				if (err)
+					res.send(err)
+				res.json(todos);
+			});
+		});
+	});
+
+	// =====================================
+	// PROJECTS ============================
+	// =====================================
+
+	main.get('/api/projects', function(req, res) {
+
+		// use mongoose to get all projects in the database
+		Project.find(function(err, projects) {
+
+			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
+			if (err)
+				res.send(err)
+
+			res.json(projects); // return all projects in JSON format
+		});
+	});
+
+	main.post('/api/projects/', function(req, res) {
+
+		Project.create({
+			title : req.body.title
+		}, function(err, project) {
+			if (err)
+				res.send(err);
+
+			// get and return all the projects after you create another
+			Project.find(function(err, projects) {
+				if (err)
+					res.send(err)
+				res.json(projects);
+		});
+	});
+
 	main.delete('/api/todos/:todo_id', function(req, res) {
 		Todo.remove({
 			_id : req.params.todo_id
