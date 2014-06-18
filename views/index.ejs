@@ -60,7 +60,7 @@
   ga('send', 'pageview');
   </script>
   </head> 
-  <body onresize="resize();" ng-controller="mainController">
+  <body onresize="resize();">
       
       <script type="text/javascript">
           //A group of global variables
@@ -573,7 +573,8 @@
                                 <li><a href="#animate" data-toggle="tab">Animate</a></li>                                
                              </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="slides">
+                                    <!--BEGIN TODO SCOPE-->
+                                    <div class="tab-pane active" id="slides" ng-controller="todoController">
                                         <ul class="nav nav-sidebar" id="slidePanel">
                                           <div class="checkbox" ng-repeat="todo in todos">
                                             <label>
@@ -593,6 +594,7 @@
                                           <button type="button" class="btn btn-info" style="margin-right: 3px">Todo Counter:{{ todos.length }}</button>
                                         </ul>
                                     </div>
+                                    <!--END TODO SCOPE-->
                                     <div class="tab-pane" id="object-list">
                                       <ul class="nav nav-sidebar">
                                       </ul>
@@ -606,11 +608,9 @@
                                             <li><a href="">Another nav item</a></li>
                                             <li><a href="">More navigation</a></li>
                                         </ul>
-                                        <ul class="nav nav-sidebar">
-                                            <li><a href="">Nav item again</a></li>
-                                            <li><a href="">One more nav</a></li>
-                                            <li><a href="">Another nav item</a></li>
-                                        </ul>
+                                        <div ng-controller="projectController">
+                                          {{message}}
+                                        </div>
                                     </div>
                                 </div>
                         </div>

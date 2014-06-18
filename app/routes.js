@@ -123,6 +123,7 @@ module.exports = function(app, passport) {
 	// PROJECTS ============================
 	// =====================================
 
+	//Show all projects
 	main.get('/api/projects', function(req, res) {
 
 		// use mongoose to get all projects in the database
@@ -143,24 +144,28 @@ module.exports = function(app, passport) {
 				res.send(err);
 			res.json(project);
 		});
-	});)
+	});
 
-	main.post('/api/projects/', function(req, res) {
+	// create project and send back all projects after creation
+	main.post('/api/projects', function(req, res) {
 
+		// create a todo, information comes from AJAX request from Angular
 		Project.create({
-			title : req.body.title
+			title : req.body.title,
 		}, function(err, project) {
 			if (err)
 				res.send(err);
 
-			// get and return all the projects after you delete one
+			// get and return all the todos after you create another
 			Project.find(function(err, projects) {
 				if (err)
 					res.send(err)
 				res.json(projects);
+			});
 		});
 	});
 
+	//update a project
 	main.put('/api/projects/:project_id', function(req, res) {
 
 		// use our project model to find the project we want
@@ -182,6 +187,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	//delete a project
 	main.delete('/api/projects/:project_id', function(req, res) {
 		Project.remove({
 			_id : req.params.project_id
