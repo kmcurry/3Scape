@@ -591,6 +591,7 @@
                                             <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
                                           </form>                                          
                                           <button type="button" class="btn btn-info" style="margin-right: 3px">Todo Counter:{{ todos.length }}</button>
+                                          <button type="button" class="btn btn-info" style="margin-right: 3px">{{formData}}</button>
                                         </ul>
                                     </div>
                                     <!--END TODO SCOPE-->
@@ -617,11 +618,16 @@
                                             </div>
                                           <form>
                                             <div class="form-group">
-                                                <input type="text" class="form-control input-lg text-center" placeholder="Project Name" ngmodel="formData.foo">
+
+                                              <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.foo">
                                             </div>
+
+                                            <!-- createToDo() WILL CREATE NEW TODOS -->
                                             <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
-                                          </form>
+                                          </form>  
                                           Project Counter: {{projects.length}}
+                                          <h3>{{formData}}</h3>
                                         </div>
                                         <!--PROJECT SCOPE ENDS-->
                                     </div>
