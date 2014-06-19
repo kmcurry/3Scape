@@ -1,4 +1,4 @@
-<html ng-app="scotchTodo">
+<html ng-app="3ScapeMain">
   <head>
     <title>3Scape</title>
     <meta name="google-site-verification" content="HshVtf6HnSfl2YCmfMSpPEkQJT4lwYlxWt1x5XSbjoo" />
@@ -572,29 +572,33 @@
                                 <li><a href="#animate" data-toggle="tab">Animate</a></li>                                
                              </ul>
                                 <div class="tab-content">
-                                    <!--BEGIN TODO SCOPE-->
-                                    <div class="tab-pane active" id="slides" ng-controller="todoController">
+                                    <!--BEGIN PROJECT SCOPE-->
+                                    <div class="tab-pane active" id="slides" ng-controller="projectController">
                                         <ul class="nav nav-sidebar" id="slidePanel">
-                                          <div class="checkbox" ng-repeat="todo in todos">
-                                            <label>
-                                              <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-                                            </label>
-                                          </div>
+                                         <%if(user) {%>
+                                          My ID: <%= user._id %>
+                                          <% } %>
+                                          <p>My Projects:</p>
+                                            <div class="checkbox" ng-repeat="project in projects">
+                                              <label>
+                                                <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.title}}
+                                              </label>
+                                            </div>
                                           <form>
                                             <div class="form-group">
 
                                               <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.text">
+                                              <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
                                             </div>
 
-                                            <!-- createToDo() WILL CREATE NEW TODOS -->
-                                            <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
-                                          </form>                                          
-                                          <button type="button" class="btn btn-info" style="margin-right: 3px">Todo Counter:{{ todos.length }}</button>
-                                          <button type="button" class="btn btn-info" style="margin-right: 3px">{{formData}}</button>
+                                            <!-- createProject() WILL CREATE NEW PROJECTS -->
+                                            <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
+                                          </form>  
+                                          Project Counter: {{projects.length}}
+                                          <h3>{{formData}}</h3>
                                         </ul>
                                     </div>
-                                    <!--END TODO SCOPE-->
+                                    <!--END PROJECT SCOPE-->
                                     <div class="tab-pane" id="object-list">
                                       <ul class="nav nav-sidebar">
                                       </ul>
@@ -607,33 +611,7 @@
                                             <li><a href="">One more nav</a></li>
                                             <li><a href="">Another nav item</a></li>
                                             <li><a href="">More navigation</a></li>
-                                        </ul>
-                                        
-                                        <!--PROJECT SCOPE BEGINS-->
-                                        <div ng-controller="projectController">
-                                          <%if(user) {%>
-                                          My ID: <%= user._id %>
-                                          <% } %>
-                                          <p>My Projects:</p>
-                                            <div class="checkbox" ng-repeat="project in projects | filter : { _creator : user._id }">
-                                              <label>
-                                                <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.title}}
-                                              </label>
-                                            </div>
-                                          <form>
-                                            <div class="form-group">
-
-                                              <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                                              <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
-                                            </div>
-
-                                            <!-- createToDo() WILL CREATE NEW TODOS -->
-                                            <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
-                                          </form>  
-                                          Project Counter: {{projects.length}}
-                                          <h3>{{formData}}</h3>
-                                        </div>
-                                        <!--PROJECT SCOPE ENDS-->
+                                        </ul>                                                          
                                     </div>
                                 </div>
                         </div>
