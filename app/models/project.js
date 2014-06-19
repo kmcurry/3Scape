@@ -2,7 +2,7 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var ProjectSchema   = new Schema({
-	text : String,
+	title : String,
 	done : Boolean,
 	// serXML: String
 });

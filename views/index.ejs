@@ -584,7 +584,7 @@
                                             <div class="form-group">
 
                                               <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.foo">
+                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.text">
                                             </div>
 
                                             <!-- createToDo() WILL CREATE NEW TODOS -->
@@ -613,14 +613,14 @@
                                         <div ng-controller="projectController">
                                             <div class="checkbox" ng-repeat="project in projects">
                                               <label>
-                                                <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.text}}
+                                                <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.title}}
                                               </label>
                                             </div>
                                           <form>
                                             <div class="form-group">
 
                                               <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.foo">
+                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.title">
                                             </div>
 
                                             <!-- createToDo() WILL CREATE NEW TODOS -->

@@ -151,7 +151,7 @@ module.exports = function(app, passport) {
 
 		// create a todo, information comes from AJAX request from Angular
 		Project.create({
-			text : req.body.foo,
+			title : req.body.title,
 			done : false,
 		}, function(err, todo) {
 			if (err)
