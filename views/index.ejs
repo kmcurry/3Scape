@@ -577,7 +577,6 @@
                                         <ul class="nav nav-sidebar" id="slidePanel">
                                          <%if(user) {%>
                                           My ID: <%= user._id %>
-                                          <% } %>
                                           <p>My Projects:</p>
                                             <div class="checkbox" ng-repeat="project in projects">
                                               <label>
@@ -596,6 +595,9 @@
                                           </form>  
                                           Project Counter: {{projects.length}}
                                           <h3>{{formData}}</h3>
+                                          <% }else { %>
+                                            <i>Login to see Project interface</i>
+                                          <% } %>                                          
                                         </ul>
                                     </div>
                                     <!--END PROJECT SCOPE-->
