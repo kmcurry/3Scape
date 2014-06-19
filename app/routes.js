@@ -1,6 +1,7 @@
 express = require('express');
 var Todo = require('./models/todo');
 var Project = require('./models/project');
+var User = require('./models/user');
 
 module.exports = function(app, passport) {
 	var main = express.Router();
@@ -86,7 +87,7 @@ module.exports = function(app, passport) {
 
 		// create a todo, information comes from AJAX request from Angular
 		Todo.create({
-			text : req.body.foo,
+			text : req.body.text,
 			done : false
 		}, function(err, todo) {
 			if (err)
@@ -138,26 +139,26 @@ module.exports = function(app, passport) {
 	});
 
 	//Show a single project
-	main.get('/api/projects/:project_id', function(req, res) {
-		Project.findById(req.params.project_id, function(err, project) {
-			if (err)
-				res.send(err);
-			res.json(project);
-		});
-	});
+	// main.get('/api/projects/:project_id', function(req, res) {
+	// 	Project.findById(req.params.project_id, function(err, project) {
+	// 		if (err)
+	// 			res.send(err);
+	// 		res.json(project);
+	// 	});
+	// });
 
 	// create project and send back all projects after creation
 	main.post('/api/projects', function(req, res) {
-
-		// create a todo, information comes from AJAX request from Angular
+		currentUser = req.user
+		// create a project, information comes from AJAX request from Angular
 		Project.create({
+			_creator : currentUser._id,
 			title : req.body.title,
-			done : false,
-		}, function(err, todo) {
+		}, function(err, project) {
 			if (err)
 				res.send(err);
 
-			// get and return all the todos after you create another
+			// get and return all the project after you create another
 			Project.find(function(err, projects) {
 				if (err)
 					res.send(err)

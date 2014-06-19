@@ -523,7 +523,7 @@
                           <% if(user) { %>
                             <div>
                               <a type="button" class="btn navbar-btn btn-danger" style="margin-right:0px" href="/profile">
-                              Welcome, <%= user.local.email %>! Note: <%= user.note %>
+                              Welcome, <%= user.local.email %>!
                               </a>
                               <a href="/logout" class="btn btn-default navbar-btn" style="margin-right:3px">Logout</a>
                             </div>
@@ -608,10 +608,14 @@
                                             <li><a href="">Another nav item</a></li>
                                             <li><a href="">More navigation</a></li>
                                         </ul>
-                                        <p>My Projects:</p>
+                                        
                                         <!--PROJECT SCOPE BEGINS-->
                                         <div ng-controller="projectController">
-                                            <div class="checkbox" ng-repeat="project in projects">
+                                          <%if(user) {%>
+                                          My ID: <%= user._id %>
+                                          <% } %>
+                                          <p>My Projects:</p>
+                                            <div class="checkbox" ng-repeat="project in projects | filter : { _creator : user._id }">
                                               <label>
                                                 <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.title}}
                                               </label>
@@ -620,7 +624,7 @@
                                             <div class="form-group">
 
                                               <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                                              <input type="text" class="form-control input-lg text-center" placeholder="What todo?" ng-model="formData.title">
+                                              <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
                                             </div>
 
                                             <!-- createToDo() WILL CREATE NEW TODOS -->
@@ -637,10 +641,10 @@
             </div>
         </div>
           
-          <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
+          <!-- <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
                   <canvas id="Canvas">
                   </canvas>
-          </div>
+          </div> -->
           <div id="present-tray">
             <span class="glyphicon glyphicon-play dvd" title="Play" onclick="bridgeworks.renderController.play();"></span>
             <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
