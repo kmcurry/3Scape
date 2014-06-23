@@ -1,21 +1,37 @@
 {
-  "name": "node-authentication",
+  "name": "3Scape",
   "main": "server.js",
-  "dependencies" : {
-    "express" : "latest",
-    "express-session" : "latest",
-    "ejs" : "latest", 				
-    "mongoose" : "latest", 
-    "morgan" : "latest",			
-    "passport" : "latest", 		
-    "passport-local" : "latest", 	
-    "passport-facebook" : "latest", 
-    "passport-twitter" : "latest", 	
-    "passport-google-oauth" : "latest",
-    "connect-flash" : "latest", 	
-    "bcrypt-nodejs" : "latest",
-    "cookie-parser" : "latest",
-    "body-parser" : "latest",
+  "dependencies": {
+    "express": "latest",
+    "express-session": "latest",
+    "ejs": "latest",
+    "mongoose": "latest",
+    "morgan": "latest",
+    "passport": "latest",
+    "passport-local": "latest",
+    "passport-facebook": "latest",
+    "passport-twitter": "latest",
+    "passport-google-oauth": "latest",
+    "connect-flash": "latest",
+    "bcrypt-nodejs": "latest",
+    "cookie-parser": "latest",
+    "body-parser": "latest",
     "method-override": "latest"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "3Scape is a way to unlock your imagination by making and sharing interactive, 3D stories over the web.",
+  "version": "0.0.0",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kmcurry/3Scape.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kmcurry/3Scape/issues"
+  },
+  "homepage": "https://github.com/kmcurry/3Scape"
 }
