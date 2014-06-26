@@ -1,6 +1,7 @@
 express = require('express');
+var mongoose = require('mongoose');
 var Project = require('./models/project');
-var User = require('./models/user');
+var User = mongoose.model('User');
 
 module.exports = function(app, passport) {
 	var main = express.Router();
@@ -8,7 +9,9 @@ module.exports = function(app, passport) {
 	// HOME PAGE (with login links) ========
 	// =====================================
 	main.get('/', function(req, res) {
-		res.render('index.ejs', { user: req.user }); // load the index.ejs file
+		res.render('index.ejs', { 
+			user: req.user
+		}); // load the index.ejs file
 	});
 
 	// =====================================

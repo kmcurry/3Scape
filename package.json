@@ -4,6 +4,7 @@
   "dependencies": {
     "express": "latest",
     "express-session": "latest",
+    "jade": "latest",
     "ejs": "latest",
     "mongoose": "latest",
     "morgan": "latest",
@@ -16,7 +17,8 @@
     "bcrypt-nodejs": "latest",
     "cookie-parser": "latest",
     "body-parser": "latest",
-    "method-override": "latest"
+    "method-override": "latest",
+    "connect-mongodb": "latest"
   },
   "scripts": {
     "start": "node server.js"

@@ -26,15 +26,19 @@
 
 					<p>
 						<strong>id</strong>: <%= user._id %><br>
-						<strong>email</strong>: <%= user.local.email %><br>
-						<strong>password</strong>: <%= user.local.password %>
+						<strong>email</strong>: <%= user.email %><br>
+						<strong>password</strong>: <%= user.password %>
 					</p>
-
+					<%= JSON.stringify(user) %>
+					<script type="text/javascript">
+						console.log(<%- JSON.stringify(user) %>)
+					</script>
 			</div>
 		</div>
 
 	</div>
 
 </div>
+
 </body>
 </html>
