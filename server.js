@@ -13,7 +13,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var methodOverride = require('method-override');
-var mongoStore = require('connect-mongodb');
+// var mongoStore = require('connect-mongodb');
 
 var configDB = require('./config/database.js');
 
@@ -35,10 +35,10 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 // required for passport
 app.use(session({ 
 	secret: 'testsecret',
-	store: new mongoStore({
-		url: configDB.url,
-		collection : 'sessions'
-	})
+	// store: new mongoStore({
+	// 	url: configDB.url,
+	// 	collection : 'sessions'
+	// })
 })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
