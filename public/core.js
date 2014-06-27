@@ -1,7 +1,7 @@
 // public/core.js
 var ng3Scape = angular.module('3ScapeMain', []);
 
-function projectController($scope, $http) {
+ng3Scape.controller('projectController', ['$scope', '$http', function($scope, $http) {
 	
 	$scope.message = "Hello!"
 
@@ -42,7 +42,22 @@ function projectController($scope, $http) {
 			});
 	};
 
-}
+}])
+.controller('headerController', ['$scope', 'Global', function($scope, Global) {
+	$scope.global	= Global;
+}])
+.factory('Global', function(){
+	var testVar = "Me!"
+	var current_user = window.user;
+	return {
+	  currentUser: function() {
+	    return current_user;
+	  },
+	  isSignedIn: function() {
+	    return !!current_user;
+	  }
+	};
+})
 
 
 // //header.js

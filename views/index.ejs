@@ -390,7 +390,9 @@
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <div class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation" id="Navbar">
+      
+      <!-- Navigation Header -->
+      <div class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation" id="Navbar" ng-controller="headerController">
           <div class="container-fluid">
               <div class="navbar-header">
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -515,20 +517,16 @@
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
                       <li>                                          
-                          <% if(user) { %>
-                            <div>
+                            <div ng-show="global.isSignedIn()">
                               <a type="button" class="btn navbar-btn btn-danger" style="margin-right:0px" href="/profile">
-                              Welcome, <%= user.email %>!
-                              </a>
+                              Welcome, {{ global.currentUser().email }}
                               <a href="/logout" class="btn btn-default navbar-btn" style="margin-right:3px">Logout</a>
                             </div>
-                          <% }else { %>
-                            <div>
+                            <div ng-hide="global.isSignedIn()">
                               <a type="button" class="btn navbar-btn btn-danger" style="margin-right:3px" href="/login">
                                 Please Login
                               </a>
-                            </div>
-                          <% } %>
+                            </div>                          
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li>
@@ -549,6 +547,7 @@
               </div>
           </div>
       </div>
+      <!-- End headerController scope -->
       <div class="row">
         <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:1028"><span class="glyphicon glyphicon-chevron-right"></span></button>
         <div id="container" style="width:300px;">
