@@ -1,8 +1,8 @@
 // public/core.js
 var ng3Scape = angular.module('3ScapeMain', []);
 
-ng3Scape.controller('projectController', ['$scope', '$http', function($scope, $http) {
-	
+ng3Scape.controller('projectController', ['$scope', '$http', 'Global', function($scope, $http, Global) {
+	$scope.global = Global;
 	$scope.message = "Hello!"
 
 	$scope.formData = {};

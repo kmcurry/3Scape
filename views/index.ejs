@@ -569,30 +569,29 @@
                                 <div class="tab-content">
                                     <!--BEGIN PROJECT SCOPE-->
                                     <div class="tab-pane active" id="slides" ng-controller="projectController">
-                                        <ul class="nav nav-sidebar" id="slidePanel">
-                                         <%if(user) {%>
-                                          My ID: <%= user._id %>
-                                          <p>My Projects:</p>
-                                            <div class="checkbox" ng-repeat="project in projects">
-                                              <label>
-                                                <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.title}}
-                                              </label>
-                                            </div>
-                                          <form>
-                                            <div class="form-group">
+                                        <ul class="nav nav-sidebar" id="slidePanel"> 
+                                          <div ng-show="global.isSignedIn()">
+                                            My ID: {{ global.currentUser()._id }}
+                                            <p>My Projects:</p>
+                                              <div class="checkbox" ng-repeat="project in projects">
+                                                <label>
+                                                  <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.title}}
+                                                </label>
+                                              </div>
+                                            <form>
+                                              <div class="form-group">
 
-                                              <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                                              <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
-                                            </div>
+                                                <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                                                <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
+                                              </div>
 
-                                            <!-- createProject() WILL CREATE NEW PROJECTS -->
-                                            <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
-                                          </form>  
-                                          Project Counter: {{projects.length}}
-                                          <h3>{{formData}}</h3>
-                                          <% }else { %>
-                                            <i>Login to see Project interface</i>
-                                          <% } %>                                          
+                                              <!-- createProject() WILL CREATE NEW PROJECTS -->
+                                              <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
+                                            </form>  
+                                            Project Counter: {{projects.length}}
+                                            <h3>{{formData}}</h3>
+                                          </div>
+                                          <i ng-hide="global.isSignedIn()">Login to see Project interface</i>
                                         </ul>
                                     </div>
                                     <!--END PROJECT SCOPE-->
