@@ -19,6 +19,8 @@
     <!-- RightJS Color Picker -->
     <script src="/javascript/right.js"></script>
     <script src="/javascript/right-colorpicker.js"></script>
+    <!--MapControls-->
+    <script src="/js/MapControls.js"></script>
 
     <!-- Angular -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
@@ -486,6 +488,22 @@
                           <ul class="dropdown-menu" role="menu" id="color-dropdown">
                             <!-- Color Picker Script - ColorCodeHex.COM -->
                             <script type="text/javascript">
+/*                            function zoomIn()
+                            {
+                                var x = bridgeworks.getRegistry().find("SceneInspector");
+                                x.panDelta.values[2]+=30;
+                                x.evaluate();
+                                bridgeworks.updateScene();
+                            }
+
+                            function zoomOut()
+                            {
+                                var x = bridgeworks.getRegistry().find("SceneInspector");
+                                x.panDelta.values[2]-=15;
+                                x.evaluate();
+                                bridgeworks.updateScene();
+                            }*/
+
                             function updateInfo(color) {
                               document.getElementById('info-r').value = color.rgb[0];
                               document.getElementById('info-g').value = color.rgb[1];
@@ -565,7 +583,7 @@
                           <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
                           <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();"></span>
                           <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
-                          <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span> 
+                          <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>
                             <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
                             <ul class="nav nav-tabs" style="clear:both">
                                 <li class="active"><a href="#slides" data-toggle="tab">Slides</a></li>
@@ -635,6 +653,29 @@
               </ul>
             </span>
             <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right" onclick="closeFullScreen();"></span>
+          </div>
+
+          <div id="map-controls">
+              <table>
+                <tr>
+                  <span class="glyphicon glyphicon-circle-arrow-left" title="Rotate -" onclick="rotateNegY();"></span>
+                  <span class="glyphicon glyphicon-circle-arrow-right" title="Rotate +" onclick="rotatePosY();"></span>
+                </tr>
+                  <p> </p>
+                  <p> </p>
+              <tr>
+                  <td><span class="glyphicon glyphicon-zoom-in" title="Zoom In" onclick="zoomIn();"></span></td>
+              </tr>
+              <tr>
+                  <td><span class="glyphicon glyphicon-zoom-out" title="Zoom Out" onclick="zoomOut();"></span></td>
+              </tr>
+              <tr>
+                  <td><span class="glyphicon glyphicon-circle-arrow-up" title="Tilt up" onclick="tiltUp();"></span></td>
+              </tr>
+              <tr>
+                  <td><span class="glyphicon glyphicon-circle-arrow-down" title="Tilt down" onclick="tiltDown();"></span></td>
+              </tr>
+            </table>
           </div>
       </div>
 

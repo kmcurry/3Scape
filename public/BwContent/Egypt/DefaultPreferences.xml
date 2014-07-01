@@ -35,7 +35,7 @@
     <targetAttribute>panDelta:2</targetAttribute>
   </ConnectAttributes>
 	<!--MOUSE ROTATION-->
-	<ConnectAttributes name="MButton1.Scene" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+	<ConnectAttributes name="MButton1Both.Scene" event="MButton1+VK_SHIFT.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
 		<sourceAttribute>deltaY</sourceAttribute>
 		<targetAttribute>invertedRotationDelta:0</targetAttribute>
 		<sourceAttribute>deltaX</sourceAttribute>
@@ -43,12 +43,12 @@
 	</ConnectAttributes>
 	
   <!--MOUSE VIEW RELATIVE PAN-->
-  <ConnectAttributes name="MButtonBoth.Scene" event="MButton1+MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+<!--  <ConnectAttributes name="MButton1.Scene" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
     <sourceAttribute>deltaX</sourceAttribute>
     <targetAttribute>invertedPanDelta:0</targetAttribute>
     <sourceAttribute>deltaY</sourceAttribute>
     <targetAttribute>invertedPanDelta:1</targetAttribute>
-  </ConnectAttributes>
+  </ConnectAttributes>-->
 	<!--<ConnectAttributes name="MButton2.Scene" event="MButton2.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
 		<sourceAttribute>deltaX</sourceAttribute>
 		<targetAttribute>translationDelta:0</targetAttribute>
@@ -68,8 +68,8 @@
 		<targetAttribute>rotationNow:1</targetAttribute>
 	</ConnectAttributes>
 	<!-- MOUSE PAN -->
-	<ConnectAttributes name="MButton2.Object" event="MButton1+MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
-		<sourceAttribute>delta:0</sourceAttribute>
+    <ConnectAttributes name="MButton1.Scene" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+        <sourceAttribute>delta:0</sourceAttribute>
 		<targetAttribute>translationDelta:0</targetAttribute>
 		<sourceAttribute>delta:1</sourceAttribute>
 		<targetAttribute>translationDelta:1</targetAttribute>

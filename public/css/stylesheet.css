@@ -27,6 +27,22 @@ body.modal-open {
   cursor: pointer;
   font-size: 1.4em;
 }
+
+#map-controls{
+    display: inline-block;
+    position: fixed;
+    text-align: center;
+    bottom: 15px;
+    right:80px;
+    background-color:#000000;
+    color:#ffffff;
+    opacity: 0.8;
+    height: 200px;
+    width:60px;
+    z-index: 2000;
+
+}
+
 #present-tray {   
     display: none; 
     position:fixed; 
