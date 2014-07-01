@@ -5197,6 +5197,19 @@ Attribute.prototype.setRegistry = function(registry)
 {
     this.registry = registry;
 }
+Attribute.prototype.flagDeserializedFromXML = function()
+{
+    this.deserialized = true;
+
+    if (this.attrContainer) // also flag container if present, otherwise serialization won't occur
+    {
+        this.attrContainer.flagDeserializedFromXML();
+    }
+}
+Attribute.prototype.isFlagDeserializedFromXML = function()
+{
+    return this.deserialized;
+}
 AttributeContainer.prototype = new Attribute();
 AttributeContainer.prototype.constructor = AttributeContainer;
 
@@ -5443,6 +5456,8 @@ function AttributeRegistry()
     AttributeContainer.call(this);
     this.className = "AttributeRegistry";
     this.attrType = eAttrType.AttributeRegistry;
+
+    this.objectCount = 0;
     
     this.typeRegistry = [];
     this.nameRegistry = [];
@@ -5456,6 +5471,7 @@ AttributeRegistry.prototype.registerByType = function(attribute, type)
     }
     
     this.typeRegistry[type].push(attribute);
+    this.objectCount += 1;
 }
 
 AttributeRegistry.prototype.registerByName = function(attribute, name)
@@ -5471,13 +5487,14 @@ AttributeRegistry.prototype.registerByName = function(attribute, name)
     }
 
     this.nameRegistry[name].push(attribute);
+    this.objectCount += 1;
 }
 
 AttributeRegistry.prototype.register = function(attribute)
 {
     // register using type
     this.registerByType(attribute, attribute.attrType);
-    
+    this.objectCount += 1;
     // register using name attribute if container
     if (attribute.isContainer())
     {
@@ -5497,10 +5514,12 @@ AttributeRegistry.prototype.unregisterByType = function(attribute, type)
     {
         this.typeRegistry[type].splice(this.typeRegistry[type].indexOf(attribute), 1);
     }
+    this.objectCount -= 1;
 }
 
 AttributeRegistry.prototype.unregisterByName = function(attribute, name)
 {
+    this.objectCount -= 1;
     if (name.length == 0)
     {
         name = "unnamed";
@@ -5516,6 +5535,7 @@ AttributeRegistry.prototype.unregister = function(attribute)
 {
     // register using type
     this.unregisterByType(attribute, attribute.attrType);
+    this.objectCount -= 1;
     
     // register using name attribute if container
     if (attribute.isContainer())
@@ -5606,8 +5626,41 @@ AttributeRegistry.prototype.updateName = function(container, name)
 
 AttributeRegistry.prototype.clear = function()
 {
-    this.typeRegistry.length = 0;
-    this.nameRegistry.length = 0;
+    for (var i in this.typeRegistry)
+    {
+        this.typeRegistry[i] = [];
+    }
+    this.typeRegistry = [];
+    
+    for (var i in this.nameRegistry)
+    {
+        this.nameRegistry[i] = [];
+    } 
+    this.nameRegistry = [];
+
+    this.objectCount = 0;
+}
+
+AttributeRegistry.prototype.getObjectCount = function ()
+{
+    return this.typeRegistry.length;
+}
+AttributeRegistry.prototype.getObject = function(num)
+{
+    var count = 0;
+    for (var i in this.typeRegistry)
+    {
+        for (var j=0; j < this.typeRegistry[i].length; j++, count++)
+        {
+            if (count == num)
+
+            {
+                return this.typeRegistry[i][j];
+            }
+        }
+    }
+    
+    return null;
 }
 
 function AttributeRegistry_AttributeContainerNameModifiedCB(attribute, container)
@@ -11301,6 +11354,19 @@ GraphMgr.prototype.getNextLabelIndex = function()
 {
     return this.labelIndex++;
 }
+GraphMgr.prototype.reset = function ()
+{
+    this.lightIndex = 0;
+    this.labelIndex = 1;
+    this.setCurrentDissolve(null);
+    this.setCurrentMaterial(null);
+    this.setDrawTextures(true);
+
+    for (var i=0; i < gl_MaxLights; i++)
+    {
+        this.renderContext.enableLight(i, false);
+    }
+}
 Node.prototype = new AttributeContainer();
 Node.prototype.constructor = Node;
 
@@ -13328,9 +13394,9 @@ RenderDirective.prototype.execute = function(root)
 
 function RenderDirective_ViewportModifiedCB(attribute, container)
 {
-    var vp = container.viewport.getValueDirect();
-    var url = container.backgroundImageFilename.getValueDirect().join("");
-    container.graphMgr.renderContext.setBackgroundImage(url, vp.width, vp.height);
+//    var vp = container.viewport.getValueDirect();
+//    var url = container.backgroundImageFilename.getValueDirect().join("");
+//    container.graphMgr.renderContext.setBackgroundImage(url, vp.width, vp.height);
 }
 
 function RenderDirective_BackgroundImageFilenameModifiedCB(attribute, container)
@@ -19080,6 +19146,39 @@ EventMgr.prototype.processEvent = function(event)
         this.registry.unregister(expired[i]);
     }
 }
+EventMgr.prototype.clearEvents = function()
+{
+/*
+    this.bProcessingQs = false;
+    this.bPendingRegistrations = false;
+
+    while (!this.pendingAddsQ.empty())
+    {
+        var elp = m_pendingAddsQ.front();
+        var elist = elp.second;
+        this.elist.clear();
+//        SAFE_DELETE(elist);
+        this.pendingAddsQ.pop();
+    }
+
+    while (!this.userInputEventsQ.empty())
+    {
+        var pEvent = this.userInputEventsQ.front();
+        this.userInputEventsQ.pop();
+//        SAFE_RELEASE(pEvent);
+    }
+
+    while (!this.sceneOutputEventsQ.empty())
+    {
+        var pEvent = this.sceneOutputEventsQ.front();
+        this.sceneOutputEventsQ.pop();
+//        SAFE_RELEASE(pEvent);
+    }
+
+    this.removeAllListeners();
+    */
+    this.listeners.length = 0;
+}
 DeviceHandler.prototype = new EventListener();
 DeviceHandler.prototype.constructor = DeviceHandler;
 
@@ -20815,6 +20914,16 @@ BwRegistry.prototype.unregister = function(container)
     AttributeRegistry.prototype.unregister.call(this, container);
     
     // TODO
+}
+
+BwRegistry.prototype.clear = function()
+{
+    this.rootPtr.setValueDirect(null);
+    this.subtreePtr.setValueDirect(null);
+    this.sgPointer.setValueDirect(null);
+    
+    // call base-class implementation
+    AttributeRegistry.prototype.clear.call(this);    
 }
 
 BwRegistry.prototype.updateTree = function(node)
@@ -23389,56 +23498,55 @@ function Util_InspectionGroup_RotationQuatModifiedCB(attribute, container)
 	}
     */
 }
+SerializeCommand.prototype = new Command();
+SerializeCommand.prototype.constructor = SerializeCommand;
 
 function SerializeCommand()
 {
-	this.typeString = "Serialize";
-    this.target = null; 
-	AddPrototype = this.AddPrototype;
-    this.directive = null; 
-    this.serialized("");
+    Command.call(this);
+    this.className = "Serialize";
+
+    this.targetAttribute = null;
+    this.target.addModifiedCB(this.SerializeCommand_TargetModifiedCB, this);
+    this.directive = null;
+    this.serialized = "";
 }
 
-SerializeCommand.prototype.ClonePrototype = function()
-{
-    var c = ++s_count;
-    return c;
-}
-
-SerializeCommand.prototype.Execute = function()
+SerializeCommand.prototype.execute = function()
 {
     if (this.directive)
     {
-	    if (this.target && this.directive)
-	    {
-            if (this.directive.execute(this.target === 0))
-            {
-                this.serialized = this.directive.getSerialized();
-            }
-	    }
-        else // !this.target
-        {
-            SerializeScene();
-        }
+//        if (this.target && this.directive)
+//        {
+//            if (this.directive.execute(this.target === 0))
+//            {
+//                this.serialized = this.directive.getSerialized();
+//            }
+//        }
+//        else // !this.target
+//        {
+            this.serializeScene();
+//        }
     }
-
-	return ;
 }
 
-SerializeCommand.prototype.SerializeScene = function()
+SerializeCommand.prototype.serializeScene = function()
 {
     var i;
-    var container = NULL;
-    var node = NULL;
-    var context;
+    var container = null;
+    var node = null;
+    var context = new Context();
+    var xstr;
 
     // root element open tag
     this.serialized = "<Session broadcast='false'>";
 
-    var attrContainerRegistry = this.registry.find(attrContainerRegistry);
+    //var attrContainerRegistry = this.registry.getAttributeContainerRegistry();
+    var attrContainerRegistry = bridgeworks.registry;
     if (attrContainerRegistry)
     {
         var serializer = new XMLSerializer();
+        var serial  = new Serializer();
         // set minimum flag so that only the minimum required for recreation is serialized
         //var serializeMinimum = serializer.getAttribute("serializeMinimum");
         //serializeMinimum.setValueDirect(true);
@@ -23446,16 +23554,22 @@ SerializeCommand.prototype.SerializeScene = function()
         var count = attrContainerRegistry.getObjectCount();
 
         // serialize device handlers
-        for (i=0; i < count; i++)
+        for (i=1; i < count; i++)
         {
             container = attrContainerRegistry.getObject(i);
             if (container)
             {
                 context.attribute = container;
+                //context = document.createElement("Scene");
+                //var inside = context.setAttribute("text",container);
                 var buffer = "";
 
                 // serialize
-                serializer.Serialize(context, buffer);
+                //serializer
+                serial.serialize(context.attribute,context.item,context.attributeName,context.container,buffer);
+                xstr = serializer.serializeToString(context.attribute);
+
+                console.log(xstr);
                 this.serialized += buffer;
             }
         }
@@ -23478,12 +23592,13 @@ SerializeCommand.prototype.SerializeScene = function()
             container = attrContainerRegistry.getObject(i); if (!container) continue;
             if (!container && !container && !container)
             {
-                if (!strcmp(container.getTypeString(), "SelectionListener"))
+                if(container.toString() == "SelectionListener")
+                //if (!strcmp(container.getTypeString(), "SelectionListener"))
                 {
                     var computePivotDistance = container.getAttribute("computePivotDistance")
-                       .getValueDirect();
+                        .getValueDirect();
 
-                    this.serialized += ".set target=\"Selector\" computePivotDistance=\"";
+                    this.serialized += "<Set target=\"Selector\" computePivotDistance=\"";
                     this.serialized += (computePivotDistance ? "true" : "false");
                     this.serialized += "\"/>";
                 }
@@ -23503,7 +23618,8 @@ SerializeCommand.prototype.SerializeScene = function()
         for (i=0; i < count; i++)
         {
             container = attrContainerRegistry.getObject(i); if (!container) continue;
-            if (container && !strcmp(container.getTypeString(), "DisconnectAttributes"))
+            if(container &&(container.toString()=="DisconnectAttributes"))
+            //if (container && !strcmp(container.getTypeString(), "DisconnectAttributes"))
             {
                 context.attribute = container;
                 var buffer = "";
@@ -23518,7 +23634,8 @@ SerializeCommand.prototype.SerializeScene = function()
         for (i=0; i < count; i++)
         {
             container = attrContainerRegistry.getObject(i); if (!container) continue;
-            if (container && strcmp(container.getTypeString(), "DisconnectAttributes"))
+            if(container && (container.toString() == "DisconnectAttributes"))
+            //if (container && strcmp(container.getTypeString(), "DisconnectAttributes"))
             {
                 context.attribute = container;
                 var buffer = "";
@@ -23529,26 +23646,26 @@ SerializeCommand.prototype.SerializeScene = function()
             }
         }
         /*
-        // updateSectorOrigin
-        const char* substr = NULL;
-        std.prototype.string name = "";
-        if ((substr = strstr(this.serialized.c_str(), "PerspectiveCamera")) ||
-            (substr = strstr(this.serialized.c_str(), "OrthographicCamera")))
-        {
-            if (substr = strstr(substr, "<name>"))
-            {
-                substr += 6; // skip "<name>"
-                while (*substr != '<')
-                {
-                    name += *substr++;
-                }
+         // updateSectorOrigin
+         const char* substr = NULL;
+         std.prototype.string name = "";
+         if ((substr = strstr(this.serialized.c_str(), "PerspectiveCamera")) ||
+         (substr = strstr(this.serialized.c_str(), "OrthographicCamera")))
+         {
+         if (substr = strstr(substr, "<name>"))
+         {
+         substr += 6; // skip "<name>"
+         while (*substr != '<')
+         {
+         name += *substr++;
+         }
 
-                this.serialized += ".set target=\"";
-                this.serialized += name;
-                this.serialized += "\" updateSectorOrigin=\"true\"/>";
-            }
-        }
-        */
+         this.serialized += ".set target=\"";
+         this.serialized += name;
+         this.serialized += "\" updateSectorOrigin=\"true\"/>";
+         }
+         }
+         */
         // TODO: pivotCone
     }
 
@@ -23560,53 +23677,27 @@ SerializeCommand.prototype.SerializeScene = function()
 
 SerializeCommand.prototype.Undo = function()
 {
-	return ;
+
 }
 
-SerializeCommand.prototype.MatchesType = function(type) 
-{
-	var matches = 0;
-    matches = !(_stricmp(type, "Serialize"));
-    return matches;
-}
-
-SerializeCommand.prototype.setRegistr = function(registry)
+SerializeCommand.prototype.setRegistry = function(registry)
 {
     // create serialize directive
-	var sg = NULL;
-	var graphMgr = NULL;
-    var resource = NULL;
-	if (registry.Find("DefaultFactory", resource))
-	{
-		var defaultFactory = resource;
-		if (defaultFactory && (sg = defaultFactory.getSceneGraph()) != NULL &&
-		   (graphMgr = sg.getGraphMgr()) != NULL)
-		{
-			if (this.directive == graphMgr) //New<GcSerializeDirective, GcGraphMgr&>(*graphMgr))
-            {
-                this.directive.setRegistry(registry);
-            }
-		}
-	}
+    var factory = bridgeworks.registry.find("AttributeFactory");
+    this.directive = factory.create("SerializeDirective");
 
     // call base-class implementation
-	CCommand.prototype.setRegistry(registry);
+    Command.prototype.setRegistry(registry);
 }
-
-SerializeCommand.prototype.SerializeCommand_TargetModifiedCB = function(attr, data)
+SerializeCommand.prototype.getSerialized = function()
 {
-	var command = data;
-	var target = attr;
-	var registry = command.this.registry;
-	if (target && registry)
-	{
-		var name = [256];
-		target.getValueDirect(name, sizeof(name));
-
-		if (_SUCCEEDED(registry.Find(name, command.this.target)))
-        {
-        }
-	}
+    return this.serialized;
+    //return this.serialized.c_str();
+}
+SerializeCommand.prototype.SerializeCommand_TargetModifiedCB = function(container, attribute)
+{
+    var target = attribute.getValueDirect().join("");
+    container.targetAttribute = container.registry.find(target);
 }
 // TODO
 var eLWObjectTokens = 
@@ -25848,6 +25939,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["BBoxDirective"] = newSGDirective;
     this.newResourceProcs["RayPickDirective"] = newSGDirective;
     this.newResourceProcs["RenderDirective"] = newSGDirective;
+    this.newResourceProcs["SerializeDirective"] = newSGDirective;
     this.newResourceProcs["UpdateDirective"] = newSGDirective;
 
     // evaluators
@@ -25871,6 +25963,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["Pause"] = newCommand;
     this.newResourceProcs["Play"] = newCommand;
     this.newResourceProcs["Remove"] = newCommand;
+    this.newResourceProcs["Serialize"] = newCommand;
     this.newResourceProcs["Set"] = newCommand;
     this.newResourceProcs["Stop"] = newCommand;
 
@@ -25887,6 +25980,7 @@ AttributeFactory.prototype.initializeConfigureMap = function()
     this.configureProcs["BBoxDirective"] = configureDirective;
     this.configureProcs["RayPickDirective"] = configureDirective;
     this.configureProcs["RenderDirective"] = configureDirective;
+    this.configureProcs["SerializeDirective"] = configureDirective;
     this.configureProcs["UpdateDirective"] = configureDirective;    
 }
 
@@ -25899,6 +25993,7 @@ AttributeFactory.prototype.initializeFinalizeMap = function()
     this.finalizeProcs["BBoxDirective"] = finalizeDirective;
     this.finalizeProcs["RayPickDirective"] = finalizeDirective;
     this.finalizeProcs["RenderDirective"] = finalizeDirective;
+    this.finalizeProcs["SerializeDirective"] = finalizeDirective;
     this.finalizeProcs["UpdateDirective"] = finalizeDirective;
 
     // evaluators 
@@ -26001,7 +26096,7 @@ function newSGDirective(name, factory)
     case "BBoxDirective":       resource = new BBoxDirective(); break;
     case "RayPickDirective":    resource = new RayPickDirective(); break;
     case "RenderDirective":     resource = new RenderDirective(); break;  
-    case "SerializeDirective":  resource = new RenderDirective(); break;  
+    case "SerializeDirective":  resource = new SerializeDirective(); break;
     case "UpdateDirective":     resource = new UpdateDirective(); break;
     }
     
@@ -26296,6 +26391,11 @@ function registerParentableAttributes(pme, factory)
 	pme.getAttribute("worldCenter").addModifiedCB(AttributeFactory_ParentableWorldPositionModifiedCB, factory);
 }
 
+function getSceneGraph()
+{
+    return this.sceneGraph;
+}
+
 function AttributeFactory_DirectiveRootModifiedCB(root, factory)
 {
     var directive = root.getContainer();
@@ -26511,12 +26611,49 @@ Bridgeworks.prototype.initEventListeners = function()
 
 Bridgeworks.prototype.onLoadModified = function()
 {
-    this.registry.clear();
-    
-    this.initRegistry();
-    this.initEventListeners();
+    this.renderAgent.stop();
+    //this.iscetAgent.stop(); There is no isectAgent in javascript version
+    this.selector.stop();
+    this.rasterComponentEventListener.stop();
+
+    this.commandMgr.clearCommandSequence();
+    this.eventMgr.clearEvents();
+    //this.resouceMgr.clear(); There is no resourceMgr in javascript version
+    this.selector.clearSelections();
+    this.selector.getAttribute("lastSelectedName").setValueDirect("");
     this.viewportMgr.initLayout();
-    
+/*    std::map<std::string, std::pair<CAttribute*, CAttribute*> >::const_iterator it;
+ for (it = m_messageSinks.begin(); it != m_messageSinks.end(); it++)
+ {
+ it->second.first->AddRef();
+ it->second.second->AddRef();
+ }*/
+
+    this.registry.clear();
+    this.initEventListeners();
+    this.initRegistry();
+
+    /*	for (it = m_messageSinks.begin(); it != m_messageSinks.end(); it++)
+     {
+     std::string data_name(it->first.c_str());
+     data_name += "_data";
+
+     dynamic_cast<AttributeRegistry*>(registry)->Register(it->second.first, it->first.c_str());
+     it->second.first->Release();
+     dynamic_cast<AttributeRegistry*>(registry)->Register(it->second.second, data_name.c_str());
+     it->second.second->Release();
+     }*/
+
+    this.renderAgent.getAttribute("globalTimeInSecs").setValueDirect(0);
+
+    this.graphMgr.reset();
+
+    this.renderAgent.start();
+    //this.iscetAgent.start(); There is no isectAgent in javascript version
+    this.selector.start();
+    this.rasterComponentEventListener.start();
+
+
     // TODO
     console.debug("TODO: " + arguments.callee.name);
 }
