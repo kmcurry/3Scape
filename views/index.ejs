@@ -67,6 +67,9 @@
           var Diss = "motions/oscillate-dissolve.mot";
           var Scal = "motions/oscillate-scale.mot"
           var wall = "objects/wall.lwo";
+          var beam = "objects/Beam.lwo";
+          var Ring = "objects/Ring.lwo";
+          var Pyramid = "objects/Pyramid.lwo";
           var currentObj = "Current Object: X";
           var editorOpen = 0;
           var slideCount = 1;
@@ -458,7 +461,7 @@
                               Add <span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                            <li><a href="javascript:bridgeworks.onLoadModified();bridgeworks.updateScene('../grid-100.xml');">New Scene</a></li>
+                            <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');;">New Scene</a></li>
                             <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
                             <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);">Ancient Egypt</a></li>
                             <li class="divider"></li>
@@ -468,6 +471,9 @@
                                 <li><a href="#" onclick="load(cube);">Cube</a></li>
                                 <li><a href="#" onclick="load(sphere);">Sphere</a></li>
                                 <li><a href="#" onclick="load(tube);">Tube</a></li>
+                                <li><a onclick="load(beam);">Beam</a></li>
+                                <li><a onclick="load(Ring);">Ring</a></li>
+                                <li><a onclick="load(Pyramid);">Pyramid</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                               </ul>
@@ -631,8 +637,8 @@
         </div>
           
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                  <!-- <canvas id="Canvas">
-                  </canvas> -->
+                   <canvas id="Canvas">
+                  </canvas>
           </div>
           <div id="present-tray">
             <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>

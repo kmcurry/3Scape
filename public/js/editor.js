@@ -63,6 +63,7 @@ function listLibrary()
         loadDirectoryObject(url,"Buildings/objects/shed.lwo",panel,"Shed");
         loadDirectoryObject(url,"Buildings/objects/shed2.lwo",panel,"Shed2");
         loadDirectoryObject(url,"Buildings/objects/shed3.lwo",panel,"Shed3");
+        loadDirectoryObject(url,"Barnville/objects/Stone_Wall.lwo",panel,"Stone Wall");
         loadDirectoryObject(url,"Barnville/objects/Well.lwo",panel,"Well");
         // listDirectory(url + "Buildings/objects/", panel);
 
