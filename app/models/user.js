@@ -11,7 +11,7 @@ var userSchema = new Schema({
     email: String,
     password: String,
 
-    projects         : [{ type: Schema.ObjectId, ref: 'Project'}]
+    projects         : [{ type: Schema.Types.ObjectId, ref: 'Project'}]
 
 });
 

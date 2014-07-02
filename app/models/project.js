@@ -2,7 +2,7 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var ProjectSchema   = new Schema({
-	creator : { type: Schema.ObjectId, ref: 'User' },
+	_creator : { type: Schema.Types.ObjectId, ref: 'User' },
 	title : String,
 	// serXML: String
 });
