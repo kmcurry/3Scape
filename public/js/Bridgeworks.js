@@ -26618,6 +26618,7 @@ Bridgeworks.prototype.onLoadModified = function()
 
     this.commandMgr.clearCommandSequence();
     this.eventMgr.clearEvents();
+    $('#RasterComponents').empty();
     //this.resouceMgr.clear(); There is no resourceMgr in javascript version
     this.selector.clearSelections();
     this.selector.getAttribute("lastSelectedName").setValueDirect("");
