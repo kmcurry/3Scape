@@ -4,7 +4,6 @@
 // get all the tools we need
 var express  = require('express');
 var app      = express();
-var port     = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -15,10 +14,11 @@ var session = require('express-session');
 var methodOverride = require('method-override');
 // var mongoStore = require('connect-mongodb');
 
-var configDB = require('./config/database.js');
 
 // configuration ===============================================================
-mongoose.connect(configDB.url); // connect to our database
+var config = require('./configLoader')(process.env.NODE_ENV || "local") //Environment
+var port     = config.port || 8080;
+mongoose.connect(config.dbConnectionString); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -28,7 +28,7 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); // get information from html forms
 app.use(methodOverride()); // simulate DELETE and PUT
 
-app.use(express.static(__dirname + '/public')); 	// set the static files location /public/img will be /img for users
+app.use(express.static(config.publicPath)); 	// set the static files location /public/img will be /img for users
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 
@@ -46,6 +46,8 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+
 
 // launch ======================================================================
 app.listen(port);

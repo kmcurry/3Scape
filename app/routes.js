@@ -1,7 +1,8 @@
 express = require('express');
 var mongoose = require('mongoose');
+var User = require('./models/user');
 var Project = require('./models/project');
-var User = mongoose.model('User');
+
 
 module.exports = function(app, passport) {
 	var main = express.Router();
@@ -111,7 +112,6 @@ module.exports = function(app, passport) {
 				res.json(projects);
 			});
 		});
-
 	});
 
 	//update a project
