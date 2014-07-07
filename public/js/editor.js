@@ -1,6 +1,13 @@
 // functions are organized by alpha
 
 var copiedUrl = "";
+var R;
+var G;
+var B;
+var Size;
+var rotY;
+var rotX;
+var rotZ;
 
 function setObject(Object)
 {
@@ -11,7 +18,14 @@ function setObject(Object)
 function copy()
 {
     if (selectedModel) {
-        copiedUrl = selectedModel.url.getValueDirect().join("")
+        copiedUrl = selectedModel.url.getValueDirect().join("");
+        R = selectedModel.color.values[0];
+        G = selectedModel.color.values[1];
+        B = selectedModel.color.values[2];
+        Size = selectedModel.scale.getValueDirect().x;
+        rotX = selectedModel.rotation.getValueDirect().x;
+        rotY = selectedModel.rotation.getValueDirect().y;
+        rotZ = selectedModel.rotation.getValueDirect().z;
     }
 }
 
@@ -322,6 +336,15 @@ function setModel(name)
 function paste()
 {
     load(copiedUrl);
+    var name = copiedUrl.substring(copiedUrl.lastIndexOf("/")+1, copiedUrl.lastIndexOf("."));
+    count -= 1;
+    name = count.toString()+". "+name;
+    count += 1;
+    selectedModel.scale.setValueDirect(Size,Size,Size);
+    selectedModel.rotation.setValueDirect(rotX,rotY,rotZ);
+    //selectedModel.color.setValueDirect(R,G,B); There is no setValueDirect for color. Should look into adding that
+    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +R+ "' " + "g= '"+G+"' " + "b= '"+B+"'/>" +"</Set>";
+    bridgeworks.updateScene(cmd);
 }
 
 function show(name)
