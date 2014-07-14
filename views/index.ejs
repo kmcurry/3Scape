@@ -18,6 +18,7 @@
     <script type="text/javascript" src="jscolor/jscolor.js"></script>
     
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
@@ -488,8 +489,53 @@
                           </ul>
                       </li>
                       <li><p class="navbar-text" id="Current_Object">Current Object: X</p></li>
+                      
                       <li>
-                        <div class="btn-group dropdown keep-open">
+                        <div class="navbar-form" style="width:200px;">
+                          <div class="input-group">
+                            <input type="text" class="form-control" id="Search">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" onclick="Search();"><span class="glyphicon glyphicon-search" style="font-size:1.4em;"></span></button>
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                    <!-- UNABLE TO SEGMENT BUTTON FOR INDIVIDUAL SHAPE LOADING FUNCTIONS
+                    <li>
+                      <div class="btn-group navbar-btn">
+                        <button class="btn btn-default">Model Placeholder</button>    
+                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;"></span></button>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">Action</a></li>
+                          <li><a href="#">Another action</a></li>
+                          <li><a href="#">Something else here</a></li>
+                          <li class="divider"></li>
+                          <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
+                        </ul>
+                      </div>
+                    </li>  --> 
+                    <li>
+                      <div class="btn-group dropdown keep-open">
+                        <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                          Shapes <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" id="shape-dropdown">
+                          <li>
+                            <div style="margin-left:5px;">
+                              <span class="shape fa fa-cube fa-2x" title="Cube" onclick="load(cube);"></span>
+                              <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
+                              <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
+                              <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
+                              <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>                              
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li>
+                        <div class="btn-group dropdown keep-open" style="margin-left:3px;">
                           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
                             Color <span class="caret"></span>
                           </button>
@@ -511,35 +557,12 @@
                         </div>
                       </li>
                       <li>
-                              <div class="dropdown">
-                              <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
-                                  Add Label
-                              </button>
-                          </div>
-                      </li>
-                      <li>
-                        <div class="navbar-form" style="width:200px;">
-                          <div class="input-group">
-                            <input type="text" class="form-control" id="Search">
-                            <span class="input-group-btn">
-                              <button class="btn btn-default" type="button" onclick="Search();"><span class="glyphicon glyphicon-search" style="font-size:1.4em;"></span></button>
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                    <li>
-                      <div class="btn-group navbar-btn">
-                        <button class="btn btn-default">Model Placeholder</button>
-                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;"></span></button>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">Action</a></li>
-                          <li><a href="#">Another action</a></li>
-                          <li><a href="#">Something else here</a></li>
-                          <li class="divider"></li>
-                          <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
-                        </ul>
-                      </div>
-                    </li>                      
+                        <div class="dropdown">
+                          <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
+                              Add Label
+                          </button>
+                        </div>  
+                      </li>                    
                       
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
