@@ -499,11 +499,16 @@
                             </span>
                           </div>
                         </div>
-                      </li>
-                    <!-- UNABLE TO SEGMENT BUTTON FOR INDIVIDUAL SHAPE LOADING FUNCTIONS
+                      </li>                  
                     <li>
                       <div class="btn-group navbar-btn">
-                        <button class="btn btn-default">Model Placeholder</button>    
+                        <button class="btn btn-default btnShape">
+                          <span class="shape fa fa-cube fa-lg" title="Cube" onclick="load(cube);"></span>
+                          <span class="shape fa fa-circle fa-lg" title="Sphere" onclick="load(sphere);"></span>
+                          <span class="shape fa fa-circle-thin fa-lg" title="Ring" onclick="load(Ring);"></span>
+                          <span class="shape fa fa fa-eject fa-lg" title="Pyramid" onclick="load(Pyramid);"></span>
+                          <span class="shape fa fa fa-database fa-lg" title="Tube" onclick="load(tube);"></span>  
+                        </button>    
                         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;"></span></button>
                         <ul class="dropdown-menu">
                           <li><a href="#">Action</a></li>
@@ -513,7 +518,7 @@
                           <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                         </ul>
                       </div>
-                    </li>  --> 
+                    </li>  
                     <li>
                       <div class="btn-group dropdown keep-open">
                         <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
@@ -562,8 +567,7 @@
                               Add Label
                           </button>
                         </div>  
-                      </li>                    
-                      
+                      </li>                                                  
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
                       <!-- <li>                                          

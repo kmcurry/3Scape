@@ -20,6 +20,12 @@ body.modal-open {
 .popover {
     z-index: 2000; /* Popovers don't get hidden behind elements. */
 }
+.btnShape,
+.btnShape:active,
+.btnShape:hover {
+  background-color: #fff;
+  cursor: inherit;
+}
 .shape {
   cursor: pointer;
   cursor: hand;
