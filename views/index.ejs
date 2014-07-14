@@ -530,24 +530,25 @@
                       
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
-                      <li>                                          
-                            <div ng-show="global.isSignedIn()">
-                              <a type="button" class="btn navbar-btn btn-danger" style="margin-right:0px" href="/profile">
-                              Welcome, {{ global.currentUser().email }}
-                              <a href="/logout" class="btn btn-default navbar-btn" style="margin-right:3px">Logout</a>
-                            </div>
-                            <div ng-hide="global.isSignedIn()">
-                              <a type="button" class="btn navbar-btn btn-danger" style="margin-right:3px" href="/login">
-                                Please Login
-                              </a>
-                            </div>                          
+                      <!-- <li>                                          
+                        <div ng-show="global.isSignedIn()">
+                          <a type="button" class="btn navbar-btn btn-danger" style="margin-right:0px" href="/profile">
+                          Welcome, {{ global.currentUser().email }}
+                          <a href="/logout" class="btn btn-default navbar-btn" style="margin-right:3px">Logout</a>
+                        </div>
+                        <div ng-hide="global.isSignedIn()">
+                          <a type="button" class="btn navbar-btn btn-danger" style="margin-right:3px" href="/login">
+                            Please Login
+                          </a>
+                        </div>                          
+                      </li>
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
-                      </li>
+                      </li> -->
                       <li>
                           <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()"><span class="glyphicon glyphicon-play"></span> Presentation</button>
                       </li>
-                      <li class="dropdown">
+                      <!-- <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
                               <li><a id="ex1" href="#">Note1</a></li>
@@ -555,7 +556,7 @@
                               <li><a id="ex3" href="#">Note3</a></li>
                               <li class="divider"></li>
                           </ul>
-                      </li>
+                      </li> -->
 
                   </ul>
               </div>
@@ -582,9 +583,9 @@
                              </ul>
                                 <div class="tab-content">
                                     <!--BEGIN PROJECT SCOPE-->
-                                    <div class="tab-pane active" id="slides" ng-controller="projectController">
+                                    <div class="tab-pane active" id="slides" ng-controller="projectController">                              
                                         <ul class="nav nav-sidebar" id="slidePanel"> 
-                                          <div ng-show="global.isSignedIn()">
+                                          <!-- <div ng-show="global.isSignedIn()">
                                             My ID: {{ global.currentUser()._id }}
                                             <p>My Projects:</p>
                                               <div class="checkbox" ng-repeat="project in projects">
@@ -595,17 +596,17 @@
                                             <form>
                                               <div class="form-group">
 
-                                                <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                                                
                                                 <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
                                               </div>
 
-                                              <!-- createProject() WILL CREATE NEW PROJECTS -->
+                                              
                                               <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
                                             </form>  
                                             Project Counter: {{projects.length}}
                                             <h3>{{formData}}</h3>
                                           </div>
-                                          <i ng-hide="global.isSignedIn()">Login to see Project interface</i>
+                                          <i ng-hide="global.isSignedIn()">Login to see Project interface</i> -->
                                         </ul>
                                     </div>
                                     <!--END PROJECT SCOPE-->
