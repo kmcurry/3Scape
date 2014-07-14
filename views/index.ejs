@@ -68,6 +68,9 @@
           var beam = "objects/Beam.lwo";
           var Ring = "objects/Ring.lwo";
           var Pyramid = "objects/Pyramid.lwo";
+          var c2v = "vehicles/objects/C2V.lwo";
+          var church = "buildings/barnville/Church.lwo"
+          var medHV = "vehicles/objects/Humvee_Medical.lwo"
           var currentObj = "Current Object: X";
           var editorOpen = 0;
           var slideCount = 1;
@@ -512,9 +515,13 @@
                         </button>    
                         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
                         <ul class="dropdown-menu">
-                          <li><a href="#">Action</a></li>
-                          <li><a href="#">Another action</a></li>
-                          <li><a href="#">Something else here</a></li>
+                          <li style="margin-left: 3px">
+                            <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
+                            <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
+                            <span class="shape fa fa fa-car fa-2x" title="Tank" onclick="load(c2v);"></span>
+                            <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
+                            <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
+                          </li>
                           <li class="divider"></li>
                           <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                         </ul>
