@@ -18,6 +18,7 @@
     <script type="text/javascript" src="jscolor/jscolor.js"></script>
     
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
@@ -488,8 +489,58 @@
                           </ul>
                       </li>
                       <li><p class="navbar-text" id="Current_Object">Current Object: X</p></li>
+                      
                       <li>
-                        <div class="btn-group dropdown keep-open">
+                        <div class="navbar-form" style="width:200px;">
+                          <div class="input-group">
+                            <input type="text" class="form-control" id="Search">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button" onclick="Search();"><span class="glyphicon glyphicon-search" style="font-size:1.4em;"></span></button>
+                            </span>
+                          </div>
+                        </div>
+                      </li>                  
+                    <li>
+                      <div class="btn-group navbar-btn">
+                        <button class="btn btn-default btnShape">
+                          <span class="shape fa fa-cube fa-lg" title="Cube" onclick="load(cube);"></span>
+                          <span class="shape fa fa-circle fa-lg" title="Sphere" onclick="load(sphere);"></span>
+                          <span class="shape fa fa-circle-thin fa-lg" title="Ring" onclick="load(Ring);"></span>
+                          <span class="shape fa fa fa-eject fa-lg" title="Pyramid" onclick="load(Pyramid);"></span>
+                          <span class="shape fa fa fa-database fa-lg" title="Tube" onclick="load(tube);"></span>  
+                        </button>    
+                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;"></span></button>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">Action</a></li>
+                          <li><a href="#">Another action</a></li>
+                          <li><a href="#">Something else here</a></li>
+                          <li class="divider"></li>
+                          <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
+                        </ul>
+                      </div>
+                    </li>  
+                    <li>
+                      <div class="btn-group dropdown keep-open">
+                        <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                          Shapes <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" id="shape-dropdown">
+                          <li>
+                            <div style="margin-left:5px;">
+                              <span class="shape fa fa-cube fa-2x" title="Cube" onclick="load(cube);"></span>
+                              <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
+                              <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
+                              <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
+                              <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>                              
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li>
+                        <div class="btn-group dropdown keep-open" style="margin-left:3px;">
                           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
                             Color <span class="caret"></span>
                           </button>
@@ -511,43 +562,33 @@
                         </div>
                       </li>
                       <li>
-                              <div class="dropdown">
-                              <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
-                                  Add Label
-                              </button>
-                          </div>
-                      </li>
-                      <li>
-                        <div class="navbar-form" style="width:200px;">
-                          <div class="input-group">
-                            <input type="text" class="form-control" id="Search">
-                            <span class="input-group-btn">
-                              <button class="btn btn-default" type="button" onclick="Search();"><span class="glyphicon glyphicon-search" style="font-size:1.4em;"></span></button>
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                      
+                        <div class="dropdown">
+                          <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
+                              Add Label
+                          </button>
+                        </div>  
+                      </li>                                                  
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
-                      <li>                                          
-                            <div ng-show="global.isSignedIn()">
-                              <a type="button" class="btn navbar-btn btn-danger" style="margin-right:0px" href="/profile">
-                              Welcome, {{ global.currentUser().email }}
-                              <a href="/logout" class="btn btn-default navbar-btn" style="margin-right:3px">Logout</a>
-                            </div>
-                            <div ng-hide="global.isSignedIn()">
-                              <a type="button" class="btn navbar-btn btn-danger" style="margin-right:3px" href="/login">
-                                Please Login
-                              </a>
-                            </div>                          
+                      <!-- <li>                                          
+                        <div ng-show="global.isSignedIn()">
+                          <a type="button" class="btn navbar-btn btn-danger" style="margin-right:0px" href="/profile">
+                          Welcome, {{ global.currentUser().email }}
+                          <a href="/logout" class="btn btn-default navbar-btn" style="margin-right:3px">Logout</a>
+                        </div>
+                        <div ng-hide="global.isSignedIn()">
+                          <a type="button" class="btn navbar-btn btn-danger" style="margin-right:3px" href="/login">
+                            Please Login
+                          </a>
+                        </div>                          
+                      </li>
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
-                      </li>
+                      </li> -->
                       <li>
                           <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()"><span class="glyphicon glyphicon-play"></span> Presentation</button>
                       </li>
-                      <li class="dropdown">
+                      <!-- <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
                               <li><a id="ex1" href="#">Note1</a></li>
@@ -555,7 +596,7 @@
                               <li><a id="ex3" href="#">Note3</a></li>
                               <li class="divider"></li>
                           </ul>
-                      </li>
+                      </li> -->
 
                   </ul>
               </div>
@@ -582,9 +623,9 @@
                              </ul>
                                 <div class="tab-content">
                                     <!--BEGIN PROJECT SCOPE-->
-                                    <div class="tab-pane active" id="slides" ng-controller="projectController">
+                                    <div class="tab-pane active" id="slides" ng-controller="projectController">                              
                                         <ul class="nav nav-sidebar" id="slidePanel"> 
-                                          <div ng-show="global.isSignedIn()">
+                                          <!-- <div ng-show="global.isSignedIn()">
                                             My ID: {{ global.currentUser()._id }}
                                             <p>My Projects:</p>
                                               <div class="checkbox" ng-repeat="project in projects">
@@ -595,17 +636,17 @@
                                             <form>
                                               <div class="form-group">
 
-                                                <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                                                
                                                 <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
                                               </div>
 
-                                              <!-- createProject() WILL CREATE NEW PROJECTS -->
+                                              
                                               <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
                                             </form>  
                                             Project Counter: {{projects.length}}
                                             <h3>{{formData}}</h3>
                                           </div>
-                                          <i ng-hide="global.isSignedIn()">Login to see Project interface</i>
+                                          <i ng-hide="global.isSignedIn()">Login to see Project interface</i> -->
                                         </ul>
                                     </div>
                                     <!--END PROJECT SCOPE-->
