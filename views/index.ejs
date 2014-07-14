@@ -68,6 +68,9 @@
           var beam = "objects/Beam.lwo";
           var Ring = "objects/Ring.lwo";
           var Pyramid = "objects/Pyramid.lwo";
+          var c2v = "vehicles/objects/C2V.lwo";
+          var church = "buildings/barnville/Church.lwo"
+          var medHV = "vehicles/objects/Humvee_Medical.lwo"
           var currentObj = "Current Object: X";
           var editorOpen = 0;
           var slideCount = 1;
@@ -479,27 +482,28 @@
                             <li class="dropdown-submenu">
                               <a tabindex="-1" href="#">Animations</a>
                               <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#"onclick="load(Diss);">dissolve</a></li>
-                                  <li><a tabindex="-1" href="#"onclick="load(Scal);">scale</a></li>
-                                  <li><a tabindex="-1" href="#"onclick="load(Spin);">spin</a></li>
+                                <li><a tabindex="-1" href="#"onclick="load(Diss);">Dissolve</a></li>
+                                  <li><a tabindex="-1" href="#"onclick="load(Scal);">Scale</a></li>
+                                  <li><a tabindex="-1" href="#"onclick="load(Spin);">Spin</a></li>
                                   <li class="divider"></li>
                                   <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Antimations...</a></li>
                               </ul>
                             </li>
                           </ul>
                       </li>
-                      <li><p class="navbar-text" id="Current_Object">Current Object: X</p></li>
+                      <!-- As wide in px as the longest object name to avoid displacement bug. More elegant solution? -->
+                      <li><p class="navbar-text" id="Current_Object" style="width: 240px">Current Object: X</p></li>
                       
-                      <li>
+                      <!-- <li>
                         <div class="navbar-form" style="width:200px;">
                           <div class="input-group">
-                            <input type="text" class="form-control" id="Search">
+                            <input type="text" class="form-control" id="Search" placeholder="Find Objects">
                             <span class="input-group-btn">
                               <button class="btn btn-default" type="button" onclick="Search();"><span class="glyphicon glyphicon-search" style="font-size:1.4em;"></span></button>
                             </span>
                           </div>
                         </div>
-                      </li>                  
+                      </li> -->                  
                     <li>
                       <div class="btn-group navbar-btn">
                         <button class="btn btn-default btnShape">
@@ -509,36 +513,20 @@
                           <span class="shape fa fa fa-eject fa-lg" title="Pyramid" onclick="load(Pyramid);"></span>
                           <span class="shape fa fa fa-database fa-lg" title="Tube" onclick="load(tube);"></span>  
                         </button>    
-                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;"></span></button>
+                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
                         <ul class="dropdown-menu">
-                          <li><a href="#">Action</a></li>
-                          <li><a href="#">Another action</a></li>
-                          <li><a href="#">Something else here</a></li>
-                          <li class="divider"></li>
-                          <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
-                        </ul>
-                      </div>
-                    </li>  
-                    <li>
-                      <div class="btn-group dropdown keep-open">
-                        <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
-                          Shapes <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" id="shape-dropdown">
-                          <li>
-                            <div style="margin-left:5px;">
-                              <span class="shape fa fa-cube fa-2x" title="Cube" onclick="load(cube);"></span>
-                              <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
-                              <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
-                              <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
-                              <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>                              
-                            </div>
+                          <li style="margin-left: 3px">
+                            <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
+                            <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
+                            <span class="shape fa fa fa-car fa-2x" title="Tank" onclick="load(c2v);"></span>
+                            <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
+                            <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
                           </li>
                           <li class="divider"></li>
                           <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                         </ul>
                       </div>
-                    </li>
+                    </li>                      
                     <li>
                         <div class="btn-group dropdown keep-open" style="margin-left:3px;">
                           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
@@ -558,6 +546,20 @@
                             <input id="info-r" size="2" type="hidden"/>
                             <input id="info-g" size="2" type="hidden"/>
                             <input id="info-b" size="2" type="hidden"/>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="btn-group dropdown">
+                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                            Animate <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a href="#"onclick="load(Diss);">Dissolve</a></li>
+                            <li><a href="#"onclick="load(Scal);">Scale</a></li>
+                            <li><a href="#"onclick="load(Spin);">Spin</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Antimations...</a></li>
                           </ul>
                         </div>
                       </li>
@@ -659,13 +661,9 @@
                                         <ul class="nav nav-sidebar">
                                             <!--This is where the animations get loaded into the list-->
                                         </ul>
-                                        Animations
+                                        
                                         <ul class="nav nav-sidebar">
-                                            <li><a href="">Nav item</a></li>
-                                            <li><a href="">Nav item again</a></li>
-                                            <li><a href="">One more nav</a></li>
-                                            <li><a href="">Another nav item</a></li>
-                                            <li><a href="">More navigation</a></li>
+                                            
                                         </ul>                     
                                     </div>
                                 </div>
