@@ -17,7 +17,9 @@
     <script src="js/nicEdit.js"></script>
     <!-- jsColor Color Picker -->
     <script type="text/javascript" src="jscolor/jscolor.js"></script>
-    
+
+    <!-- WebHostingHub Glyphs -->
+    <link rel="stylesheet" type="text/css" media="all" href="css/whhg.css" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -70,6 +72,7 @@
           var Ring = "objects/Ring.lwo";
           var Pyramid = "objects/Pyramid.lwo";
           var c2v = "Vehicles/objects/C2V.lwo";
+          var cow = "Animals/objects/Cow.lwo";
           var church = "Barnville/objects/Church.lwo";
           var medHV = "Vehicles/objects/Humvee_Medical.lwo";
           var currentObj = "Current Object: X";
@@ -516,10 +519,10 @@
                         </button>    
                         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
                         <ul class="dropdown-menu">
-                          <li style="margin-left: 3px">
+                          <li style="margin-left: 8px">
                             <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
                             <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
-                            <span class="shape fa fa fa-car fa-2x" title="Tank" onclick="load(c2v);"></span>
+                            <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
                             <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
                             <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
                           </li>
@@ -567,7 +570,7 @@
                       <li>
                         <div class="dropdown">
                           <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
-                              Add Label
+                              Add Label                              
                           </button>
                         </div>  
                       </li>                                                  
