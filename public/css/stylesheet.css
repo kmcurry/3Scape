@@ -70,6 +70,20 @@ body.modal-open {
 
 }
 
+#present-toolbar {   
+    z-index: 2000;
+    display: none; 
+    position:fixed; 
+    bottom: 500px; 
+    left:600px; 
+    background-color:#5cb85c; 
+    height:50px; 
+    width:250px; 
+    border-radius: 10px; 
+    padding: 13px; 
+    color:white;
+    
+}
 /*Dropdown within dropdown styling */
 
 .dropdown-submenu {
