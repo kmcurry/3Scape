@@ -45,6 +45,17 @@ body.modal-open {
   cursor: pointer;
   font-size: 1.4em;
 }
+
+#map-controls{
+    font-size: 10px;
+    background-color: #000000;
+    color: rgb(71, 169, 211)
+    opacity: 0.50;
+    border-radius: 25px;
+    left: 90%;
+    bottom: 15px;
+    z-index: 100;
+}
 #present-tray {   
     display: none; 
     position:fixed; 
