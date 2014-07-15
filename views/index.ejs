@@ -691,6 +691,23 @@
             </span>
             <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right" onclick="closeFullScreen();"></span>
           </div>
+
+          <div id = "map-controls">
+            <div id ="Rotate">
+                <span class="glyphicon glyphicon- icon-circle-arrow-left" title="Rotate -" onclick="rotateNegY();"></span>
+                <span class="glyphicon glyphicon- icon-circle-arrow-right" title="Rotate +" onclick="rotatePosY();"></span>
+            </div>
+              <p></p>
+            <div id ="Tilt">
+                <span class="glyphicon glyphicon- icon-circle-arrow-up" title="Tilt +" onclick="tiltUp();"></span>
+                <span class="glyphicon glyphicon- icon-circle-arrow-down" title="Tilt -" onclick="tiltDown();"></span>
+            </div>
+              <p></p>
+            <div id="Zoom">
+                <span class="glyphicon glyphicon- icon-zoom-in" title="Zoom +" onclick="zoomIn();"></span>
+                <span class="glyphicon glyphicon- icon-zoom-out" title="Zoom -" onclick="zoomOut();"></span>
+            </div>
+          </div>
       </div>
 
       <!-- Progress Bar -->
