@@ -12,7 +12,9 @@ var rotZ;
 function setObject(Object)
 {
     var p = document.getElementById('Current_Object');
+    var q = document.getElementById('Current_Object2');
     p.innerHTML = "Current Object: " + Object;
+    q.innerHTML = "Current Object: " + Object;
 }
 
 function copy()
