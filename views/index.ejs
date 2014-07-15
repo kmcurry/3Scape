@@ -17,7 +17,9 @@
     <script src="js/nicEdit.js"></script>
     <!-- jsColor Color Picker -->
     <script type="text/javascript" src="jscolor/jscolor.js"></script>
-    
+
+    <!-- WebHostingHub Glyphs -->
+    <link rel="stylesheet" type="text/css" media="all" href="css/whhg.css" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -79,6 +81,7 @@
           var Ring = "objects/Ring.lwo";
           var Pyramid = "objects/Pyramid.lwo";
           var c2v = "Vehicles/objects/C2V.lwo";
+          var cow = "Animals/objects/Cow.lwo";
           var church = "Barnville/objects/Church.lwo";
           var medHV = "Vehicles/objects/Humvee_Medical.lwo";
           var currentObj = "Current Object: X";
@@ -357,11 +360,11 @@
       </script>
 
       <!-- Fork ribbon -->
-      <div class="github-fork-ribbon-wrapper left-bottom">
+      <!-- <div class="github-fork-ribbon-wrapper left-bottom">
           <div class="github-fork-ribbon">
               <a href="https://github.com/kmcurry/3scape" target="_blank">Fork me on GitHub</a>
           </div>
-      </div>
+      </div> -->
 
       <img id="BackgroundImage" style="position: absolute;" src="BwContent/images/white.png"/>
       <div class="modal fade" id="myModal">
@@ -525,10 +528,10 @@
                         </button>    
                         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
                         <ul class="dropdown-menu">
-                          <li style="margin-left: 3px">
+                          <li style="margin-left: 8px">
                             <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
                             <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
-                            <span class="shape fa fa fa-car fa-2x" title="Tank" onclick="load(c2v);"></span>
+                            <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
                             <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
                             <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
                           </li>
@@ -542,7 +545,7 @@
                           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
                             Color <span class="caret"></span>
                           </button>
-                          <ul class="dropdown-menu" role="menu" id="color-dropdown">
+                          <ul class="dropdown-menu color-dropdown" role="menu">
                             <!-- Color Picker Script - ColorCodeHex.COM -->
                             <script type="text/javascript">
                             function updateInfo(color) {
@@ -569,14 +572,14 @@
                             <li><a href="#"onclick="load(Scal);">Scale</a></li>
                             <li><a href="#"onclick="load(Spin);">Spin</a></li>
                             <li class="divider"></li>
-                            <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Antimations...</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
                           </ul>
                         </div>
                       </li>
                       <li>
                         <div class="dropdown">
                           <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
-                              Add Label
+                              Add Label                              
                           </button>
                         </div>  
                       </li>                                                  
@@ -636,7 +639,7 @@
                                 <div class="tab-content">
                                     <!--BEGIN PROJECT SCOPE-->
                                     <div class="tab-pane active" id="slides" ng-controller="projectController">                              
-                                        <ul class="nav nav-sidebar" id="slidePanel"> 
+                                        <ul class="nav nav-sidebar" id="slidePanel">
                                           <!-- <div ng-show="global.isSignedIn()">
                                             My ID: {{ global.currentUser()._id }}
                                             <p>My Projects:</p>
@@ -699,6 +702,66 @@
               </ul>
             </span>
             <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right" onclick="closeFullScreen();"></span>
+          </div>
+          <div id="present-toolbar">
+            <div class="btn-group dropup">
+              <button class="btn btn-default btnShape">
+                <span class="shape fa fa-cube fa-2x" title="Cube" onclick="load(cube);"></span>
+                <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
+                <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
+                <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
+                <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>  
+              </button>    
+              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
+                <li class="divider"></li>
+                <li style="margin-left: 8px">
+                  <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
+                  <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
+                  <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
+                  <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
+                  <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
+                </li>                          
+              </ul>
+            </div>
+            <div class="btn-group dropup keep-open" style="margin-left:3px;">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:1.4em;">
+                Color <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu color-dropdown" role="menu">
+                <!-- Color Picker Script - ColorCodeHex.COM -->
+                <script type="text/javascript">
+                function updateInfo(color) {
+                  document.getElementById('info-r').value = color.rgb[0];
+                  document.getElementById('info-g').value = color.rgb[1];
+                  document.getElementById('info-b').value = color.rgb[2];
+                }
+                </script>
+
+                <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
+                <input id="info-r" size="2" type="hidden"/>
+                <input id="info-g" size="2" type="hidden"/>
+                <input id="info-b" size="2" type="hidden"/>
+              </ul>
+            </div>
+            
+            <div class="btn-group dropup">
+              <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                Animate <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#"onclick="load(Diss);">Dissolve</a></li>
+                <li><a href="#"onclick="load(Scal);">Scale</a></li>
+                <li><a href="#"onclick="load(Spin);">Spin</a></li>
+                <li class="divider"></li>
+                <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-default" id="dLabel" role="button" onclick="createRecord();" style="font-size:1.4em;">
+                Add Label                              
+            </button>       
+            <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Current Object: X</button>
           </div>
       </div>
 
@@ -842,6 +905,7 @@
               $('#expand').hide();
               $('#dialog').hide();
               $('#present-tray').show();
+              $('#present-toolbar').show();
               $('#click').show();
 
               var docElement
@@ -895,6 +959,7 @@
               $('#expand').show();
               $('#dialog').show();
               $('#present-tray').hide();
+              $('#present-toolbar').hide();
               $('#click').hide();
 
               window.clearInterval(interval);
@@ -1020,10 +1085,10 @@
           });
 
         //Color picker dropdown doesn't close on click
-          $('#color-dropdown').click(function(event){
+          $('.color-dropdown').click(function(event){
                event.stopPropagation();
            });
-          $('#color-dropdown').on('hide.bs.dropdown', function () {
+          $('.color-dropdown').on('hide.bs.dropdown', function () {
               return false;
           });
 $(function () {
@@ -1038,7 +1103,21 @@ $(function () {
             return $(this).data('closable');
         }
     });
-});      
+});
+$(function () {
+    $('.dropup.keep-open').on({
+        "shown.bs.dropdown": function() {
+            $(this).data('closable', false);
+        },
+        "click": function() {
+            $(this).data('closable', true);
+        },
+        "hide.bs.dropdown": function() {
+            return $(this).data('closable');
+        }
+    });
+});
+
       </script>
       
         <script type="text/javascript">
