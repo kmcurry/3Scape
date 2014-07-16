@@ -92,6 +92,11 @@
           var numSlides = 10;
           var elapsedTime = 0;
           var CameraMotion = "CameraMotion";
+          var zoomUpdate;
+          var distance;
+          var sceneInspector;
+          var camStartPos;
+
 
           //Progress Bar ===========================================================
           var interval;
@@ -237,15 +242,18 @@
           function handleEvent(e)
           {
               bridgeworks.handleEvent(e);
-
               switch(e.type) {
-                case "mousedown": {
-                    capture = true;
+                  case "mousedown":
+                  {
+                      capture = true;
 
-                }
-                    break;
-                case "mouseup":
-                    capture = false;
+                  }
+                      break;
+                  case "mouseup":
+                  {
+                      capture = false;
+                      sceneInspector = bridgeworks.registry.find("SceneInspector");
+                  }
                     break;
                 case "click": {
                     //Dishing out the event client x and y cordinates of the mouse for testing purposes
@@ -297,6 +305,14 @@
               }
               
           }
+
+          zoomUpdate = window.setInterval(function () {
+              distance = sceneInspector.pivotDistance.getValueDirect();
+              sceneInspector.panSensitivity.values[0] = distance * 0.3;
+              sceneInspector.panSensitivity.values[1] = distance * 0.3;
+              sceneInspector.panSensitivity.values[2] = distance * 0.3;
+              console.log(sceneInspector.pivotDistance.getValueDirect());
+          }, 200);
 
           function nextSlide(){
               console.debug("Slide Count: "+slideCount);
@@ -1042,7 +1058,6 @@
 
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
-
 
                 listLibrary();
                 
