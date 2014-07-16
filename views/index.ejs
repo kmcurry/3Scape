@@ -366,7 +366,27 @@
               <a href="https://github.com/kmcurry/3scape" target="_blank">Fork me on GitHub</a>
           </div>
       </div> -->
-
+<div id="ajax-modal" class="modal hide fade in" tabindex="-1" aria-hidden="false" style="display: block; margin-top: -128.5px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab">Tab 1</a></li>
+      <li><a href="#tab2" data-toggle="tab">Tab 2</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1"><p>This modal was loaded in via ajax</p></div>
+      <div class="tab-pane" id="tab2"><p>This is some other tab content</p></div>
+    </div>
+    <button class="btn update">Update</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn">Close</button>
+    <button type="button" class="btn btn-primary">Ok</button>
+  </div>
+</div>
       <img id="BackgroundImage" style="position: absolute;" src="BwContent/images/white.png"/>
       <div class="modal fade" id="myModal">
           <div class="modal-dialog" style="width: 900px">
@@ -376,25 +396,43 @@
                       <h4 class="modal-title">List of Objects</h4>
                   </div>
                   <!--Loading all the Libs and putting them in their respective places-->
-                  <div class="modal-body row">
-                      <div class="col-md-2" id="panel-lib-shapeObjects">
+                  <div class="modal-body row">                                            
+                    <ul class="nav nav-tabs" id="tabContent">
+                      <li class="active"><a href="#objects1" data-toggle="tab">Page 1</a></li>
+                      <li><a href="#objects2" data-toggle="tab">Page 2</a></li>
+                      <li><a href="#objects3" data-toggle="tab">Page 3</a></li>
+                    </ul>
+                    <div class="tab-content">                    
+                      <div class="tab-pane active" id="objects1">
+                        <div class="col-md-2" id="panel-lib-shapeObjects">
                           <H3>Shapes</H3>
-                      </div>
-                      <div class="col-md-2" id="panel-lib-animalObjects">
+                        </div>
+                        <div class="col-md-2" id="panel-lib-animalObjects">
                           <H3>Animals</H3>
-                      </div>
-                      <div class="col-md-2" id="panel-lib-buildingObjects">
-                          <H3>Buildings</H3>
-                      </div>
-                      <div class="col-md-2" id="panel-lib-vehicleObjects">
-                          <H3>Vehicles</H3>
-                      </div>
-                      <div class="col-md-2" id="panel-lib-robotObjects">
+                        </div>
+                        <div class="col-md-2" id="panel-lib-buildingObjects">
+                            <H3>Buildings</H3>
+                        </div>
+                        <div class="col-md-2" id="panel-lib-vehicleObjects">
+                            <H3>Vehicles</H3>
+                        </div>
+                      </div>                      
+                      <div class="tab-pane" id="objects2">
+                        <div class="col-md-2" id="panel-lib-robotObjects">
                           <H3>Robots</H3>
-                      </div>
-                      <div class="col-md-2" id="panel-lib-egyptObjects">
-                          <H3>Egypt</H3>
-                      </div>
+                        </div>
+                        <div class="col-md-2" id="panel-lib-egyptObjects">
+                            <H3>Egypt</H3>
+                        </div>
+                      </div>                       
+                      <div class="tab-pane" id="objects3">
+                        content 1 
+                      </div>                      
+                    </div>
+                        
+                    
+                    
+                    
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
