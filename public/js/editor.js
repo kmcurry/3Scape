@@ -119,7 +119,19 @@ function listLibrary()
         // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_ARV_1.lwo",panel,"Shadow_MULE_ARV_1");
         // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_CM_HIGH.lwo",panel,"Shadow_MULE_CM_HIGH");
         // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_T_HIGH.lwo",panel,"Shadow_MULE_T_HIGH");
-        // listDirectory(url + "robot/objects/", panel);
+        // listDirectory(url + "Robots/objects/", panel);
+
+        panel = document.getElementById("panel-lib-geoObjects");
+        loadDirectoryObject(url,"Geography/objects/cone.lwo",panel,"Cone");
+        loadDirectoryObject(url,"Geography/objects/Dam.lwo",panel,"Dam");
+        loadDirectoryObject(url,"Geography/objects/AP_ApacheL1.lwo",panel,"AP_ApacheL1");
+        loadDirectoryObject(url,"Geography/objects/AP_ApacheL2.lwo",panel,"AP_ApacheL2");
+        loadDirectoryObject(url,"Geography/objects/AP_ApacheL3.lwo",panel,"AP_ApacheL3");
+        loadDirectoryObject(url,"Geography/objects/AP_F18R.lwo",panel,"AP_F18R");
+        loadDirectoryObject(url,"Geography/objects/Camaro.lwo",panel,"Camaro");
+        loadDirectoryObject(url,"Geography/objects/SemiTruck.lwo",panel,"SemiTruck");
+        loadDirectoryObject(url,"Geography/objects/Truck3.lwo",panel,"Truck3");
+        // listDirectory(url + "Geography/objects/", panel);
 
         panel = document.getElementById("panel-motions");
         loadDirectoryObject(url,"motions/fly-loop.mot",panel,"Fly-loop");
