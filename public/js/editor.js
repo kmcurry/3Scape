@@ -60,6 +60,7 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Tube.lwo",panel,"Tube");
         loadDirectoryObject(url,"objects/Wall.lwo",panel,"Wall");
         loadDirectoryObject(url,"objects/Water.lwo",panel,"Water");
+        loadDirectoryObject(url,"objects/Wood.lwo",panel,"Wood");
 
         //listDirectory(url + "objects/", panel);
 
