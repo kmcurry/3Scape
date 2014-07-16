@@ -110,6 +110,17 @@ function listLibrary()
         loadDirectoryObject(url,"Egypt/objects/Site_SkyDome.lwo",panel,"Site_SkyDome");
        // listDirectory(url + "Egypt/objects/", panel);
 
+        panel = document.getElementById("panel-lib-robotObjects");
+        loadDirectoryObject(url,"Robots/objects/MULE_ARV_1.lwo",panel,"MULE_ARV_1");
+        // loadDirectoryObject(url,"Robots/objects/MULE_ARV_HIGH.lwo",panel,"MULE_ARV_HIGH");
+        loadDirectoryObject(url,"Robots/objects/MULE_CM_1.lwo",panel,"MULE_CM_1");
+        // loadDirectoryObject(url,"Robots/objects/MULE_CM_HIGH.lwo",panel,"MULE_CM_HIGH");
+        loadDirectoryObject(url,"Robots/objects/MULE_T_HIGH.lwo",panel,"MULE_T_HIGH");
+        // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_ARV_1.lwo",panel,"Shadow_MULE_ARV_1");
+        // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_CM_HIGH.lwo",panel,"Shadow_MULE_CM_HIGH");
+        // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_T_HIGH.lwo",panel,"Shadow_MULE_T_HIGH");
+        // listDirectory(url + "robot/objects/", panel);
+
         panel = document.getElementById("panel-motions");
         loadDirectoryObject(url,"motions/fly-loop.mot",panel,"Fly-loop");
         loadDirectoryObject(url,"motions/fly-loop-roll.mot",panel,"Fly-loop-roll");

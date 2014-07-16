@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwplugin url="BBD3D8Engine" action="load"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<Scene>
+    <Isolator name="Root">
+        <Selector name="Cameras">
+            <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="0.1" farDistance="1000">
+                <position x="8.30479" y="3.69812" z="-9.27765"/>
+                <rotation x="12.2" y="673.101" z="0"/>
+            </PerspectiveCamera>
+        </Selector>
+        <Group name="Lights">
+            <GlobalIllumination name="AmbientLight">
+                <ambient r="0.45" g="0.45" b="0.45"/>
+            </GlobalIllumination>
+            <PointLight name="Light" range="3.40282e+038" parent="Camera">
+                <position x="26.2248" y="73.9201" z="-93.7113"/>
+                <rotation x="35.6879" y="4.34871" z="0.723227"/>
+                <ambient r="0.05" g="0.05" b="0.05"/>
+                <diffuse r="1" g="1" b="1"/>
+                <specular r="1" g="1" b="1"/>
+            </PointLight>
+        </Group>
+        <Group name="Models">
+            <Model name="Shadow_MULE_CM_HIGH" url="objects/Shadow_MULE_CM_HIGH.lwo"/>
+            <Model name="MULE_CM_1" url="objects/MULE_CM_1.lwo">
+                <position x="0" y="-0.13" z="0"/>
+            </Model>
+        </Group>
+    </Isolator>
+    <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png""/>
+    <Animations>
+        <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
+        <KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
+        <KeyframeInterpolator name="Shadow_MULE_CM_HIGHMotion" url="motions/Shadow_MULE_CM_HIGH.mot" target="Shadow_MULE_CM_HIGH"/>
+        <KeyframeInterpolator name="MULE_CM_1Motion" url="motions/MULE_CM_1.mot" target="MULE_CM_1"/>
+    </Animations>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+</Scene>
