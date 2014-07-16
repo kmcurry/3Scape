@@ -487,7 +487,7 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="http://3scape.me" target="_blank"><img src="logo-3S.png" style="max-width:100%; max-height:100%;"></a>
+                  <a class="navbar-brand" href="http://3scape.me" target="_blank"><div style="height:45px; margin-top:-12px;"><img src="logo-3S.png" style="max-width:100%; max-height:100%;"></div></a>
               </div>
               <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav">
@@ -662,7 +662,7 @@
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li> -->
                       <li>
-                          <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()"><span class="glyphicon glyphicon-play"></span> Presentation</button>
+                          <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()" style="margin-right:10px;"><span class="glyphicon glyphicon-play"></span> Presentation</button>
                       </li>
                       <!-- <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
@@ -747,8 +747,8 @@
         </div>
           
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                   <canvas id="Canvas">
-                  </canvas>
+                   <!-- <canvas id="Canvas">
+                  </canvas> -->
           </div>
           <div id="present-tray">
             <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
