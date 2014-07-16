@@ -62,6 +62,8 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Water.lwo",panel,"Water");
         loadDirectoryObject(url,"objects/Wood.lwo",panel,"Wood");
         loadDirectoryObject(url,"objects/Sky2.lwo",panel,"Sky2");
+        loadDirectoryObject(url,"objects/Push Pin.lwo",panel,"Push_Pin");
+        loadDirectoryObject(url,"objects/Flag.lwo",panel,"Flag");
 
         //listDirectory(url + "objects/", panel);
 
