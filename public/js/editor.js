@@ -89,6 +89,8 @@ function listLibrary()
         loadDirectoryObject(url,"Vehicles/objects/Fishing Boat.lwo",panel,"Fishing Boat");
         loadDirectoryObject(url,"Vehicles/objects/Humvee_Medical.lwo",panel,"Humvee_Medical");
         loadDirectoryObject(url,"Vehicles/objects/Landing-Pad.lwo",panel,"Landing-Pad");
+        loadDirectoryObject(url,"Vehicles/objects/F16.lwo",panel,"F16");
+        loadDirectoryObject(url,"Vehicles/objects/DC-10.lwo",panel,"DC-10");
        // listDirectory(url + "Vehicles/objects/", panel);
 
         panel = document.getElementById("panel-lib-egyptObjects");
