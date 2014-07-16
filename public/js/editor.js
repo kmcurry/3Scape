@@ -61,6 +61,7 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Wall.lwo",panel,"Wall");
         loadDirectoryObject(url,"objects/Water.lwo",panel,"Water");
         loadDirectoryObject(url,"objects/Wood.lwo",panel,"Wood");
+        loadDirectoryObject(url,"objects/Sky2.lwo",panel,"Sky2");
 
         //listDirectory(url + "objects/", panel);
 
@@ -82,6 +83,7 @@ function listLibrary()
         loadDirectoryObject(url,"Buildings/objects/shed3.lwo",panel,"Shed3");
         loadDirectoryObject(url,"Barnville/objects/Stone_Wall.lwo",panel,"Stone Wall");
         loadDirectoryObject(url,"Barnville/objects/Well.lwo",panel,"Well");
+        loadDirectoryObject(url,"Buildings/objects/RadioTower.lwo",panel,"Radio_Tower");
         // listDirectory(url + "Buildings/objects/", panel);
 
         panel = document.getElementById("panel-lib-vehicleObjects");
