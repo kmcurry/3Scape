@@ -61,7 +61,8 @@ function listLibrary()
         loadDirectoryObject(url,"Geography/objects/cone.lwo",panel,"Cone");
         loadDirectoryObject(url,"objects/Push Pin.lwo",panel,"Push_Pin");
         loadDirectoryObject(url,"objects/Wood.lwo",panel,"Wood");
-        
+        loadDirectoryObject(url,"objects/Gear.lwo",panel,"Gear");
+        loadDirectoryObject(url,"objects/9VBattery.lwo",panel,"9VBattery");
         //listDirectory(url + "objects/", panel);
 
         panel = document.getElementById("panel-lib-animalObjects");
@@ -69,6 +70,27 @@ function listLibrary()
         loadDirectoryObject(url,"Animals/objects/trex.lwo",panel,"Trex");
         loadDirectoryObject(url,"Animals/objects/Ant.lwo",panel,"Ant");
        // listDirectory(url + "Animals/objects/", panel);
+
+        panel = document.getElementById("panel-lib-anatomyObjects");
+        // loadDirectoryObject(url,"Heart/objects/heart4.lwo",panel,"heart4");
+        // loadDirectoryObject(url,"Heart/objects/aortaw.lwo",panel,"aortaw");
+        // loadDirectoryObject(url,"Heart/objects/catheder.lwo",panel,"catheder");
+        // loadDirectoryObject(url,"Heart/objects/1.lwo",panel,"1");
+        // loadDirectoryObject(url,"Heart/objects/2.lwo",panel,"2");
+        // loadDirectoryObject(url,"Heart/objects/4.lwo",panel,"4");
+        // loadDirectoryObject(url,"Heart/objects/a.lwo",panel,"a");
+        // loadDirectoryObject(url,"Heart/objects/HumanHeart_1.lwo",panel,"HumanHeart_1");
+        loadDirectoryObject(url,"Heart/objects/Heart_back.lwo",panel,"Heart_back");
+        // loadDirectoryObject(url,"Heart/objects/Heart_back2.lwo",panel,"Heart_back2");
+        loadDirectoryObject(url,"Heart/objects/Heart_front.lwo",panel,"Heart_front");
+        // loadDirectoryObject(url,"Heart/objects/Heart_front2.lwo",panel,"Heart_front2");
+        loadDirectoryObject(url,"Arm/objects/Arm.lwo",panel,"Arm");
+        loadDirectoryObject(url,"Arm/objects/Bn_femur.lwo",panel,"Bn_femur");
+        loadDirectoryObject(url,"Arm/objects/bones.lwo",panel,"bones");
+        loadDirectoryObject(url,"Arm/objects/Hand.lwo",panel,"Hand");
+        loadDirectoryObject(url,"Arm/objects/hand-skin.lwo",panel,"hand-skin");
+        loadDirectoryObject(url,"Arm/objects/Humerus-Ulna.lwo",panel,"Humerus-Ulna");
+
 
         panel = document.getElementById("panel-lib-buildingObjects");
         loadDirectoryObject(url,"Barnville/objects/Barn.lwo",panel,"Barn");
