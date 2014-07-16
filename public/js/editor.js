@@ -60,6 +60,10 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Tube.lwo",panel,"Tube");
         loadDirectoryObject(url,"objects/Wall.lwo",panel,"Wall");
         loadDirectoryObject(url,"objects/Water.lwo",panel,"Water");
+        loadDirectoryObject(url,"objects/Wood.lwo",panel,"Wood");
+        loadDirectoryObject(url,"objects/Sky2.lwo",panel,"Sky2");
+        loadDirectoryObject(url,"objects/Push Pin.lwo",panel,"Push_Pin");
+        loadDirectoryObject(url,"objects/Flag.lwo",panel,"Flag");
 
         //listDirectory(url + "objects/", panel);
 
@@ -81,6 +85,7 @@ function listLibrary()
         loadDirectoryObject(url,"Buildings/objects/shed3.lwo",panel,"Shed3");
         loadDirectoryObject(url,"Barnville/objects/Stone_Wall.lwo",panel,"Stone Wall");
         loadDirectoryObject(url,"Barnville/objects/Well.lwo",panel,"Well");
+        loadDirectoryObject(url,"Buildings/objects/RadioTower.lwo",panel,"Radio_Tower");
         // listDirectory(url + "Buildings/objects/", panel);
 
         panel = document.getElementById("panel-lib-vehicleObjects");
@@ -89,6 +94,8 @@ function listLibrary()
         loadDirectoryObject(url,"Vehicles/objects/Fishing Boat.lwo",panel,"Fishing Boat");
         loadDirectoryObject(url,"Vehicles/objects/Humvee_Medical.lwo",panel,"Humvee_Medical");
         loadDirectoryObject(url,"Vehicles/objects/Landing-Pad.lwo",panel,"Landing-Pad");
+        loadDirectoryObject(url,"Vehicles/objects/F16.lwo",panel,"F16");
+        loadDirectoryObject(url,"Vehicles/objects/DC-10.lwo",panel,"DC-10");
        // listDirectory(url + "Vehicles/objects/", panel);
 
         panel = document.getElementById("panel-lib-egyptObjects");
@@ -102,6 +109,29 @@ function listLibrary()
         loadDirectoryObject(url,"Egypt/objects/MenkaurePyramid.lwo",panel,"MenkaurePyramid");
         loadDirectoryObject(url,"Egypt/objects/Site_SkyDome.lwo",panel,"Site_SkyDome");
        // listDirectory(url + "Egypt/objects/", panel);
+
+        panel = document.getElementById("panel-lib-robotObjects");
+        loadDirectoryObject(url,"Robots/objects/MULE_ARV_1.lwo",panel,"MULE_ARV_1");
+        // loadDirectoryObject(url,"Robots/objects/MULE_ARV_HIGH.lwo",panel,"MULE_ARV_HIGH");
+        loadDirectoryObject(url,"Robots/objects/MULE_CM_1.lwo",panel,"MULE_CM_1");
+        // loadDirectoryObject(url,"Robots/objects/MULE_CM_HIGH.lwo",panel,"MULE_CM_HIGH");
+        loadDirectoryObject(url,"Robots/objects/MULE_T_HIGH.lwo",panel,"MULE_T_HIGH");
+        // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_ARV_1.lwo",panel,"Shadow_MULE_ARV_1");
+        // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_CM_HIGH.lwo",panel,"Shadow_MULE_CM_HIGH");
+        // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_T_HIGH.lwo",panel,"Shadow_MULE_T_HIGH");
+        // listDirectory(url + "Robots/objects/", panel);
+
+        panel = document.getElementById("panel-lib-geoObjects");
+        loadDirectoryObject(url,"Geography/objects/cone.lwo",panel,"Cone");
+        loadDirectoryObject(url,"Geography/objects/Dam.lwo",panel,"Dam");
+        loadDirectoryObject(url,"Geography/objects/AP_ApacheL1.lwo",panel,"AP_ApacheL1");
+        loadDirectoryObject(url,"Geography/objects/AP_ApacheL2.lwo",panel,"AP_ApacheL2");
+        loadDirectoryObject(url,"Geography/objects/AP_ApacheL3.lwo",panel,"AP_ApacheL3");
+        loadDirectoryObject(url,"Geography/objects/AP_F18R.lwo",panel,"AP_F18R");
+        loadDirectoryObject(url,"Geography/objects/Camaro.lwo",panel,"Camaro");
+        loadDirectoryObject(url,"Geography/objects/SemiTruck.lwo",panel,"SemiTruck");
+        loadDirectoryObject(url,"Geography/objects/Truck3.lwo",panel,"Truck3");
+        // listDirectory(url + "Geography/objects/", panel);
 
         panel = document.getElementById("panel-motions");
         loadDirectoryObject(url,"motions/fly-loop.mot",panel,"Fly-loop");
