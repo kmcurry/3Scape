@@ -8,7 +8,7 @@
 	<ObjectInspector name="ObjectInspector" enabled="false"/>
 	<SceneInspector name="SceneInspector" viewRelativeXAxisRotation="true" viewRelativeZAxisRotation="true" pivotDistance="0" enabled="true">
 		<rotationSensitivity x=".5" y=".5" z=".5"/>
-        <panSensitivity x="50" y="50" z="50"/>
+        <panSensitivity x="1" y="1" z="1"/>
 	</SceneInspector>
 	<FlightSimulator name="FlightSimulator" speed="1" evaluate="false"/>
     <WalkSimulator name="WalkSimulator" speed="1" evaluate="false"/>
