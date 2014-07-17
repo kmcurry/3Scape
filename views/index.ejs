@@ -659,14 +659,7 @@
                               Add Label                              
                           </button>
                         </div>  
-                      </li>
-                      <li>
-                          <div class="button">
-                            <button type="button" class="btn btn-info navbar-btn" id="toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode">
-                                <span id="toggleGlyph" class="fa fa-video-camera fa-lg"></span> <span id="modeText">Camera Mode</span>
-                            </button>
-                          </div>
-                      </li>
+                      </li>                      
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
                       <!-- <li>                                          
@@ -684,6 +677,13 @@
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li> -->
+                      <li>                        
+                        <div class="button" style="margin-right:30px;">
+                          <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode">
+                            <span class="fa fa-video-camera fa-lg toggleGlyph"></span> <span class="modeText">Camera Mode</span>
+                          </button>
+                        </div>
+                      </li>
                       <li>
                           <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()" style="margin-right:10px;"><span class="glyphicon glyphicon-play"></span> Presentation</button>
                       </li>
@@ -849,6 +849,9 @@
                 Add Label                              
             </button>       
             <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Current Object: X</button>
+            <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode" style="height:42px;">
+              <span class="fa fa-video-camera fa-2x toggleGlyph"></span> <span class="modeText" style="font-size:1.4em;">Camera Mode</span>
+            </button>
           </div>
       </div>
 
@@ -1209,19 +1212,14 @@ $(function () {
 
 <script type="text/javascript">
   var toggleText = function(){
-    // $('#toggleController').click(function(){
-    //   alert("Hey!");
-    // });
-    var x = document.getElementById('modeText')
-    // var y = document.getElementById('toggleController')
-    if(x.innerHTML == "Camera Mode") {
-      x.innerHTML = "Object Mode &nbsp";
-      $('#toggleController').removeClass('btn-info').addClass('btn-danger');
-      $('#toggleGlyph').removeClass('fa-video-camera').addClass('fa-anchor');
+    if($('.modeText:first').text() == "Camera Mode") {
+      $('.modeText').text("Object Mode");
+      $('.toggleController').removeClass('btn-info').addClass('btn-danger');
+      $('.toggleGlyph').removeClass('fa-video-camera').addClass('fa-anchor');
     }else {
-      x.innerHTML = "Camera Mode";
-      $('#toggleController').removeClass('btn-danger').addClass('btn-info');
-      $('#toggleGlyph').removeClass('fa-anchor').addClass('fa-video-camera');
+      $('.modeText').text("Camera Mode");
+      $('.toggleController').removeClass('btn-danger').addClass('btn-info');
+      $('.toggleGlyph').removeClass('fa-anchor').addClass('fa-video-camera');
     }
   };
 </script>
