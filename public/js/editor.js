@@ -30,7 +30,26 @@ function copy()
         rotZ = selectedModel.rotation.getValueDirect().z;
     }
 }
+function switchModes()
+{
+    var objectInspector =bridgeworks.registry.find("ObjectInspector");
+    var sceneInspector =bridgeworks.registry.find("SceneInspector");
+    var sceneActive = sceneInspector.enabled.getValueDirect();
 
+    if(sceneActive)
+    {
+        sceneInspector.enabled.setValueDirect(false);
+        objectInspector.enabled.setValueDirect(true);
+    }
+    else if(!sceneActive)
+    {
+        sceneInspector.enabled.setValueDirect(true);
+        objectInspector.enabled.setValueDirect(false);
+    }
+
+    console.log(sceneInspector.enabled.getValueDirect());
+
+}
 function cut()
 {
     if (selectedModel) {
