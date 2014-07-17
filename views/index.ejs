@@ -41,6 +41,7 @@
             width: 90%;
             height:30px;
             border: solid 1px #222;
+            overflow: hidden;
         }
         .modal {
             overflow-y: auto;
@@ -51,6 +52,7 @@
         html{
             overflow-y: auto;
         }
+
     </style>
     <!--<link type="text/css" rel="StyleSheet" href="css/bootstrap.min.css"/>-->
       <style id="holderjs-style" type="text/css"></style>
@@ -946,7 +948,6 @@
                   elapsedTime = kfi.time.getValueDirect();
                   elapsedTime = elapsedTime * 1.07;
                   bar.set_percentage(elapsedTime);
-                  console.log(elapsedTime);
                   //console.log(elapsedTime);
               }, 50);
           }
