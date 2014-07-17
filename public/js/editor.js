@@ -63,14 +63,15 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Wood.lwo",panel,"Wood");
         loadDirectoryObject(url,"objects/Gear.lwo",panel,"Gear");
         loadDirectoryObject(url,"objects/9VBattery.lwo",panel,"9VBattery");
-        loadDirectoryObject(url,"objects/schwert7.lwo",panel,"Sword");
+        loadDirectoryObject(url,"objects/sword.lwo",panel,"Sword");
         //listDirectory(url + "objects/", panel);
 
         panel = document.getElementById("panel-lib-animalObjects");
         loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");
         loadDirectoryObject(url,"Animals/objects/trex.lwo",panel,"Trex");
         loadDirectoryObject(url,"Animals/objects/Ant.lwo",panel,"Ant");
-        loadDirectoryObject(url,"objects/Horse.lwo",panel,"Horse");
+        loadDirectoryObject(url,"objects/rhino.lwo",panel,"Rhino");
+        loadDirectoryObject(url,"objects/elephant.lwo",panel,"Elephant");
        // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-anatomyObjects");
