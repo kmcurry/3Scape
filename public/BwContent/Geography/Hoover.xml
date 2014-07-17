@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwplugin url="BBD3D8Engine" action="load"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<Scene>
+    <Isolator name="Root">
+        <Selector name="Cameras">
+            <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="10000">
+                <position x="-818.636" y="6353.1" z="7620.75"/>
+                <rotation x="40.1001" y="155.1" z="0"/>
+            </PerspectiveCamera>
+        </Selector>
+        <Group name="Lights">
+            <GlobalIllumination name="AmbientLight">
+                <ambient r="0.45" g="0.45" b="0.45"/>
+            </GlobalIllumination>
+            <PointLight name="Light" range="3.40282e+038">
+                <position x="3792.37" y="5550" z="-4734.5"/>
+                <rotation x="46" y="-13.3" z="0"/>
+                <ambient r="0.05" g="0.05" b="0.05"/>
+                <diffuse r="0.861177" g="0.801176" b="0.751765"/>
+                <specular r="0.861177" g="0.801176" b="0.751765"/>
+            </PointLight>
+        </Group>
+        <Group name="Models">
+            <Model name="Dam" url="objects/Dam.lwo">
+                <position x="2383.14" y="0" z="-282.775"/>
+            </Model>
+            <Model name="Truck3" url="objects/Truck3.lwo">
+                <position x="782.1" y="169.575" z="-2115.15"/>
+                <rotation x="0" y="21.1" z="0"/>
+                <pivot x="-1635" y="171" z="-1676.4"/>
+            </Model>
+            <Model name="AP_ApacheL1" url="objects/AP_ApacheL1.lwo">
+                <position x="345" y="308.75" z="-3914"/>
+                <rotation x="0" y="-8.5" z="0"/>
+            </Model>
+            <Model name="AP_F18R" url="objects/AP_F18R.lwo">
+                <position x="-2304.46" y="1010" z="2087.2"/>
+                <rotation x="0" y="84.6" z="0"/>
+            </Model>
+            <Model name="Camaro" url="objects/Camaro.lwo">
+                <position x="782.1" y="169.575" z="-2115.15"/>
+                <rotation x="0" y="21.1" z="0"/>
+                <pivot x="0" y="0.55" z="0"/>
+            </Model>
+            <Model name="cone" url="objects/cone.lwo"/>
+            <Model name="SemiTruck" url="objects/SemiTruck.lwo">
+                <position x="624.4" y="170.15" z="-1903.95"/>
+                <rotation x="0" y="89.4" z="0"/>
+                <pivot x="0" y="1.8" z="5.4"/>
+            </Model>
+            <NullObject name="Null" parent="Camera"/>
+            <Model name="AP_ApacheL2" url="objects/AP_ApacheL2.lwo" parent="AP_ApacheL1"/>
+            <Model name="AP_ApacheL3" url="objects/AP_ApacheL3.lwo" parent="AP_ApacheL1">
+                <position x="-0.8" y="0" z="-10.5624"/>
+            </Model>
+        </Group>
+    </Isolator>
+    <RenderDirective name="RenderDirective"/>
+    <Animations>
+        <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
+        <KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
+        <KeyframeInterpolator name="DamMotion" url="motions/Dam.mot" target="Dam"/>
+        <KeyframeInterpolator name="Truck3Motion" url="motions/Truck3.mot" target="Truck3"/>
+        <KeyframeInterpolator name="AP_ApacheL1Motion" url="motions/AP_ApacheL1.mot" target="AP_ApacheL1"/>
+        <KeyframeInterpolator name="AP_F18RMotion" url="motions/AP_F18R.mot" target="AP_F18R"/>
+        <KeyframeInterpolator name="CamaroMotion" url="motions/Camaro.mot" target="Camaro"/>
+        <KeyframeInterpolator name="coneMotion" url="motions/cone.mot" target="cone"/>
+        <KeyframeInterpolator name="SemiTruckMotion" url="motions/SemiTruck.mot" target="SemiTruck"/>
+        <KeyframeInterpolator name="NullMotion" url="motions/Null.mot" target="Null"/>
+        <KeyframeInterpolator name="AP_ApacheL2Motion" url="motions/AP_ApacheL2.mot" target="AP_ApacheL2"/>
+        <KeyframeInterpolator name="AP_ApacheL3Motion" url="motions/AP_ApacheL3.mot" target="AP_ApacheL3"/>
+    </Animations>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+</Scene>

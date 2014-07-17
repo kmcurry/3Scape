@@ -1,0 +1,835 @@
+LWSC
+3
+
+FirstFrame 1
+LastFrame 30
+FrameStep 1
+PreviewFirstFrame 0
+PreviewLastFrame 60
+PreviewFrameStep 1
+CurrentFrame 0
+FramesPerSecond 30
+
+LoadObjectLayer 1 objects/Muscle_layers.lwo
+ShowObject 0 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.0127 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.127 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+PivotPosition 0.0127 0.127 0
+ObjectDissolve (envelope)
+{ Envelope
+  2
+  Key 0 0 0 0 0 0 0 1.0113001 0
+  Key 1.0118705 0.49250001 0 0 0 0 1.0113001 0 0
+  Behaviors 1 1
+}
+ShadowOptions 7
+
+LoadObjectLayer 2 objects/Muscle_layers.lwo
+ShowObject 0 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.0254 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.063500002 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+PivotPosition 0.0254 0.0635 0
+ShadowOptions 7
+
+LoadObjectLayer 3 objects/Muscle_layers.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  2
+  Key 0.0381 0 0 0 0 0 0 0 0
+  Key 0.0381 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  2
+  Key -0.082549997 0 0 0 0 0 0 0 0
+  Key -0.082549997 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  2
+  Key 0.003175 0 0 0 0 0 0 0 0
+  Key 0.003175 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  2
+  Key 0 0 0 0 0 0 0 -3.1354852 0
+  Key -3.1363561 1 0 0 0 0 -3.1354852 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  2
+  Key 0 0 0 0 0 0 0 0 0
+  Key 0 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  2
+  Key 0 0 0 0 0 0 0 0 0
+  Key 0 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  2
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  2
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  2
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LockedChannels 48
+PivotPosition 0.0381 -0.08255 0.003175
+ShadowOptions 7
+
+LoadObjectLayer 4 objects/Muscle_layers.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  4
+  Key 0.042862501 0 0 0 0 0 0 0 0
+  Key 0.042862501 0.26666668 0 0 0 0 0 0 0
+  Key 0.042862501 0.5 0 0 0 0 0 0 0
+  Key 0.042862501 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  4
+  Key 0.21431249 0 0 0 0 0 0 0 0
+  Key 0.21431249 0.26666668 0 0 0 0 0 0 0
+  Key 0.21431249 0.5 0 0 0 0 0 0 0
+  Key 0.21431249 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  4
+  Key -0.0127 0 0 0 0 0 0 0 0
+  Key -0.0127 0.26666668 0 0 0 0 0 0 0
+  Key -0.0127 0.5 0 0 0 0 0 0 0
+  Key -0.0127 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  4
+  Key 0 0 0 0 0 0 0 -0.077170193 0
+  Key -0.077250578 0.26666668 0 0 0 0 -0.077259921 -0.067602433 0
+  Key -0.14486235 0.5 0 0 0 0 -0.067605406 -0.14486873 0
+  Key -0.28972471 1 0 0 0 0 -0.14478192 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  4
+  Key 0 0 0 0 0 0 0 0.07732413 0
+  Key 0.077404678 0.26666668 0 0 0 0 0.075863846 0.066380866 0
+  Key 0.14224471 0.5 0 0 0 0 -0.0029708331 -0.0063660708 0
+  Key 0.068067774 1 0 0 0 0 -0.074135751 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  4
+  Key 0 0 0 0 0 0 0 0.044783905 0
+  Key 0.044830553 0.26666668 0 0 0 0 0.062831856 0.054977871 0
+  Key 0.11780973 0.5 0 0 0 0 0.10291077 0.22052309 0
+  Key 0.36826441 1 0 0 0 0 0.25031561 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  4
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 0.26666668 0 0 0 0 0 0 0
+  Key 1 0.5 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  4
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 0.26666668 0 0 0 0 0 0 0
+  Key 1 0.5 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  4
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 0.26666668 0 0 0 0 0 0 0
+  Key 1 0.5 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LockedChannels 24
+PivotPosition 0.0428625 0.2143125 -0.0127
+BoneFalloffType 3
+AddBone
+BoneName Bone01
+ShowBone 1 8
+BoneActive 1
+BoneRestPosition 0.04116638 0.2049665 -0.01068041
+BoneRestDirection -85.82456 70.83052 -174.5199
+BoneRestLength 0.08388168
+BoneStrength 1
+ScaleBoneStrength 0
+BoneMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.04116638 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.20496655 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key -0.010680407 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key -1.4979212 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 1.2362257 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key -3.0459476 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+ParentItem 10000003
+AddBone
+BoneName Bone02
+ShowBone 1 8
+BoneActive 1
+BoneRestPosition 1.391849e-010 4.111872e-009 0.08388168
+BoneRestDirection -4.709258 -2.763395 4.610023
+BoneRestLength 0.07658571
+BoneStrength 1
+ScaleBoneStrength 0
+BoneMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  3
+  Key 1.3918487e-010 0 0 0 0 0 0 0 0
+  Key 1.3918487e-010 0.5 0 0 0 0 0 0 0
+  Key 1.3918487e-010 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  3
+  Key 4.1118722e-009 0 0 0 0 0 0 0 0
+  Key 4.1118722e-009 0.5 0 0 0 0 0 0 0
+  Key 4.1118722e-009 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  3
+  Key 0.083881684 0 0 0 0 0 0 0 0
+  Key 0.083881684 0.5 0 0 0 0 0 0 0
+  Key 0.083881684 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  3
+  Key -0.082192063 0 0 0 0 0 0 0 0
+  Key -0.082192063 0.5 0 0 0 0 0 0 0
+  Key -0.082192063 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  3
+  Key -0.048230335 0 0 0 0 0 0 0 0
+  Key -0.048230335 0.5 0 0 0 0 0 0 0
+  Key -0.048230335 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  3
+  Key 0.080460086 0 0 0 0 0 0 0 0
+  Key 0.080460086 0.5 0 0 0 0 0.45902181 0.45902181 0
+  Key 0.99850368 1 0 0 0 0 0.91753387 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  3
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 0.5 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  3
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 0.5 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  3
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 0.5 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LockedChannels 24
+ParentItem 40000003
+ShadowOptions 7
+
+LoadObjectLayer 5 objects/Muscle_layers.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.0381 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.193675 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key 0.0127 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+PivotPosition 0.0381 0.193675 0.0127
+ShadowOptions 7
+
+LoadObjectLayer 6 objects/Muscle_layers.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  3
+  Key 0.0063499999 0 0 0 0 0 0 0 0
+  Key 0.0063499999 0.5 0 0 0 0 0 0 0
+  Key 0.0063499999 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  3
+  Key 0.193675 0 0 0 0 0 0 0 0
+  Key 0.193675 0.5 0 0 0 0 0 0 0
+  Key 0.193675 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  3
+  Key 0 0 0 0 0 0 0 0 0
+  Key 0 0.5 0 0 0 0 0 0 0
+  Key 0 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  3
+  Key 0 0 0 0 0 0 0 -1.3745558 0
+  Key -1.3753195 0.5 0 0 0 0 -1.3753195 -1.3753195 0
+  Key -2.750639 1 0 0 0 0 -1.3745558 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  3
+  Key 0 0 0 0 0 0 0 0.10291725 0
+  Key 0.10297442 0.5 0 0 0 0 0.043633223 0.043633223 0
+  Key 0.087266445 1 0 0 0 0 -0.015699256 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  3
+  Key 0 0 0 0 0 0 0 -0.11251125 0
+  Key -0.11257376 0.5 0 0 0 0 -0.11257376 -0.11257376 0
+  Key -0.22514752 1 0 0 0 0 -0.11251125 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  3
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 0.5 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  3
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 0.5 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  3
+  Key 1 0 0 0 0 0 0 0 0
+  Key 1 0.5 0 0 0 0 0 0 0
+  Key 1 1 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LockedChannels 40
+PivotPosition 0.00635 0.193675 0
+ShadowOptions 7
+
+LoadObjectLayer 7 objects/Muscle_layers.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.015875001 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.193675 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+PivotPosition 0.015875 0.193675 0
+ShadowOptions 7
+
+AmbientColor 1 1 1
+AmbientIntensity 0.25
+
+AddLight
+LightName Light
+ShowLight 1 5
+LightMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key -2 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 2 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key -2 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0.78539813 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0.61086524 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LightColor 1 1 1
+LightIntensity 1
+AffectCaustics 1
+LightType 0
+ShadowType 1
+
+AddCamera
+CameraName Camera
+ShowCamera 1 2
+CameraMotion
+NumChannels 6
+Channel 0
+{ Envelope
+  1
+  Key 0.016999995 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key -0.029000001 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key -1.0614152 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+ZoomFactor 3.2
+ResolutionMultiplier 1.0
+FrameSize 640 480
+PixelAspect 1
+MaskPosition 0 0 640 480
+MotionBlur 0
+FieldRendering 0
+
+ApertureHeight 0.015
+Antialiasing 1
+EnhancedAA 1
+AdaptiveSampling 1
+AdaptiveThreshold 0.1
+
+SolidBackdrop 1
+BackdropColor 0 0 0
+ZenithColor 0 0.1569 0.3137
+SkyColor 0.4706 0.7059 0.9412
+GroundColor 0.1961 0.1569 0.1176
+NadirColor 0.3922 0.3137 0.2353
+FogType 0
+DitherIntensity 1
+AnimatedDither 0
+
+RenderMode 2
+RayTraceEffects 0
+RayRecursionLimit 16
+DataOverlayLabel  
+SaveAnimationName C:\LightWave\DYM_ARM\scenes\dissolve.avi
+AnimationSaver AVI(.avi)
+1684633187
+10000
+4
+colr
+EndPlugin
+
+ViewConfiguration 0
+DefineView 0
+ViewType 9
+ViewAimpoint 0 0 0
+ViewZoomFactor 8.28212
+
+GridNumber 20
+GridSize 0.2
+CameraViewBG 0
+ShowMotionPath 1
+ShowFogRadius 1
+ShowFogEffect 1
+ShowSafeAreas 1
+ShowFieldChart 1
+
+CurrentObject 0
+CurrentLight 0
+CurrentCamera 0
+GraphEditorData
+{ GraphEd_Favorites
+}
+{ GE_Expression_Lib
+  1
+}
