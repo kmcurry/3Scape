@@ -43,6 +43,7 @@
             width: 90%;
             height:30px;
             border: solid 1px #222;
+            overflow: hidden;
         }
         .modal {
             overflow-y: auto;
@@ -53,6 +54,7 @@
         html{
             overflow-y: auto;
         }
+
     </style>
     <!--<link type="text/css" rel="StyleSheet" href="css/bootstrap.min.css"/>-->
       <style id="holderjs-style" type="text/css"></style>
@@ -97,6 +99,7 @@
           var distance;
           var sceneInspector;
           var camStartPos;
+          var ancientLoaded = 0;
 
 
           //Progress Bar ===========================================================
@@ -254,6 +257,8 @@
                   {
                       capture = false;
                       sceneInspector = bridgeworks.registry.find("SceneInspector");
+                      //console.log(sceneInspector.panSensitivity.values[0]);
+
                   }
                     break;
                 case "click": {
@@ -308,11 +313,12 @@
           }
 
           zoomUpdate = window.setInterval(function () {
-              distance = sceneInspector.pivotDistance.getValueDirect();
+              distance = sceneInspector.pivotDistance.getValueDirect()
               sceneInspector.panSensitivity.values[0] = distance * 0.3;
               sceneInspector.panSensitivity.values[1] = distance * 0.3;
               sceneInspector.panSensitivity.values[2] = distance * 0.3;
-              console.log(sceneInspector.pivotDistance.getValueDirect());
+              //console.log(sceneInspector.panSensitivity.values[0]);
+              //console.log(sceneInspector.panSensitivity.value[0]);
           }, 200);
 
           function nextSlide(){
@@ -543,9 +549,9 @@
                               Add <span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                            <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();">New Scene</a></li>
+                            <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();ancientLoaded = 0;">New Scene</a></li>
                             <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
-                            <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);">Ancient Egypt</a></li>
+                            <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-submenu">
                               <a tabindex="-1" href="#">Objects</a>
@@ -980,7 +986,9 @@
               $('#dialog').hide();
               $('#present-tray').show();
               $('#present-toolbar').show();
-              $('#click').show();
+              if(ancientLoaded == 1) {
+                  $('#click').show();
+              }
 
               var docElement
               var request;
@@ -998,7 +1006,6 @@
                   elapsedTime = kfi.time.getValueDirect();
                   elapsedTime = elapsedTime * 1.07;
                   bar.set_percentage(elapsedTime);
-                  console.log(elapsedTime);
                   //console.log(elapsedTime);
               }, 50);
           }
