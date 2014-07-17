@@ -662,8 +662,8 @@
                       </li>
                       <li>
                           <div class="button">
-                            <button type="button" class="btn btn-default navbar-btn" id="toggleController" role="button" onclick="switchModes();">
-                                <span class="glyphicon glyphicon-facetime-video"></span>
+                            <button type="button" class="btn btn-info navbar-btn" id="toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode">
+                                <span id="toggleGlyph" class="fa fa-video-camera fa-lg"></span> <span id="modeText">Camera Mode</span>
                             </button>
                           </div>
                       </li>
@@ -1206,6 +1206,25 @@ $(function () {
 });
 
       </script>
+
+<script type="text/javascript">
+  var toggleText = function(){
+    // $('#toggleController').click(function(){
+    //   alert("Hey!");
+    // });
+    var x = document.getElementById('modeText')
+    // var y = document.getElementById('toggleController')
+    if(x.innerHTML == "Camera Mode") {
+      x.innerHTML = "Object Mode &nbsp";
+      $('#toggleController').removeClass('btn-info').addClass('btn-danger');
+      $('#toggleGlyph').removeClass('fa-video-camera').addClass('fa-anchor');
+    }else {
+      x.innerHTML = "Camera Mode";
+      $('#toggleController').removeClass('btn-danger').addClass('btn-info');
+      $('#toggleGlyph').removeClass('fa-anchor').addClass('fa-video-camera');
+    }
+  };
+</script>
       
         <script type="text/javascript">
           window.user = null
