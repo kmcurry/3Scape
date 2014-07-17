@@ -72,6 +72,8 @@ function listLibrary()
         loadDirectoryObject(url,"Animals/objects/Ant.lwo",panel,"Ant");
         loadDirectoryObject(url,"objects/rhino.lwo",panel,"Rhino");
         loadDirectoryObject(url,"objects/elephant.lwo",panel,"Elephant");
+        loadDirectoryObject(url,"objects/dolphin.lwo",panel,"Dolphin");
+        loadDirectoryObject(url,"objects/anteater.lwo",panel,"Anteater");
        // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-anatomyObjects");
