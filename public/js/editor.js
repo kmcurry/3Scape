@@ -63,12 +63,14 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Wood.lwo",panel,"Wood");
         loadDirectoryObject(url,"objects/Gear.lwo",panel,"Gear");
         loadDirectoryObject(url,"objects/9VBattery.lwo",panel,"9VBattery");
+        loadDirectoryObject(url,"objects/schwert7.lwo",panel,"Sword");
         //listDirectory(url + "objects/", panel);
 
         panel = document.getElementById("panel-lib-animalObjects");
         loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");
         loadDirectoryObject(url,"Animals/objects/trex.lwo",panel,"Trex");
         loadDirectoryObject(url,"Animals/objects/Ant.lwo",panel,"Ant");
+        loadDirectoryObject(url,"objects/Horse.lwo",panel,"Horse");
        // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-anatomyObjects");
@@ -90,6 +92,7 @@ function listLibrary()
         loadDirectoryObject(url,"Arm/objects/Hand.lwo",panel,"Hand");
         loadDirectoryObject(url,"Arm/objects/hand-skin.lwo",panel,"hand-skin");
         loadDirectoryObject(url,"Arm/objects/Humerus-Ulna.lwo",panel,"Humerus-Ulna");
+
 
 
         panel = document.getElementById("panel-lib-buildingObjects");
