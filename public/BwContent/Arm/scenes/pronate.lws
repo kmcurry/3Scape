@@ -1,0 +1,938 @@
+LWSC
+3
+
+FirstFrame 1
+LastFrame 60
+FrameStep 1
+PreviewFirstFrame 0
+PreviewLastFrame 105
+PreviewFrameStep 1
+CurrentFrame 0
+FramesPerSecond 30
+
+LoadObjectLayer 1 objects/Muscle_layers2.lwo
+ShowObject 0 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.0127 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.127 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+PivotPosition 0.0127 0.127 0
+UnseenByCamera 1
+ShadowOptions 7
+
+LoadObjectLayer 2 objects/Muscle_layers2.lwo
+ShowObject 0 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.0254 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.063500002 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+PivotPosition 0.0254 0.0635 0
+UnseenByCamera 1
+ShadowOptions 7
+
+LoadObjectLayer 3 objects/Muscle_layers2.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  4
+  Key 0.0381 0 3 0 0 0 0 0 0
+  Key 0.0381 1 3 0 0 0 0 0 0
+  Key 0.0381 2.5 3 0 0 0 0 0 0
+  Key 0.0381 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  4
+  Key -0.082549997 0 3 0 0 0 0 0 0
+  Key -0.082549997 1 3 0 0 0 0 0 0
+  Key -0.082549997 2.5 3 0 0 0 0 0 0
+  Key -0.082549997 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  4
+  Key 0.003175 0 3 0 0 0 0 0 0
+  Key 0.003175 1 3 0 0 0 0 0 0
+  Key 0.003175 2.5 3 0 0 0 0 0 0
+  Key 0.003175 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  4
+  Key 0 0 3 0 0 0 0 -3.1354852 0
+  Key -3.1363561 1 3 0 0 0 -1.2545425 -1.8818136 0
+  Key -3.1363561 2.5 3 0 0 0 1.8818136 1.2545425 0
+  Key 0 3.5 3 0 0 0 3.1354852 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  4
+  Key 0 0 3 0 0 0 0 0 0
+  Key 0 1 3 0 0 0 0 0 0
+  Key 0 2.5 3 0 0 0 0 0 0
+  Key 0 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  4
+  Key 0 0 3 0 0 0 0 0 0
+  Key 0 1 3 0 0 0 0 0 0
+  Key 0 2.5 3 0 0 0 0 0 0
+  Key 0 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  4
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  4
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  4
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LockedChannels 48
+PivotPosition 0.0381 -0.08255 0.003175
+ShadowOptions 7
+
+LoadObjectLayer 4 objects/Muscle_layers2.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  10
+  Key 0.042862501 0 3 0 0 0 0 0 0
+  Key 0.042862501 0.26666668 3 0 0 0 0 0 0
+  Key 0.042862501 0.40000001 0 0 0 0 0 0 0
+  Key 0.042862501 0.5 3 0 0 0 0 0 0
+  Key 0.042862501 1 3 0 0 0 0 0 0
+  Key 0.042862501 2.5 3 0 0 0 0 0 0
+  Key 0.042862501 3 3 0 0 0 0 0 0
+  Key 0.042862501 3.1666667 0 0 0 0 0 0 0
+  Key 0.042862501 3.2666667 3 0 0 0 0 0 0
+  Key 0.042862501 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  10
+  Key 0.21431249 0 3 0 0 0 0 0 0
+  Key 0.21431249 0.26666668 3 0 0 0 0 0 0
+  Key 0.21431249 0.40000001 0 0 0 0 0 0 0
+  Key 0.21431249 0.5 3 0 0 0 0 0 0
+  Key 0.21431249 1 3 0 0 0 0 0 0
+  Key 0.21431249 2.5 3 0 0 0 0 0 0
+  Key 0.21431249 3 3 0 0 0 0 0 0
+  Key 0.21431249 3.1666667 0 0 0 0 0 0 0
+  Key 0.21431249 3.2666667 3 0 0 0 0 0 0
+  Key 0.21431249 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  10
+  Key -0.0127 0 3 0 0 0 0 0 0
+  Key -0.0127 0.26666668 3 0 0 0 0 0 0
+  Key -0.0127 0.40000001 0 0 0 0 0 0 0
+  Key -0.0127 0.5 3 0 0 0 0 0 0
+  Key -0.0127 1 3 0 0 0 0 0 0
+  Key -0.0127 2.5 3 0 0 0 0 0 0
+  Key -0.0127 3 3 0 0 0 0 0 0
+  Key -0.0127 3.1666667 0 0 0 0 0 0 0
+  Key -0.0127 3.2666667 3 0 0 0 0 0 0
+  Key -0.0127 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  10
+  Key 0 0 3 0 0 0 0 -0.077170193 0
+  Key -0.077250578 0.26666668 3 0 0 0 -0.077259921 -0.038628627 0
+  Key -0.11588588 0.40000001 0 0 0 0 -0.038635302 -0.028976476 0
+  Key -0.14486235 0.5 3 0 0 0 -0.067605406 -0.14486873 0
+  Key -0.28972471 1 3 0 0 0 -0.036215588 -0.10864677 0
+  Key -0.28972471 2.5 3 0 0 0 0.10864679 0.036215596 0
+  Key -0.14486232 3 3 0 0 0 0.13852605 0.046769381 0
+  Key -0.10264718 3.1666667 0 0 0 0 0.042215146 0.025329089 0
+  Key -0.077318087 3.2666667 3 0 0 0 0.077259906 0.067602418 0
+  Key 0 3.5 3 0 0 0 0.077226155 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  10
+  Key 0 0 3 0 0 0 0 0.07732413 0
+  Key 0.077404678 0.26666668 3 0 0 0 0.075863846 0.038152039 0
+  Key 0.11445612 0.40000001 0 0 0 0 0.037051447 0.027788585 0
+  Key 0.14224471 0.5 3 0 0 0 -0.0029708331 -0.0063660708 0
+  Key 0.068067774 1 3 0 0 0 -0.018544234 -0.055632703 0
+  Key 0.068067774 2.5 3 0 0 0 0.055632412 0.018544137 0
+  Key 0.14224432 3 3 0 0 0 0.0060328129 0.0083994139 0
+  Key 0.10166543 3.1666667 0 0 0 0 -0.040578898 -0.024347339 0
+  Key 0.077318087 3.2666667 3 0 0 0 -0.075863637 -0.066380687 0
+  Key 0 3.5 3 0 0 0 -0.077226155 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  10
+  Key 0 0 3 0 0 0 0 0.044783905 0
+  Key 0.036103919 0.26666668 3 0 0 0 0.062831856 0.024106994 0
+  Key 0.072320983 0.40000001 0 0 0 0 0.046689034 0.035016775 0
+  Key 0.11780973 0.5 3 0 0 0 0.10291077 0.22052309 0
+  Key 0.36826441 1 3 0 0 0 0.062613666 0.18784101 0
+  Key 0.36826441 2.5 3 0 0 0 -0.18784101 -0.062613674 0
+  Key 0.11780972 3 3 0 0 0 -0.2109192 -0.079685166 0
+  Key 0.049523734 3.1666667 0 0 0 0 -0.058686692 -0.027358035 0
+  Key 0.023911014 3.2666667 3 0 0 0 -0.062831849 -0.054977868 0
+  Key 0 3.5 3 0 0 0 -0.044801626 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  10
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 0.26666668 3 0 0 0 0 0 0
+  Key 1 0.40000001 0 0 0 0 0 0 0
+  Key 1 0.5 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3 3 0 0 0 0 0 0
+  Key 1 3.1666667 0 0 0 0 0 0 0
+  Key 1 3.2666667 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  10
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 0.26666668 3 0 0 0 0 0 0
+  Key 1 0.40000001 0 0 0 0 0 0 0
+  Key 1 0.5 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3 3 0 0 0 0 0 0
+  Key 1 3.1666667 0 0 0 0 0 0 0
+  Key 1 3.2666667 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  10
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 0.26666668 3 0 0 0 0 0 0
+  Key 1 0.40000001 0 0 0 0 0 0 0
+  Key 1 0.5 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3 3 0 0 0 0 0 0
+  Key 1 3.1666667 0 0 0 0 0 0 0
+  Key 1 3.2666667 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LockedChannels 24
+PivotPosition 0.0428625 0.2143125 -0.0127
+BoneFalloffType 3
+AddBone
+BoneName Bone01
+ShowBone 1 8
+BoneActive 1
+BoneRestPosition 0.04116638 0.2049665 -0.01068041
+BoneRestDirection -85.82456 70.83052 -174.5199
+BoneRestLength 0.08388168
+BoneStrength 1
+ScaleBoneStrength 0
+BoneMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.04116638 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.20496655 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key -0.010680407 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key -1.4979212 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 1.2362257 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key -3.0459476 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+ParentItem 10000003
+AddBone
+BoneName Bone02
+ShowBone 1 8
+BoneActive 1
+BoneRestPosition 1.391849e-010 4.111872e-009 0.08388168
+BoneRestDirection -4.709258 -2.763395 4.610023
+BoneRestLength 0.07658571
+BoneStrength 1
+ScaleBoneStrength 0
+BoneMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  5
+  Key 1.3918487e-010 0 3 0 0 0 0 0 0
+  Key 1.3918487e-010 0.5 3 0 0 0 0 0 0
+  Key 1.3918487e-010 1 3 0 0 0 0 0 0
+  Key 1.3918487e-010 2.5 3 0 0 0 0 0 0
+  Key 1.3918487e-010 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  5
+  Key 4.1118722e-009 0 3 0 0 0 0 0 0
+  Key 4.1118722e-009 0.5 3 0 0 0 0 0 0
+  Key 4.1118722e-009 1 3 0 0 0 0 0 0
+  Key 4.1118722e-009 2.5 3 0 0 0 0 0 0
+  Key 4.1118722e-009 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  5
+  Key 0.083881684 0 3 0 0 0 0 0 0
+  Key 0.083881684 0.5 3 0 0 0 0 0 0
+  Key 0.083881684 1 3 0 0 0 0 0 0
+  Key 0.083881684 2.5 3 0 0 0 0 0 0
+  Key 0.083881684 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  5
+  Key -0.082192063 0 3 0 0 0 0 0 0
+  Key -0.082192063 0.5 3 0 0 0 0 0 0
+  Key -0.082192063 1 3 0 0 0 0 0 0
+  Key -0.082192063 2.5 3 0 0 0 0 0 0
+  Key -0.082192063 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  5
+  Key -0.048230335 0 3 0 0 0 0 0 0
+  Key -0.048230335 0.5 3 0 0 0 0 0 0
+  Key -0.048230335 1 3 0 0 0 0 0 0
+  Key -0.048230335 2.5 3 0 0 0 0 0 0
+  Key -0.048230335 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  5
+  Key 0.080460086 0 3 0 0 0 0 0 0
+  Key 0.080460086 0.5 3 0 0 0 0.45902181 0.45902181 0
+  Key 0.99850368 1 3 0 0 0 0.2295109 0.68853271 0
+  Key 0.99850368 2.5 3 0 0 0 -0.55082643 -0.3672176 0
+  Key 0.080459677 3.5 3 0 0 0 -0.91778904 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  5
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 0.5 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  5
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 0.5 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  5
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 0.5 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LockedChannels 24
+ParentItem 40000003
+ShadowOptions 7
+
+LoadObjectLayer 5 objects/Muscle_layers2.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.0381 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.193675 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key 0.0127 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+PivotPosition 0.0381 0.193675 0.0127
+ShadowOptions 7
+
+LoadObjectLayer 6 objects/Muscle_layers2.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  6
+  Key 0.0063499999 0 3 0 0 0 0 0 0
+  Key 0.0063499999 0.5 3 0 0 0 0 0 0
+  Key 0.0063499999 1 3 0 0 0 0 0 0
+  Key 0.0063499999 2.5 3 0 0 0 0 0 0
+  Key 0.0063499999 3 3 0 0 0 0 0 0
+  Key 0.0063499999 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  6
+  Key 0.193675 0 3 0 0 0 0 0 0
+  Key 0.193675 0.5 3 0 0 0 0 0 0
+  Key 0.193675 1 3 0 0 0 0 0 0
+  Key 0.193675 2.5 3 0 0 0 0 0 0
+  Key 0.193675 3 3 0 0 0 0 0 0
+  Key 0.193675 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  6
+  Key 0 0 3 0 0 0 0 0 0
+  Key 0 0.5 3 0 0 0 0 0 0
+  Key 0 1 3 0 0 0 0 0 0
+  Key 0 2.5 3 0 0 0 0 0 0
+  Key 0 3 3 0 0 0 0 0 0
+  Key 0 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  6
+  Key 0 0 3 0 0 0 0 -1.3745558 0
+  Key -1.3753195 0.5 3 0 0 0 -1.3753195 -1.3753195 0
+  Key -2.750639 1 3 0 0 0 -0.34382987 -1.0314896 0
+  Key -2.750639 2.5 3 0 0 0 1.0314897 0.3438299 0
+  Key -1.3753194 3 3 0 0 0 1.3753195 1.3753195 0
+  Key 0 3.5 3 0 0 0 1.3745557 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  6
+  Key 0 0 3 0 0 0 0 0.10291725 0
+  Key 0.10297442 0.5 3 0 0 0 0.043633223 0.043633223 0
+  Key 0.087266445 1 3 0 0 0 -0.0039269943 -0.011780983 0
+  Key 0.087266445 2.5 3 0 0 0 0.011780983 0.0039269943 0
+  Key 0.10297442 3 3 0 0 0 -0.043633223 -0.043633223 0
+  Key 0 3.5 3 0 0 0 -0.10291725 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  6
+  Key 0 0 3 0 0 0 0 -0.11251125 0
+  Key -0.11257376 0.5 3 0 0 0 -0.11257376 -0.11257376 0
+  Key -0.22514752 1 3 0 0 0 -0.028143439 -0.084430322 0
+  Key -0.22514752 2.5 3 0 0 0 0.084430337 0.028143445 0
+  Key -0.11257374 3 3 0 0 0 0.11257376 0.11257376 0
+  Key 0 3.5 3 0 0 0 0.11251123 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  6
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 0.5 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  6
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 0.5 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  6
+  Key 1 0 3 0 0 0 0 0 0
+  Key 1 0.5 3 0 0 0 0 0 0
+  Key 1 1 3 0 0 0 0 0 0
+  Key 1 2.5 3 0 0 0 0 0 0
+  Key 1 3 3 0 0 0 0 0 0
+  Key 1 3.5 3 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LockedChannels 40
+PivotPosition 0.00635 0.193675 0
+ShadowOptions 7
+
+LoadObjectLayer 7 objects/Muscle_layers2.lwo
+ShowObject 6 3
+ObjectMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key 0.015875001 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 0.193675 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+PivotPosition 0.015875 0.193675 0
+ShadowOptions 7
+
+AmbientColor 1 1 1
+AmbientIntensity 0.25
+
+AddLight
+LightName Light
+ShowLight 1 5
+LightMotion
+NumChannels 9
+Channel 0
+{ Envelope
+  1
+  Key -2 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key 2 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key -2 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0.78539813 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0.61086524 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 6
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 7
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 8
+{ Envelope
+  1
+  Key 1 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+LightColor 1 1 1
+LightIntensity 1
+AffectCaustics 1
+LightType 0
+ShadowType 1
+
+AddCamera
+CameraName Camera
+ShowCamera 1 2
+CameraMotion
+NumChannels 6
+Channel 0
+{ Envelope
+  1
+  Key 0.016999995 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 1
+{ Envelope
+  1
+  Key -0.029000001 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 2
+{ Envelope
+  1
+  Key -1.0614152 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 3
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 4
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+Channel 5
+{ Envelope
+  1
+  Key 0 0 0 0 0 0 0 0 0
+  Behaviors 1 1
+}
+
+ZoomFactor 3.2
+ResolutionMultiplier 1.0
+FrameSize 640 480
+PixelAspect 1
+MaskPosition 0 0 640 480
+MotionBlur 0
+FieldRendering 0
+
+ApertureHeight 0.015
+Antialiasing 0
+AdaptiveSampling 1
+AdaptiveThreshold 0.1
+
+SolidBackdrop 1
+BackdropColor 0 0 0
+ZenithColor 0 0.1569 0.3137
+SkyColor 0.4706 0.7059 0.9412
+GroundColor 0.1961 0.1569 0.1176
+NadirColor 0.3922 0.3137 0.2353
+FogType 0
+DitherIntensity 1
+AnimatedDither 0
+
+RenderMode 2
+RayTraceEffects 0
+DataOverlayLabel  
+
+ViewConfiguration 0
+DefineView 0
+ViewType 9
+ViewAimpoint 0 0 0
+ViewZoomFactor 8.28212
+
+GridNumber 20
+GridSize 0.2
+CameraViewBG 0
+ShowMotionPath 1
+ShowFogRadius 1
+ShowFogEffect 1
+ShowSafeAreas 1
+ShowFieldChart 1
+
+CurrentObject 1
+CurrentLight 0
+CurrentCamera 0
+GraphEditorData
+{ GraphEd_Favorites
+}
+{ GE_Expression_Lib
+  1
+}
