@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwplugin url="BBD3D8Engine" action="load"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<?bwinclude url="scenes/HumanHeart.lws"?>
+<Update>
+    <Behaviors>
+        <Set target="Selector" computePivotDistance="true"/>
+        <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+        <AppendNode parent="PivotConeIsolator" child="pivotCone"/>
+        <ConnectAttributes source="SceneInspector/pivotPointWorld" target="pivotCone/sectorPosition"/>
+        <Set target="pivotCone" screenScaleEnabled="true"/>
+        <ConnectAttributes sourceContainer="FadeSlider" targetContainer="BLDG001_Walls" persist="true">
+            <sourceAttribute>scrollPosition</sourceAttribute>
+            <targetAttribute>dissolve</targetAttribute>
+        </ConnectAttributes>
+        <ConnectAttributes sourceContainer="FadeSlider" targetContainer="BLDG001_Exterior" persist="true">
+            <sourceAttribute>scrollPosition</sourceAttribute>
+            <targetAttribute>dissolve</targetAttribute>
+        </ConnectAttributes>
+        <ConnectAttributes sourceContainer="FadeSlider" targetContainer="BLDG001_DoorsWindows" persist="true">
+            <sourceAttribute>scrollPosition</sourceAttribute>
+            <targetAttribute>dissolve</targetAttribute>
+        </ConnectAttributes>
+    </Behaviors>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+    <ConnectOutputs targetContainer="Camera" sourceContainer="WalkSimulator" connectionType="walkSimulation"/>
+    <Set target="WalkSimulator">
+        <linearSensitivity x="0.1" y="0.1" z="0.1"/>
+        <angularSensitivity>2</angularSensitivity>
+    </Set>
+    <CommandSequence name="OnEnableWalkSimulation" numResponses="-1" undoable="false">
+        <event>VK_W</event>
+        <event>EnableWalkSimulation</event>
+        <AutoInterpolate target="Camera">
+            <!-- CHANGE FOR NEW FACILITY -->
+            <position x="-3.3996" y="2.292" z="134.688"/>
+            <rotation x="0" y="126" z="0"/>
+            <!--END-->
+            <zoom>1.5</zoom>
+        </AutoInterpolate>
+    </CommandSequence>
+    <?bwinclude url="Heater (Add).xml"?>
+    <Set target="Camera" updateSectorOrigin="true"/>
+    <Set target="BLDG001_Walls/Walls_Stud" renderSequenceSlot="2"/>
+    <Set target="BLDG001_Walls/Walls_Drywall_1stFloor" renderSequenceSlot="3"/>
+    <Set target="BLDG001_Walls/Walls_Drywall_2ndFloor" renderSequenceSlot="3"/>
+    <Set target="BLDG001_Walls/Walls_Drywall_3rdFloor" renderSequenceSlot="3"/>
+    <Set target="BLDG001_Walls/Walls_Drywall_4thFloor" renderSequenceSlot="3"/>
+    <Set target="BLDG001_Exterior" renderSequenceSlot="4"/>
+    <Set target="BLDG001_OfficeSpace" renderSequenceSlot="5"/>
+    <ConnectAttributes sourceContainer="GraphData_TimeSlider" targetContainer="GraphData_Motions" persist="true">
+        <sourceAttribute>scrollPosition</sourceAttribute>
+        <targetAttribute>time</targetAttribute>
+    </ConnectAttributes>
+</Update>
