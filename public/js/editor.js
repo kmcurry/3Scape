@@ -63,12 +63,17 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Wood.lwo",panel,"Wood");
         loadDirectoryObject(url,"objects/Gear.lwo",panel,"Gear");
         loadDirectoryObject(url,"objects/9VBattery.lwo",panel,"9VBattery");
+        loadDirectoryObject(url,"objects/sword.lwo",panel,"Sword");
         //listDirectory(url + "objects/", panel);
 
         panel = document.getElementById("panel-lib-animalObjects");
         loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");
         loadDirectoryObject(url,"Animals/objects/trex.lwo",panel,"Trex");
         loadDirectoryObject(url,"Animals/objects/Ant.lwo",panel,"Ant");
+        loadDirectoryObject(url,"objects/rhino.lwo",panel,"Rhino");
+        loadDirectoryObject(url,"objects/elephant.lwo",panel,"Elephant");
+        loadDirectoryObject(url,"objects/dolphin.lwo",panel,"Dolphin");
+        loadDirectoryObject(url,"objects/dragon.lwo",panel,"Dragon");
        // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-anatomyObjects");
@@ -92,11 +97,13 @@ function listLibrary()
         loadDirectoryObject(url,"Arm/objects/Humerus-Ulna.lwo",panel,"Humerus-Ulna");
 
 
+
         panel = document.getElementById("panel-lib-buildingObjects");
         loadDirectoryObject(url,"Barnville/objects/Barn.lwo",panel,"Barn");
         loadDirectoryObject(url,"Buildings/objects/Building.lwo",panel,"Building1");
         loadDirectoryObject(url,"Buildings/objects/building1.lwo",panel,"Building2");
         loadDirectoryObject(url,"Barnville/objects/Church.lwo",panel,"Church");
+        loadDirectoryObject(url,"objects/medstreet.lwo",panel,"Village");
         loadDirectoryObject(url,"Buildings/objects/City_buildings.lwo",panel,"City_buildings");
         loadDirectoryObject(url,"Buildings/objects/shed.lwo",panel,"Shed");
         loadDirectoryObject(url,"Buildings/objects/shed2.lwo",panel,"Shed2");
@@ -123,6 +130,7 @@ function listLibrary()
         loadDirectoryObject(url,"Geography/objects/AP_ApacheL2.lwo",panel,"AP_ApacheL2");
         loadDirectoryObject(url,"Geography/objects/AP_ApacheL3.lwo",panel,"AP_ApacheL3");
         loadDirectoryObject(url,"Geography/objects/AP_F18R.lwo",panel,"AP_F18R");
+
         
 
         panel = document.getElementById("panel-lib-egyptObjects");
