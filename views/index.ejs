@@ -308,7 +308,7 @@
           }
 
           zoomUpdate = window.setInterval(function () {
-              distance = bridgeworks.selector.pivotDistance.getValueDirect();
+              distance = sceneInspector.pivotDistance.getValueDirect()
               sceneInspector.panSensitivity.values[0] = distance * 0.3;
               sceneInspector.panSensitivity.values[1] = distance * 0.3;
               sceneInspector.panSensitivity.values[2] = distance * 0.3;
