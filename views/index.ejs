@@ -28,6 +28,7 @@
     <script type="text/javascript" src="./js/crossbrowser.js"></script>
     <script type="text/javascript" src="./js/editor.js"></script>
     <script type="text/javascript" src="./js/controls.js"></script>
+    <script tpype="text/javascript" src="./js/MapControls.js"></script>
 
     <style type="text/css">
         .clickable {
@@ -692,22 +693,28 @@
           </div>
 
           <div id = "map-controls">
-            <div id ="Rotate">
-                <span class="glyphicon glyphicon- icon-circle-arrow-left" title="Rotate -" onclick="rotateNegY();"></span>
-                <span class="glyphicon glyphicon- icon-circle-arrow-right" title="Rotate +" onclick="rotatePosY();"></span>
-            </div>
+              <div id ="Rotate">
+                  <p>
+                      <span class="glyphicon glyphicon-icon-circle-arrow-left" title="Rotate -" onclick="rotateNegY();">a</span>
+                      <span class="glyphicon glyphicon-icon-circle-arrow-right" title="Rotate +" onclick="rotatePosY();">b</span>
+                  </p>
+              </div>
               <p></p>
-            <div id ="Tilt">
-                <span class="glyphicon glyphicon- icon-circle-arrow-up" title="Tilt +" onclick="tiltUp();"></span>
-                <span class="glyphicon glyphicon- icon-circle-arrow-down" title="Tilt -" onclick="tiltDown();"></span>
-            </div>
+              <div id ="Tilt">
+                  <p><span class="glyphicon glyphicon-icon-circle-arrow-up" title="Tilt +" onclick="tiltUp();">c</span></p>
+                  <p></p>
+                  <p><span class="glyphicon glyphicon-icon-circle-arrow-down" title="Tilt -" onclick="tiltDown();">d</span></p>
+              </div>
               <p></p>
-            <div id="Zoom">
-                <span class="glyphicon glyphicon- icon-zoom-in" title="Zoom +" onclick="zoomIn();"></span>
-                <span class="glyphicon glyphicon- icon-zoom-out" title="Zoom -" onclick="zoomOut();"></span>
-            </div>
+              <div id="Zoom">
+                  <p><span class="glyphicon glyphicon-icon-zoom-in" title="Zoom +" onclick="zoomIn();">e</span></p>
+                  <p></p>
+                  <p><span class="glyphicon glyphicon-icon-zoom-out" title="Zoom -" onclick="zoomOut();">f</span></p>
+              </div>
           </div>
+
       </div>
+
 
       <!-- Progress Bar -->
       <div class="clickable" id="click" style="display:none">
