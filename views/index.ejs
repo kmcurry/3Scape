@@ -99,8 +99,10 @@
           var distance;
           var sceneInspector;
           var camStartPos;
-          var modelName
+          var modelName;
           var ancientLoaded = 0;
+          var selected;
+          var selectedId;
 
 
           //Progress Bar ===========================================================
@@ -258,7 +260,7 @@
                   {
                       capture = false;
                       sceneInspector = bridgeworks.registry.find("SceneInspector");
-                      //console.log(sceneInspector.panSensitivity.values[0]);
+                      zoomActivate();
 
                   }
                     break;
@@ -266,8 +268,14 @@
                     //Dishing out the event client x and y cordinates of the mouse for testing purposes
                     // if (!e.metaKey && !e.ctrlKey) {
                     selectedModel = bridgeworks.selector.selections.models[0];
-                    modelName = selectedModel.name.getValueDirect().join("");
-                    var name = selectedModel.name.getValueDirect().join("");
+                    if(selectedModel) {
+                        modelName = selectedModel.name.getValueDirect().join("");
+                        var name = selectedModel.name.getValueDirect().join("");
+
+                        setObject(name);
+                        setColorPicker();
+                    }
+                    window.clearInterval(zoomUpdate);
                     //     if (selectedModel) {
                     //         var pos = selectedModel.position.getValueDirect();
                     //         $("#positionX").spinner("value", pos.x);
@@ -284,8 +292,11 @@
                             
                     //     }
                     // }
-                    setObject(name);
-                    setColorPicker();
+
+                    selected = bridgeworks.selector.selectedName.getValueDirect().join("");
+                    console.log(selected);
+                    selectedId = bridgeworks.selector.getAttribute("Selected").id;
+
                     capture = false;
                 }
                 break;
@@ -313,16 +324,23 @@
               }
               
           }
-
-          zoomUpdate = window.setInterval(function () {
-              distance = sceneInspector.pivotDistance.getValueDirect()
-              if(distance*0.3 != sceneInspector.panSensitivity.values[0]) {
-                  sceneInspector.panSensitivity.values[0] = distance * 0.3;
-                  sceneInspector.panSensitivity.values[1] = distance * 0.3;
-                  sceneInspector.panSensitivity.values[2] = distance * 0.3;
-                  console.log('hi');
-              }
-          }, 200);
+function zoomActivate() {
+    zoomUpdate = window.setInterval(function () {
+        distance = sceneInspector.pivotDistance.getValueDirect()
+        if ((distance >= 0) && (distance < 4000)) {
+            if (distance * 0.3 != sceneInspector.panSensitivity.values[0]) {
+                sceneInspector.panSensitivity.values[0] = distance * 0.3;
+                sceneInspector.panSensitivity.values[1] = distance * 0.3;
+                sceneInspector.panSensitivity.values[2] = distance * 0.3;
+            }
+        }
+        else {
+            sceneInspector.panSensitivity.values[0] = 1200;
+            sceneInspector.panSensitivity.values[1] = 1200;
+            sceneInspector.panSensitivity.values[2] = 1200;
+        }
+    }, 200);
+}
 
           function nextSlide(){
               console.debug("Slide Count: "+slideCount);
@@ -356,6 +374,16 @@
                         }      // c
                     }
                         break;
+                    case 'B'.charCodeAt(0):
+                        var slice = selected.slice(6.8);
+                            console.log(slice);
+                        var cmd = "\<Remove target='"+selected+"'/>";
+                        bridgeworks.updateScene(cmd);
+                        var cmd2 = "\<Remove target='"+slice+"'/>"
+                        var div = document.getElementById(selectedId);
+                        bridgeworks.updateScene(cmd2);
+                        div.parentNode.removeChild(div);
+
                     case 'V'.charCodeAt(0):
                     {      // v
                         if (e.metaKey || e.ctrlKey) {
