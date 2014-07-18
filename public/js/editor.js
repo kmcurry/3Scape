@@ -95,6 +95,9 @@ function listLibrary()
         loadDirectoryObject(url,"objects/dragon.lwo",panel,"Dragon");
        // listDirectory(url + "Animals/objects/", panel);
 
+        panel = document.getElementById("panel-lib-peopleObjects");
+        loadDirectoryObject(url,"People/objects/B rifleman.lwo",panel,"Rifleman");
+
         panel = document.getElementById("panel-lib-anatomyObjects");
         // loadDirectoryObject(url,"Heart/objects/heart4.lwo",panel,"heart4");
         // loadDirectoryObject(url,"Heart/objects/aortaw.lwo",panel,"aortaw");
