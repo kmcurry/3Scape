@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<Update>
+    <Set target="SceneInspector" SceneInspector_enabled="true"/>
+    <Set target="ObjectInspector" ObjectInspector_enabled="false"/>
+</Update>

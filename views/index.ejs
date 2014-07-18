@@ -1,6 +1,9 @@
 <html ng-app="3ScapeMain">
   <head>
     <title>3Scape</title>
+    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"> -->
+    <link rel="shortcut icon" href="/favicon.ico?v=2" />
     <meta name="google-site-verification" content="HshVtf6HnSfl2YCmfMSpPEkQJT4lwYlxWt1x5XSbjoo" />
 
     <script type="text/javascript" src="./js/Bridgeworks.js"></script>
@@ -16,7 +19,9 @@
     <script src="js/nicEdit.js"></script>
     <!-- jsColor Color Picker -->
     <script type="text/javascript" src="jscolor/jscolor.js"></script>
-    
+
+    <!-- WebHostingHub Glyphs -->
+    <link rel="stylesheet" type="text/css" media="all" href="css/whhg.css" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -39,7 +44,18 @@
             width: 90%;
             height:30px;
             border: solid 1px #222;
+            overflow: hidden;
         }
+        .modal {
+            overflow-y: auto;
+        }
+        .row{
+            overflow-y: auto;
+        }
+        html{
+            overflow-y: auto;
+        }
+
     </style>
     <!--<link type="text/css" rel="StyleSheet" href="css/bootstrap.min.css"/>-->
       <style id="holderjs-style" type="text/css"></style>
@@ -65,11 +81,13 @@
           var Spin = "motions/spin-y.mot";
           var Diss = "motions/oscillate-dissolve.mot";
           var Scal = "motions/oscillate-scale.mot";
+          var fly = "motions/fly-loop.mot";
           var wall = "objects/Wall.lwo";
           var beam = "objects/Beam.lwo";
           var Ring = "objects/Ring.lwo";
           var Pyramid = "objects/Pyramid.lwo";
           var c2v = "Vehicles/objects/C2V.lwo";
+          var cow = "Animals/objects/Cow.lwo";
           var church = "Barnville/objects/Church.lwo";
           var medHV = "Vehicles/objects/Humvee_Medical.lwo";
           var currentObj = "Current Object: X";
@@ -78,6 +96,13 @@
           var numSlides = 10;
           var elapsedTime = 0;
           var CameraMotion = "CameraMotion";
+          var zoomUpdate;
+          var distance;
+          var sceneInspector;
+          var camStartPos;
+          var modelName
+          var ancientLoaded = 0;
+
 
           //Progress Bar ===========================================================
           var interval;
@@ -223,20 +248,26 @@
           function handleEvent(e)
           {
               bridgeworks.handleEvent(e);
-
               switch(e.type) {
-                case "mousedown": {
-                    capture = true;
+                  case "mousedown":
+                  {
+                      capture = true;
 
-                }
-                    break;
-                case "mouseup":
-                    capture = false;
+                  }
+                      break;
+                  case "mouseup":
+                  {
+                      capture = false;
+                      sceneInspector = bridgeworks.registry.find("SceneInspector");
+                      //console.log(sceneInspector.panSensitivity.values[0]);
+
+                  }
                     break;
                 case "click": {
                     //Dishing out the event client x and y cordinates of the mouse for testing purposes
                     // if (!e.metaKey && !e.ctrlKey) {
                     selectedModel = bridgeworks.selector.selections.models[0];
+                    modelName = selectedModel.name.getValueDirect().join("");
                     var name = selectedModel.name.getValueDirect().join("");
                     //     if (selectedModel) {
                     //         var pos = selectedModel.position.getValueDirect();
@@ -284,6 +315,16 @@
               
           }
 
+          zoomUpdate = window.setInterval(function () {
+              distance = sceneInspector.pivotDistance.getValueDirect()
+              if(distance*0.3 != sceneInspector.panSensitivity.values[0]) {
+                  sceneInspector.panSensitivity.values[0] = distance * 0.3;
+                  sceneInspector.panSensitivity.values[1] = distance * 0.3;
+                  sceneInspector.panSensitivity.values[2] = distance * 0.3;
+                  console.log('hi');
+              }
+          }, 200);
+
           function nextSlide(){
               console.debug("Slide Count: "+slideCount);
             if (slideCount <= numSlides) {
@@ -327,10 +368,71 @@
                     }
                         break;
                     case 39:
-                        nextSlide();
+                            //This way will activate the keys depending on the direction the camera is facing. But will need some refactoring.
+//                        var objectInspector = bridgeworks.registry.find("ObjectInspector");
+//                            objectInspector.enabled.setValueDirect(true);
+//                            objectInspector.translationDelta.setValueDirect(100,0,0);
+//                           //objectInspector.evaluate();
+//                            bridgeworks.updateScene();
+                     var cmd;
+                            cmd = "\<Set target='" + modelName + "'>";
+                            cmd += "\<position x='" + (selectedModel.position.values[0] += 1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
+                            cmd += "\</Set>";
+                            console.log(selectedModel.position.getValueDirect());
+                            bridgeworks.updateScene(cmd);
+
+                        //nextSlide();
                         break;
                     case 37:
-                        previousSlide();
+//                        var objectInspector = bridgeworks.registry.find("ObjectInspector");
+//                        objectInspector.enabled.setValueDirect(true);
+//                        objectInspector.translationDelta.setValueDirect(-100,0,0);
+//                        //objectInspector.evaluate();
+//                        bridgeworks.updateScene();
+                        var cmd;
+                        cmd = "\<Set target='" + modelName + "'>";
+                        cmd += "\<position x='" + (selectedModel.position.values[0]-=1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
+                        cmd += "\</Set>";
+                        console.log(selectedModel.position.getValueDirect());
+                        bridgeworks.updateScene(cmd);
+                        //previousSlide();
+                        break;
+
+                    case 40:
+                        var cmd;
+                        if (e.metaKey || e.ctrlKey) {
+                                cmd = "\<Set target='" + modelName + "'>";
+                                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]-= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
+                                cmd += "\</Set>";
+                                console.log(selectedModel.position.getValueDirect());
+                                bridgeworks.updateScene(cmd);
+                            }
+                            else {
+                            cmd = "\<Set target='" + modelName + "'>";
+                            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= 1) + "'/>"
+                            cmd += "\</Set>";
+                            console.log(selectedModel.position.getValueDirect());
+                            bridgeworks.updateScene(cmd);
+                            //nextSlide();
+                        }
+                        break;
+                    case 38:
+                        var cmd;
+                        if (e.metaKey || e.ctrlKey) {
+                            cmd = "\<Set target='" + modelName + "'>";
+                            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]+= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
+                            cmd += "\</Set>";
+                            console.log(selectedModel.position.getValueDirect());
+                            bridgeworks.updateScene(cmd);
+                        }
+                        else {
+                            cmd = "\<Set target='" + modelName + "'>";
+                            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += 1) + "'/>"
+                            cmd += "\</Set>";
+                            console.log(selectedModel.position.getValueDirect());
+                            bridgeworks.updateScene(cmd);
+                        }
+                        //previousSlide();
                         break;
                     case 'X'.charCodeAt(0):
                     {      // x
@@ -348,12 +450,32 @@
       </script>
 
       <!-- Fork ribbon -->
-      <div class="github-fork-ribbon-wrapper left-bottom">
+      <!-- <div class="github-fork-ribbon-wrapper left-bottom">
           <div class="github-fork-ribbon">
               <a href="https://github.com/kmcurry/3scape" target="_blank">Fork me on GitHub</a>
           </div>
-      </div>
-
+      </div> -->
+<div id="ajax-modal" class="modal hide fade in" tabindex="-1" aria-hidden="false" style="display: block; margin-top: -128.5px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab">Tab 1</a></li>
+      <li><a href="#tab2" data-toggle="tab">Tab 2</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1"><p>This modal was loaded in via ajax</p></div>
+      <div class="tab-pane" id="tab2"><p>This is some other tab content</p></div>
+    </div>
+    <button class="btn update">Update</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn">Close</button>
+    <button type="button" class="btn btn-primary">Ok</button>
+  </div>
+</div>
       <img id="BackgroundImage" style="position: absolute;" src="BwContent/images/white.png"/>
       <div class="modal fade" id="myModal">
           <div class="modal-dialog" style="width: 900px">
@@ -363,22 +485,51 @@
                       <h4 class="modal-title">List of Objects</h4>
                   </div>
                   <!--Loading all the Libs and putting them in their respective places-->
-                  <div class="modal-body row">
-                      <div class="col-md-2" id="panel-lib-shapeObjects">
+                  <div class="modal-body row">                                            
+                    <ul class="nav nav-tabs" id="tabContent">
+                      <li class="active"><a href="#objects1" data-toggle="tab">Misc</a></li>
+                      <li><a href="#objects2" data-toggle="tab">Scenery</a></li>
+                      <li><a href="#objects3" data-toggle="tab">Vehicles</a></li>
+                    </ul>
+                    <div class="tab-content">                    
+                      <div class="tab-pane active" id="objects1">
+                        <div class="col-md-2" id="panel-lib-shapeObjects">
                           <H3>Shapes</H3>
-                      </div>
-                      <div class="col-md-2" id="panel-lib-animalObjects">
+                        </div>
+                        <div class="col-md-2" id="panel-lib-animalObjects">
                           <H3>Animals</H3>
+                        </div>
+                        <div class="col-md-2" id="panel-lib-anatomyObjects">
+                          <H3>Anatomy</H3>
+                        </div>                        
+                      </div>                      
+                      <div class="tab-pane" id="objects2">
+                        <div class="col-md-2" id="panel-lib-buildingObjects">
+                            <H3>Buildings</H3>
+                        </div>
+                        <div class="col-md-2" id="panel-lib-egyptObjects">
+                            <H3>Egypt</H3>
+                        </div>
+                        <div class="col-md-2" id="panel-lib-geoObjects">
+                            <H3>Geography</H3>
+                        </div>
                       </div>
-                      <div class="col-md-3" id="panel-lib-buildingObjects">
-                          <H3>Buildings</H3>
-                      </div>
-                      <div class="col-md-3" id="panel-lib-vehicleObjects">
-                          <H3>Vehicles</H3>
-                      </div>
-                      <div class="col-md-2" id="panel-lib-egyptObjects">
-                          <H3>Egypt</H3>
-                      </div>
+                      <div class="tab-pane" id="objects3">
+                        <div class="col-md-2" id="panel-lib-robotObjects">
+                          <H3>Robots</H3>
+                        </div>
+                        <div class="col-md-2" id="panel-lib-landVehicleObjects">
+                            <H3>Land</H3>
+                        </div>
+                        <div class="col-md-2" id="panel-lib-airVehicleObjects">
+                            <H3>Air</H3>
+                        </div>
+                      </div>                                            
+                    </div>
+                        
+                    
+                    
+                    
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -417,7 +568,7 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="http://3scape.me" target="_blank">3Scape</a>
+                  <a class="navbar-brand" href="http://3scape.me" target="_blank"><div style="height:45px; margin-top:-12px;"><img src="logo-3S.png" style="max-width:100%; max-height:100%;"></div></a>
               </div>
               <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav">
@@ -463,9 +614,9 @@
                               Add <span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                            <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');;">New Scene</a></li>
+                            <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();ancientLoaded = 0;">New Scene</a></li>
                             <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
-                            <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);">Ancient Egypt</a></li>
+                            <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-submenu">
                               <a tabindex="-1" href="#">Objects</a>
@@ -516,10 +667,10 @@
                         </button>    
                         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
                         <ul class="dropdown-menu">
-                          <li style="margin-left: 3px">
+                          <li style="margin-left: 8px">
                             <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
                             <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
-                            <span class="shape fa fa fa-car fa-2x" title="Tank" onclick="load(c2v);"></span>
+                            <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
                             <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
                             <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
                           </li>
@@ -533,7 +684,7 @@
                           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
                             Color <span class="caret"></span>
                           </button>
-                          <ul class="dropdown-menu" role="menu" id="color-dropdown">
+                          <ul class="dropdown-menu color-dropdown" role="menu">
                             <!-- Color Picker Script - ColorCodeHex.COM -->
                             <script type="text/javascript">
                             function updateInfo(color) {
@@ -556,21 +707,24 @@
                             Animate <span class="caret"></span>
                           </button>
                           <ul class="dropdown-menu">
-                            <li><a href="#"onclick="load(Diss);">Dissolve</a></li>
-                            <li><a href="#"onclick="load(Scal);">Scale</a></li>
-                            <li><a href="#"onclick="load(Spin);">Spin</a></li>
+                            <li style="margin-left:8px;">
+                              <span class="shape fa fa-expand fa-2x" title="Scale" onclick="load(Scal);"></span>
+                              <span class="shape fa fa-refresh fa-2x" title="Spin" onclick="load(Spin);"></span>
+                              <span class="shape fa fa-eye-slash fa-2x" title="Dissolve" onclick="load(Diss);"></span>
+                              <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
+                            </li>
                             <li class="divider"></li>
-                            <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Antimations...</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
                           </ul>
                         </div>
                       </li>
                       <li>
                         <div class="dropdown">
                           <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
-                              Add Label
+                              Add Label                              
                           </button>
                         </div>  
-                      </li>                                                  
+                      </li>                      
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
                       <!-- <li>                                          
@@ -588,8 +742,15 @@
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li> -->
+                      <li>                        
+                        <div class="button" style="margin-right:30px;">
+                          <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode">
+                            <span class="fa fa-video-camera fa-lg toggleGlyph"></span> <span class="modeText">Camera Mode</span>
+                          </button>
+                        </div>
+                      </li>
                       <li>
-                          <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()"><span class="glyphicon glyphicon-play"></span> Presentation</button>
+                          <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()" style="margin-right:10px;"><span class="glyphicon glyphicon-play"></span> Presentation</button>
                       </li>
                       <!-- <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
@@ -627,7 +788,7 @@
                                 <div class="tab-content">
                                     <!--BEGIN PROJECT SCOPE-->
                                     <div class="tab-pane active" id="slides" ng-controller="projectController">                              
-                                        <ul class="nav nav-sidebar" id="slidePanel"> 
+                                        <ul class="nav nav-sidebar" id="slidePanel">
                                           <!-- <div ng-show="global.isSignedIn()">
                                             My ID: {{ global.currentUser()._id }}
                                             <p>My Projects:</p>
@@ -713,6 +874,72 @@
               </div>
           </div>
 
+          <div id="present-toolbar">
+            <div class="btn-group dropup">
+              <button class="btn btn-default btnShape">
+                <span class="shape fa fa-cube fa-2x" title="Cube" onclick="load(cube);"></span>
+                <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
+                <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
+                <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
+                <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>  
+              </button>    
+              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
+                <li class="divider"></li>
+                <li style="margin-left: 8px">
+                  <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
+                  <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
+                  <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
+                  <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
+                  <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
+                </li>                          
+              </ul>
+            </div>
+            <div class="btn-group dropup keep-open" style="margin-left:3px;">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:1.4em;">
+                Color <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu color-dropdown" role="menu">
+                <!-- Color Picker Script - ColorCodeHex.COM -->
+                <script type="text/javascript">
+                function updateInfo(color) {
+                  document.getElementById('info-r').value = color.rgb[0];
+                  document.getElementById('info-g').value = color.rgb[1];
+                  document.getElementById('info-b').value = color.rgb[2];
+                }
+                </script>
+
+                <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
+                <input id="info-r" size="2" type="hidden"/>
+                <input id="info-g" size="2" type="hidden"/>
+                <input id="info-b" size="2" type="hidden"/>
+              </ul>
+            </div>
+            
+            <div class="btn-group dropup">
+              <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                Animate <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">                
+                <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
+                <li class="divider"></li>
+                <li style="margin-left:8px;">
+                  <span class="shape fa fa-expand fa-2x" title="Scale" onclick="load(Scal);"></span>
+                  <span class="shape fa fa-refresh fa-2x" title="Spin" onclick="load(Spin);"></span>
+                  <span class="shape fa fa-eye-slash fa-2x" title="Dissolve" onclick="load(Diss);"></span>
+                  <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
+                </li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-default" id="dLabel" role="button" onclick="createRecord();" style="font-size:1.4em;">
+                Add Label                              
+            </button>       
+            <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Current Object: X</button>
+            <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode" style="height:42px;">
+              <span class="fa fa-video-camera fa-2x toggleGlyph"></span> <span class="modeText" style="font-size:1.4em;">Camera Mode</span>
+            </button>
+          </div>
       </div>
 
 
@@ -856,7 +1083,10 @@
               $('#expand').hide();
               $('#dialog').hide();
               $('#present-tray').show();
-              $('#click').show();
+              $('#present-toolbar').show();
+              if(ancientLoaded == 1) {
+                  $('#click').show();
+              }
 
               var docElement
               var request;
@@ -874,7 +1104,6 @@
                   elapsedTime = kfi.time.getValueDirect();
                   elapsedTime = elapsedTime * 1.07;
                   bar.set_percentage(elapsedTime);
-                  console.log(elapsedTime);
                   //console.log(elapsedTime);
               }, 50);
           }
@@ -909,6 +1138,7 @@
               $('#expand').show();
               $('#dialog').show();
               $('#present-tray').hide();
+              $('#present-toolbar').hide();
               $('#click').hide();
 
               window.clearInterval(interval);
@@ -943,7 +1173,6 @@
 
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
-
 
                 listLibrary();
                 
@@ -1034,10 +1263,10 @@
           });
 
         //Color picker dropdown doesn't close on click
-          $('#color-dropdown').click(function(event){
+          $('.color-dropdown').click(function(event){
                event.stopPropagation();
            });
-          $('#color-dropdown').on('hide.bs.dropdown', function () {
+          $('.color-dropdown').on('hide.bs.dropdown', function () {
               return false;
           });
 $(function () {
@@ -1052,8 +1281,36 @@ $(function () {
             return $(this).data('closable');
         }
     });
-});      
+});
+$(function () {
+    $('.dropup.keep-open').on({
+        "shown.bs.dropdown": function() {
+            $(this).data('closable', false);
+        },
+        "click": function() {
+            $(this).data('closable', true);
+        },
+        "hide.bs.dropdown": function() {
+            return $(this).data('closable');
+        }
+    });
+});
+
       </script>
+
+<script type="text/javascript">
+  var toggleText = function(){
+    if($('.modeText:first').text() == "Camera Mode") {
+      $('.modeText').text("Object Mode");
+      $('.toggleController').removeClass('btn-info').addClass('btn-danger');
+      $('.toggleGlyph').removeClass('fa-video-camera').addClass('fa-anchor');
+    }else {
+      $('.modeText').text("Camera Mode");
+      $('.toggleController').removeClass('btn-danger').addClass('btn-info');
+      $('.toggleGlyph').removeClass('fa-anchor').addClass('fa-video-camera');
+    }
+  };
+</script>
       
         <script type="text/javascript">
           window.user = null
