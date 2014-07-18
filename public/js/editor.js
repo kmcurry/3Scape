@@ -158,6 +158,7 @@ function listLibrary()
         loadDirectoryObject(url,"Vehicles/objects/F16.lwo",panel,"F16");
         loadDirectoryObject(url,"Vehicles/objects/DC-10.lwo",panel,"DC-10");
         loadDirectoryObject(url,"Vehicles/objects/BlackHawk.lwo",panel,"BlackHawk");
+        loadDirectoryObject(url,"Vehicles/objects/Predator.lwo",panel,"Predator");
         loadDirectoryObject(url,"Geography/objects/AP_ApacheL1.lwo",panel,"AP_ApacheL1");
         loadDirectoryObject(url,"Geography/objects/AP_ApacheL2.lwo",panel,"AP_ApacheL2");
         loadDirectoryObject(url,"Geography/objects/AP_ApacheL3.lwo",panel,"AP_ApacheL3");
