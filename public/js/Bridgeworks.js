@@ -7831,7 +7831,13 @@ var eRenderContextMethod =
     VB_Draw                                 : 33,
     TO_SetImage                             : 34,
     TO_SetImageData                         : 35,
-    TO_SetVideo                             : 36
+    TO_SetVideo                             : 36,
+    SetMatrixMode							: 37,
+    PushMatrix								: 38,
+    PopMatrix								: 39,
+    LoadMatrix								: 40,
+    LeftMultMatrix							: 41,
+    RightMultMatrix							: 42
 }
 
 function RenderContextMethodDesc(method, params)
@@ -8099,6 +8105,42 @@ DisplayListObj.prototype.invokeMethod = function(desc)
             desc.params[0].setVideo(desc.params[1]);
         }
         break;
+        
+        case eRenderContextMethod.SetMatrixMode:
+        {
+        	this.renderContext.setMatrixMode(desc.params[0]);
+        }
+        break;
+        
+        case eRenderContextMethod.PushMatrix:
+        {
+        	this.renderContext.pushMatrix();
+        }
+        break;
+        
+        case eRenderContextMethod.PopMatrix:
+        {
+        	this.renderContext.popMatrix();
+        }
+        break;
+        
+        case eRenderContextMethod.LoadMatrix:
+        {
+        	this.renderContext.loadMatrix(desc.params[0]);
+        }
+        break;
+        
+        case eRenderContextMethod.LeftMultMatrix:
+        {
+        	this.renderContext.leftMultMatrix(desc.params[0]);
+        }
+        break;
+        
+        case eRenderContextMethod.RightMultMatrix:
+        {
+        	this.renderContext.rightMultMatrix(desc.params[0]);
+        }
+        break;
     }
 }
 
@@ -8236,7 +8278,14 @@ var eTextureCoordSrc =
 var RC_REPEAT                      = 0x2901;
 var RC_CLAMP_TO_EDGE               = 0x812F;
 var RC_MIRRORED_REPEAT             = 0x8370;
-  
+
+/*
+ * matrix mode
+ */
+var RC_MODELVIEW				   = 0x001;
+var RC_PROJECTION				   = 0x002;
+var RC_TEXTURE					   = 0x004;
+
 /*
  * render context
  */
@@ -8249,6 +8298,7 @@ function RenderContext(canvas, background)
     
     this.projectionMatrixStack = new MatrixStack(new Matrix4x4());
     this.modelViewMatrixStack = new MatrixStack(new Matrix4x4());
+    this.matrixMode = RC_MODELVIEW;
     
     this.frontMaterial = new MaterialDesc();
     
@@ -8279,6 +8329,113 @@ function RenderContext(canvas, background)
             this.background.width = width;
             this.background.height = height;
         }
+    }
+    
+    this.setMatrixMode = function(mode) 
+    { 
+    	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetMatrixMode, [mode]);
+    	
+    	this.matrixMode = mode; 
+    }
+    
+    this.pushMatrix = function()
+    {
+    	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.PushMatrix, null);
+    	
+    	switch (this.matrixMode)
+    	{
+    		case RC_MODELVIEW:
+    		{
+    			this.modelViewMatrixStack.push();
+    		}
+    		break;
+    		
+    		case RC_PROJECTION:
+    		{
+    			this.projectionMatrixStack.push();
+    		}
+    		break;
+    	}	
+    }
+    
+    this.popMatrix = function()
+    {
+    	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.PopMatrix, null);
+    	
+    	switch (this.matrixMode)
+    	{
+    		case RC_MODELVIEW:
+    		{
+    			this.modelViewMatrixStack.pop();
+    		}
+    		break;
+    		
+    		case RC_PROJECTION:
+    		{
+    			this.projectionMatrixStack.pop();
+    		}
+    		break;
+    	}
+    }
+    
+    this.loadMatrix = function(matrix)
+    {
+    	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.LoadMatrix, [matrix]);
+    	
+    	switch (this.matrixMode)
+    	{
+    		case RC_MODELVIEW:
+    		{
+    			this.modelViewMatrixStack.loadMatrix(matrix);
+    		}
+    		break;
+    		
+    		case RC_PROJECTION:
+    		{
+    			this.projectionMatrixStack.loadMatrix(matrix);
+    		}
+    		break;
+    	}	
+    }
+    
+    this.leftMultMatrix = function(matrix)
+    {
+    	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.LeftMultMatrix, [matrix]);
+    	
+    	switch (this.matrixMode)
+    	{
+    		case RC_MODELVIEW:
+    		{
+    			this.modelViewMatrixStack.leftMultiply(matrix);
+    		}
+    		break;
+    		
+    		case RC_PROJECTION:
+    		{
+    			this.projectionMatrixStack.leftMultiply(matrix);
+    		}
+    		break;
+    	}
+    }
+    
+    this.rightMultMatrix = function(matrix)
+    {
+    	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.RightMultMatrix, [matrix]);
+    	
+    	switch (this.matrixMode)
+    	{
+    		case RC_MODELVIEW:
+    		{
+    			this.modelViewMatrixStack.rightMultiply(matrix);
+    		}
+    		break;
+    		
+    		case RC_PROJECTION:
+    		{
+    			this.projectionMatrixStack.rightMultiply(matrix);
+    		}
+    		break;
+    	}	
     }
 }
 
@@ -12759,7 +12916,8 @@ ParentableMotionElement.prototype.applyTransform = function()
     // applied to avoid translation caused by scaling  
     
     // set transformation matrix
-    this.graphMgr.renderContext.modelViewMatrixStack.leftMultiply(this.sectorTransformCompound);
+    this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.leftMultMatrix(this.sectorTransformCompound);
     this.graphMgr.renderContext.applyModelViewTransform();
     
 // TODO: if invsere scale was applied, re-apply scale
@@ -13259,7 +13417,8 @@ Camera.prototype.applyTransform = function()
     matrix.loadMatrix(this.sectorTransformCompound);
     matrix.invert();
 
-    this.graphMgr.renderContext.modelViewMatrixStack.loadMatrix(matrix);
+    this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.loadMatrix(matrix);
     this.graphMgr.renderContext.applyModelViewTransform();
 }
 
@@ -14201,8 +14360,10 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
                     lastWorldMatrix = params.worldMatrix;
                     
                     // TEMP -- move to pushIsolatedStates
-                    this.graphMgr.renderContext.projectionMatrixStack.push();
-                    this.graphMgr.renderContext.modelViewMatrixStack.push();
+                	this.graphMgr.renderContext.setMatrixMode(RC_PROJECTION);
+                	this.graphMgr.renderContext.pushMatrix();
+                	this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+                	this.graphMgr.renderContext.pushMatrix();
                 }
                 
                 // push textures
@@ -14243,7 +14404,7 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
                 // push transforms
                 if (isolateTransforms)
                 {
-                    // TODO
+                    lastWorldMatrix = params.worldMatrix;
                 }
             }
             break;
@@ -14268,10 +14429,10 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
                     params.worldMatrix = lastWorldMatrix;
                     
                     // TEMP -- move to popIsolatedStates
-                    this.graphMgr.renderContext.projectionMatrixStack.pop();
-                    this.graphMgr.renderContext.applyProjectionTransform();
-                    this.graphMgr.renderContext.modelViewMatrixStack.pop();
-                    this.graphMgr.renderContext.applyModelViewTransform();
+                    this.graphMgr.renderContext.setMatrixMode(RC_PROJECTION);
+                	this.graphMgr.renderContext.popMatrix();
+                	this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+                	this.graphMgr.renderContext.popMatrix();
                 }
                     
                 // pop textures
@@ -14312,7 +14473,7 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
                 // pop transforms
                 if (isolateTransforms)
                 {
-                    // TODO
+                    params.worldMatrix = lastWorldMatrix;
                 }
             }
             break;
@@ -16476,12 +16637,14 @@ Model.prototype.apply = function(directive, params, visitChildren)
 
 Model.prototype.pushMatrix = function()
 {
-    this.graphMgr.renderContext.modelViewMatrixStack.push();
+	this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.pushMatrix();
 }
 
 Model.prototype.popMatrix = function()
 {
-    this.graphMgr.renderContext.modelViewMatrixStack.pop();
+    this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.popMatrix();
     this.graphMgr.renderContext.applyModelViewTransform();    
 }
 
@@ -19926,7 +20089,7 @@ Transform.prototype.apply = function(directive, params, visitChildren)
     
     if (params.worldMatrix)
     {
-        params.worldMatrix = params.worldMatrix.multiply(this.matrixTransform);
+        params.worldMatrix = params.worldMatrix.leftMultiply(this.matrixTransform);
     }
             
     switch (directive)
@@ -19936,7 +20099,7 @@ Transform.prototype.apply = function(directive, params, visitChildren)
             this.applyTransform();
         }
         break;
-            
+         
         default:
             break;
     }
@@ -19948,7 +20111,8 @@ Transform.prototype.apply = function(directive, params, visitChildren)
 Transform.prototype.applyTransform = function()
 {
     // set transformation matrix
-    this.graphMgr.renderContext.modelViewMatrixStack.leftMultiply(this.matrixTransform);
+    this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.leftMultMatrix(this.matrixTransform);
     this.graphMgr.renderContext.applyModelViewTransform();
 }
 
