@@ -78,7 +78,7 @@ body.modal-open {
 
 #rotate{
     display: block;
-    font-size: 1.4em;
+/*    font-size: 1.4em;*/
     z-index: 2001;
 }
 #present-tray {   
