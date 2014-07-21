@@ -1181,7 +1181,7 @@ function zoomActivate() {
               var request;
 
               docElement = document.documentElement;
-              request = docElement.requestFullScreen || docElement.webkitRequestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
+              request = docElement.requestFullScreen || docElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT) || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
 
               // if(typeof request!="undefined" && request){
               request.call(docElement);
