@@ -50,19 +50,30 @@ function switchModes()
     console.log(sceneInspector.enabled.getValueDirect());
 
 }
-function trash()
+function trashModel(name)
 {
-    if (selectedModel) {
-        var name = selectedModel.name.getValueDirect().join("");
-        var c = "\<Remove target='" + name + "'/>"
-        bridgeworks.updateScene(c);
-        console.log(name);
+    var c = "\<Remove target='" + name + "'/>"
+    bridgeworks.updateScene(c);
+    console.log(name);
 
-        var panel = document.getElementById("object-list");
-        var link = document.getElementById("row" + name);
-        panel.removeChild(link);
-    }
+    var panel = document.getElementById("object-list");
+    var link = document.getElementById("row" + name);
+    panel.removeChild(link);
 }
+
+// function trashAnimation()
+// {
+//     if (selectedModel) {
+//         var name = selectedModel.name.getValueDirect().join("");
+//         var c = "\<Remove target='" + name + "'/>"
+//         bridgeworks.updateScene(c);
+//         console.log(name);
+
+//         var panel = document.getElementById("animate");
+//         var link = document.getElementById("row" + name);
+//         panel.removeChild(link);
+//     }
+// }
 
 function cut()
 {
@@ -336,10 +347,17 @@ function loadModel(url)
     a.setAttribute("Title", "Jump to Object");
     a.style.cursor="pointer"; 
     a.style.cursor="hand";
+    t = document.createElement('span');
+    t.setAttribute("id", "trash" + name)
+    t.setAttribute("class", 'shape fa fa-trash-o');
+    t.setAttribute("style", "margin-top:3px;");
+    t.setAttribute("Title", 'Remove');
+    t.setAttribute("onClick", "trashModel('" + name + "');");
     nameColumn.setAttribute("class", "col-md-9");
     trashColumn.setAttribute("class", "col-md-3");
-    trashColumn.innerHTML = "<span class='shape fa fa-trash-o' style='margin-top:3px;' title='Remove' onclick='trash()'></span>";
+    // trashColumn.innerHTML = "<span class='shape fa fa-trash-o' style='margin-top:3px;' title='Remove' id='trash'" + name + "></span>";
     nameColumn.appendChild(a);
+    trashColumn.appendChild(t);
     row.appendChild(nameColumn);
     row.appendChild(trashColumn);
     objectPanel.appendChild(row);
@@ -381,6 +399,7 @@ function loadModel(url)
     
     var panel = document.getElementById("panel-curr-scene");
     //panel.appendChild(p);
+    console.log(name);
     
     
 }
@@ -407,7 +426,7 @@ function loadMotion(url)
     nameColumn.setAttribute("class", "col-md-9");
     trashColumn.setAttribute("class", "col-md-3");
     p.innerHTML = name; // <a>INNER_TEXT</a>
-    trashColumn.innerHTML = "<span class='shape fa fa-trash-o' style='margin-top:3px;' title='Remove'></span>";
+    trashColumn.innerHTML = "<span class='shape fa fa-trash-o' style='margin-top:3px;' title='Remove' onclick='trash()'></span>";
     nameColumn.appendChild(p);
     row.appendChild(nameColumn);
     row.appendChild(trashColumn);
