@@ -61,15 +61,13 @@ body.modal-open {
 */
 
 #map-controls {
-    display: table;
+    /*display: table;*/
     text-align: center;
     position:fixed;
-    left: 90%;
-    bottom: 15px;
-    background-color:#000;
-    width: 75px;
-    height: 175px;
-    border-radius: 25px;
+    right: 2%;
+    top: 25%;
+    background-color:#000;    
+    border-radius: 10px;
     padding: 13px;
     color: rgb(71, 169, 211);
     opacity: 0.4;
@@ -89,7 +87,7 @@ body.modal-open {
     left:100px; 
     background-color:#5cb85c; 
     height:50px; 
-    width:250px; 
+    width:100%; 
     border-radius: 10px; 
     padding: 13px; 
     color:white;
@@ -114,12 +112,16 @@ body.modal-open {
     display: none; 
     position:fixed; 
     bottom: 30px; 
-    left:500px; 
+    left:25%;
+    right:25%;
+    width:100%;
+    /*left:500px; */
     /*background-color:#5cb85c; */
-    height:50px; 
-    width:1100px; 
-    border-radius: 10px; 
-    padding: 13px; 
+    /*height:50px; 
+    width:1100px; */
+    /*border-radius: 10px; */
+    /*padding: 13px;*/
+    /*text-align: center;*/
 }
 /*Dropdown within dropdown styling */
 
@@ -310,4 +312,50 @@ border-radius: 6px 0 6px 6px;
   -ms-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
+}
+
+.btn-purple { 
+  color: #FFFFFF; 
+  background-color: #823B94; 
+  border-color: #823B94; 
+} 
+ 
+.btn-purple:hover, 
+.btn-purple:focus, 
+.btn-purple:active, 
+.btn-purple.active, 
+.open .dropdown-toggle.btn-purple { 
+  color: #FFFFFF; 
+  background-color: #682978; 
+  border-color: #823B94; 
+} 
+ 
+.btn-purple:active, 
+.btn-purple.active, 
+.open .dropdown-toggle.btn-purple { 
+  background-image: none; 
+} 
+ 
+.btn-purple.disabled, 
+.btn-purple[disabled], 
+fieldset[disabled] .btn-purple, 
+.btn-purple.disabled:hover, 
+.btn-purple[disabled]:hover, 
+fieldset[disabled] .btn-purple:hover, 
+.btn-purple.disabled:focus, 
+.btn-purple[disabled]:focus, 
+fieldset[disabled] .btn-purple:focus, 
+.btn-purple.disabled:active, 
+.btn-purple[disabled]:active, 
+fieldset[disabled] .btn-purple:active, 
+.btn-purple.disabled.active, 
+.btn-purple[disabled].active, 
+fieldset[disabled] .btn-purple.active { 
+  background-color: #823B94; 
+  border-color: #823B94; 
+} 
+ 
+.btn-purple .badge { 
+  color: #823B94; 
+  background-color: #FFFFFF; 
 }
