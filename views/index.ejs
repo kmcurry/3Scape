@@ -528,7 +528,10 @@ function zoomActivate() {
                         </div>
                         <div class="col-md-2" id="panel-lib-anatomyObjects">
                           <H3>Anatomy</H3>
-                        </div>                        
+                        </div>
+                        <div class="col-md-2" id="panel-lib-peopleObjects">
+                          <H3>People</H3>
+                        </div>                      
                       </div>                      
                       <div class="tab-pane" id="objects2">
                         <div class="col-md-2" id="panel-lib-buildingObjects">
@@ -555,6 +558,83 @@ function zoomActivate() {
                     </div>
                         
                     
+                    
+                    
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                  </div>
+              </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+      <div class="modal fade" id="helpModal">
+          <div class="modal-dialog" style="width: 900px">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">Help</h4>
+                  </div>
+                  <!--Loading all the Libs and putting them in their respective places-->
+                  <div class="modal-body row">                                            
+                    <ul class="nav nav-tabs" id="tabContent">
+                      <li class="active"><a href="#helpIntro" data-toggle="tab">Intro</a></li>
+                      <li><a href="#helpControls" data-toggle="tab">Controls</a></li>
+                      <li><a href="#helpGuide" data-toggle="tab">Guide</a></li>
+                    </ul>
+                    <div class="tab-content">                    
+                      <div class="tab-pane active" id="helpIntro">
+                        Welcome to 3Scape!
+                      </div>                      
+                      <div class="tab-pane" id="helpControls">
+                        <div class="col-md-4">
+                          <H3>Main</H3>
+                          <div class="controlBullet">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                             - Object Z-Axis
+                          </div>
+                          <div class="controlBullet">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                             - Object X-Axis
+                          </div>
+                          <div class="controlBullet">
+                            Ctrl/⌘ + 
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                             - Object Y-Axis
+                          </div>
+                        </div>  
+                        <div class="col-md-4">
+                          <H3>Camera Mode</H3>
+                          <div class="controlBullet">
+                            <img src="left-click.png"> Rotate
+                          </div>
+                          <div class="controlBullet">
+                            <img src="right-click.png"> Zoom
+                          </div>
+                          <div class="controlBullet">
+                            <img src="both-click.png"> Pan
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <H3>Object Mode</H3>
+                          <div class="controlBullet">
+                            <img src="left-click.png"> Rotate
+                          </div>
+                          <div class="controlBullet">
+                            <img src="right-click.png"> Pull/Push
+                          </div>
+                          <div class="controlBullet">
+                            <img src="both-click.png"> Slide/Lift
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane" id="helpGuide">
+                        Make things, break things, have fun.
+                      </div>                                            
+                    </div>
                     
                     
                   </div>
@@ -769,8 +849,8 @@ function zoomActivate() {
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li> -->
-                      <li>                        
-                        <div class="button" style="margin-right:30px;">
+                      <li>                  
+                        <div class="button" style="margin-right:10px;">
                           <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode">
                             <span class="fa fa-video-camera fa-lg toggleGlyph"></span> <span class="modeText">Camera Mode</span>
                           </button>
@@ -779,6 +859,10 @@ function zoomActivate() {
                       <li>
                           <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()" style="margin-right:10px;"><span class="glyphicon glyphicon-play"></span> Presentation</button>
                       </li>
+                      
+                      
+                      <li><button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle fa-lg"></span> <span>Help</span></button></li>
+                      
                       <!-- <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
@@ -1059,6 +1143,7 @@ function zoomActivate() {
           function modalHide(){
                   $('#myModal').modal('hide');
                   $('#motionsModal').modal('hide');
+                  $('#helpModal').modal('hide');
           }
           //Progress Bar ========================
           function progress_bar(container){
