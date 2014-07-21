@@ -61,10 +61,8 @@ function trashModel(name)
     panel.removeChild(link);
 }
 
-// function trashAnimation()
+// function trashAnimation(name)
 // {
-//     if (selectedModel) {
-//         var name = selectedModel.name.getValueDirect().join("");
 //         var c = "\<Remove target='" + name + "'/>"
 //         bridgeworks.updateScene(c);
 //         console.log(name);
@@ -423,11 +421,17 @@ function loadMotion(url)
     var p = document.createElement('p');
     //a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
     p.setAttribute("id", name);
+    t = document.createElement('span');
+    t.setAttribute("id", "trash" + name)
+    t.setAttribute("class", 'shape fa fa-trash-o');
+    t.setAttribute("style", "margin-top:3px;");
+    t.setAttribute("Title", 'Remove');
+    t.setAttribute("onClick", "trashAnimation('" + name + "');");
     nameColumn.setAttribute("class", "col-md-9");
     trashColumn.setAttribute("class", "col-md-3");
     p.innerHTML = name; // <a>INNER_TEXT</a>
-    trashColumn.innerHTML = "<span class='shape fa fa-trash-o' style='margin-top:3px;' title='Remove' onclick='trash()'></span>";
     nameColumn.appendChild(p);
+    trashColumn.appendChild(t);
     row.appendChild(nameColumn);
     row.appendChild(trashColumn);
     animationPanel.appendChild(row); // Append the link to the div
