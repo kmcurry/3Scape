@@ -864,20 +864,21 @@ function zoomActivate() {
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li> -->
-                      <li>                  
-                        <div class="button" style="margin-right:10px;">
-                          <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode">
-                            <span class="fa fa-video-camera fa-lg toggleGlyph"></span> <span class="modeText">Camera Mode</span>
-                          </button>
-                        </div>
+                      <li>
+                        <button type="button" class="btn btn-info navbar-btn toggleController" id="navCamera" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="margin-right:10px;">
+                          <span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>                          
+                        </button>
                       </li>
                       <li>
-                          <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()" style="margin-right:10px;"><span class="glyphicon glyphicon-play"></span> Presentation</button>
-                      </li>
-                      
-                      
-                      <li><button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle fa-lg"></span> <span>Help</span></button></li>
-                      
+                        <button type="button" class="btn btn-success navbar-btn" id="navFullscreen" role="button" onclick="preHide();" title="Fullscreen" style="margin-right:10px;">
+                          <span class="glyphicon glyphicon-fullscreen" style="font-size:1.4em;"></span>
+                        </button>
+                      </li>                      
+                      <li>
+                        <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
+                          <span class="fa fa-question-circle fa-lg" style="font-size:2em;"></span>
+                        </button>
+                      </li>                                      
                       <!-- <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
@@ -964,6 +965,7 @@ function zoomActivate() {
                    <canvas id="Canvas">
                   </canvas>
           </div>
+          <!-- WILL REVISIT SLIDES
           <div id="present-tray">
             <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
             <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
@@ -973,11 +975,11 @@ function zoomActivate() {
             <span class="dropdown dropup dvd">
               <a class="dropdown-toggle" data-toggle="dropdown" style="margin-left: 10px; margin-bottom: 2px; text-decoration: none; color: white">Slide<b class="caret"></b></a>
               <ul class="dropdown-menu" id="dropUpTray">
-                <!-- Populated by slides on scene -->
+                To be populated
               </ul>
             </span>
             <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right" onclick="closeFullScreen();"></span>
-          </div>
+          </div> -->
           <div id="present-toolbar">
             <div class="btn-group dropup">
               <button class="btn btn-default btnShape">
@@ -1039,18 +1041,18 @@ function zoomActivate() {
             <button type="button" class="btn btn-default" id="dLabel" role="button" onclick="createRecord();" style="font-size:1.4em;">
                 Add Label                              
             </button>            
-            <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();" >
-                  <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>                          
-            </button>                  
-            <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();" >
-                  <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>                          
+            <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();">
+                  <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>
+            </button>
+            <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();">
+                  <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>
             </button>                      
-            <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();" >
-                  <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>                          
+            <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();">
+                  <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>
             </button>                  
             <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Current Object: X</button>
-            <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode" style="height:42px;">
-              <span class="fa fa-video-camera fa-2x toggleGlyph"></span> <span class="modeText" style="font-size:1.4em;">Camera Mode</span>
+            <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="height:42px;">
+              <span class="modeButton fa fa-video-camera fa-2x toggleGlyph"></span>
             </button>
           </div>
       </div>
@@ -1412,13 +1414,12 @@ $(function () {
       </script>
 
 <script type="text/javascript">
-  var toggleText = function(){
-    if($('.modeText:first').text() == "Camera Mode") {
-      $('.modeText').text("Object Mode");
+  var toggleMode = function(){
+    console.log($('.modeText:first').hasClass("fa-video-camera"))
+    if($('.modeButton:first').hasClass("fa-video-camera")) {
       $('.toggleController').removeClass('btn-info').addClass('btn-danger');
       $('.toggleGlyph').removeClass('fa-video-camera').addClass('fa-anchor');
     }else {
-      $('.modeText').text("Camera Mode");
       $('.toggleController').removeClass('btn-danger').addClass('btn-info');
       $('.toggleGlyph').removeClass('fa-anchor').addClass('fa-video-camera');
     }
