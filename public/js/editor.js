@@ -53,6 +53,7 @@ function switchModes()
 function cut()
 {
     if (selectedModel) {
+        copy();
         var name = selectedModel.name.getValueDirect().join("");
         var c = "\<Remove target='" + name + "'/>"
         bridgeworks.updateScene(c);
