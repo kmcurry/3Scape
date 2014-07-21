@@ -33,6 +33,7 @@
     <script type="text/javascript" src="./js/crossbrowser.js"></script>
     <script type="text/javascript" src="./js/editor.js"></script>
     <script type="text/javascript" src="./js/controls.js"></script>
+    <script tpype="text/javascript" src="./js/MapControls.js"></script>
 
     <style type="text/css">
         .clickable {
@@ -103,6 +104,8 @@
           var ancientLoaded = 0;
           var selected;
           var selectedId;
+          var edit = 0;
+          var selectedText;
 
 
           //Progress Bar ===========================================================
@@ -142,22 +145,32 @@
                 }
                 $( "#dialog" ).dialog("close");
             }
-
+          function editRecord(labelName)
+          {
+              var nicE = new nicEditors.findEditor('title');
+              var title = nicE.getContent();
+              console.log("EDITRECORD: "+labelName);
+              var update = "\<Set target='" + labelName + "' text='" + title + "' show='true'/>";
+              console.debug(update);
+              bridgeworks.updateScene(update);
+              edit = 0;
+              $( "#dialog" ).dialog("close");
+          }
           function createRecord()
           {
-              
+
               adding = true;
               editorOpen = 1;
-              
+
               var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-                          
+
               g_labelCount = g_labelCount + 1;
               g_countStr = g_labelCount.toString();
-              
+
               g_labelName = "L-" + g_countStr;
-              
+
               var xml = loadXMLFile("BwContent/label.xml");
-              
+
               var name = xml.getElementsByTagName("Model")[0].attributes[0];
               name.value = g_labelName;
 
@@ -165,18 +178,21 @@
               pos.attributes["x"].value = pointWorld.x.toString();
               pos.attributes["y"].value = pointWorld.y.toString();
               pos.attributes["z"].value = pointWorld.z.toString();
-              
+
               var label = xml.getElementsByTagName("Label")[0];
               label.attributes["name"].value = "Label_" + name.value;
               label.attributes["parent"].value = name.value;
-              
+
               name = xml.getElementsByTagName("Group")[0].attributes[0];
               name.value = "Group_" + g_labelName;
-              
-              
+
+
               var xstr = (new XMLSerializer()).serializeToString(xml);
               console.debug(xstr);
               bridgeworks.updateScene(xstr);
+              if(g_labelCount > 1) {
+                  var nicE = new nicEditors.findEditor('title').setContent("");
+              }
               $( "#dialog" ).dialog("open");
               //addRecord();
           }
@@ -276,26 +292,11 @@
                         setColorPicker();
                     }
                     window.clearInterval(zoomUpdate);
-                    //     if (selectedModel) {
-                    //         var pos = selectedModel.position.getValueDirect();
-                    //         $("#positionX").spinner("value", pos.x);
-                    //         $("#positionY").spinner("value", pos.y);
-                    //         $("#positionZ").spinner("value", pos.z);
-                            
-                    //         var rot = selectedModel.rotation.getValueDirect();
-                    //         $("#rotationX").spinner("value", rot.x);
-                    //         $("#rotationY").spinner("value", rot.y);
-                    //         $("#rotationZ").spinner("value", rot.z);
-                            
-                    //         $("#scale").spinner("value", selectedModel.scale.getValueDirect().x);
-                    //         $('#objectname').val(selectedModel.name.getValueDirect().join(""))
-                            
-                    //     }
-                    // }
-
                     selected = bridgeworks.selector.selectedName.getValueDirect().join("");
                     console.log(selected);
                     selectedId = bridgeworks.selector.getAttribute("Selected").id;
+                    selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
+                    console.log(selectedId);
 
                     capture = false;
                 }
@@ -374,7 +375,8 @@ function zoomActivate() {
                         }      // c
                     }
                         break;
-                    case 46: //Delete
+
+                    case 46:
                         var slice = selected.slice(6.8);
                             console.log(slice);
                         var cmd = "\<Remove target='"+selected+"'/>";
@@ -383,6 +385,13 @@ function zoomActivate() {
                         var div = document.getElementById(selectedId);
                         bridgeworks.updateScene(cmd2);
                         div.parentNode.removeChild(div);
+                    break;
+
+                    case 187: //Edit Label(=)
+                        edit = 1;
+                        new nicEditors.findEditor('title').setContent(selectedText);
+                        $( "#dialog" ).dialog("open");
+                    break;
 
                     case 'V'.charCodeAt(0):
                     {      // v
@@ -772,7 +781,7 @@ function zoomActivate() {
                           <span class="shape fa fa fa-eject fa-lg" title="Pyramid" onclick="load(Pyramid);"></span>
                           <span class="shape fa fa fa-database fa-lg" title="Tube" onclick="load(tube);"></span>  
                         </button>    
-                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
+                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
                         <ul class="dropdown-menu">
                           <li style="margin-left: 8px">
                             <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
@@ -830,8 +839,23 @@ function zoomActivate() {
                           <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
                               Add Label                              
                           </button>
-                        </div>  
-                      </li>                      
+                        </div>
+                      </li>
+                      <li>
+                        <button type="button" class="btn btn-default navbar-btn" id="navCut" role="button" onclick="cut();" >
+                              <span class="shape fa fa-scissors fa-lg" style="font-size:2em" title="Cut"></span>                          
+                        </button>
+                      </li>             
+                      <li>
+                        <button type="button" class="btn btn-default navbar-btn" id="navCopy" role="button" onclick="copy();" >
+                              <span class="shape fa fa-files-o fa-lg" style="font-size:2em" title="Copy"></span>                          
+                        </button>
+                      </li>
+                      <li>
+                        <button type="button" class="btn btn-default navbar-btn" id="navPaste" role="button" onclick="paste();" >
+                              <span class="shape fa fa-clipboard fa-lg" style="font-size:2em;" title="Paste"></span>                          
+                        </button>
+                      </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
                       <!-- <li>                                          
@@ -848,21 +872,27 @@ function zoomActivate() {
                       </li>
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
-                      </li> -->
-                      <li>                  
-                        <div class="button" style="margin-right:10px;">
-                          <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode">
-                            <span class="fa fa-video-camera fa-lg toggleGlyph"></span> <span class="modeText">Camera Mode</span>
-                          </button>
-                        </div>
+                      </li> -->                      
+                      <li>
+                        <button type="button" class="btn btn-info navbar-btn toggleController" id="navCamera" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="margin-right:10px;">
+                          <span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>                          
+                        </button>
                       </li>
                       <li>
-                          <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()" style="margin-right:10px;"><span class="glyphicon glyphicon-play"></span> Presentation</button>
+                        <button type="button" class="btn btn-purple navbar-btn toggleController" id="navMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="margin-right:10px;">
+                          <span class="toggleGlyph fa fa-compass fa-lg" style="font-size:2em;"></span>                          
+                        </button>
                       </li>
-                      
-                      
-                      <li><button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle fa-lg"></span> <span>Help</span></button></li>
-                      
+                      <li>
+                        <button type="button" class="btn btn-success navbar-btn" id="navFullscreen" role="button" onclick="preHide();" title="Fullscreen" style="margin-right:10px;">
+                          <span class="glyphicon glyphicon-fullscreen" style="font-size:1.4em;"></span>
+                        </button>
+                      </li>                      
+                      <li>
+                        <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
+                          <span class="fa fa-question-circle fa-lg" style="font-size:2em;"></span>
+                        </button>
+                      </li>                                      
                       <!-- <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
@@ -949,6 +979,7 @@ function zoomActivate() {
                    <canvas id="Canvas">
                   </canvas>
           </div>
+          <!-- WILL REVISIT SLIDES
           <div id="present-tray">
             <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
             <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
@@ -958,11 +989,28 @@ function zoomActivate() {
             <span class="dropdown dropup dvd">
               <a class="dropdown-toggle" data-toggle="dropdown" style="margin-left: 10px; margin-bottom: 2px; text-decoration: none; color: white">Slide<b class="caret"></b></a>
               <ul class="dropdown-menu" id="dropUpTray">
-                <!-- Populated by slides on scene -->
+                To be populated
               </ul>
             </span>
             <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right" onclick="closeFullScreen();"></span>
+          </div> -->
+        </div>
+
+          <div id="map-controls">
+              <div id="Rotate">                  
+                <span class="shape fa fa-undo" title="Rotate Counter-Clockwise" onclick="rotateNegY();" style="font-size: 2em;"></span>
+                <span class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" onclick="rotatePosY();" style="font-size: 1.8em"></span>
+              </div>        
+              <div id ="Tilt">
+                <span class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onclick="tiltUp();"></span>                  
+                <span class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onclick="tiltDown();"></span>
+              </div>              
+              <div id="Zoom">
+                <span class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In" onclick="zoomIn();"></span>
+                <span class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out" onclick="zoomOut();"></span>
+              </div>
           </div>
+
           <div id="present-toolbar">
             <div class="btn-group dropup">
               <button class="btn btn-default btnShape">
@@ -972,7 +1020,7 @@ function zoomActivate() {
                 <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
                 <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>  
               </button>    
-              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
+              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
               <ul class="dropdown-menu">
                 <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                 <li class="divider"></li>
@@ -1005,7 +1053,7 @@ function zoomActivate() {
                 <input id="info-b" size="2" type="hidden"/>
               </ul>
             </div>
-            
+          
             <div class="btn-group dropup">
               <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
                 Animate <span class="caret"></span>
@@ -1023,28 +1071,44 @@ function zoomActivate() {
             </div>
             <button type="button" class="btn btn-default" id="dLabel" role="button" onclick="createRecord();" style="font-size:1.4em;">
                 Add Label                              
-            </button>       
-            <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Current Object: X</button>
-            <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode" style="height:42px;">
-              <span class="fa fa-video-camera fa-2x toggleGlyph"></span> <span class="modeText" style="font-size:1.4em;">Camera Mode</span>
+            </button>            
+            <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();">
+                  <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>
             </button>
+            <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();">
+                  <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>
+            </button>                      
+            <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();">
+                  <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>
+            </button>                  
+            <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Current Object: X</button>            
+            <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="height:42px;">
+              <span class="modeButton fa fa-video-camera fa-2x toggleGlyph"></span>
+            </button>
+            <button type="button" class="btn btn-purple navbar-btn toggleController" id="pMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="height:42px;">
+              <span class="toggleGlyph fa fa-compass fa-2x"></span>
+            </button>
+            <button type="button" class="btn btn-success navbar-btn" id="pFullscreen" role="button" onclick="closeFullScreen();" title="Exit Fullscreen">
+              <span class="glyphicon glyphicon-resize-small" style="font-size:2em;"></span>
+            </button>                
+            <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
+              <span class="fa fa-question-circle fa-2x"></span>
+            </button>                      
           </div>
-      </div>
+
 
       <!-- Progress Bar -->
       <div class="clickable" id="click" style="display:none">
       </div>
       <!-- Progress Bar -->
 
-
       <div id="dialog" title="Please enter your description for this item below">
           <form method="post"> <!--id="my-form" enctype="multipart/form-data" -->
               <textarea name="title" id="title" style="width:100%"></textarea>
               <!-- <input type="text" id="title">-->
-              <p><input type="button" value="Submit" onclick="addRecord()"></p>
+              <p><input id="submitLabel" type="submit" value="Submit"></p>
           </form>
       </div>
-
 
     
     <!--<video controls="controls" src="http://localhost/bwjs/BwContent/images/quake.mpg">
@@ -1181,7 +1245,7 @@ function zoomActivate() {
               var request;
 
               docElement = document.documentElement;
-              request = docElement.requestFullScreen || docElement.webkitRequestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
+              request = docElement.requestFullScreen || docElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT) || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
 
               // if(typeof request!="undefined" && request){
               request.call(docElement);
@@ -1276,7 +1340,16 @@ function zoomActivate() {
                    }
                 });
 
-                
+                $("#submitLabel").click(function(){
+                    if(edit == 0)
+                    {
+                        addRecord();
+                    }
+                    else if(edit==1)
+                    {
+                        editRecord(selected);
+                    }
+                });
                 $( "#dialog" ).dialog({
                     autoOpen: false,
                     modal: true
@@ -1388,17 +1461,18 @@ $(function () {
       </script>
 
 <script type="text/javascript">
-  var toggleText = function(){
-    if($('.modeText:first').text() == "Camera Mode") {
-      $('.modeText').text("Object Mode");
+  var toggleMode = function(){
+    if($('.modeButton:first').hasClass("fa-video-camera")) {
       $('.toggleController').removeClass('btn-info').addClass('btn-danger');
       $('.toggleGlyph').removeClass('fa-video-camera').addClass('fa-anchor');
     }else {
-      $('.modeText').text("Camera Mode");
       $('.toggleController').removeClass('btn-danger').addClass('btn-info');
       $('.toggleGlyph').removeClass('fa-anchor').addClass('fa-video-camera');
     }
   };
+  var toggleMap = function(){
+    $('#map-controls').fadeToggle();
+  }
 </script>
       
         <script type="text/javascript">

@@ -53,6 +53,7 @@ function switchModes()
 function cut()
 {
     if (selectedModel) {
+        copy();
         var name = selectedModel.name.getValueDirect().join("");
         var c = "\<Remove target='" + name + "'/>"
         bridgeworks.updateScene(c);
@@ -357,6 +358,11 @@ function loadModel(url)
     
 }
 
+// <div class="row">
+//   <div class="col-md-6">.col-md-6</div>
+//   <div class="col-md-6">.col-md-6</div>
+// </div>
+
 function loadMotion(url)
 {
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
@@ -364,11 +370,20 @@ function loadMotion(url)
     motionCount++;
 
     var animationPanel = document.getElementById("animate");
-    var a = document.createElement('a');
+    var row = document.createElement('div');
+    var nameColumn = document.createElement('div');
+    var trashColumn = document.createElement('div');
+    var p = document.createElement('p');
     //a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
-    a.setAttribute("id", name);
-    a.innerHTML = name + "<br>"; // <a>INNER_TEXT</a>
-    animationPanel.appendChild(a); // Append the link to the div
+    p.setAttribute("id", name);
+    nameColumn.setAttribute("class", "col-md-9");
+    trashColumn.setAttribute("class", "col-md-3");
+    p.innerHTML = name; // <a>INNER_TEXT</a>
+    trashColumn.innerHTML = "<span class='shape fa fa-trash-o' style='margin-top:3px;' title='Remove'></span>";
+    nameColumn.appendChild(p);
+    row.appendChild(nameColumn);
+    row.appendChild(trashColumn);
+    animationPanel.appendChild(row); // Append the link to the div
 
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
     
