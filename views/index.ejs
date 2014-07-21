@@ -100,8 +100,10 @@
           var distance;
           var sceneInspector;
           var camStartPos;
-          var modelName
+          var modelName;
           var ancientLoaded = 0;
+          var selected;
+          var selectedId;
 
 
           //Progress Bar ===========================================================
@@ -259,7 +261,7 @@
                   {
                       capture = false;
                       sceneInspector = bridgeworks.registry.find("SceneInspector");
-                      //console.log(sceneInspector.panSensitivity.values[0]);
+                      zoomActivate();
 
                   }
                     break;
@@ -267,8 +269,14 @@
                     //Dishing out the event client x and y cordinates of the mouse for testing purposes
                     // if (!e.metaKey && !e.ctrlKey) {
                     selectedModel = bridgeworks.selector.selections.models[0];
-                    modelName = selectedModel.name.getValueDirect().join("");
-                    var name = selectedModel.name.getValueDirect().join("");
+                    if(selectedModel) {
+                        modelName = selectedModel.name.getValueDirect().join("");
+                        var name = selectedModel.name.getValueDirect().join("");
+
+                        setObject(name);
+                        setColorPicker();
+                    }
+                    window.clearInterval(zoomUpdate);
                     //     if (selectedModel) {
                     //         var pos = selectedModel.position.getValueDirect();
                     //         $("#positionX").spinner("value", pos.x);
@@ -285,8 +293,11 @@
                             
                     //     }
                     // }
-                    setObject(name);
-                    setColorPicker();
+
+                    selected = bridgeworks.selector.selectedName.getValueDirect().join("");
+                    console.log(selected);
+                    selectedId = bridgeworks.selector.getAttribute("Selected").id;
+
                     capture = false;
                 }
                 break;
@@ -314,16 +325,23 @@
               }
               
           }
-
-          zoomUpdate = window.setInterval(function () {
-              distance = sceneInspector.pivotDistance.getValueDirect()
-              if(distance*0.3 != sceneInspector.panSensitivity.values[0]) {
-                  sceneInspector.panSensitivity.values[0] = distance * 0.3;
-                  sceneInspector.panSensitivity.values[1] = distance * 0.3;
-                  sceneInspector.panSensitivity.values[2] = distance * 0.3;
-                  console.log('hi');
-              }
-          }, 200);
+function zoomActivate() {
+    zoomUpdate = window.setInterval(function () {
+        distance = sceneInspector.pivotDistance.getValueDirect()
+        if ((distance >= 0) && (distance < 4000)) {
+            if (distance * 0.3 != sceneInspector.panSensitivity.values[0]) {
+                sceneInspector.panSensitivity.values[0] = distance * 0.3;
+                sceneInspector.panSensitivity.values[1] = distance * 0.3;
+                sceneInspector.panSensitivity.values[2] = distance * 0.3;
+            }
+        }
+        else {
+            sceneInspector.panSensitivity.values[0] = 1200;
+            sceneInspector.panSensitivity.values[1] = 1200;
+            sceneInspector.panSensitivity.values[2] = 1200;
+        }
+    }, 200);
+}
 
           function nextSlide(){
               console.debug("Slide Count: "+slideCount);
@@ -357,6 +375,16 @@
                         }      // c
                     }
                         break;
+                    case 46: //Delete
+                        var slice = selected.slice(6.8);
+                            console.log(slice);
+                        var cmd = "\<Remove target='"+selected+"'/>";
+                        bridgeworks.updateScene(cmd);
+                        var cmd2 = "\<Remove target='"+slice+"'/>"
+                        var div = document.getElementById(selectedId);
+                        bridgeworks.updateScene(cmd2);
+                        div.parentNode.removeChild(div);
+
                     case 'V'.charCodeAt(0):
                     {      // v
                         if (e.metaKey || e.ctrlKey) {
@@ -375,7 +403,7 @@
 //                           //objectInspector.evaluate();
 //                            bridgeworks.updateScene();
                      var cmd;
-                            cmd = "\<Set target='" + modelName + "'>";
+                            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
                             cmd += "\<position x='" + (selectedModel.position.values[0] += 1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
                             cmd += "\</Set>";
                             console.log(selectedModel.position.getValueDirect());
@@ -390,7 +418,7 @@
 //                        //objectInspector.evaluate();
 //                        bridgeworks.updateScene();
                         var cmd;
-                        cmd = "\<Set target='" + modelName + "'>";
+                        cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
                         cmd += "\<position x='" + (selectedModel.position.values[0]-=1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
                         cmd += "\</Set>";
                         console.log(selectedModel.position.getValueDirect());
@@ -400,15 +428,15 @@
 
                     case 40:
                         var cmd;
-                        if (e.metaKey || e.ctrlKey) {
-                                cmd = "\<Set target='" + modelName + "'>";
+                        if (e.shiftKey || e.ctrlKey) {
+                                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
                                 cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]-= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
                                 cmd += "\</Set>";
                                 console.log(selectedModel.position.getValueDirect());
                                 bridgeworks.updateScene(cmd);
                             }
                             else {
-                            cmd = "\<Set target='" + modelName + "'>";
+                            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
                             cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= 1) + "'/>"
                             cmd += "\</Set>";
                             console.log(selectedModel.position.getValueDirect());
@@ -418,15 +446,15 @@
                         break;
                     case 38:
                         var cmd;
-                        if (e.metaKey || e.ctrlKey) {
-                            cmd = "\<Set target='" + modelName + "'>";
+                        if (e.shiftKey || e.ctrlKey) {
+                            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
                             cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]+= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
                             cmd += "\</Set>";
                             console.log(selectedModel.position.getValueDirect());
                             bridgeworks.updateScene(cmd);
                         }
                         else {
-                            cmd = "\<Set target='" + modelName + "'>";
+                            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
                             cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += 1) + "'/>"
                             cmd += "\</Set>";
                             console.log(selectedModel.position.getValueDirect());
@@ -501,7 +529,10 @@
                         </div>
                         <div class="col-md-2" id="panel-lib-anatomyObjects">
                           <H3>Anatomy</H3>
-                        </div>                        
+                        </div>
+                        <div class="col-md-2" id="panel-lib-peopleObjects">
+                          <H3>People</H3>
+                        </div>                      
                       </div>                      
                       <div class="tab-pane" id="objects2">
                         <div class="col-md-2" id="panel-lib-buildingObjects">
@@ -528,6 +559,83 @@
                     </div>
                         
                     
+                    
+                    
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                  </div>
+              </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+      <div class="modal fade" id="helpModal">
+          <div class="modal-dialog" style="width: 900px">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">Help</h4>
+                  </div>
+                  <!--Loading all the Libs and putting them in their respective places-->
+                  <div class="modal-body row">                                            
+                    <ul class="nav nav-tabs" id="tabContent">
+                      <li class="active"><a href="#helpIntro" data-toggle="tab">Intro</a></li>
+                      <li><a href="#helpControls" data-toggle="tab">Controls</a></li>
+                      <li><a href="#helpGuide" data-toggle="tab">Guide</a></li>
+                    </ul>
+                    <div class="tab-content">                    
+                      <div class="tab-pane active" id="helpIntro">
+                        Welcome to 3Scape!
+                      </div>                      
+                      <div class="tab-pane" id="helpControls">
+                        <div class="col-md-4">
+                          <H3>Main</H3>
+                          <div class="controlBullet">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                             - Object Z-Axis
+                          </div>
+                          <div class="controlBullet">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                             - Object X-Axis
+                          </div>
+                          <div class="controlBullet">
+                            Ctrl/⌘ + 
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                             - Object Y-Axis
+                          </div>
+                        </div>  
+                        <div class="col-md-4">
+                          <H3>Camera Mode</H3>
+                          <div class="controlBullet">
+                            <img src="left-click.png"> Rotate
+                          </div>
+                          <div class="controlBullet">
+                            <img src="right-click.png"> Zoom
+                          </div>
+                          <div class="controlBullet">
+                            <img src="both-click.png"> Pan
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <H3>Object Mode</H3>
+                          <div class="controlBullet">
+                            <img src="left-click.png"> Rotate
+                          </div>
+                          <div class="controlBullet">
+                            <img src="right-click.png"> Pull/Push
+                          </div>
+                          <div class="controlBullet">
+                            <img src="both-click.png"> Slide/Lift
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane" id="helpGuide">
+                        Make things, break things, have fun.
+                      </div>                                            
+                    </div>
                     
                     
                   </div>
@@ -665,7 +773,7 @@
                           <span class="shape fa fa fa-eject fa-lg" title="Pyramid" onclick="load(Pyramid);"></span>
                           <span class="shape fa fa fa-database fa-lg" title="Tube" onclick="load(tube);"></span>  
                         </button>    
-                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
+                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
                         <ul class="dropdown-menu">
                           <li style="margin-left: 8px">
                             <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
@@ -723,8 +831,23 @@
                           <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
                               Add Label                              
                           </button>
-                        </div>  
-                      </li>                      
+                        </div>
+                      </li>
+                      <li>
+                        <button type="button" class="btn btn-default navbar-btn" id="navCut" role="button" onclick="cut();" >
+                              <span class="shape fa fa-scissors fa-lg" style="font-size:2em" title="Cut"></span>                          
+                        </button>
+                      </li>             
+                      <li>
+                        <button type="button" class="btn btn-default navbar-btn" id="navCopy" role="button" onclick="copy();" >
+                              <span class="shape fa fa-files-o fa-lg" style="font-size:2em" title="Copy"></span>                          
+                        </button>
+                      </li>
+                      <li>
+                        <button type="button" class="btn btn-default navbar-btn" id="navPaste" role="button" onclick="paste();" >
+                              <span class="shape fa fa-clipboard fa-lg" style="font-size:2em;" title="Paste"></span>                          
+                        </button>
+                      </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
                       <!-- <li>                                          
@@ -742,8 +865,8 @@
                       <li>
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li> -->
-                      <li>                        
-                        <div class="button" style="margin-right:30px;">
+                      <li>                  
+                        <div class="button" style="margin-right:10px;">
                           <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode">
                             <span class="fa fa-video-camera fa-lg toggleGlyph"></span> <span class="modeText">Camera Mode</span>
                           </button>
@@ -752,6 +875,10 @@
                       <li>
                           <button type="button" class="btn navbar-btn btn-success" id="Presentation" role="button" onclick="preHide()" style="margin-right:10px;"><span class="glyphicon glyphicon-play"></span> Presentation</button>
                       </li>
+                      
+                      
+                      <li><button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle fa-lg"></span> <span>Help</span></button></li>
+                      
                       <!-- <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
                           <ul class="dropdown-menu">
@@ -883,7 +1010,7 @@
                 <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
                 <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>  
               </button>    
-              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
+              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
               <ul class="dropdown-menu">
                 <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                 <li class="divider"></li>
@@ -934,7 +1061,16 @@
             </div>
             <button type="button" class="btn btn-default" id="dLabel" role="button" onclick="createRecord();" style="font-size:1.4em;">
                 Add Label                              
-            </button>       
+            </button>            
+            <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();" >
+                  <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>                          
+            </button>                  
+            <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();" >
+                  <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>                          
+            </button>                      
+            <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();" >
+                  <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>                          
+            </button>                  
             <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Current Object: X</button>
             <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode" style="height:42px;">
               <span class="fa fa-video-camera fa-2x toggleGlyph"></span> <span class="modeText" style="font-size:1.4em;">Camera Mode</span>
@@ -1055,6 +1191,7 @@
           function modalHide(){
                   $('#myModal').modal('hide');
                   $('#motionsModal').modal('hide');
+                  $('#helpModal').modal('hide');
           }
           //Progress Bar ========================
           function progress_bar(container){
@@ -1092,7 +1229,7 @@
               var request;
 
               docElement = document.documentElement;
-              request = docElement.requestFullScreen || docElement.webkitRequestFullScreen || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
+              request = docElement.requestFullScreen || docElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT) || docElement.mozRequestFullScreen || docElement.msRequestFullScreen;
 
               // if(typeof request!="undefined" && request){
               request.call(docElement);

@@ -88,7 +88,7 @@ function tiltUp()
     var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
     sceneInspec.rotationDelta.values[0]= 10;
     sceneInspec.evaluate();
-    bridgeworks.updateScale();
+    bridgeworks.updateScene();
     sceneInspec.rotationDelta.values[0] = 0;
     sceneInspec.rotationDelta.values[1] = 0;
     sceneInspec.rotationDelta.values[2] = 0;
@@ -99,7 +99,7 @@ function tiltDown()
     var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
     sceneInspec.rotationDelta.values[0]= -10;
     sceneInspec.evaluate();
-    bridgeworks.updateScale();
+    bridgeworks.updateScene();
     sceneInspec.rotationDelta.values[0] = 0;
     sceneInspec.rotationDelta.values[1] = 0;
     sceneInspec.rotationDelta.values[2] = 0;
