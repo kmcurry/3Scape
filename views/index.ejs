@@ -33,6 +33,7 @@
     <script type="text/javascript" src="./js/crossbrowser.js"></script>
     <script type="text/javascript" src="./js/editor.js"></script>
     <script type="text/javascript" src="./js/controls.js"></script>
+    <script tpype="text/javascript" src="./js/MapControls.js"></script>
 
     <style type="text/css">
         .clickable {
@@ -978,6 +979,28 @@ function zoomActivate() {
             </span>
             <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right" onclick="closeFullScreen();"></span>
           </div>
+
+          <div id = "map-controls">
+              <div id ="Rotate">
+                  <p>
+                      <span class="fa fa-undo" title="Rotate -" onclick="rotateNegY();" style="font-size: 1.4em"></span>
+                      <span class="glyphicon glyphicon-repeat" title="Rotate +" onclick="rotatePosY();" style="font-size: 1.3em"></span>
+                  </p>
+              </div>
+              <p></p>
+              <div id ="Tilt">
+                  <p><span class="glyphicon glyphicon-circle-arrow-up" title="Tilt +" onclick="tiltUp();"></span></p>
+                  <p></p>
+                  <p><span class="glyphicon glyphicon-circle-arrow-down" title="Tilt -" onclick="tiltDown();"></span></p>
+              </div>
+              <p></p>
+              <div id="Zoom">
+                  <p><span class="glyphicon glyphicon-zoom-in" title="Zoom +" onclick="zoomIn();"></span></p>
+                  <p></p>
+                  <p><span class="glyphicon glyphicon-zoom-out" title="Zoom -" onclick="zoomOut();"></span></p>
+              </div>
+          </div>
+
           <div id="present-toolbar">
             <div class="btn-group dropup">
               <button class="btn btn-default btnShape">
@@ -1054,6 +1077,7 @@ function zoomActivate() {
             </button>
           </div>
       </div>
+
 
       <!-- Progress Bar -->
       <div class="clickable" id="click" style="display:none">
