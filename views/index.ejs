@@ -866,6 +866,11 @@ function zoomActivate() {
                         <button type="button" class="btn navbar-btn btn-info" id="share-button" style="margin-right:3px" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="left" data-content="Coming soon!">Share</button>
                       </li> -->
                       <li>
+                        <button type="button" class="btn btn-purple navbar-btn toggleController" id="navMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="margin-right:10px;">
+                          <span class="toggleGlyph fa fa-compass fa-lg" style="font-size:2em;"></span>                          
+                        </button>
+                      </li>
+                      <li>
                         <button type="button" class="btn btn-info navbar-btn toggleController" id="navCamera" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="margin-right:10px;">
                           <span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>                          
                         </button>
@@ -983,24 +988,18 @@ function zoomActivate() {
           </div> -->
         </div>
 
-          <div id = "map-controls">
-              <div id ="Rotate">
-                  <p>
-                      <span class="shape fa fa-undo" title="Rotate -" onclick="rotateNegY();" style="font-size: 1.4em"></span>
-                      <span class="shape glyphicon glyphicon-repeat" title="Rotate +" onclick="rotatePosY();" style="font-size: 1.3em"></span>
-                  </p>
-              </div>
-              <p></p>
+          <div id="map-controls">
+              <div id="Rotate">                  
+                <span class="shape fa fa-undo" title="Rotate Counter-Clockwise" onclick="rotateNegY();" style="font-size: 1.4em"></span>
+                <span class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" onclick="rotatePosY();" style="font-size: 1.3em"></span>
+              </div>        
               <div id ="Tilt">
-                  <p><span class="shape glyphicon glyphicon-circle-arrow-up" title="Tilt +" onclick="tiltUp();"></span></p>
-                  <p></p>
-                  <p><span class="shape glyphicon glyphicon-circle-arrow-down" title="Tilt -" onclick="tiltDown();"></span></p>
-              </div>
-              <p></p>
+                <span class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:1.4em" title="Tilt Up" onclick="tiltUp();"></span>                  
+                <span class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:1.4em" title="Tilt Down" onclick="tiltDown();"></span>
+              </div>              
               <div id="Zoom">
-                  <p><span class="shape glyphicon glyphicon-zoom-in" title="Zoom +" onclick="zoomIn();"></span></p>
-                  <p></p>
-                  <p><span class="shape glyphicon glyphicon-zoom-out" title="Zoom -" onclick="zoomOut();"></span></p>
+                <span class="shape glyphicon glyphicon-zoom-in" style="font-size:1.4em" title="Zoom +" onclick="zoomIn();"></span>
+                <span class="shape glyphicon glyphicon-zoom-out" style="font-size:1.4em" title="Zoom -" onclick="zoomOut();"></span>
               </div>
           </div>
 
@@ -1439,7 +1438,6 @@ $(function () {
 
 <script type="text/javascript">
   var toggleMode = function(){
-    console.log($('.modeText:first').hasClass("fa-video-camera"))
     if($('.modeButton:first').hasClass("fa-video-camera")) {
       $('.toggleController').removeClass('btn-info').addClass('btn-danger');
       $('.toggleGlyph').removeClass('fa-video-camera').addClass('fa-anchor');
@@ -1448,6 +1446,9 @@ $(function () {
       $('.toggleGlyph').removeClass('fa-anchor').addClass('fa-video-camera');
     }
   };
+  var toggleMap = function(){
+    $('#map-controls').fadeToggle();
+  }
 </script>
       
         <script type="text/javascript">

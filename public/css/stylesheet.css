@@ -315,3 +315,49 @@ border-radius: 6px 0 6px 6px;
   -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
+
+.btn-purple { 
+  color: #FFFFFF; 
+  background-color: #823B94; 
+  border-color: #823B94; 
+} 
+ 
+.btn-purple:hover, 
+.btn-purple:focus, 
+.btn-purple:active, 
+.btn-purple.active, 
+.open .dropdown-toggle.btn-purple { 
+  color: #FFFFFF; 
+  background-color: #682978; 
+  border-color: #823B94; 
+} 
+ 
+.btn-purple:active, 
+.btn-purple.active, 
+.open .dropdown-toggle.btn-purple { 
+  background-image: none; 
+} 
+ 
+.btn-purple.disabled, 
+.btn-purple[disabled], 
+fieldset[disabled] .btn-purple, 
+.btn-purple.disabled:hover, 
+.btn-purple[disabled]:hover, 
+fieldset[disabled] .btn-purple:hover, 
+.btn-purple.disabled:focus, 
+.btn-purple[disabled]:focus, 
+fieldset[disabled] .btn-purple:focus, 
+.btn-purple.disabled:active, 
+.btn-purple[disabled]:active, 
+fieldset[disabled] .btn-purple:active, 
+.btn-purple.disabled.active, 
+.btn-purple[disabled].active, 
+fieldset[disabled] .btn-purple.active { 
+  background-color: #823B94; 
+  border-color: #823B94; 
+} 
+ 
+.btn-purple .badge { 
+  color: #823B94; 
+  background-color: #FFFFFF; 
+}
