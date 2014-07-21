@@ -830,8 +830,23 @@ function zoomActivate() {
                           <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
                               Add Label                              
                           </button>
-                        </div>  
-                      </li>                      
+                        </div>
+                      </li>
+                      <li>
+                        <button type="button" class="btn btn-default navbar-btn" id="navCut" role="button" onclick="cut();" >
+                              <span class="shape fa fa-scissors fa-lg" style="font-size:2em" title="Cut"></span>                          
+                        </button>
+                      </li>             
+                      <li>
+                        <button type="button" class="btn btn-default navbar-btn" id="navCopy" role="button" onclick="copy();" >
+                              <span class="shape fa fa-files-o fa-lg" style="font-size:2em" title="Copy"></span>                          
+                        </button>
+                      </li>
+                      <li>
+                        <button type="button" class="btn btn-default navbar-btn" id="navPaste" role="button" onclick="paste();" >
+                              <span class="shape fa fa-clipboard fa-lg" style="font-size:2em;" title="Paste"></span>                          
+                        </button>
+                      </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
                       <!-- <li>                                          
@@ -1023,7 +1038,16 @@ function zoomActivate() {
             </div>
             <button type="button" class="btn btn-default" id="dLabel" role="button" onclick="createRecord();" style="font-size:1.4em;">
                 Add Label                              
-            </button>       
+            </button>            
+            <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();" >
+                  <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>                          
+            </button>                  
+            <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();" >
+                  <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>                          
+            </button>                      
+            <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();" >
+                  <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>                          
+            </button>                  
             <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Current Object: X</button>
             <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleText();" title="Toggle Camera/Object Mode" style="height:42px;">
               <span class="fa fa-video-camera fa-2x toggleGlyph"></span> <span class="modeText" style="font-size:1.4em;">Camera Mode</span>
