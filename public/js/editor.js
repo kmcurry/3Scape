@@ -340,31 +340,51 @@ function loadModel(url)
     name = count.toString()+". "+name;
     count++;
 
-    setObject(name);
+    // c = document.createElement('div');
+    // c.innerHTML = '<input id="heyColor">' {onImmediateChange:\'updateInfo(this);\'}" id="2myColor" value="FFFFFF"'
+    //             + 'onchange="applyColor();" style="height:20px;width:20px;"/>'
+    //             + '<input id="2info-r" size="2" type="hidden"/>'
+    //             + '<input id="2info-g" size="2" type="hidden"/>'
+    //             + '<input id="2info-b" size="2" type="hidden"/>';
 
+    setObject(name);
     var objectPanel = document.getElementById("object-list");
     var row = document.createElement('div');
     row.setAttribute("id", "row" + name)
     var nameColumn = document.createElement('div');
+    // var colorColumn = document.createElement('div');
+    var findColumn = document.createElement('div');
     var trashColumn = document.createElement('div');
     a = document.createElement('a');
-    a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
-    a.innerHTML = name; // <a>INNER_TEXT</a>    
+    a.innerHTML = name;
     a.setAttribute("id", name);
-    a.setAttribute("Title", "Jump to Object");
+    a.setAttribute("onclick", "setModel('"+name+"');"); // Instead of calling setAttribute    
+    a.setAttribute("Title", "Select Object");
     a.style.cursor="pointer"; 
     a.style.cursor="hand";
+    f = document.createElement('span');
+    f.setAttribute("id", "find" + name)
+    f.setAttribute("class", 'shape fa fa-search');
+    f.setAttribute("style", "margin-top:3px;");
+    f.setAttribute("Title", 'Jump to Object');
+    f.setAttribute("onClick", "locate('" + name + "');");
     t = document.createElement('span');
     t.setAttribute("id", "trash" + name)
     t.setAttribute("class", 'shape fa fa-trash-o');
     t.setAttribute("style", "margin-top:3px;");
     t.setAttribute("Title", 'Remove');
     t.setAttribute("onClick", "trashModel('" + name + "');");
-    nameColumn.setAttribute("class", "col-md-9");
-    trashColumn.setAttribute("class", "col-md-3");
+    nameColumn.setAttribute("class", "col-md-8");
+    // colorColumn.setAttribute("class", "col-md-5");
+    findColumn.setAttribute("class", "col-md-2");
+    trashColumn.setAttribute("class", "col-md-2");
     nameColumn.appendChild(a);
+    findColumn.appendChild(f);
+    // colorColumn.appendChild(c);
     trashColumn.appendChild(t);
     row.appendChild(nameColumn);
+    // row.appendChild(colorColumn)
+    row.appendChild(findColumn);
     row.appendChild(trashColumn);
     objectPanel.appendChild(row);
     
@@ -425,7 +445,6 @@ function loadMotion(url)
     var nameColumn = document.createElement('div');
     var trashColumn = document.createElement('div');
     var p = document.createElement('p');
-    //a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
     p.setAttribute("id", name);
     t = document.createElement('span');
     t.setAttribute("id", "trash" + name)
@@ -500,8 +519,11 @@ function setModel()
 function setModel(name)
 {
     var xml = "\<Set target='" + name + "'/>";
+    selectedModel = bridgeworks.registry.find(name);
     console.log(xml);
+    setColorPicker();
     bridgeworks.updateScene(xml);
+    setObject(name);
 }
 function paste()
 {
@@ -562,15 +584,23 @@ function show(name)
 }
 //Apply Color function takes the selected model and sets its color to whatever the color is
 //in the color patch
+
 function applyColor() 
 {
     var name = selectedModel.name.getValueDirect().join("");
-    $('#object-list a').attr('id')
+    //($('#object-list a').attr('id'))
     var b = $('#info-b').val();
     var g = $('#info-g').val();
     var r = $('#info-r').val();
     var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '"+b+"'/>" +"</Set>";
     bridgeworks.updateScene(cmd);
+}
+
+function remoteColor(name) 
+{
+    var b = $('#' + name + 'info-b').val();
+    var g = $('#' + name + 'info-g').val();
+    var r = $('#' + name + 'info-r').val();
 }
 
 function showTop()
