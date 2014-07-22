@@ -70,7 +70,7 @@ function trashModel(name)
 //         var panel = document.getElementById("animate");
 //         var link = document.getElementById("row" + name);
 //         panel.removeChild(link);
-//     }
+    
 // }
 
 function cut()
