@@ -8,13 +8,15 @@ var Size;
 var rotY;
 var rotX;
 var rotZ;
+var copiedSelectedText;
+var copiedElement = 0;
 
 function setObject(Object)
 {
     var p = document.getElementById('Current_Object');
     var q = document.getElementById('Current_Object2');
-    p.innerHTML = "Current Object: " + Object;
-    q.innerHTML = "Current Object: " + Object;
+    p.innerHTML = "Target: " + Object;
+    q.innerHTML = "Target: " + Object;
 }
 
 function copy()
@@ -28,6 +30,13 @@ function copy()
         rotX = selectedModel.rotation.getValueDirect().x;
         rotY = selectedModel.rotation.getValueDirect().y;
         rotZ = selectedModel.rotation.getValueDirect().z;
+        copiedElement = 1;
+    }
+    else if (selected)
+    {
+        copiedSelectedText = selectedText;
+        console.log(copiedSelectedText);
+        copiedElement = 2;
     }
 }
 function switchModes()
@@ -50,6 +59,29 @@ function switchModes()
     console.log(sceneInspector.enabled.getValueDirect());
 
 }
+function trashModel(name)
+{
+    var c = "\<Remove target='" + name + "'/>"
+    bridgeworks.updateScene(c);
+    console.log(name);
+
+    var panel = document.getElementById("object-list");
+    var link = document.getElementById("row" + name);
+    panel.removeChild(link);
+}
+
+// function trashAnimation(name)
+// {
+//         var c = "\<Remove target='" + name + "'/>"
+//         bridgeworks.updateScene(c);
+//         console.log(name);
+
+//         var panel = document.getElementById("animate");
+//         var link = document.getElementById("row" + name);
+//         panel.removeChild(link);
+    
+// }
+
 function cut()
 {
     if (selectedModel) {
@@ -60,7 +92,7 @@ function cut()
         console.log(name);
 
         var panel = document.getElementById("object-list");
-        var link = document.getElementById(name);
+        var link = document.getElementById("row" + name);
         panel.removeChild(link);
     }
 }
@@ -311,13 +343,30 @@ function loadModel(url)
     setObject(name);
 
     var objectPanel = document.getElementById("object-list");
+    var row = document.createElement('div');
+    row.setAttribute("id", "row" + name)
+    var nameColumn = document.createElement('div');
+    var trashColumn = document.createElement('div');
     a = document.createElement('a');
     a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
+    a.innerHTML = name; // <a>INNER_TEXT</a>    
     a.setAttribute("id", name);
-    a.innerHTML = name + "<br>"; // <a>INNER_TEXT</a>
-    objectPanel.appendChild(a); // Append the link to the div
-    //var br = document.createElement("br");
-   // objectPanel.appendChild(br);
+    a.setAttribute("Title", "Jump to Object");
+    a.style.cursor="pointer"; 
+    a.style.cursor="hand";
+    t = document.createElement('span');
+    t.setAttribute("id", "trash" + name)
+    t.setAttribute("class", 'shape fa fa-trash-o');
+    t.setAttribute("style", "margin-top:3px;");
+    t.setAttribute("Title", 'Remove');
+    t.setAttribute("onClick", "trashModel('" + name + "');");
+    nameColumn.setAttribute("class", "col-md-9");
+    trashColumn.setAttribute("class", "col-md-3");
+    nameColumn.appendChild(a);
+    trashColumn.appendChild(t);
+    row.appendChild(nameColumn);
+    row.appendChild(trashColumn);
+    objectPanel.appendChild(row);
     
     var xml = loadXMLFile("BwContent/model.xml");
     
@@ -354,6 +403,7 @@ function loadModel(url)
     
     var panel = document.getElementById("panel-curr-scene");
     //panel.appendChild(p);
+    console.log(name);
     
     
 }
@@ -371,16 +421,23 @@ function loadMotion(url)
 
     var animationPanel = document.getElementById("animate");
     var row = document.createElement('div');
+    row.setAttribute("id", "row" + name)
     var nameColumn = document.createElement('div');
     var trashColumn = document.createElement('div');
     var p = document.createElement('p');
     //a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
     p.setAttribute("id", name);
+    t = document.createElement('span');
+    t.setAttribute("id", "trash" + name)
+    t.setAttribute("class", 'shape fa fa-trash-o');
+    t.setAttribute("style", "margin-top:3px;");
+    t.setAttribute("Title", 'Remove');
+    t.setAttribute("onClick", "trashAnimation('" + name + "');");
     nameColumn.setAttribute("class", "col-md-9");
     trashColumn.setAttribute("class", "col-md-3");
     p.innerHTML = name; // <a>INNER_TEXT</a>
-    trashColumn.innerHTML = "<span class='shape fa fa-trash-o' style='margin-top:3px;' title='Remove'></span>";
     nameColumn.appendChild(p);
+    trashColumn.appendChild(t);
     row.appendChild(nameColumn);
     row.appendChild(trashColumn);
     animationPanel.appendChild(row); // Append the link to the div
@@ -448,16 +505,53 @@ function setModel(name)
 }
 function paste()
 {
-    load(copiedUrl);
-    var name = copiedUrl.substring(copiedUrl.lastIndexOf("/")+1, copiedUrl.lastIndexOf("."));
-    count -= 1;
-    name = count.toString()+". "+name;
-    count += 1;
-    selectedModel.scale.setValueDirect(Size,Size,Size);
-    selectedModel.rotation.setValueDirect(rotX,rotY,rotZ);
-    //selectedModel.color.setValueDirect(R,G,B); There is no setValueDirect for color. Should look into adding that
-    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +R+ "' " + "g= '"+G+"' " + "b= '"+B+"'/>" +"</Set>";
-    bridgeworks.updateScene(cmd);
+    if(copiedElement == 2)
+    {
+        var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+
+        g_labelCount = g_labelCount + 1;
+        g_countStr = g_labelCount.toString();
+
+        g_labelName = "L-" + g_countStr;
+
+        var xml = loadXMLFile("BwContent/label.xml");
+
+        var name = xml.getElementsByTagName("Model")[0].attributes[0];
+        name.value = g_labelName;
+
+        var pos = xml.getElementsByTagName("position")[0];
+        pos.attributes["x"].value = pointWorld.x.toString();
+        pos.attributes["y"].value = pointWorld.y.toString();
+        pos.attributes["z"].value = pointWorld.z.toString();
+
+        var label = xml.getElementsByTagName("Label")[0];
+        label.attributes["name"].value = "Label_" + name.value;
+        label.attributes["parent"].value = name.value;
+
+        name = xml.getElementsByTagName("Group")[0].attributes[0];
+        name.value = "Group_" + g_labelName;
+
+
+        var xstr = (new XMLSerializer()).serializeToString(xml);
+        console.debug(xstr);
+        bridgeworks.updateScene(xstr);
+
+        var update = "\<Set target='Label_" + g_labelName + "' text='" + copiedSelectedText + "' show='true'/>";
+        console.debug(update);
+        bridgeworks.updateScene(update);
+    }
+    else if(copiedElement == 1) {
+        load(copiedUrl);
+        var name = copiedUrl.substring(copiedUrl.lastIndexOf("/") + 1, copiedUrl.lastIndexOf("."));
+        count -= 1;
+        name = count.toString() + ". " + name;
+        count += 1;
+        selectedModel.scale.setValueDirect(Size, Size, Size);
+        selectedModel.rotation.setValueDirect(rotX, rotY, rotZ);
+        //selectedModel.color.setValueDirect(R,G,B); There is no setValueDirect for color. Should look into adding that
+        var cmd = "\<Set target='" + name + "'>" + "\<color r= '" + R + "' " + "g= '" + G + "' " + "b= '" + B + "'/>" + "</Set>";
+        bridgeworks.updateScene(cmd);
+    }
 }
 
 function show(name)
