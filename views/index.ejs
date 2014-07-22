@@ -930,13 +930,27 @@ function zoomActivate() {
                           <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span> 
                             <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
                             <ul class="nav nav-tabs" style="clear:both">
-                                <li class="active"><a href="#slides" data-toggle="tab">Slides</a></li>
-                                <li><a href="#object-list" data-toggle="tab">Objects</a></li>
-                                <li><a href="#animate" data-toggle="tab">Animate</a></li>                                
+                              <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
+                              <li><a href="#animate" data-toggle="tab">Animate</a></li>
+                              <li><a href="#slides" data-toggle="tab">Slides</a></li>
                              </ul>
                                 <div class="tab-content">
+                                    <div class="tab-pane active" id="object-list">
+                                      <ul class="nav nav-sidebar">
+                                            <!--This is where the objects get loaded into the list-->
+                                      </ul>
+                                    </div>
+                                    <div class="tab-pane" id="animate">
+                                        <ul class="nav nav-sidebar">
+                                            <!--This is where the animations get loaded into the list-->
+                                        </ul>
+                                        
+                                        <ul class="nav nav-sidebar">
+                                            
+                                        </ul>                     
+                                    </div>
                                     <!--BEGIN PROJECT SCOPE-->
-                                    <div class="tab-pane active" id="slides" ng-controller="projectController">                              
+                                    <div class="tab-pane" id="slides" ng-controller="projectController">                              
                                         <ul class="nav nav-sidebar" id="slidePanel">
                                           <!-- <div ng-show="global.isSignedIn()">
                                             My ID: {{ global.currentUser()._id }}
@@ -962,21 +976,7 @@ function zoomActivate() {
                                           <i ng-hide="global.isSignedIn()">Login to see Project interface</i> -->
                                         </ul>
                                     </div>
-                                    <!--END PROJECT SCOPE-->
-                                    <div class="tab-pane" id="object-list">
-                                      <ul class="nav nav-sidebar">
-                                            <!--This is where the objects get loaded into the list-->
-                                      </ul>
-                                    </div>                                    
-                                    <div class="tab-pane" id="animate">
-                                        <ul class="nav nav-sidebar">
-                                            <!--This is where the animations get loaded into the list-->
-                                        </ul>
-                                        
-                                        <ul class="nav nav-sidebar">
-                                            
-                                        </ul>                     
-                                    </div>
+                                    <!--END PROJECT SCOPE-->                                                                  
                                 </div>
                         </div>
                 </div>
