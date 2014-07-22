@@ -8,6 +8,8 @@ var Size;
 var rotY;
 var rotX;
 var rotZ;
+var copiedSelectedText;
+var copiedElement = 0;
 
 function setObject(Object)
 {
@@ -28,6 +30,13 @@ function copy()
         rotX = selectedModel.rotation.getValueDirect().x;
         rotY = selectedModel.rotation.getValueDirect().y;
         rotZ = selectedModel.rotation.getValueDirect().z;
+        copiedElement = 1;
+    }
+    else if (selected)
+    {
+        copiedSelectedText = selectedText;
+        console.log(copiedSelectedText);
+        copiedElement = 2;
     }
 }
 function switchModes()
@@ -448,16 +457,53 @@ function setModel(name)
 }
 function paste()
 {
-    load(copiedUrl);
-    var name = copiedUrl.substring(copiedUrl.lastIndexOf("/")+1, copiedUrl.lastIndexOf("."));
-    count -= 1;
-    name = count.toString()+". "+name;
-    count += 1;
-    selectedModel.scale.setValueDirect(Size,Size,Size);
-    selectedModel.rotation.setValueDirect(rotX,rotY,rotZ);
-    //selectedModel.color.setValueDirect(R,G,B); There is no setValueDirect for color. Should look into adding that
-    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +R+ "' " + "g= '"+G+"' " + "b= '"+B+"'/>" +"</Set>";
-    bridgeworks.updateScene(cmd);
+    if(copiedElement == 2)
+    {
+        var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+
+        g_labelCount = g_labelCount + 1;
+        g_countStr = g_labelCount.toString();
+
+        g_labelName = "L-" + g_countStr;
+
+        var xml = loadXMLFile("BwContent/label.xml");
+
+        var name = xml.getElementsByTagName("Model")[0].attributes[0];
+        name.value = g_labelName;
+
+        var pos = xml.getElementsByTagName("position")[0];
+        pos.attributes["x"].value = pointWorld.x.toString();
+        pos.attributes["y"].value = pointWorld.y.toString();
+        pos.attributes["z"].value = pointWorld.z.toString();
+
+        var label = xml.getElementsByTagName("Label")[0];
+        label.attributes["name"].value = "Label_" + name.value;
+        label.attributes["parent"].value = name.value;
+
+        name = xml.getElementsByTagName("Group")[0].attributes[0];
+        name.value = "Group_" + g_labelName;
+
+
+        var xstr = (new XMLSerializer()).serializeToString(xml);
+        console.debug(xstr);
+        bridgeworks.updateScene(xstr);
+
+        var update = "\<Set target='Label_" + g_labelName + "' text='" + copiedSelectedText + "' show='true'/>";
+        console.debug(update);
+        bridgeworks.updateScene(update);
+    }
+    else if(copiedElement == 1) {
+        load(copiedUrl);
+        var name = copiedUrl.substring(copiedUrl.lastIndexOf("/") + 1, copiedUrl.lastIndexOf("."));
+        count -= 1;
+        name = count.toString() + ". " + name;
+        count += 1;
+        selectedModel.scale.setValueDirect(Size, Size, Size);
+        selectedModel.rotation.setValueDirect(rotX, rotY, rotZ);
+        //selectedModel.color.setValueDirect(R,G,B); There is no setValueDirect for color. Should look into adding that
+        var cmd = "\<Set target='" + name + "'>" + "\<color r= '" + R + "' " + "g= '" + G + "' " + "b= '" + B + "'/>" + "</Set>";
+        bridgeworks.updateScene(cmd);
+    }
 }
 
 function show(name)
