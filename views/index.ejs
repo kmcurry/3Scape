@@ -181,7 +181,15 @@
 
               var label = xml.getElementsByTagName("Label")[0];
               label.attributes["name"].value = "Label_" + name.value;
-              label.attributes["parent"].value = name.value;
+              if(selectedModel)
+              {
+                  label.attributes["parent"].value = modelName;
+                  console.log(modelName)
+              }
+              else {
+                  label.attributes["parent"].value = name.value;
+                  console.log("No Model");
+              }
 
               name = xml.getElementsByTagName("Group")[0].attributes[0];
               name.value = "Group_" + g_labelName;
@@ -293,10 +301,10 @@
                     }
                     window.clearInterval(zoomUpdate);
                     selected = bridgeworks.selector.selectedName.getValueDirect().join("");
-                    console.log(selected);
+                    //console.log(selected);
                     selectedId = bridgeworks.selector.getAttribute("Selected").id;
                     selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
-                    console.log(selectedId);
+                    //console.log(selectedId);
 
                     capture = false;
                 }
@@ -1017,16 +1025,16 @@ function zoomActivate() {
 
           <div id="map-controls">
               <div id="Rotate">                  
-                <span class="shape fa fa-undo" title="Rotate Counter-Clockwise" onclick="rotateNegY();" style="font-size: 2em;"></span>
-                <span class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" onclick="rotatePosY();" style="font-size: 1.8em"></span>
+                <span class="shape fa fa-undo" title="Rotate Counter-Clockwise" onmousedown="rotateNegY();" style="font-size: 2em;"></span>
+                <span class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" onmousedown="rotatePosY();" style="font-size: 1.8em"></span>
               </div>        
               <div id ="Tilt">
-                <span class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onclick="tiltUp();"></span>                  
-                <span class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onclick="tiltDown();"></span>
+                <span class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onmousedown="tiltUp();"></span>
+                <span class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onmousedown="tiltDown();"></span>
               </div>              
               <div id="Zoom">
-                <span class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In" onclick="zoomIn();"></span>
-                <span class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out" onclick="zoomOut();"></span>
+                <span class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In" onmousedown="zoomIn();"></span>
+                <span class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out" onmousedown="zoomOut();"></span>
               </div>
           </div>
 
