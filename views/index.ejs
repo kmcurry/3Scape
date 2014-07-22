@@ -104,6 +104,8 @@
           var ancientLoaded = 0;
           var selected;
           var selectedId;
+          var edit = 0;
+          var selectedText;
 
 
           //Progress Bar ===========================================================
@@ -143,22 +145,32 @@
                 }
                 $( "#dialog" ).dialog("close");
             }
-
+          function editRecord(labelName)
+          {
+              var nicE = new nicEditors.findEditor('title');
+              var title = nicE.getContent();
+              console.log("EDITRECORD: "+labelName);
+              var update = "\<Set target='" + labelName + "' text='" + title + "' show='true'/>";
+              console.debug(update);
+              bridgeworks.updateScene(update);
+              edit = 0;
+              $( "#dialog" ).dialog("close");
+          }
           function createRecord()
           {
-              
+
               adding = true;
               editorOpen = 1;
-              
+
               var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-                          
+
               g_labelCount = g_labelCount + 1;
               g_countStr = g_labelCount.toString();
-              
+
               g_labelName = "L-" + g_countStr;
-              
+
               var xml = loadXMLFile("BwContent/label.xml");
-              
+
               var name = xml.getElementsByTagName("Model")[0].attributes[0];
               name.value = g_labelName;
 
@@ -166,18 +178,21 @@
               pos.attributes["x"].value = pointWorld.x.toString();
               pos.attributes["y"].value = pointWorld.y.toString();
               pos.attributes["z"].value = pointWorld.z.toString();
-              
+
               var label = xml.getElementsByTagName("Label")[0];
               label.attributes["name"].value = "Label_" + name.value;
               label.attributes["parent"].value = name.value;
-              
+
               name = xml.getElementsByTagName("Group")[0].attributes[0];
               name.value = "Group_" + g_labelName;
-              
-              
+
+
               var xstr = (new XMLSerializer()).serializeToString(xml);
               console.debug(xstr);
               bridgeworks.updateScene(xstr);
+              if(g_labelCount > 1) {
+                  var nicE = new nicEditors.findEditor('title').setContent("");
+              }
               $( "#dialog" ).dialog("open");
               //addRecord();
           }
@@ -277,26 +292,11 @@
                         setColorPicker();
                     }
                     window.clearInterval(zoomUpdate);
-                    //     if (selectedModel) {
-                    //         var pos = selectedModel.position.getValueDirect();
-                    //         $("#positionX").spinner("value", pos.x);
-                    //         $("#positionY").spinner("value", pos.y);
-                    //         $("#positionZ").spinner("value", pos.z);
-                            
-                    //         var rot = selectedModel.rotation.getValueDirect();
-                    //         $("#rotationX").spinner("value", rot.x);
-                    //         $("#rotationY").spinner("value", rot.y);
-                    //         $("#rotationZ").spinner("value", rot.z);
-                            
-                    //         $("#scale").spinner("value", selectedModel.scale.getValueDirect().x);
-                    //         $('#objectname').val(selectedModel.name.getValueDirect().join(""))
-                            
-                    //     }
-                    // }
-
                     selected = bridgeworks.selector.selectedName.getValueDirect().join("");
                     console.log(selected);
                     selectedId = bridgeworks.selector.getAttribute("Selected").id;
+                    selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
+                    console.log(selectedId);
 
                     capture = false;
                 }
@@ -375,7 +375,8 @@ function zoomActivate() {
                         }      // c
                     }
                         break;
-                    case 46: //Delete
+
+                    case 46:
                         var slice = selected.slice(6.8);
                             console.log(slice);
                         var cmd = "\<Remove target='"+selected+"'/>";
@@ -384,6 +385,13 @@ function zoomActivate() {
                         var div = document.getElementById(selectedId);
                         bridgeworks.updateScene(cmd2);
                         div.parentNode.removeChild(div);
+                    break;
+
+                    case 187: //Edit Label(=)
+                        edit = 1;
+                        new nicEditors.findEditor('title').setContent(selectedText);
+                        $( "#dialog" ).dialog("open");
+                    break;
 
                     case 'V'.charCodeAt(0):
                     {      // v
@@ -1094,15 +1102,13 @@ function zoomActivate() {
       </div>
       <!-- Progress Bar -->
 
-
       <div id="dialog" title="Please enter your description for this item below">
           <form method="post"> <!--id="my-form" enctype="multipart/form-data" -->
               <textarea name="title" id="title" style="width:100%"></textarea>
               <!-- <input type="text" id="title">-->
-              <p><input type="button" value="Submit" onclick="addRecord()"></p>
+              <p><input id="submitLabel" type="submit" value="Submit"></p>
           </form>
       </div>
-
 
     
     <!--<video controls="controls" src="http://localhost/bwjs/BwContent/images/quake.mpg">
@@ -1334,7 +1340,16 @@ function zoomActivate() {
                    }
                 });
 
-                
+                $("#submitLabel").click(function(){
+                    if(edit == 0)
+                    {
+                        addRecord();
+                    }
+                    else if(edit==1)
+                    {
+                        editRecord(selected);
+                    }
+                });
                 $( "#dialog" ).dialog({
                     autoOpen: false,
                     modal: true
