@@ -353,14 +353,11 @@ function loadModel(url)
     t.setAttribute("onClick", "trashModel('" + name + "');");
     nameColumn.setAttribute("class", "col-md-9");
     trashColumn.setAttribute("class", "col-md-3");
-    // trashColumn.innerHTML = "<span class='shape fa fa-trash-o' style='margin-top:3px;' title='Remove' id='trash'" + name + "></span>";
     nameColumn.appendChild(a);
     trashColumn.appendChild(t);
     row.appendChild(nameColumn);
     row.appendChild(trashColumn);
     objectPanel.appendChild(row);
-    //var br = document.createElement("br");
-   // objectPanel.appendChild(br);
     
     var xml = loadXMLFile("BwContent/model.xml");
     
