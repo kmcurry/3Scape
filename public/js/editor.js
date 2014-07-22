@@ -350,13 +350,13 @@ function loadModel(url)
     a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
     a.innerHTML = name; // <a>INNER_TEXT</a>    
     a.setAttribute("id", name);
-    a.setAttribute("Title", "Jump to Object");
+    a.setAttribute("Title", "Select Object");
     a.style.cursor="pointer"; 
     a.style.cursor="hand";
     f = document.createElement('span');
     f.setAttribute("id", "find" + name)
     f.setAttribute("class", 'shape fa fa-search');
-    f.setAttribute("Title", 'Remove');
+    f.setAttribute("Title", 'Jump to Object');
     f.setAttribute("onClick", "locate('" + name + "');");
     t = document.createElement('span');
     t.setAttribute("id", "trash" + name)
