@@ -90,7 +90,7 @@
           var cow = "Animals/objects/Cow.lwo";
           var church = "Barnville/objects/Church.lwo";
           var medHV = "Vehicles/objects/Humvee_Medical.lwo";
-          var currentObj = "Current Object: X";
+          var currentObj = "Target: X";
           var editorOpen = 0;
           var slideCount = 1;
           var numSlides = 10;
@@ -641,7 +641,15 @@ function zoomActivate() {
                         </div>
                       </div>
                       <div class="tab-pane" id="helpGuide">
-                        Make things, break things, have fun.
+                        <h3>
+                          With an object selected, click the
+                          <button type="button" class="btn btn-info" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>
+                          </button>
+                          Camera Mode button to switch to 
+                          <button type="button" class="btn btn-danger" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-anchor fa-lg" style="font-size:2em;"></span>
+                          </button>
+                          Object Mode, changing the mouse controls to manipulate the object.
+                        </h3>
                       </div>                                            
                     </div>
                     
@@ -760,7 +768,7 @@ function zoomActivate() {
                           </ul>
                       </li>
                       <!-- As wide in px as the longest object name to avoid displacement bug. More elegant solution? -->
-                      <li><p class="navbar-text" id="Current_Object" style="width: 240px">Current Object: X</p></li>
+                      <li><p class="navbar-text" id="Current_Object" style="width: 200px">Target: X</p></li>
                       
                       <!-- <li>
                         <div class="navbar-form" style="width:200px;">
@@ -922,13 +930,27 @@ function zoomActivate() {
                           <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span> 
                             <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
                             <ul class="nav nav-tabs" style="clear:both">
-                                <li class="active"><a href="#slides" data-toggle="tab">Slides</a></li>
-                                <li><a href="#object-list" data-toggle="tab">Objects</a></li>
-                                <li><a href="#animate" data-toggle="tab">Animate</a></li>                                
+                              <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
+                              <li><a href="#animate" data-toggle="tab">Animate</a></li>
+                              <li><a href="#slides" data-toggle="tab">Slides</a></li>
                              </ul>
                                 <div class="tab-content">
+                                    <div class="tab-pane active" id="object-list">
+                                      <ul class="nav nav-sidebar">
+                                            <!--This is where the objects get loaded into the list-->
+                                      </ul>
+                                    </div>
+                                    <div class="tab-pane" id="animate">
+                                        <ul class="nav nav-sidebar">
+                                            <!--This is where the animations get loaded into the list-->
+                                        </ul>
+                                        
+                                        <ul class="nav nav-sidebar">
+                                            
+                                        </ul>                     
+                                    </div>
                                     <!--BEGIN PROJECT SCOPE-->
-                                    <div class="tab-pane active" id="slides" ng-controller="projectController">                              
+                                    <div class="tab-pane" id="slides" ng-controller="projectController">                              
                                         <ul class="nav nav-sidebar" id="slidePanel">
                                           <!-- <div ng-show="global.isSignedIn()">
                                             My ID: {{ global.currentUser()._id }}
@@ -954,21 +976,7 @@ function zoomActivate() {
                                           <i ng-hide="global.isSignedIn()">Login to see Project interface</i> -->
                                         </ul>
                                     </div>
-                                    <!--END PROJECT SCOPE-->
-                                    <div class="tab-pane" id="object-list">
-                                      <ul class="nav nav-sidebar">
-                                            <!--This is where the objects get loaded into the list-->
-                                      </ul>
-                                    </div>                                    
-                                    <div class="tab-pane" id="animate">
-                                        <ul class="nav nav-sidebar">
-                                            <!--This is where the animations get loaded into the list-->
-                                        </ul>
-                                        
-                                        <ul class="nav nav-sidebar">
-                                            
-                                        </ul>                     
-                                    </div>
+                                    <!--END PROJECT SCOPE-->                                                                  
                                 </div>
                         </div>
                 </div>
@@ -1081,7 +1089,7 @@ function zoomActivate() {
             <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();">
                   <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>
             </button>                  
-            <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Current Object: X</button>            
+            <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Target: X</button>            
             <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="height:42px;">
               <span class="modeButton fa fa-video-camera fa-2x toggleGlyph"></span>
             </button>

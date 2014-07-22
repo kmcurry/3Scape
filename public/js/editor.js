@@ -13,8 +13,8 @@ function setObject(Object)
 {
     var p = document.getElementById('Current_Object');
     var q = document.getElementById('Current_Object2');
-    p.innerHTML = "Current Object: " + Object;
-    q.innerHTML = "Current Object: " + Object;
+    p.innerHTML = "Target: " + Object;
+    q.innerHTML = "Target: " + Object;
 }
 
 function copy()
@@ -50,6 +50,29 @@ function switchModes()
     console.log(sceneInspector.enabled.getValueDirect());
 
 }
+function trashModel(name)
+{
+    var c = "\<Remove target='" + name + "'/>"
+    bridgeworks.updateScene(c);
+    console.log(name);
+
+    var panel = document.getElementById("object-list");
+    var link = document.getElementById("row" + name);
+    panel.removeChild(link);
+}
+
+// function trashAnimation(name)
+// {
+//         var c = "\<Remove target='" + name + "'/>"
+//         bridgeworks.updateScene(c);
+//         console.log(name);
+
+//         var panel = document.getElementById("animate");
+//         var link = document.getElementById("row" + name);
+//         panel.removeChild(link);
+    
+// }
+
 function cut()
 {
     if (selectedModel) {
@@ -60,7 +83,7 @@ function cut()
         console.log(name);
 
         var panel = document.getElementById("object-list");
-        var link = document.getElementById(name);
+        var link = document.getElementById("row" + name);
         panel.removeChild(link);
     }
 }
@@ -311,13 +334,30 @@ function loadModel(url)
     setObject(name);
 
     var objectPanel = document.getElementById("object-list");
+    var row = document.createElement('div');
+    row.setAttribute("id", "row" + name)
+    var nameColumn = document.createElement('div');
+    var trashColumn = document.createElement('div');
     a = document.createElement('a');
     a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
+    a.innerHTML = name; // <a>INNER_TEXT</a>    
     a.setAttribute("id", name);
-    a.innerHTML = name + "<br>"; // <a>INNER_TEXT</a>
-    objectPanel.appendChild(a); // Append the link to the div
-    //var br = document.createElement("br");
-   // objectPanel.appendChild(br);
+    a.setAttribute("Title", "Jump to Object");
+    a.style.cursor="pointer"; 
+    a.style.cursor="hand";
+    t = document.createElement('span');
+    t.setAttribute("id", "trash" + name)
+    t.setAttribute("class", 'shape fa fa-trash-o');
+    t.setAttribute("style", "margin-top:3px;");
+    t.setAttribute("Title", 'Remove');
+    t.setAttribute("onClick", "trashModel('" + name + "');");
+    nameColumn.setAttribute("class", "col-md-9");
+    trashColumn.setAttribute("class", "col-md-3");
+    nameColumn.appendChild(a);
+    trashColumn.appendChild(t);
+    row.appendChild(nameColumn);
+    row.appendChild(trashColumn);
+    objectPanel.appendChild(row);
     
     var xml = loadXMLFile("BwContent/model.xml");
     
@@ -354,6 +394,7 @@ function loadModel(url)
     
     var panel = document.getElementById("panel-curr-scene");
     //panel.appendChild(p);
+    console.log(name);
     
     
 }
@@ -371,16 +412,23 @@ function loadMotion(url)
 
     var animationPanel = document.getElementById("animate");
     var row = document.createElement('div');
+    row.setAttribute("id", "row" + name)
     var nameColumn = document.createElement('div');
     var trashColumn = document.createElement('div');
     var p = document.createElement('p');
     //a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
     p.setAttribute("id", name);
+    t = document.createElement('span');
+    t.setAttribute("id", "trash" + name)
+    t.setAttribute("class", 'shape fa fa-trash-o');
+    t.setAttribute("style", "margin-top:3px;");
+    t.setAttribute("Title", 'Remove');
+    t.setAttribute("onClick", "trashAnimation('" + name + "');");
     nameColumn.setAttribute("class", "col-md-9");
     trashColumn.setAttribute("class", "col-md-3");
     p.innerHTML = name; // <a>INNER_TEXT</a>
-    trashColumn.innerHTML = "<span class='shape fa fa-trash-o' style='margin-top:3px;' title='Remove'></span>";
     nameColumn.appendChild(p);
+    trashColumn.appendChild(t);
     row.appendChild(nameColumn);
     row.appendChild(trashColumn);
     animationPanel.appendChild(row); // Append the link to the div
