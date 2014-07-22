@@ -347,15 +347,16 @@ function loadModel(url)
     var findColumn = document.createElement('div');
     var trashColumn = document.createElement('div');
     a = document.createElement('a');
-    a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
-    a.innerHTML = name; // <a>INNER_TEXT</a>    
+    a.innerHTML = name;
     a.setAttribute("id", name);
+    a.setAttribute("onclick", "setModel('"+name+"');"); // Instead of calling setAttribute    
     a.setAttribute("Title", "Select Object");
     a.style.cursor="pointer"; 
     a.style.cursor="hand";
     f = document.createElement('span');
     f.setAttribute("id", "find" + name)
     f.setAttribute("class", 'shape fa fa-search');
+    f.setAttribute("style", "margin-top:3px;");
     f.setAttribute("Title", 'Jump to Object');
     f.setAttribute("onClick", "locate('" + name + "');");
     t = document.createElement('span');
@@ -435,7 +436,6 @@ function loadMotion(url)
     var nameColumn = document.createElement('div');
     var trashColumn = document.createElement('div');
     var p = document.createElement('p');
-    //a.setAttribute("onclick", "locate('" + name + "');setModel('"+name+"');"); // Instead of calling setAttribute
     p.setAttribute("id", name);
     t = document.createElement('span');
     t.setAttribute("id", "trash" + name)
@@ -510,8 +510,11 @@ function setModel()
 function setModel(name)
 {
     var xml = "\<Set target='" + name + "'/>";
+    selectedModel = bridgeworks.registry.find(name);
     console.log(xml);
+    setColorPicker();
     bridgeworks.updateScene(xml);
+    setObject(name);
 }
 function paste()
 {
