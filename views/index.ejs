@@ -831,10 +831,15 @@ function zoomActivate() {
                         </div>
                       </li>
                       <li>
-                        <div class="dropdown">
-                          <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
-                              Add Label                              
+                        <div class="btn-group dropdown">
+                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                            Add Label <span class="caret"></span>
                           </button>
+                          <ul class="dropdown-menu">
+                            <li><a href="#" onclick="createRecord();">Regular</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="">Balloon Tip</a></li>
+                          </ul>
                         </div>
                       </li>
                       <li>
@@ -1066,9 +1071,16 @@ function zoomActivate() {
                   </li>
                 </ul>
               </div>
-              <button type="button" class="btn btn-default" id="dLabel" role="button" onclick="createRecord();" style="font-size:1.4em;">
-                  Add Label                              
-              </button>            
+              <div class="btn-group dropup">
+                <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                  Add Label <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">                
+                  <li><a href="#" onclick="createRecord();">Regular</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#" onclick="">Balloon Tip</a></li>
+                </ul>
+              </div>
               <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();">
                     <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>
               </button>
