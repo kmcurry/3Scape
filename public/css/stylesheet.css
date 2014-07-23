@@ -107,24 +107,20 @@ body.modal-open {
 
 }
 
+#toolbar-wrapper{
+  text-align: center;
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+  margin: 0 0 0 -50%;
+  left:50%;
+}
 #present-toolbar {   
     z-index: 2000;
     display: none; 
-    position:fixed; 
-    bottom: 30px; 
-    left:25%;
-    right:25%;
-    width:100%;
-    /*left:500px; */
-    /*background-color:#5cb85c; */
-    /*height:50px; 
-    width:1100px; */
-    /*border-radius: 10px; */
-    /*padding: 13px;*/
-    /*text-align: center;*/
 }
-/*Dropdown within dropdown styling */
 
+/*Dropdown within dropdown styling */
 .dropdown-submenu {
 position: relative;
 }

@@ -12,10 +12,14 @@
     <!-- jquery stuff -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <!--<script src="js/jquery-1.10.2.min.js"></script>-->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
     <script src="./js/BwHelper.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <!--<script src="js/jquery-1.10.2.min.js"></script>-->
+      <script src="js/jquery.qtip.js"></script>
+      <link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
     <script src="js/nicEdit.js"></script>
     <!-- jsColor Color Picker -->
     <script type="text/javascript" src="jscolor/jscolor.js"></script>
@@ -407,6 +411,49 @@ function zoomActivate() {
                         $( "#dialog" ).dialog("open");
                     break;
 
+                    case 70: //F placeholder for making labels
+
+                            console.log("balloon");
+                        var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+
+                        g_labelCount = g_labelCount + 1;
+                        g_countStr = g_labelCount.toString();
+
+                        g_labelName = "L-" + g_countStr;
+
+                        var xml = loadXMLFile("BwContent/BalloonTipLabel.xml");
+
+                        var name = xml.getElementsByTagName("Model")[0].attributes[0];
+                        name.value = g_labelName;
+
+                        var pos = xml.getElementsByTagName("position")[0];
+                        pos.attributes["x"].value = pointWorld.x.toString();
+                        pos.attributes["y"].value = pointWorld.y.toString();
+                        pos.attributes["z"].value = pointWorld.z.toString();
+
+                        var label = xml.getElementsByTagName("BalloonTipLabel")[0];
+                        label.attributes["name"].value = "Label_" + name.value;
+                        if(selectedModel)
+                        {
+                            label.attributes["parent"].value = modelName;
+                            console.log(modelName)
+                        }
+                        else {
+                            label.attributes["parent"].value = name.value;
+                            console.log("No Model");
+                        }
+
+                        name = xml.getElementsByTagName("Group")[0].attributes[0];
+                        name.value = "Group_" + g_labelName;
+
+
+                        var xstr = (new XMLSerializer()).serializeToString(xml);
+                        console.debug(xstr);
+                        bridgeworks.updateScene(xstr);
+                        var cmd = "\<Remove target='"+g_labelName+"'/>";
+                        bridgeworks.updateScene(cmd);
+                    break;
+
                     case 'V'.charCodeAt(0):
                     {      // v
                         if (e.metaKey || e.ctrlKey) {
@@ -667,13 +714,13 @@ function zoomActivate() {
                       </div>
                       <div class="tab-pane" id="helpGuide">
                         <h3>
-                          With an object selected, click the
+                          Click the
                           <button type="button" class="btn btn-info" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>
                           </button>
                           Camera Mode button to switch to 
                           <button type="button" class="btn btn-danger" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-anchor fa-lg" style="font-size:2em;"></span>
                           </button>
-                          Object Mode, changing the mouse controls to manipulate the object.
+                          Object Mode, changing the mouse controls to manipulate an object by clicking it.
                         </h3>
                       </div>                                            
                     </div>
@@ -831,10 +878,15 @@ function zoomActivate() {
                         </div>
                       </li>
                       <li>
-                        <div class="dropdown">
-                          <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
-                              Add Label                              
+                        <div class="btn-group dropdown">
+                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                            Add Label <span class="caret"></span>
                           </button>
+                          <ul class="dropdown-menu">
+                            <li><a href="#" onclick="createRecord();">Regular</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="">Balloon Tip</a></li>
+                          </ul>
                         </div>
                       </li>
                       <li>
@@ -1007,91 +1059,99 @@ function zoomActivate() {
               </div>
           </div>
 
-          <div id="present-toolbar">
-            <div class="btn-group dropup">
-              <button class="btn btn-default btnShape">
-                <span class="shape fa fa-cube fa-2x" title="Cube" onclick="load(cube);"></span>
-                <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
-                <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
-                <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
-                <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>  
-              </button>    
-              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
-              <ul class="dropdown-menu">
-                <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
-                <li class="divider"></li>
-                <li style="margin-left: 8px">
-                  <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
-                  <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
-                  <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
-                  <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
-                  <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
-                </li>                          
-              </ul>
-            </div>
-            <div class="btn-group dropup keep-open" style="margin-left:3px;">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:1.4em;">
-                Color <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu color-dropdown" role="menu">
-                <!-- Color Picker Script - ColorCodeHex.COM -->
-                <script type="text/javascript">
-                function updateInfo(color) {
-                  document.getElementById('info-r').value = color.rgb[0];
-                  document.getElementById('info-g').value = color.rgb[1];
-                  document.getElementById('info-b').value = color.rgb[2];
-                }
-                </script>
+          <div id="toolbar-wrapper" style="text-align:center;">
+            <div id="present-toolbar">
+              <div class="btn-group dropup">
+                <button class="btn btn-default btnShape">
+                  <span class="shape fa fa-cube fa-2x" title="Cube" onclick="load(cube);"></span>
+                  <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
+                  <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
+                  <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
+                  <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>  
+                </button>    
+                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
+                  <li class="divider"></li>
+                  <li style="margin-left: 8px">
+                    <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
+                    <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
+                    <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
+                    <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
+                    <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
+                  </li>                          
+                </ul>
+              </div>
+              <div class="btn-group dropup keep-open" style="margin-left:3px;">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:1.4em;">
+                  Color <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu color-dropdown" role="menu">
+                  <!-- Color Picker Script - ColorCodeHex.COM -->
+                  <script type="text/javascript">
+                  function updateInfo(color) {
+                    document.getElementById('info-r').value = color.rgb[0];
+                    document.getElementById('info-g').value = color.rgb[1];
+                    document.getElementById('info-b').value = color.rgb[2];
+                  }
+                  </script>
 
-                <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
-                <input id="info-r" size="2" type="hidden"/>
-                <input id="info-g" size="2" type="hidden"/>
-                <input id="info-b" size="2" type="hidden"/>
-              </ul>
-            </div>
-          
-            <div class="btn-group dropup">
-              <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
-                Animate <span class="caret"></span>
+                  <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
+                  <input id="info-r" size="2" type="hidden"/>
+                  <input id="info-g" size="2" type="hidden"/>
+                  <input id="info-b" size="2" type="hidden"/>
+                </ul>
+              </div>
+            
+              <div class="btn-group dropup">
+                <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                  Animate <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">                
+                  <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
+                  <li class="divider"></li>
+                  <li style="margin-left:8px;">
+                    <span class="shape fa fa-expand fa-2x" title="Scale" onclick="load(Scal);"></span>
+                    <span class="shape fa fa-refresh fa-2x" title="Spin" onclick="load(Spin);"></span>
+                    <span class="shape fa fa-eye-slash fa-2x" title="Dissolve" onclick="load(Diss);"></span>
+                    <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
+                  </li>
+                </ul>
+              </div>
+              <div class="btn-group dropup">
+                <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                  Add Label <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">                
+                  <li><a href="#" onclick="createRecord();">Regular</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#" onclick="">Balloon Tip</a></li>
+                </ul>
+              </div>
+              <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();">
+                    <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>
               </button>
-              <ul class="dropdown-menu">                
-                <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
-                <li class="divider"></li>
-                <li style="margin-left:8px;">
-                  <span class="shape fa fa-expand fa-2x" title="Scale" onclick="load(Scal);"></span>
-                  <span class="shape fa fa-refresh fa-2x" title="Spin" onclick="load(Spin);"></span>
-                  <span class="shape fa fa-eye-slash fa-2x" title="Dissolve" onclick="load(Diss);"></span>
-                  <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
-                </li>
-              </ul>
+              <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();">
+                    <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>
+              </button>                      
+              <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();">
+                    <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>
+              </button>                  
+              <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Target: X</button>            
+              <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="height:42px;">
+                <span class="modeButton fa fa-video-camera fa-2x toggleGlyph"></span>
+              </button>
+              <button type="button" class="btn btn-purple navbar-btn toggleController" id="pMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="height:42px;">
+                <span class="toggleGlyph fa fa-compass fa-2x"></span>
+              </button>
+              <button type="button" class="btn btn-success navbar-btn" id="pFullscreen" role="button" onclick="closeFullScreen();" title="Exit Fullscreen">
+                <span class="glyphicon glyphicon-resize-small" style="font-size:2em;"></span>
+              </button>                
+              <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
+                <span class="fa fa-question-circle fa-2x"></span>
+              </button>                      
             </div>
-            <button type="button" class="btn btn-default" id="dLabel" role="button" onclick="createRecord();" style="font-size:1.4em;">
-                Add Label                              
-            </button>            
-            <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();">
-                  <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>
-            </button>
-            <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();">
-                  <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>
-            </button>                      
-            <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();">
-                  <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>
-            </button>                  
-            <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499">Target: X</button>            
-            <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="height:42px;">
-              <span class="modeButton fa fa-video-camera fa-2x toggleGlyph"></span>
-            </button>
-            <button type="button" class="btn btn-purple navbar-btn toggleController" id="pMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="height:42px;">
-              <span class="toggleGlyph fa fa-compass fa-2x"></span>
-            </button>
-            <button type="button" class="btn btn-success navbar-btn" id="pFullscreen" role="button" onclick="closeFullScreen();" title="Exit Fullscreen">
-              <span class="glyphicon glyphicon-resize-small" style="font-size:2em;"></span>
-            </button>                
-            <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
-              <span class="fa fa-question-circle fa-2x"></span>
-            </button>                      
           </div>
-
 
       <!-- Progress Bar -->
       <div class="clickable" id="click" style="display:none">
