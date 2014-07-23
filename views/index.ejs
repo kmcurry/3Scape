@@ -12,10 +12,14 @@
     <!-- jquery stuff -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <!--<script src="js/jquery-1.10.2.min.js"></script>-->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
     <script src="./js/BwHelper.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <!--<script src="js/jquery-1.10.2.min.js"></script>-->
+      <script src="js/jquery.qtip.js"></script>
+      <link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
     <script src="js/nicEdit.js"></script>
     <!-- jsColor Color Picker -->
     <script type="text/javascript" src="jscolor/jscolor.js"></script>
@@ -405,6 +409,49 @@ function zoomActivate() {
                         edit = 1;
                         new nicEditors.findEditor('title').setContent(selectedText);
                         $( "#dialog" ).dialog("open");
+                    break;
+
+                    case 70: //F placeholder for making labels
+
+                            console.log("balloon");
+                        var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+
+                        g_labelCount = g_labelCount + 1;
+                        g_countStr = g_labelCount.toString();
+
+                        g_labelName = "L-" + g_countStr;
+
+                        var xml = loadXMLFile("BwContent/BalloonTipLabel.xml");
+
+                        var name = xml.getElementsByTagName("Model")[0].attributes[0];
+                        name.value = g_labelName;
+
+                        var pos = xml.getElementsByTagName("position")[0];
+                        pos.attributes["x"].value = pointWorld.x.toString();
+                        pos.attributes["y"].value = pointWorld.y.toString();
+                        pos.attributes["z"].value = pointWorld.z.toString();
+
+                        var label = xml.getElementsByTagName("BalloonTipLabel")[0];
+                        label.attributes["name"].value = "Label_" + name.value;
+                        if(selectedModel)
+                        {
+                            label.attributes["parent"].value = modelName;
+                            console.log(modelName)
+                        }
+                        else {
+                            label.attributes["parent"].value = name.value;
+                            console.log("No Model");
+                        }
+
+                        name = xml.getElementsByTagName("Group")[0].attributes[0];
+                        name.value = "Group_" + g_labelName;
+
+
+                        var xstr = (new XMLSerializer()).serializeToString(xml);
+                        console.debug(xstr);
+                        bridgeworks.updateScene(xstr);
+                        var cmd = "\<Remove target='"+g_labelName+"'/>";
+                        bridgeworks.updateScene(cmd);
                     break;
 
                     case 'V'.charCodeAt(0):
