@@ -380,6 +380,80 @@ function zoomActivate() {
             }
           };
 
+          function objectLeft(e)
+          {
+            // var objectInspector = bridgeworks.registry.find("ObjectInspector");
+            // objectInspector.enabled.setValueDirect(true);
+            // objectInspector.translationDelta.setValueDirect(-100,0,0);
+            // objectInspector.evaluate();
+            // bridgeworks.updateScene();
+            var cmd;
+            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+            cmd += "\<position x='" + (selectedModel.position.values[0]-=1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
+            cmd += "\</Set>";
+            console.log(selectedModel.position.getValueDirect());
+            bridgeworks.updateScene(cmd);
+            //previousSlide();
+          }
+
+          function objectRight(e)
+          {
+            // This way will activate the keys depending on the direction the camera is facing. But will need some refactoring.
+            // var objectInspector = bridgeworks.registry.find("ObjectInspector");
+            // objectInspector.enabled.setValueDirect(true);
+            // objectInspector.translationDelta.setValueDirect(100,0,0);
+            // //objectInspector.evaluate();
+            // bridgeworks.updateScene();
+            var cmd;
+            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+            cmd += "\<position x='" + (selectedModel.position.values[0] += 1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
+            cmd += "\</Set>";
+            console.log(selectedModel.position.getValueDirect());
+            bridgeworks.updateScene(cmd);
+
+                //nextSlide();
+          }
+
+          function objectDown(e)
+          {
+            var cmd;
+            if (e.shiftKey || e.ctrlKey) {
+              cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+              cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]-= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
+              cmd += "\</Set>";
+              console.log(selectedModel.position.getValueDirect());
+              bridgeworks.updateScene(cmd);
+            }
+            else {
+              cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+              cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= 1) + "'/>"
+              cmd += "\</Set>";
+              console.log(selectedModel.position.getValueDirect());
+              bridgeworks.updateScene(cmd);
+            //nextSlide();            
+            }
+          }
+
+          function objectUp(e)
+          {
+            var cmd;
+            if (e.shiftKey || e.ctrlKey) {
+              cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+              cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]+= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
+              cmd += "\</Set>";
+              console.log(selectedModel.position.getValueDirect());
+              bridgeworks.updateScene(cmd);
+            }
+            else {
+              cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+              cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += 1) + "'/>"
+              cmd += "\</Set>";
+              console.log(selectedModel.position.getValueDirect());
+              bridgeworks.updateScene(cmd);
+            }
+            //previousSlide();            
+          }
+
           function handleKey(e)
           {
             if(editorOpen == 0) {
@@ -464,72 +538,19 @@ function zoomActivate() {
                         }
                     }
                         break;
-                    case 39:
-                            //This way will activate the keys depending on the direction the camera is facing. But will need some refactoring.
-//                        var objectInspector = bridgeworks.registry.find("ObjectInspector");
-//                            objectInspector.enabled.setValueDirect(true);
-//                            objectInspector.translationDelta.setValueDirect(100,0,0);
-//                           //objectInspector.evaluate();
-//                            bridgeworks.updateScene();
-                     var cmd;
-                            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                            cmd += "\<position x='" + (selectedModel.position.values[0] += 1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
-                            cmd += "\</Set>";
-                            console.log(selectedModel.position.getValueDirect());
-                            bridgeworks.updateScene(cmd);
-
-                        //nextSlide();
-                        break;
-                    case 37:
-//                        var objectInspector = bridgeworks.registry.find("ObjectInspector");
-//                        objectInspector.enabled.setValueDirect(true);
-//                        objectInspector.translationDelta.setValueDirect(-100,0,0);
-//                        //objectInspector.evaluate();
-//                        bridgeworks.updateScene();
-                        var cmd;
-                        cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                        cmd += "\<position x='" + (selectedModel.position.values[0]-=1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
-                        cmd += "\</Set>";
-                        console.log(selectedModel.position.getValueDirect());
-                        bridgeworks.updateScene(cmd);
-                        //previousSlide();
+                    case 39: //right
+                        objectRight(e);
                         break;
 
-                    case 40:
-                        var cmd;
-                        if (e.shiftKey || e.ctrlKey) {
-                                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]-= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
-                                cmd += "\</Set>";
-                                console.log(selectedModel.position.getValueDirect());
-                                bridgeworks.updateScene(cmd);
-                            }
-                            else {
-                            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= 1) + "'/>"
-                            cmd += "\</Set>";
-                            console.log(selectedModel.position.getValueDirect());
-                            bridgeworks.updateScene(cmd);
-                            //nextSlide();
-                        }
+                    case 37: //left
+                        objectLeft(e);
                         break;
-                    case 38:
-                        var cmd;
-                        if (e.shiftKey || e.ctrlKey) {
-                            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]+= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
-                            cmd += "\</Set>";
-                            console.log(selectedModel.position.getValueDirect());
-                            bridgeworks.updateScene(cmd);
-                        }
-                        else {
-                            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += 1) + "'/>"
-                            cmd += "\</Set>";
-                            console.log(selectedModel.position.getValueDirect());
-                            bridgeworks.updateScene(cmd);
-                        }
-                        //previousSlide();
+
+                    case 40: //down
+                        objectDown(e);                  
+                        break;
+                    case 38: //up
+                        objectUp(e);
                         break;
                     case 'X'.charCodeAt(0):
                     {      // x
