@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<Update>
+    <Group name="foo">
+        <Set target="NodeMgr" sgPointer="Root"/>
+        <Model name="foo" url="objects/cube.lwo">
+            <position x="0" y="0" z="0"/>
+            <scale x="0.02" y="0.02" z="0.02"/>
+            <color r="0" g="1" b="0"/>
+        </Model>
+        <BalloonTipLabel name="bar" parent="foo" show="true">
+            <balloonTipLabelStyle>
+                <htmlLabelStyle>
+                    <html><![CDATA[<em>Test</em>]]></html>
+                </htmlLabelStyle>
+            </balloonTipLabelStyle>
+        </BalloonTipLabel>
+    </Group>
+</Update>
