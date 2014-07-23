@@ -136,7 +136,8 @@
                     var update = "\<Set target='Label_" + g_labelName + "' text='" + title + "' show='true'/>";
                     console.debug(update);
                     bridgeworks.updateScene(update);
-
+                    var cmd = "\<Remove target='"+g_labelName+"'/>";
+                    bridgeworks.updateScene(cmd);
                     // This flag is checked on dialog close. If true on close
                     // then there are some things to undo.
                     // If we made it this far then there is nothing to undo.
@@ -145,6 +146,7 @@
                 }
                 $( "#dialog" ).dialog("close");
             }
+
           function editRecord(labelName)
           {
               var nicE = new nicEditors.findEditor('title');
@@ -153,9 +155,11 @@
               var update = "\<Set target='" + labelName + "' text='" + title + "' show='true'/>";
               console.debug(update);
               bridgeworks.updateScene(update);
+              console.log(g_labelName);
               edit = 0;
               $( "#dialog" ).dialog("close");
           }
+
           function createRecord()
           {
 
@@ -291,6 +295,7 @@
                 case "click": {
                     //Dishing out the event client x and y cordinates of the mouse for testing purposes
                     // if (!e.metaKey && !e.ctrlKey) {
+                    window.clearInterval(zoomUpdate);
                     selectedModel = bridgeworks.selector.selections.models[0];
                     if(selectedModel) {
                         modelName = selectedModel.name.getValueDirect().join("");
@@ -299,12 +304,13 @@
                         setObject(name);
                         setColorPicker();
                     }
-                    window.clearInterval(zoomUpdate);
-                    selected = bridgeworks.selector.selectedName.getValueDirect().join("");
-                    //console.log(selected);
-                    selectedId = bridgeworks.selector.getAttribute("Selected").id;
-                    selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
-                    //console.log(selectedId);
+                    else {
+                        selected = bridgeworks.selector.selectedName.getValueDirect().join("");
+                        //console.log(selected);
+                        selectedId = bridgeworks.selector.getAttribute("Selected").id;
+                        selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
+                        //console.log(selectedId);
+                    }
 
                     capture = false;
                 }
@@ -1329,8 +1335,12 @@ function zoomActivate() {
                 {
                    if(e.keyCode == 13)
                    {
-                       if ($("#dialog").dialog( "isOpen" )===true) {
+                       if ($("#dialog").dialog( "isOpen" )===true && edit == 0) {
                            addRecord();
+                           console.log("Not editting");
+                       }
+                       else{
+                           editRecord(selected);
                        }
                        return false;
                    }
