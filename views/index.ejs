@@ -825,10 +825,15 @@ function zoomActivate() {
                         </div>
                       </li>
                       <li>
-                        <div class="dropdown">
-                          <button type="button" class="btn btn-default navbar-btn" id="dLabel" role="button" onclick="createRecord();" >
-                              Add Label                              
+                        <div class="btn-group dropdown">
+                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                            Add Label <span class="caret"></span>
                           </button>
+                          <ul class="dropdown-menu">
+                            <li><a href="#" onclick="createRecord();">Regular</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="">Balloon Tip</a></li>
+                          </ul>
                         </div>
                       </li>
                       <li>
