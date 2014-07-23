@@ -1089,6 +1089,21 @@ function zoomActivate() {
               </div>
           </div>
 
+          <div id="object-controls">
+              <div>                  
+                <span class="shape fa fa-angle-double-up" title="Move Object Up" onclick="objectUp();" style="font-size: 2em;"></span>
+                <span class="shape fa fa-angle-double-down" style="font-size:2em" title="Move Object Down" onclick="objectDown();"></span>
+              </div>        
+              <div>                
+                <span class="shape fa fa-angle-up" style="font-size:2em" title="Move Object Forward" onclick="objectForward();"></span>
+                <span class="shape fa fa-angle-down" style="font-size:2em" title="Move Object Backward" onclick="objectBackward();"></span>
+              </div>              
+              <div>
+                <span class="shape fa fa-angle-left" style="font-size:2em" title="Move Object Left" onclick="objectLeft();"></span>
+                <span class="shape fa fa-angle-right" style="font-size:2em" title="Move Object Right" onclick="objectRight();"></span>
+              </div>
+          </div>
+
           <div id="toolbar-wrapper" style="text-align:center;">
             <div id="present-toolbar">
               <div class="btn-group dropup">
@@ -1562,6 +1577,7 @@ $(function () {
   };
   var toggleMap = function(){
     $('#map-controls').fadeToggle();
+    $('#object-controls').fadeToggle();
   }
 </script>
       

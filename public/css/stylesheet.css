@@ -74,6 +74,19 @@ body.modal-open {
     z-index: 2000;
 }
 
+#object-controls {
+    text-align: center;
+    position:fixed;
+    right: 2%;
+    top: 50%;
+    background-color:#000;    
+    border-radius: 10px;
+    padding: 13px;
+    color: rgb(71, 169, 211);
+    opacity: 0.4;
+    z-index: 2000; 
+}
+
 #rotate{
     display: block;
 /*    font-size: 1.4em;*/
