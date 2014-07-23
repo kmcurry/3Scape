@@ -548,7 +548,15 @@ function paste()
 
         var label = xml.getElementsByTagName("Label")[0];
         label.attributes["name"].value = "Label_" + name.value;
-        label.attributes["parent"].value = name.value;
+        if(selectedModel)
+        {
+            label.attributes["parent"].value = modelName;
+            console.log(modelName)
+        }
+        else {
+            label.attributes["parent"].value = name.value;
+            console.log("No Model");
+        }
 
         name = xml.getElementsByTagName("Group")[0].attributes[0];
         name.value = "Group_" + g_labelName;
@@ -561,6 +569,9 @@ function paste()
         var update = "\<Set target='Label_" + g_labelName + "' text='" + copiedSelectedText + "' show='true'/>";
         console.debug(update);
         bridgeworks.updateScene(update);
+
+        var cmd = "\<Remove target='"+g_labelName+"'/>";
+        bridgeworks.updateScene(cmd);
     }
     else if(copiedElement == 1) {
         load(copiedUrl);
