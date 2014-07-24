@@ -6,9 +6,14 @@ function zoomOut()
     //Should be moved to a config file
     var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
     var totalDelta = sceneInspec.panDelta.values[2];
+    var distance = sceneInspec.pivotDistance.getValueDirect();
     if(totalDelta > 0)
     {
-        sceneInspec.panDelta.values[2]=-15;
+        if((distance >= 0) && distance < 4000)
+            if(distance * 0.3 != sceneInspec.pivotDistance.getValueDirect())
+            {
+                sceneInspec.panDelta.values[2]=-15 * 0.3;
+            }
         sceneInspec.evaluate();
         bridgeworks.updateScene();
         console.log("Current delta: " + sceneInspec.panDelta.values[2]);
@@ -18,7 +23,7 @@ function zoomOut()
     }
     else
     {
-        sceneInspec.panDelta.values[2]-=15;
+        sceneInspec.panDelta.values[2]-=1000;
         sceneInspec.evaluate();
         bridgeworks.updateScene();
         console.log("Current Z delta: " + sceneInspec.panDelta.values[2]);
@@ -36,7 +41,12 @@ function zoomIn()
     var totalDelta = sceneInspec.panDelta.values[2];
     if(totalDelta < 0)
     {
-        sceneInspec.panDelta.values[2]=15;
+        if((distance >= 0) && (distance < 4000))
+            if(distance * 0.3 != sceneInspec.pivotDistance.getValueDirect())
+            {
+                sceneInspec.panDelta.values[2]=15 * 0.3;
+            }
+
         sceneInspec.evaluate();
         bridgeworks.updateScene();
         sceneInspec.panDelta.values[0] = 0;
@@ -45,7 +55,7 @@ function zoomIn()
     }
     else
     {
-        sceneInspec.panDelta.values[2]+=15;
+        sceneInspec.panDelta.values[2]+=1000;
         sceneInspec.evaluate();
         bridgeworks.updateScene();
 
