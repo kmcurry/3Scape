@@ -43,6 +43,10 @@ body.modal-open {
   font-size: 1.4em;
 }
 
+.fb-like {
+  margin-top: 15px;
+}
+
 /*
 {
     display: block;
