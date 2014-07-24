@@ -7,10 +7,10 @@
             <scale x="0.02" y="0.02" z="0.02"/>
             <color r="0" g="1" b="0"/>
         </Model>
-        <BalloonTipLabel name="bar" parent="foo" show="true">
+        <BalloonTipLabel name="bar" parent="foo" show="false">
             <balloonTipLabelStyle>
                 <htmlLabelStyle>
-                    <html><![CDATA[<em>Test</em>]]></html>
+                    <html><![CDATA[<em><strong><font color="red">This is some text!</font></strong></em>]]></html>
                 </htmlLabelStyle>
             </balloonTipLabelStyle>
         </BalloonTipLabel>
