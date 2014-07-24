@@ -47,6 +47,12 @@ body.modal-open {
   margin-top: 15px;
 }
 
+.fb-like.fb_edge_widget_with_comment.fb_iframe_widget span iframe {
+
+  /* Now you can apply css here */
+  bottom:0!important;
+}
+
 /*
 {
     display: block;
@@ -63,6 +69,29 @@ body.modal-open {
     z-index: 2000;
 }
 */
+
+#current-target {
+    display: table;
+    text-align: center;
+    position:fixed;
+    right: 50%;
+    top: 55px;
+    /*background-color:#000;    */
+    border-radius: 10px;
+    /*color: #FFF;*/
+    /*opacity: 0;*/
+    width: 20%;
+    margin: 0 0 0 -10%;
+    left:50%;
+}
+
+#current-object {
+  display: table-cell;
+  vertical-align: middle;
+  opacity: 1;
+  color: black;
+}
+
 
 #map-controls {
     /*display: table;*/
