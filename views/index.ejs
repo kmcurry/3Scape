@@ -1033,74 +1033,74 @@ function zoomActivate() {
           </div>
       </div>
       <!-- End headerController scope -->
-      <div class="row">
-        <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:1028"><span class="glyphicon glyphicon-chevron-right"></span></button>
-        <div id="container" style="width:300px;">
-            <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
-                <div style="padding: 20px; overflow:hidden; width:300px;">
-                        <div>
-                            <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->
-                          <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
-                          <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
-                          <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(timer);window.clearInterval(playSlider);isPlaying = 0;slidesPlayed = 1;"></span>
-                          <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
-                          <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span> 
-                            <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
-                            <ul class="nav nav-tabs" style="clear:both">
-                              <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
-                              <li><a href="#animate" data-toggle="tab">Animate</a></li>
-                              <li><a href="#slides" data-toggle="tab">Slides</a></li>
-                             </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="object-list">
-                                      <ul class="nav nav-sidebar">
-                                            <!--This is where the objects get loaded into the list-->
-                                      </ul>
-                                    </div>
-                                    <div class="tab-pane" id="animate">
+        <div class="row">
+          <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:1028"><span class="glyphicon glyphicon-chevron-right"></span></button>
+          <div id="container" style="width:300px;">
+              <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
+                  <div style="padding: 20px; overflow:hidden; width:300px;">
+                          <div>
+                              <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->
+                            <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
+                            <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
+                            <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(timer);window.clearInterval(playSlider);isPlaying = 0;slidesPlayed = 1;"></span>
+                            <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
+                            <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span> 
+                              <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                              <ul class="nav nav-tabs" style="clear:both">
+                                <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
+                                <li><a href="#animate" data-toggle="tab">Animate</a></li>
+                                <li><a href="#slides" data-toggle="tab">Slides</a></li>
+                               </ul>
+                                  <div class="tab-content">
+                                      <div class="tab-pane active" id="object-list">
                                         <ul class="nav nav-sidebar">
-                                            <!--This is where the animations get loaded into the list-->
+                                              <!--This is where the objects get loaded into the list-->
                                         </ul>
-                                        
-                                        <ul class="nav nav-sidebar">
-                                            
-                                        </ul>                     
-                                    </div>
-                                    <!--BEGIN PROJECT SCOPE-->
-                                    <div class="tab-pane" id="slides" ng-controller="projectController">                              
-                                        <ul class="nav nav-sidebar" id="slidePanel">
-                                          <!-- <div ng-show="global.isSignedIn()">
-                                            My ID: {{ global.currentUser()._id }}
-                                            <p>My Projects:</p>
-                                              <div class="checkbox" ng-repeat="project in projects">
-                                                <label>
-                                                  <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.title}}
-                                                </label>
-                                              </div>
-                                            <form>
-                                              <div class="form-group">
+                                      </div>
+                                      <div class="tab-pane" id="animate">
+                                          <ul class="nav nav-sidebar">
+                                              <!--This is where the animations get loaded into the list-->
+                                          </ul>
+                                          
+                                          <ul class="nav nav-sidebar">
+                                              
+                                          </ul>                     
+                                      </div>
+                                      <!--BEGIN PROJECT SCOPE-->
+                                      <div class="tab-pane" id="slides" ng-controller="projectController">                              
+                                          <ul class="nav nav-sidebar" id="slidePanel">
+                                            <!-- <div ng-show="global.isSignedIn()">
+                                              My ID: {{ global.currentUser()._id }}
+                                              <p>My Projects:</p>
+                                                <div class="checkbox" ng-repeat="project in projects">
+                                                  <label>
+                                                    <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.title}}
+                                                  </label>
+                                                </div>
+                                              <form>
+                                                <div class="form-group">
+
+                                                  
+                                                  <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
+                                                </div>
 
                                                 
-                                                <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
-                                              </div>
-
-                                              
-                                              <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
-                                            </form>  
-                                            Project Counter: {{projects.length}}
-                                            <h3>{{formData}}</h3>
-                                          </div>
-                                          <i ng-hide="global.isSignedIn()">Login to see Project interface</i> -->
-                                        </ul>                                        
-                                    </div>
-                                    <!--END PROJECT SCOPE-->                                                                  
-                                </div>                              
-                              
-                        </div>
-                </div>
-            </div>
-        </div>
-          
+                                                <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
+                                              </form>  
+                                              Project Counter: {{projects.length}}
+                                              <h3>{{formData}}</h3>
+                                            </div>
+                                            <i ng-hide="global.isSignedIn()">Login to see Project interface</i> -->
+                                          </ul>                                        
+                                      </div>
+                                      <!--END PROJECT SCOPE-->                                                                  
+                                  </div>                              
+                                
+                          </div>                                                
+                  </div>
+              </div>
+          </div>
+            
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
                    <canvas id="Canvas">
                   </canvas>
@@ -1121,135 +1121,157 @@ function zoomActivate() {
             <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right" onclick="closeFullScreen();"></span>
           </div> -->
         </div>
-          <div id="target-wrapper">
-            <div id="current-target">
-              <p id="Current_Object" style="font-size:2em; vertical-align:middle;">Target: X</p>
+        <div id="target-wrapper">
+          <div id="current-target">
+            <p id="Current_Object" style="font-size:2em; vertical-align:middle;">Target: X</p>
+          </div>
+        </div>
+        <input id="rs" data-slider-id='rotate-slider' type="text"/>
+        <input id="ts" data-slider-id='tilt-slider' type="text"/>                        
+        <script type="text/javascript">
+          $('#rs').slider({
+            formater: function(value) {
+              return 'Rotation: '+value;
+            },
+            min: -180,
+            max: 180,
+            value: 0
+          });
+          $('#ts').slider({
+            formater: function(value) {
+              return 'Tilt: ' + (-1 * value); // Hack to have highest value at top
+            },
+            min: -180,
+            max: 180,
+            value: 0,
+            orientation: 'vertical',
+            // reversed: true DOESN'T WORK
+          });                                                                          
+        </script>          
+
+        <div id="map-controls">
+            <div id="Rotate">                  
+              <span class="shape fa fa-undo" title="Rotate Counter-Clockwise" onmousedown="rotateNegY();" style="font-size: 2em;"></span>
+              <span class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" onmousedown="rotatePosY();" style="font-size: 1.8em"></span>
+            </div>        
+            <div id ="Tilt">
+              <span class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onmousedown="tiltUp();"></span>
+              <span class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onmousedown="tiltDown();"></span>
+            </div>              
+            <div id="Zoom">
+              <span class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In" onmousedown="zoomIn();"></span>
+              <span class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out" onmousedown="zoomOut();"></span>
             </div>
-          </div>
+        </div>
 
-          <div id="map-controls">
-              <div id="Rotate">                  
-                <span class="shape fa fa-undo" title="Rotate Counter-Clockwise" onmousedown="rotateNegY();" style="font-size: 2em;"></span>
-                <span class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" onmousedown="rotatePosY();" style="font-size: 1.8em"></span>
-              </div>        
-              <div id ="Tilt">
-                <span class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onmousedown="tiltUp();"></span>
-                <span class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onmousedown="tiltDown();"></span>
-              </div>              
-              <div id="Zoom">
-                <span class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In" onmousedown="zoomIn();"></span>
-                <span class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out" onmousedown="zoomOut();"></span>
-              </div>
-          </div>
-
-          <div id="object-controls">
-              <div>                  
-                <span class="shape fa fa-angle-double-up" title="Move Object Up" onclick="objectUp();" style="font-size: 2em;"></span>
-                <span class="shape fa fa-angle-double-down" style="font-size:2em" title="Move Object Down" onclick="objectDown();"></span>
-              </div>        
-              <div>                
-                <span class="shape fa fa-angle-up" style="font-size:2em" title="Move Object Forward" onclick="objectForward();"></span>
-                <span class="shape fa fa-angle-down" style="font-size:2em" title="Move Object Backward" onclick="objectBackward();"></span>
-              </div>              
-              <div>
-                <span class="shape fa fa-angle-left" style="font-size:2em" title="Move Object Left" onclick="objectLeft();"></span>
-                <span class="shape fa fa-angle-right" style="font-size:2em" title="Move Object Right" onclick="objectRight();"></span>
-              </div>
-          </div>
-
-          <div id="toolbar-wrapper" style="text-align:center;">
-            <div id="present-toolbar">
-              <div class="btn-group dropup">
-                <button class="btn btn-default btnShape">
-                  <span class="shape fa fa-cube fa-2x" title="Cube" onclick="load(cube);"></span>
-                  <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
-                  <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
-                  <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
-                  <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>  
-                </button>    
-                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
-                  <li class="divider"></li>
-                  <li style="margin-left: 8px">
-                    <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
-                    <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
-                    <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
-                    <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
-                    <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
-                  </li>                          
-                </ul>
-              </div>
-              <div class="btn-group dropup keep-open" style="margin-left:3px;">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:1.4em;">
-                  Color <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu color-dropdown" role="menu">
-                  <!-- Color Picker Script - ColorCodeHex.COM -->
-                  <script type="text/javascript">
-                  function updateInfo(color) {
-                    document.getElementById('info-r').value = color.rgb[0];
-                    document.getElementById('info-g').value = color.rgb[1];
-                    document.getElementById('info-b').value = color.rgb[2];
-                  }
-                  </script>
-
-                  <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
-                  <input id="info-r" size="2" type="hidden"/>
-                  <input id="info-g" size="2" type="hidden"/>
-                  <input id="info-b" size="2" type="hidden"/>
-                </ul>
-              </div>
-            
-              <div class="btn-group dropup">
-                <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
-                  Animate <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">                
-                  <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
-                  <li class="divider"></li>
-                  <li style="margin-left:8px;">
-                    <span class="shape fa fa-expand fa-2x" title="Scale" onclick="load(Scal);"></span>
-                    <span class="shape fa fa-refresh fa-2x" title="Spin" onclick="load(Spin);"></span>
-                    <span class="shape fa fa-eye-slash fa-2x" title="Dissolve" onclick="load(Diss);"></span>
-                    <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
-                  </li>
-                </ul>
-              </div>
-              <div class="btn-group dropup">
-                <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
-                  Add Label <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">                
-                  <li><a href="#" onclick="createRecord();">Regular</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#" onclick="">Balloon Tip</a></li>
-                </ul>
-              </div>
-              <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();">
-                    <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>
-              </button>
-              <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();">
-                    <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>
-              </button>                      
-              <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();">
-                    <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>
-              </button>                  
-              <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499; display:hidden;">Target: X</button> <!-- must refactor targetting function -->
-              <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="height:42px;">
-                <span class="modeButton fa fa-video-camera fa-2x toggleGlyph"></span>
-              </button>
-              <button type="button" class="btn btn-purple navbar-btn toggleController" id="pMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="height:42px;">
-                <span class="toggleGlyph fa fa-compass fa-2x"></span>
-              </button>
-              <button type="button" class="btn btn-success navbar-btn" id="pFullscreen" role="button" onclick="closeFullScreen();" title="Exit Fullscreen">
-                <span class="glyphicon glyphicon-resize-small" style="font-size:2em;"></span>
-              </button>                
-              <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
-                <span class="fa fa-question-circle fa-2x"></span>
-              </button>                      
+        <div id="object-controls">
+            <div>                  
+              <span class="shape fa fa-angle-double-up" title="Move Object Up" onclick="objectUp();" style="font-size: 2em;"></span>
+              <span class="shape fa fa-angle-double-down" style="font-size:2em" title="Move Object Down" onclick="objectDown();"></span>
+            </div>        
+            <div>                
+              <span class="shape fa fa-angle-up" style="font-size:2em" title="Move Object Forward" onclick="objectForward();"></span>
+              <span class="shape fa fa-angle-down" style="font-size:2em" title="Move Object Backward" onclick="objectBackward();"></span>
+            </div>              
+            <div>
+              <span class="shape fa fa-angle-left" style="font-size:2em" title="Move Object Left" onclick="objectLeft();"></span>
+              <span class="shape fa fa-angle-right" style="font-size:2em" title="Move Object Right" onclick="objectRight();"></span>
             </div>
+        </div>
+
+        <div id="toolbar-wrapper" style="text-align:center;">
+          <div id="present-toolbar">
+            <div class="btn-group dropup">
+              <button class="btn btn-default btnShape">
+                <span class="shape fa fa-cube fa-2x" title="Cube" onclick="load(cube);"></span>
+                <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
+                <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
+                <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
+                <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>  
+              </button>    
+              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
+                <li class="divider"></li>
+                <li style="margin-left: 8px">
+                  <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
+                  <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
+                  <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
+                  <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
+                  <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
+                </li>                          
+              </ul>
+            </div>
+            <div class="btn-group dropup keep-open" style="margin-left:3px;">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:1.4em;">
+                Color <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu color-dropdown" role="menu">
+                <!-- Color Picker Script - ColorCodeHex.COM -->
+                <script type="text/javascript">
+                function updateInfo(color) {
+                  document.getElementById('info-r').value = color.rgb[0];
+                  document.getElementById('info-g').value = color.rgb[1];
+                  document.getElementById('info-b').value = color.rgb[2];
+                }
+                </script>
+
+                <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
+                <input id="info-r" size="2" type="hidden"/>
+                <input id="info-g" size="2" type="hidden"/>
+                <input id="info-b" size="2" type="hidden"/>
+              </ul>
+            </div>
+          
+            <div class="btn-group dropup">
+              <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                Animate <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">                
+                <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
+                <li class="divider"></li>
+                <li style="margin-left:8px;">
+                  <span class="shape fa fa-expand fa-2x" title="Scale" onclick="load(Scal);"></span>
+                  <span class="shape fa fa-refresh fa-2x" title="Spin" onclick="load(Spin);"></span>
+                  <span class="shape fa fa-eye-slash fa-2x" title="Dissolve" onclick="load(Diss);"></span>
+                  <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
+                </li>
+              </ul>
+            </div>
+            <div class="btn-group dropup">
+              <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+                Add Label <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">                
+                <li><a href="#" onclick="createRecord();">Regular</a></li>
+                <li class="divider"></li>
+                <li><a href="#" onclick="">Balloon Tip</a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();">
+                  <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>
+            </button>
+            <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();">
+                  <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>
+            </button>                      
+            <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();">
+                  <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>
+            </button>                  
+            <button class="btn btn-default btnshape"id="Current_Object2" style="font-size:1.4em; color:#6f5499; display:hidden;">Target: X</button> <!-- must refactor targetting function -->
+            <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="height:42px;">
+              <span class="modeButton fa fa-video-camera fa-2x toggleGlyph"></span>
+            </button>
+            <button type="button" class="btn btn-purple navbar-btn toggleController" id="pMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="height:42px;">
+              <span class="toggleGlyph fa fa-compass fa-2x"></span>
+            </button>
+            <button type="button" class="btn btn-success navbar-btn" id="pFullscreen" role="button" onclick="closeFullScreen();" title="Exit Fullscreen">
+              <span class="glyphicon glyphicon-resize-small" style="font-size:2em;"></span>
+            </button>                
+            <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
+              <span class="fa fa-question-circle fa-2x"></span>
+            </button>                      
           </div>
+        </div>
 
       <!-- Progress Bar -->
       <div class="clickable" id="click" style="display:none">
@@ -1640,6 +1662,8 @@ $(function () {
   var toggleMap = function(){
     $('#map-controls').fadeToggle();
     $('#object-controls').fadeToggle();
+    $('#rotate-slider').fadeToggle();
+    $('#tilt-slider').fadeToggle();
   }
 </script>
       
