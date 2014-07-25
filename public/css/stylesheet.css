@@ -39,6 +39,11 @@ body.modal-open {
   color: #07c;
 }
 
+.color {
+  cursor: pointer;
+  cursor: hand;
+}
+
 .current-object {
   background-color: #46E88C;
 }
