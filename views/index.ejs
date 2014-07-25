@@ -1136,16 +1136,20 @@ function zoomActivate() {
             min: -180,
             max: 180,
             value: 0
-          });
+          });            
           $('#ts').slider({
             formater: function(value) {
-              return 'Tilt: ' + (-1 * value); // Hack to have highest value at top
+              return 'Tilt: ' + (value); // Hack to have highest value at top
             },
-            min: -180,
-            max: 180,
-            value: 0,
-            orientation: 'vertical',
+            min: 0,
+            max: 200,
+            value: 100,                        
+            // orientation: 'vertical',
             // reversed: true DOESN'T WORK
+          })
+          .on('slide', function(ev){
+            console.log(ev.value);
+            setScale(ev.value / 100)
           });                                                                          
         </script>          
 
