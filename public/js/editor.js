@@ -61,26 +61,29 @@ function switchModes()
 }
 function trashModel(name)
 {
-    var c = "\<Remove target='" + name + "'/>"
+    var c = "\<Remove target='" + name + "'/>";
+    console.log(c);
     bridgeworks.updateScene(c);
-    console.log(name);
 
     var panel = document.getElementById("object-list");
     var link = document.getElementById("row" + name);
     panel.removeChild(link);
 }
 
-// function trashAnimation(name)
-// {
-//         var c = "\<Remove target='" + name + "'/>"
-//         bridgeworks.updateScene(c);
-//         console.log(name);
+function trashAnimation(name)
+{
+         var cmd = "\<Remove target='" + name + "'/>";
+         //var cmd = "\<Stop target='" + name + "'/>";
+         console.log(cmd);
+         //bridgeworks.renderController.stop();
+         bridgeworks.updateScene(cmd);
+         //bridgeworks.updateScene(c);
 
-//         var panel = document.getElementById("animate");
-//         var link = document.getElementById("row" + name);
-//         panel.removeChild(link);
+         var panel = document.getElementById("animate");
+         var link = document.getElementById("row" + name);
+         panel.removeChild(link);
     
-// }
+}
 
 function cut()
 {
@@ -461,14 +464,14 @@ function loadMotion(url)
     row.appendChild(trashColumn);
     animationPanel.appendChild(row); // Append the link to the div
 
-    var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
+    //var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
     
     var xml = loadXMLFile("BwContent/motion.xml");
     
     var kfi = xml.getElementsByTagName("KeyframeInterpolator")[0];
     
     var n = kfi.attributes["name"];
-    n.value = name + "_Motion";
+    n.value = name;
     
     var u = kfi.attributes["url"];
     u.value = url;
