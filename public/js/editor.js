@@ -360,6 +360,7 @@ function loadModel(url)
     a.setAttribute("id", name);
     a.setAttribute("onclick", "setModel('"+name+"');"); // Instead of calling setAttribute    
     a.setAttribute("Title", "Select Object");
+    a.setAttribute("class", "object")
     a.style.cursor="pointer"; 
     a.style.cursor="hand";
     f = document.createElement('span');
@@ -486,6 +487,7 @@ function locate()
     var xml = "\<Locate target='" + $('#objectname').val() + "'/>";
     console.log(xml);
     bridgeworks.updateScene(xml);
+
 }
 
 //Locates the target given the name and also sets current object to be the object located
@@ -496,6 +498,10 @@ function locate(name){
     console.log(cmd);
     bridgeworks.updateScene(cmd);
     setObject(name);
+    myObject = document.getElementById(name);
+    $('.object').removeClass('current-object');
+    $(myObject).addClass('current-object');
+    
 }
 
 function setColorPicker()
@@ -524,6 +530,9 @@ function setModel(name)
     setColorPicker();
     bridgeworks.updateScene(xml);
     setObject(name);
+    myObject = document.getElementById(name);
+    $('.object').removeClass('current-object');
+    $(myObject).addClass('current-object');
 }
 function paste()
 {

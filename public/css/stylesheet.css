@@ -38,6 +38,11 @@ body.modal-open {
 .shape:hover{
   color: #07c;
 }
+
+.current-object {
+  background-color: #46E88C;
+}
+
 .dvd{
   cursor: pointer;
   font-size: 1.4em;
@@ -96,12 +101,6 @@ body.modal-open {
     margin: 0 0 0 -10%;
     left:50%;
 }
-
-#current-object {
-  opacity: 1;
-  color: black;
-}
-
 
 #map-controls {
     /*display: table;*/
