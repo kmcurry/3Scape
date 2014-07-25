@@ -1495,7 +1495,7 @@ function zoomActivate() {
                     var ctx = canvas.getContext("webgl");
                     if (!ctx) {
                         // browser supports WebGL but initialization failed.
-                        window.location = "NoWebGL.html";
+                        window.location.href = "nowebgl";
                     }
                 }
 
