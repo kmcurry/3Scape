@@ -334,15 +334,15 @@
 
                   //Duplicate steps to populate presentation tray slide dropup. Not DRY because each parent container needs its own unique version of the generated slide link.
 
-                  var popUp = document.getElementById("dropUpTray")
-                  var Li2 = document.createElement('li');
-                  var S2 = document.createElement('a');
-                  S2.setAttribute("style", "cursor: pointer;");
-                  S2.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount)+".xml')");
-                  S2.setAttribute("id", "TraySlide " + slideCount);
-                  S2.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
-                  Li2.appendChild(S2);
-                  popUp.appendChild(Li2);
+//                  var popUp = document.getElementById("dropUpTray")
+//                  var Li2 = document.createElement('li');
+//                  var S2 = document.createElement('a');
+//                  S2.setAttribute("style", "cursor: pointer;");
+//                  S2.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount)+".xml')");
+//                  S2.setAttribute("id", "TraySlide " + slideCount);
+//                  S2.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
+//                  Li2.appendChild(S2);
+//                  popUp.appendChild(Li2);
 
                   slideCount++;
               }
@@ -1516,7 +1516,7 @@ function zoomActivate() {
 
                            editRecord(selected);
                        }
-                       else if($("#dialog").dialog( "isOpen")===true && edit ==1)
+                       else if($("#dialog").dialog( "isOpen")===true && edit ==2)
                        {
                            addBalloon();
                        }
@@ -1550,7 +1550,6 @@ function zoomActivate() {
                 $( "#dialog").dialog({open: function(event,ui) {
 
                     new nicEditor({
-                        fullPanel : true,
                         iconsPath : 'nicEditorIcons.gif'
                     }).panelInstance('title');
                 }
