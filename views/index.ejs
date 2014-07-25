@@ -942,6 +942,18 @@ function zoomActivate() {
                       </li>
                       <li>
                         <div class="btn-group dropdown">
+                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Add Label">
+                            <span class="shape fa fa-thumb-tack" style="font-size:1.4em;"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a href="#" onclick="createRecord();">Regular</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="createBalloon();">Balloon Tip</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="btn-group dropdown">
                           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
                             Animate <span class="caret"></span>
                           </button>
@@ -956,19 +968,7 @@ function zoomActivate() {
                             <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
                           </ul>
                         </div>
-                      </li>
-                      <li>
-                        <div class="btn-group dropdown">
-                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
-                            Label <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a href="#" onclick="createRecord();">Regular</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#" onclick="createBalloon();">Balloon Tip</a></li>
-                          </ul>
-                        </div>
-                      </li>
+                      </li>                      
                       <li>
                         <button type="button" class="btn btn-default navbar-btn" id="navCut" role="button" onclick="cut();" >
                               <span class="shape fa fa-scissors fa-lg" style="font-size:2em" title="Cut"></span>                          
@@ -1166,16 +1166,16 @@ function zoomActivate() {
 
         <div id="object-controls">
             <div>                  
-              <span class="shape fa fa-angle-double-up" title="Move Object Up" onclick="objectUp();" style="font-size: 2em;"></span>
-              <span class="shape fa fa-angle-double-down" style="font-size:2em" title="Move Object Down" onclick="objectDown();"></span>
+              <span class="shape icon-pushalt" title="Move Object Up" onclick="objectUp();" style="font-size: 2em;"></span>
+              <span class="shape icon-pullalt" style="font-size:2em" title="Move Object Down" onclick="objectDown();"></span>
             </div>        
             <div>                
-              <span class="shape fa fa-angle-up" style="font-size:2em" title="Move Object Forward" onclick="objectForward();"></span>
-              <span class="shape fa fa-angle-down" style="font-size:2em" title="Move Object Backward" onclick="objectBackward();"></span>
+              <span class="shape fa fa-arrow-up" style="font-size:2em" title="Move Object Forward" onclick="objectForward();"></span>
+              <span class="shape fa fa-arrow-down" style="font-size:2em" title="Move Object Backward" onclick="objectBackward();"></span>
             </div>              
             <div>
-              <span class="shape fa fa-angle-left" style="font-size:2em" title="Move Object Left" onclick="objectLeft();"></span>
-              <span class="shape fa fa-angle-right" style="font-size:2em" title="Move Object Right" onclick="objectRight();"></span>
+              <span class="shape fa fa-arrow-left" style="font-size:2em" title="Move Object Left" onclick="objectLeft();"></span>
+              <span class="shape fa fa-arrow-right" style="font-size:2em" title="Move Object Right" onclick="objectRight();"></span>
             </div>
         </div>
 
@@ -1204,8 +1204,8 @@ function zoomActivate() {
               </ul>
             </div>
             <div class="btn-group dropup keep-open" style="margin-left:3px;">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:1.4em;" title="Set Color">
-                <span class="shape icon-paintroll"></span>
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Set Color">
+                <span class="shape icon-paintroll" style="font-size:1.4em;"></span>
               </button>
               <ul class="dropdown-menu color-dropdown" role="menu">
                 <!-- Color Picker Script - ColorCodeHex.COM -->
@@ -1223,7 +1223,16 @@ function zoomActivate() {
                 <input id="info-b" size="2" type="hidden"/>
               </ul>
             </div>
-          
+            <div class="btn-group dropup">
+              <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Add Label">
+                <span class="shape fa fa-thumb-tack" style="font-size: 2em;"></span>
+              </button>
+              <ul class="dropdown-menu">                
+                <li><a href="#" onclick="createRecord();">Regular</a></li>
+                <li class="divider"></li>
+                <li><a href="#" onclick="">Balloon Tip</a></li>
+              </ul>
+            </div>
             <div class="btn-group dropup">
               <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
                 Animate <span class="caret"></span>
@@ -1238,17 +1247,7 @@ function zoomActivate() {
                   <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
                 </li>
               </ul>
-            </div>
-            <div class="btn-group dropup">
-              <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
-                Label <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu">                
-                <li><a href="#" onclick="createRecord();">Regular</a></li>
-                <li class="divider"></li>
-                <li><a href="#" onclick="">Balloon Tip</a></li>
-              </ul>
-            </div>
+            </div>            
             <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();">
                   <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>
             </button>
