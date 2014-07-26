@@ -1,6 +1,6 @@
 
-function setScale() {
-    var value = $( "#scale" ).spinner( "value" );
+function setScale(value) {
+    // var value = $( "#scale" ).spinner( "value" );
     
     if (selectedModel) {
         //var s = selectedModel.rotation.getValueDirect();
