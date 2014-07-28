@@ -384,11 +384,15 @@
                     window.clearInterval(zoomUpdate);
                     selectedModel = bridgeworks.selector.selections.models[0];
                     if(selectedModel) {
-                        modelName = selectedModel.name.getValueDirect().join("");
+                        modelName = selectedModel.name.getValueDirect().join(""); //redundant?
                         var name = selectedModel.name.getValueDirect().join("");
 
                         setObject(name);
                         setColorPicker();
+
+                        myObject = document.getElementById(name);
+                        $('.object').removeClass('current-object');
+                        $(myObject).addClass('current-object');
 
                         scaleValues = (selectedModel.scale.getValueDirect());
                         x = scaleValues['x'] * 100

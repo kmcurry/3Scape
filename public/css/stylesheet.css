@@ -10,6 +10,9 @@ body.modal-open {
     left: 0;
     overflow-y: scroll;
 }
+.btn:focus {
+  outline:none;
+}
 #side-nav.width { /*Horizontal slide effect*/
     height: auto;
     -webkit-transition: width 0.35s ease;
@@ -26,6 +29,7 @@ body.modal-open {
   background-color: #fff;
   cursor: inherit;
 }
+
 .shape {
   cursor: pointer;
   cursor: hand;
