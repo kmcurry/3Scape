@@ -1,14 +1,9 @@
 <html ng-app="3ScapeMain">
   <head>
     <title>3Scape</title>
-    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon"> -->
     <link rel="shortcut icon" href="/favicon.ico?v=2" />
     <meta name="google-site-verification" content="HshVtf6HnSfl2YCmfMSpPEkQJT4lwYlxWt1x5XSbjoo" />
-
     <script type="text/javascript" src="./js/Bridgeworks.js"></script>
-    
-    <!--<link type="text/css" rel="stylesheet" href="css/style.css" />-->
     <!-- jquery stuff -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
@@ -26,7 +21,7 @@
 
     <!-- WebHostingHub Glyphs -->
     <link rel="stylesheet" type="text/css" media="all" href="css/whhg.css" />
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- Custom styles for this template -->
@@ -64,7 +59,6 @@
         }
 
     </style>
-    <!--<link type="text/css" rel="StyleSheet" href="css/bootstrap.min.css"/>-->
       <style id="holderjs-style" type="text/css"></style>
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -838,6 +832,31 @@ function zoomActivate() {
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+      <button id="sidebar-button" type="button" class="btn btn-default navbar-btn btn-danger closed" title="Toggle Sidebar"><span class="glyphicon glyphicon-chevron-right"></span></button>
+      <script>
+        $("#sidebar-button").click(function(){
+          $("#container").css("display", "");
+          $("#side-nav").collapse('toggle');
+          if ($(this).hasClass("closed")) {
+            // $(this).animate({left: '300px'}, 350, "swing");
+            $(this).removeClass("closed").addClass("opened");
+            $('#sidebar-button span').removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-left");
+          }else {
+            // $(this).animate({left: '0px'}, 350, "swing");
+            $(this).removeClass("opened").addClass("closed");
+            $('#sidebar-button span').removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-right");
+
+          }
+        });                
+
+    //      if($('.modeButton:first').hasClass("fa-video-camera")) {
+    //   $('.toggleController').removeClass('btn-info').addClass('btn-danger');
+    //   $('.toggleGlyph').removeClass('fa-video-camera').addClass('fa-anchor');
+    // }else {
+    //   $('.toggleController').removeClass('btn-danger').addClass('btn-info');
+    //   $('.toggleGlyph').removeClass('fa-anchor').addClass('fa-video-camera');
+    // }
+      </script>
       
       <!-- Navigation Header -->
       <div class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation" id="Navbar" ng-controller="headerController">
@@ -1044,18 +1063,13 @@ function zoomActivate() {
       </div>
       <!-- End headerController scope -->
         <div class="row">
-          <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:1028"><span class="glyphicon glyphicon-chevron-right"></span></button>
-          <div id="container" style="width:300px;">
-              <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
+          <!-- <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:1028" title="Show Sidebar"><span class="glyphicon glyphicon-chevron-right"></span></button> -->
+          <div id="container" style="width:300px; display: none;">
+              <div id="side-nav" class="width sidebar collapse" style="padding:0; border:0;z-index:1029">
                   <div style="padding: 20px; overflow:hidden; width:300px;">
                           <div>
-                              <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->
-                            <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
-                            <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
-                            <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(timer);window.clearInterval(playSlider);isPlaying = 0;slidesPlayed = 1;"></span>
-                            <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
-                            <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span> 
-                              <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                              <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->                            
+                              <!-- <button type="button" id="collapse-button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" title="Hide Sidebar"><span class="glyphicon glyphicon-chevron-left"></span></button> -->
                               <ul class="nav nav-tabs" style="clear:both">
                                 <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
                                 <li><a href="#animate" data-toggle="tab">Animate</a></li>
@@ -1077,7 +1091,12 @@ function zoomActivate() {
                                           </ul>                     
                                       </div>
                                       <!--BEGIN PROJECT SCOPE-->
-                                      <div class="tab-pane" id="slides" ng-controller="projectController">                              
+                                      <div class="tab-pane" id="slides" ng-controller="projectController">
+                                        <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
+                                        <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
+                                        <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(timer);window.clearInterval(playSlider);isPlaying = 0;slidesPlayed = 1;"></span>
+                                        <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
+                                        <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>
                                           <ul class="nav nav-sidebar" id="slidePanel">
                                             <!-- <div ng-show="global.isSignedIn()">
                                               My ID: {{ global.currentUser()._id }}
@@ -1109,8 +1128,7 @@ function zoomActivate() {
                           </div>                                                
                   </div>
               </div>
-          </div>
-            
+          </div>            
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
                    <canvas id="Canvas">
                   </canvas>
@@ -1452,7 +1470,7 @@ function zoomActivate() {
           function preHide(){
               $('#container').hide();
               $('#Navbar').hide();
-              $('#expand').hide();
+              $('#sidebar-button').hide();
               $('#dialog').hide();
               $('#present-tray').show();
               $('#present-toolbar').show();
@@ -1507,7 +1525,7 @@ function zoomActivate() {
           function preUnhide(){
               $('#container').show();
               $('#Navbar').show();
-              $('#expand').show();
+              $('#sidebar-button').show();
               $('#dialog').show();
               $('#present-tray').hide();
               $('#present-toolbar').hide();
@@ -1625,32 +1643,6 @@ function zoomActivate() {
         }
         </script>
       <script type="text/javascript">
-      // Presentation notes display correctly.
-          $(function () {
-              var showPopover = function () {
-                          $(this).popover('show');
-                      }
-                      , hidePopover = function () {
-                          $(this).popover('hide');
-                      };
-              $('#ex1').popover({
-                  content: 'An Example1 popover',
-                  trigger: 'hover',
-                  placement:'left'
-              })
-              $('#ex2').popover({
-                  content: 'An Example2 popover',
-                  trigger: 'hover',
-                  placement:'left'
-              })
-
-              $('#ex3').popover({
-                  content: 'An Example3 popover',
-                  trigger: 'hover',
-                  placement:'left'
-              })
-
-          });
           $('.dropdown-menu').find('form').click(function (e) {
               e.stopPropagation();
           });
@@ -1662,32 +1654,32 @@ function zoomActivate() {
           $('.color-dropdown').on('hide.bs.dropdown', function () {
               return false;
           });
-$(function () {
-    $('.dropdown.keep-open').on({
-        "shown.bs.dropdown": function() {
-            $(this).data('closable', false);
-        },
-        "click": function() {
-            $(this).data('closable', true);
-        },
-        "hide.bs.dropdown": function() {
-            return $(this).data('closable');
-        }
-    });
-});
-$(function () {
-    $('.dropup.keep-open').on({
-        "shown.bs.dropdown": function() {
-            $(this).data('closable', false);
-        },
-        "click": function() {
-            $(this).data('closable', true);
-        },
-        "hide.bs.dropdown": function() {
-            return $(this).data('closable');
-        }
-    });
-});
+          $(function () {
+              $('.dropdown.keep-open').on({
+                  "shown.bs.dropdown": function() {
+                      $(this).data('closable', false);
+                  },
+                  "click": function() {
+                      $(this).data('closable', true);
+                  },
+                  "hide.bs.dropdown": function() {
+                      return $(this).data('closable');
+                  }
+              });
+          });
+          $(function () {
+              $('.dropup.keep-open').on({
+                  "shown.bs.dropdown": function() {
+                      $(this).data('closable', false);
+                  },
+                  "click": function() {
+                      $(this).data('closable', true);
+                  },
+                  "hide.bs.dropdown": function() {
+                      return $(this).data('closable');
+                  }
+              });
+          });
 
       </script>
 
@@ -1706,6 +1698,9 @@ $(function () {
     $('#object-controls').fadeToggle();
     $('#rotate-slider').fadeToggle();
     $('#scale-slider').fadeToggle();
+    $('#rotz-slider').fadeToggle();
+    $('#rotx-slider').fadeToggle();
+    $('#roty-slider').fadeToggle();
   }
 </script>
       
