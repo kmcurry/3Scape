@@ -67,6 +67,14 @@ body.modal-open {
   z-index: 2000;
   left: 0px;
   top: 70px;
+  -webkit-transition: left 0.35s ease;
+  -moz-transition: left 0.35s ease;
+  -o-transition: left 0.35s ease;
+  transition: left 0.35s ease;
+}
+
+#sidebar-button.opened {
+  left: 300px;
 }
 
 #rotx-slider {

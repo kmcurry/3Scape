@@ -1,14 +1,9 @@
 <html ng-app="3ScapeMain">
   <head>
     <title>3Scape</title>
-    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon"> -->
     <link rel="shortcut icon" href="/favicon.ico?v=2" />
     <meta name="google-site-verification" content="HshVtf6HnSfl2YCmfMSpPEkQJT4lwYlxWt1x5XSbjoo" />
-
     <script type="text/javascript" src="./js/Bridgeworks.js"></script>
-    
-    <!--<link type="text/css" rel="stylesheet" href="css/style.css" />-->
     <!-- jquery stuff -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
@@ -26,7 +21,7 @@
 
     <!-- WebHostingHub Glyphs -->
     <link rel="stylesheet" type="text/css" media="all" href="css/whhg.css" />
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- Custom styles for this template -->
@@ -843,11 +838,11 @@ function zoomActivate() {
           $("#container").css("display", "");
           $("#side-nav").collapse('toggle');
           if ($(this).hasClass("closed")) {
-            $(this).animate({left: '300px'}, 250, "swing");
+            // $(this).animate({left: '300px'}, 350, "swing");
             $(this).removeClass("closed").addClass("opened");
             $('#sidebar-button span').removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-left");
           }else {
-            $(this).animate({left: '0px'}, 275, "swing");
+            // $(this).animate({left: '0px'}, 350, "swing");
             $(this).removeClass("opened").addClass("closed");
             $('#sidebar-button span').removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-right");
 
