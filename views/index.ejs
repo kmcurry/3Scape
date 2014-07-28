@@ -1133,10 +1133,14 @@ function zoomActivate() {
             formater: function(value) {
               return 'Rotation: '+value;
             },
-            min: -180,
-            max: 180,
+            min: 0,
+            max: 360,
             value: 0
-          });            
+          })
+           .on("slide", function(ev){
+             console.log(ev.value);
+             setRotationY(ev.value);
+           });
           $('#ts').slider({
             formater: function(value) {
               return 'Tilt: ' + (value); // Hack to have highest value at top
