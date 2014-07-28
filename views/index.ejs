@@ -837,15 +837,15 @@ function zoomActivate() {
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <button id="sidebar-button" type="button" class="btn btn-default navbar-btn btn-danger opened" data-toggle="collapse" data-target="#side-nav" title="Show Sidebar"><span class="glyphicon glyphicon-chevron-left"></span></button>
+      <button id="sidebar-button" type="button" class="btn btn-default navbar-btn btn-danger opened" data-toggle="collapse" data-target="#side-nav" title="Toggle Sidebar"><span class="glyphicon glyphicon-chevron-left"></span></button>
       <script>
         $("#sidebar-button").click(function(){
           if ($(this).hasClass("opened")) {
-            $(this).animate({left: '0px'}, 250);
+            $(this).animate({left: '0px'}, 250, "swing");
             $(this).removeClass("opened").addClass("closed");
             $('#sidebar-button span').removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-right");
           }else {
-            $(this).animate({left: '300px'}, 275);
+            $(this).animate({left: '300px'}, 275, "swing");
             $(this).removeClass("closed").addClass("opened");
             $('#sidebar-button span').removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-left");
           }
@@ -1098,7 +1098,7 @@ function zoomActivate() {
                                         <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
                                         <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(timer);window.clearInterval(playSlider);isPlaying = 0;slidesPlayed = 1;"></span>
                                         <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
-                                        <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span> 
+                                        <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>
                                           <ul class="nav nav-sidebar" id="slidePanel">
                                             <!-- <div ng-show="global.isSignedIn()">
                                               My ID: {{ global.currentUser()._id }}
@@ -1133,8 +1133,8 @@ function zoomActivate() {
           </div>
             
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                   <!-- <canvas id="Canvas">
-                  </canvas> -->
+                   <canvas id="Canvas">
+                  </canvas>
           </div>
           <!-- WILL REVISIT SLIDES
           <div id="present-tray">

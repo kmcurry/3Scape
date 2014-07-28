@@ -57,10 +57,10 @@ body.modal-open {
   margin-top: 15px;
 }
 
-#collapse-button {
+/*#collapse-button {
   margin-top:0;
   float: right;
-}
+}*/
 
 #sidebar-button {
   position: fixed;
