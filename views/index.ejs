@@ -1049,13 +1049,8 @@ function zoomActivate() {
               <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
                   <div style="padding: 20px; overflow:hidden; width:300px;">
                           <div>
-                              <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->
-                            <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
-                            <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
-                            <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(timer);window.clearInterval(playSlider);isPlaying = 0;slidesPlayed = 1;"></span>
-                            <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
-                            <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span> 
-                              <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                              <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->                            
+                              <button type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin-top:0; float: right;" title="Hide Sidebar"><span class="glyphicon glyphicon-chevron-left"></span></button>
                               <ul class="nav nav-tabs" style="clear:both">
                                 <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
                                 <li><a href="#animate" data-toggle="tab">Animate</a></li>
@@ -1077,7 +1072,12 @@ function zoomActivate() {
                                           </ul>                     
                                       </div>
                                       <!--BEGIN PROJECT SCOPE-->
-                                      <div class="tab-pane" id="slides" ng-controller="projectController">                              
+                                      <div class="tab-pane" id="slides" ng-controller="projectController">
+                                        <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
+                                        <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
+                                        <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(timer);window.clearInterval(playSlider);isPlaying = 0;slidesPlayed = 1;"></span>
+                                        <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
+                                        <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span> 
                                           <ul class="nav nav-sidebar" id="slidePanel">
                                             <!-- <div ng-show="global.isSignedIn()">
                                               My ID: {{ global.currentUser()._id }}
