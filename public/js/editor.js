@@ -408,13 +408,18 @@ function loadModel(url)
     pos.attributes["x"].value = pointWorld.x.toString();
     pos.attributes["y"].value = pointWorld.y.toString();
     pos.attributes["z"].value = pointWorld.z.toString();
-    
+
     
     var xstr = (new XMLSerializer()).serializeToString(xml);
     console.debug(xstr);
     bridgeworks.updateScene(xstr);
     
     selectedModel = bridgeworks.registry.find(name);
+
+    var r = selectedModel.rotation.getValueDirect();
+    $("#rotxs").slider("setValue", r.x);
+    $("#rotys").slider("setValue", r.y);
+    $("#rotzs").slider("setValue", r.z);
     
     // add the loaded thing to the list of loaded things
     var p = document.createElement("div");
@@ -504,6 +509,10 @@ function locate(name){
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
+    var r = selectedModel.rotation.getValueDirect();
+    $("#rotxs").slider("setValue", r.x);
+    $("#rotys").slider("setValue", r.y);
+    $("#rotzs").slider("setValue", r.z);
     
 }
 
@@ -536,6 +545,10 @@ function setModel(name)
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
+    var r = selectedModel.rotation.getValueDirect();
+    $("#rotxs").slider("setValue", r.x);
+    $("#rotys").slider("setValue", r.y);
+    $("#rotzs").slider("setValue", r.z);
 }
 function paste()
 {
