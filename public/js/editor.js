@@ -416,7 +416,6 @@ function loadModel(url)
     
     selectedModel = bridgeworks.registry.find(name);
     scaleValues = (selectedModel.scale.getValueDirect());
-    console.log(scaleValues);
     x = scaleValues['x'] * 100
     $('#ts').slider('setValue', x);
     
@@ -490,10 +489,19 @@ function loadMotion(url)
 }
 
 function locate()
-{
-    var xml = "\<Locate target='" + $('#objectname').val() + "'/>";
+{   
+    var name = $('#objectname').val();
+    var xml = "\<Locate target='" + name + "'/>";
     console.log(xml);
     bridgeworks.updateScene(xml);
+    
+    console.log(name);
+
+    // selectedModel = bridgeworks.registry.find(name);
+    // console.log(selectedModel)
+    // scaleValues = (selectedModel.scale.getValueDirect());
+    // x = scaleValues['x'] * 100;
+    // $('#ts').slider('setValue', x);
 
 }
 
@@ -508,6 +516,12 @@ function locate(name){
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
+
+    scaleValues = (selectedModel.scale.getValueDirect());
+    x = scaleValues['x'] * 100
+    $('#ts').slider('setValue', x);
+
+
     
 }
 
@@ -524,9 +538,16 @@ function setColorPicker()
 
 function setModel()
 {
-    var xml = "\<Set target='" + $('#objectname').val() + "'/>";
+    var name = $('#objectname').val();
+    var xml = "\<Set target='" + name + "'/>";
     console.log(xml);
     bridgeworks.updateScene(xml);
+
+    // selectedModel = bridgeworks.registry.find(name);
+    // scaleValues = (selectedModel.scale.getValueDirect());
+    // x = scaleValues['x'] * 100;
+    // console.log(x);
+    // $('#ts').slider('setValue', x);
 }
 
 function setModel(name)
@@ -540,6 +561,11 @@ function setModel(name)
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
+
+    scaleValues = (selectedModel.scale.getValueDirect());
+    x = scaleValues['x'] * 100
+    $('#ts').slider('setValue', x);
+
 }
 function paste()
 {
