@@ -415,6 +415,10 @@ function loadModel(url)
     bridgeworks.updateScene(xstr);
     
     selectedModel = bridgeworks.registry.find(name);
+    
+    scaleValues = (selectedModel.scale.getValueDirect());
+    x = scaleValues['x'] * 100
+    $('#scales').slider('setValue', x);
 
     var r = selectedModel.rotation.getValueDirect();
     $("#rotxs").slider("setValue", r.x);
@@ -490,12 +494,12 @@ function loadMotion(url)
     bridgeworks.updateScene(xstr);
 }
 
-function locate()
-{
-    var xml = "\<Locate target='" + $('#objectname').val() + "'/>";
+function locate() //Where is this function called?
+{   
+    var name = $('#objectname').val();
+    var xml = "\<Locate target='" + name + "'/>";
     console.log(xml);
-    bridgeworks.updateScene(xml);
-
+    bridgeworks.updateScene(xml);    
 }
 
 //Locates the target given the name and also sets current object to be the object located
@@ -509,6 +513,11 @@ function locate(name){
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
+
+    scaleValues = (selectedModel.scale.getValueDirect());
+    x = scaleValues['x'] * 100
+    $('#scales').slider('setValue', x);
+
     var r = selectedModel.rotation.getValueDirect();
     $("#rotxs").slider("setValue", r.x);
     $("#rotys").slider("setValue", r.y);
@@ -527,11 +536,13 @@ function setColorPicker()
     document.getElementById('myColor').color.fromRGB(r, g, b);
 }
 
-function setModel()
+function setModel() //Where is this function called?
 {
-    var xml = "\<Set target='" + $('#objectname').val() + "'/>";
+    var name = $('#objectname').val();
+    var xml = "\<Set target='" + name + "'/>";
     console.log(xml);
     bridgeworks.updateScene(xml);
+
 }
 
 function setModel(name)
@@ -545,6 +556,11 @@ function setModel(name)
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
+
+    scaleValues = (selectedModel.scale.getValueDirect());
+    x = scaleValues['x'] * 100
+    $('#scales').slider('setValue', x);
+
     var r = selectedModel.rotation.getValueDirect();
     $("#rotxs").slider("setValue", r.x);
     $("#rotys").slider("setValue", r.y);

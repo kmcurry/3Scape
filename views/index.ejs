@@ -395,11 +395,16 @@
 
                         setObject(name);
                         setColorPicker();
+
+                        scaleValues = (selectedModel.scale.getValueDirect());
+                        x = scaleValues['x'] * 100
+                        $('#scales').slider('setValue', x);
+
                         var r = selectedModel.rotation.getValueDirect();
                         $("#rotxs").slider("setValue", r.x);
                         $("#rotys").slider("setValue", r.y);
                         $("#rotzs").slider("setValue", r.z);
-                        console.log(r);
+                        
                     }
                     else {
                         selected = bridgeworks.selector.selectedName.getValueDirect().join("");
@@ -1134,11 +1139,11 @@ function zoomActivate() {
         <input id="rotxs" data-slider-id='rotx-slider' type="text"/>
         <input id="rotys" data-slider-id='roty-slider' type="text"/>
         <input id="rotzs" data-slider-id='rotz-slider' type="text"/>
-        <input id="ts" data-slider-id='tilt-slider' type="text"/>                        
+        <input id="scales" data-slider-id='scale-slider' type="text"/>                        
         <script type="text/javascript">
           $('#rotxs').slider({
             formater: function(value) {
-             return 'Rotation X: '+value;
+             return 'Pitch: '+value;
               },
               min: -180,
               max: 180,
@@ -1150,7 +1155,7 @@ function zoomActivate() {
              });
           $('#rotys').slider({
             formater: function(value) {
-              return 'Rotation Y: '+value;
+              return 'Yaw: '+value;
             },
             min: -180,
             max: 180,
@@ -1162,7 +1167,7 @@ function zoomActivate() {
            });
           $('#rotzs').slider({
            formater: function(value) {
-           return 'Rotation Z: '+value;
+           return 'Roll: '+value;
            },
            min: -180,
            max: 180,
@@ -1172,9 +1177,9 @@ function zoomActivate() {
            console.log(ev.value);
            setRotationZ(ev.value);
             });
-          $('#ts').slider({
+          $('#scales').slider({
             formater: function(value) {
-              return 'Tilt: ' + (value); // Hack to have highest value at top
+              return 'Scale: ' + (value); // Hack to have highest value at top
             },
             min: 0,
             max: 200,
@@ -1700,7 +1705,7 @@ $(function () {
     $('#map-controls').fadeToggle();
     $('#object-controls').fadeToggle();
     $('#rotate-slider').fadeToggle();
-    $('#tilt-slider').fadeToggle();
+    $('#scale-slider').fadeToggle();
   }
 </script>
       

@@ -93,7 +93,7 @@ body.modal-open {
   z-index: 2000;
 }*/
 
-#tilt-slider{
+#scale-slider{
   position:fixed;
   right: 9%;
   top: 50%;
@@ -107,11 +107,7 @@ body.modal-open {
   background: #BABABA;
 }
 
-#tilt-slider .slider-selection {
-  background: #F5;
-}
-
-#tilt-slider .slider-track {
+#scale-slider .slider-selection {
   background: #597AFF;
 }
 
