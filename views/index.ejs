@@ -837,17 +837,20 @@ function zoomActivate() {
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <button id="sidebar-button" type="button" class="btn btn-default navbar-btn btn-danger opened" data-toggle="collapse" data-target="#side-nav" title="Toggle Sidebar"><span class="glyphicon glyphicon-chevron-left"></span></button>
+      <button id="sidebar-button" type="button" class="btn btn-default navbar-btn btn-danger closed" title="Toggle Sidebar"><span class="glyphicon glyphicon-chevron-right"></span></button>
       <script>
         $("#sidebar-button").click(function(){
-          if ($(this).hasClass("opened")) {
-            $(this).animate({left: '0px'}, 250, "swing");
-            $(this).removeClass("opened").addClass("closed");
-            $('#sidebar-button span').removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-right");
-          }else {
-            $(this).animate({left: '300px'}, 275, "swing");
+          $("#container").css("display", "");
+          $("#side-nav").collapse('toggle');
+          if ($(this).hasClass("closed")) {
+            $(this).animate({left: '300px'}, 250, "swing");
             $(this).removeClass("closed").addClass("opened");
             $('#sidebar-button span').removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-left");
+          }else {
+            $(this).animate({left: '0px'}, 275, "swing");
+            $(this).removeClass("opened").addClass("closed");
+            $('#sidebar-button span').removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-right");
+
           }
         });                
 
@@ -1066,8 +1069,8 @@ function zoomActivate() {
       <!-- End headerController scope -->
         <div class="row">
           <!-- <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:1028" title="Show Sidebar"><span class="glyphicon glyphicon-chevron-right"></span></button> -->
-          <div id="container" style="width:300px;">
-              <div id="side-nav" class="collapse in width sidebar" style="padding:0; border:0;z-index:1029">
+          <div id="container" style="width:300px; display: none;">
+              <div id="side-nav" class="width sidebar collapse" style="padding:0; border:0;z-index:1029">
                   <div style="padding: 20px; overflow:hidden; width:300px;">
                           <div>
                               <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->                            
@@ -1130,12 +1133,11 @@ function zoomActivate() {
                           </div>                                                
                   </div>
               </div>
-          </div>
-            
+          </div>            
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                   <canvas id="Canvas">
+                   <!-- <canvas id="Canvas">
                   </canvas>
-          </div>
+        -->   </div>
           <!-- WILL REVISIT SLIDES
           <div id="present-tray">
             <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
@@ -1646,32 +1648,6 @@ function zoomActivate() {
         }
         </script>
       <script type="text/javascript">
-      // Presentation notes display correctly.
-          $(function () {
-              var showPopover = function () {
-                          $(this).popover('show');
-                      }
-                      , hidePopover = function () {
-                          $(this).popover('hide');
-                      };
-              $('#ex1').popover({
-                  content: 'An Example1 popover',
-                  trigger: 'hover',
-                  placement:'left'
-              })
-              $('#ex2').popover({
-                  content: 'An Example2 popover',
-                  trigger: 'hover',
-                  placement:'left'
-              })
-
-              $('#ex3').popover({
-                  content: 'An Example3 popover',
-                  trigger: 'hover',
-                  placement:'left'
-              })
-
-          });
           $('.dropdown-menu').find('form').click(function (e) {
               e.stopPropagation();
           });
@@ -1683,32 +1659,32 @@ function zoomActivate() {
           $('.color-dropdown').on('hide.bs.dropdown', function () {
               return false;
           });
-$(function () {
-    $('.dropdown.keep-open').on({
-        "shown.bs.dropdown": function() {
-            $(this).data('closable', false);
-        },
-        "click": function() {
-            $(this).data('closable', true);
-        },
-        "hide.bs.dropdown": function() {
-            return $(this).data('closable');
-        }
-    });
-});
-$(function () {
-    $('.dropup.keep-open').on({
-        "shown.bs.dropdown": function() {
-            $(this).data('closable', false);
-        },
-        "click": function() {
-            $(this).data('closable', true);
-        },
-        "hide.bs.dropdown": function() {
-            return $(this).data('closable');
-        }
-    });
-});
+          $(function () {
+              $('.dropdown.keep-open').on({
+                  "shown.bs.dropdown": function() {
+                      $(this).data('closable', false);
+                  },
+                  "click": function() {
+                      $(this).data('closable', true);
+                  },
+                  "hide.bs.dropdown": function() {
+                      return $(this).data('closable');
+                  }
+              });
+          });
+          $(function () {
+              $('.dropup.keep-open').on({
+                  "shown.bs.dropdown": function() {
+                      $(this).data('closable', false);
+                  },
+                  "click": function() {
+                      $(this).data('closable', true);
+                  },
+                  "hide.bs.dropdown": function() {
+                      return $(this).data('closable');
+                  }
+              });
+          });
 
       </script>
 
@@ -1727,6 +1703,9 @@ $(function () {
     $('#object-controls').fadeToggle();
     $('#rotate-slider').fadeToggle();
     $('#scale-slider').fadeToggle();
+    $('#rotz-slider').fadeToggle();
+    $('#rotx-slider').fadeToggle();
+    $('#roty-slider').fadeToggle();
   }
 </script>
       

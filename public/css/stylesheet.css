@@ -65,7 +65,7 @@ body.modal-open {
 #sidebar-button {
   position: fixed;
   z-index: 2000;
-  left: 300px;
+  left: 0px;
   top: 70px;
 }
 
