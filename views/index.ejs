@@ -395,6 +395,11 @@
 
                         setObject(name);
                         setColorPicker();
+                        var r = selectedModel.rotation.getValueDirect();
+                        $("#rotxs").slider("setValue", r.x);
+                        $("#rotys").slider("setValue", r.y);
+                        $("#rotzs").slider("setValue", r.z);
+                        console.log(r);
                     }
                     else {
                         selected = bridgeworks.selector.selectedName.getValueDirect().join("");
@@ -1126,17 +1131,47 @@ function zoomActivate() {
             <p id="Current_Object" style="font-size:2em; vertical-align:middle;">Target: X</p>
           </div>
         </div> -->
-        <input id="rs" data-slider-id='rotate-slider' type="text"/>
+        <input id="rotxs" data-slider-id='rotx-slider' type="text"/>
+        <input id="rotys" data-slider-id='roty-slider' type="text"/>
+        <input id="rotzs" data-slider-id='rotz-slider' type="text"/>
         <input id="ts" data-slider-id='tilt-slider' type="text"/>                        
         <script type="text/javascript">
-          $('#rs').slider({
+          $('#rotxs').slider({
             formater: function(value) {
-              return 'Rotation: '+value;
+             return 'Rotation X: '+value;
+              },
+              min: -180,
+              max: 180,
+              value: 0
+            })
+             .on("slide", function(ev){
+              console.log(ev.value)
+              setRotationX(ev.value);
+             });
+          $('#rotys').slider({
+            formater: function(value) {
+              return 'Rotation Y: '+value;
             },
             min: -180,
             max: 180,
             value: 0
-          });            
+          })
+           .on("slide", function(ev){
+             console.log(ev.value);
+             setRotationY(ev.value);
+           });
+          $('#rotzs').slider({
+           formater: function(value) {
+           return 'Rotation Z: '+value;
+           },
+           min: -180,
+           max: 180,
+           value: 0
+          })
+          .on("slide", function(ev){
+           console.log(ev.value);
+           setRotationZ(ev.value);
+            });
           $('#ts').slider({
             formater: function(value) {
               return 'Tilt: ' + (value); // Hack to have highest value at top
