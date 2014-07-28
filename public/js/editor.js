@@ -429,26 +429,13 @@ function loadModel(url)
     $("#rotys").slider("setValue", r.y);
     $("#rotzs").slider("setValue", r.z);
     
-    // add the loaded thing to the list of loaded things
-    var p = document.createElement("div");
-    p.setAttribute("id", name);
-    var a = document.createElement("a");
-    a.setAttribute("onclick", "show('" + name + "');")
-    a.innerText = name;
-    
-    //p.appendChild(a);
-    
-    var panel = document.getElementById("panel-curr-scene");
-    //panel.appendChild(p);
-    console.log(name);
-    
+    console.log($('#sidebar-button').hasClass("closed"))
+
+    if($('#sidebar-button').hasClass("closed")){
+        $('#sidebar-button').removeClass('btn-danger').addClass('btn-info');
+    }
     
 }
-
-// <div class="row">
-//   <div class="col-md-6">.col-md-6</div>
-//   <div class="col-md-6">.col-md-6</div>
-// </div>
 
 function loadMotion(url)
 {
