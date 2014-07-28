@@ -415,6 +415,10 @@ function loadModel(url)
     bridgeworks.updateScene(xstr);
     
     selectedModel = bridgeworks.registry.find(name);
+    scaleValues = (selectedModel.scale.getValueDirect());
+    console.log(scaleValues);
+    x = scaleValues['x'] * 100
+    $('#ts').slider('setValue', x);
     
     // add the loaded thing to the list of loaded things
     var p = document.createElement("div");
