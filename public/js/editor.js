@@ -418,7 +418,7 @@ function loadModel(url)
     
     scaleValues = (selectedModel.scale.getValueDirect());
     x = scaleValues['x'] * 100
-    $('#ts').slider('setValue', x);
+    $('#scales').slider('setValue', x);
 
     var r = selectedModel.rotation.getValueDirect();
     $("#rotxs").slider("setValue", r.x);
@@ -516,7 +516,7 @@ function locate(name){
 
     scaleValues = (selectedModel.scale.getValueDirect());
     x = scaleValues['x'] * 100
-    $('#ts').slider('setValue', x);
+    $('#scales').slider('setValue', x);
 
     var r = selectedModel.rotation.getValueDirect();
     $("#rotxs").slider("setValue", r.x);
@@ -559,7 +559,7 @@ function setModel(name)
 
     scaleValues = (selectedModel.scale.getValueDirect());
     x = scaleValues['x'] * 100
-    $('#ts').slider('setValue', x);
+    $('#scales').slider('setValue', x);
 
     var r = selectedModel.rotation.getValueDirect();
     $("#rotxs").slider("setValue", r.x);
