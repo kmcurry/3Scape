@@ -415,6 +415,10 @@ function loadModel(url)
     bridgeworks.updateScene(xstr);
     
     selectedModel = bridgeworks.registry.find(name);
+
+    myObject = document.getElementById(name);
+    $('.object').removeClass('current-object');
+    $(myObject).addClass('current-object');
     
     scaleValues = (selectedModel.scale.getValueDirect());
     x = scaleValues['x'] * 100
