@@ -57,6 +57,18 @@ body.modal-open {
   margin-top: 15px;
 }
 
+#collapse-button {
+  margin-top:0;
+  float: right;
+}
+
+#sidebar-button {
+  position: fixed;
+  z-index: 2000;
+  left: 300px;
+  top: 70px;
+}
+
 #rotx-slider {
     position:fixed;
     width:120px;
