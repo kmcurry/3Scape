@@ -395,6 +395,9 @@
 
                         setObject(name);
                         setColorPicker();
+                        scaleValues = (selectedModel.scale.getValueDirect());
+                        x = scaleValues['x'] * 100
+                        $('#ts').slider('setValue', x);
                     }
                     else {
                         selected = bridgeworks.selector.selectedName.getValueDirect().join("");
