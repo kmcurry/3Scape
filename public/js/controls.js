@@ -8,8 +8,8 @@ function setScale(value) {
     }
 }
 
-function setRotationX() {
-    var value = $( "#rotationX" ).spinner( "value" );
+function setRotationX(value) {
+    //var value = $( "#rotationX" ).spinner( "value" );
     
     if (selectedModel) {
         var r = selectedModel.rotation.getValueDirect();
@@ -17,8 +17,8 @@ function setRotationX() {
     }
 }
 
-function setRotationY() {
-    var value = $( "#rotationY" ).spinner( "value" );
+function setRotationY(value) {
+    //var value = $( "#rotationY" ).spinner( "value" );
     
     if (selectedModel) {
         var r = selectedModel.rotation.getValueDirect();
@@ -26,8 +26,8 @@ function setRotationY() {
     }
 }
 
-function setRotationZ() {
-    var value = $( "#rotationZ" ).spinner( "value" );
+function setRotationZ(value) {
+    //var value = $( "#rotationZ" ).spinner( "value" );
     
     if (selectedModel) {
         var r = selectedModel.rotation.getValueDirect();
