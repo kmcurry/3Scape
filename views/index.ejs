@@ -1205,13 +1205,11 @@ function zoomActivate() {
             });
           $('#scales').slider({
             formater: function(value) {
-              return 'Scale: ' + (value); // Hack to have highest value at top
+              return 'Scale: ' + (value);
             },
             min: 0,
             max: 200,
-            value: 100,                        
-            // orientation: 'vertical',
-            // reversed: true DOESN'T WORK
+            value: 100              
           })
           .on('slide', function(ev){
             console.log(ev.value);
@@ -1476,9 +1474,9 @@ function zoomActivate() {
 
 
           function preHide(){
-              $('#container').hide();
+              // $('#container').hide();
               $('#Navbar').hide();
-              $('#sidebar-button').hide();
+              // $('#sidebar-button').hide();
               $('#dialog').hide();
               $('#present-tray').show();
               $('#present-toolbar').show();
@@ -1531,7 +1529,7 @@ function zoomActivate() {
           });
 
           function preUnhide(){
-              $('#container').show();
+              // $('#container').show();
               $('#Navbar').show();
               $('#sidebar-button').show();
               $('#dialog').show();
