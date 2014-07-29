@@ -388,65 +388,65 @@
 		},
 
 		keydown: function(handleIdx, ev) {
-			if(!this.isEnabled()) {
-				return false;
-			}
+			// if(!this.isEnabled()) {
+			// 	return false;
+			// }
 
-			var dir;
-			switch (ev.which) {
-				case 37: // left
-				case 40: // down
-					dir = -1;
-					break;
-				case 39: // right
-				case 38: // up
-					dir = 1;
-					break;
-			}
-			if (!dir) {
-				return;
-			}
+			// var dir;
+			// switch (ev.which) {
+			// 	case 37: // left
+			// 	case 40: // down
+			// 		dir = -1;
+			// 		break;
+			// 	case 39: // right
+			// 	case 38: // up
+			// 		dir = 1;
+			// 		break;
+			// }
+			// if (!dir) {
+			// 	return;
+			// }
 
-			// use natural arrow keys instead of from min to max
-			if (this.natural_arrow_keys) {
-				if ((this.orientation === 'vertical' && !this.reversed) || (this.orientation === 'horizontal' && this.reversed)) {
-					dir = dir * -1;
-				}
-			}
+			// // use natural arrow keys instead of from min to max
+			// if (this.natural_arrow_keys) {
+			// 	if ((this.orientation === 'vertical' && !this.reversed) || (this.orientation === 'horizontal' && this.reversed)) {
+			// 		dir = dir * -1;
+			// 	}
+			// }
 
-			var oneStepValuePercentageChange = dir * this.percentage[2];
-			var percentage = this.percentage[handleIdx] + oneStepValuePercentageChange;
+			// var oneStepValuePercentageChange = dir * this.percentage[2];
+			// var percentage = this.percentage[handleIdx] + oneStepValuePercentageChange;
 
-			if (percentage > 100) {
-				percentage = 100;
-			} else if (percentage < 0) {
-				percentage = 0;
-			}
+			// if (percentage > 100) {
+			// 	percentage = 100;
+			// } else if (percentage < 0) {
+			// 	percentage = 0;
+			// }
 
-			this.dragged = handleIdx;
-			this.adjustPercentageForRangeSliders(percentage);
-			this.percentage[this.dragged] = percentage;
-			this.layout();
+			// this.dragged = handleIdx;
+			// this.adjustPercentageForRangeSliders(percentage);
+			// this.percentage[this.dragged] = percentage;
+			// this.layout();
 
-			var val = this.calculateValue();
+			// var val = this.calculateValue();
 			
-			this.element.trigger({
-					type: 'slideStart',
-					value: val
-				})
-				.data('value', val)
-				.prop('value', val);
+			// this.element.trigger({
+			// 		type: 'slideStart',
+			// 		value: val
+			// 	})
+			// 	.data('value', val)
+			// 	.prop('value', val);
 
-			this.setValue(val, true);
+			// this.setValue(val, true);
 
-			this.element
-				.trigger({
-					type: 'slideStop',
-					value: val
-				})
-				.data('value', val)
-				.prop('value', val);
-			return false;
+			// this.element
+			// 	.trigger({
+			// 		type: 'slideStop',
+			// 		value: val
+			// 	})
+			// 	.data('value', val)
+			// 	.prop('value', val);
+			// return false;
 		},
 
 		mousemove: function(ev) {
