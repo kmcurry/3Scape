@@ -112,6 +112,7 @@
           var zoomUpdate;
           var distance;
           var sceneInspector;
+          var objectInspector;
           var camStartPos;
           var modelName;
           var ancientLoaded = 0;
@@ -1228,6 +1229,8 @@ function zoomActivate() {
             </div>
         </div>
 
+        
+
         <div id="object-controls">
             <div>                  
               <span class="shape icon-pushalt" title="Move Object Up" onclick="objectUp();" style="font-size: 2em;"></span>
@@ -1566,6 +1569,9 @@ function zoomActivate() {
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
 
+                sceneInspector = bridgeworks.registry.find("SceneInspector");
+                objectInspector =bridgeworks.registry.find("ObjectInspector");
+
                 listLibrary();
                 
                 $('html').bind('keypress', function(e)
@@ -1643,7 +1649,20 @@ function zoomActivate() {
                 
             }
         }
-        </script>
+        $('#map-controls').mouseenter(function(){
+          var sceneActive = sceneInspector.enabled.getValueDirect();           
+          console.log(sceneActive);
+          if(!sceneActive){
+            sceneInspector.enabled.setValueDirect(true);
+            // objectInspector.enabled.setValueDirect(false);
+          }
+        }).mouseleave(function(){
+          var objectActive = objectInspector.enabled.getValueDirect();
+          if(objectActive){
+            sceneInspector.enabled.setValueDirect(false);
+          }
+        })
+      </script>
       <script type="text/javascript">
           $('.dropdown-menu').find('form').click(function (e) {
               e.stopPropagation();
