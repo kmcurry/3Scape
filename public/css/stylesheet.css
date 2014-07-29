@@ -2,6 +2,7 @@ body{
     padding:0;
     overflow: hidden;
 }
+
 body.modal-open {
     position: fixed;
     top: 0;
@@ -83,8 +84,7 @@ body.modal-open {
 
 #rotx-slider .slider-handle,
 #roty-slider .slider-handle,
-#rotz-slider .slider-handle,
-#scale-slider .slider-handle {
+#rotz-slider .slider-handle {
   background: #54BA57;
 }
 
