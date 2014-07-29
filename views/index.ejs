@@ -493,7 +493,7 @@ function zoomActivate() {
             }
           };
 
-          function objectLeft()
+          function objectLeft(magnitude)
           {
             // var objectInspector = bridgeworks.registry.find("ObjectInspector");
             // objectInspector.enabled.setValueDirect(true);
@@ -502,14 +502,14 @@ function zoomActivate() {
             // bridgeworks.updateScene();
             var cmd;
             cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]-=1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
+            cmd += "\<position x='" + (selectedModel.position.values[0]-= magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
             cmd += "\</Set>";
             console.log(selectedModel.position.getValueDirect());
             bridgeworks.updateScene(cmd);
             //previousSlide();
           }
 
-          function objectRight()
+          function objectRight(magnitude)
           {
             // This way will activate the keys depending on the direction the camera is facing. But will need some refactoring.
             // var objectInspector = bridgeworks.registry.find("ObjectInspector");
@@ -519,7 +519,7 @@ function zoomActivate() {
             // bridgeworks.updateScene();
             var cmd;
             cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0] += 1) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
+            cmd += "\<position x='" + (selectedModel.position.values[0] += magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
             cmd += "\</Set>";
             console.log(selectedModel.position.getValueDirect());
             bridgeworks.updateScene(cmd);
@@ -527,40 +527,40 @@ function zoomActivate() {
                 //nextSlide();
           }
 
-          function objectDown()
+          function objectDown(magnitude)
           {
             var cmd;            
             cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]-= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
+            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]-= magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
             cmd += "\</Set>";
             console.log(selectedModel.position.getValueDirect());
             bridgeworks.updateScene(cmd);          
           }
 
-          function objectBackward()
+          function objectBackward(magnitude)
           {
             var cmd;
             cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= 1) + "'/>"
+            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= magnitude) + "'/>"
             cmd += "\</Set>";
             console.log(selectedModel.position.getValueDirect());
             bridgeworks.updateScene(cmd);
             //nextSlide();
           }
 
-          function objectUp()
+          function objectUp(magnitude)
           {
             var cmd;
             cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]+= 1) + "' z='" + selectedModel.position.values[2] + "'/>"
+            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]+= magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
             cmd += "\</Set>";
             console.log(selectedModel.position.getValueDirect());
             bridgeworks.updateScene(cmd);
           }
 
-          function objectForward(){
+          function objectForward(magnitude){
             cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += 1) + "'/>"
+            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += magnitude) + "'/>"
             cmd += "\</Set>";
             console.log(selectedModel.position.getValueDirect());
             bridgeworks.updateScene(cmd);            
@@ -602,27 +602,27 @@ function zoomActivate() {
                     }
                         break;
                     case 39: //right
-                      objectRight();
+                      objectRight(1);
                       break;
 
                     case 37: //left
-                      objectLeft();
+                      objectLeft(1);
                       break;
 
                     case 40: //down
                       if (e.shiftKey || e.ctrlKey) {
-                        objectDown();
+                        objectDown(1);
                       }
                       else{
-                        objectBackward();
+                        objectBackward(1);
                       }
                       break;
                     case 38: //up
                       if (e.shiftKey || e.ctrlKey) {
-                        objectUp();
+                        objectUp(1);
                       }
                       else{
-                        objectForward();
+                        objectForward(1);
                       }
                       break;
                     case 'X'.charCodeAt(0):
@@ -1139,7 +1139,7 @@ function zoomActivate() {
               </div>
           </div>            
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                   <canvas id="Canvas">
+                   <canvas id="Canvas" style="width:100%">
                   </canvas>
           </div>
           <!-- WILL REVISIT SLIDES
@@ -1220,33 +1220,34 @@ function zoomActivate() {
 
         <div id="map-controls">
             <div id="Rotate">                  
-              <span class="shape fa fa-undo" title="Rotate Counter-Clockwise" onmousedown="rotateNegY();" style="font-size: 2em;"></span>
-              <span class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" onmousedown="rotatePosY();" style="font-size: 1.8em"></span>
+              <span id="rotate-counter" class="shape fa fa-undo" title="Rotate Counter-Clockwise" style="font-size: 2em;"></span>
+              <span id="rotate-clockwise" class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" style="font-size: 1.8em"></span>
             </div>        
             <div id ="Tilt">
-              <span class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onmousedown="tiltUp();"></span>
-              <span class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onmousedown="tiltDown();"></span>
+              <span id="tilt-up" class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onmousedown="tiltUp();"></span>
+              <span id="tilt-down" class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onmousedown="tiltDown();"></span>
             </div>              
             <div id="Zoom">
-              <span class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In" onmousedown="zoomIn();"></span>
-              <span class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out" onmousedown="zoomOut();"></span>
+              <span id="zoom-in" class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In"></span>
+              <span id="zoom-out" class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out"></span>
             </div>
         </div>
 
         
+        
 
         <div id="object-controls">
             <div>                  
-              <span class="shape icon-pushalt" title="Move Object Up" onclick="objectUp();" style="font-size: 2em;"></span>
-              <span class="shape icon-pullalt" style="font-size:2em" title="Move Object Down" onclick="objectDown();"></span>
+              <span id="object-up" class="shape icon-pushalt" title="Move Object Up" style="font-size: 2em;"></span>
+              <span id="object-down" class="shape icon-pullalt" style="font-size:2em" title="Move Object Down"></span>
             </div>        
             <div>                
-              <span class="shape fa fa-arrow-up" style="font-size:2em" title="Move Object Forward" onclick="objectForward();"></span>
-              <span class="shape fa fa-arrow-down" style="font-size:2em" title="Move Object Backward" onclick="objectBackward();"></span>
+              <span id="object-forward" class="shape fa fa-arrow-up" style="font-size:2em" title="Move Object Forward"></span>
+              <span id="object-backward" class="shape fa fa-arrow-down" style="font-size:2em" title="Move Object Backward"></span>
             </div>              
             <div>
-              <span class="shape fa fa-arrow-left" style="font-size:2em" title="Move Object Left" onclick="objectLeft();"></span>
-              <span class="shape fa fa-arrow-right" style="font-size:2em" title="Move Object Right" onclick="objectRight();"></span>
+              <span id="object-left" class="shape fa fa-arrow-left" style="font-size:2em" title="Move Object Left"></span>
+              <span id="object-right" class="shape fa fa-arrow-right" style="font-size:2em" title="Move Object Right"></span>
             </div>
         </div>
 
@@ -1348,7 +1349,7 @@ function zoomActivate() {
       </div>
       <!-- Progress Bar -->
 
-      <div id="dialog" style="display:none" title="Please enter your description for this item below">
+      <div id="dialog" style="display:none; top:50%" title="Please enter your description for this item below">
           <form method="post"> <!--id="my-form" enctype="multipart/form-data" -->
               <textarea name="title" id="title" style="width:100%"></textarea>
               <!-- <input type="text" id="title">-->
@@ -1480,7 +1481,7 @@ function zoomActivate() {
               // $('#container').hide();
               $('#Navbar').hide();
               // $('#sidebar-button').hide();
-              $('#dialog').hide();
+              // $('#dialog').hide();
               $('#present-tray').show();
               $('#present-toolbar').show();
               if(ancientLoaded == 1) {
@@ -1535,7 +1536,7 @@ function zoomActivate() {
               // $('#container').show();
               $('#Navbar').show();
               $('#sidebar-button').show();
-              $('#dialog').show();
+              // $('#dialog').show();
               $('#present-tray').hide();
               $('#present-toolbar').hide();
               $('#click').hide();
@@ -1654,20 +1655,51 @@ function zoomActivate() {
                 
             }
         }
-        $('#map-controls').mouseenter(function(){
-          var sceneActive = sceneInspector.enabled.getValueDirect();           
-          console.log(sceneActive);
-          if(!sceneActive){
-            sceneInspector.enabled.setValueDirect(true);
-            // objectInspector.enabled.setValueDirect(false);
-          }
-        }).mouseleave(function(){
-          var objectActive = objectInspector.enabled.getValueDirect();
-          if(objectActive){
-            sceneInspector.enabled.setValueDirect(false);
-          }
-        })
-      </script>
+          $('#map-controls').mouseenter(function(){
+            var sceneActive = sceneInspector.enabled.getValueDirect();           
+            console.log(sceneActive);
+            if(!sceneActive){
+              sceneInspector.enabled.setValueDirect(true);
+              // objectInspector.enabled.setValueDirect(false);
+            }
+          }).mouseleave(function(){
+            var objectActive = objectInspector.enabled.getValueDirect();
+            if(objectActive){
+              sceneInspector.enabled.setValueDirect(false);
+            }
+          })
+          
+          //Helper method to create button-hold functions. Pass element id, desired function (leave out parentheses), and time between repeats in miliseconds.
+          var onHoldFunction = function(id, method, time) {
+            var interval;
+            $(id).on({
+              mousedown : function () {
+                method(); // Still works on a single click                
+                interval = window.setInterval(function(){                
+                  method();
+                }, time); //Repeats every (time) miliseconds               
+              },
+              mouseup : function () {
+                window.clearInterval(interval);
+              }
+            });                
+          };
+          //Map
+          onHoldFunction('#rotate-counter', rotateNegY, 20);
+          onHoldFunction('#rotate-clockwise', rotatePosY, 20);
+          onHoldFunction('#tilt-up', tiltUp, 20);
+          onHoldFunction('#tilt-down', tiltDown, 20);
+          onHoldFunction('#zoom-in', zoomIn, 20);
+          onHoldFunction('#zoom-out', zoomOut, 20);
+
+          //Object, uses Anonymous function to pass parameter to callback
+          onHoldFunction('#object-up', function(){objectUp(0.5);}, 20);
+          onHoldFunction('#object-down', function(){objectDown(0.5);}, 20); 
+          onHoldFunction('#object-forward', function(){objectForward(0.5);}, 20); 
+          onHoldFunction('#object-backward', function(){objectBackward(0.5);}, 20); 
+          onHoldFunction('#object-left', function(){objectLeft(0.5);}, 20); 
+          onHoldFunction('#object-right', function(){objectRight(0.5);}, 20);        
+        </script>
       <script type="text/javascript">
           $('.dropdown-menu').find('form').click(function (e) {
               e.stopPropagation();
