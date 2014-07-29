@@ -23,7 +23,7 @@ function zoomOut()
     }
     else
     {
-        sceneInspec.panDelta.values[2]-=100;
+        sceneInspec.panDelta.values[2]-=10;
         sceneInspec.evaluate();
         bridgeworks.updateScene();
         console.log("Current Z delta: " + sceneInspec.panDelta.values[2]);
@@ -55,7 +55,7 @@ function zoomIn()
     }
     else
     {
-        sceneInspec.panDelta.values[2]+=100;
+        sceneInspec.panDelta.values[2]+=10;
         sceneInspec.evaluate();
         bridgeworks.updateScene();
 
@@ -71,7 +71,7 @@ function rotatePosY()
     //Should be moved to a config file
     var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
     //console.log(sceneInspec);
-    sceneInspec.rotationDelta.values[1]=90;
+    sceneInspec.rotationDelta.values[1]=5;
     console.log("Current Y delta: " + sceneInspec.panDelta.values[1]);
     sceneInspec.evaluate();
     bridgeworks.updateScene();
@@ -84,7 +84,7 @@ function rotateNegY()
 {
     //Should be moved to a config file
     var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
-    sceneInspec.rotationDelta.values[1]= -90;
+    sceneInspec.rotationDelta.values[1]= -5;
     console.log("Current Z delta: " + sceneInspec.panDelta.values[1]);
     sceneInspec.evaluate();
     bridgeworks.updateScene();
@@ -96,7 +96,7 @@ function rotateNegY()
 function tiltDown()
 {
     var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
-    sceneInspec.rotationDelta.values[0]= 10;
+    sceneInspec.rotationDelta.values[0]= 2;
     sceneInspec.evaluate();
     bridgeworks.updateScene();
     sceneInspec.rotationDelta.values[0] = 0;
@@ -107,7 +107,7 @@ function tiltDown()
 function tiltUp()
 {
     var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
-    sceneInspec.rotationDelta.values[0]= -10;
+    sceneInspec.rotationDelta.values[0]= -2;
     sceneInspec.evaluate();
     bridgeworks.updateScene();
     sceneInspec.rotationDelta.values[0] = 0;
