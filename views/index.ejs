@@ -1220,19 +1220,45 @@ function zoomActivate() {
 
         <div id="map-controls">
             <div id="Rotate">                  
-              <span class="shape fa fa-undo" title="Rotate Counter-Clockwise" onmousedown="rotateNegY();" style="font-size: 2em;"></span>
-              <span class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" onmousedown="rotatePosY();" style="font-size: 1.8em"></span>
+              <span id="rotate-counter" class="shape fa fa-undo" title="Rotate Counter-Clockwise" style="font-size: 2em;"></span>
+              <span id="rotate-clockwise" class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" style="font-size: 1.8em"></span>
             </div>        
             <div id ="Tilt">
-              <span class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onmousedown="tiltUp();"></span>
-              <span class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onmousedown="tiltDown();"></span>
+              <span id="tilt-up" class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onmousedown="tiltUp();"></span>
+              <span id="tilt-down" class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onmousedown="tiltDown();"></span>
             </div>              
             <div id="Zoom">
-              <span class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In" onmousedown="zoomIn();"></span>
-              <span class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out" onmousedown="zoomOut();"></span>
+              <span id="zoom-in" class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In"></span>
+              <span id="zoom-out" class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out"></span>
             </div>
         </div>
 
+        <script type="text/javascript">
+          //Helper method to create button-hold functions. Pass element id, desired function (leave out parentheses), and time between repeats in miliseconds.
+          var onHoldFunction = function(id, method, time) {
+            var interval;
+            $(id).on({
+              mousedown : function () {
+                method(); // Still works on a single click                
+                interval = window.setInterval(function(){                
+                  method();
+                }, time); //Repeats every 200 ms                
+              },
+              mouseup : function () {
+                window.clearInterval(interval);
+              }
+            });                
+          };
+
+          onHoldFunction('#rotate-counter', rotateNegY, 200);
+          onHoldFunction('#rotate-clockwise', rotatePosY, 200);
+          onHoldFunction('#tilt-up', tiltUp, 200);
+          onHoldFunction('#tilt-down', tiltDown, 200);
+          onHoldFunction('#zoom-in', zoomIn, 200);
+          onHoldFunction('#zoom-out', zoomOut, 200);        
+          
+          
+        </script>
         
 
         <div id="object-controls">

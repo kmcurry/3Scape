@@ -23,7 +23,7 @@ function zoomOut()
     }
     else
     {
-        sceneInspec.panDelta.values[2]-=1000;
+        sceneInspec.panDelta.values[2]-=100;
         sceneInspec.evaluate();
         bridgeworks.updateScene();
         console.log("Current Z delta: " + sceneInspec.panDelta.values[2]);
@@ -55,7 +55,7 @@ function zoomIn()
     }
     else
     {
-        sceneInspec.panDelta.values[2]+=1000;
+        sceneInspec.panDelta.values[2]+=100;
         sceneInspec.evaluate();
         bridgeworks.updateScene();
 
