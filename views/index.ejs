@@ -458,15 +458,18 @@ function zoomActivate() {
         distance = sceneInspector.pivotDistance.getValueDirect()
         if ((distance >= 0) && (distance < 4000)) {
             if (distance * 0.3 != sceneInspector.panSensitivity.values[0]) {
-                sceneInspector.panSensitivity.values[0] = distance * 0.3;
-                sceneInspector.panSensitivity.values[1] = distance * 0.3;
-                sceneInspector.panSensitivity.values[2] = distance * 0.3;
+                sceneInspector.panSensitivity.values[0] = distance * 0.05;
+                sceneInspector.panSensitivity.values[1] = distance * 0.05;
+                sceneInspector.panSensitivity.values[2] = distance * 0.05;
+                console.log(sceneInspector.panSensitivity.values[0]);
             }
         }
         else {
             sceneInspector.panSensitivity.values[0] = 1200;
             sceneInspector.panSensitivity.values[1] = 1200;
             sceneInspector.panSensitivity.values[2] = 1200;
+            console.log(sceneInspector.panSensitivity.values[0]);
+            console.log(distance);
         }
     }, 200);
 }
@@ -578,7 +581,7 @@ function zoomActivate() {
                         break;
 
                     case 46: //Delete Key
-                        var slice = selected.slice(6.8);
+                        var slice = selected.slice(6,8);
                             console.log(slice);
                         var cmd = "\<Remove target='"+selected+"'/>";
                         bridgeworks.updateScene(cmd);
