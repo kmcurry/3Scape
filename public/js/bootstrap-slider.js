@@ -99,7 +99,7 @@
 				this.stylePos = 'left';
 				this.mousePos = 'pageX';
 				this.sizePos = 'offsetWidth';
-				this.tooltip.addClass('top')[0].style.top = -this.tooltip.outerHeight() - 14 + 'px';
+				this.tooltip.addClass('left')[0].style.top = -this.tooltip.outerHeight() + 5 + 'px';
 				this.tooltip_min.addClass('top')[0].style.top = -this.tooltip_min.outerHeight() - 14 + 'px';
 				this.tooltip_max.addClass('top')[0].style.top = -this.tooltip_max.outerHeight() - 14 + 'px';
 				break;
@@ -321,7 +321,7 @@
 				if (this.orientation === 'vertical') {
 					this.tooltip.css('margin-top', -this.tooltip.outerHeight() / 2 + 'px');
 				} else {
-					this.tooltip.css('margin-left', -this.tooltip.outerWidth() / 2 + 'px');
+					this.tooltip.css('margin-left', -this.tooltip.outerWidth() / 2 - 50 + 'px');
 				}
 			}
 		},

@@ -88,6 +88,13 @@ body.modal-open {
   background: #54BA57;
 }
 
+#rotx-slider .slider-handle:focus,
+#roty-slider .slider-handle:focus,
+#rotz-slider .slider-handle:focus,
+#scale-slider .slider-handle:focus {
+  outline:none;
+}
+
 #rotx-slider {
     position:fixed;
     width:120px;
