@@ -122,8 +122,8 @@ body.modal-open {
 #scale-slider{
   position:fixed;
   width:120px;
-  right: 9%;
-  top: 50%;
+  left: 90%;
+  top: 70%;
   z-index: 2000;
 }
 

@@ -1134,8 +1134,8 @@ function zoomActivate() {
               </div>
           </div>            
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                   <!-- <canvas id="Canvas">
-                  </canvas> -->
+                   <canvas id="Canvas">
+                  </canvas>
           </div>
           <!-- WILL REVISIT SLIDES
           <div id="present-tray">
@@ -1524,8 +1524,7 @@ function zoomActivate() {
               //=================================================
           });
 
-          function preUnhide(){
-              $('#container').show();
+          function preUnhide(){              
               $('#Navbar').show();
               $('#sidebar-button').show();
               $('#dialog').show();
