@@ -81,6 +81,13 @@ body.modal-open {
   left: 300px;
 }
 
+#rotx-slider .slider-handle,
+#roty-slider .slider-handle,
+#rotz-slider .slider-handle,
+#scale-slider .slider-handle {
+  background: #54BA57;
+}
+
 #rotx-slider {
     position:fixed;
     width:120px;
@@ -119,22 +126,13 @@ body.modal-open {
 
 #scale-slider{
   position:fixed;
+  width:120px;
   right: 9%;
   top: 50%;
   color: rgb(71, 169, 211);
   /*opacity: 0.4;*/
   z-index: 2000;
-  height: 120px;
 }
-
-#rotate-slider .slider-selection {
-  background: #BABABA;
-}
-
-#scale-slider .slider-selection {
-  background: #597AFF;
-}
-
 
 #current-target {
     text-align: center;

@@ -1195,13 +1195,12 @@ function zoomActivate() {
             });
           $('#scales').slider({
             formater: function(value) {
-              return 'Scale: ' + (value); // Hack to have highest value at top
+              return 'Scale: ' + (value);
             },
             min: 0,
             max: 200,
-            value: 100,                        
-            // orientation: 'vertical',
-            // reversed: true DOESN'T WORK
+            value: 100,
+            tooltip: 'always'            
           })
           .on('slide', function(ev){
             console.log(ev.value);
