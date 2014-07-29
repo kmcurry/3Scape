@@ -100,8 +100,8 @@
 				this.mousePos = 'pageX';
 				this.sizePos = 'offsetWidth';
 				this.tooltip.addClass('left')[0].style.top = -this.tooltip.outerHeight() + 5 + 'px';
-				this.tooltip_min.addClass('top')[0].style.top = -this.tooltip_min.outerHeight() - 14 + 'px';
-				this.tooltip_max.addClass('top')[0].style.top = -this.tooltip_max.outerHeight() - 14 + 'px';
+				this.tooltip_min.addClass('top')[0].style.top = 0
+				this.tooltip_max.addClass('top')[0].style.top = 0
 				break;
 		}
 
@@ -271,7 +271,7 @@
 
                 if (offset_min.right > offset_max.left) {
                     this.tooltip_max.removeClass('top');
-                    this.tooltip_max.addClass('bottom')[0].style.top = 18 + 'px';
+                    this.tooltip_max.addClass('bottom')[0].style.top = 0 + 'px';
                 } else {
                     this.tooltip_max.removeClass('bottom');
                     this.tooltip_max.addClass('top')[0].style.top = -30 + 'px';
