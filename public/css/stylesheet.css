@@ -98,7 +98,7 @@ body.modal-open {
 #rotx-slider {
     position:fixed;
     width:120px;
-    left: 90%;
+    right: 2%;
     top: 75%;
     z-index: 2000;
 }
@@ -106,7 +106,7 @@ body.modal-open {
 #roty-slider {
     position:fixed;
     width:120px;
-    left: 90%;
+    right: 2%;
     top: 80%;
     z-index: 2000;
 }
@@ -114,7 +114,7 @@ body.modal-open {
 #rotz-slider {
     position:fixed;
     width:120px;
-    left: 90%;
+    right: 2%;
     top: 85%;
     z-index: 2000;
 }
@@ -143,7 +143,7 @@ body.modal-open {
     text-align: center;
     position:fixed;
     right: 2%;
-    top: 25%;
+    top: 20%;
     background-color:#000;    
     border-radius: 10px;
     padding: 13px;
@@ -156,7 +156,7 @@ body.modal-open {
     text-align: center;
     position:fixed;
     right: 2%;
-    top: 50%;
+    top: 45%;
     background-color:#000;    
     border-radius: 10px;
     padding: 13px;
