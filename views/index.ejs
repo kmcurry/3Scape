@@ -360,6 +360,12 @@
               }
           }
 */
+          function openLabelEdit()
+          {
+              edit = 1;
+              new nicEditors.findEditor('title').setContent(selectedText);
+              $( "#dialog" ).dialog("open");
+          }
           function handleEvent(e)
           {
               bridgeworks.handleEvent(e);
@@ -418,22 +424,28 @@
 
                 case "dblclick":
                 {
-                    var name = selectedModel.name.getValueDirect().join("");
-                    var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-                    var cmd = "";
-                    if (e.metaKey || e.ctrlKey) {
-                        cmd = "\<AutoInterpolate target='" + name + "'>";
-                        cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
-                        cmd += "\</AutoInterpolate>";
+                    if(selected)
+                    {
+                        openLabelEdit();
                     }
                     else {
-                        cmd = "\<Locate target='" + name + "'/>";
+                        var name = selectedModel.name.getValueDirect().join("");
+                        var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+                        var cmd = "";
+                        if (e.metaKey || e.ctrlKey) {
+                            cmd = "\<AutoInterpolate target='" + name + "'>";
+                            cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
+                            cmd += "\</AutoInterpolate>";
+                        }
+                        else {
+                            cmd = "\<Locate target='" + name + "'/>";
+                        }
+                        console.log(name);
+                        console.debug(cmd);
+                        bridgeworks.updateScene(cmd);
+                        setObject(name);
+                        setColorPicker();
                     }
-                    console.log(name);
-                    console.debug(cmd);
-                    bridgeworks.updateScene(cmd);
-                    setObject(name);
-                    setColorPicker();
                 }
                 break;
               }
@@ -572,12 +584,6 @@ function zoomActivate() {
                         var div = document.getElementById(selectedId);
                         bridgeworks.updateScene(cmd2);
                         div.parentNode.removeChild(div);
-                    break;
-
-                    case 187: //Edit Label(=)
-                        edit = 1;
-                        new nicEditors.findEditor('title').setContent(selectedText);
-                        $( "#dialog" ).dialog("open");
                     break;
 
                     case 'V'.charCodeAt(0):
@@ -969,7 +975,7 @@ function zoomActivate() {
                       </li>
                       <li>
                         <div class="btn-group dropdown">
-                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Add Label">
+                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Add Label"onclick="if(selected){openLabelEdit();}">
                             <span class="shape fa fa-font" style="font-size:1.4em;"></span>
                           </button>
                           <ul class="dropdown-menu">
