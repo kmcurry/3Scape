@@ -1136,7 +1136,7 @@ function zoomActivate() {
               </div>
           </div>            
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                   <canvas id="Canvas">
+                   <canvas id="Canvas" style="width:100%">
                   </canvas>
           </div>
           <!-- WILL REVISIT SLIDES
@@ -1345,7 +1345,7 @@ function zoomActivate() {
       </div>
       <!-- Progress Bar -->
 
-      <div id="dialog" style="display:none" title="Please enter your description for this item below">
+      <div id="dialog" style="display:none; top:50%" title="Please enter your description for this item below">
           <form method="post"> <!--id="my-form" enctype="multipart/form-data" -->
               <textarea name="title" id="title" style="width:100%"></textarea>
               <!-- <input type="text" id="title">-->
@@ -1477,7 +1477,7 @@ function zoomActivate() {
               // $('#container').hide();
               $('#Navbar').hide();
               // $('#sidebar-button').hide();
-              $('#dialog').hide();
+              // $('#dialog').hide();
               $('#present-tray').show();
               $('#present-toolbar').show();
               if(ancientLoaded == 1) {
@@ -1532,7 +1532,7 @@ function zoomActivate() {
               // $('#container').show();
               $('#Navbar').show();
               $('#sidebar-button').show();
-              $('#dialog').show();
+              // $('#dialog').show();
               $('#present-tray').hide();
               $('#present-toolbar').hide();
               $('#click').hide();
