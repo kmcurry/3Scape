@@ -51,578 +51,12 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
-      
-    <script type="text/javascript">
-        //A group of global variables
-        var bridgeworks = null;
-        var cube ="objects/Cube.lwo";
-        var sphere = "objects/Sphere.lwo";
-        var tube = "objects/Tube.lwo";
-        var Spin = "motions/spin-y.mot";
-        var Diss = "motions/oscillate-dissolve.mot";
-        var Scal = "motions/oscillate-scale.mot";
-        var fly = "motions/fly-loop.mot";
-        var wall = "objects/Wall.lwo";
-        var beam = "objects/Beam.lwo";
-        var Ring = "objects/Ring.lwo";
-        var Pyramid = "objects/Pyramid.lwo";
-        var c2v = "Vehicles/objects/C2V.lwo";
-        var cow = "Animals/objects/Cow.lwo";
-        var church = "Barnville/objects/Church.lwo";
-        var medHV = "Vehicles/objects/Humvee_Medical.lwo";
-        var currentObj = "Target: X";
-        var editorOpen = 0;
-        var slideCount = 1;
-        var numSlides = 10;
-        var elapsedTime = 0;
-        var CameraMotion = "CameraMotion";
-        var zoomUpdate;
-        var distance;
-        var sceneInspector;
-        var objectInspector;
-        var camStartPos;
-        var modelName;
-        var ancientLoaded = 0;
-        var selected;
-        var selectedId;
-        var edit = 0;
-        var selectedText;
-        var nicText;
-
-
-        //Progress Bar ===========================================================
-        var interval;
-        var kfi;
-        var slideTime;
-        var playSlider;
-        var slidesPlayed;
-        var isPlaying;
-        var isStopped;
-        var timer;
-        //========================================================================
-
-        var g_labelCount = 0;
-        var g_labelName = null;
-        var g_countStr = "";
-        
-        var selectedModel = null;
-        
-        var capture = false;
-        
-          function addRecord()
-          {
-              var nicE = new nicEditors.findEditor('title');
-              var title = nicE.getContent();
-              //var title = $( "#title" ).val();
-              if (title != "") {
-                  var update = "\<Set target='Label_" + g_labelName + "' text='" + title + "' show='true'/>";
-                  console.debug(update);
-                  bridgeworks.updateScene(update);
-                  var cmd = "\<Remove target='"+g_labelName+"'/>";
-                  bridgeworks.updateScene(cmd);
-                  // This flag is checked on dialog close. If true on close
-                  // then there are some things to undo.
-                  // If we made it this far then there is nothing to undo.
-                  adding = false;
-                  editorOpen = 0;
-              }
-              $( "#dialog" ).dialog("close");
-          }
-        function addBalloon()
-        {
-            var nicE = new nicEditors.findEditor('title');
-            var title = nicE.getContent();
-            //var title = $( "#title" ).val();
-            if (title != "") {
-                var update = "\<Set target='Label_" + g_labelName + "/balloonTipLabelStyle/htmlLabelStyle'>";
-                update += "\<html><![CDATA["+ title +"]]></html>";
-                //update += "\<html>"+ title + "</html>";
-                update += "</Set>";
-                console.debug(update);
-                bridgeworks.updateScene(update);
-                var cmd = "\<Set target='Label_" + g_labelName + "' show='true'/>";
-                bridgeworks.updateScene(cmd);
-                // var cmd = "\<Remove target='"+g_labelName+"'/>";
-                // bridgeworks.updateScene(cmd);
-                // This flag is checked on dialog close. If true on close
-                // then there are some things to undo.
-                // If we made it this far then there is nothing to undo.
-                adding = false;
-                editorOpen = 0;
-                edit = 0;
-            }
-            $( "#dialog" ).dialog("close");
-        }
-
-        function editRecord(labelName)
-        {
-            var nicE = new nicEditors.findEditor('title');
-            var title = nicE.getContent();
-            console.log("EDITRECORD: "+labelName);
-            var update = "\<Set target='" + labelName + "' text='" + title + "' show='true'/>";
-            console.debug(update);
-            bridgeworks.updateScene(update);
-            console.log(g_labelName);
-            edit = 0;
-            $( "#dialog" ).dialog("close");
-        }
-
-        function createRecord()
-        {
-
-            adding = true;
-            editorOpen = 1;
-
-            var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-
-            g_labelCount = g_labelCount + 1;
-            g_countStr = g_labelCount.toString();
-
-            g_labelName = "L-" + g_countStr;
-
-            var xml = loadXMLFile("BwContent/label.xml");
-
-            var name = xml.getElementsByTagName("Model")[0].attributes[0];
-            name.value = g_labelName;
-
-            var pos = xml.getElementsByTagName("position")[0];
-            pos.attributes["x"].value = pointWorld.x.toString();
-            pos.attributes["y"].value = pointWorld.y.toString();
-            pos.attributes["z"].value = pointWorld.z.toString();
-
-            var label = xml.getElementsByTagName("Label")[0];
-            label.attributes["name"].value = "Label_" + name.value;
-            if(selectedModel)
-            {
-                label.attributes["parent"].value = modelName;
-                console.log(modelName)
-            }
-            else {
-                label.attributes["parent"].value = name.value;
-                console.log("No Model");
-            }
-
-            name = xml.getElementsByTagName("Group")[0].attributes[0];
-            name.value = "Group_" + g_labelName;
-
-
-            var xstr = (new XMLSerializer()).serializeToString(xml);
-            console.debug(xstr);
-            bridgeworks.updateScene(xstr);
-            if(g_labelCount > 1) {
-                var nicE = new nicEditors.findEditor('title').setContent("");
-            }
-            $( "#dialog" ).dialog("open");
-            //addRecord();
-        }
-        function createBalloon()
-        {
-            edit = 2;
-            var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-
-            g_labelCount = g_labelCount + 1;
-            g_countStr = g_labelCount.toString();
-
-            g_labelName = "L-" + g_countStr;
-
-            var xml = loadXMLFile("BwContent/BalloonTipLabel.xml");
-
-            var name = xml.getElementsByTagName("Model")[0].attributes[0];
-            name.value = g_labelName;
-
-            var pos = xml.getElementsByTagName("position")[0];
-            pos.attributes["x"].value = pointWorld.x.toString();
-            pos.attributes["y"].value = pointWorld.y.toString();
-            pos.attributes["z"].value = pointWorld.z.toString();
-
-            var label = xml.getElementsByTagName("BalloonTipLabel")[0];
-            label.attributes["name"].value = "Label_" + name.value;
-            if(selectedModel)
-            {
-                label.attributes["parent"].value = modelName;
-                console.log(modelName)
-            }
-            else {
-                label.attributes["parent"].value = name.value;
-                console.log("No Model");
-            }
-
-            name = xml.getElementsByTagName("Group")[0].attributes[0];
-            name.value = "Group_" + g_labelName;
-
-
-            var xstr = (new XMLSerializer()).serializeToString(xml);
-            console.debug(xstr);
-            bridgeworks.updateScene(xstr);
-
-            var cmd = "\<Remove target='"+g_labelName+"'/>";
-            bridgeworks.updateScene(cmd);
-
-            if(g_labelCount > 1) {
-                var nicE = new nicEditors.findEditor('title').setContent("");
-            }
-            $( "#dialog" ).dialog("open");
-        }
-
-        // This function makes it so that mouse interaction with the scene
-        // continues when the cursor moves out of the Bridgeworks frame.
-        function handleDocMove(event)
-        {
-            if (capture) bridgeworks.handleEvent(event);
-        }
-
-        //Mock Up of How Search would work
-        function Search()
-        {
-            var Search = $( "#Search" ).val();
-            var cmd = "\<Locate target='" + Search + "'/>";
-            bridgeworks.updateScene(cmd);
-            console.debug(cmd);
-        }
-
-        //Hacks in loadslides function. Right now you send it the number of slides you want loaded. And they have to be named SlideX in order for this to work
-        function loadSlides(num){
-            //slideCount = 1;
-            while(slideCount<=num) {
-                var popUp = document.getElementById("dropUpTray");
-                var slidePanel = document.getElementById("slidePanel");
-                var Li = document.createElement('li');
-                var S = document.createElement('a');
-                S.setAttribute("style", "cursor: pointer;");
-                S.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount)+".xml');slidesPlayed = "+slideCount);
-                S.setAttribute("id", "Slide " + slideCount);
-                S.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
-                Li.appendChild(S);
-                slidePanel.appendChild(Li);
-
-                //Duplicate steps to populate presentation tray slide dropup. Not DRY because each parent container needs its own unique version of the generated slide link.
-
-//                  var popUp = document.getElementById("dropUpTray")
-//                  var Li2 = document.createElement('li');
-//                  var S2 = document.createElement('a');
-//                  S2.setAttribute("style", "cursor: pointer;");
-//                  S2.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount)+".xml')");
-//                  S2.setAttribute("id", "TraySlide " + slideCount);
-//                  S2.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
-//                  Li2.appendChild(S2);
-//                  popUp.appendChild(Li2);
-
-                slideCount++;
-            }
-                slideCount = 1;
-
-            //This makes it so the slides can be changed from active to non active to represent what slide we are on
-            $('.nav li a').click(function(e) {
-                $('.nav li').removeClass('active');
-
-                var $parent = $(this).parent();
-                if (!$parent.hasClass('active')) {
-                    $parent.addClass('active');
-                }
-            });
-        }
-        /*
-        function playing(t) {
-            if(t == 1) {
-                console.log();
-            }
-        }
-        */
-        function openLabelEdit()
-        {
-            edit = 1;
-            new nicEditors.findEditor('title').setContent(selectedText);
-            $( "#dialog" ).dialog("open");
-        }
-        function handleEvent(e)
-        {
-            bridgeworks.handleEvent(e);
-            switch(e.type) {
-                case "mousedown":
-                {
-                    capture = true;
-
-                }
-                    break;
-                case "mouseup":
-                {
-                    capture = false;
-                    sceneInspector = bridgeworks.registry.find("SceneInspector");
-                    zoomActivate();
-
-                }
-                  break;
-              case "click": {
-                  //Dishing out the event client x and y cordinates of the mouse for testing purposes
-                  // if (!e.metaKey && !e.ctrlKey) {
-                  window.clearInterval(zoomUpdate);
-                  selectedModel = bridgeworks.selector.selections.models[0];
-                  if(selectedModel) {
-                      modelName = selectedModel.name.getValueDirect().join("");
-                      var name = selectedModel.name.getValueDirect().join("");
-
-                      setObject(name);
-                      setColorPicker();
-                      
-                      myObject = document.getElementById(name);
-                      $('.object').removeClass('current-object');
-                      $(myObject).addClass('current-object');
-
-                      scaleValues = (selectedModel.scale.getValueDirect());
-                      x = scaleValues['x'] * 100
-                      $('#scales').slider('setValue', x);
-
-                      var r = selectedModel.rotation.getValueDirect();
-                      $("#rotxs").slider("setValue", r.x);
-                      $("#rotys").slider("setValue", r.y);
-                      $("#rotzs").slider("setValue", r.z);
-                      
-                  }
-                  else {
-                      selected = bridgeworks.selector.selectedName.getValueDirect().join("");
-                      //console.log(selected);
-                      selectedId = bridgeworks.selector.getAttribute("Selected").id;
-                      selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
-                      //console.log(selectedId);
-                  }
-
-                  capture = false;
-              }
-              break;
-
-              case "dblclick":
-              {
-                  if(selected)
-                  {
-                      openLabelEdit();
-                  }
-                  else {
-                      var name = selectedModel.name.getValueDirect().join("");
-                      var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-                      var cmd = "";
-                      if (e.metaKey || e.ctrlKey) {
-                          cmd = "\<AutoInterpolate target='" + name + "'>";
-                          cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
-                          cmd += "\</AutoInterpolate>";
-                      }
-                      else {
-                          cmd = "\<Locate target='" + name + "'/>";
-                      }
-                      console.log(name);
-                      console.debug(cmd);
-                      bridgeworks.updateScene(cmd);
-                      setObject(name);
-                      setColorPicker();
-                  }
-              }
-              break;
-            }
-            
-        }
-        function zoomActivate() {
-            zoomUpdate = window.setInterval(function () {
-                distance = sceneInspector.pivotDistance.getValueDirect()
-                if ((distance >= 0) && (distance < 4000)) {
-                    if (distance * 0.3 != sceneInspector.panSensitivity.values[0]) {
-                        sceneInspector.panSensitivity.values[0] = distance * 0.05;
-                        sceneInspector.panSensitivity.values[1] = distance * 0.05;
-                        sceneInspector.panSensitivity.values[2] = distance * 0.05;
-                        console.log(sceneInspector.panSensitivity.values[0]);
-                    }
-                }
-                else {
-                    sceneInspector.panSensitivity.values[0] = 1200;
-                    sceneInspector.panSensitivity.values[1] = 1200;
-                    sceneInspector.panSensitivity.values[2] = 1200;
-                    console.log(sceneInspector.panSensitivity.values[0]);
-                    console.log(distance);
-                }
-            }, 200);
-        }
-
-        function nextSlide(){
-            console.debug("Slide Count: "+slideCount);
-          if (slideCount <= numSlides) {
-
-              bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
-              slideCount++;
-              console.log("SLIDE NUMBER = "+slideCount);
-          }
-        };
-
-        function previousSlide(){
-            console.debug("Slide Count: "+slideCount);
-          if (slideCount > 1 && slideCount <= numSlides) {
-              slideCount--;
-              bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
-              console.log("SLIDE NUMBER = "+slideCount);
-          }
-        };
-
-        function objectLeft(magnitude)
-        {
-          // var objectInspector = bridgeworks.registry.find("ObjectInspector");
-          // objectInspector.enabled.setValueDirect(true);
-          // objectInspector.translationDelta.setValueDirect(-100,0,0);
-          // objectInspector.evaluate();
-          // bridgeworks.updateScene();
-          var cmd;
-          cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-          cmd += "\<position x='" + (selectedModel.position.values[0]-= magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
-          cmd += "\</Set>";
-          console.log(selectedModel.position.getValueDirect());
-          bridgeworks.updateScene(cmd);
-          //previousSlide();
-        }
-
-        function objectRight(magnitude)
-        {
-          // This way will activate the keys depending on the direction the camera is facing. But will need some refactoring.
-          // var objectInspector = bridgeworks.registry.find("ObjectInspector");
-          // objectInspector.enabled.setValueDirect(true);
-          // objectInspector.translationDelta.setValueDirect(100,0,0);
-          // //objectInspector.evaluate();
-          // bridgeworks.updateScene();
-          var cmd;
-          cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-          cmd += "\<position x='" + (selectedModel.position.values[0] += magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
-          cmd += "\</Set>";
-          console.log(selectedModel.position.getValueDirect());
-          bridgeworks.updateScene(cmd);
-
-              //nextSlide();
-        }
-
-        function objectDown(magnitude)
-        {
-          var cmd;            
-          cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-          cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]-= magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
-          cmd += "\</Set>";
-          console.log(selectedModel.position.getValueDirect());
-          bridgeworks.updateScene(cmd);          
-        }
-
-        function objectBackward(magnitude)
-        {
-          var cmd;
-          cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-          cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= magnitude) + "'/>"
-          cmd += "\</Set>";
-          console.log(selectedModel.position.getValueDirect());
-          bridgeworks.updateScene(cmd);
-          //nextSlide();
-        }
-
-        function objectUp(magnitude)
-        {
-          var cmd;
-          cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-          cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]+= magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
-          cmd += "\</Set>";
-          console.log(selectedModel.position.getValueDirect());
-          bridgeworks.updateScene(cmd);
-        }
-
-        function objectForward(magnitude){
-          cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-          cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += magnitude) + "'/>"
-          cmd += "\</Set>";
-          console.log(selectedModel.position.getValueDirect());
-          bridgeworks.updateScene(cmd);            
-        }
-
-        function handleKey(e)
-        {
-          if(editorOpen == 0) {
-              switch (e.keyCode) {
-                  case 'C'.charCodeAt(0):
-                  {
-                      if (e.metaKey || e.ctrlKey) {
-                          e.preventDefault();
-                          copy();
-                          copy();
-                      }      // c
-                  }
-                      break;
-
-                  case 46: //Delete Key
-                      var slice = selected.slice(6,8);
-                          console.log(slice);
-                      var cmd = "\<Remove target='"+selected+"'/>";
-                      bridgeworks.updateScene(cmd);
-                      var cmd2 = "\<Remove target='"+slice+"'/>"
-                      var div = document.getElementById(selectedId);
-                      bridgeworks.updateScene(cmd2);
-                      div.parentNode.removeChild(div);
-                  break;
-
-                  case 'V'.charCodeAt(0):
-                  {      // v
-                      if (e.metaKey || e.ctrlKey) {
-                          if (document.activeElement.id != 'url') {
-                              e.preventDefault();
-                              paste();
-                          }
-                      }
-                  }
-                      break;
-                  case 39: //right
-                    objectRight(1);
-                    break;
-
-                  case 37: //left
-                    objectLeft(1);
-                    break;
-
-                  case 40: //down
-                    if (e.shiftKey || e.ctrlKey) {
-                      objectDown(1);
-                    }
-                    else{
-                      objectBackward(1);
-                    }
-                    break;
-                  case 38: //up
-                    if (e.shiftKey || e.ctrlKey) {
-                      objectUp(1);
-                    }
-                    else{
-                      objectForward(1);
-                    }
-                    break;
-                  case 'X'.charCodeAt(0):
-                  {      // x
-                      if (e.metaKey || e.ctrlKey) {
-                          e.preventDefault();
-                          if(selected){
-                              var slice = selected.slice(6.8);
-                              console.log(slice);
-                              var cmd = "\<Remove target='"+selected+"'/>";
-                              bridgeworks.updateScene(cmd);
-                              var cmd2 = "\<Remove target='"+slice+"'/>"
-                              var div = document.getElementById(selectedId);
-                              bridgeworks.updateScene(cmd2);
-                              div.parentNode.removeChild(div);
-                              copy();
-                          }
-                          cut();
-                      }
-                  }
-                      break;
-
-              }
-          }
-        }
-        
-    </script>
-
-      <!-- Fork ribbon -->
-      <!-- <div class="github-fork-ribbon-wrapper left-bottom">
-          <div class="github-fork-ribbon">
-              <a href="https://github.com/kmcurry/3scape" target="_blank">Fork me on GitHub</a>
-          </div>
-      </div> -->
+    <!-- Fork ribbon -->
+    <!-- <div class="github-fork-ribbon-wrapper left-bottom">
+      <div class="github-fork-ribbon">
+        <a href="https://github.com/kmcurry/3scape" target="_blank">Fork me on GitHub</a>
+      </div>
+    </div> -->
     <div id="ajax-modal" class="modal hide fade in" tabindex="-1" aria-hidden="false" style="display: block; margin-top: -128.5px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -710,8 +144,7 @@
           <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">Help</h4>
-          </div>
-          <!--Loading all the Libs and putting them in their respective places-->
+          </div>          
           <div class="modal-body row">                                            
             <ul class="nav nav-tabs" id="tabContent">
               <li class="active"><a href="#helpIntro" data-toggle="tab">Intro</a></li>
@@ -781,8 +214,7 @@
             </div>                      
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>              
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -800,8 +232,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>            
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -821,7 +252,8 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li>
+            <!-- UNCOMMENT FOR LOGIN -->
+            <!-- <li>
               <div ng-show="global.isSignedIn()" class="btn-group dropdown">
                 <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Add Label"onclick="if(selected){openLabelEdit();}">
                   {{ global.currentUser().email }} <span class="caret"></span>
@@ -837,7 +269,7 @@
                   Login
                 </a>
               </div>                        
-            </li>
+            </li> -->
             <li>
               <div class="fb-like" data-href="http://3scape.me" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true" style="margin-left:3px;"></div>
             </li>                      
@@ -875,7 +307,7 @@
                   <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                   <li class="divider"></li>
                   <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();ancientLoaded = 0;">New Scene</a></li>
-                  <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
+                  <!--Loading the slides in the line below this, indicate how many slides you want loaded-->
                   <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
                 </ul>
               </div>
@@ -886,7 +318,6 @@
                   <span class="shape icon-paintroll"></span>
                 </button>
                 <ul class="dropdown-menu color-dropdown" role="menu">
-                  <!-- Color Picker Script - ColorCodeHex.COM -->
                   <script type="text/javascript">
                   function updateInfo(color) {
                     document.getElementById('info-r').value = color.rgb[0];
@@ -894,7 +325,6 @@
                     document.getElementById('info-b').value = color.rgb[2];
                   }
                   </script>
-
                   <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
                   <input id="info-r" size="2" type="hidden"/>
                   <input id="info-g" size="2" type="hidden"/>
@@ -987,17 +417,13 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="object-list">
                   <ul class="nav nav-sidebar">
-                        <!--This is where the objects get loaded into the list-->
+                    <!--This is where the objects get loaded into the list-->
                   </ul>
                 </div>
                 <div class="tab-pane" id="animate">
-                    <ul class="nav nav-sidebar">
-                        <!--This is where the animations get loaded into the list-->
-                    </ul>
-                    
-                    <ul class="nav nav-sidebar">
-                        
-                    </ul>                     
+                  <ul class="nav nav-sidebar">
+                    <!--This is where the animations get loaded into the list-->
+                  </ul>                                    
                 </div>
                 <!--BEGIN PROJECT SCOPE-->
                 <div class="tab-pane" id="slides" ng-controller="projectController">
@@ -1057,56 +483,7 @@
     <input id="rotys" data-slider-id='roty-slider' type="text"/>
     <input id="rotzs" data-slider-id='rotz-slider' type="text"/>
     <input id="scales" data-slider-id='scale-slider' type="text"/>                        
-    <script type="text/javascript">
-      $('#rotxs').slider({
-        formater: function(value) {
-         return 'Pitch: '+value;
-          },
-          min: -180,
-          max: 180,
-          value: 0
-        })
-         .on("slide", function(ev){
-          console.log(ev.value)
-          setRotationX(ev.value);
-         });
-      $('#rotys').slider({
-        formater: function(value) {
-          return 'Yaw: '+value;
-        },
-        min: -180,
-        max: 180,
-        value: 0
-      })
-       .on("slide", function(ev){
-         console.log(ev.value);
-         setRotationY(ev.value);
-       });
-      $('#rotzs').slider({
-       formater: function(value) {
-       return 'Roll: '+value;
-       },
-       min: -180,
-       max: 180,
-       value: 0
-      })
-      .on("slide", function(ev){
-       console.log(ev.value);
-       setRotationZ(ev.value);
-        });
-      $('#scales').slider({
-        formater: function(value) {
-          return 'Scale: ' + (value);
-        },
-        min: 0,
-        max: 200,
-        value: 100              
-      })
-      .on('slide', function(ev){
-        console.log(ev.value);
-        setScale(ev.value / 100)
-      });                                                                          
-    </script>          
+    <script type="text/javascript" src="./js/sliderInit.js"></script>
     <div id="map-controls">
       <div id="Rotate">                  
         <span id="rotate-counter" class="shape fa fa-undo" title="Rotate Counter-Clockwise" style="font-size: 2em;"></span>
@@ -1241,170 +618,20 @@
     </div>    
     <!--<video controls="controls" src="http://localhost/bwjs/BwContent/images/quake.mpg">
     Your browser does not support the video tag.
-    </video>-->
-      <script>                    
-        function modalHide(){
-          $('#myModal').modal('hide');
-          $('#motionsModal').modal('hide');
-          $('#helpModal').modal('hide');
-        }        
-      </script>
-
-        <script type="text/javascript">
-        document.onreadystatechange = function () {
-            if (document.readyState == "complete") {
-                //This is changing the background of the slides navbar to active and non active to give it the selected effect.
-                if (!window.WebGLRenderingContext) {
-                    // browser supports WebGL
-                    document.location.href = "http://get.webgl.org/";
-                } else {
-                    var canvas = document.getElementById("Canvas");
-                    var ctx = canvas.getContext("webgl");
-                    if (!ctx) {
-                        // browser supports WebGL but initialization failed.
-                        window.location.href = "nowebgl";
-                    }
-                }
-
-                bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
-                //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
-
-                sceneInspector = bridgeworks.registry.find("SceneInspector");
-                objectInspector =bridgeworks.registry.find("ObjectInspector");
-
-                listLibrary();
-                
-                $('html').bind('keypress', function(e)
-                {
-                   if(e.keyCode == 13)
-                   {
-                       if ($("#dialog").dialog( "isOpen" )===true && edit == 0) {
-                           addRecord();
-                           console.log("Not editting");
-                       }
-                       else if($("#dialog").dialog( "isOpen")===true && edit ==1){
-
-                           editRecord(selected);
-                       }
-                       else if($("#dialog").dialog( "isOpen")===true && edit ==2)
-                       {
-                           addBalloon();
-                       }
-                       return false;
-                   }
-                });
-
-                $("#submitLabel").click(function(){
-                    if(edit == 0)
-                    {
-                        addRecord();
-                    }
-                    else if(edit==1)
-                    {
-                        editRecord(selected);
-                    }
-                    else if(edit==2)
-                    {
-                        addBalloon();
-                    }
-                });
-                $( "#dialog" ).dialog({
-                    autoOpen: false,
-                    modal: true
-                });
-            
-                $( "#dialog" ).dialog({ show: { effect: "blind", duration: 200 } });
-            
-                $( "#dialog" ).dialog({ hide: { effect: "blind", duration: 200 } });
-
-                $( "#dialog").dialog({open: function(event,ui) {
-                   nicText = new nicEditor({
-                        iconsPath : 'nicEditorIcons.gif'
-                    }).panelInstance('title');
-                }
-                });
-
-                $( "#dialog" ).dialog({
-                  close: function( event, ui ) {
-                      if (adding) {
-                          // if in the middle of adding and closed w/o submitting
-                          bridgeworks.updateScene("\<Remove target='" + "Group_L-" + g_countStr + "'/>");
-                          var cmd = "\<Remove target='"+g_labelName+"'/>";
-                          bridgeworks.updateScene(cmd);
-                      }
-                      adding = false;
-                      editorOpen = 0;
-                  }
-                });
-
-                $(".btn-slide").click(function(){
-                    $("#ControlPanel").slideToggle("medium");
-                    $(this).toggleClass("active"); return false;
-                  });
-                
-                window.onkeydown = handleKey;
-                //window.onkeyup = handleKey;
-                
-                $('.ui-spinner-button').click(function() { $(this).siblings('input').change(); });
-                
-                
-            }
-        }
-          $('#map-controls').mouseenter(function(){
-            var sceneActive = sceneInspector.enabled.getValueDirect();           
-            console.log(sceneActive);
-            if(!sceneActive){
-              sceneInspector.enabled.setValueDirect(true);
-              // objectInspector.enabled.setValueDirect(false);
-            }
-          }).mouseleave(function(){
-            var objectActive = objectInspector.enabled.getValueDirect();
-            if(objectActive){
-              sceneInspector.enabled.setValueDirect(false);
-            }
-          })
-          
-          //Helper method to create button-hold functions. Pass element id, desired function (leave out parentheses), and time between repeats in miliseconds.
-          var onHoldFunction = function(id, method, time) {
-            var interval;
-            $(id).on({
-              mousedown : function () {
-                method(); // Still works on a single click                
-                interval = window.setInterval(function(){                
-                  method();
-                }, time); //Repeats every (time) miliseconds               
-              },
-              mouseup : function () {
-                window.clearInterval(interval);
-              }
-            });                
-          };
-          //Map
-          onHoldFunction('#rotate-counter', rotateNegY, 20);
-          onHoldFunction('#rotate-clockwise', rotatePosY, 20);
-          onHoldFunction('#tilt-up', tiltUp, 20);
-          onHoldFunction('#tilt-down', tiltDown, 20);
-          onHoldFunction('#zoom-in', zoomIn, 20);
-          onHoldFunction('#zoom-out', zoomOut, 20);
-
-          //Object, uses Anonymous function to pass parameter to callback
-          onHoldFunction('#object-up', function(){objectUp(0.5);}, 20);
-          onHoldFunction('#object-down', function(){objectDown(0.5);}, 20); 
-          onHoldFunction('#object-forward', function(){objectForward(0.5);}, 20); 
-          onHoldFunction('#object-backward', function(){objectBackward(0.5);}, 20); 
-          onHoldFunction('#object-left', function(){objectLeft(0.5);}, 20); 
-          onHoldFunction('#object-right', function(){objectRight(0.5);}, 20);        
-        </script>
-           
+    </video>-->           
     <script type="text/javascript">
+      //Angular user Login logic
       window.user = null
       <% if (user) { %>
         window.user = <%-(JSON.stringify(user))%>
       <% } %>
     </script>
+    <script type="text/javascript" src="./js/bwInit.js"></script>
     <script type="text/javascript" src="./js/ui.js"></script>
     <script type="text/javascript" src="./js/fullscreen.js"></script>
     <script type="text/javascript" src="./js/slideshow.js"></script>
+    <script type="text/javascript" src="./js/canvasNav.js"></script>
+    <script type="text/javascript" src="./js/label.js"></script>
     <!-- Initialize Angular -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
     <script src="core.js"></script>

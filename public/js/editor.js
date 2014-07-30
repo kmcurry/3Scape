@@ -11,6 +11,12 @@ var rotZ;
 var copiedSelectedText;
 var copiedElement = 0;
 
+function modalHide(){
+    $('#myModal').modal('hide');
+    $('#motionsModal').modal('hide');
+    $('#helpModal').modal('hide');
+}
+
 function setObject(Object)
 {
     var p = document.getElementById('Current_Object');
