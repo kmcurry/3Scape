@@ -1,3 +1,7 @@
+html{
+    overflow-y: auto;
+}
+
 body{
     padding:0;
     overflow: hidden;
@@ -11,9 +15,30 @@ body.modal-open {
     left: 0;
     overflow-y: scroll;
 }
+
+#progress {
+    margin: 20px;
+    right: 25px;
+    position: fixed;
+    bottom: 50px;
+    width: 90%;
+    height:30px;
+    border: solid 1px #222;
+    overflow: hidden;
+}
+
+.modal {
+    overflow-y: auto;
+}
+
+.row{
+    overflow-y: auto;
+}
+
 .btn:focus {
   outline:none;
 }
+
 #side-nav.width { /*Horizontal slide effect*/
     height: auto;
     -webkit-transition: width 0.35s ease;
@@ -21,9 +46,11 @@ body.modal-open {
     -o-transition: width 0.35s ease;
     transition: width 0.35s ease;
 }
+
 .popover {
     z-index: 2000; /* Popovers don't get hidden behind elements. */
 }
+
 .btnShape,
 .btnShape:active,
 .btnShape:hover {
@@ -40,6 +67,7 @@ body.modal-open {
   -o-transition:      color 0.5s;
   transition:         color 0.5s;
 }
+
 .shape:hover{
   color: #07c;
 }
