@@ -731,10 +731,6 @@ function zoomActivate() {
                         </div>
                       </div>                                            
                     </div>
-                        
-                    
-                    
-                    
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -743,83 +739,96 @@ function zoomActivate() {
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <div class="modal fade" id="helpModal">
-          <div class="modal-dialog" style="width: 900px">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <h4 class="modal-title">Help</h4>
-                  </div>
-                  <!--Loading all the Libs and putting them in their respective places-->
-                  <div class="modal-body row">                                            
+    <div class="modal fade" id="helpModal">
+        <div class="modal-dialog" style="width: 900px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Help</h4>
+                </div>
+                <!--Loading all the Libs and putting them in their respective places-->
+                <div class="modal-body row">
                     <ul class="nav nav-tabs" id="tabContent">
-                      <li class="active"><a href="#helpIntro" data-toggle="tab">Intro</a></li>
-                      <li><a href="#helpControls" data-toggle="tab">Controls</a></li>
-                      <li><a href="#helpGuide" data-toggle="tab">Guide</a></li>
+                        <li class="active"><a href="#helpIntro" data-toggle="tab">Intro</a></li>
+                        <li><a href="#helpControls" data-toggle="tab">Controls</a></li>
+                        <li><a href="#helpGuide" data-toggle="tab">Guide</a></li>
+                        <li><a href="#aboutTeam" data-toggle="tab">About</a></li>
                     </ul>
-                    <div class="tab-content">                    
-                      <div class="tab-pane active" id="helpIntro">
-                        Welcome to 3Scape!
-                      </div>                      
-                      <div class="tab-pane" id="helpControls">
-                        <div class="col-md-4">
-                          <H3>Main</H3>
-                          <div class="controlBullet">
-                            <span class="glyphicon glyphicon-arrow-up"></span>
-                            <span class="glyphicon glyphicon-arrow-down"></span>
-                             - Object Z-Axis
-                          </div>
-                          <div class="controlBullet">
-                            <span class="glyphicon glyphicon-arrow-left"></span>
-                            <span class="glyphicon glyphicon-arrow-right"></span>
-                             - Object X-Axis
-                          </div>
-                          <div class="controlBullet">
-                            Shift + 
-                            <span class="glyphicon glyphicon-arrow-up"></span>
-                            <span class="glyphicon glyphicon-arrow-down"></span>
-                             - Object Y-Axis
-                          </div>
-                        </div>  
-                        <div class="col-md-4">
-                          <H3>Camera Mode</H3>
-                          <div class="controlBullet">
-                            <img src="left-click.png"> Rotate
-                          </div>
-                          <div class="controlBullet">
-                            <img src="right-click.png"> Zoom
-                          </div>
-                          <div class="controlBullet">
-                            <img src="both-click.png"> Pan
-                          </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="helpIntro">
+                            Welcome to 3Scape! 3Scape is a web site where anyone who can point,
+                            click, copy and paste can make and share interactive,
+                            3D scapes online. http://3scape.me/
                         </div>
-                        <div class="col-md-4">
-                          <H3>Object Mode</H3>
-                          <div class="controlBullet">
-                            <img src="left-click.png"> Rotate
-                          </div>
-                          <div class="controlBullet">
-                            <img src="right-click.png"> Pull/Push
-                          </div>
-                          <div class="controlBullet">
-                            <img src="both-click.png"> Slide/Lift
-                          </div>
+                        <div class="tab-pane" id="helpControls">
+                            <div class="col-md-4">
+                                <H3>Main</H3>
+                                <div class="controlBullet">
+                                    <span class="glyphicon glyphicon-arrow-up"></span>
+                                    <span class="glyphicon glyphicon-arrow-down"></span>
+                                    - Object In/Out
+                                </div>
+                                <div class="controlBullet">
+                                    <span class="glyphicon glyphicon-arrow-left"></span>
+                                    <span class="glyphicon glyphicon-arrow-right"></span>
+                                    - Object Left/Right
+                                </div>
+                                <div class="controlBullet">
+                                    <span class="shape icon-pushalt"></span>
+                                    <span class="shape icon-pullalt"></span>
+                                    - Object Up/Down
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <H3>Camera Mode</H3>
+                                <div class="controlBullet">
+                                    <img src="left-click.png"> Rotate
+                                </div>
+                                <div class="controlBullet">
+                                    <img src="right-click.png"> Zoom
+                                </div>
+                                <div class="controlBullet">
+                                    <img src="both-click.png"> Pan
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <H3>Object Mode</H3>
+                                <div class="controlBullet">
+                                    <img src="left-click.png"> Rotate
+                                </div>
+                                <div class="controlBullet">
+                                    <img src="right-click.png"> Pull/Push
+                                </div>
+                                <div class="controlBullet">
+                                    <img src="both-click.png"> Slide/Lift
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="tab-pane" id="helpGuide">
-                        <h3>
-                          Click the
-                          <button type="button" class="btn btn-info" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>
-                          </button>
-                          Camera Mode button to switch to 
-                          <button type="button" class="btn btn-danger" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-anchor fa-lg" style="font-size:2em;"></span>
-                          </button>
-                          Object Mode, changing the mouse controls to manipulate an object by clicking it.
-                        </h3>
-                      </div>                                            
+                        <div class="tab-pane" id="helpGuide">
+                            <h3>
+                                Basics:
+<!--                                <button type="button" class="btn btn-info" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>
+                                </button>
+                                Camera Mode button to switch to
+                                <button type="button" class="btn btn-danger" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-anchor fa-lg" style="font-size:2em;"></span>
+                                </button>
+                                Object Mode, changing the mouse controls to manipulate an object by clicking it.-->
+                            </h3>
+                            <p>First click on the object pane <img src="/public/objModal"> with a bunch of shapes to quickly get models on the scene</p>
+                            <p>For more models hit the down facing arrow and take your pick (protip: Cows are the best)</p>
+                            <p>Let's liven up the cow and add some color. Hit the paint brush to use the color picker </p>
+                        </div>
+                        <div class = "tab-pane" id="aboutTeam">
+                           <center><h3>Made by the 3Scape team!</h3></center>
+                           <br>
+                           <p><a href="https://github.com/kmcurry"> Kevin Curry</a>: Lead Developer/Head of Mr. Miyagi's School of Software Engineering</p>
+                           <p><a href="https://github.com/mbrazell"> Michael Brazell</a>: Senior Developer/Wizard</p>
+                           <p><a href="https://github.com/Hyiero"> Brandon Ripley</a>: Junior Developer/Muscle Man</p>
+                           <p><a href="https://github.com/jonsmall"> Jon Small</a>: Junior Developer/Sage of the Front End</p>
+                           <p><a href="https://github.com/TerabyteTyler"> Tyler McLean</a>: Junior Developer/Software Engineering Padawan</p>
+                        </div>
                     </div>
-                    
-                    
+
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
