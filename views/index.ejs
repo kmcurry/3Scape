@@ -235,6 +235,14 @@
                   console.log("No Model");
               }
 
+              var labPos = xml.getElementsByTagName("position")[1];
+              var posX = pointWorld.x - selectedModel.position.values[0];
+              var posY = pointWorld.y - selectedModel.position.values[1];
+              var posZ = pointWorld.z - selectedModel.position.values[2];
+              labPos.attributes["x"].value = posX.toString();
+              labPos.attributes["y"].value = posY.toString();
+              labPos.attributes["z"].value = posZ.toString();
+
               name = xml.getElementsByTagName("Group")[0].attributes[0];
               name.value = "Group_" + g_labelName;
 
@@ -279,6 +287,14 @@
                   label.attributes["parent"].value = name.value;
                   console.log("No Model");
               }
+
+              var labPos = xml.getElementsByTagName("position")[1];
+              var posX = pointWorld.x - selectedModel.position.values[0];
+              var posY = pointWorld.y - selectedModel.position.values[1];
+              var posZ = pointWorld.z - selectedModel.position.values[2];
+              labPos.attributes["x"].value = posX.toString();
+              labPos.attributes["y"].value = posY.toString();
+              labPos.attributes["z"].value = posZ.toString();
 
               name = xml.getElementsByTagName("Group")[0].attributes[0];
               name.value = "Group_" + g_labelName;
@@ -457,7 +473,7 @@ function zoomActivate() {
     zoomUpdate = window.setInterval(function () {
         distance = sceneInspector.pivotDistance.getValueDirect()
         if ((distance >= 0) && (distance < 4000)) {
-            if (distance * 0.3 != sceneInspector.panSensitivity.values[0]) {
+            if (distance * 0.05 != sceneInspector.panSensitivity.values[0]) {
                 sceneInspector.panSensitivity.values[0] = distance * 0.05;
                 sceneInspector.panSensitivity.values[1] = distance * 0.05;
                 sceneInspector.panSensitivity.values[2] = distance * 0.05;
