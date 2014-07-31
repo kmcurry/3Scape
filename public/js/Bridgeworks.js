@@ -9634,7 +9634,7 @@ function getWebGLContext(canvas, debug)
         }
         else // !debug
         {
-            gl = canvas.getContext("experimental-webgl", {antialias : true});
+            gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
         }
     }    
     catch (e) 
@@ -23145,7 +23145,7 @@ CommandMgr.prototype.addCommand = function(command)
     if (this.commandSeqStack.length() > 0)
     {
         this.commandSeqStack.top().addCommand(command);
-        
+        this.registry.unregister(command); // unregister here so command will not be serialized separately
         return;
     }
     
@@ -25183,11 +25183,12 @@ function SelectionListener()
     EventListener.call(this);
     this.className = "SelectionListener";
 
+    this.name.setValueDirect("Selector");
+
     this.rayPick = null;
     this.selections = new Selections();
     this.selected = null;
-    
-    this.name.setValueDirect("Selector");
+
     this.selectionOccurred = new PulseAttr();
     this.selectionCleared = new PulseAttr();
     this.pointView = new Vector3DAttr();
