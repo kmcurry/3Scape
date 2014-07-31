@@ -595,6 +595,10 @@ function zoomActivate() {
                         }      // c
                     }
                         break;
+                    case 187: //Equal Sign
+                        var command = "\<Serialize target='Root'/>";
+                        bridgeworks.updateScene(command);
+                        break;
 
                     case 46: //Delete Key
                         var slice = selected.slice(6,8);
@@ -1597,7 +1601,7 @@ function zoomActivate() {
                 }
 
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
-                //bridgeworks = init("Egypt/Egypt.xml", document.getElementById("BwContainer"));
+                //bridgeworks = init("Testing_Load.xml", document.getElementById("BwContainer"));
 
                 sceneInspector = bridgeworks.registry.find("SceneInspector");
                 objectInspector =bridgeworks.registry.find("ObjectInspector");
