@@ -471,6 +471,8 @@ function deserializeAttributeContainer(container, atts)
             deserializeAttribute(attribute, atts[i][1]);
         }
     }
+    
+    container.flagDeserializedFromXML();
 }
 
 function deserializeComplexAttribute(attribute, atts)
@@ -491,6 +493,8 @@ function deserializeComplexAttribute(attribute, atts)
             gAttributeBin.push(new Pair(attribute, values));
         }
     }
+    
+    attribute.flagDeserializedFromXML();
 }
 
 function deserializeAttribute(attribute, value)
@@ -505,6 +509,8 @@ function deserializeAttribute(attribute, value)
     {
         gAttributeBin.push(new Pair(attribute, value));
     }
+    
+    attribute.flagDeserializedFromXML();
 }
 
 function resolveAttributeContainerReference(container, atts, registry)
@@ -4686,106 +4692,104 @@ var eAttrType = {
     StylesAttr                  :25,
     StyleMapAttr                :26,
     StylesMapAttr               :27,
-    Vector3DAttr                :28,
-    ViewportAttr                :29,
-    ViewVolumeAttr              :30,
+    Vector2DAttr                :28,
+    Vector3DAttr                :29,
+    ViewportAttr                :30,
+    ViewVolumeAttr              :31,
+    RenderableElementStyleAttr  :32,
     
-    Node                        :31,
+    Node                        :1000,
+       
+    ParentableMotionElement     :1001,
+    Camera                      :1002,
+    PerspectiveCamera           :1003,
+    OrthographicCamera          :1004,
+    Light                       :1005,
+    DirectionalLight            :1006,
+    PointLight                  :1007,
+    SpotLight                   :1008, 
+    GlobalIllumination          :1009,           
+    Material                    :1010,
+    Texture                     :1011, 
+    RenderableElement           :1012,
+    Geometry                    :1013,
+    VertexGeoemtry              :1014,
+    TriList                     :1015, 
+    Group                       :1016,
+    Isolator                    :1017,
+    Dissolve                    :1018,  
+    Transform                   :1019,   
+    QuaternionRotate            :1020,
+    Scale                       :1021,
+    Rotate                      :1022,
+    Translate                   :1023,   
+    Model                       :1024,
+    Surface                     :1025,
+    MediaTexture                :1026,
+    NullObject                  :1027,   
+    Label                       :1028,
+    HTMLLabel                   :1029,
+    BalloonTipLabel             :1030, 
+    PathTrace                   :1031,
     
-    ParentableMotionElement     :32,
-    Camera                      :33,
-    PerspectiveCamera           :34,
-    OrthographicCamera          :35,
-    Light                       :36,
-    DirectionalLight            :37,
-    PointLight                  :38,
-    SpotLight                   :39, 
-    GlobalIllumination          :40,           
-    
-    Material                    :41,
-    Texture                     :42,
-    
-    RenderableElement           :43,
-    Geometry                    :44,
-    VertexGeoemtry              :45,
-    TriList                     :46,
-    
-    Group                       :47,
-    Isolator                    :48,
-    
-    Dissolve                    :49,
-    
-    Transform                   :50,
-    
-    QuaternionRotate            :51,
-    Scale                       :52,
-    Rotate                      :53,
-    Translate                   :54,
-    
-    Model                       :55,
-    Surface                     :56,
-    MediaTexture                :57,
-    NullObject                  :58,
-    
-    Label                       :59,
-    HTMLLabel                   :60,
-    BalloonTipLabel             :61,
-    
-    PathTrace                   :62,
-    
-    Directive                   :63,
-    UpdateDirective             :64,
-    RenderDirective             :65,
-    RayPickDirective            :66,
-    BBoxDirective               :67,
-    SerializeDirective          :68,
-    
-    Evaluator                   :1000,
-    SceneInspector              :1001,
-    KeyframeInterpolator        :1002,
-    BBoxLocator                 :1003,
-    ArcballInspector            :1004,
-    MapProjectionCalculator     :1005,
-    ObjectInspector             :1006,
-    
-    Evaluator_End               :1999, // all evaluator types must be given a type between Evaluator and Evaluator_End
+    Evaluator                   :1100,
+    SceneInspector              :1101,
+    KeyframeInterpolator        :1102,
+    BBoxLocator                 :1103,
+    ArcballInspector            :1104,
+    MapProjectionCalculator     :1105,
+    ObjectInspector             :1106,
+    MultiTargetObserver			:1107,   
+    Evaluator_End               :1199, // all evaluator types must be given a type between Evaluator and Evaluator_End
 
-    Command                     :2000,
-    CommandSequence             :2001,
-    AppendNode                  :2002,
-    AttributeTrigger            :2003,
-    AutoInterpolate             :2004,
-    Locate                      :2005,
-    Play                        :2006,
-    Remove                      :2007,
-    Serialize                   :2008,
-    Set                         :2009,
-    Stop                        :2010,
-    Command_End                 :2999,
+    Node_End                    :1999,
 
-    UserDefined                 :3000
+	Directive                   :2000,
+    UpdateDirective             :2001,
+    RenderDirective             :2002,
+    RayPickDirective            :2003,
+    BBoxDirective               :2004,
+    SerializeDirective          :2005,
+    Directive_End               :2999,
+    
+    Command                     :3000,
+    CommandSequence             :3001,
+    AppendNode                  :3002,
+    AttributeTrigger            :3003,
+    AutoInterpolate             :3004,
+    Locate                      :3005,
+    Play                        :3006,
+    Remove                      :3007,
+    Serialize                   :3008,
+    Set                         :3009,
+    Stop                        :3010,
+    ConnectAttributes           :3011,
+    Command_End                 :3999,
+
+    DeviceHandler               :4000,
+    MouseHandler                :4001,
+    DeviceHandler_End           :4999,
+    
+    UserDefined                 :5000
 };
 
 var eAttrElemType = {
     // unknown
-    eAttrElemType_Unknown               :0,	///
-
-    // standard C-types
-    eAttrElemType_Int                   :1,							///
-    eAttrElemType_UnsignedInt           :2,					///
-    eAttrElemType_Char                  :3,							///
-    eAttrElemType_UnsignedChar          :4,					///
-    eAttrElemType_Float                 :5,						///
-    eAttrElemType_Double                :6,						///
+    Unknown                     :-1,
 
     // attribute
-    eAttrElemType_Attribute             :7,					///
+    Attribute                   :0,
+    
+    // standard C-types
+    Int                         :1,
+    UnsignedInt                 :2,
+    Char                        :3,
+    UnsignedChar                :4,
+    Float                       :5,
+    Double                      :6,
 
     // user-defined
-    eAttrElemType_UserDefined           :0x000000FF,		///
-    
-    // force enumeration to 32-bits
-    eAttrElemType_FORCE_DWORD           :0x7FFFFFFF		///
+    UserDefined                 :100
 };
 
 function enumerateAttributeTypes()
@@ -4875,7 +4879,12 @@ function Attribute()
     Base.call(this);
     this.className = "Attribute";
     this.attrType = eAttrType.Attribute;
-    this.attrElemType = eAttrElemType.eAttrElemType_Attribute;
+    this.attrElemType = eAttrElemType.Attribute;
+    
+    this.native = true;
+    this.transient = false;
+    this.persistent = false;
+    this.deserialized = false;
     
     this.values = [];
     this.modifiedCBs = [];
@@ -5208,6 +5217,36 @@ Attribute.prototype.setContainer = function(container)
     this.container = container;
 }
 
+Attribute.prototype.setNative = function(native)
+{
+    this.native = native;
+}
+
+Attribute.prototype.isNative = function()
+{
+    return this.native;    
+}
+
+Attribute.prototype.setTransient = function(transient)
+{
+    this.transient = transient;
+}
+
+Attribute.prototype.isTransient = function()
+{
+    return this.transient;    
+}
+
+Attribute.prototype.setPersistent = function(persistent)
+{
+    this.persistent = persistent;
+}
+
+Attribute.prototype.isPersistent = function()
+{
+    return this.persistent;    
+}
+
 Attribute.prototype.getRegistry = function()
 {
     return this.registry;
@@ -5226,7 +5265,7 @@ Attribute.prototype.flagDeserializedFromXML = function()
         this.attrContainer.flagDeserializedFromXML();
     }
 }
-Attribute.prototype.isFlagDeserializedFromXML = function()
+Attribute.prototype.isDeserializedFromXML = function()
 {
     return this.deserialized;
 }
@@ -5248,10 +5287,13 @@ AttributeContainer.prototype.destroy = function()
     // destroy all registered attributes with this as the container
     for (var i in this.attrNameMap)
     {
-        var attr = this.getAttribute(i);
-        if (attr.getContainer() == this)
+        for (var j=0; j < this.attrNameMap[i].length; j++)
         {
-            attr.destroy();
+            var attr = this.attrNameMap[i][j];
+            if (attr.getContainer() == this)
+            {
+                attr.destroy();
+            }
         }
     }
 
@@ -5266,7 +5308,11 @@ AttributeContainer.prototype.isContainer = function()
 
 AttributeContainer.prototype.registerAttribute = function(attribute, name)
 {
-    this.attrNameMap[name] = attribute;
+    if (this.attrNameMap[name] == undefined)
+    {
+        this.attrNameMap[name] = new Array();
+    }
+    this.attrNameMap[name].push(attribute);
     //this.attrModifiedCountMap[attribute] = 0; // doesn't work
     this.attrModifiedCountMap.push(new Pair(attribute, 0));
 
@@ -5284,19 +5330,27 @@ AttributeContainer.prototype.unregisterAttribute = function(attribute)
 {
     for (var i in this.attrNameMap)
     {
-        if (this.attrNameMap[i] == attribute)
+        for (var j=0; j < this.attrNameMap[i].length; j++)
         {
-            attribute.removeModifiedCB(AttributeContainer_AttributeModifiedCB, this);
-            attribute.removeModifiedCB(AttributeContainer_AttributeModifiedCounterCB, this);
-            delete this.attrNameMap[i];
-            break;
+            if (this.attrNameMap[i][j] == attribute)
+            {
+                attribute.removeModifiedCB(AttributeContainer_AttributeModifiedCB, this);
+                attribute.removeModifiedCB(AttributeContainer_AttributeModifiedCounterCB, this);
+                delete this.attrNameMap[i][j];
+                break;
+            }
         }
     }
 }
 
 AttributeContainer.prototype.getAttribute = function(name)
 {
-    return this.attrNameMap[name];
+    if (this.attrNameMap[name] == undefined)
+    {
+        return null;
+    }
+    
+    return this.attrNameMap[name][0];
 }
 
 AttributeContainer.prototype.getAttributeAt = function(index)
@@ -5304,11 +5358,14 @@ AttributeContainer.prototype.getAttributeAt = function(index)
     var count = 0;
     for (var i in this.attrNameMap)
     {
-        if (count == index)
+        for (var j=0; j < this.attrNameMap[i].length; j++)
         {
-            return this.attrNameMap[i];
+            if (count == index)
+            {
+                return this.attrNameMap[i][j];
+            }
+            count++;
         }
-        count++;
     }
     
     return null;
@@ -5319,11 +5376,14 @@ AttributeContainer.prototype.getAttributeName = function(attribute)
     var count = 0;
     for (var i in this.attrNameMap)
     {
-        if (this.attrNameMap[i] == attribute)
+        for (var j=0; j < this.attrNameMap[i].length; j++)
         {
-            return this.getAttributeNameAt(count);
+            if (this.attrNameMap[i][j] == attribute)
+            {
+                return i;
+            }
+            count++;
         }
-        count++;
     }
 
     return null;
@@ -5334,11 +5394,14 @@ AttributeContainer.prototype.getAttributeNameAt = function(index)
     var count = 0;
     for (var i in this.attrNameMap)
     {
-        if (count == index)
+        for (var j=0; j < this.attrNameMap[i].length; j++)
         {
-            return i;
+            if (count == index)
+            {
+                return i;
+            }
+            count++;
         }
-        count++;
     }
     
     return null;
@@ -5347,7 +5410,7 @@ AttributeContainer.prototype.getAttributeNameAt = function(index)
 AttributeContainer.prototype.getAttributeCount = function()
 {
     var count = 0;
-    for (var i in this.attrNameMap) count++;
+    for (var i in this.attrNameMap) count += this.attrNameMap[i].length;
     return count;
 }
 
@@ -5440,18 +5503,21 @@ AttributeContainer.prototype.synchronize = function(src, syncValues)
 
     for (var i in src.attrNameMap)
     {
-        var attr = this.getAttribute(i);
-        if (!attr)
+        for (var j=0; j < src.attrNameMap.length; j++)
         {
-            attr = src.attrNameMap[i].clone();
-            if (!attr) continue;
-            attr.setContainer(this);
-            this.registerAttribute(attr, i);
-        }
-
-        if (attr && syncValues)
-        {
-            attr.copyValue(src.attrNameMap[i]);
+            var attr = this.attrNameMap[i][j];
+            if (!attr)
+            {
+                attr = src.attrNameMap[i].clone();
+                if (!attr) continue;
+                attr.setContainer(this);
+                this.registerAttribute(attr, i);
+            }
+    
+            if (attr && syncValues)
+            {
+                attr.copyValue(src.attrNameMap[i]);
+            }
         }
     }
 }
@@ -5481,8 +5547,32 @@ function AttributeRegistry()
     
     this.typeRegistry = [];
     this.nameRegistry = [];
+    
+    this.uniqueAttributes = [];
 }
 
+AttributeRegistry.prototype.addUnique = function(attribute)
+{
+	for (var i=0; i < this.uniqueAttributes.length; i++)
+	{
+		if (this.uniqueAttributes[i] == attribute) return;
+	}
+	
+	this.uniqueAttributes.push(attribute);
+}
+    
+AttributeRegistry.prototype.removeUnique = function(attribute)
+{
+	for (var i=0; i < this.uniqueAttributes.length; i++)
+	{
+		if (this.uniqueAttributes[i] == attribute)
+		{
+			this.uniqueAttributes.splice(i, 1);
+			return;
+		}
+	}
+}
+    
 AttributeRegistry.prototype.registerByType = function(attribute, type)
 {
     if (this.typeRegistry[type] == undefined)
@@ -5491,7 +5581,6 @@ AttributeRegistry.prototype.registerByType = function(attribute, type)
     }
     
     this.typeRegistry[type].push(attribute);
-    this.objectCount += 1;
 }
 
 AttributeRegistry.prototype.registerByName = function(attribute, name)
@@ -5507,14 +5596,13 @@ AttributeRegistry.prototype.registerByName = function(attribute, name)
     }
 
     this.nameRegistry[name].push(attribute);
-    this.objectCount += 1;
 }
 
 AttributeRegistry.prototype.register = function(attribute)
 {
     // register using type
     this.registerByType(attribute, attribute.attrType);
-    this.objectCount += 1;
+
     // register using name attribute if container
     if (attribute.isContainer())
     {
@@ -5526,6 +5614,9 @@ AttributeRegistry.prototype.register = function(attribute)
             name.addModifiedCB(AttributeRegistry_AttributeContainerNameModifiedCB, this); 
         }
     }
+    
+    this.addUnique(attribute);
+    this.objectCount++;
 }
 
 AttributeRegistry.prototype.unregisterByType = function(attribute, type)
@@ -5534,12 +5625,10 @@ AttributeRegistry.prototype.unregisterByType = function(attribute, type)
     {
         this.typeRegistry[type].splice(this.typeRegistry[type].indexOf(attribute), 1);
     }
-    this.objectCount -= 1;
 }
 
 AttributeRegistry.prototype.unregisterByName = function(attribute, name)
 {
-    this.objectCount -= 1;
     if (name.length == 0)
     {
         name = "unnamed";
@@ -5555,7 +5644,6 @@ AttributeRegistry.prototype.unregister = function(attribute)
 {
     // register using type
     this.unregisterByType(attribute, attribute.attrType);
-    this.objectCount -= 1;
     
     // register using name attribute if container
     if (attribute.isContainer())
@@ -5568,6 +5656,9 @@ AttributeRegistry.prototype.unregister = function(attribute)
             name.removeModifiedCB(AttributeRegistry_AttributeContainerNameModifiedCB, this); 
         }
     }
+    
+    this.removeUnique(attribute);
+    this.objectCount--;
 }
 
 AttributeRegistry.prototype.getByType = function(type)
@@ -5663,21 +5754,14 @@ AttributeRegistry.prototype.clear = function()
 
 AttributeRegistry.prototype.getObjectCount = function ()
 {
-    return this.typeRegistry.length;
+    return this.uniqueAttributes.length;
 }
+
 AttributeRegistry.prototype.getObject = function(num)
 {
-    var count = 0;
-    for (var i in this.typeRegistry)
+    if (num < this.uniqueAttributes.length)
     {
-        for (var j=0; j < this.typeRegistry[i].length; j++, count++)
-        {
-            if (count == num)
-
-            {
-                return this.typeRegistry[i][j];
-            }
-        }
+    	return this.uniqueAttributes[num];
     }
     
     return null;
@@ -5861,6 +5945,8 @@ function PulseAttr()
     BooleanAttr.call(this);
     this.className = "PulseAttr";
     this.attrType = eAttrType.PulseAttr;
+    
+    this.setTransient(true); // don't serialize because by definition this attribute doesn't hold "true" (it pulses)
 }
 
 PulseAttr.prototype.clone = function()
@@ -7791,6 +7877,19 @@ function rayPick(tree,
     }
     
     return null;
+}
+function Context()
+{
+    this.clear();
+}
+
+Context.prototype.clear = function()
+{
+    this.container = null;
+    this.attribute = null;
+    this.item = 0;
+    this.containerName = "";
+    this.attributeName = "";
 }
 var eRenderContextMethod =
 {
@@ -10981,6 +11080,7 @@ XMLParser.prototype.parseAttributeContainer = function(name, atts)
             this.attributeStack.push(null); // for corresponding pop at closing tag
             return;
         }
+        attribute.flagDeserializedFromXML();
 
         if (!resolveAttributeContainerReference(attribute, atts.m_parser.m_atts, this.registry))
         {
@@ -11129,6 +11229,697 @@ XMLParser.prototype.parseTokenValue = function(string, delim_begin, delim_end)
     }
 
     return string.substring(begin, end);
+}
+
+
+Serializer.prototype = new AttributeContainer();
+Serializer.prototype.constructor = Serializer;
+
+function Serializer()
+{
+    AttributeContainer.call(this);
+    this.className = "Serializer";
+
+    this.pbMixed = null;
+    this.bMixed = false;
+    this.DOM  = null;
+    this.RootElement = null;
+    this.elementStack = new Stack();
+    
+    this.format = new StringAttr("xml");
+    this.serializeMinimum = new BooleanAttr(false);
+    this.serializeChildren = new BooleanAttr(false);
+    
+    this.registerAttribute(this.format, "format");
+    this.registerAttribute(this.serializeMinimum, "serializeMinimum");
+    this.registerAttribute(this.serializeChildren, "serializeChildren");
+}
+
+Serializer.prototype.serialize = function(attribute, item, attributeName, container)
+{
+	this.RootElement = null;
+    this.DOM  = document.implementation.createDocument("", "__InitialRoot", null); 
+    if (this.DOM)
+    {
+        if (this.RootElement)
+        {
+            this.DOM.removeChild(this.RootElement);
+            this.RootElement = null;
+
+            this.mixedModifiedCB(attr,data);
+        }
+        if (attribute)
+        {
+            this.serializeAttribute(attribute, item, attributeName);
+        }
+        else
+        {
+            this.serializeAttribute(container, 0, "");
+        }
+    }
+}
+
+Serializer.prototype.serializeAttribute = function(attribute, item, attrName)
+{
+    if (attribute)
+    {
+        if (attribute.isTransient()) // don't serialize transient attributes
+        {
+            return;
+        }
+        
+        if (this.serializeMinimum.getValueDirect() == true &&
+            !attribute.isDeserializedFromXML()) // if requested, don't serialize defaults
+        {
+            return;
+        }
+        
+        if (attribute.attrType == eAttrType.Model)
+        {
+            var model = attribute;
+            this.serializeModel(model);
+        }
+        else if (attribute.attrType == eAttrType.PerspectiveCamera)
+        {
+            var ctr = attribute;
+            this.serializeAttributeContainer(ctr)
+        }
+        else if (attribute.attrType > eAttrType.Command &&
+                 attribute.attrType < eAttrType.Command_End)
+        {
+            var cmd = attribute;
+            this.serializeCommand(cmd);
+        }
+        else if (attribute.isContainer())
+        {
+            var ctr = attribute;
+            this.serializeAttributeContainer(ctr);
+        }
+        else if (attrName && this.DOM)
+        {
+            var aType = attribute.attrType;
+            var element = null;
+            var itemElement = null;
+            var itemAttr = null;
+            var attrMap = null;
+            var strItemAttr;
+            var vecVal;
+            var varVal;
+
+            var len = attribute.getLength();
+            if (attrName)
+            {
+                // serializer cannot put "(" or ")" in the XML tag name,
+                // so convert parentheses to a string that is value,
+                // which is then converted back to parentheses in the result
+                // of serialization
+                
+                var index = 0;
+                while (true)
+                {
+                    /* Locate the substring to replace. */
+                    index = attrName.indexOf("(");
+                    if (index == -1) break;
+
+                    /* Make the replacement. */
+                    attrName.replace(index, 1, "_x0028");
+                }
+                while (true)
+                {
+                    /* Locate the substring to replace. */
+                    index = attrName.indexOf(")");
+                    if (index == -1) break;
+
+                    /* Make the replacement. */
+                    attrName.replace(index, 1, "_x0029");
+                }
+                var bstr = attrName;
+                if (bstr)
+                {
+                    element = this.DOM.createElement(bstr);
+                    if (element)
+                    {
+                        var strValue;
+                        strValue = this.getAttributeStringValue(attribute, item);
+                        if (strValue == "") return;
+
+                        if (item >= 0 || len == 1 || aType == eAttrType.StringAttr)
+                        {
+                            // Check for a CDATA section:
+                            // CDATA sections are used for CStringAttrs
+                            // containing special characters, including XML.
+                            // CDATA behaves as it does in SAX, i.e., it
+                            // is not parsed.  It is instead passed directly
+                            // to the Attribute as a string literal.
+
+                            // TODO:  Move this "constant" to a shared location.
+                            // It is also used by XMLTokenizer
+                            var strCdataStart = "<![CDATA[";
+                            var strCdataEnd = "]]>";
+
+                            var nStartPos = 0;
+                            var nEndPos = strValue.indexOf(strCdataEnd);
+                            if (nStartPos != -1 && nEndPos != -1)
+                            {
+
+                                nStartPos += strCdataStart.length;
+
+                                strValue = strValue.substr(nStartPos, strValue.length-nStartPos-strCdataEnd.length);
+                                var cdata = null;
+                                bstr = strValue;
+                                if (bstr)
+                                {
+                                    cdata = this.DOM.createCDATASection(bstr);
+                                }
+                                element.appendChild(cdata);
+                            }
+                            else
+                            {
+                                element.textContent = strValue;
+                            }
+                        }
+                        else
+                        {
+                            var sv;
+                            var startNdx = 0;
+                            var endNdx = 0;
+                            for (var i = 0; i < len; ++i)	// len - 1 = # of commas
+                            {
+                                strItemAttr = "item" + i.toString();
+
+                                endNdx = (i == len-1) ? strValue.length : strValue.indexOf(",", startNdx);
+                                sv = strValue.substr(startNdx, endNdx-startNdx);
+
+                                startNdx = endNdx+1;
+
+                                if (this.bMixed)
+                                {
+                                    itemElement = this.DOM.createElement(strItemAttr);
+                                    itemElement.textValue = sv;
+                                    element.appendChild(itemElement);
+                                }
+                                else
+                                {
+                                    itemAttr = this.DOM.createAttribute(strItemAttr);
+                                    itemAttr.value = sv;
+                                    element.setAttributeNode(itemAttr);
+                                }
+                            }
+                        }
+
+                        this.pushElement(element);
+                        this.popElement();
+                    }
+                }
+            }
+        }
+    }
+}
+Serializer.prototype.serializeAttributeReference = function(attribute, reference)
+{
+    if (attribute && reference && this.DOM)
+    {
+        var container = null;
+        var element = null;
+        var itemAttr = null;
+        var attrMap = null;
+        var pOldChild = null;
+
+        container = attribute.getContainer();
+        if (container)
+        {
+            var bstr = container.getAttributeName(attribute);
+            if (bstr)
+            {
+                element = this.DOM.createElement(bstr);
+            }
+        }
+        if (element)
+        {
+            if (element.attributes.length > 0)
+            {
+                itemAttr = this.DOM.createAttribute("ref");
+
+                if (itemAttr)
+                {
+                    var refName = "";
+                    var tmpName = "";
+                    var nameAttr = null;
+                    container = reference.getContainer();
+                    if (container)
+                    {
+                        refName = container.getAttributeName(reference);
+                        if (nameAttr = container.getAttribute("name"))
+                        {
+                            var s;
+                            tmpName = nameAttr.getValueDirect().join("");
+                            tmpName += "/";
+                            tmpName += refName;
+                            refName = tmpName;
+                        }
+                    }
+                    itemAttr.textContent = refName;
+                    attrMap.setNamedItem(itemAttr, pOldChild);
+                }
+            }
+
+            this.pushElement(element);
+            this.popElement();
+        }
+    }
+}
+
+Serializer.prototype.serializeModel = function(Model)
+{
+    // surround <Model> and <Set> tags so that both will serialize (previously the
+    // <Set> was overwriting the <Model> as the root)
+    var bstr = null;
+    var element = null;
+    if (this.DOM)
+    {
+        bstr = "ModelRoot";
+        if (bstr)
+        {
+            element = this.DOM.createElement(bstr);
+            if (element)
+            {
+                this.pushElement(element);
+            }
+        }
+    }
+
+    if (Model)
+    {
+        // serialize Model
+        this.serializeAttributeContainer(Model);
+
+        // add set command for rotation group's quaternion rotation, to retain rotation caused by object inspection
+        var RotGroup = null;
+        if (RotGroup = getInspectionGroup(Model))
+        {
+            var container = Model;
+            var attr = RotGroup.getChild(2).getAttribute("rotationQuat");
+
+            var containerName;
+            var containerNameAttr = container.getAttribute("name");
+            containerName = containerNameAttr.getValueDirect().join("");
+
+            var command = null;
+            var factory = this.registry.find("AttributeFactory");
+            command = factory.create("SetCommand");
+            if (command)
+            {
+                command.getAttribute("target").setValueDirect(containerName);
+                command.getAttribute("target").flagDeserializedFromXML();
+
+                command.registerTargetAttributes(container, containerName);
+
+                var values = [];
+                attr.getValue(values);
+
+                command.attributeValuePairs.push(new Pair(attr, values));
+                
+                this.serializeCommand(command);
+            }
+        }
+    }
+
+    if (element)
+    {
+        this.popElement();
+    }
+}
+
+Serializer.prototype.serializeCommand = function(command)
+{
+    var i;
+    // 1. create the start tag.
+
+    if (command && this.DOM)
+    {
+        var element = null;
+        var pcszType = command.className;
+        
+        // rename if negate is set
+        var negate = command.getAttribute("negate");
+        if (negate && negate.getValueDirect() == true) 
+        {
+            switch (pcszType)
+            {
+                case "Play":                pcszType = "Pause"; break;
+                case "ConnectAttributes":   pcszType = "DisconnectAttributes"; break;
+                default:                    break;
+            }
+        }
+        
+        var bstr = pcszType;
+        if (bstr)
+        {
+            //this.DOM.createElement(bstr, element); Can only pass in a string value for this and only has 1 parameter
+            element = this.DOM.createElement(bstr);
+            if (element) {
+                this.pushElement(element);
+
+                // 2. serialize the native attributes (except "sourceContainer", "sourceEvaluator",
+                //    "sourceAttribute", "sourceOutput", "source", "targetContainer", "targetAttribute", "target")
+                var i;
+                var attribute = null;
+                var pcszName = null;
+                var uiAttrCount = command.getAttributeCount();
+                for (i = 0; i < uiAttrCount; ++i) {
+                    attribute = command.getAttributeAt(i);
+                    pcszName = command.getAttributeName(attribute);
+                    if (!command.isBorrowed(attribute) &&
+                        (pcszName != "sourceContainer") &&
+                        (pcszName != "sourceEvaluator") &&
+                        (pcszName != "sourceAttribute") &&
+                        (pcszName != "sourceOutput") &&
+                        (pcszName != "source") &&
+                        (pcszName != "targetContainer") &&
+                        (pcszName != "targetAttribute") &&
+                        (pcszName != "target")) {
+                        this.serializeAttribute(attribute, -1, pcszName);
+                    }
+                }
+
+                // 3. serialize "sourceContainer", "targetContainer"
+                attribute = command.getAttribute("sourceContainer");
+                if (attribute) {
+                    this.serializeAttribute(attribute, -1, "sourceContainer");
+                }
+                attribute = command.getAttribute("targetContainer");
+                if (attribute) {
+                    this.serializeAttribute(attribute, -1, "targetContainer");
+                }
+
+                // 4. serialize "sourceAttribute", "targetAttribute", "target" (may be multiple source/target pairs)
+                var sources = [];
+                var targets = [];
+                for (i = 0; i < uiAttrCount; ++i) 
+                {
+                    //attribute = command.getAttribute(i, pcszName);
+                    var attr = command.getAttributeAt(i);
+                    var attrName = command.getAttributeName(attr);
+                    if (attrName == "sourceAttribute") 
+                    {
+                        sources.push(attr);
+                    }
+                    else if (attrName == "targetAttribute") 
+                    {
+                        targets.push(attr);
+                    }
+                }
+                
+                // source/target pairs must be serialized together
+                for (i = 0; i < sources.length && i < targets.length; i++) 
+                {
+                    this.serializeAttribute(sources[i], -1, "sourceAttribute");
+                    this.serializeAttribute(targets[i], -1, "targetAttribute");
+                }
+                // if "targetAttribute" specified, don't serialize "target"
+                if (targets.length == 0) 
+                {
+                    attribute = command.getAttribute("target");
+                    if (attribute) 
+                    {
+                        this.serializeAttribute(attribute, -1, "target");
+                    }
+                }
+
+                // 5. serialize the borrowed attributes that were modified by the command
+                var vNewVal;
+                var pRef;
+                for (i = 0; i < uiAttrCount; ++i) 
+                {
+                    attribute = command.getAttributeAt(i);
+                    var attrName = command.getAttributeName(attribute);
+                    var borrowed = command.isBorrowedAndValueModified(attribute);
+                    if (borrowed.borrowed)
+                    {
+                        var pNewAttribute = newAttribute(attribute.className);
+                        if (pNewAttribute) 
+                        {
+                            setAttributeValue(pNewAttribute, borrowed.value);
+                            pNewAttribute.flagDeserializedFromXML();
+                            this.serializeAttribute(pNewAttribute, -1, attrName);
+                        }
+                    }
+                    else 
+                    {
+                    	var borrowed = command.isBorrowedAndReferenceModified(attribute);
+                    	if (borrowed.borrowed) 
+                    	{
+                        	this.serializeAttributeReference(attribute, borrowed.reference);
+                        }
+                    }
+                }
+
+                this.popElement();
+            }
+        }
+    }
+}
+
+Serializer.prototype.serializeAttributeContainer = function(container)
+{
+    // 1. create the start tag.
+
+    if (container && this.DOM)
+    {
+        var element = null;
+        var pcszType = container.className;
+        if (pcszType == "BwSceneInspector")
+        {
+        	pcszType = "SceneInspector";
+        }
+
+        var bstr = pcszType;
+        if (bstr)
+        {
+            element = this.DOM.createElement(bstr);
+            if (element)
+            {
+                this.pushElement(element);
+
+                var attribute = null;
+                var pcszName = null;
+                var uiAttrCount = container.getAttributeCount();
+
+                // 0. serialize any native attributes first
+                for (var i = 0; i < uiAttrCount; ++i)
+                {
+                    attribute = container.getAttributeAt(i);
+                    var attrName = container.getAttributeName(attribute);
+                    if (attribute.isNative() == true)
+                    {
+                        this.serializeAttribute(attribute, -1, attrName);
+                    }
+                }
+
+                // 1. if serialization of children is requested, serialize children
+                if (this.serializeChildren.getValueDirect())
+                {
+                    this.doSerializeChildren(container);
+                }
+
+                // 2. serialize the non-native attributes
+                for (var i = 0; i < uiAttrCount; ++i)
+                {
+                    attribute = container.getAttributeAt(i);
+                    if (container.getAttributeModificationCount(attribute) == 0) continue;
+                    var attrName = container.getAttributeName(attribute);
+                    if (attribute.isNative() == false)
+                    {
+                        this.serializeAttribute(attribute, -1, attrName);
+                    }
+                }
+                this.popElement();
+            }
+        }
+    }
+
+    // 3. create the end tag.
+}
+
+Serializer.prototype.serializeAttributeCollection = function(collection)
+{
+    if (collection && this.DOM)
+    {
+        var element = null;
+        var pcszType = collection.className;
+
+        var bstr = pcszType;
+        if (bstr)
+        {
+            element = this.DOM.createElement(bstr);
+            if (element)
+            {
+                this.pushElement(element);
+
+                // vector
+                var attrVec = collection;
+                {
+                    var elementName;
+                    var baseName = attrVec.baseName.getValueDirect().join("");
+
+                    var size = attrVec.length;
+                    for (var i=0; i < size; i++)
+                    {
+                        elementName = baseName[0];
+                        elementName += "[";
+                        elementName += i.toString();
+                        elementName += "]";
+
+                        this.serializeAttribute(attrVec[i], 0, elementName);
+                    }
+                }
+
+                this.popElement();
+            }
+        }
+    }
+}
+
+Serializer.prototype.doSerializeChildren = function(root)
+{
+    if (root.attrType < eAttrType.Node ||
+        root.attrType > eAttrType.Node_End)
+    {
+        return;
+    }
+    
+    for (var i=0; i < root.getChildCount(); i++)
+    {
+        this.serializeAttribute(root.getChild(i), 0, null);
+    }
+}
+
+Serializer.prototype.pushElement = function(element)
+{
+	this.elementStack.push(element);
+	    
+    if (this.RootElement)
+    {
+        this.RootElement.appendChild(element);
+    }
+    else // !this.RootElement
+    {
+        this.DOM.replaceChild(element, this.DOM.documentElement);
+    }
+
+    this.RootElement = element;
+}
+
+Serializer.prototype.popElement = function()
+{
+    this.elementStack.pop();
+
+    if (this.elementStack.length() > 0)
+    {
+        this.RootElement = this.elementStack.top();
+    }
+}
+
+Serializer.prototype.getAttributeStringValue = function(attr, item)
+{
+    strValue = "";
+
+    var e = attr.attrType;
+
+    var index = -1;
+
+    switch (e)
+    {
+        case eAttrType.NumberAttr:
+        {
+            var i = attr.getValueDirect();
+            strValue = i.toString();
+        }
+            break;
+        case eAttrType.BooleanAttr:
+        {
+            var b = attr.getValueDirect();
+            if (b == true)
+            {
+            	strValue = "true";
+            }
+            else
+            {
+            	strValue = "false";
+            }
+        }
+            break;
+        case eAttrType.StringAttr:
+        {
+            var len = attr.getLength();
+            strValue = attr.getValueDirect().join("");
+        }
+            break;
+        case eAttrType.ColorAttr:
+        case eAttrType.Vector2DAttr:
+        case eAttrType.Vector3DAttr:
+        case eAttrType.Matrix4x4Attr:
+        case eAttrType.QuaternionRotate:
+        {
+            var vecVal_F = [];
+            attr.getValue(vecVal_F);
+            if (item == -1)
+            {
+                for (var i = 0; i < vecVal_F.length; ++i)
+                {
+                    strValue += vecVal_F[i].toString();
+                    if (i < vecVal_F.length - 1)
+                    {
+                        strValue += ",";
+                    }
+                }
+            }
+            else
+            {
+                strValue += vecVal_F[item].toString();
+            }
+        }
+            break;
+        case eAttrType.NumberArrayAttr:
+        case eAttrType.ViewportAttr:
+        {
+            var vecVal_I = [];
+            attr.getValue(vecVal_I);
+            if (item == -1)
+            {
+                for (var i = 0; i < vecVal_I.length; ++i)
+                {
+                    strValue += vecVal_I[i].toString();
+                    if (i < vecVal_I.length - 1)
+                    {
+                        strValue += ",";
+                    }
+                }
+            }
+            else
+            {
+                strValue += vecVal_I[item].toString();
+            }
+        }
+            break;
+        default:
+        {
+        }
+            break;
+    }
+    
+    return strValue;
+}
+
+Serializer.prototype.mixedModifiedCB = function(attr,data)
+{
+    var v = [];
+    attr.getValue(v);
+    var pSerializer = data;
+    if (pSerializer != 0xffffffff)
+    {
+        pSerializer.bMixed = v[0]; //ASK MICHAEL
+    }
 }
 
 
@@ -12297,9 +13088,43 @@ Node.prototype.apply = function(directive, params, visitChildren)
     var enabled = this.enabled.getValueDirect();
     if (!enabled)
     {
-        return;
+        if (directive != "serialize")
+        {
+            return;
+        }
     }
 
+    switch (directive)
+    {
+        case "serialize":
+        {          
+            var context = new Context();
+            context.attribute = this;
+
+            var factory = this.registry.find("AttributeFactory");
+            var serializer = factory.create("Serializer");
+            var xmlSerializer = new XMLSerializer();
+            
+            // added required format setting - need to revisit to reduce number of required steps
+            serializer.getAttribute("format").setValueDirect("xml");
+            // set minimum flag so that only the minimum required for recreation is serialized
+            serializer.getAttribute("serializeMinimum").setValueDirect(true);
+            // set children flag so that child nodes are serialized
+            serializer.getAttribute("serializeChildren").setValueDirect(true);
+            // serialize
+            serializer.serialize(context.attribute, context.item, context.attributeName, context.container);
+            var serialized = xmlSerializer.serializeToString(serializer.DOM);
+            if (serialized != "<__InitialRoot/>")
+            {
+            	params.serialized += serialized;
+            }
+
+            // do not visit children, as they were serialized by this
+            visitChildren = false;
+        }
+        break;
+    }
+    
     if (visitChildren)
     {
         if (params.path)
@@ -16894,6 +17719,8 @@ function Texture()
     this.heightWrap = new NumberAttr(eTextureWrap.None);
     this.mipmappingEnabled = new BooleanAttr(false);
     
+    this.image.setTransient(true); // don't serialize image data
+    
     this.image.getAttribute("width").addModifiedCB(Texture_ImageModifiedCB, this);
     this.image.getAttribute("height").addModifiedCB(Texture_ImageModifiedCB, this);
     this.image.getAttribute("byteAlignment").addModifiedCB(Texture_ImageModifiedCB, this);
@@ -18531,7 +19358,7 @@ function RasterComponent_StylesMapElementEventModifiedCB(attribute, container)
 
 function RasterComponent_ShowModifiedCB(attribute, container)
 {
-    container.showModified(attribute.getValueDirect());
+    container.showModified();
 }
 Label.prototype = new RasterComponent();
 Label.prototype.constructor = Label;
@@ -19214,340 +20041,6 @@ function Label_BalloonTipLabelStyleModifiedCB(attribute, container)
 {
     Label_DescriptionModifiedCB(container.description, container);   
 }
-BalloonTipLabel.prototype = new RasterComponent();
-BalloonTipLabel.prototype.constructor = BalloonTipLabel;
-
-function BalloonTipLabel()
-{
-    RasterComponent.call(this);
-    this.className = "BallonTipLabel";
-    this.attrType = eAttrType.BalloonTipLabel;
-    
-    this.qtip = null;
-    this.qtip_api = null;
-    
-    this.labelRect = new Rect(0, 0, 0, 0);
-    
-    this.balloonTipLabelStyle = new BalloonTipLabelStyleAttr();
-    this.labelWidth = new NumberAttr(0);
-    this.labelHeight = new NumberAttr(0);
-    
-    this.balloonTipLabelStyle.bgColor.addModifiedCB(BalloonTipLabel_balloonTipLabelStyleBgColorModifiedCB, this);
-    this.balloonTipLabelStyle.htmlLabelStyle.addModifiedCB(BalloonTipLabel_BalloonTipLabelStyleHTMLLabelStyleModifiedCB, this);
-    this.balloonTipLabelStyle.displayMode.addModifiedCB(BalloonTipLabel_balloonTipLabelStyleDisplayModeModifiedCB, this);
-    this.show.addModifiedCB(BalloonTipLabel_showModifiedCB, this);
-    this.renderSequenceSlot.addModifiedCB(BalloonTipLabel_renderSequenceSlotModifiedCB, this);
-
-    this.registerAttribute(this.balloonTipLabelStyle, "balloonTipLabelStyle");
-    this.registerAttribute(this.labelWidth, "labelWidth");
-    this.registerAttribute(this.labelHeight, "labelHeight");
-    
-    this.styles.registerStyle(this.balloonTipLabelStyle, "balloonTipLabelStyle");
-}
-
-BalloonTipLabel.prototype.setGraphMgr = function(graphMgr)
-{
-    // call base-class implementation
-    RasterComponent.prototype.setGraphMgr.call(this, graphMgr);
-    
-    // create id
-    this.id = "BalloonTipLabel" + this.graphMgr.getNextBalloonTipLabelIndex();
-    
-    // create html components for canvas overlay
-    var htmlBalloonTipLabel = CreateHTMLBalloonTipLabel(this.id);
-    this.htmlBalloonTipLabel = htmlBalloonTipLabel.label;
-    this.qtip = htmlBalloonTipLabel.qtip;
-    
-    // get qtip api 
-    this.qtip_api = $('a[id=' + this.id + ']').qtip("api");
-}
-
-BalloonTipLabel.prototype.update = function(params, visitChildren)
-{
-    if (params.userData)
-    {
-        var updateParams = params.userData;
-        if (this.show.getValueDirect())// && (this.updateLabel || isRenderStateModified(updateParams.viewport)))
-        {
-            this.updateLabel = false;
-
-            //updateLabel(updateParams.viewport);
-        }
-    }
-
-    // call base-class implementation
-    RasterComponent.prototype.update.call(this, params, visitChildren);
-}
-
-BalloonTipLabel.prototype.apply = function(directive, params, visitChildren)
-{
-    var enabled = this.enabled.getValueDirect();
-    if (!enabled)
-    {
-        // call base-class implementation
-        RasterComponent.prototype.apply.call(this, directive, params, visitChildren);
-        return;
-    }
-    
-    switch (directive)
-    {
-    case "render":
-        {
-            this.draw(params.viewport);
-        }
-        break;
-    }
-    
-    // call base-class implementation
-    RasterComponent.prototype.apply.call(this, directive, params, visitChildren);
-}
-
-BalloonTipLabel.prototype.updateLabel = function(viewport)
-{
-}
-
-BalloonTipLabel.prototype.updateLabelDimensions = function(viewport)
-{
-}
-
-BalloonTipLabel.prototype.updateShowStates = function()
-{
-}
-
-BalloonTipLabel.prototype.draw = function()
-{
-    if (!(this.show.getValueDirect()))
-    {
-        if (this.graphMgr.getCurrentBalloonTipLabel() == this)
-        {
-            this.graphMgr.setCurrentBalloonTipLabel(null);
-        }
-        return;
-    }
-    /*
-     // only allow one balloon tip to display at a time (per Ted)
-     BalloonTipLabel* currentBTL = this.graphMgr.getCurrentBalloonTipLabel();
-     if (currentBTL && currentBTL != this)
-     {
-     this.show.setValueDirect(false, false);
-     return;
-     }
-     */
-    this.graphMgr.setCurrentBalloonTipLabel(this);
-    
-    var bworks = this.registry.find("Bridgeworks");
-    
-    // determine the rendering positions
-    var positions = this.getRenderingPositions();
-    
-    var labelWidth = this.htmlBalloonTipLabel.offsetWidth; // * this.htmlLabel.style.zoom;
-    var labelHeight = this.htmlBalloonTipLabel.offsetHeight; // * this.htmlLabel.style.zoom;
-    
-    // update positions if visible
-    //if (this.show.getValueDirect())
-    {
-        this.htmlBalloonTipLabel.style.left = bworks.canvas.offsetLeft + positions.labelX;
-        this.htmlBalloonTipLabel.style.top = bworks.canvas.offsetTop + positions.labelY;
-
-        this.labelRect.load(bworks.canvas.offsetLeft + positions.labelX,
-                            bworks.canvas.offsetTop + positions.labelY,
-                            this.labelRect.left + labelWidth,
-                            this.labelRect.top + labelHeight);
-        
-        if (this.qtip_api)
-        {
-            this.qtip_api.reposition(null, false); // Reposition without animation
-            //this.qtip_api.show();
-        }
-    }
-    //else
-    //{
-    //    this.labelRect.load(0, 0, 0, 0);
-    //}
-    
-    // update screen rect
-    var screenRect = new Rect(0, 0, 0, 0);
-    //if (this.show.getValueDirect())
-    {
-        screenRect.loadRect(this.labelRect);
-    }
-    this.screenRect.setValueDirect(screenRect);
-}
-
-BalloonTipLabel.prototype.getRenderingPositions = function()
-{
-    // initialize
-    var labelX = 0;
-    var labelY = 0;
-    
-    // get screen position
-    var screen = this.screenPosition.getValueDirect();
-    
-    // get anchor position
-    var anchor = this.anchor.getValueDirect();
-    
-    labelX = screen.x + anchor.x;
-    labelY = screen.y - anchor.y;
-    
-    return { labelX: labelX, labelY: labelY };
-}
-
-BalloonTipLabel.prototype.eventPerformed = function(event)
-{
-    if (!(this.show.getValueDirect()))
-    {
-        return false;
-    }
-
-    var selected = this.isSelected(event.x, event.y);
-
-    return selected;
-}
-
-BalloonTipLabel.prototype.balloonTipLabelStyleModified = function(update)
-{
-}
-
-BalloonTipLabel.prototype.balloonTipLabelStyleBgColorModified = function()
-{
-}
-
-BalloonTipLabel.prototype.balloonTipLabelStyleDisplayModeModified = function(mode)
-{
-    switch (mode)
-    {
-        case "default":
-        {
-            this.show.setValueDirect(true, false);
-        }
-        break;
-        
-        case "hide":
-        {
-            // don't hide if parent has focus
-            if (this.motionParent && this.motionParent.getAttribute("hasFocus").getValueDirect() > 0)
-            {
-                // a bit kludgy for this programmer, but this is nessary to get the "Google Earth"-like behavior [MCB]
-                this.hasFocus.setValueDirect(1);
-                //DisableInspectionState();
-            }
-            else
-            {
-                this.show.setValueDirect(false, false);
-            }
-        }
-        break;
-    }
-        
-    this.incrementModificationCount();
-}
-
-BalloonTipLabel.prototype.balloonTipLabelStyleHtmlLabelStyleModified = function()
-{
-    // html
-    var html = this.balloonTipLabelStyle.htmlLabelStyle.html.getValueDirect().join("");
-    
-    if (this.qtip_api)
-    {
-        this.qtip_api.set("content.text", html);
-    }
-    
-    this.incrementModificationCount();
-}
-
-BalloonTipLabel.prototype.renderSequenceSlotModified = function()
-{
-}
-
-BalloonTipLabel.prototype.showModified = function(show)
-{
-    if (this.qtip_api)
-    {
-        if (show)
-        {
-            this.qtip_api.show();
-        }
-        else
-        {
-            this.qtip_api.hide();
-        }
-    }
-}
-
-function CreateHTMLBalloonTipLabel(id)
-{
-    var newA = null;
-
-    // Needs further refactoring. Currently set in an app Helper
-    // because we don't have container scope here to append these elements
-    if (bridgeworks.rasterComponents)
-    {
-        newA = document.createElement("a");
-        if (newA)
-        {
-            newA.setAttribute("id", id);
-            //newA.innerHTML = "";
-            newA.style.visibility = "hidden";
-            newA.style.position = "absolute";
-
-            bridgeworks.rasterComponents.appendChild(newA);
-        }
-    }
-
-    var id = 'a[id=' + id + ']';
-    var qtip = $(id).qtip(
-    {
-        style:
-        {
-            classes: 'qtip-bootstrap qtip-rounded qtip-shadow qtip-close'
-        },
-        content :
-        {
-            text: '',
-            button: true
-        },
-        //show : true,
-        hide:
-        {
-            event: false
-        }
-    });
-   
-    return { label: newA, qtip: qtip };
-}
-
-function BalloonTipLabel_balloonTipLabelStyleModifiedCB(attribute, container)
-{
-    container.balloonTipLabelStyleModified();
-}
-
-function BalloonTipLabel_balloonTipLabelStyleBgColorModifiedCB(attribute, container)
-{
-}
-
-function BalloonTipLabel_balloonTipLabelStyleDisplayModeModifiedCB(attribute, container)
-{
-    container.balloonTipLabelStyleDisplayModeModified(attribute.getValueDirect().join(""));
-}
-
-function BalloonTipLabel_BalloonTipLabelStyleHTMLLabelStyleModifiedCB(attribute, container)
-{
-    container.balloonTipLabelStyleHtmlLabelStyleModified();
-}
-
-function BalloonTipLabel_HTMLLabel_PageDimensionsModifiedCB(attribute, container)
-{
-}
-
-function BalloonTipLabel_showModifiedCB(attribute, container)
-{
-    container.showModified(attribute.getValueDirect());
-}
-
-function BalloonTipLabel_renderSequenceSlotModifiedCB(attribute, container)
-{
-}
-
 LineList.prototype = new VertexGeometry();
 LineList.prototype.constructor = LineList;
 
@@ -20679,7 +21172,7 @@ function SerializeParams()
 {
     DirectiveParams.call(this);
     
-    this.serialized = "";
+    this.serialized = null;
 }
 
 SerializeDirective.prototype = new SGDirective();
@@ -20692,6 +21185,7 @@ function SerializeDirective()
     this.className = "SerializeDirective";
     this.attrType = eAttrType.SerializeDirective;
 
+    this.serialized = null;
 }
 
 SerializeDirective.prototype.execute = function(root)
@@ -20702,42 +21196,20 @@ SerializeDirective.prototype.execute = function(root)
 	}
 
     // clear serialize string
-    this.serialized = "";
+    this.serialized = null;
 
     // setup serialize params structure
-    var serializeParams = new SerializeParams();
-    serializeParams.serialized = this.serialized;
-    serializeParams.userData = this.userData.getValueDirect();
+    var params = new SerializeParams();
+    params.serialized = new String();
 
     // apply serialize directive
-    root.apply(eAttrType.DirectiveSerialize, serializeParams, true);
+    root.apply("serialize", params, true);
+
+	this.serialized = params.serialized;
 
     return;
 }
 
-SerializeDirective.prototype.execute = function(path)
-{
-    if (!path)
-    {
-        return;
-    }
-
-    // clear serialize string
-    this.serialized = "";
-
-    // setup serialize params structure
-    var serializeParams = new SerializeParams();
-    serializeParams.serialized = this.serialized;
-    serializeParams.userData = this.userData.getValueDirect();
-
-	// apply serialize directive
-    if (path.getNodeCount() > 0)
-    {
-	    path[0].apply(eAttrType.DirectiveSerialize, serializeParams, true);
-    }
-
-	return;
-}
 
 var eEventType = {
     Unknown                     :-1,
@@ -21070,6 +21542,13 @@ function EventListener()
 EventListener.prototype.addEventType = function(type)
 {
     this.events.push(type);
+    
+    // for serialization
+    var name = this.event.getValueDirect().join("");
+    var event = new StringAttr(name);
+    event.flagDeserializedFromXML(); 
+    this.events.push(event);
+    this.registerAttribute(event, "event");
 }
 
 EventListener.prototype.getEventTypes = function()
@@ -21211,6 +21690,7 @@ function DeviceHandler()
 {
     EventListener.call(this);
     this.className = "DeviceHandler";
+    this.attrType = eAttrType.DeviceHandler;
     
     this.inputMessage = new NumberAttr(0);
     this.inputId = new NumberAttr(0);
@@ -21244,6 +21724,7 @@ function MouseHandler()
 {
     DeviceHandler.call(this);
     this.className = "MouseHandler";
+    this.attrType = eAttrType.MouseHandler;
     
     this.name.setValueDirect("MouseHandler");
         
@@ -21314,9 +21795,17 @@ function Command()
     this.className = "Command";
     this.attrType = eAttrType.Command;
     
+    this.borrowedAttributes = [];
+    this.attributeValuePairs = [];
+    this.attributeRefPairs = [];
+    
     this.target = new StringAttr("");
     
     this.registerAttribute(this.target, "target");
+}
+
+Command.prototype.finalize = function()
+{  
 }
 
 Command.prototype.eventPerformed = function(event)
@@ -21330,16 +21819,60 @@ Command.prototype.eventPerformed = function(event)
     EventListener.prototype.eventPerformed.call(this, event);
 }
 
+Command.prototype.isBorrowed = function(attribute)
+{
+    for (var i=0; i < this.borrowedAttributes.length; i++)
+    {
+        if (attribute == this.borrowedAttributes[i])
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+Command.prototype.isBorrowedAndValueModified = function(attribute)
+{
+    if (this.isBorrowed(attribute))
+    {
+        for (var i=0; i < this.attributeValuePairs.length; i++)
+        {
+            if (attribute == this.attributeValuePairs[i].first)
+            {
+                return { borrowed: true, value: this.attributeValuePairs[i].second };
+            }
+        }
+    }
+
+    return { borrowed: false, value: null };
+}
+
+Command.prototype.isBorrowedAndReferenceModified = function(attribute)
+{
+    if (this.isBorrowed(attribute))
+    {
+        for (var i=0; i < this.attributeRefPairs.length; i++)
+        {
+            if (attribute == this.attributeRefPairs[i].second)
+            {
+                return { borrowed: true, reference: this.attributeRefPairs[i].first };
+            }
+        }
+    }
+
+    return { borrowed: false, reference: null };
+}
+
+
 SetCommand.prototype = new Command();
 SetCommand.prototype.constructor = SetCommand;
 
 function SetCommand()
 {
     Command.call(this);
-    this.className = "SetCommand";
+    this.className = "Set";
     this.attrType = eAttrType.Set;
-    
-    this.attributeValuePairs = [];
     
     this.target.addModifiedCB(SetCommand_TargetModifiedCB, this);
 }
@@ -21384,6 +21917,7 @@ SetCommand.prototype.registerTargetAttributes = function(target, targetName)
 		}
 		
 		this.registerAttribute(attribute, sName);
+		this.borrowedAttributes.push(attribute);
     }    
 }
 
@@ -21410,6 +21944,8 @@ function ConnectionDesc()
     this.targetContainer = null;
     this.sourceAttribute = null;
     this.targetAttribute = null;
+    this.sourceAttributeName = "";
+    this.targetAttributeName = "";
     this.sourceIndex = -1;
     this.targetIndex = -1;
 }
@@ -21427,9 +21963,10 @@ ConnectAttributesCommand.prototype.constructor = ConnectAttributesCommand;
 function ConnectAttributesCommand()
 {
     Command.call(this);
-    this.className = "ConnectAttributesCommand";
+    this.className = "ConnectAttributes";
+    this.attrType = eAttrType.ConnectAttributes;
     
-    this.connections = new Stack(new ConnectionDesc());
+    this.connections = new Stack();
     this.connectionHelper = new Pair(null, null);
     
     this.sourceContainer = new StringAttr("");
@@ -21460,6 +21997,28 @@ function ConnectAttributesCommand()
 	this.registerAttribute(this.negate, "negate");
 	this.registerAttribute(this.persist, "persist");
 	this.registerAttribute(this.connectionType, "connectionType");
+}
+
+ConnectAttributesCommand.prototype.finalize = function()
+{
+    // for serialization; register each sourceAttribute/targetAttribute pair
+    for (var i=0; i < this.connections.length()-2; i++)
+    {
+        var connection = this.connections.getAt(i);
+        if (connection.sourceAttribute && connection.targetAttribute)
+        {
+            var sourceAttribute = new StringAttr(connection.sourceAttributeName);
+            sourceAttribute.flagDeserializedFromXML();
+            this.registerAttribute(sourceAttribute, "sourceAttribute");
+            
+            var targetAttribute = new StringAttr(connection.targetAttributeName);
+            targetAttribute.flagDeserializedFromXML();
+            this.registerAttribute(targetAttribute, "targetAttribute"); 
+        }    
+    }
+    
+    // call base-class implementation
+    Command.prototype.finalize.call(this);
 }
 
 ConnectAttributesCommand.prototype.eventPerformed = function(event)
@@ -21568,12 +22127,20 @@ ConnectAttributesCommand.prototype.addOrRemoveTargets = function(add)
 
 function ConnectAttributesCommand_SourceContainerModifiedCB(attribute, container)
 {
+    if (container.connections.length() == 0)
+    {
+        container.connections.push(new ConnectionDesc());
+    }
     var connection = container.connections.top();
     connection.sourceContainer = container.registry.find(attribute.getValueDirect().join(""));       
 }
 
 function ConnectAttributesCommand_TargetContainerModifiedCB(attribute, container)
 {
+    if (container.connections.length() == 0)
+    {
+        container.connections.push(new ConnectionDesc());
+    }
     var connection = container.connections.top();     
     connection.targetContainer = container.registry.find(attribute.getValueDirect().join(""));       
 }
@@ -21583,6 +22150,11 @@ function ConnectAttributesCommand_SourceAttributeModifiedCB(attribute, container
     var source = null;
     var index = -1;
     
+    if (container.connections.length() == 0)
+    {
+        container.connections.push(new ConnectionDesc());
+    }
+
     var connection = container.connections.top();    
     if (connection.sourceContainer)
     {
@@ -21604,6 +22176,7 @@ function ConnectAttributesCommand_SourceAttributeModifiedCB(attribute, container
     }
     
     connection.sourceAttribute = source;
+    connection.sourceAttributeName = attribute.getValueDirect().join("");
     connection.sourceIndex = index;
     
     // if source and target attributes have both been set, push another connection desc for the next source/target pair
@@ -21619,6 +22192,11 @@ function ConnectAttributesCommand_TargetAttributeModifiedCB(attribute, container
 {
     var target = null;
     var index = -1;
+    
+    if (container.connections.length() == 0)
+    {
+        container.connections.push(new ConnectionDesc());
+    }
     
     var connection = container.connections.top();    
     if (connection.targetContainer)
@@ -21641,8 +22219,9 @@ function ConnectAttributesCommand_TargetAttributeModifiedCB(attribute, container
     }
     
     connection.targetAttribute = target;
+    connection.targetAttributeName = attribute.getValueDirect().join("");
     connection.targetIndex = index;
-    
+        
     // if source and target attributes have both been set, push another connection desc for the next source/target pair
     if (connection.sourceAttribute && connection.targetAttribute)
     {
@@ -21667,11 +22246,9 @@ AutoInterpolateCommand.prototype.constructor = AutoInterpolateCommand;
 function AutoInterpolateCommand()
 {
     Command.call(this);
-    this.className = "AutoInterpolateCommand";
+    this.className = "AutoInterpolate";
     this.attrType = eAttrType.AutoInterpolate;
 
-    this.attributeValuePairs = [];
-    this.attributeReferencePairs = [];
     this.kfi = null;
     this.numValueChannels = 0;
     this.numReferenceChannels = 0;
@@ -21874,6 +22451,7 @@ AutoInterpolateCommand.prototype.registerTargetAttributes = function(target, tar
         }
 
         this.registerAttribute(attribute, sName);
+        this.borrowedAttributes.push(attribute);
     }
 }
 
@@ -22319,7 +22897,7 @@ PlayCommand.prototype.constructor = PlayCommand;
 function PlayCommand()
 {
     Command.call(this);
-    this.className = "PlayCommand";
+    this.className = "Play";
     this.attrType = eAttrType.Play;
 
     this.evaluators = [];
@@ -22452,7 +23030,7 @@ StopCommand.prototype.constructor = StopCommand;
 function StopCommand()
 {
     Command.call(this);
-    this.className = "StopCommand";
+    this.className = "Stop";
     this.attrType = eAttrType.Stop;
 
     this.evaluators = [];
@@ -22523,6 +23101,11 @@ CommandSequence.prototype.execute = function()
 CommandSequence.prototype.addCommand = function(command)
 {
     this.sequence.push(command);
+    
+    // register command for serialization
+    var num = this.sequence.length - 1;
+    var name = "Command(" + num.toString() + ")";
+    this.registerAttribute(command, name);
 }
 CommandMgr.prototype = new AttributeContainer();
 CommandMgr.prototype.constructor = CommandMgr;
@@ -22532,7 +23115,7 @@ function CommandMgr()
     AttributeContainer.call(this);
     this.className = "CommandMgr";
     
-    this.sequenceStack = new Stack();
+    this.commandSeqStack = new Stack();
     
     this.name = new StringAttr("CommandMgr");
     
@@ -22541,24 +23124,28 @@ function CommandMgr()
 
 CommandMgr.prototype.pushCommandSequence = function(sequence)
 {
-    this.sequenceStack.push(sequence);
+    this.commandSeqStack.push(sequence);
 }
 
 CommandMgr.prototype.popCommandSequence = function()
 {
-    this.sequenceStack.pop();
+    this.commandSeqStack.pop();
 }
 
-CommandMgr.prototype.clearCommandSequence = function()
+CommandMgr.prototype.clearCommandSequenceStack = function()
 {
-    this.sequenceStack.clear();
+    this.commandSequenceStack.clear();
 }
 
 CommandMgr.prototype.addCommand = function(command)
 {
-    if (this.sequenceStack.length > 0)
+    setAttributeBin(null);
+    setAttributePairs(null);
+    
+    if (this.commandSeqStack.length() > 0)
     {
-        this.sequenceStack.top().addCommand(command);
+        this.commandSeqStack.top().addCommand(command);
+        
         return;
     }
     
@@ -22587,8 +23174,6 @@ CommandMgr.prototype.addCommand = function(command)
         command.execute();
         this.registry.unregister(command);
     }
-    
-    setAttributeBin(null);
 }
 
 CommandMgr.prototype.createCommandTrigger = function(command, trigger) 
@@ -23625,12 +24210,7 @@ function ObjectInspector()
     // set orphan so that evaluator will not be added to scene graph
     this.orphan.setValueDirect(true);   
     
-    this.enabled.addModifiedCB(ObjectInspector_EnableModifiedCB, this)   
-}
-
-function ObjectInspector_EnableModifiedCB(attribute, container)
-{
-    console.debug("ObjectInspector.enable modified: " + container.enabled.getValueDirect().toString())
+    this.enabled.addModifiedCB(ObjectInspector_EnabledModifiedCB, this)   
 }
 
 ObjectInspector.prototype.applyCameraRelativeRotation = function(selected)
@@ -24065,6 +24645,11 @@ function ObjectInspector_SelectionOccurredCB(attribute, container)
 function ObjectInspector_SelectionClearedCB(attribute, container)
 {
     container.runSelectionCleared();
+}
+
+function ObjectInspector_EnabledModifiedCB(attribute, container)
+{
+    console.debug("ObjectInspector.enable modified: " + container.enabled.getValueDirect().toString())
 }
 
 
@@ -24602,7 +25187,7 @@ function SelectionListener()
     this.selections = new Selections();
     this.selected = null;
     
-    this.name = new StringAttr("Selector");   
+    this.name.setValueDirect("Selector");
     this.selectionOccurred = new PulseAttr();
     this.selectionCleared = new PulseAttr();
     this.pointView = new Vector3DAttr();
@@ -24631,8 +25216,6 @@ function SelectionListener()
     this.registerAttribute(this.computePivotDistance, "computePivotDistance");
     this.registerAttribute(this.selectedName, "selectedName");
     this.registerAttribute(this.lastSelectedName, "lastSelectedName");
-
-    this.registerAttribute(this.name, "name");
     
     this.numResponses.setValueDirect(-1);
 }
@@ -25595,7 +26178,7 @@ function SerializeCommand()
     this.attrType = eAttrType.Serialize;
 
     this.targetAttribute = null;
-    this.target.addModifiedCB(this.SerializeCommand_TargetModifiedCB, this);
+    this.target.addModifiedCB(SerializeCommand_TargetModifiedCB, this);
     this.directive = null;
     this.serialized = "";
 }
@@ -25627,112 +26210,122 @@ SerializeCommand.prototype.serializeScene = function()
     var xstr;
 
     // root element open tag
-    this.serialized = "<Session broadcast='false'>";
+    this.serialized = '<?xml version="1.0" encoding="UTF-8"?><?bw onload="initialize"?><Session broadcast="false">';
 
     //var attrContainerRegistry = this.registry.getAttributeContainerRegistry();
     var attrContainerRegistry = bridgeworks.registry;
     if (attrContainerRegistry)
     {
-        var serializer = new XMLSerializer();
-        var serial  = new Serializer();
+        var factory = this.registry.find("AttributeFactory");
+        var serializer = factory.create("Serializer");
+        var xmlSerializer = new XMLSerializer(); 
         // set minimum flag so that only the minimum required for recreation is serialized
-        //var serializeMinimum = serializer.getAttribute("serializeMinimum");
-        //serializeMinimum.setValueDirect(true);
+        serializer.serializeMinimum.setValueDirect(true);
 
         var count = attrContainerRegistry.getObjectCount();
 
-        // serialize device handlers
-        for (i=1; i < count; i++)
+        // serialize
+        var i;
+        for (i = 0; i < count; i++)
         {
             container = attrContainerRegistry.getObject(i);
-            if (container)
+            if (!container) continue;
+            
+            // device handlers
+            if (container.attrType > eAttrType.DeviceHandler && 
+                container.attrType < eAttrType.DeviceHandler_End)
             {
                 context.attribute = container;
-                //context = document.createElement("Scene");
-                //var inside = context.setAttribute("text",container);
-                var buffer = "";
 
                 // serialize
-                //serializer
-                serial.serialize(context.attribute,context.item,context.attributeName,context.container,buffer);
-                xstr = serializer.serializeToString(context.attribute);
-
-                console.log(xstr);
-                this.serialized += buffer;
+                serializer.serialize(context.attribute, context.item, context.attributeName, context.container);
+                var serialized = xmlSerializer.serializeToString(serializer.DOM);
+                if (serialized == "<__InitialRoot/>") continue;
+                this.serialized += serialized;
             }
-        }
-
-        // serialize root nodes (nodes without parents)
-        for (i=0; i < count; i++)
-        {
-            if (node = attrContainerRegistry.getObject(i) &&
-                !node.getParent(0))
+            // root nodes (nodes without parents)
+            else if (container.attrType > eAttrType.Node && 
+                	 container.attrType < eAttrType.Node_End)
             {
-                this.directive.Execute(node);
-                this.serialized += this.directive.getSerialized();
-            }
-        }
-
-        // serialize non-device handlers, non-nodes, non-commands (commands need to be serialized last so that the objects
-        // they affect will be declared first)
-        for (i=0; i < count; i++)
-        {
-            container = attrContainerRegistry.getObject(i); if (!container) continue;
-            if (!container && !container && !container)
-            {
-                if(container.toString() == "SelectionListener")
-                //if (!strcmp(container.getTypeString(), "SelectionListener"))
-                {
-                    var computePivotDistance = container.getAttribute("computePivotDistance")
-                        .getValueDirect();
-
-                    this.serialized += "<Set target=\"Selector\" computePivotDistance=\"";
-                    this.serialized += (computePivotDistance ? "true" : "false");
-                    this.serialized += "\"/>";
-                }
-                else
-                {
-                    context.attribute = container;
-                    var buffer = "";
-
-                    // serialize
-                    serializer.Serialize(context, buffer);
-                    this.serialized += buffer;
+            	if (container.getParentCount() == 0)
+            	{
+                	this.directive.execute(container);
+                	this.serialized += this.directive.serialized;
                 }
             }
-        }
-
-        // serialize any DisconnectAttributes commands (must come before ConnectAttributes in DefaultPreferences.xml)
-        for (i=0; i < count; i++)
-        {
-            container = attrContainerRegistry.getObject(i); if (!container) continue;
-            if(container &&(container.toString()=="DisconnectAttributes"))
-            //if (container && !strcmp(container.getTypeString(), "DisconnectAttributes"))
+            // directives
+            else if (container.attrType > eAttrType.Directive &&
+            		 container.attrType < eAttrType.Directive_End)
             {
-                context.attribute = container;
-                var buffer = "";
+            	context.attribute = container;
 
                 // serialize
-                serializer.Serialize(context, buffer);
-                this.serialized += buffer;
+                serializer.serialize(context.attribute, context.item, context.attributeName, context.container);
+                var serialized = xmlSerializer.serializeToString(serializer.DOM);
+                if (serialized == "<__InitialRoot/>") continue;
+                this.serialized += serialized;
             }
-        }
+            // SelectionListener
+            else if (container.className == "SelectionListener")
+            {
+                var computePivotDistance = container.getAttribute("computePivotDistance").getValueDirect();
 
-        // serialize remaining commands (DisconnectAttributes already serialized above)
-        for (i=0; i < count; i++)
-        {
-            container = attrContainerRegistry.getObject(i); if (!container) continue;
-            if(container && (container.toString() == "DisconnectAttributes"))
-            //if (container && strcmp(container.getTypeString(), "DisconnectAttributes"))
+                this.serialized += "<Set target=\"Selector\" computePivotDistance=\"";
+                this.serialized += (computePivotDistance ? "true" : "false");
+                this.serialized += "\"/>";
+            }
+            // remaining attributes not fitting other criteria and not a command (commands serialized below)
+            /*else if (container.attrType < eAttrType.Command || 
+                	 container.attrType > eAttrType.Command_End)
             {
                 context.attribute = container;
-                var buffer = "";
 
                 // serialize
-                serializer.Serialize(context, buffer);
-                this.serialized += buffer;
+                serializer.serialize(context.attribute, context.item, context.attributeName, context.container);
+                this.serialized += xmlSerializer.serializeToString(serializer.DOM);
+            }*/
+        }
+
+		// commands
+
+		// DisconnectAttributes commands (must come before ConnectAttributes in DefaultPreferences.xml)
+		for (i = 0; i < count; i++)
+        {
+            container = attrContainerRegistry.getObject(i);
+            if (!container) continue;
+            
+   			if (container.className == "DisconnectAttributes")
+            {
+                context.attribute = container;
+
+                // serialize
+                serializer.serialize(context.attribute, context.item, context.attributeName, context.container);
+                var serialized = xmlSerializer.serializeToString(serializer.DOM);
+                if (serialized == "<__InitialRoot/>") continue;
+                this.serialized += serialized;
             }
         }
+        
+        // other commands
+        for (i = 0; i < count; i++)
+        {
+            container = attrContainerRegistry.getObject(i);
+            if (!container) continue;
+            
+   			if (container.attrType > eAttrType.Command && 
+                container.attrType < eAttrType.Command_End &&
+                container.className != "DisconnectAttributes")
+            {
+                context.attribute = container;
+
+                // serialize
+                serializer.serialize(context.attribute, context.item, context.attributeName, context.container);
+                var serialized = xmlSerializer.serializeToString(serializer.DOM);
+                if (serialized == "<__InitialRoot/>") continue;
+                this.serialized += serialized;
+            }
+        }
+            		
         /*
          // updateSectorOrigin
          const char* substr = NULL;
@@ -25759,11 +26352,13 @@ SerializeCommand.prototype.serializeScene = function()
 
     // root element close tag
     this.serialized += "</Session>";
+    
+    console.log(this.serialized);
 
     return;
 }
 
-SerializeCommand.prototype.Undo = function()
+SerializeCommand.prototype.undo = function()
 {
 
 }
@@ -25775,14 +26370,15 @@ SerializeCommand.prototype.setRegistry = function(registry)
     this.directive = factory.create("SerializeDirective");
 
     // call base-class implementation
-    Command.prototype.setRegistry(registry);
+    Command.prototype.setRegistry.call(this, registry);
 }
+
 SerializeCommand.prototype.getSerialized = function()
 {
     return this.serialized;
-    //return this.serialized.c_str();
 }
-SerializeCommand.prototype.SerializeCommand_TargetModifiedCB = function(container, attribute)
+
+function SerializeCommand_TargetModifiedCB(attribute, container)
 {
     var target = attribute.getValueDirect().join("");
     container.targetAttribute = container.registry.find(target);
@@ -27999,6 +28595,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["HTMLLabelStyle"] = newAttribute;
     this.newResourceProcs["BalloonTipLabelStyle"] = newAttribute;
     this.newResourceProcs["RenderableElementStyle"] = newAttribute;
+    this.newResourceProcs["Serializer"] = newAttribute;
 
     // nodes
     this.newResourceProcs["DirectionalLight"] = newSGNode;
@@ -28036,7 +28633,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["MapProjectionCalculator"] = newMapProjectionCalculator;
     this.newResourceProcs["ObjectInspector"] = newObjectInspector;
     this.newResourceProcs["SceneInspector"] = newSceneInspector;
-    
+    this.newResourceProcs["TargetObserver"] = newTargetObserver;
 
     // commands
     this.newResourceProcs["AppendNode"] = newCommand;
@@ -28124,15 +28721,35 @@ function newAttribute(name, factory)
     
     switch (name)
     {
-    case "Styles":                  resource = new StylesAttr(); break;
-    case "StyleMap":                resource = new StyleMapAttr(); break;
-    case "StylesMap":               resource = new StylesMapAttr(); break;
-    case "LabelStyle":              resource = new LabelStyleAttr(); break;
-    case "IconStyle":               resource = new IconStyleAttr(); break;
-    case "FontStyle":               resource = new FontStyleAttr(); break;
-    case "HTMLLabelStyle":          resource = new HTMLLabelStyleAttr(); break;
-    case "BalloonTipLabelStyle":    resource = new BalloonTipLabelStyleAttr(); break;
-    case "RenderableElementStyle":  resource = new RenderableElementStyleAttr(); break;
+    case "BalloonTipLabelStyleAttr":    resource = new BalloonTipLabelStyleAttr(); break;
+    case "BBoxAttr":                    resource = new BBoxAttr(); break;
+    case "BooleanAttr":                 resource = new BooleanAttr(); break;
+    case "ColorAttr":                   resource = new ColorAttr(); break;
+    case "FontStyleAttr":               resource = new FontStyleAttr(); break;
+    case "IconStyleAttr":               resource = new IconStyleAttr(); break;
+    case "ImageAttr":                   resource = new ImageAttr(); break;
+    case "KeyframeAttr":                resource = new KeyframeAttr(); break;
+    case "KeyframesAttr":               resource = new KeyframesAttr(); break;
+    case "LabelStyleAttr":              resource = new LabelStyleAttr(); break;
+    case "HTMLLabelStyleAttr":          resource = new HTMLLabelStyleAttr(); break;
+    case "NumberArrayAttr":             resource = new NumberArrayAttr(); break;
+    case "NumberAttr":                  resource = new NumberAttr(); break;
+    case "Matrix4x4Attr":               resource = new Matrix4x4Attr(); break;
+    case "PlaneAttr":                   resource = new PlaneAttr(); break;
+    case "PulseAttr":                   resource = new PulseAttr(); break;
+    case "RectAttr":                    resource = new RectAttr(); break;
+    case "ReferenceAttr":               resource = new ReferenceAttr(); break;
+    case "StringAttr":                  resource = new StringAttr(); break;
+    case "StyleAttr":                   resource = new StyleAttr(); break;
+    case "StylesAttr":                  resource = new StylesAttr(); break;
+    case "StyleMapAttr":                resource = new StyleMapAttr(); break;
+    case "StylesMapAttr":               resource = new StylesMapAttr(); break;
+    case "Vector2DAttr":                resource = new Vector2DAttr(); break;
+    case "Vector3DAttr":                resource = new Vector3DAttr(); break;
+    case "ViewportAttr":                resource = new ViewportAttr(); break;
+    case "ViewVolumeAttr":              resource = new ViewVolumeAttr(); break;
+    case "RenderableElementStyleAttr":  resource = new RenderableElementStyleAttr(); break;
+    case "Serializer":                  resource = new Serializer(); break;
     }
     
     return resource;
@@ -28272,6 +28889,15 @@ function newSceneInspector(name, factory)
     return resource;
 }
 
+function newTargetObserver(name, factory)
+{
+	var resource = new BwTargetObserver();
+    
+    registerEvaluatorAttributes(resource, factory);
+   
+   	return resource;	
+}
+
 function newCommand(name, factory)
 {
     var resource = null;
@@ -28374,6 +29000,8 @@ function finalizeDirective(directive, factory)
 
 function finalizeCommand(command, factory)
 {
+    command.finalize();
+    
     var commandMgr = factory.registry.find("CommandMgr");
     if (commandMgr)
     {
@@ -28449,6 +29077,11 @@ function registerEvaluatorAttributes(evaluator, factory)
     var targetConnectionType = new StringAttr("transform");
     targetConnectionType.addModifiedCB(AttributeFactory_EvaluatorTargetConnectionTypeModifiedCB, factory);
     evaluator.registerAttribute(targetConnectionType, "targetConnectionType");
+    
+    // evaluate (replaced by "enabled")
+    var evaluate = new BooleanAttr(true);
+    evaluator.registerAttribute(evaluate, "evaluate");
+    evaluate.addTarget(evaluator.getAttribute("enabled"));
 }
 
 function registerParentableAttributes(pme, factory)
@@ -28591,6 +29224,8 @@ function Bridgeworks(canvas, bgImage, contentDir)
     this.selector.setRegistry(this.registry);
     this.renderAgent.setRegistry(this.registry);
     this.layout.setRegistry(this.registry);
+    this.mapProjectionCalculator.setRegistry(this.registry);
+    this.rasterComponentEventListener.setRegistry(this.registry);
     
     // configure dependencies
     this.factory.setGraphMgr(this.graphMgr);
