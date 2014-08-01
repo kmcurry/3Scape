@@ -4764,6 +4764,7 @@ var eAttrType = {
     Set                         :3009,
     Stop                        :3010,
     ConnectAttributes           :3011,
+    ScreenCapture               :3012,
     Command_End                 :3999,
 
     DeviceHandler               :4000,
@@ -4862,13 +4863,15 @@ function AttributeSetParams(elementIndex,
                             valueElementIndex,
                             op,
                             updateTargets,
-                            alertModifiedCBs)
+                            alertModifiedCBs,
+                            caller)
 {
     this.elementIndex = elementIndex || -1;
     this.valueElementIndex = valueElementIndex || -1;
     this.op = op || eAttrSetOp.Replace;
     this.updateTargets = updateTargets != undefined ? updateTargets : true;
     this.alertModifiedCBs = alertModifiedCBs != undefined ? alertModifiedCBs : true;
+    this.caller = caller != undefined ? caller : null;
 }
                             
 Attribute.prototype = new Base();
@@ -5006,11 +5009,13 @@ Attribute.prototype.setValue = function(values, params)
     var updateTargets = (params ? params.updateTargets : true);
     if (updateTargets)
     {
+        var caller = (params ? params.caller : null);
         for (var i = 0; i < this.targets.length; i++)
         {
             var targetDesc = this.targets[i];
+            if (targetDesc.target == caller) continue; // don't set value for circular targeting
             var params = new AttributeSetParams(targetDesc.targetElementIndex, targetDesc.sourceElementIndex,
-                                                targetDesc.op, true, true);
+                                                targetDesc.op, true, true, this);
             targetDesc.target.setValue(this.values, params);
         }
     }
@@ -5337,6 +5342,7 @@ AttributeContainer.prototype.unregisterAttribute = function(attribute)
                 attribute.removeModifiedCB(AttributeContainer_AttributeModifiedCB, this);
                 attribute.removeModifiedCB(AttributeContainer_AttributeModifiedCounterCB, this);
                 delete this.attrNameMap[i][j];
+                this.attrNameMap[i].splice(j,1);
                 break;
             }
         }
@@ -9634,7 +9640,7 @@ function getWebGLContext(canvas, debug)
         }
         else // !debug
         {
-            gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+            gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl"); //Try and make a normal canvas of webgl, if that fails then fall back on the experimental
         }
     }    
     catch (e) 
@@ -19413,7 +19419,7 @@ Label.prototype.setGraphMgr = function(graphMgr)
     RasterComponent.prototype.setGraphMgr.call(this, graphMgr);
     
     // create id
-    this.id = "Label" + this.graphMgr.getNextLabelIndex;
+    this.id = "Label" + this.graphMgr.getNextLabelIndex();
     this.labelId = this.id + "_label";
     this.iconId = this.id + "_icon";
     
@@ -28649,6 +28655,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["Pause"] = newCommand;
     this.newResourceProcs["Play"] = newCommand;
     this.newResourceProcs["Remove"] = newCommand;
+    this.newResourceProcs["ScreenCapture"] = newCommand;
     this.newResourceProcs["Serialize"] = newCommand;
     this.newResourceProcs["Set"] = newCommand;
     this.newResourceProcs["Stop"] = newCommand;
@@ -28698,6 +28705,7 @@ AttributeFactory.prototype.initializeFinalizeMap = function()
     this.finalizeProcs["Pause"] = finalizeCommand;
     this.finalizeProcs["Play"] = finalizeCommand;
     this.finalizeProcs["Remove"] = finalizeCommand;
+    this.finalizeProcs["ScreenCapture"] = finalizeCommand;
     this.finalizeProcs["Serialize"] = finalizeCommand;
     this.finalizeProcs["Set"] = finalizeCommand;
     this.finalizeProcs["Stop"] = finalizeCommand;
@@ -28917,6 +28925,7 @@ function newCommand(name, factory)
     case "Pause":               resource = new PlayCommand(); resource.getAttribute("negate").setValueDirect(true); break;
     case "Play":                resource = new PlayCommand(); break;
     case "Remove":              resource = new RemoveCommand(); break;
+    case "ScreenCapture":       resource = new ScreenCapture(); break;
     case "Serialize":           resource = new SerializeCommand(); break;
     case "Set":                 resource = new SetCommand(); break;
     case "Stop":                resource = new StopCommand(); break;
@@ -29082,7 +29091,9 @@ function registerEvaluatorAttributes(evaluator, factory)
     // evaluate (replaced by "enabled")
     var evaluate = new BooleanAttr(true);
     evaluator.registerAttribute(evaluate, "evaluate");
-    evaluate.addTarget(evaluator.getAttribute("enabled"));
+    var enabled = evaluator.getAttribute("enabled");
+    evaluate.addTarget(enabled);
+    enabled.addTarget(evaluate);
 }
 
 function registerParentableAttributes(pme, factory)

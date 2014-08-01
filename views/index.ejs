@@ -133,8 +133,8 @@
           var isStopped;
           var timer;
           //========================================================================
-
-          var g_labelCount = 0;
+          var graphMgr;
+          var g_labelCount;
           var g_labelName = null;
           var g_countStr = "";
           
@@ -190,7 +190,9 @@
           function editRecord(labelName)
           {
               var nicE = new nicEditors.findEditor('title');
-              var title = nicE.getContent();
+              if(selected) {
+                  var title = nicE.getContent();
+              }
               console.log("EDITRECORD: "+labelName);
               var update = "\<Set target='" + labelName + "' text='" + title + "' show='true'/>";
               console.debug(update);
@@ -208,8 +210,10 @@
 
               var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
 
-              g_labelCount = g_labelCount + 1;
               g_countStr = g_labelCount.toString();
+              g_labelCount = g_labelCount + 1;
+              graphMgr.getNextLabelIndex();
+              console.log(graphMgr.labelIndex);
 
               g_labelName = "L-" + g_countStr;
 
@@ -250,9 +254,9 @@
               var xstr = (new XMLSerializer()).serializeToString(xml);
               console.debug(xstr);
               bridgeworks.updateScene(xstr);
-              if(g_labelCount > 1) {
-                  var nicE = new nicEditors.findEditor('title').setContent("");
-              }
+//              if(g_labelCount > 2) {
+//                  var nicE = new nicEditors.findEditor('title').setContent("");
+//              }
               $( "#dialog" ).dialog("open");
               //addRecord();
           }
@@ -1378,7 +1382,7 @@ function zoomActivate() {
       </div>
       <!-- Progress Bar -->
 
-      <div id="dialog" style="display:none; top:50%" title="Please enter your description for this item below">
+      <div id="dialog" title="Please enter your description for this item below">
           <form method="post"> <!--id="my-form" enctype="multipart/form-data" -->
               <textarea name="title" id="title" style="width:100%"></textarea>
               <!-- <input type="text" id="title">-->
@@ -1600,13 +1604,15 @@ function zoomActivate() {
                     }
                 }
 
-                bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
-                //bridgeworks = init("Testing_Load.xml", document.getElementById("BwContainer"));
+                //bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
+                bridgeworks = init("Testing_Load.xml", document.getElementById("BwContainer"));
 
                 sceneInspector = bridgeworks.registry.find("SceneInspector");
                 objectInspector =bridgeworks.registry.find("ObjectInspector");
-                objectInspector.enabled.setValueDirect(false);
+                graphMgr = bridgeworks.registry.find("GraphMgr");
+                g_labelCount = graphMgr.labelIndex;
 
+                console.log(g_labelCount);
                 listLibrary();
                 
                 $('html').bind('keypress', function(e)
