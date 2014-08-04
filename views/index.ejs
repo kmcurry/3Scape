@@ -121,6 +121,7 @@
           var edit = 0;
           var selectedText;
           var nicText;
+          var textBoxMade = 0;
 
 
           //Progress Bar ===========================================================
@@ -384,6 +385,13 @@
 */
           function openLabelEdit()
           {
+              if(textBoxMade == 0)
+              {
+                  new nicEditor({
+                      iconsPath : 'nicEditorIcons.gif'
+                  }).panelInstance('title');
+                  adding = true;
+              }
               edit = 1;
               new nicEditors.findEditor('title').setContent(selectedText);
               $( "#dialog" ).dialog("open");
@@ -414,6 +422,7 @@
                     if(selectedModel) {
                         modelName = selectedModel.name.getValueDirect().join("");
                         var name = selectedModel.name.getValueDirect().join("");
+                        selected = null;
 
                         setObject(name);
                         setColorPicker();
@@ -1382,7 +1391,7 @@ function zoomActivate() {
       </div>
       <!-- Progress Bar -->
 
-      <div id="dialog" title="Please enter your description for this item below">
+      <div id="dialog" style="display:none" title="Please enter your description for this item below">
           <form method="post"> <!--id="my-form" enctype="multipart/form-data" -->
               <textarea name="title" id="title" style="width:100%"></textarea>
               <!-- <input type="text" id="title">-->
@@ -1659,9 +1668,12 @@ function zoomActivate() {
                 $( "#dialog" ).dialog({ hide: { effect: "blind", duration: 200 } });
 
                 $( "#dialog").dialog({open: function(event,ui) {
-                   nicText = new nicEditor({
-                        iconsPath : 'nicEditorIcons.gif'
-                    }).panelInstance('title');
+                    if(textBoxMade == 0) {
+                        textBoxMade = 1;
+                        nicText = new nicEditor({
+                            iconsPath: 'nicEditorIcons.gif'
+                        }).panelInstance('title');
+                    }
                 }
                 });
 
