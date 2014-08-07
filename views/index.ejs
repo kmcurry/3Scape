@@ -32,7 +32,8 @@
     <script type="text/javascript" src="./js/crossbrowser.js"></script>
     <script type="text/javascript" src="./js/editor.js"></script>
     <script type="text/javascript" src="./js/controls.js"></script>
-    <script tpype="text/javascript" src="./js/MapControls.js"></script>
+    <script type="text/javascript" src="./js/MapControls.js"></script>
+    <script type="text/javascript" src="./js/BinaryDecode.js"></script>
     <!-- Slider -->
     <script type="text/javascript" src="./js/bootstrap-slider.js"></script>
     <link rel="stylesheet" type="text/css" href="css/slider.css">
@@ -61,7 +62,7 @@
     </style>
       <style id="holderjs-style" type="text/css"></style>
       <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
@@ -71,20 +72,51 @@
         ga('send', 'pageview');
       </script>
     <meta property="og:image" content="http://3Scape.me/logo-3S.png"/>
-    <meta property="og:description" content="3Scape is a web site where anyone who can point, click, copy and paste can make and share interactive, 3D scapes online." /> 
+    <meta property="og:description" content="lalalalaa3Scape is a web site where anyone who can point, click, copy and paste can make and share interactive, 3D scapes online." />
   </head> 
   <body onresize="resize();">
     <div id="fb-root"></div><!-- FB Javascript SDK -->
     <script>
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '270261976501269',
+                xfbml      : true,
+                version    : 'v2.0'
+            });
+        };
+        //This is in Screen Capture Now
+//            function getInfo(imgData) {
+//                FB.login(function (response) {
+//                    //if (response.session)
+//                    var authToken = response.authResponse.accessToken;
+//                    PostImageToFacebook(authToken,'img.png', 'image/png', imgData, 'js upload')
+////                        FB.api("/me/photos", "post",
+////                                {
+////                                    "source": imgData
+////                                },
+////                                function (response) {
+////                                    if (!response || response.error) {
+////                                        alert('Error occured');
+////                                    } else {
+////                                        alert('Post ID: ' + response.id);
+////                                    }
+////                                });
+////                        FB.api('/me',  function(response) {
+////                            alert('User: ' + response.name);
+////                        });
+//                    //}
+//                });
+//                return false;
+//            }
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     </script>
-      
+
       <script type="text/javascript">
           //A group of global variables
           var bridgeworks = null;
@@ -323,6 +355,19 @@
           function handleDocMove(event)
           {
               if (capture) bridgeworks.handleEvent(event);
+          }
+
+          function openCaption(){
+              var canvasId = "Canvas";
+                var xml = "<ScreenCapture canvasId='" + canvasId + "'/>"
+                console.debug(xml);
+                bridgeworks.updateScene(xml);
+          setTimeout(function() {
+              document.getElementById("picCaption").src=cimageData;
+              document.getElementById("picCaption").width= 500;
+              document.getElementById("picCaption").height=200;
+              $("#example").dialog("open");
+          }, 1000);
           }
 
           //Mock Up of How Search would work
@@ -609,8 +654,22 @@ function zoomActivate() {
                     }
                         break;
                     case 187: //Equal Sign
-                        var command = "\<Serialize target='Root'/>";
-                        bridgeworks.updateScene(command);
+//                        var command = "\<Serialize target='Root'/>";
+//                        bridgeworks.updateScene(command);
+
+                        var canvasId = "Canvas";
+                        var xml = "<ScreenCapture canvasId='" + canvasId + "'/>"
+                        console.debug(xml);
+                        bridgeworks.updateScene(xml);
+                            //This is now in Screen Capture
+//                            var canvas = document.getElementById('Canvas');
+//                            var imgData = canvas.toDataURL('image/png');
+//                            var cnt = imgData.lastIndexOf(',') + 1;
+//                            imgData = imgData.substr(cnt);
+//                            var decodedImg = Base64Binary.decode(imgData);
+////                            PostImageToFacebook(auth,'img.png', 'image/png', decodedImg, 'js upload')
+//                            //console.log(PostImageToFacebook('img.png', 'image/png', decodedImg, 'js upload'));
+//                            getInfo(decodedImg);
                         break;
 
                     case 46: //Delete Key
@@ -1077,7 +1136,12 @@ function zoomActivate() {
                             Please Login
                           </a>
                         </div>                          
-                      </li> -->                       
+                      </li> -->
+                      <li>
+                          <button type="button" class="btn btn-info navbar-btn" id="fbShare" role="button" onclick="openCaption();" title="Share Scene on Facebook" style="margin-right:3px;">
+                              <span class="fa fa-camera-retro fa-lg" style="font-size:2em;"></span>
+                          </button>
+                      </li>
                       <li>
                         <button type="button" class="btn btn-info navbar-btn toggleController" id="navCamera" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="margin-right:3px;">
                           <span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>                          
@@ -1362,8 +1426,8 @@ function zoomActivate() {
                 </li>
               </ul>
             </div>            
-            <button type="button" class="btn btn-default" id="pCut" role="button" onclick="cut();">
-                  <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut"></span>
+            <button type="button" class="btn btn-default" id="pCut" role="button">
+                  <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut" onclick="cut();"></span>
             </button>
             <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();">
                   <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>
@@ -1399,6 +1463,11 @@ function zoomActivate() {
           </form>
       </div>
 
+    <div id="example" title="Caption this Scene for Facebook">
+        <span style ="float: left; margin:0 7px 50px 0; width:550px; height:200px;"><img id="picCaption"></span>
+        <textarea name="fbCaption" id="fbCaption" style="width:100%"></textarea>
+        <p><input id="submitCaption" type="submit" value="Submit"></p>
+    </div>
     
     <!--<video controls="controls" src="http://localhost/bwjs/BwContent/images/quake.mpg">
     Your browser does not support the video tag.
@@ -1628,6 +1697,9 @@ function zoomActivate() {
                 {
                    if(e.keyCode == 13)
                    {
+                       if($("#example").dialog("isOpen")===true){
+                           $('#submitCaption').click();
+                       }
                        if ($("#dialog").dialog( "isOpen" )===true && edit == 0) {
                            addRecord();
                            console.log("Not editting");
@@ -1658,6 +1730,26 @@ function zoomActivate() {
                         addBalloon();
                     }
                 });
+
+                $('#submitCaption').click(function(){
+                    message = $( "#fbCaption" ).val();
+                    console.log(message);
+                    $("#fbCaption").val('');
+                    FB.login(function (response) {
+                        if (response.authResponse) {
+                            var authToken = response.authResponse.accessToken;
+                            PostImageToFacebook(authToken, 'img.png', 'image/png', imgeData, message);
+                        }
+                    });
+                    $("#example").dialog("close");
+                });
+
+                $( "#example").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: "575px"
+                });
+
                 $( "#dialog" ).dialog({
                     autoOpen: false,
                     modal: true
