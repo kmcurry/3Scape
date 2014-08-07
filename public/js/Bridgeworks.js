@@ -9653,7 +9653,7 @@ function getWebGLContext(canvas, debug)
         }
         else // !debug
         {
-            gl = canvas.getContext("experimental-webgl", { antialias : true, preserveDrawingBuffer: true });
+            gl = (canvas.getContext("webgl", { antialias : true, preserveDrawingBuffer: true }) || canvas.getContext("experimental-webgl", { antialias : true, preserveDrawingBuffer: true }));
         }
     }    
     catch (e) 
