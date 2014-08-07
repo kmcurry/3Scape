@@ -1740,7 +1740,7 @@ function zoomActivate() {
                             var authToken = response.authResponse.accessToken;
                             PostImageToFacebook(authToken, 'img.png', 'image/png', imgeData, message);
                         }
-                    });
+                    },{scope: "publish_actions"});
                     $("#example").dialog("close");
                 });
 
