@@ -14,6 +14,13 @@ module.exports = function(app, passport) {
 			user: req.user
 		}); // load the index.ejs file
 	});
+	
+	// =====================================
+	// PRIVACY ========
+	// =====================================
+	main.get('/privacy', function(req, res) {
+		res.render('privacy.ejs')
+	});
 
 	// =====================================
 	// NO WEB GL ========
