@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /BwSchools/BwContent -->
+<DefaultInteraction>
+	<!-- DEVICES USED -->
+	<MouseHandler/>
+	<KeyboardHandler/>
+	<!--INTERACTORS-->
+	<ObjectInspector name="ObjectInspector" enabled="false"/>
+	<SceneInspector name="SceneInspector" viewRelativeXAxisRotation="true" viewRelativeZAxisRotation="true" pivotDistance="0" enabled="true">
+		<rotationSensitivity x=".5" y=".5" z=".5"/>
+        <panSensitivity x="1" y="1" z="1"/>
+	</SceneInspector>
+	<FlightSimulator name="FlightSimulator" speed="1" evaluate="false"/>
+    <WalkSimulator name="WalkSimulator" speed="1" evaluate="false"/>
+	<!--
+			DISCONNECT MOUSE
+	-->
+	<DisconnectAttributes name="DisconnectAllMouse" numResponses="-1" undoable="false" sourceContainer="MouseHandler" connectionType="DisconnectAllTargets">
+		<event>MButton1.Up</event>
+		<event>MButton2.Up</event>
+		<event>MButton3.Up</event>
+		<event>MButton1.Down</event>
+		<event>MButton1+MButton3.Down</event>
+		<event>MButton2.Down</event>
+		<event>MButton3.Down</event>
+	</DisconnectAttributes>
+	<!--MOUSE ROTATION-->
+	<ConnectAttributes name="MButton1.Scene" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+		<sourceAttribute>deltaY</sourceAttribute>
+		<targetAttribute>invertedRotationDelta:0</targetAttribute>
+		<sourceAttribute>deltaX</sourceAttribute>
+		<targetAttribute>invertedRotationDelta:1</targetAttribute>
+	</ConnectAttributes>
+	<!--MOUSE VIEW RELATIVE PAN-->
+	<ConnectAttributes name="MButtonBoth.Scene" event="MButton1+MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+		<sourceAttribute>deltaX</sourceAttribute>
+		<targetAttribute>invertedPanDelta:0</targetAttribute>
+		<sourceAttribute>deltaY</sourceAttribute>
+		<targetAttribute>invertedPanDelta:1</targetAttribute>
+	</ConnectAttributes>
+	<!--<ConnectAttributes name="MButton2.Scene" event="MButton2.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+	<sourceAttribute>deltaX</sourceAttribute>
+		<targetAttribute>translationDelta:0</targetAttribute>
+		<sourceAttribute>deltaY</sourceAttribute>
+		<targetAttribute>translationDelta:2</targetAttribute>
+	</ConnectAttributes>-->
+	<!--MOUSE PAN Z-->
+	<ConnectAttributes name="MButton3.Scene" event="MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+		<sourceAttribute>deltaY</sourceAttribute>
+		<targetAttribute>panDelta:2</targetAttribute>
+	</ConnectAttributes>
+	<!-- OBJECT INSPECTION -->
+	<ConnectAttributes name="MButton1.Object" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
+		<sourceAttribute>deviceY</sourceAttribute>
+		<targetAttribute>rotationNow:0</targetAttribute>
+		<sourceAttribute>deviceX</sourceAttribute>
+		<targetAttribute>rotationNow:1</targetAttribute>
+	</ConnectAttributes>
+	<!-- MOUSE PAN -->
+	<ConnectAttributes name="MButton2.Object" event="MButton1+MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
+		<sourceAttribute>delta:0</sourceAttribute>
+		<targetAttribute>translationDelta:0</targetAttribute>
+		<sourceAttribute>delta:1</sourceAttribute>
+		<targetAttribute>translationDelta:1</targetAttribute>
+	</ConnectAttributes>
+	<!-- MOUSE PAN Z -->
+	<ConnectAttributes name="MButton3.Object" event="MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
+		<sourceAttribute>delta:1</sourceAttribute>
+		<targetAttribute>translationDelta:2</targetAttribute>
+	</ConnectAttributes>
+	<!-- FLIGHT SIM -->
+	<ConnectAttributes name="MButton1.Flight" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="FlightSimulator">
+		<sourceAttribute>deltaY</sourceAttribute>
+		<targetAttribute>pitchDelta</targetAttribute>
+		<sourceAttribute>deltaX</sourceAttribute>
+		<targetAttribute>rollDelta</targetAttribute>
+	</ConnectAttributes>
+	<!--
+			KEYBOARD ROTATION
+	-->
+	<Set name="SetCapture_Down_Rot_Scene" event="VK_DOWN.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<rotationDelta x="-5" y="0" z="0"/>
+	</Set>
+	<Set name="SetCapture_Up_Rot_Scene" event="VK_UP.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<rotationDelta x="5" y="0" z="0"/>
+	</Set>
+	<!-- Y AXIS -->
+	<Set name="SetCapture_Left_Rot_Scene" event="VK_LEFT.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<rotationDelta x="0" y="-5" z="0"/>
+	</Set>
+	<Set name="SetCapture_Right_Rot_Scene" event="VK_RIGHT.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<rotationDelta x="0" y="5" z="0"/>
+	</Set>
+	<!-- KEYBOARD PAN 
+		S = Left
+		F = Right
+		D = Forward
+		E = Backward
+		C = Up
+		V = Down
+	-->
+	<Set name="SetCapture_Left_Pan_Scene" event="VK_CONTROL+VK_LEFT.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<panDelta x="1" y="0" z="0"/>
+	</Set>
+	<Set name="SetCapture_Right_Pan_Scene" event="VK_CONTROL+VK_RIGHT.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<panDelta x="-1" y="0" z="0"/>
+	</Set>
+	<!-- Y AXIS -->
+	<Set name="SetCapture_Up_Pan_Scene" event="VK_CONTROL+VK_UP.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<viewRelativeTranslationDelta x="0" y="0" z="-1"/>
+	</Set>
+	<Set name="SetCapture_Down_Pan_Scene" event="VK_CONTROL+VK_DOWN.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<viewRelativeTranslationDelta x="0" y="0" z="1"/>
+	</Set>
+	<Set name="SetCapture_ZoomIn_Scene" event="VK_PLUS.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<panDelta x="0" y="0" z="5"/>
+	</Set>
+	<Set name="SetCapture_ZoomOut_Scene" event="VK_MINUS.Down" numResponses="-1" undoable="false" target="SceneInspector">
+		<panDelta x="0" y="0" z="-5"/>
+	</Set>
+	<!--
+			KEYBOARD ROTATION
+	-->
+	<Set name="SetCapture_Down_Rot_Objects" event="VK_DOWN.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<rotationDelta x="-5" y="0" z="0"/>
+	</Set>
+	<Set name="SetCapture_Up_Rot_Objects" event="VK_UP.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<rotationDelta x="5" y="0" z="0"/>
+	</Set>
+	<!-- Y AXIS -->
+	<Set name="SetCapture_Left_Rot_Objects" event="VK_LEFT.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<rotationDelta x="0" y="-5" z="0"/>
+	</Set>
+	<Set name="SetCapture_Right_Rot_Objects" event="VK_RIGHT.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<rotationDelta x="0" y="5" z="0"/>
+	</Set>
+	<!-- KEYBOARD PAN 
+		S = Left
+		F = Right
+		D = Forward
+		E = Backward
+		C = Up
+		V = Down
+	-->
+	<Set name="SetCapture_S_Pan_Objects" event="VK_CONTROL+VK_LEFT.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<panDelta x="1" y="0" z="0"/>
+	</Set>
+	<Set name="SetCapture_F_Pan_Objects" event="VK_CONTROL+VK_RIGHT.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<panDelta x="-1" y="0" z="0"/>
+	</Set>
+	<!-- Y AXIS -->
+	<Set name="SetCapture_C_Pan_Objects" event="VK_CONTROL+VK_UP.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<panDelta x="0" y="1" z="0"/>
+	</Set>
+	<Set name="SetCapture_V_Pan_Objects" event="VK_CONTROL+VK_DOWN.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<panDelta x="0" y="-1" z="0"/>
+	</Set>
+	<Set name="SetCapture_E_Pan_Objects" event="VK_MINUS.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<panDelta x="0" y="0" z="-1"/>
+	</Set>
+	<Set name="SetCapture_D_Pan_Objects" event="VK_PLUS.Down" numResponses="-1" undoable="false" target="ObjectInspector">
+		<panDelta x="0" y="0" z="1"/>
+	</Set>
+	<!-- HOT KEYS -->
+	<HotKeys>
+		<Play numResponses="-1" undoable="false">
+			<event>play</event>
+			<event>VK_PERIOD</event>
+		</Play>
+		<CommandSequence name="Pause" numResponses="-1" undoable="false">
+			<event>pause</event>
+			<event>VK_SLASH</event>
+			<Pause/>
+			<Set target="SceneInspector" evaluate="true"/>
+			<Set target="ObjectInspector" evaluate="false"/>
+		</CommandSequence>
+		<CommandSequence name="Stop" numResponses="-1" undoable="false">
+			<event>stop</event>
+			<event>VK_COMMA</event>
+			<Stop/>
+			<Set target="SceneInspector" evaluate="true"/>
+			<Set target="ObjectInspector" evaluate="false"/>
+		</CommandSequence>
+		<CommandSequence name="EnableObjectInspection" numResponses="-1" undoable="false">
+			<event>VK_O</event>
+			<event>EnableObjectInspection</event>
+			<Set target="SceneInspector" evaluate="false"/>
+			<Set target="ObjectInspector" evaluate="true"/>
+			<Set target="FlightSimulator" evaluate="false"/>
+			<Set target="WalkSimulator" evaluate="false"/>
+		</CommandSequence>
+		<CommandSequence name="EnableSceneInspection" numResponses="-1" undoable="false">
+			<event>VK_S</event>
+			<event>EnableSceneInspection</event>
+			<Set target="SceneInspector" evaluate="true"/>
+			<Set target="ObjectInspector" evaluate="false"/>
+			<Set target="FlightSimulator" evaluate="false"/>
+			<Set target="WalkSimulator" evaluate="false"/>
+		</CommandSequence>
+		<CommandSequence name="EnableFlightSimulation" numResponses="-1" undoable="false">
+			<event>VK_F</event>
+			<event>EnableFlightSimulation</event>
+			<Set target="SceneInspector" evaluate="false"/>
+			<Set target="ObjectInspector" evaluate="false"/>
+			<Set target="FlightSimulator" evaluate="true"/>
+			<Set target="WalkSimulator" evaluate="false"/>
+		</CommandSequence>
+		<CommandSequence name="EnableWalkSimulation" numResponses="-1" undoable="false">
+			<event>VK_W</event>
+			<event>EnableWalkSimulation</event>
+			<Set target="SceneInspector" evaluate="false"/>
+			<Set target="ObjectInspector" evaluate="false"/>
+			<Set target="FlightSimulator" evaluate="false"/>
+			<Set target="WalkSimulator" evaluate="true"/>
+		</CommandSequence>
+		<Set event="VK_ADD" numResponses="-1" undoable="false" target="RenderAgent" desiredFrameRate="10+"/>
+		<Set event="VK_SUBTRACT" numResponses="-1" undoable="false" target="RenderAgent" desiredFrameRate="10-"/>
+	</HotKeys>
+</DefaultInteraction>

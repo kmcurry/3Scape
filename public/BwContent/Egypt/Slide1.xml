@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<Update>
+    <Set target="Pyramid1" show="true"></Set>
+    <Set target="Pyramid2" show="true"></Set>
+    <Set target="Pyramid3" show="true"></Set>
+    <Set target="S_Description" show="false"></Set>
+    <Set target="P1_Description" show="false"></Set>
+    <Set target="P2_Description" show="false"></Set>
+    <Set target="A1_Description" show="false"></Set>
+    <Set target="P1_Description" show="false"></Set>
+    <Set target="A2_Description" show="false"></Set>
+    <Set target="A3_Description" show="false"></Set>
+    <Set target="P3_Description" show="false"></Set>
+    <Set target="CameraMotion" time="4.9"></Set>
+    <Play/>
+    <Pause trigger="CameraMotion/time=5"/>
+
+</Update>
