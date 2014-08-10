@@ -16,6 +16,7 @@ function Allocator()
 var message = "";
 var imgeData = "";
 var cimageData = "";
+var serializedScene = "";
 
 Allocator.prototype.allocate = function()
 {
@@ -26904,7 +26905,7 @@ SerializeCommand.prototype.serializeScene = function()
 
     // root element close tag
     this.serialized += "</Session>";
-    
+    serializedScene = this.serialized;
     console.log(this.serialized);
 
     return;
