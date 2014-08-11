@@ -567,12 +567,6 @@ function zoomActivate() {
                 console.log("SLIDE NUMBER = "+slideCount);
             }
           };
-          function saveThis(info,name)
-          {
-              var blob = new Blob([info], {type: "text/xml"});
-
-              saveAs(blob, name+".xmp");
-          }
           function objectLeft(magnitude)
           {
             // var objectInspector = bridgeworks.registry.find("ObjectInspector");
@@ -628,12 +622,20 @@ function zoomActivate() {
             //nextSlide();
           }
 
+          function saveThis(info,name)
+          {
+              var blob = new Blob([info], {type: "text/xml"});
+
+              saveAs(blob, name+".xmp");
+          }
+
           function saveScene()
           {
               var command = "\<Serialize target='Root'/>";
               bridgeworks.updateScene(command);
               saveThis(serializedScene,"Scene");
           }
+
           function objectUp(magnitude)
           {
             var cmd;

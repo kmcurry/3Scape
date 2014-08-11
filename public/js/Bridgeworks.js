@@ -5762,6 +5762,8 @@ AttributeRegistry.prototype.clear = function()
     } 
     this.nameRegistry = [];
 
+    this.uniqueAttributes = [];
+
     this.objectCount = 0;
 }
 
@@ -11562,6 +11564,8 @@ Serializer.prototype.serializeModel = function(Model)
                 command.attributeValuePairs.push(new Pair(attr, values));
                 
                 this.serializeCommand(command);
+
+                setAttributeBin(null);
             }
         }
     }
