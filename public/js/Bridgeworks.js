@@ -12,9 +12,12 @@ Base.prototype.destroy = function()
 function Allocator()
 {
 }
+//These are created in global scope that way 3Scape can access them
 var message = "";
 var imgeData = "";
 var cimageData = "";
+var serializedScene = "";
+
 Allocator.prototype.allocate = function()
 {
     return null;
@@ -20048,6 +20051,340 @@ function Label_BalloonTipLabelStyleModifiedCB(attribute, container)
 {
     Label_DescriptionModifiedCB(container.description, container);   
 }
+BalloonTipLabel.prototype = new RasterComponent();
+BalloonTipLabel.prototype.constructor = BalloonTipLabel;
+
+function BalloonTipLabel()
+{
+    RasterComponent.call(this);
+    this.className = "BallonTipLabel";
+    this.attrType = eAttrType.BalloonTipLabel;
+    
+    this.qtip = null;
+    this.qtip_api = null;
+    
+    this.labelRect = new Rect(0, 0, 0, 0);
+    
+    this.balloonTipLabelStyle = new BalloonTipLabelStyleAttr();
+    this.labelWidth = new NumberAttr(0);
+    this.labelHeight = new NumberAttr(0);
+    
+    this.balloonTipLabelStyle.bgColor.addModifiedCB(BalloonTipLabel_balloonTipLabelStyleBgColorModifiedCB, this);
+    this.balloonTipLabelStyle.htmlLabelStyle.addModifiedCB(BalloonTipLabel_BalloonTipLabelStyleHTMLLabelStyleModifiedCB, this);
+    this.balloonTipLabelStyle.displayMode.addModifiedCB(BalloonTipLabel_balloonTipLabelStyleDisplayModeModifiedCB, this);
+    this.show.addModifiedCB(BalloonTipLabel_showModifiedCB, this);
+    this.renderSequenceSlot.addModifiedCB(BalloonTipLabel_renderSequenceSlotModifiedCB, this);
+
+    this.registerAttribute(this.balloonTipLabelStyle, "balloonTipLabelStyle");
+    this.registerAttribute(this.labelWidth, "labelWidth");
+    this.registerAttribute(this.labelHeight, "labelHeight");
+    
+    this.styles.registerStyle(this.balloonTipLabelStyle, "balloonTipLabelStyle");
+}
+
+BalloonTipLabel.prototype.setGraphMgr = function(graphMgr)
+{
+    // call base-class implementation
+    RasterComponent.prototype.setGraphMgr.call(this, graphMgr);
+    
+    // create id
+    this.id = "BalloonTipLabel" + this.graphMgr.getNextBalloonTipLabelIndex();
+    
+    // create html components for canvas overlay
+    var htmlBalloonTipLabel = CreateHTMLBalloonTipLabel(this.id);
+    this.htmlBalloonTipLabel = htmlBalloonTipLabel.label;
+    this.qtip = htmlBalloonTipLabel.qtip;
+    
+    // get qtip api 
+    this.qtip_api = $('a[id=' + this.id + ']').qtip("api");
+}
+
+BalloonTipLabel.prototype.update = function(params, visitChildren)
+{
+    if (params.userData)
+    {
+        var updateParams = params.userData;
+        if (this.show.getValueDirect())// && (this.updateLabel || isRenderStateModified(updateParams.viewport)))
+        {
+            this.updateLabel = false;
+
+            //updateLabel(updateParams.viewport);
+        }
+    }
+
+    // call base-class implementation
+    RasterComponent.prototype.update.call(this, params, visitChildren);
+}
+
+BalloonTipLabel.prototype.apply = function(directive, params, visitChildren)
+{
+    var enabled = this.enabled.getValueDirect();
+    if (!enabled)
+    {
+        // call base-class implementation
+        RasterComponent.prototype.apply.call(this, directive, params, visitChildren);
+        return;
+    }
+    
+    switch (directive)
+    {
+    case "render":
+        {
+            this.draw(params.viewport);
+        }
+        break;
+    }
+    
+    // call base-class implementation
+    RasterComponent.prototype.apply.call(this, directive, params, visitChildren);
+}
+
+BalloonTipLabel.prototype.updateLabel = function(viewport)
+{
+}
+
+BalloonTipLabel.prototype.updateLabelDimensions = function(viewport)
+{
+}
+
+BalloonTipLabel.prototype.updateShowStates = function()
+{
+}
+
+BalloonTipLabel.prototype.draw = function()
+{
+    if (!(this.show.getValueDirect()))
+    {
+        if (this.graphMgr.getCurrentBalloonTipLabel() == this)
+        {
+            this.graphMgr.setCurrentBalloonTipLabel(null);
+        }
+        return;
+    }
+    /*
+     // only allow one balloon tip to display at a time (per Ted)
+     BalloonTipLabel* currentBTL = this.graphMgr.getCurrentBalloonTipLabel();
+     if (currentBTL && currentBTL != this)
+     {
+     this.show.setValueDirect(false, false);
+     return;
+     }
+     */
+    this.graphMgr.setCurrentBalloonTipLabel(this);
+    
+    var bworks = this.registry.find("Bridgeworks");
+    
+    // determine the rendering positions
+    var positions = this.getRenderingPositions();
+    
+    var labelWidth = this.htmlBalloonTipLabel.offsetWidth; // * this.htmlLabel.style.zoom;
+    var labelHeight = this.htmlBalloonTipLabel.offsetHeight; // * this.htmlLabel.style.zoom;
+    
+    // update positions if visible
+    //if (this.show.getValueDirect())
+    {
+        this.htmlBalloonTipLabel.style.left = bworks.canvas.offsetLeft + positions.labelX;
+        this.htmlBalloonTipLabel.style.top = bworks.canvas.offsetTop + positions.labelY;
+
+        this.labelRect.load(bworks.canvas.offsetLeft + positions.labelX,
+                            bworks.canvas.offsetTop + positions.labelY,
+                            this.labelRect.left + labelWidth,
+                            this.labelRect.top + labelHeight);
+        
+        if (this.qtip_api)
+        {
+            this.qtip_api.reposition(null, false); // Reposition without animation
+            //this.qtip_api.show();
+        }
+    }
+    //else
+    //{
+    //    this.labelRect.load(0, 0, 0, 0);
+    //}
+    
+    // update screen rect
+    var screenRect = new Rect(0, 0, 0, 0);
+    //if (this.show.getValueDirect())
+    {
+        screenRect.loadRect(this.labelRect);
+    }
+    this.screenRect.setValueDirect(screenRect);
+}
+
+BalloonTipLabel.prototype.getRenderingPositions = function()
+{
+    // initialize
+    var labelX = 0;
+    var labelY = 0;
+    
+    // get screen position
+    var screen = this.screenPosition.getValueDirect();
+    
+    // get anchor position
+    var anchor = this.anchor.getValueDirect();
+    
+    labelX = screen.x + anchor.x;
+    labelY = screen.y - anchor.y;
+    
+    return { labelX: labelX, labelY: labelY };
+}
+
+BalloonTipLabel.prototype.eventPerformed = function(event)
+{
+    if (!(this.show.getValueDirect()))
+    {
+        return false;
+    }
+
+    var selected = this.isSelected(event.x, event.y);
+
+    return selected;
+}
+
+BalloonTipLabel.prototype.balloonTipLabelStyleModified = function(update)
+{
+}
+
+BalloonTipLabel.prototype.balloonTipLabelStyleBgColorModified = function()
+{
+}
+
+BalloonTipLabel.prototype.balloonTipLabelStyleDisplayModeModified = function(mode)
+{
+    switch (mode)
+    {
+        case "default":
+        {
+            this.show.setValueDirect(true, false);
+        }
+        break;
+        
+        case "hide":
+        {
+            // don't hide if parent has focus
+            if (this.motionParent && this.motionParent.getAttribute("hasFocus").getValueDirect() > 0)
+            {
+                // a bit kludgy for this programmer, but this is nessary to get the "Google Earth"-like behavior [MCB]
+                this.hasFocus.setValueDirect(1);
+                //DisableInspectionState();
+            }
+            else
+            {
+                this.show.setValueDirect(false, false);
+            }
+        }
+        break;
+    }
+        
+    this.incrementModificationCount();
+}
+
+BalloonTipLabel.prototype.balloonTipLabelStyleHtmlLabelStyleModified = function()
+{
+    // html
+    var html = this.balloonTipLabelStyle.htmlLabelStyle.html.getValueDirect().join("");
+    
+    if (this.qtip_api)
+    {
+        this.qtip_api.set("content.text", html);
+    }
+    
+    this.incrementModificationCount();
+}
+
+BalloonTipLabel.prototype.renderSequenceSlotModified = function()
+{
+}
+
+BalloonTipLabel.prototype.showModified = function(show)
+{
+    if (this.qtip_api)
+    {
+        if (show)
+        {
+            this.qtip_api.show();
+        }
+        else
+        {
+            this.qtip_api.hide();
+        }
+    }
+}
+
+function CreateHTMLBalloonTipLabel(id)
+{
+    var newA = null;
+
+    // Needs further refactoring. Currently set in an app Helper
+    // because we don't have container scope here to append these elements
+    if (bridgeworks.rasterComponents)
+    {
+        newA = document.createElement("a");
+        if (newA)
+        {
+            newA.setAttribute("id", id);
+            //newA.innerHTML = "";
+            newA.style.visibility = "hidden";
+            newA.style.position = "absolute";
+
+            bridgeworks.rasterComponents.appendChild(newA);
+        }
+    }
+
+    var id = 'a[id=' + id + ']';
+    var qtip = $(id).qtip(
+    {
+        style:
+        {
+            classes: 'qtip-bootstrap qtip-rounded qtip-shadow qtip-close'
+        },
+        content :
+        {
+            text: '',
+            button: true
+        },
+        //show : true,
+        hide:
+        {
+            event: false
+        }
+    });
+   
+    return { label: newA, qtip: qtip };
+}
+
+function BalloonTipLabel_balloonTipLabelStyleModifiedCB(attribute, container)
+{
+    container.balloonTipLabelStyleModified();
+}
+
+function BalloonTipLabel_balloonTipLabelStyleBgColorModifiedCB(attribute, container)
+{
+}
+
+function BalloonTipLabel_balloonTipLabelStyleDisplayModeModifiedCB(attribute, container)
+{
+    container.balloonTipLabelStyleDisplayModeModified(attribute.getValueDirect().join(""));
+}
+
+function BalloonTipLabel_BalloonTipLabelStyleHTMLLabelStyleModifiedCB(attribute, container)
+{
+    container.balloonTipLabelStyleHtmlLabelStyleModified();
+}
+
+function BalloonTipLabel_HTMLLabel_PageDimensionsModifiedCB(attribute, container)
+{
+}
+
+function BalloonTipLabel_showModifiedCB(attribute, container)
+{
+    container.showModified(attribute.getValueDirect());
+}
+
+function BalloonTipLabel_renderSequenceSlotModifiedCB(attribute, container)
+{
+}
+
 LineList.prototype = new VertexGeometry();
 LineList.prototype.constructor = LineList;
 
@@ -21171,6 +21508,177 @@ function Translate_TranslationModifiedCB(attribute, container)
 {
     container.updateTranslation = true;
     container.incrementModificationCount();
+}
+MultiTargetObserver.prototype = new Evaluator();
+MultiTargetObserver.prototype.constructor = MultiTargetObserver;
+
+function MultiTargetObserver()
+{
+    Evaluator.call(this);
+    this.className = "MultiTargetObserver";
+    this.attrType = eAttrType.MultiTargetObserver;
+    
+    this.targetPosition = [];
+    
+    this.targets = new NumberAttr(0);
+    this.position = new Vector3DAttr(0, 0, 0);
+    this.distanceFromFirstTarget = new NumberAttr(0);
+	this.affectPitch = new BooleanAttr(true);
+	this.affectHeading = new BooleanAttr(true);
+	this.resultPosition = new Vector3DAttr(0, 0, 0);
+    this.resultPitch = new NumberAttr(0);
+    this.resultHeading = new NumberAttr(0);
+
+    this.registerAttribute(this.targets, "targets");
+    this.registerAttribute(this.position, "position");
+    this.registerAttribute(this.distanceFromFirstTarget, "distanceFromFirstTarget");
+	this.registerAttribute(this.affectPitch, "affectPitch");
+	this.registerAttribute(this.affectHeading, "affectHeading");
+    this.registerAttribute(this.resultPosition, "resultPosition");
+    this.registerAttribute(this.resultPitch, "resultPitch");
+    this.registerAttribute(this.resultHeading, "resultHeading");
+}
+
+MultiTargetObserver.prototype.setNumberOfTargets = function(targets)
+{
+	// if targets are already registered, then unregister them
+    var oldTargets = this.targets.getValueDirect();
+	if (oldTargets > 0)
+	{
+		for (var i=0; i < oldTargets; i++)
+        {
+            this.unregisterAttribute(this.targetPosition[i]);
+        }
+	}
+
+    this.targets.setValueDirect(targets);
+
+    // allocate dynamic inputs
+    if (targets > 0)
+    {
+        this.targetPosition.length = targets;
+        
+        for (var i=0; i < targets; i++)
+        {
+        	this.targetPosition[i] = new Vector3DAttr(0, 0, 0);
+			this.registerAttribute(this.targetPosition[i], "targetPosition" + i);
+        }
+    }
+}
+
+MultiTargetObserver.prototype.evaluate = function()
+{
+    if (!(this.enabled.getValueDirect()))
+	{
+		return;
+	}
+
+    // if no targets, nothing to do
+    if (this.targets.getValueDirect() == 0)
+    {
+        return;
+    }
+
+    // get input values
+
+    // get observer and target positions
+    var observerAndTarget = this.getObserverAndTargetPositions();
+    var observer = observerAndTarget.observer;
+    var target = observerAndTarget.target;
+
+    // calculate target direction vector (vector from observer position to target position)
+    var targetDirection = new Vector3D(target.x - observer.x,
+                               		   target.y - observer.y,
+                               		   target.z - observer.z);
+
+    // get heading and pitch angles from target direction vector
+    var targetDirHeading, targetDirPitch;
+    var hp = XYZtoHP(targetDirection.x, targetDirection.y, targetDirection.z);
+    var targetDirHeading = hp.heading;
+    var targetDirPitch = hp.pitch;
+
+    var pitch = 0;
+	if (this.affectPitch.getValueDirect() == true)
+	{
+		pitch = -toDegrees(targetDirPitch);
+	}
+
+    var heading = 0;
+	if (this.affectHeading.getValueDirect() == true)
+	{
+		heading = -toDegrees(targetDirHeading);
+	}
+
+    // output result
+    var values = [observer.x, observer.y, observer.z];
+    this.resultPosition.setValue(values);
+
+    if (this.affectPitch.getValueDirect() == true)
+    {
+    	this.resultPitch.setValueDirect(pitch);
+    }
+
+    if (this.affectHeading.getValueDirect() == true)
+    {
+        this.resultHeading.setValueDirect(heading);
+    }
+}
+
+MultiTargetObserver.prototype.getObserverAndTargetPositions = function()
+{
+	var observer, target;
+	
+    switch (this.targets.getValueDirect())
+    {
+    case 0:
+        {
+            observer = new Vector3D(0, 0, 0);
+            target = new Vector3D(0, 0, 0);
+        }
+        break;
+
+    case 1:
+        {
+            observer = this.position.getValueDirect();
+            target = this.targetPosition[0].getValueDirect();
+        }
+        break;
+
+    case 2:
+        {
+            var target1 = this.targetPosition[0].getValueDirect();
+            var target2 = this.targetPosition[1].getValueDirect();
+
+            var distance = this.distanceFromFirstTarget.getValueDirect();
+
+            // get line direction from target2 to target1
+            var lineDir = Normalize(target1 - target2);
+
+            // calculate observer's position as target1's position + lineDir scaled by distance
+            observer = lineDir * distance + target1;
+
+            // if distance is 0, observer's position will equal target1's position,
+            // so use target1 - lineDir as target's position
+            if (distance == 0)
+            {
+                target = target1 - lineDir;
+            }
+            else
+            {
+                target = target1;
+            }
+        }
+        break;
+
+    default: // > 2 targets (currently unsupported)
+        {
+            observer = new Vector3D(0, 0, 0);
+            target = Vector3D(0, 0, 0);
+        }
+        break;
+    }
+    
+    return { observer: observer, target: target };
 }
 SerializeParams.prototype = new DirectiveParams();
 SerializeParams.prototype.constructor = SerializeParams();
@@ -23178,7 +23686,7 @@ CommandMgr.prototype.popCommandSequence = function()
 
 CommandMgr.prototype.clearCommandSequenceStack = function()
 {
-    this.commandSequenceStack.clear();
+    this.commandSeqStack.clear();
 }
 
 CommandMgr.prototype.addCommand = function(command)
@@ -26397,7 +26905,7 @@ SerializeCommand.prototype.serializeScene = function()
 
     // root element close tag
     this.serialized += "</Session>";
-    
+    serializedScene = this.serialized;
     console.log(this.serialized);
 
     return;
@@ -26452,53 +26960,22 @@ ScreenCaptureCommand.prototype.execute = function()
 
 ScreenCaptureCommand.prototype.screenCapture = function(canvasId)
 {
-    var canvas = document.getElementById(canvasId);  
+    var canvas = document.getElementById(canvasId);
     cimageData = canvas.toDataURL('image/png');
     var imageData = cimageData;
 
-    //Decode the base64 data into 8bit array.
+//    window.open(imageData);
+
+    //Decode the base64 data into 8bit array. Used Specifically for 3Scape
     var cnt = imageData.lastIndexOf(',') + 1;
     imageData = imageData.substr(cnt);
     imgeData = Base64Binary.decode(imageData);
-//    FB.login(function (response) {
-//        if (response.authResponse) {
-//            var authToken = response.authResponse.accessToken;
-//            PostImageToFacebook(authToken, 'img.png', 'image/png', imgeData, message);
-//        }
-//        var post_id = "10152357590396799_10152359898731799";
-//        FB.api(
-//            {
-//                method: 'fql.query',
-//                query: 'SELECT permalink FROM stream WHERE post_id = ' + post_id;
-//            },
-//            function(response) {
-//                //    do something with the response
-//                console.log(response);
-//            }
-//        );
-//                        FB.api("/me/photos", "post",
-//                                {
-//                                    "source": imgData
-//                                },
-//                                function (response) {
-//                                    if (!response || response.error) {
-//                                        alert('Error occured');
-//                                    } else {
-//                                        alert('Post ID: ' + response.id);
-//                                    }
-//                                });
-//                        FB.api('/me',  function(response) {
-//                            alert('User: ' + response.name);
-//                        });
-        //}
-//    });
     
     // copy to clipboard
     // TODO: investigate method described at: https://forums.mozilla.org/addons/viewtopic.php?t=9736&p=21119
     
     // open in new window
-    //window.open(imageData);
-    
+
     // download
     //var imageDataStream = imageData.replace("image/png", "image/octet-stream");
     //window.location.href = imageDataStream;
@@ -29479,7 +29956,7 @@ Bridgeworks.prototype.onLoadModified = function()
     this.selector.stop();
     this.rasterComponentEventListener.stop();
 
-    this.commandMgr.clearCommandSequence();
+    this.commandMgr.clearCommandSequenceStack();
     this.eventMgr.clearEvents();
     $('#RasterComponents').empty();
     //this.resouceMgr.clear(); There is no resourceMgr in javascript version
