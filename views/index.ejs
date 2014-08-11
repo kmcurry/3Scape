@@ -628,6 +628,12 @@ function zoomActivate() {
             //nextSlide();
           }
 
+          function saveScene()
+          {
+              var command = "\<Serialize target='Root'/>";
+              bridgeworks.updateScene(command);
+              saveThis(serializedScene,"Scene");
+          }
           function objectUp(magnitude)
           {
             var cmd;
@@ -1061,6 +1067,7 @@ function zoomActivate() {
                           <li class="divider"></li>
                           <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();ancientLoaded = 0;">New Scene</a></li>
                           <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
+                          <li><a href="#" id="loadScene">Load Scene</a></li>
                           <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
                         </ul>
                       </div>
@@ -1122,14 +1129,12 @@ function zoomActivate() {
                         </button>
                       </li>
                       <!--Where I put the load a scene button-->
-                      <li>
-                          <button type="button" class="btn btn-default navbar-btn" id="navCut" role="button">
-                              <input type="file" id="files" name="files[]" multiple />
-                              <output id="list"></output>
-                          </button>
-                      </li>
+                              <input type="file" id="files" name="files[]" multiple style="display:none"/>
 
                       <script>
+                          $('#loadScene').click(function(){
+                              $('#files').click();
+                          })
                           function handleFileSelect(evt) {
                               var files = evt.target.files; // FileList object
 
@@ -1161,6 +1166,11 @@ function zoomActivate() {
                         <button type="button" class="btn btn-default navbar-btn" id="navPaste" role="button" onclick="paste();" >
                               <span class="shape fa fa-clipboard fa-lg" style="font-size:2em;" title="Paste"></span>                          
                         </button>
+                      </li>
+                      <li>
+                          <button type="button" class="btn btn-default navbar-btn" id="saveScene" role="button" onclick="saveScene();" >
+                              <span class="shape fa fa-floppy-o fa-lg" style="font-size:2em;" title="saveScene"></span>
+                          </button>
                       </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
