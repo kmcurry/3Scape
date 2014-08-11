@@ -1129,12 +1129,14 @@ function zoomActivate() {
                         </button>
                       </li>
                       <!--Where I put the load a scene button-->
-                              <input type="file" id="files" name="files[]" multiple style="display:none"/>
+                              <input type="file" id="files" accept=".xmp" style="display:none"/>
 
                       <script>
+                            //Loads the file dialog when the loadScene hyperlink is clicked
                           $('#loadScene').click(function(){
                               $('#files').click();
-                          })
+                          });
+
                           function handleFileSelect(evt) {
                               var files = evt.target.files; // FileList object
 
