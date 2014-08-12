@@ -5763,7 +5763,7 @@ AttributeRegistry.prototype.clear = function()
     this.nameRegistry = [];
 
     this.uniqueAttributes = [];
-
+    
     this.objectCount = 0;
 }
 
@@ -11556,16 +11556,18 @@ Serializer.prototype.serializeModel = function(Model)
                 command.getAttribute("target").setValueDirect(containerName);
                 command.getAttribute("target").flagDeserializedFromXML();
 
-                command.registerTargetAttributes(container, containerName);
-
                 var values = [];
                 attr.getValue(values);
 
                 command.attributeValuePairs.push(new Pair(attr, values));
                 
                 this.serializeCommand(command);
-
+                
+                // setting the target on the SetCommand sets the attribute bin, which is normally
+                // cleared by adding the command to the CommandMgr, but this doesn't occur here, because
+                // it is only being serialized, not executed
                 setAttributeBin(null);
+                setAttributePairs(null);
             }
         }
     }
@@ -11873,7 +11875,7 @@ Serializer.prototype.getAttributeStringValue = function(attr, item)
         case eAttrType.Vector2DAttr:
         case eAttrType.Vector3DAttr:
         case eAttrType.Matrix4x4Attr:
-        case eAttrType.QuaternionRotate:
+        case eAttrType.QuaternionAttr:
         {
             var vecVal_F = [];
             attr.getValue(vecVal_F);
@@ -26909,7 +26911,7 @@ SerializeCommand.prototype.serializeScene = function()
 
     // root element close tag
     this.serialized += "</Session>";
-    serializedScene = this.serialized;
+    serializedScene += this.serialized;
     console.log(this.serialized);
 
     return;
@@ -29355,6 +29357,7 @@ function newAttribute(name, factory)
     case "Matrix4x4Attr":               resource = new Matrix4x4Attr(); break;
     case "PlaneAttr":                   resource = new PlaneAttr(); break;
     case "PulseAttr":                   resource = new PulseAttr(); break;
+    case "QuaternionAttr":              resource = new QuaternionAttr(); break;
     case "RectAttr":                    resource = new RectAttr(); break;
     case "ReferenceAttr":               resource = new ReferenceAttr(); break;
     case "StringAttr":                  resource = new StringAttr(); break;
