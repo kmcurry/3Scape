@@ -36,6 +36,7 @@
     <script type="text/javascript" src="./js/BinaryDecode.js"></script>
     <!-- Slider -->
     <script type="text/javascript" src="./js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="./js/FileSaver.js"></script>
     <link rel="stylesheet" type="text/css" href="css/slider.css">
 
     <style type="text/css">
@@ -287,9 +288,9 @@
               var xstr = (new XMLSerializer()).serializeToString(xml);
               console.debug(xstr);
               bridgeworks.updateScene(xstr);
-//              if(g_labelCount > 2) {
-//                  var nicE = new nicEditors.findEditor('title').setContent("");
-//              }
+              if(g_labelCount > 2) {
+                  var nicE = new nicEditors.findEditor('title').setContent("");
+              }
               $( "#dialog" ).dialog("open");
               //addRecord();
           }
@@ -324,14 +325,14 @@
                   label.attributes["parent"].value = name.value;
                   console.log("No Model");
               }
-
-              var labPos = xml.getElementsByTagName("position")[1];
-              var posX = pointWorld.x - selectedModel.position.values[0];
-              var posY = pointWorld.y - selectedModel.position.values[1];
-              var posZ = pointWorld.z - selectedModel.position.values[2];
-              labPos.attributes["x"].value = posX.toString();
-              labPos.attributes["y"].value = posY.toString();
-              labPos.attributes["z"].value = posZ.toString();
+//
+//              var labPos = xml.getElementsByTagName("position")[1];
+//              var posX = pointWorld.x - selectedModel.position.values[0];
+//              var posY = pointWorld.y - selectedModel.position.values[1];
+//              var posZ = pointWorld.z - selectedModel.position.values[2];
+              pos.attributes["x"].value = pointWorld.x.toString();
+              pos.attributes["y"].value = pointWorld.y.toString();
+              pos.attributes["z"].value = pointWorld.z.toString();
 
               name = xml.getElementsByTagName("Group")[0].attributes[0];
               name.value = "Group_" + g_labelName;
@@ -344,7 +345,7 @@
               var cmd = "\<Remove target='"+g_labelName+"'/>";
               bridgeworks.updateScene(cmd);
 
-              if(g_labelCount > 1) {
+              if(g_labelCount > 2) {
                   var nicE = new nicEditors.findEditor('title').setContent("");
               }
               $( "#dialog" ).dialog("open");
@@ -566,7 +567,6 @@ function zoomActivate() {
                 console.log("SLIDE NUMBER = "+slideCount);
             }
           };
-
           function objectLeft(magnitude)
           {
             // var objectInspector = bridgeworks.registry.find("ObjectInspector");
@@ -622,6 +622,20 @@ function zoomActivate() {
             //nextSlide();
           }
 
+          function saveThis(info,name)
+          {
+              var blob = new Blob([info], {type: "text/xml"});
+
+              saveAs(blob, name+".xmp");
+          }
+
+          function saveScene()
+          {
+              var command = "\<Serialize target='Root'/>";
+              bridgeworks.updateScene(command);
+              saveThis(serializedScene,"Scene");
+          }
+
           function objectUp(magnitude)
           {
             var cmd;
@@ -654,13 +668,15 @@ function zoomActivate() {
                     }
                         break;
                     case 187: //Equal Sign
-//                        var command = "\<Serialize target='Root'/>";
-//                        bridgeworks.updateScene(command);
+                        var command = "\<Serialize target='Root'/>";
+                        bridgeworks.updateScene(command);
+                            saveThis(serializedScene,"Scene");
 
-                        var canvasId = "Canvas";
-                        var xml = "<ScreenCapture canvasId='" + canvasId + "'/>"
-                        console.debug(xml);
-                        bridgeworks.updateScene(xml);
+
+//                        var canvasId = "Canvas";
+//                        var xml = "<ScreenCapture canvasId='" + canvasId + "'/>"
+//                        console.debug(xml);
+//                        bridgeworks.updateScene(xml);
                             //This is now in Screen Capture
 //                            var canvas = document.getElementById('Canvas');
 //                            var imgData = canvas.toDataURL('image/png');
@@ -1053,6 +1069,7 @@ function zoomActivate() {
                           <li class="divider"></li>
                           <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();ancientLoaded = 0;">New Scene</a></li>
                           <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
+                          <li><a href="#" id="loadScene">Load Scene</a></li>
                           <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
                         </ul>
                       </div>
@@ -1112,7 +1129,38 @@ function zoomActivate() {
                         <button type="button" class="btn btn-default navbar-btn" id="navCut" role="button" onclick="cut();" >
                               <span class="shape fa fa-scissors fa-lg" style="font-size:2em" title="Cut"></span>                          
                         </button>
-                      </li>             
+                      </li>
+                      <!--Where I put the load a scene button-->
+                              <input type="file" id="files" accept=".xmp" style="display:none"/>
+
+                      <script>
+                            //Loads the file dialog when the loadScene hyperlink is clicked
+                          $('#loadScene').click(function(){
+                              $('#files').click();
+                          });
+
+                          function handleFileSelect(evt) {
+                              var files = evt.target.files; // FileList object
+
+                              // Loop through the FileList and render image files as thumbnails.
+                              for (var i = 0, f; f = files[i]; i++) {
+
+                                  var reader = new FileReader();
+
+                                  // Closure to capture the file information.
+                                  reader.onload = function(e) {
+                                      var text = reader.result;
+                                      console.log(text);
+                                      bridgeworks.onLoadModified();
+                                      bridgeworks.updateScene(text);
+                                  }
+
+                                  reader.readAsText(f);
+                              }
+                          }
+
+                          document.getElementById('files').addEventListener('change', handleFileSelect, false);
+                      </script>
                       <li>
                         <button type="button" class="btn btn-default navbar-btn" id="navCopy" role="button" onclick="copy();" >
                               <span class="shape fa fa-files-o fa-lg" style="font-size:2em" title="Copy"></span>                          
@@ -1122,6 +1170,11 @@ function zoomActivate() {
                         <button type="button" class="btn btn-default navbar-btn" id="navPaste" role="button" onclick="paste();" >
                               <span class="shape fa fa-clipboard fa-lg" style="font-size:2em;" title="Paste"></span>                          
                         </button>
+                      </li>
+                      <li>
+                          <button type="button" class="btn btn-default navbar-btn" id="saveScene" role="button" onclick="saveScene();" >
+                              <span class="shape fa fa-floppy-o fa-lg" style="font-size:2em;" title="saveScene"></span>
+                          </button>
                       </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
