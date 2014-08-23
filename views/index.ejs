@@ -634,6 +634,7 @@ function zoomActivate() {
               var command = "\<Serialize target='Root'/>";
               bridgeworks.updateScene(command);
               saveThis(serializedScene,"Scene");
+
           }
 
           function objectUp(magnitude)
@@ -668,9 +669,9 @@ function zoomActivate() {
                     }
                         break;
                     case 187: //Equal Sign
-                        var command = "\<Serialize target='Root'/>";
-                        bridgeworks.updateScene(command);
-                            saveThis(serializedScene,"Scene");
+//                        var command = "\<Serialize target='Root'/>";
+//                        bridgeworks.updateScene(command);
+//                            saveThis(serializedScene,"Scene");
 
 
 //                        var canvasId = "Canvas";
@@ -995,6 +996,9 @@ function zoomActivate() {
                       <span class="icon-bar"></span>
                   </button>
                   <a class="navbar-brand" href="http://3scape.me" target="_blank"><div style="height:45px; margin-top:-12px;"><img src="logo-3S.png" style="max-width:100%; max-height:100%;"></div></a>
+                  <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
+                  <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>
+                  <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> <%= user.email%></a>
               </div>
               <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav">
@@ -1136,7 +1140,11 @@ function zoomActivate() {
                       <script>
                             //Loads the file dialog when the loadScene hyperlink is clicked
                           $('#loadScene').click(function(){
-                              $('#files').click();
+                              //$('#files').click(); //This is commented out, this is from loading from a file
+                              var scene = document.getElementById('scene').value;
+                              console.log(scene);
+                              bridgeworks.onLoadModified();
+                              bridgeworks.updateScene(scene);
                           });
 
                           function handleFileSelect(evt) {
@@ -1172,9 +1180,13 @@ function zoomActivate() {
                         </button>
                       </li>
                       <li>
-                          <button type="button" class="btn btn-default navbar-btn" id="saveScene" role="button" onclick="saveScene();" >
+                          <form action="/changeScene" method="post">
+                              <input id="email" name="email" style="display: none" value="<%=user.email%>">
+                              <input id="scene" type="text" style="display:none" name="scene" value="<%=user.scene%>">
+                              <button type="submit" class="btn btn-default navbar-btn" id="saveScene" role="button" >
                               <span class="shape fa fa-floppy-o fa-lg" style="font-size:2em;" title="saveScene"></span>
-                          </button>
+                              </button>
+                          </form>
                       </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">  
@@ -1499,7 +1511,7 @@ function zoomActivate() {
             </button>                
             <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
               <span class="fa fa-question-circle fa-2x"></span>
-            </button>                      
+            </button>
           </div>
         </div>
 
@@ -1734,7 +1746,6 @@ function zoomActivate() {
                         window.location.href = "nowebgl";
                     }
                 }
-
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
                 //bridgeworks = init("Testing_Load.xml", document.getElementById("BwContainer"));
 
@@ -1742,6 +1753,11 @@ function zoomActivate() {
                 objectInspector =bridgeworks.registry.find("ObjectInspector");
                 graphMgr = bridgeworks.registry.find("GraphMgr");
                 g_labelCount = graphMgr.labelIndex;
+
+                document.getElementById('saveScene').onclick = function(){
+                    saveScene();
+                    document.getElementById('scene').value = serializedScene;
+                };
 
                 console.log(g_labelCount);
                 listLibrary();
@@ -1954,13 +1970,6 @@ function zoomActivate() {
     $('#roty-slider').fadeToggle();
   }
 </script>
-      
-        <script type="text/javascript">
-          window.user = null
-          <% if (user) { %>
-            window.user = <%-(JSON.stringify(user))%>
-          <% } %>
-        </script>
       
       <!-- Initialize Angular -->
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>

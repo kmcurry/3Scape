@@ -27,12 +27,9 @@
 					<p>
 						<strong>id</strong>: <%= user._id %><br>
 						<strong>email</strong>: <%= user.email %><br>
-						<strong>password</strong>: <%= user.password %>
+						<strong>password</strong>: <%= user.password %><br>
+                        <strong>scene</strong>: <%= user.scene%>
 					</p>
-					<%= JSON.stringify(user) %>
-					<script type="text/javascript">
-						console.log(<%- JSON.stringify(user) %>)
-					</script>
 			</div>
 		</div>
 
