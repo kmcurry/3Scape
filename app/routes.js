@@ -1,7 +1,7 @@
 
 module.exports = function(app, passport) {
 //HOME PAGE(with login links) ======
-    app.get('/', function (req, res) {
+    app.get('/',isLoggedIn, function (req, res) {
         res.render('index.ejs',{
             user: req.user
         }); //load the index.ejs file
@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
 
 //process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/profile', //redirect to the secure profile section
+        successRedirect: '/', //redirect to the secure profile section
         failureRedirect: '/login', //redirect to the signup page if there is an error
         failureFlash: true //allow flash messages
     }));
@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
 
 //process the signup form
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect: '/profile', //redirect to the secure profile section
+        successRedirect: '/', //redirect to the secure profile section
         failureRedirect: '/signup', //redirect to the signup page if there is an error
         failureFlash: true //allow flash messages
     }));
@@ -51,11 +51,11 @@ module.exports = function(app, passport) {
 //Profile Section ===================
 //We will want this protected so you have to be logged in to visit
 //We will use route middleware to verify this(the isLoggedIn function)
-    app.get('/profile', isLoggedIn, function (req, res) {
-        res.render('profile.ejs', {
-            user: req.user //get the user out of session and pass to template
-        });
-    });
+//    app.get('/profile', isLoggedIn, function (req, res) {
+//        res.render('profile.ejs', {
+//            user: req.user //get the user out of session and pass to template
+//        });
+//    });
 
 //Change the Scene ===================
     app.post('/changeScene', function (req, res) {
@@ -63,7 +63,6 @@ module.exports = function(app, passport) {
         User.findOne({'email': req.body.email}, function (err, user) {
             user.scene = req.body.scene;
             user.save();
-            res.redirect('/profile');
         })
     })
 
@@ -169,5 +168,5 @@ function isLoggedIn(req, res, next) {
 		return next();
 
 	// if they aren't redirect them to the home page
-	res.redirect('/');
+	res.redirect('/login');
 }
