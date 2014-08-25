@@ -133,7 +133,9 @@ function listLibrary()
        // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-peopleObjects");
-        loadDirectoryObject(url,"People/objects/B rifleman.lwo",panel,"Rifleman");
+		loadDirectoryObject(url,"Characters/objects/bobble-body.lwo",panel,"Bobble Head Body");
+        loadDirectoryObject(url,"Characters/objects/DanPatrick.lwo",panel,"Ham Patrick");
+		loadDirectoryObject(url,"People/objects/B rifleman.lwo",panel,"Rifleman");
         loadDirectoryObject(url,"People/objects/Civilian.lwo",panel,"Civilian");
         loadDirectoryObject(url,"People/objects/RECON.lwo",panel,"RECON");
         loadDirectoryObject(url,"People/objects/SOF_gun.lwo",panel,"SOF_gun");

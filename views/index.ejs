@@ -1837,12 +1837,12 @@ function zoomActivate() {
           onHoldFunction('#zoom-out', zoomOut, 20);
 
           //Object, uses Anonymous function to pass parameter to callback
-          onHoldFunction('#object-up', function(){objectUp(5);}, 20);
-          onHoldFunction('#object-down', function(){objectDown(5);}, 20); 
-          onHoldFunction('#object-forward', function(){objectForward(5);}, 20); 
-          onHoldFunction('#object-backward', function(){objectBackward(5);}, 20); 
-          onHoldFunction('#object-left', function(){objectLeft(5);}, 20); 
-          onHoldFunction('#object-right', function(){objectRight(5);}, 20);        
+          onHoldFunction('#object-up', function(){objectUp(.5);}, 20);
+          onHoldFunction('#object-down', function(){objectDown(.5);}, 20); 
+          onHoldFunction('#object-forward', function(){objectForward(.5);}, 20); 
+          onHoldFunction('#object-backward', function(){objectBackward(.5);}, 20); 
+          onHoldFunction('#object-left', function(){objectLeft(.5);}, 20); 
+          onHoldFunction('#object-right', function(){objectRight(.5);}, 20);        
         </script>
       <script type="text/javascript">
           $('.dropdown-menu').find('form').click(function (e) {
