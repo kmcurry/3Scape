@@ -1,7 +1,7 @@
 var path = require('path'),
     configuration = {
         production: {
-            dbConnectionString: 'mongodb://3PROD:78276e765e27677d6247656b4a@@novus.modulusmongo.net:27017/Aju3juxi',
+            dbConnectionString: 'mongodb://3PROD:78276e765e27677d6247656b4a@novus.modulusmongo.net:27017/Aju3juxi',
             publicPath: path.resolve("./public"),
             viewPath: path.resolve('./views'),
             port: process.env.PORT || 8080,
