@@ -633,6 +633,7 @@ function zoomActivate() {
           {
               var command = "\<Serialize target='Root'/>";
               bridgeworks.updateScene(command);
+              document.getElementById('scene').value = serializedScene;
               //saveThis(serializedScene,"Scene");
 
           }
@@ -1756,7 +1757,6 @@ function zoomActivate() {
 
                 document.getElementById('saveScene').onclick = function(){
                     saveScene();
-                    document.getElementById('scene').value = serializedScene;
                 };
 
                 console.log(g_labelCount);
