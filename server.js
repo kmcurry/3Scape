@@ -20,7 +20,7 @@ var configDB = require('./config/database.js');
 // configuration ===============================================================
 var config = require('./configLoader')(process.env.NODE_ENV || "local") //Environment
 var port = process.env.PORT || 8080;
-mongoose.connect(configDB.url); // connect to our database
+mongoose.connect(config.dbConnectionString); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
