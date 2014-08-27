@@ -4,7 +4,7 @@ var Schema       = mongoose.Schema;
 var ProjectSchema   = new Schema({
 	_creator : { type: Schema.Types.ObjectId, ref: 'User' },
 	title : String,
-	// serXML: String
+	 scene: String
 });
 
 module.exports = mongoose.model('Project', ProjectSchema);

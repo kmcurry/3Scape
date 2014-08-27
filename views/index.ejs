@@ -538,11 +538,13 @@ function zoomActivate() {
             // objectInspector.evaluate();
             // bridgeworks.updateScene();
             var cmd;
-            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]-= magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
-            cmd += "\</Set>";
-            console.log(selectedModel.position.getValueDirect());
-            bridgeworks.updateScene(cmd);
+            if(modelName != "Grid") {
+                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+                cmd += "\<position x='" + (selectedModel.position.values[0] -= magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
+                cmd += "\</Set>";
+                console.log(selectedModel.position.getValueDirect());
+                bridgeworks.updateScene(cmd);
+            }
             //previousSlide();
           }
 
@@ -555,33 +557,40 @@ function zoomActivate() {
             // //objectInspector.evaluate();
             // bridgeworks.updateScene();
             var cmd;
-            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0] += magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
-            cmd += "\</Set>";
-            console.log(selectedModel.position.getValueDirect());
-            bridgeworks.updateScene(cmd);
+              console.log(modelName);
+            if(modelName != "Grid") {
+                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+                cmd += "\<position x='" + (selectedModel.position.values[0] += magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
+                cmd += "\</Set>";
+                console.log(selectedModel.position.getValueDirect());
+                bridgeworks.updateScene(cmd);
+            }
 
                 //nextSlide();
           }
 
           function objectDown(magnitude)
           {
-            var cmd;            
-            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]-= magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
-            cmd += "\</Set>";
-            console.log(selectedModel.position.getValueDirect());
-            bridgeworks.updateScene(cmd);          
+            var cmd;
+            if(modelName != "Grid") {
+                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1] -= magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
+                cmd += "\</Set>";
+                console.log(selectedModel.position.getValueDirect());
+                bridgeworks.updateScene(cmd);
+            }
           }
 
           function objectBackward(magnitude)
           {
             var cmd;
-            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= magnitude) + "'/>"
-            cmd += "\</Set>";
-            console.log(selectedModel.position.getValueDirect());
-            bridgeworks.updateScene(cmd);
+            if(modelName != "Grid") {
+                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= magnitude) + "'/>"
+                cmd += "\</Set>";
+                console.log(selectedModel.position.getValueDirect());
+                bridgeworks.updateScene(cmd);
+            }
             //nextSlide();
           }
 
@@ -604,19 +613,24 @@ function zoomActivate() {
           function objectUp(magnitude)
           {
             var cmd;
-            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1]+= magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
-            cmd += "\</Set>";
-            console.log(selectedModel.position.getValueDirect());
-            bridgeworks.updateScene(cmd);
+            if(modelName != "Grid") {
+                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1] += magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
+                cmd += "\</Set>";
+                console.log(selectedModel.position.getValueDirect());
+                bridgeworks.updateScene(cmd);
+            }
           }
 
           function objectForward(magnitude){
-            cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-            cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += magnitude) + "'/>"
-            cmd += "\</Set>";
-            console.log(selectedModel.position.getValueDirect());
-            bridgeworks.updateScene(cmd);            
+            var cmd;
+            if(modelName !="Grid") {
+                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
+                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += magnitude) + "'/>"
+                cmd += "\</Set>";
+                console.log(selectedModel.position.getValueDirect());
+                bridgeworks.updateScene(cmd);
+            }
           }
 
           function handleKey(e)
@@ -950,11 +964,11 @@ function zoomActivate() {
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                   </button>
+                  <a href="#"><span class="fa fa-user"></span><%=user.email%></a>
                   <a class="navbar-brand" href="http://3scape.me" target="_blank"><div style="height:45px; margin-top:-12px;"><img src="logo-3S.png" style="max-width:100%; max-height:100%;"></div></a>
                   <!--<a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>-->
                   <!--<a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>-->
-                  <a href="#"><span class="fa fa-user"></span><%=user.email%></a>
-              </div>
+          </div>
               <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav">
                       <li>
@@ -1007,13 +1021,13 @@ function zoomActivate() {
                       </li> -->                  
                     <li>
                       <div class="btn-group navbar-btn" style="margin-left:10px;">
-                        <button class="btn btn-default btnShape">
+                        <div class="btn btn-default btnShape">
                           <span class="shape fa fa-cube fa-lg" title="Cube" onclick="load(cube);"></span>
                           <span class="shape fa fa-circle fa-lg" title="Sphere" onclick="load(sphere);"></span>
                           <span class="shape fa fa-circle-thin fa-lg" title="Ring" onclick="load(Ring);"></span>
                           <span class="shape fa fa fa-eject fa-lg" title="Pyramid" onclick="load(Pyramid);"></span>
                           <span class="shape fa fa fa-database fa-lg" title="Tube" onclick="load(tube);"></span>  
-                        </button>    
+                        </div>
                         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
                         <ul class="dropdown-menu">
                           <li style="margin-left: 8px">
@@ -1304,7 +1318,8 @@ function zoomActivate() {
             })
              .on("slide", function(ev){
               console.log(ev.value)
-              setRotationX(ev.value);
+              if(modelName != "Grid")
+                    setRotationX(ev.value);
              });
           $('#rotys').slider({
             formater: function(value) {
@@ -1316,7 +1331,8 @@ function zoomActivate() {
           })
            .on("slide", function(ev){
              console.log(ev.value);
-             setRotationY(ev.value);
+             if(modelName != "Grid")
+                setRotationY(ev.value);
            });
           $('#rotzs').slider({
            formater: function(value) {
@@ -1328,7 +1344,8 @@ function zoomActivate() {
           })
           .on("slide", function(ev){
            console.log(ev.value);
-           setRotationZ(ev.value);
+           if(modelName != "Grid")
+                setRotationZ(ev.value);
             });
           $('#scales').slider({
             formater: function(value) {
@@ -1340,7 +1357,8 @@ function zoomActivate() {
           })
           .on('slide', function(ev){
             console.log(ev.value);
-            setScale(ev.value / 100)
+            if(modelName != "Grid")
+                setScale(ev.value / 100)
           });                                                                          
         </script>          
 
@@ -1761,7 +1779,7 @@ function zoomActivate() {
                     FB.login(function (response) {
                         if (response.authResponse) {
                             var authToken = response.authResponse.accessToken;
-                            PostImageToFacebook(authToken, 'img.png', 'image/png', imgeData, message);
+                            PostImageToFacebook(authToken, 'img.png', 'image/png', imgeData, "3Scaping: "+message);
                         }
                     },{scope: "publish_actions"});
                     $("#example").dialog("close");
