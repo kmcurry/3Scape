@@ -10,9 +10,9 @@ var userSchema = mongoose.Schema({
 
     email: String,
     password: String,
-    scene: String
+    scene: String,
 
-   // projects         : [{ type: Schema.Types.ObjectId, ref: 'Project'}]
+    projects         : [{ type: Schema.Types.ObjectId, ref: 'Project'}]
 
 });
 
