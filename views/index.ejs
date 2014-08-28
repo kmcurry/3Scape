@@ -605,8 +605,8 @@ function zoomActivate() {
           {
               var command = "\<Serialize target='Root'/>";
               bridgeworks.updateScene(command);
-              document.getElementById('scene').value = serializedScene;
-              //saveThis(serializedScene,"Scene");
+              //document.getElementById('scene').value = serializedScene; This is taken out till multiple scenes is working.
+              saveThis(serializedScene,"Scene");
 
           }
 
@@ -1109,9 +1109,9 @@ function zoomActivate() {
                       <script>
                             //Loads the file dialog when the loadScene hyperlink is clicked
                           $('#loadScene').click(function(){
-                              //$('#files').click(); //This is commented out, this is from loading from a file
-                              var scene = document.getElementById('scene').value;
-                              console.log(scene);
+                              $('#files').click(); //This is commented out, this is from loading from a file
+                              //var scene = document.getElementById('scene').value; This is taken out til multiple scenes is working
+                              //console.log(scene);
                               bridgeworks.onLoadModified();
                               bridgeworks.updateScene(scene);
                           });
