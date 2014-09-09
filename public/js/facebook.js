@@ -13,3 +13,17 @@ window.fbAsyncInit = function() {
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+
+
+function postPictureToFacebook() {
+    var canvasId = "Canvas";
+      var xml = "<ScreenCapture canvasId='" + canvasId + "'/>"
+      console.debug(xml);
+      bridgeworks.updateScene(xml);
+        setTimeout(function() {
+            document.getElementById("picCaption").src=cimageData;
+            document.getElementById("picCaption").width= 500;
+            document.getElementById("picCaption").height=200;
+            $("#example").dialog("open");
+        }, 1000);
+}
