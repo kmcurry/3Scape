@@ -46,6 +46,7 @@
     <script type="text/javascript" src="./js/FileSaver.js"></script>
     <link rel="stylesheet" type="text/css" href="css/slider.css">
     <script type="text/javascript" src="./js/uservoice.js"></script>
+    <script type="text/javascript" src="./js/facebook.js"></script>
     <style type="text/css">
         .clickable {
             margin: 20px;
@@ -84,23 +85,6 @@
   </head>
   <body onresize="resize();">
     <div id="fb-root"></div><!-- FB Javascript SDK -->
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '270261976501269',
-                xfbml      : true,
-                version    : 'v2.0'
-            });
-        };
-
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
 
       <script type="text/javascript">
           //A group of global variables
