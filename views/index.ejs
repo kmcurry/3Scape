@@ -71,6 +71,7 @@
           var cow = "Animals/objects/Cow.lwo";
           var church = "Barnville/objects/Church.lwo";
           var medHV = "Vehicles/objects/Humvee_Medical.lwo";
+          var boat = "Vehicles/objects/Fishing Boat.lwo";
           var currentObj = "Target: X";
           var editorOpen = 0;
           var slideCount = 1;
@@ -396,8 +397,11 @@
                             <span class="shape fa fa-square fa-2x" title="Wall" onclick="load(wall);"></span>
                             <span class="shape fa fa fa-italic fa-2x" title="Beam" onclick="load(beam);"></span>
                             <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
-                            <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
+                            <span class="shape icon-church" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
                             <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
+                          </li>
+                          <li style="margin-left: 8px">
+                            <span class="shape icon-boat" style="font-size: 1.8em;" title="Boat" onclick="load(boat);"></span>
                           </li>
                           <li class="divider"></li>
                           <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
@@ -444,22 +448,14 @@
                         </div>
                       </li>
                       <li>
-                        <div class="btn-group dropdown">
-                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Animate Object">
-                            <span class="shape fa fa-bolt" style="font-size: 1.4em;"></span>
+                        <button type="button" class="btn btn-default navbar-btn" id="navRoam" role="button" onclick="roam();" >
+                          <span class="shape fa fa-bolt" style="font-size:1.45em" title="Animate"></span>
+                        </button>
+                      </li>
+                      <li>
+                          <button type="button" class="btn btn-default navbar-btn" id="navDissolve" role="button" onclick="load(Diss);" >
+                              <span class="shape fa fa-eye-slash" style="font-size:1.45em" title="Dissolve"></span>
                           </button>
-                          <ul class="dropdown-menu">
-                            <li style="margin-left:8px;">
-                              <span class="shape fa fa-expand fa-2x" title="Scale" onclick="load(Scal);"></span>
-                              <span class="shape fa fa-refresh fa-2x" title="Spin" onclick="load(Spin);"></span>
-                              <span class="shape fa fa-eye-slash fa-2x" title="Dissolve" onclick="load(Diss);"></span>
-                              <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
-                              <span class="shape icon-cow" style="font-size:1.8em;" title="Animal Mover" onclick="roam();"></span>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
-                          </ul>
-                        </div>
                       </li>
                       <li>
                         <button type="button" class="btn btn-default navbar-btn" id="navCut" role="button" onclick="cut();" >
