@@ -4,19 +4,21 @@
     <link rel="shortcut icon" href="/favicon.ico?v=2" />
     <meta name="google-site-verification" content="HshVtf6HnSfl2YCmfMSpPEkQJT4lwYlxWt1x5XSbjoo" />
     <meta name="globalsign-domain-verification" content="0N60TGhkkTPLK6Kecx2W5DbZ8UKdDDPtT-xB1AdoqH" />
+
+    <!-- Bridgeworks-->
+    <script src="./js/BwHelper.js"></script>
     <script type="text/javascript" src="./js/Bridgeworks.js"></script>
+
     <!-- jquery stuff -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <!--<script src="js/jquery-1.10.2.min.js"></script>-->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
-    <script src="./js/BwHelper.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <!--<script src="js/jquery-1.10.2.min.js"></script>-->
-      <script src="js/jquery.qtip.js"></script>
-      <link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
+    <script src="js/jquery.qtip.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
     <script src="js/nicEdit.js"></script>
+
     <!-- jsColor Color Picker -->
     <script type="text/javascript" src="jscolor/jscolor.js"></script>
 
@@ -24,7 +26,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="css/whhg.css" />
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
     <!-- Styles made by 3Scape team -->
@@ -35,6 +37,7 @@
     <script type="text/javascript" src="./js/controls.js"></script>
     <script type="text/javascript" src="./js/MapControls.js"></script>
     <script type="text/javascript" src="./js/BinaryDecode.js"></script>
+    <script type="text/javascript" src="./js/labels.js"></script>
     <!-- Slider -->
     <script type="text/javascript" src="./js/bootstrap-slider.js"></script>
     <script type="text/javascript" src="./js/FileSaver.js"></script>
@@ -146,184 +149,12 @@
           var timer;
           //========================================================================
           var graphMgr;
-          var g_labelCount;
-          var g_labelName = null;
-          var g_countStr = "";
 
           var selectedModels = null;
 
           var capture = false;
 
-            function addLabel()
-            {
-                var nicE = new nicEditors.findEditor('title');
-                var title = nicE.getContent();
-                //var title = $( "#title" ).val();
-                if (title != "") {
-                    var update = "\<Set target='Label_" + g_labelName + "' text='" + title + "' show='true'/>";
-                    console.debug(update);
-                    bridgeworks.updateScene(update);
-                    var cmd = "\<Remove target='"+g_labelName+"'/>";
-                    bridgeworks.updateScene(cmd);
-                    // This flag is checked on dialog close. If true on close
-                    // then there are some things to undo.
-                    // If we made it this far then there is nothing to undo.
-                    adding = false;
-                    editorOpen = 0;
-                }
-                $( "#dialog" ).dialog("close");
-            }
-          function addBalloon()
-          {
-              var nicE = new nicEditors.findEditor('title');
-              var title = nicE.getContent();
-              //var title = $( "#title" ).val();
-              if (title != "") {
-                  var update = "\<Set target='Label_" + g_labelName + "/balloonTipLabelStyle/htmlLabelStyle'>";
-                  update += "\<html><![CDATA["+ title +"]]></html>";
-                  //update += "\<html>"+ title + "</html>";
-                  update += "</Set>";
-                  console.debug(update);
-                  bridgeworks.updateScene(update);
-                  var cmd = "\<Set target='Label_" + g_labelName + "' show='true'/>";
-                  bridgeworks.updateScene(cmd);
-//                  var cmd = "\<Remove target='"+g_labelName+"'/>";
-//                  bridgeworks.updateScene(cmd);
-                  // This flag is checked on dialog close. If true on close
-                  // then there are some things to undo.
-                  // If we made it this far then there is nothing to undo.
-                  adding = false;
-                  editorOpen = 0;
-                  edit = 0;
-              }
-              $( "#dialog" ).dialog("close");
-          }
 
-          function editLabel(labelName)
-          {
-              var nicE = new nicEditors.findEditor('title');
-              if(selected) {
-                  var title = nicE.getContent();
-              }
-              console.log("editLabel: "+labelName);
-              var update = "\<Set target='" + labelName + "' text='" + title + "' show='true'/>";
-              console.debug(update);
-              bridgeworks.updateScene(update);
-              console.log(g_labelName);
-              edit = 0;
-              $( "#dialog" ).dialog("close");
-          }
-
-          function createLabel()
-          {
-
-              adding = true;
-              editorOpen = 1;
-
-              var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-
-              g_countStr = g_labelCount.toString();
-              g_labelCount = g_labelCount + 1;
-              graphMgr.getNextLabelIndex();
-              console.log(graphMgr.labelIndex);
-
-              g_labelName = "L-" + g_countStr;
-
-              var xml = loadXMLFile("BwContent/label.xml");
-
-              var name = xml.getElementsByTagName("Model")[0].attributes[0];
-              name.value = g_labelName;
-
-              var pos = xml.getElementsByTagName("position")[0];
-              pos.attributes["x"].value = pointWorld.x.toString();
-              pos.attributes["y"].value = pointWorld.y.toString();
-              pos.attributes["z"].value = pointWorld.z.toString();
-
-              var label = xml.getElementsByTagName("Label")[0];
-              label.attributes["name"].value = "Label_" + name.value;
-              if(selectedModel)
-              {
-                  label.attributes["parent"].value = modelName;
-                  console.log(modelName)
-              }
-              else {
-                  label.attributes["parent"].value = name.value;
-                  console.log("No Model");
-              }
-
-              var labPos = xml.getElementsByTagName("position")[1];
-              var posX = pointWorld.x - selectedModel.position.values[0];
-              var posY = pointWorld.y - selectedModel.position.values[1];
-              var posZ = pointWorld.z - selectedModel.position.values[2];
-              labPos.attributes["x"].value = posX.toString();
-              labPos.attributes["y"].value = posY.toString();
-              labPos.attributes["z"].value = posZ.toString();
-
-              name = xml.getElementsByTagName("Group")[0].attributes[0];
-              name.value = "Group_" + g_labelName;
-
-
-              var xstr = (new XMLSerializer()).serializeToString(xml);
-              console.debug(xstr);
-              bridgeworks.updateScene(xstr);
-              if(g_labelCount > 2) {
-                  var nicE = new nicEditors.findEditor('title').setContent("");
-              }
-              $( "#dialog" ).dialog("open");
-              //addLabel();
-          }
-          function createBalloon()
-          {
-              edit = 2;
-              var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-
-              g_labelCount = g_labelCount + 1;
-              g_countStr = g_labelCount.toString();
-
-              g_labelName = "L-" + g_countStr;
-
-              var xml = loadXMLFile("BwContent/BalloonTipLabel.xml");
-
-              var name = xml.getElementsByTagName("Model")[0].attributes[0];
-              name.value = g_labelName;
-
-              var pos = xml.getElementsByTagName("position")[0];
-              pos.attributes["x"].value = pointWorld.x.toString();
-              pos.attributes["y"].value = pointWorld.y.toString();
-              pos.attributes["z"].value = pointWorld.z.toString();
-
-              var label = xml.getElementsByTagName("BalloonTipLabel")[0];
-              label.attributes["name"].value = "Label_" + name.value;
-              if(selectedModel)
-              {
-                  label.attributes["parent"].value = modelName;
-                  console.log(modelName)
-              }
-              else {
-                  label.attributes["parent"].value = name.value;
-                  console.log("No Model");
-              }
-
-              pos.attributes["x"].value = pointWorld.x.toString();
-              pos.attributes["y"].value = pointWorld.y.toString();
-              pos.attributes["z"].value = pointWorld.z.toString();
-
-              name = xml.getElementsByTagName("Group")[0].attributes[0];
-              name.value = "Group_" + g_labelName;
-
-
-              var xstr = (new XMLSerializer()).serializeToString(xml);
-              console.debug(xstr);
-              bridgeworks.updateScene(xstr);
-
-              var cmd = "\<Remove target='"+g_labelName+"'/>";
-              bridgeworks.updateScene(cmd);
-
-              if(g_labelCount > 2) {
-                  var nicE = new nicEditors.findEditor('title').setContent("");
-              }
-              $( "#dialog" ).dialog("open");
-          }
 
           // This function makes it so that mouse interaction with the scene
           // continues when the cursor moves out of the Bridgeworks frame.
@@ -356,7 +187,6 @@
 
           //Hacks in loadslides function. Right now you send it the number of slides you want loaded. And they have to be named SlideX in order for this to work
           function loadSlides(num){
-              //slideCount = 1;
               while(slideCount<=num) {
                   var popUp = document.getElementById("dropUpTray");
                   var slidePanel = document.getElementById("slidePanel");
@@ -386,13 +216,6 @@
               });
           }
 
-/*
-          function playing(t) {
-              if(t == 1) {
-                  console.log();
-              }
-          }
-*/
           function openLabelEdit()
           {
               if(textBoxMade == 0)
@@ -426,7 +249,6 @@
                     break;
                 case "click": {
                     //Dishing out the event client x and y cordinates of the mouse for testing purposes
-                    // if (!e.metaKey && !e.ctrlKey) {
                     window.clearInterval(zoomUpdate);
                     selectedModel = bridgeworks.selector.selections.models[0];
                     if(selectedModel) {
@@ -453,10 +275,8 @@
                     }
                     else {
                         selected = bridgeworks.selector.selectedName.getValueDirect().join("");
-                        //console.log(selected);
                         selectedId = bridgeworks.selector.getAttribute("Selected").id;
                         selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
-                        //console.log(selectedId);
                     }
 
                     capture = false;
@@ -533,11 +353,6 @@ function zoomActivate() {
           };
           function objectLeft(magnitude)
           {
-            // var objectInspector = bridgeworks.registry.find("ObjectInspector");
-            // objectInspector.enabled.setValueDirect(true);
-            // objectInspector.translationDelta.setValueDirect(-100,0,0);
-            // objectInspector.evaluate();
-            // bridgeworks.updateScene();
             var cmd;
             if(modelName != "Grid") {
                 cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
@@ -546,17 +361,10 @@ function zoomActivate() {
                 console.log(selectedModel.position.getValueDirect());
                 bridgeworks.updateScene(cmd);
             }
-            //previousSlide();
           }
 
           function objectRight(magnitude)
           {
-            // This way will activate the keys depending on the direction the camera is facing. But will need some refactoring.
-            // var objectInspector = bridgeworks.registry.find("ObjectInspector");
-            // objectInspector.enabled.setValueDirect(true);
-            // objectInspector.translationDelta.setValueDirect(100,0,0);
-            // //objectInspector.evaluate();
-            // bridgeworks.updateScene();
             var cmd;
               console.log(modelName);
             if(modelName != "Grid") {
@@ -567,7 +375,6 @@ function zoomActivate() {
                 bridgeworks.updateScene(cmd);
             }
 
-                //nextSlide();
           }
 
           function objectDown(magnitude)
@@ -592,7 +399,6 @@ function zoomActivate() {
                 console.log(selectedModel.position.getValueDirect());
                 bridgeworks.updateScene(cmd);
             }
-            //nextSlide();
           }
 
           function saveThis(info,name)
@@ -606,7 +412,6 @@ function zoomActivate() {
           {
               var command = "\<Serialize target='Root'/>";
               bridgeworks.updateScene(command);
-              //document.getElementById('scene').value = serializedScene; This is taken out till multiple scenes is working.
               saveThis(serializedScene,"Scene");
 
           }
@@ -905,7 +710,6 @@ function zoomActivate() {
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                   </div>
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -924,7 +728,6 @@ function zoomActivate() {
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                   </div>
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
