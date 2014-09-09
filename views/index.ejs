@@ -40,6 +40,7 @@
     <script type="text/javascript" src="./js/labels.js"></script>
     <script type="text/javascript" src="./js/objectmode.js"></script>
     <script type="text/javascript" src="./js/keyboard.js"></script>
+    <script type="text/javascript" src="./js/slidemode.js"></script>
     <!-- Slider -->
     <script type="text/javascript" src="./js/bootstrap-slider.js"></script>
     <script type="text/javascript" src="./js/FileSaver.js"></script>
@@ -187,50 +188,6 @@
               console.debug(cmd);
           }
 
-          //Hacks in loadslides function. Right now you send it the number of slides you want loaded. And they have to be named SlideX in order for this to work
-          function loadSlides(num){
-              while(slideCount<=num) {
-                  var popUp = document.getElementById("dropUpTray");
-                  var slidePanel = document.getElementById("slidePanel");
-                  var Li = document.createElement('li');
-                  var S = document.createElement('a');
-                  S.setAttribute("style", "cursor: pointer;");
-                  S.setAttribute("onclick", "javascript:bridgeworks.updateScene('Slide"+(slideCount)+".xml');slidesPlayed = "+slideCount);
-                  S.setAttribute("id", "Slide " + slideCount);
-                  S.innerHTML = "Slide " + slideCount; // <a>INNER_TEXT</a>
-                  Li.appendChild(S);
-                  slidePanel.appendChild(Li);
-
-
-
-                  slideCount++;
-              }
-                  slideCount = 1;
-
-              //This makes it so the slides can be changed from active to non active to represent what slide we are on
-              $('.nav li a').click(function(e) {
-                  $('.nav li').removeClass('active');
-
-                  var $parent = $(this).parent();
-                  if (!$parent.hasClass('active')) {
-                      $parent.addClass('active');
-                  }
-              });
-          }
-
-          function openLabelEdit()
-          {
-              if(textBoxMade == 0)
-              {
-                  new nicEditor({
-                      iconsPath : 'nicEditorIcons.gif'
-                  }).panelInstance('title');
-                  adding = true;
-              }
-              edit = 1;
-              new nicEditors.findEditor('title').setContent(selectedText);
-              $( "#dialog" ).dialog("open");
-          }
           function handleEvent(e)
           {
               bridgeworks.handleEvent(e);
@@ -335,24 +292,7 @@
               }, 200);
           }
 
-          function nextSlide(){
-              console.debug("Slide Count: "+slideCount);
-            if (slideCount <= numSlides) {
 
-                bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
-                slideCount++;
-                console.log("SLIDE NUMBER = "+slideCount);
-            }
-          };
-
-          function previousSlide(){
-              console.debug("Slide Count: "+slideCount);
-            if (slideCount > 1 && slideCount <= numSlides) {
-                slideCount--;
-                bridgeworks.updateScene('Slide' + (slideCount) + '.xml');
-                console.log("SLIDE NUMBER = "+slideCount);
-            }
-          };
 
           function saveThis(info,name)
           {
@@ -531,7 +471,7 @@
                             <h3>
                                 Basics:
                             </h3>
-                            <p>First click on the object pane <img src="/public/objModal"> with a bunch of shapes to quickly get models on the scene</p>
+                            <p>First click on the object pane <img src="./images/objModal.jpg"> with a bunch of shapes to quickly get models on the scene</p>
                             <p>For more models hit the down facing arrow and take your pick (protip: Cows are the best)</p>
                             <p>Let's liven up the cow and add some color. Hit the paint brush to use the color picker </p>
                         </div>
