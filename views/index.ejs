@@ -25,7 +25,7 @@
     <!-- WebHostingHub Glyphs -->
     <link rel="stylesheet" type="text/css" media="all" href="css/whhg.css" />
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
@@ -38,6 +38,8 @@
     <script type="text/javascript" src="./js/MapControls.js"></script>
     <script type="text/javascript" src="./js/BinaryDecode.js"></script>
     <script type="text/javascript" src="./js/labels.js"></script>
+    <script type="text/javascript" src="./js/objectmode.js"></script>
+    <script type="text/javascript" src="./js/keyboard.js"></script>
     <!-- Slider -->
     <script type="text/javascript" src="./js/bootstrap-slider.js"></script>
     <script type="text/javascript" src="./js/FileSaver.js"></script>
@@ -312,26 +314,26 @@
               }
 
           }
-function zoomActivate() {
-    zoomUpdate = window.setInterval(function () {
-        distance = sceneInspector.pivotDistance.getValueDirect()
-        if ((distance >= 0) && (distance < 4000)) {
-            if (distance * 0.05 != sceneInspector.panSensitivity.values[0]) {
-                sceneInspector.panSensitivity.values[0] = distance * 0.05;
-                sceneInspector.panSensitivity.values[1] = distance * 0.05;
-                sceneInspector.panSensitivity.values[2] = distance * 0.05;
-                console.log(sceneInspector.panSensitivity.values[0]);
-            }
-        }
-        else {
-            sceneInspector.panSensitivity.values[0] = 1200;
-            sceneInspector.panSensitivity.values[1] = 1200;
-            sceneInspector.panSensitivity.values[2] = 1200;
-            console.log(sceneInspector.panSensitivity.values[0]);
-            console.log(distance);
-        }
-    }, 200);
-}
+          function zoomActivate() {
+              zoomUpdate = window.setInterval(function () {
+                  distance = sceneInspector.pivotDistance.getValueDirect()
+                  if ((distance >= 0) && (distance < 4000)) {
+                      if (distance * 0.05 != sceneInspector.panSensitivity.values[0]) {
+                          sceneInspector.panSensitivity.values[0] = distance * 0.05;
+                          sceneInspector.panSensitivity.values[1] = distance * 0.05;
+                          sceneInspector.panSensitivity.values[2] = distance * 0.05;
+                          console.log(sceneInspector.panSensitivity.values[0]);
+                      }
+                  }
+                  else {
+                      sceneInspector.panSensitivity.values[0] = 1200;
+                      sceneInspector.panSensitivity.values[1] = 1200;
+                      sceneInspector.panSensitivity.values[2] = 1200;
+                      console.log(sceneInspector.panSensitivity.values[0]);
+                      console.log(distance);
+                  }
+              }, 200);
+          }
 
           function nextSlide(){
               console.debug("Slide Count: "+slideCount);
@@ -351,55 +353,6 @@ function zoomActivate() {
                 console.log("SLIDE NUMBER = "+slideCount);
             }
           };
-          function objectLeft(magnitude)
-          {
-            var cmd;
-            if(modelName != "Grid") {
-                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                cmd += "\<position x='" + (selectedModel.position.values[0] -= magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
-                cmd += "\</Set>";
-                console.log(selectedModel.position.getValueDirect());
-                bridgeworks.updateScene(cmd);
-            }
-          }
-
-          function objectRight(magnitude)
-          {
-            var cmd;
-              console.log(modelName);
-            if(modelName != "Grid") {
-                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                cmd += "\<position x='" + (selectedModel.position.values[0] += magnitude) + "' y='" + selectedModel.position.values[1] + "' z='" + selectedModel.position.values[2] + "'/>"
-                cmd += "\</Set>";
-                console.log(selectedModel.position.getValueDirect());
-                bridgeworks.updateScene(cmd);
-            }
-
-          }
-
-          function objectDown(magnitude)
-          {
-            var cmd;
-            if(modelName != "Grid") {
-                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1] -= magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
-                cmd += "\</Set>";
-                console.log(selectedModel.position.getValueDirect());
-                bridgeworks.updateScene(cmd);
-            }
-          }
-
-          function objectBackward(magnitude)
-          {
-            var cmd;
-            if(modelName != "Grid") {
-                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] -= magnitude) + "'/>"
-                cmd += "\</Set>";
-                console.log(selectedModel.position.getValueDirect());
-                bridgeworks.updateScene(cmd);
-            }
-          }
 
           function saveThis(info,name)
           {
@@ -416,122 +369,9 @@ function zoomActivate() {
 
           }
 
-          function objectUp(magnitude)
-          {
-            var cmd;
-            if(modelName != "Grid") {
-                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + (selectedModel.position.values[1] += magnitude) + "' z='" + selectedModel.position.values[2] + "'/>"
-                cmd += "\</Set>";
-                console.log(selectedModel.position.getValueDirect());
-                bridgeworks.updateScene(cmd);
-            }
-          }
-
-          function objectForward(magnitude){
-            var cmd;
-            if(modelName !="Grid") {
-                cmd = "\<Set target='" + selectedModel.name.getValueDirect().join("") + "'>";
-                cmd += "\<position x='" + (selectedModel.position.values[0]) + "' y='" + selectedModel.position.values[1] + "' z='" + (selectedModel.position.values[2] += magnitude) + "'/>"
-                cmd += "\</Set>";
-                console.log(selectedModel.position.getValueDirect());
-                bridgeworks.updateScene(cmd);
-            }
-          }
-
-          function handleKey(e)
-          {
-            if(editorOpen == 0) {
-                switch (e.keyCode) {
-                    case 'C'.charCodeAt(0):
-                    {
-                        if (e.metaKey || e.ctrlKey) {
-                            e.preventDefault();
-                            copy();
-                            copy(); // why is this called 2X?? - KMC
-                        }      // c
-                    }
-                        break;
-                    case 187: //Equal Sign
-//                        var command = "\<Serialize target='Root'/>";
-//                        bridgeworks.updateScene(command);
-//                            saveThis(serializedScene,"Scene");
 
 
-//                        var canvasId = "Canvas";
-//                        var xml = "<ScreenCapture canvasId='" + canvasId + "'/>"
-//                        console.debug(xml);
-//                        bridgeworks.updateScene(xml);
-                        break;
 
-                    case 46: //Delete Key
-                        var slice = selected.slice(6,8);
-                            console.log(slice);
-                        var cmd = "\<Remove target='"+selected+"'/>";
-                        bridgeworks.updateScene(cmd);
-                        var cmd2 = "\<Remove target='"+slice+"'/>"
-                        var div = document.getElementById(selectedId);
-                        bridgeworks.updateScene(cmd2);
-                        div.parentNode.removeChild(div);
-                    break;
-
-                    case 'V'.charCodeAt(0):
-                    {      // v
-                        if (e.metaKey || e.ctrlKey) {
-                            if (document.activeElement.id != 'url') {
-                                e.preventDefault();
-                                paste();
-                            }
-                        }
-                    }
-                        break;
-                    case 39: //right
-                      objectRight(1);
-                      break;
-
-                    case 37: //left
-                      objectLeft(1);
-                      break;
-
-                    case 40: //down
-                      if (e.shiftKey || e.ctrlKey) {
-                        objectDown(1);
-                      }
-                      else{
-                        objectBackward(1);
-                      }
-                      break;
-                    case 38: //up
-                      if (e.shiftKey || e.ctrlKey) {
-                        objectUp(1);
-                      }
-                      else{
-                        objectForward(1);
-                      }
-                      break;
-                    case 'X'.charCodeAt(0):
-                    {      // x
-                        if (e.metaKey || e.ctrlKey) {
-                            e.preventDefault();
-                            if(selected){
-                                var slice = selected.slice(6.8);
-                                console.log(slice);
-                                var cmd = "\<Remove target='"+selected+"'/>";
-                                bridgeworks.updateScene(cmd);
-                                var cmd2 = "\<Remove target='"+slice+"'/>"
-                                var div = document.getElementById(selectedId);
-                                bridgeworks.updateScene(cmd2);
-                                div.parentNode.removeChild(div);
-                                copy();
-                            }
-                            cut();
-                        }
-                    }
-                        break;
-
-                }
-            }
-          }
 
       </script>
 
@@ -618,7 +458,6 @@ function zoomActivate() {
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                   </div>
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -666,25 +505,25 @@ function zoomActivate() {
                             <div class="col-md-4">
                                 <H3>Camera Mode</H3>
                                 <div class="controlBullet">
-                                    <img src="images/left-click.png"> Rotate
+                                    <img src="./images/left-click.png"> Rotate
                                 </div>
                                 <div class="controlBullet">
-                                    <img src="images/right-click.png"> Zoom
+                                    <img src="./images/right-click.png"> Zoom
                                 </div>
                                 <div class="controlBullet">
-                                    <img src="images/both-click.png"> Pan
+                                    <img src="./images/both-click.png"> Pan
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <H3>Object Mode</H3>
                                 <div class="controlBullet">
-                                    <img src="images/left-click.png"> Rotate
+                                    <img src="./images/left-click.png"> Rotate
                                 </div>
                                 <div class="controlBullet">
-                                    <img src="images/right-click.png"> Pull/Push
+                                    <img src="./images/right-click.png"> Pull/Push
                                 </div>
                                 <div class="controlBullet">
-                                    <img src="images/both-click.png"> Slide/Lift
+                                    <img src="./images/both-click.png"> Slide/Lift
                                 </div>
                             </div>
                         </div>
@@ -763,9 +602,7 @@ function zoomActivate() {
                       <span class="icon-bar"></span>
                   </button>
                   <a href="#"><span class="fa fa-user"></span><%=user.email%></a>
-                  <a class="navbar-brand" href="http://3scape.me" target="_blank"><div style="height:45px; margin-top:-12px;"><img src="images/logo-3S.png" style="max-width:100%; max-height:100%;"></div></a>
-                  <!--<a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>-->
-                  <!--<a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>-->
+                  <a class="navbar-brand" href="http://3scape.me" target="_blank"><div style="height:45px; margin-top:-12px;"><img src="./images/logo-3S.png" style="max-width:100%; max-height:100%;"></div></a>
           </div>
               <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav">
@@ -947,13 +784,10 @@ function zoomActivate() {
       </div>
       <!-- End headerController scope -->
         <div class="row">
-          <!-- <button id="expand" type="button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" style="margin:70px 0 0 13px; position:fixed;z-index:1028" title="Show Sidebar"><span class="glyphicon glyphicon-chevron-right"></span></button> -->
           <div id="container" style="width:300px; display: none;">
               <div id="side-nav" class="width sidebar collapse" style="padding:0; border:0;z-index:1029">
                   <div style="padding: 20px; overflow:hidden; width:300px;">
                           <div>
-                              <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->
-                              <!-- <button type="button" id="collapse-button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" title="Hide Sidebar"><span class="glyphicon glyphicon-chevron-left"></span></button> -->
                               <ul class="nav nav-tabs" style="clear:both">
                                 <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
                                 <li><a href="#animate" data-toggle="tab">Animate</a></li>
@@ -991,6 +825,8 @@ function zoomActivate() {
                   </div>
               </div>
           </div>
+
+          <!-- CANVAS IS HERE-->
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
                    <canvas id="Canvas" style="width:100%">
                   </canvas>

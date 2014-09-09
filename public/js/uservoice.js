@@ -1,4 +1,3 @@
-<script>
 // Include the UserVoice JavaScript SDK (only needed once on a page)
 UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/E4LhHN1ynnuJ6ooIYwPHA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
 
@@ -40,4 +39,3 @@ UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-left'
 
 // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
 UserVoice.push(['autoprompt', {}]);
-</script>
