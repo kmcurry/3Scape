@@ -1,3 +1,10 @@
+// This function makes it so that mouse interaction with the scene
+// continues when the cursor moves out of the Bridgeworks frame.
+function handleDocMove(event)
+{
+    if (capture) bridgeworks.handleEvent(event);
+}
+
 function handleEvent(e)
 {
     bridgeworks.handleEvent(e);

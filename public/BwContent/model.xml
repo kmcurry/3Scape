@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Update>
-    <Set target="NodeMgr" sgPointer="Models"/>
+    <Set target="NodeMgr" sgPointer="Models" detectCollision="true"/>
     <Model name="foo" url="objects/cube.lwo">
         <position x="0" y="0" z="0"/>
         <rotation x="0" y="0" z="0"/>

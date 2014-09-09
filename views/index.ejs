@@ -110,12 +110,7 @@
 
 
 
-          // This function makes it so that mouse interaction with the scene
-          // continues when the cursor moves out of the Bridgeworks frame.
-          function handleDocMove(event)
-          {
-              if (capture) bridgeworks.handleEvent(event);
-          }
+
 
           //Mock Up of How Search would work
           function Search()
@@ -459,6 +454,7 @@
                               <span class="shape fa fa-refresh fa-2x" title="Spin" onclick="load(Spin);"></span>
                               <span class="shape fa fa-eye-slash fa-2x" title="Dissolve" onclick="load(Diss);"></span>
                               <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
+                              <span class="shape icon-cow" style="font-size:1.8em;" title="Animal Mover" onclick="roam();"></span>
                             </li>
                             <li class="divider"></li>
                             <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
@@ -753,21 +749,7 @@
                 <li><a href="#" onclick="">Balloon Tip Label</a></li>
               </ul>
             </div>
-            <div class="btn-group dropup">
-              <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Animate Object">
-                <span class="shape fa fa-bolt" style="font-size:1.4em;"></span>
-              </button>
-              <ul class="dropdown-menu">
-                <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
-                <li class="divider"></li>
-                <li style="margin-left:8px;">
-                  <span class="shape fa fa-expand fa-2x" title="Scale" onclick="load(Scal);"></span>
-                  <span class="shape fa fa-refresh fa-2x" title="Spin" onclick="load(Spin);"></span>
-                  <span class="shape fa fa-eye-slash fa-2x" title="Dissolve" onclick="load(Diss);"></span>
-                  <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
-                </li>
-              </ul>
-            </div>
+
             <button type="button" class="btn btn-default" id="pCut" role="button">
                   <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut" onclick="cut();"></span>
             </button>

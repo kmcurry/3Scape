@@ -82,7 +82,7 @@ function trashAnimation(name)
          var panel = document.getElementById("animate");
          var link = document.getElementById("row" + name);
          panel.removeChild(link);
-    
+
 }
 
 function cut()
@@ -110,9 +110,9 @@ function listLibrary()
         var panel = document.getElementById("panel-lib-shapeObjects");
         loadDirectoryObject(url,"objects/Cube.lwo",panel,"Cube");
         loadDirectoryObject(url,"objects/Grid.lwo",panel,"Grid");
-        loadDirectoryObject(url,"objects/Sphere.lwo",panel,"Sphere");        
+        loadDirectoryObject(url,"objects/Sphere.lwo",panel,"Sphere");
         loadDirectoryObject(url,"objects/Tube.lwo",panel,"Tube");
-        loadDirectoryObject(url,"objects/Wall.lwo",panel,"Wall");        
+        loadDirectoryObject(url,"objects/Wall.lwo",panel,"Wall");
         loadDirectoryObject(url,"Geography/objects/cone.lwo",panel,"Cone");
         loadDirectoryObject(url,"objects/Push Pin.lwo",panel,"Push_Pin");
         loadDirectoryObject(url,"objects/Wood.lwo",panel,"Wood");
@@ -182,7 +182,7 @@ function listLibrary()
         loadDirectoryObject(url,"Buildings/objects/CheckPoint.lwo",panel,"Checkpoint");
         // listDirectory(url + "Buildings/objects/", panel);
 
-        panel = document.getElementById("panel-lib-landVehicleObjects");        
+        panel = document.getElementById("panel-lib-landVehicleObjects");
         loadDirectoryObject(url,"Vehicles/objects/C2V.lwo",panel,"C2V");
         loadDirectoryObject(url,"Vehicles/objects/Fishing Boat.lwo",panel,"Fishing Boat");
         loadDirectoryObject(url,"Vehicles/objects/Humvee_Medical.lwo",panel,"Humvee_Medical");
@@ -202,7 +202,7 @@ function listLibrary()
         loadDirectoryObject(url,"Geography/objects/AP_ApacheL3.lwo",panel,"AP_ApacheL3");
         loadDirectoryObject(url,"Geography/objects/AP_F18R.lwo",panel,"AP_F18R");
 
-        
+
 
         panel = document.getElementById("panel-lib-egyptObjects");
         loadDirectoryObject(url,"Egypt/objects/Artifact_01.lwo",panel,"Artifact_01");
@@ -274,29 +274,29 @@ function listDirectory(url, panel)
     var xhttp = CreateHTTPRequestObject();
     xhttp.open("GET", url, false);
     xhttp.send();
-    
+
     var dom = ParseHTTPResponse(xhttp, "text/html");
     var objects = dom.getElementsByTagName("a");
     var object = null;
     var onclick = null;
     var href = "";
-    
+
     var i = 0;
-    
+
     for (i = 0; i < objects.length; i++) {
-        
+
         object = objects[i].cloneNode(true);
-        
+
         var value = object.innerText;
-        
+
         href = object.getAttribute("href");
-        
+
         // skip subversion files - blecch
         var ndx = href.indexOf('.svn') && value.indexOf('Parent Directory');
         if (ndx != -1) continue;
-        
+
         ndx = href.lastIndexOf('/');
-        
+
         href = ndx == -1 ? href : href.substring(ndx+1);
 
         object.innerText = object.innerText.substring(0,object.innerText.indexOf('.'));
@@ -310,9 +310,9 @@ function listDirectory(url, panel)
         panel.appendChild(object);
         var br = document.createElement("br");
         panel.appendChild(br);
-        
+
     }
-    
+
 }
 
 function load(u)
@@ -363,10 +363,10 @@ function loadModel(url)
     a = document.createElement('a');
     a.innerHTML = name;
     a.setAttribute("id", name);
-    a.setAttribute("onclick", "setModel('"+name+"');"); // Instead of calling setAttribute    
+    a.setAttribute("onclick", "setModel('"+name+"');"); // Instead of calling setAttribute
     a.setAttribute("Title", "Select Object");
     a.setAttribute("class", "object")
-    a.style.cursor="pointer"; 
+    a.style.cursor="pointer";
     a.style.cursor="hand";
     f = document.createElement('span');
     f.setAttribute("id", "find" + name)
@@ -393,35 +393,35 @@ function loadModel(url)
     row.appendChild(findColumn);
     row.appendChild(trashColumn);
     objectPanel.appendChild(row);
-    
+
     var xml = loadXMLFile("BwContent/model.xml");
-    
+
     var model = xml.getElementsByTagName("Model")[0];
-    
+
     var n = model.attributes["name"];
     n.value = name;
-    
+
     var u = model.attributes["url"];
     u.value = url;
-    
+
     var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-    
+
     var pos = xml.getElementsByTagName("position")[0];
     pos.attributes["x"].value = pointWorld.x.toString();
     pos.attributes["y"].value = pointWorld.y.toString();
     pos.attributes["z"].value = pointWorld.z.toString();
 
-    
+
     var xstr = (new XMLSerializer()).serializeToString(xml);
     console.debug(xstr);
     bridgeworks.updateScene(xstr);
-    
+
     selectedModel = bridgeworks.registry.find(name);
 
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
-    
+
     scaleValues = (selectedModel.scale.getValueDirect());
     x = scaleValues['x'] * 100
     $('#scales').slider('setValue', x);
@@ -430,13 +430,13 @@ function loadModel(url)
     $("#rotxs").slider("setValue", r.x);
     $("#rotys").slider("setValue", r.y);
     $("#rotzs").slider("setValue", r.z);
-    
+
     console.log($('#sidebar-button').hasClass("closed"))
 
     if($('#sidebar-button').hasClass("closed")){
         $('#sidebar-button').removeClass('btn-danger').addClass('btn-info');
     }
-    
+
 }
 
 function loadMotion(url)
@@ -468,31 +468,31 @@ function loadMotion(url)
     animationPanel.appendChild(row); // Append the link to the div
 
     //var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
-    
+
     var xml = loadXMLFile("BwContent/motion.xml");
-    
+
     var kfi = xml.getElementsByTagName("KeyframeInterpolator")[0];
-    
+
     var n = kfi.attributes["name"];
     n.value = name;
-    
+
     var u = kfi.attributes["url"];
     u.value = url;
-    
+
     var t = kfi.attributes["target"];
     t.value = selectedModel.name.getValueDirect().join("");
-    
+
     var xstr = (new XMLSerializer()).serializeToString(xml);
     console.debug(xstr);
     bridgeworks.updateScene(xstr);
 }
 
 function locate() //Where is this function called?
-{   
+{
     var name = $('#objectname').val();
     var xml = "\<Locate target='" + name + "'/>";
     console.log(xml);
-    bridgeworks.updateScene(xml);    
+    bridgeworks.updateScene(xml);
 }
 
 //Locates the target given the name and also sets current object to be the object located
@@ -515,7 +515,16 @@ function locate(name){
     $("#rotxs").slider("setValue", r.x);
     $("#rotys").slider("setValue", r.y);
     $("#rotzs").slider("setValue", r.z);
+
+}
+
+function roam() {
+    var name = selectedModel.name.getValueDirect().join("");
+    if (name === "Grid") return;
     
+    var cmd = "\<AnimalMover target='" + name + "' linearSpeed='.5' angularSpeed='25'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
 }
 
 function setColorPicker()
@@ -630,7 +639,7 @@ function show(name)
 //Apply Color function takes the selected model and sets its color to whatever the color is
 //in the color patch
 
-function applyColor() 
+function applyColor()
 {
     var name = selectedModel.name.getValueDirect().join("");
     //($('#object-list a').attr('id'))
@@ -641,7 +650,7 @@ function applyColor()
     bridgeworks.updateScene(cmd);
 }
 
-function remoteColor(name) 
+function remoteColor(name)
 {
     var b = $('#' + name + 'info-b').val();
     var g = $('#' + name + 'info-g').val();
