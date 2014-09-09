@@ -75,7 +75,7 @@
       </script>
     <meta property="og:image" content="http://3Scape.me/logo-3S.png"/>
     <meta property="og:description" content="Make and share interactive 3D. If you can imagine it you can 3Scape it." />
-  </head> 
+  </head>
   <body onresize="resize();">
     <div id="fb-root"></div><!-- FB Javascript SDK -->
     <script>
@@ -149,12 +149,12 @@
           var g_labelCount;
           var g_labelName = null;
           var g_countStr = "";
-          
+
           var selectedModels = null;
-          
+
           var capture = false;
-          
-            function addRecord()
+
+            function addLabel()
             {
                 var nicE = new nicEditors.findEditor('title');
                 var title = nicE.getContent();
@@ -199,13 +199,13 @@
               $( "#dialog" ).dialog("close");
           }
 
-          function editRecord(labelName)
+          function editLabel(labelName)
           {
               var nicE = new nicEditors.findEditor('title');
               if(selected) {
                   var title = nicE.getContent();
               }
-              console.log("EDITRECORD: "+labelName);
+              console.log("editLabel: "+labelName);
               var update = "\<Set target='" + labelName + "' text='" + title + "' show='true'/>";
               console.debug(update);
               bridgeworks.updateScene(update);
@@ -214,7 +214,7 @@
               $( "#dialog" ).dialog("close");
           }
 
-          function createRecord()
+          function createLabel()
           {
 
               adding = true;
@@ -270,7 +270,7 @@
                   var nicE = new nicEditors.findEditor('title').setContent("");
               }
               $( "#dialog" ).dialog("open");
-              //addRecord();
+              //addLabel();
           }
           function createBalloon()
           {
@@ -436,7 +436,7 @@
 
                         setObject(name);
                         setColorPicker();
-                        
+
                         myObject = document.getElementById(name);
                         $('.object').removeClass('current-object');
                         $(myObject).addClass('current-object');
@@ -449,7 +449,7 @@
                         $("#rotxs").slider("setValue", r.x);
                         $("#rotys").slider("setValue", r.y);
                         $("#rotzs").slider("setValue", r.z);
-                        
+
                     }
                     else {
                         selected = bridgeworks.selector.selectedName.getValueDirect().join("");
@@ -490,7 +490,7 @@
                 }
                 break;
               }
-              
+
           }
 function zoomActivate() {
     zoomUpdate = window.setInterval(function () {
@@ -727,7 +727,7 @@ function zoomActivate() {
                 }
             }
           }
-          
+
       </script>
 
       <!-- Fork ribbon -->
@@ -766,13 +766,13 @@ function zoomActivate() {
                       <h4 class="modal-title">List of Objects</h4>
                   </div>
                   <!--Loading all the Libs and putting them in their respective places-->
-                  <div class="modal-body row">                                            
+                  <div class="modal-body row">
                     <ul class="nav nav-tabs" id="tabContent">
                       <li class="active"><a href="#objects1" data-toggle="tab">Misc</a></li>
                       <li><a href="#objects2" data-toggle="tab">Scenery</a></li>
                       <li><a href="#objects3" data-toggle="tab">Vehicles</a></li>
                     </ul>
-                    <div class="tab-content">                    
+                    <div class="tab-content">
                       <div class="tab-pane active" id="objects1">
                         <div class="col-md-2" id="panel-lib-shapeObjects">
                           <H3>Shapes</H3>
@@ -785,8 +785,8 @@ function zoomActivate() {
                         </div>
                         <div class="col-md-2" id="panel-lib-peopleObjects">
                           <H3>People</H3>
-                        </div>                      
-                      </div>                      
+                        </div>
+                      </div>
                       <div class="tab-pane" id="objects2">
                         <div class="col-md-2" id="panel-lib-buildingObjects">
                             <H3>Buildings</H3>
@@ -808,7 +808,7 @@ function zoomActivate() {
                         <div class="col-md-2" id="panel-lib-airVehicleObjects">
                             <H3>Air</H3>
                         </div>
-                      </div>                                            
+                      </div>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -886,12 +886,6 @@ function zoomActivate() {
                         <div class="tab-pane" id="helpGuide">
                             <h3>
                                 Basics:
-<!--                                <button type="button" class="btn btn-info" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>
-                                </button>
-                                Camera Mode button to switch to
-                                <button type="button" class="btn btn-danger" role="button" title="Toggle Camera/Object Mode"><span class="modeButton toggleGlyph fa fa-anchor fa-lg" style="font-size:2em;"></span>
-                                </button>
-                                Object Mode, changing the mouse controls to manipulate an object by clicking it.-->
                             </h3>
                             <p>First click on the object pane <img src="/public/objModal"> with a bunch of shapes to quickly get models on the scene</p>
                             <p>For more models hit the down facing arrow and take your pick (protip: Cows are the best)</p>
@@ -900,9 +894,9 @@ function zoomActivate() {
                         <div class = "tab-pane" id="aboutTeam">
                            <center><h3>Made by the 3Scape team!</h3></center>
                            <br>
-                           <p><a href="https://github.com/kmcurry"> Kevin Curry</a>: Lead Developer/Head of Mr. Miyagi's School of Software Engineering</p>
+                           <p><a href="https://github.com/kmcurry"> Kevin Curry</a>: Creator of 3Scape/Sensei at Mr. Miyagi School of Software Engineering</p>
                            <p><a href="https://github.com/mbrazell"> Michael Brazell</a>: Senior Developer/Wizard</p>
-                           <p><a href="https://github.com/Hyiero"> Brandon Ripley</a>: Junior Developer/Muscle Man</p>
+                           <p><a href="https://github.com/Hyiero"> Brandon Ripley</a>: Junior Developer/Head Cheerleader/Muscle Man</p>
                            <p><a href="https://github.com/jonsmall"> Jon Small</a>: Junior Developer/Sage of the Front End</p>
                            <p><a href="https://github.com/TerabyteTyler"> Tyler McLean</a>: Junior Developer/Software Engineering Padawan</p>
                         </div>
@@ -940,21 +934,21 @@ function zoomActivate() {
         $("#sidebar-button").click(function(){
           $("#container").css("display", "");
           $("#side-nav").collapse('toggle');
-          if ($(this).hasClass("closed")) {            
+          if ($(this).hasClass("closed")) {
             $(this).removeClass("closed").addClass("opened");
             $('#sidebar-button span').removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-left");
-            //clear notification color          
+            //clear notification color
             if($(this).hasClass("btn-info")){
-              $(this).removeClass("btn-info").addClass("btn-danger");              
+              $(this).removeClass("btn-info").addClass("btn-danger");
             }
-          }else {            
+          }else {
             $(this).removeClass("opened").addClass("closed");
             $('#sidebar-button span').removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-right");
           }
-        });                
+        });
 
       </script>
-      
+
       <!-- Navigation Header -->
       <div class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation" id="Navbar" ng-controller="headerController">
           <div class="container-fluid">
@@ -975,51 +969,10 @@ function zoomActivate() {
                       <li>
                         <div class="fb-like" data-href="http://3scape.me" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
                       </li>
-                      <!-- <li class="dropdown">
-                          <a id="dLabel" data-toggle="dropdown" data-target="#" href="/page.html">
-                              Add <span class="caret"></span>
-                          </a>
-                          <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                            <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();ancientLoaded = 0;">New Scene</a></li>                            
-                            <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-submenu">
-                              <a tabindex="-1" href="#">Objects</a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#" onclick="load(cube);">Cube</a></li>
-                                <li><a href="#" onclick="load(sphere);">Sphere</a></li>
-                                <li><a href="#" onclick="load(tube);">Tube</a></li>
-                                <li><a onclick="load(beam);">Beam</a></li>
-                                <li><a onclick="load(Ring);">Ring</a></li>
-                                <li><a onclick="load(Pyramid);">Pyramid</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
-                              </ul>
-                            </li>
-                            <li class="dropdown-submenu">
-                              <a tabindex="-1" href="#">Animations</a>
-                              <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#"onclick="load(Diss);">Dissolve</a></li>
-                                  <li><a tabindex="-1" href="#"onclick="load(Scal);">Scale</a></li>
-                                  <li><a tabindex="-1" href="#"onclick="load(Spin);">Spin</a></li>
-                                  <li class="divider"></li>
-                                  <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
-                              </ul>
-                            </li>
-                          </ul>
-                      </li> -->
+
                       <!-- As wide in px as the longest object name to avoid displacement bug. More elegant solution? -->
                       <li><p class="navbar-text" id="Current_Object" style="width: 200px">Target: X</p></li>
-                      <!-- <li>
-                        <div class="navbar-form" style="width:200px;">
-                          <div class="input-group">
-                            <input type="text" class="form-control" id="Search" placeholder="Find Objects">
-                            <span class="input-group-btn">
-                              <button class="btn btn-default" type="button" onclick="Search();"><span class="glyphicon glyphicon-search" style="font-size:1.4em;"></span></button>
-                            </span>
-                          </div>
-                        </div>
-                      </li> -->                  
+
                     <li>
                       <div class="btn-group navbar-btn" style="margin-left:10px;">
                         <div class="btn btn-default btnShape">
@@ -1027,7 +980,7 @@ function zoomActivate() {
                           <span class="shape fa fa-circle fa-lg" title="Sphere" onclick="load(sphere);"></span>
                           <span class="shape fa fa-circle-thin fa-lg" title="Ring" onclick="load(Ring);"></span>
                           <span class="shape fa fa fa-eject fa-lg" title="Pyramid" onclick="load(Pyramid);"></span>
-                          <span class="shape fa fa fa-database fa-lg" title="Tube" onclick="load(tube);"></span>  
+                          <span class="shape fa fa fa-database fa-lg" title="Tube" onclick="load(tube);"></span>
                         </div>
                         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="More"></span></button>
                         <ul class="dropdown-menu">
@@ -1047,7 +1000,7 @@ function zoomActivate() {
                           <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
                         </ul>
                       </div>
-                    </li>                      
+                    </li>
                     <li>
                         <div class="btn-group dropdown keep-open" style="margin-left:3px;">
                           <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Set Color">
@@ -1063,7 +1016,7 @@ function zoomActivate() {
                             }
                             </script>
 
-                            <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
+                            <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">
                             <input id="info-r" size="2" type="hidden"/>
                             <input id="info-g" size="2" type="hidden"/>
                             <input id="info-b" size="2" type="hidden"/>
@@ -1076,7 +1029,7 @@ function zoomActivate() {
                             <span class="shape fa fa-font" style="font-size:1.4em;"></span>
                           </button>
                           <ul class="dropdown-menu">
-                            <li><a href="#" onclick="createRecord();">Label</a></li>
+                            <li><a href="#" onclick="createLabel();">Label</a></li>
                             <li class="divider"></li>
                             <li><a href="#" onclick="createBalloon();">Balloon Tip Label</a></li>
                           </ul>
@@ -1098,10 +1051,10 @@ function zoomActivate() {
                             <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
                           </ul>
                         </div>
-                      </li>                      
+                      </li>
                       <li>
                         <button type="button" class="btn btn-default navbar-btn" id="navCut" role="button" onclick="cut();" >
-                              <span class="shape fa fa-scissors fa-lg" style="font-size:2em" title="Cut"></span>                          
+                              <span class="shape fa fa-scissors fa-lg" style="font-size:2em" title="Cut"></span>
                         </button>
                       </li>
                       <!--Where I put the load a scene button-->
@@ -1111,8 +1064,6 @@ function zoomActivate() {
                             //Loads the file dialog when the loadScene hyperlink is clicked
                           $('#loadScene').click(function(){
                               $('#files').click(); //This is commented out, this is from loading from a file
-                              //var scene = document.getElementById('scene').value; This is taken out til multiple scenes is working
-                              //console.log(scene);
                               bridgeworks.onLoadModified();
                               bridgeworks.updateScene(scene);
                           });
@@ -1141,12 +1092,12 @@ function zoomActivate() {
                       </script>
                       <li>
                         <button type="button" class="btn btn-default navbar-btn" id="navCopy" role="button" onclick="copy();" >
-                              <span class="shape fa fa-files-o fa-lg" style="font-size:2em" title="Copy"></span>                          
+                              <span class="shape fa fa-files-o fa-lg" style="font-size:2em" title="Copy"></span>
                         </button>
                       </li>
                       <li>
                         <button type="button" class="btn btn-default navbar-btn" id="navPaste" role="button" onclick="paste();" >
-                              <span class="shape fa fa-clipboard fa-lg" style="font-size:2em;" title="Paste"></span>                          
+                              <span class="shape fa fa-clipboard fa-lg" style="font-size:2em;" title="Paste"></span>
                         </button>
                       </li>
                       <li>
@@ -1159,19 +1110,8 @@ function zoomActivate() {
                           </form>
                       </li>
                   </ul>
-                  <ul class="nav navbar-nav navbar-right">  
-                      <!-- <li>                                          
-                        <div ng-show="global.isSignedIn()">
-                          <a type="button" class="btn navbar-btn btn-danger" style="margin-right:0px" href="/profile">
-                          Welcome, {{ global.currentUser().email }}
-                          <a href="/logout" class="btn btn-default navbar-btn" style="margin-right:3px">Logout</a>
-                        </div>
-                        <div ng-hide="global.isSignedIn()">
-                          <a type="button" class="btn navbar-btn btn-danger" style="margin-right:3px" href="/login">
-                            Please Login
-                          </a>
-                        </div>                          
-                      </li> -->
+                  <ul class="nav navbar-nav navbar-right">
+
                       <li>
                           <button type="button" class="btn btn-info navbar-btn" id="fbShare" role="button" onclick="openCaption();" title="Share Scene on Facebook" style="margin-right:3px;">
                               <span class="fa fa-camera-retro fa-lg" style="font-size:2em;"></span>
@@ -1179,33 +1119,24 @@ function zoomActivate() {
                       </li>
                       <li>
                         <button type="button" class="btn btn-info navbar-btn toggleController" id="navCamera" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="margin-right:3px;">
-                          <span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>                          
+                          <span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>
                         </button>
                       </li>
                       <li>
                         <button type="button" class="btn btn-purple navbar-btn toggleController" id="navMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="margin-right:3px;">
-                          <span class="toggleGlyph fa fa-compass fa-lg" style="font-size:2em;"></span>                          
+                          <span class="toggleGlyph fa fa-compass fa-lg" style="font-size:2em;"></span>
                         </button>
                       </li>
                       <li>
                         <button type="button" class="btn btn-success navbar-btn" id="navFullscreen" role="button" onclick="preHide();" title="Fullscreen" style="margin-right:3px;">
                           <span class="glyphicon glyphicon-fullscreen" style="font-size:1.4em;"></span>
                         </button>
-                      </li>                      
+                      </li>
                       <li>
                         <button style="margin-right:3px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
                           <span class="fa fa-question-circle fa-lg" style="font-size:2em;"></span>
                         </button>
-                      </li>                                      
-                      <!-- <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Presentation Notes<b class="caret"></b></a>
-                          <ul class="dropdown-menu">
-                              <li><a id="ex1" href="#">Note1</a></li>
-                              <li><a id="ex2" href="#">Note2</a></li>
-                              <li><a id="ex3" href="#">Note3</a></li>
-                              <li class="divider"></li>
-                          </ul>
-                      </li> -->
+                      </li>
 
                   </ul>
               </div>
@@ -1218,7 +1149,7 @@ function zoomActivate() {
               <div id="side-nav" class="width sidebar collapse" style="padding:0; border:0;z-index:1029">
                   <div style="padding: 20px; overflow:hidden; width:300px;">
                           <div>
-                              <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->                            
+                              <!--javascript:bridgeworks.updateScene('Play.xml') says something about evaluators, ask kevin-->
                               <!-- <button type="button" id="collapse-button" class="btn btn-default navbar-btn btn-danger" data-toggle="collapse" data-target="#side-nav" title="Hide Sidebar"><span class="glyphicon glyphicon-chevron-left"></span></button> -->
                               <ul class="nav nav-tabs" style="clear:both">
                                 <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
@@ -1235,10 +1166,10 @@ function zoomActivate() {
                                           <ul class="nav nav-sidebar">
                                               <!--This is where the animations get loaded into the list-->
                                           </ul>
-                                          
+
                                           <ul class="nav nav-sidebar">
-                                              
-                                          </ul>                     
+
+                                          </ul>
                                       </div>
                                       <!--BEGIN PROJECT SCOPE-->
                                       <div class="tab-pane" id="slides" ng-controller="projectController">
@@ -1248,66 +1179,26 @@ function zoomActivate() {
                                         <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
                                         <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>
                                           <ul class="nav nav-sidebar" id="slidePanel">
-                                            <!-- <div ng-show="global.isSignedIn()">
-                                              My ID: {{ global.currentUser()._id }}
-                                              <p>My Projects:</p>
-                                                <div class="checkbox" ng-repeat="project in projects">
-                                                  <label>
-                                                    <input type="checkbox" ng-click="deleteProject(project._id)"> {{project.title}}
-                                                  </label>
-                                                </div>
-                                              <form>
-                                                <div class="form-group">
-
-                                                  
-                                                  <input type="text" class="form-control input-lg text-center" placeholder="My Project" ng-model="formData.title">
-                                                </div>
-
-                                                
-                                                <button type="submit" class="btn btn-primary btn-lg" ng-click="createProject()">Add</button>
-                                              </form>  
-                                              Project Counter: {{projects.length}}
-                                              <h3>{{formData}}</h3>
-                                            </div>
-                                            <i ng-hide="global.isSignedIn()">Login to see Project interface</i> -->
-                                          </ul>                                        
+                                          </ul>
                                       </div>
-                                      <!--END PROJECT SCOPE-->                                                                  
-                                  </div>                              
-                                
-                          </div>                                                
+                                      <!--END PROJECT SCOPE-->
+                                  </div>
+
+                          </div>
                   </div>
               </div>
-          </div>            
+          </div>
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
                    <canvas id="Canvas" style="width:100%">
                   </canvas>
           </div>
-          <!-- WILL REVISIT SLIDES
-          <div id="present-tray">
-            <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
-            <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
-            <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(timer);window.clearInterval(playSlider);isPlaying = 0;slidesPlayed = 1;"></span>
-            <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
-            <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>  
-            <span class="dropdown dropup dvd">
-              <a class="dropdown-toggle" data-toggle="dropdown" style="margin-left: 10px; margin-bottom: 2px; text-decoration: none; color: white">Slide<b class="caret"></b></a>
-              <ul class="dropdown-menu" id="dropUpTray">
-                To be populated
-              </ul>
-            </span>
-            <span class="glyphicon glyphicon-resize-small dvd" title="Exit Fullscreen" style="float: right" onclick="closeFullScreen();"></span>
-          </div> -->
+
         </div>
-        <!-- <div id="target-wrapper">
-          <div id="current-target">
-            <p id="Current_Object" style="font-size:2em; vertical-align:middle;">Target: X</p>
-          </div>
-        </div> -->
+
         <input id="rotxs" data-slider-id='rotx-slider' type="text"/>
         <input id="rotys" data-slider-id='roty-slider' type="text"/>
         <input id="rotzs" data-slider-id='rotz-slider' type="text"/>
-        <input id="scales" data-slider-id='scale-slider' type="text"/>                        
+        <input id="scales" data-slider-id='scale-slider' type="text"/>
         <script type="text/javascript">
           $('#rotxs').slider({
             formater: function(value) {
@@ -1354,42 +1245,42 @@ function zoomActivate() {
             },
             min: 0,
             max: 200,
-            value: 100              
+            value: 100
           })
           .on('slide', function(ev){
             console.log(ev.value);
             if(modelName != "Grid")
                 setScale(ev.value / 100)
-          });                                                                          
-        </script>          
+          });
+        </script>
 
         <div id="map-controls">
-            <div id="Rotate">                  
+            <div id="Rotate">
               <span id="rotate-counter" class="shape fa fa-undo" title="Rotate Counter-Clockwise" style="font-size: 2em;"></span>
               <span id="rotate-clockwise" class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" style="font-size: 1.8em"></span>
-            </div>        
+            </div>
             <div id ="Tilt">
               <span id="tilt-up" class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onmousedown="tiltUp();"></span>
               <span id="tilt-down" class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onmousedown="tiltDown();"></span>
-            </div>              
+            </div>
             <div id="Zoom">
               <span id="zoom-in" class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In"></span>
               <span id="zoom-out" class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out"></span>
             </div>
         </div>
 
-        
-        
+
+
 
         <div id="object-controls">
-            <div>                  
+            <div>
               <span id="object-up" class="shape icon-pushalt" title="Move Object Up" style="font-size: 2em;"></span>
               <span id="object-down" class="shape icon-pullalt" style="font-size:2em" title="Move Object Down"></span>
-            </div>        
-            <div>                
+            </div>
+            <div>
               <span id="object-forward" class="shape fa fa-arrow-up" style="font-size:2em" title="Move Object Forward"></span>
               <span id="object-backward" class="shape fa fa-arrow-down" style="font-size:2em" title="Move Object Backward"></span>
-            </div>              
+            </div>
             <div>
               <span id="object-left" class="shape fa fa-arrow-left" style="font-size:2em" title="Move Object Left"></span>
               <span id="object-right" class="shape fa fa-arrow-right" style="font-size:2em" title="Move Object Right"></span>
@@ -1405,8 +1296,8 @@ function zoomActivate() {
                 <span class="shape fa fa-circle fa-2x" title="Sphere" onclick="load(sphere);"></span>
                 <span class="shape fa fa-circle-thin fa-2x" title="Ring" onclick="load(Ring);"></span>
                 <span class="shape fa fa fa-eject fa-2x" title="Pyramid" onclick="load(Pyramid);"></span>
-                <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>  
-              </button>    
+                <span class="shape fa fa fa-database fa-2x" title="Tube" onclick="load(tube);"></span>
+              </button>
               <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="shape glyphicon glyphicon-chevron-up" style="font-size:2em;" title="More"></span></button>
               <ul class="dropdown-menu">
                 <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
@@ -1417,7 +1308,7 @@ function zoomActivate() {
                   <span class="shape icon-cow" title="Cow" style="font-size:1.8em;" onclick="load(cow);"></span>
                   <span class="shape glyphicon glyphicon-tower" style="font-size: 1.8em;" title="Church" onclick="load(church);"></span>
                   <span class="shape fa fa fa-ambulance fa-2x" title="Med HumV" onclick="load(medHV);"></span>
-                </li>                          
+                </li>
               </ul>
             </div>
             <div class="btn-group dropup keep-open" style="margin-left:3px;">
@@ -1434,7 +1325,7 @@ function zoomActivate() {
                 }
                 </script>
 
-                <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">                            
+                <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">
                 <input id="info-r" size="2" type="hidden"/>
                 <input id="info-g" size="2" type="hidden"/>
                 <input id="info-b" size="2" type="hidden"/>
@@ -1444,8 +1335,8 @@ function zoomActivate() {
               <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Add Label">
                 <span class="shape fa fa-font" style="font-size: 2em;"></span>
               </button>
-              <ul class="dropdown-menu">                
-                <li><a href="#" onclick="createRecord();">Label</a></li>
+              <ul class="dropdown-menu">
+                <li><a href="#" onclick="createLabel();">Label</a></li>
                 <li class="divider"></li>
                 <li><a href="#" onclick="">Balloon Tip Label</a></li>
               </ul>
@@ -1454,7 +1345,7 @@ function zoomActivate() {
               <button style="font-size: 1.4em;" type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Animate Object">
                 <span class="shape fa fa-bolt" style="font-size:1.4em;"></span>
               </button>
-              <ul class="dropdown-menu">                
+              <ul class="dropdown-menu">
                 <li><a href="#" data-toggle="modal" data-target="#motionsModal">Browse Animations...</a></li>
                 <li class="divider"></li>
                 <li style="margin-left:8px;">
@@ -1464,16 +1355,16 @@ function zoomActivate() {
                   <span class="shape fa fa-fighter-jet fa-2x" title="Fly" onclick="load(fly);"></span>
                 </li>
               </ul>
-            </div>            
+            </div>
             <button type="button" class="btn btn-default" id="pCut" role="button">
                   <span class="shape fa fa-scissors fa-2x" style="font-size:2em" title="Cut" onclick="cut();"></span>
             </button>
             <button type="button" class="btn btn-default" id="pCopy" role="button" onclick="copy();">
                   <span class="shape fa fa-files-o fa-2x" style="font-size:2em" title="Copy"></span>
-            </button>                      
+            </button>
             <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();">
                   <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>
-            </button>                              
+            </button>
             <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="height:42px;">
               <span class="modeButton fa fa-video-camera fa-2x toggleGlyph"></span>
             </button>
@@ -1482,7 +1373,7 @@ function zoomActivate() {
             </button>
             <button type="button" class="btn btn-success navbar-btn" id="pFullscreen" role="button" onclick="closeFullScreen();" title="Exit Fullscreen">
               <span class="glyphicon glyphicon-resize-small" style="font-size:2em;"></span>
-            </button>                
+            </button>
             <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
               <span class="fa fa-question-circle fa-2x"></span>
             </button>
@@ -1507,7 +1398,7 @@ function zoomActivate() {
         <textarea name="fbCaption" id="fbCaption" style="width:100%"></textarea>
         <p><input id="submitCaption" type="submit" value="Submit"></p>
     </div>
-    
+
     <!--<video controls="controls" src="http://localhost/bwjs/BwContent/images/quake.mpg">
     Your browser does not support the video tag.
     </video>-->
@@ -1677,16 +1568,11 @@ function zoomActivate() {
               bridgeworks.updateScene(cmd);
               bridgeworks.updateScene(cmd2);
 
-              //console.log(bar.style.width);
-              //console.log(x);
-              //=================================================
           });
 
           function preUnhide(){
-              // $('#container').show();
               $('#Navbar').show();
               $('#sidebar-button').show();
-              // $('#dialog').show();
               $('#present-tray').hide();
               $('#present-toolbar').hide();
               $('#click').hide();
@@ -1697,11 +1583,11 @@ function zoomActivate() {
 
         <script>
         //Getting sidebar tabs to work again. Not sure why they broke//
-        $(function(){ 
+        $(function(){
             $('.nav-tabs a').on('click', function (e) {
                 e.preventDefault();
                 $(this).tab('show');
-            });  
+            });
         });
 
         </script>
@@ -1721,7 +1607,6 @@ function zoomActivate() {
                     }
                 }
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
-                //bridgeworks = init("Testing_Load.xml", document.getElementById("BwContainer"));
 
                 sceneInspector = bridgeworks.registry.find("SceneInspector");
                 objectInspector =bridgeworks.registry.find("ObjectInspector");
@@ -1734,7 +1619,7 @@ function zoomActivate() {
 
                 console.log(g_labelCount);
                 listLibrary();
-                
+
                 $('html').bind('keypress', function(e)
                 {
                    if(e.keyCode == 13)
@@ -1743,12 +1628,12 @@ function zoomActivate() {
                            $('#submitCaption').click();
                        }
                        if ($("#dialog").dialog( "isOpen" )===true && edit == 0) {
-                           addRecord();
+                           addLabel();
                            console.log("Not editting");
                        }
                        else if($("#dialog").dialog( "isOpen")===true && edit ==1){
 
-                           editRecord(selected);
+                           editLabel(selected);
                        }
                        else if($("#dialog").dialog( "isOpen")===true && edit ==2)
                        {
@@ -1761,11 +1646,11 @@ function zoomActivate() {
                 $("#submitLabel").click(function(){
                     if(edit == 0)
                     {
-                        addRecord();
+                        addLabel();
                     }
                     else if(edit==1)
                     {
-                        editRecord(selected);
+                        editLabel(selected);
                     }
                     else if(edit==2)
                     {
@@ -1796,9 +1681,9 @@ function zoomActivate() {
                     autoOpen: false,
                     modal: true
                 });
-            
+
                 $( "#dialog" ).dialog({ show: { effect: "blind", duration: 200 } });
-            
+
                 $( "#dialog" ).dialog({ hide: { effect: "blind", duration: 200 } });
 
                 $( "#dialog").dialog({open: function(event,ui) {
@@ -1828,21 +1713,21 @@ function zoomActivate() {
                     $("#ControlPanel").slideToggle("medium");
                     $(this).toggleClass("active"); return false;
                   });
-                
+
                 window.onkeydown = handleKey;
-                //window.onkeyup = handleKey;
-                
+
+
                 $('.ui-spinner-button').click(function() { $(this).siblings('input').change(); });
-                
-                
+
+
             }
         }
           $('#map-controls').mouseenter(function(){
-            var sceneActive = sceneInspector.enabled.getValueDirect();           
+            var sceneActive = sceneInspector.enabled.getValueDirect();
             console.log(sceneActive);
             if(!sceneActive){
               sceneInspector.enabled.setValueDirect(true);
-              // objectInspector.enabled.setValueDirect(false);
+
             }
           }).mouseleave(function(){
             var objectActive = objectInspector.enabled.getValueDirect();
@@ -1850,21 +1735,21 @@ function zoomActivate() {
               sceneInspector.enabled.setValueDirect(false);
             }
           })
-          
+
           //Helper method to create button-hold functions. Pass element id, desired function (leave out parentheses), and time between repeats in miliseconds.
           var onHoldFunction = function(id, method, time) {
             var interval;
             $(id).on({
               mousedown : function () {
-                method(); // Still works on a single click                
-                interval = window.setInterval(function(){                
+                method(); // Still works on a single click
+                interval = window.setInterval(function(){
                   method();
-                }, time); //Repeats every (time) miliseconds               
+                }, time); //Repeats every (time) miliseconds
               },
               mouseup : function () {
                 window.clearInterval(interval);
               }
-            });                
+            });
           };
           //Map
           onHoldFunction('#rotate-counter', rotateNegY, 20);
@@ -1876,11 +1761,11 @@ function zoomActivate() {
 
           //Object, uses Anonymous function to pass parameter to callback
           onHoldFunction('#object-up', function(){objectUp(.5);}, 20);
-          onHoldFunction('#object-down', function(){objectDown(.5);}, 20); 
-          onHoldFunction('#object-forward', function(){objectForward(.5);}, 20); 
-          onHoldFunction('#object-backward', function(){objectBackward(.5);}, 20); 
-          onHoldFunction('#object-left', function(){objectLeft(.5);}, 20); 
-          onHoldFunction('#object-right', function(){objectRight(.5);}, 20);        
+          onHoldFunction('#object-down', function(){objectDown(.5);}, 20);
+          onHoldFunction('#object-forward', function(){objectForward(.5);}, 20);
+          onHoldFunction('#object-backward', function(){objectBackward(.5);}, 20);
+          onHoldFunction('#object-left', function(){objectLeft(.5);}, 20);
+          onHoldFunction('#object-right', function(){objectRight(.5);}, 20);
         </script>
       <script type="text/javascript">
           $('.dropdown-menu').find('form').click(function (e) {
@@ -1943,7 +1828,7 @@ function zoomActivate() {
     $('#roty-slider').fadeToggle();
   }
 </script>
-      
+
       <!-- Initialize Angular -->
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
       <script src="core.js"></script>
