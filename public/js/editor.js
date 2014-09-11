@@ -193,15 +193,21 @@ function listLibrary()
        // listDirectory(url + "Vehicles/objects/", panel);
 
         panel = document.getElementById("panel-lib-airVehicleObjects");
-        loadDirectoryObject(url,"Vehicles/objects/F16.lwo",panel,"F16");
+        loadDirectoryObject(url,"Vehicles/objects/AP_A10R.lwo",panel,"A10 Warthog");
+        loadDirectoryObject(url,"Vehicles/objects/BW_ac-130.lwo",panel,"AC130");
+        loadDirectoryObject(url,"Vehicles/objects/BW_ACprop.lwo",panel,"AC130 prop");
+        loadDirectoryObject(url,"Geography/objects/AP_ApacheL1.lwo",panel,"Apache-1");
+        loadDirectoryObject(url,"Geography/objects/AP_ApacheL2.lwo",panel,"Apache-2");
+        loadDirectoryObject(url,"Geography/objects/AP_ApacheL3.lwo",panel,"Apache-3");
         loadDirectoryObject(url,"Vehicles/objects/DC-10.lwo",panel,"DC-10");
+        loadDirectoryObject(url,"Vehicles/objects/AP_F15R.lwo",panel,"F15");
+        loadDirectoryObject(url,"Vehicles/objects/F16.lwo",panel,"F16");
+        loadDirectoryObject(url,"Geography/objects/AP_F18R.lwo",panel,"F18 Hornet");
         loadDirectoryObject(url,"Vehicles/objects/BlackHawk.lwo",panel,"BlackHawk");
+        loadDirectoryObject(url,"Vehicles/objects/JStars.lwo",panel,"JStars");
         loadDirectoryObject(url,"Vehicles/objects/Predator.lwo",panel,"Predator");
-        loadDirectoryObject(url,"Geography/objects/AP_ApacheL1.lwo",panel,"AP_ApacheL1");
-        loadDirectoryObject(url,"Geography/objects/AP_ApacheL2.lwo",panel,"AP_ApacheL2");
-        loadDirectoryObject(url,"Geography/objects/AP_ApacheL3.lwo",panel,"AP_ApacheL3");
-        loadDirectoryObject(url,"Geography/objects/AP_F18R.lwo",panel,"AP_F18R");
-
+        loadDirectoryObject(url,"Vehicles/objects/RC12.lwo",panel,"RC12");
+        loadDirectoryObject(url,"Vehicles/objects/U2.lwo",panel,"U2");
 
 
         panel = document.getElementById("panel-lib-egyptObjects");
@@ -521,7 +527,7 @@ function locate(name){
 function roam() {
     var name = selectedModel.name.getValueDirect().join("");
     if (name === "Grid") return;
-    
+
     var cmd = "\<AnimalMover target='" + name + "' linearSpeed='.5' angularSpeed='25'/>";
     console.log(cmd);
     bridgeworks.updateScene(cmd);
