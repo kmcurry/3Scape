@@ -16259,6 +16259,7 @@ function VertexGeometry()
     
     this.registerAttribute(this.vertices, "vertices");
 }
+
 VertexGeometry.prototype.postCloneChild = function(childClone,pathSrc,pathClone)
 {
     var i;
@@ -18617,6 +18618,7 @@ function Evaluator()
     this.expired = new BooleanAttr(false);
     
     this.registerAttribute(this.expired, "expired");
+    this.registerAttribute(this.enabled, "evaluate");
 }
 
 Evaluator.prototype.evaluate = function()
@@ -24914,6 +24916,8 @@ function BwSceneInspector()
     
     // set orphan so that evaluator will not be added to scene graph
 	this.orphan.setValueDirect(true);
+	
+	this.enabled.addModifiedCB(BwSceneInspector_EnabledModifiedCB, this);
 }
 
 BwSceneInspector.prototype.evaluate = function()
@@ -25405,6 +25409,10 @@ function BwSceneInspector_SelectionOccurredCB(attribute, container)
     }
 }
 
+function BwSceneInspector_EnabledModifiedCB(attribute, container)
+{
+    var enabled = attribute.getValueDirect();
+}
 
 
 ObjectInspector.prototype = new ArcballInspector();
@@ -30176,6 +30184,9 @@ function newObjectInspector(name, factory)
             
         selector.getAttribute("selectionCleared").addTarget(
             resource.getAttribute("selectionCleared"), eAttrSetOp.Replace, null, false);
+            
+        selector.getAttribute("pointView").addTarget(
+            resource.getAttribute("pointView"), eAttrSetOp.Replace, null, false);
     }
     
     return resource;
@@ -30413,15 +30424,6 @@ function registerEvaluatorAttributes(evaluator, factory)
     	targetConnectionType.addModifiedCB(AttributeFactory_EvaluatorTargetConnectionTypeModifiedCB, factory);
     	evaluator.registerAttribute(targetConnectionType, "targetConnectionType");
     }
-    
-    // evaluate (replaced by "enabled")
-    if (!evaluator.getAttribute("evaluate"))
-    {
-    	var evaluate = new BooleanAttr(true);
-    	evaluator.registerAttribute(evaluate, "evaluate");
-    	evaluate.addTarget(evaluator.getAttribute("enabled"));
-	}
-
 }
 
 function registerParentableAttributes(pme, factory)
