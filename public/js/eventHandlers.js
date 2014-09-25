@@ -42,11 +42,12 @@ function handleEvent(e)
               scaleValues = (selectedModel.scale.getValueDirect());
               x = scaleValues['x'] * 100
               $('#scales').slider('setValue', x);
-
+              /*
               var r = selectedModel.rotation.getValueDirect();
               $("#rotxs").slider("setValue", r.x);
               $("#rotys").slider("setValue", r.y);
               $("#rotzs").slider("setValue", r.z);
+              */
 
           }
           else {
@@ -78,7 +79,6 @@ function handleEvent(e)
                   cmd = "\<Locate target='" + name + "'/>";
               }
               console.log(name);
-              console.debug(cmd);
               bridgeworks.updateScene(cmd);
               setObject(name);
               setColorPicker();

@@ -25,7 +25,7 @@
 		<event>MButton3.Down</event>
 	</DisconnectAttributes>
 	<!--MOUSE ROTATION-->
-	<ConnectAttributes name="MButton1.Scene" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+	<ConnectAttributes name="MButton3.Scene" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
 		<sourceAttribute>deltaY</sourceAttribute>
 		<targetAttribute>invertedRotationDelta:0</targetAttribute>
 		<sourceAttribute>deltaX</sourceAttribute>
@@ -50,14 +50,14 @@
 		<targetAttribute>panDelta:2</targetAttribute>
 	</ConnectAttributes>
 	<!-- OBJECT INSPECTION -->
-	<ConnectAttributes name="MButton1.Object" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
+	<ConnectAttributes name="MButton2.Object" event="MButton1+MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
 		<sourceAttribute>deviceY</sourceAttribute>
 		<targetAttribute>rotationNow:0</targetAttribute>
 		<sourceAttribute>deviceX</sourceAttribute>
 		<targetAttribute>rotationNow:1</targetAttribute>
 	</ConnectAttributes>
 	<!-- MOUSE PAN -->
-	<ConnectAttributes name="MButton2.Object" event="MButton1+MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
+	<ConnectAttributes name="MButton1.Object" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
 		<sourceAttribute>delta:0</sourceAttribute>
 		<targetAttribute>translationDelta:0</targetAttribute>
 		<sourceAttribute>delta:1</sourceAttribute>
@@ -91,7 +91,7 @@
 	<Set name="SetCapture_Right_Rot_Scene" event="VK_RIGHT.Down" numResponses="-1" undoable="false" target="SceneInspector">
 		<rotationDelta x="0" y="5" z="0"/>
 	</Set>
-	<!-- KEYBOARD PAN 
+	<!-- KEYBOARD PAN
 		S = Left
 		F = Right
 		D = Forward
@@ -134,7 +134,7 @@
 	<Set name="SetCapture_Right_Rot_Objects" event="VK_RIGHT.Down" numResponses="-1" undoable="false" target="ObjectInspector">
 		<rotationDelta x="0" y="5" z="0"/>
 	</Set>
-	<!-- KEYBOARD PAN 
+	<!-- KEYBOARD PAN
 		S = Left
 		F = Right
 		D = Forward
