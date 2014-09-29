@@ -14,8 +14,6 @@ var session = require('express-session');
 var methodOverride = require('method-override');
 var mongoStore = require('connect-mongodb');
 
-var configDB = require('./config/database.js');
-
 
 // configuration ===============================================================
 var config = require('./configLoader')(process.env.NODE_ENV || "local") //Environment
