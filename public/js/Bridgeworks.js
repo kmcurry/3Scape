@@ -4817,6 +4817,7 @@ var eAttrType = {
     HTMLLabel                   :1029,
     BalloonTipLabel             :1030, 
     PathTrace                   :1031,
+    Cube                        :1032,
     
     Evaluator                   :1100,
     SceneInspector              :1101,
@@ -17805,7 +17806,7 @@ Model.prototype.apply = function(directive, params, visitChildren)
 
 Model.prototype.pushMatrix = function()
 {
-	this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
     this.graphMgr.renderContext.pushMatrix();
 }
 
@@ -22410,6 +22411,165 @@ AnimalMover.prototype.collisionDetected = function(collisionList)
     }
 }
 
+Cube.prototype = new TriList();
+Cube.prototype.constructor = Cube;
+
+function Cube()
+{
+    TriList.call(this);
+    this.className = "Cube";
+    this.attrType = eAttrType.Cube;
+    
+    this.updateTriList = true; // update once
+    
+    this.transform = new Matrix4x4();
+    this.updateTransform = false;
+    
+    this.materialNode = new Material();
+    this.updateMaterial = false;
+    
+    this.color = new ColorAttr(1, 1, 1, 1);
+    this.opacity = new NumberAttr(1);
+    this.position = new Vector3DAttr(0, 0, 0);
+    this.rotation = new Vector3DAttr(0, 0, 0);
+    this.scale = new Vector3DAttr(1, 1, 1);
+    
+    this.color.addModifiedCB(Cube_MaterialModifiedCB, this);
+    this.opacity.addModifiedCB(Cube_MaterialModifiedCB, this);
+    this.position.addModifiedCB(Cube_PositionModifiedCB, this);
+    this.rotation.addModifiedCB(Cube_RotationModifiedCB, this);
+    this.scale.addModifiedCB(Cube_ScaleModifiedCB, this);
+    
+    this.registerAttribute(this.color, "color");
+    this.registerAttribute(this.opacity, "opacity");
+    this.registerAttribute(this.position, "position");
+    this.registerAttribute(this.rotation, "rotation");
+    this.registerAttribute(this.scale, "scale");
+    
+    var vertices = 
+    [
+        -0.25, -0.25, 0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, 0.25, -0.25, 0.25, -0.25,
+        0.25, -0.25, -0.25, 0.25, -0.25, 0.25, -0.25, -0.25, 0.25, -0.25, -0.25, -0.25, 0.25, -0.25, -0.25, -0.25, -0.25, 0.25,
+        0.25, -0.25, -0.25, -0.25, 0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, 0.25, -0.25,
+        0.25, -0.25, 0.25, 0.25, 0.25, -0.25, 0.25, 0.25, 0.25, 0.25, -0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, 0.25,
+        0.25, 0.25, -0.25, -0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, -0.25, -0.25, 0.25, -0.25, -0.25, 0.25, 0.25,
+        0.25, -0.25, 0.25, 0.25, 0.25, 0.25, -0.25, 0.25, 0.25, -0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, 0.25, 0.25
+    ];
+    
+    var normals =
+    [
+        -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0,
+        0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0,
+        0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
+        1, -0, 0, 1, -0, 0, 1, -0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
+        0, 1, -0, 0, 1, -0, 0, 1, -0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
+        0, -0, 1, 0, -0, 1, 0, -0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1
+    ];
+    
+    this.vertices.setValue(vertices);
+    this.normals.setValue(normals);
+    
+    this.color.addTarget(this.materialNode.getAttribute("color"));
+    this.opacity.addTarget(this.materialNode.getAttribute("opacity"));
+}
+
+Cube.prototype.setGraphMgr = function(graphMgr)
+{
+    // call base-class implementation
+    TriList.prototype.setGraphMgr.call(this, graphMgr);
+
+    this.materialNode.setGraphMgr(graphMgr);
+}
+            
+Cube.prototype.update = function(params, visitChildren)
+{
+    if (this.updateTransform)
+    {
+        this.updateTransform = false;
+ 
+        var position = this.position.getValueDirect();
+        var translationMatrix = new Matrix4x4();
+        translationMatrix.loadTranslation(position.x, position.y, position.z);
+        
+        var rotation = this.rotation.getValueDirect();
+        var rotationMatrix = new Matrix4x4();
+        rotationMatrix.loadXYZAxisRotation(rotation.x, rotation.y, rotation.z);
+        
+        var scale = this.scale.getValueDirect();
+        var scaleMatrix = new Matrix4x4();
+        scaleMatrix.loadScale(scale.x, scale.y, scale.z);
+        
+        this.transform.loadMatrix(scaleMatrix.multiply(rotationMatrix.multiply(translationMatrix)));
+    }
+    
+    if (this.updateMaterial)
+    {
+        this.updateMaterial = false;       
+        this.materialNode.update(params, visitChildren);
+    }
+
+    if (this.updateTriList)
+    {
+        this.updateTriList = false;
+        TriList.prototype.update.call(this, params, visitChildren);
+    }
+}
+
+Cube.prototype.apply = function(directive, params, visitChildren)
+{
+    var show = this.show.getValueDirect();
+    var enabled = this.enabled.getValueDirect();
+    if (!show || !enabled)
+    {
+        return;
+    }
+    
+    switch (directive)
+    {
+        case "render":
+            {
+                this.materialNode.apply(directive, params, visitChildren);
+                this.draw(params.dissolve);
+            }
+            break;
+    }
+}
+
+Cube.prototype.draw = function(dissolve)
+{
+    this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.pushMatrix();
+
+    this.graphMgr.renderContext.leftMultMatrix(this.transform);
+    this.graphMgr.renderContext.applyModelViewTransform();
+    
+    // draw primitives
+    this.vertexBuffer.draw();
+    
+    this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.popMatrix();
+    this.graphMgr.renderContext.applyModelViewTransform();
+}
+
+function Cube_PositionModifiedCB(attribute, container)
+{
+    container.updateTransform = true;
+}
+
+function Cube_RotationModifiedCB(attribute, container)
+{
+    container.updateTransform = true;
+}
+
+function Cube_ScaleModifiedCB(attribute, container)
+{
+    container.updateTransform = true;
+}
+
+function Cube_MaterialModifiedCB(attribute, container)
+{
+    container.updateMaterial = true;
+}
 var eEventType = {
     Unknown                     :-1,
     
@@ -28941,7 +29101,8 @@ LWObjectBuilder.prototype.describeModel = function(data, layer, model)
 
             triList.getAttribute("vertices").setValue(vertices);
             triList.getAttribute("normals").setValue(normals);
-
+console.log(vertices);
+console.log(normals);
             triLists[surfIndex] = triList;
             triVertices[surfIndex] = vertices;
         }
@@ -29932,6 +30093,8 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["Translate"] = newSGNode;
     this.newResourceProcs["TriList"] = newSGNode;
     this.newResourceProcs["NullObject"] = newSGNode;
+    this.newResourceProcs["Material"] = newSGNode;
+    this.newResourceProcs["Cube"] = newSGNode;
 
     // directives
     this.newResourceProcs["BBoxDirective"] = newSGDirective;
@@ -30101,7 +30264,9 @@ function newSGNode(name, factory)
     case "Transform":           resource = new Transform(); break;
     case "Translate":           resource = new Translate(); break;
     case "TriList":             resource = new TriList(); break;
-    case "NullObject":          resource = new NullObject(); registerParentableAttributes(resource, factory);  break; 
+    case "NullObject":          resource = new NullObject(); registerParentableAttributes(resource, factory);  break;
+    case "Cube":                resource = new Cube(); break;
+    case "Material":            resource = new Material(); break;
     }
     
     if (resource)
