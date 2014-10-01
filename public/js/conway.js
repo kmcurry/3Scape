@@ -1,4 +1,4 @@
-var eGoLStatus = 
+var eGoLStatus =
 {
     Dead           : 0,
     Alive          : 1,
@@ -24,20 +24,20 @@ GameOfLife.prototype.init = function(objCountX,
         objCountY <= 0 ||
         objCountZ <= 0)
         return;
-    
+
     this.objCountX = objCountX;
     this.objCountY = objCountY;
     this.objCountZ = objCountZ;
-    
+
     this.currGen = new Array(objCountX);
     this.nextGen = new Array(objCountX);
-    
+
     var objWidth = 1;
     var objHeight = 1;
     var objDepth = 1;
-    
+
     var seedRate = (1 / (max3(objCountX, objCountY, objCountZ)));
-    
+
     var xml = "<Update>";
     xml += "Set target='NodeMgr' sgPointer='" + this.sgPointer + "'/>";
     // add GoL Models
@@ -45,22 +45,22 @@ GameOfLife.prototype.init = function(objCountX,
     {
         this.currGen[i] = new Array(objCountY);
         this.nextGen[i] = new Array(objCountY);
-        
+
         for (var j=0, y=0; j < objCountY; j++, y+=objHeight/2)
         {
             this.currGen[i][j] = new Array(objCountZ);
             this.nextGen[i][j] = new Array(objCountZ);
-            
+
             for (var k=0, z=0; k < objCountZ; k++, z+=objDepth/2)
-            {            
+            {
                 var alive = Math.random() <= seedRate ? true : false;
                 this.currGen[i][j][k] = alive ? eGoLStatus.Alive : eGoLStatus.Dead;
                 this.nextGen[i][j][k] = eGoLStatus.Dead;
-                
+
                 var r = Math.random();
                 var g = Math.random();
                 var b = Math.random();
-                
+
                 xml += "<Cube name='GoL_" + i + "_" + j + "_" + k + "' show='" + alive + "' opacity='1'>";
                 xml += "<position x='" + x + "' y='" + y + "' z='" + z + "'/>";
                 xml += "<color r='" + r + "' y='" + g + "' z='" + b + "' a='1'/>";
@@ -70,16 +70,16 @@ GameOfLife.prototype.init = function(objCountX,
     }
 
     xml += "</Update>";
-    
+
     this.bridgeworks.updateScene(xml);
 }
 
 GameOfLife.prototype.uninit = function()
 {
     this.stop();
-    
+
     var xml = "<Update>";
-    
+
     for (var i=0; i < this.objCountX; i++)
     {
         for (var j=0; j < this.objCountY; j++)
@@ -90,9 +90,9 @@ GameOfLife.prototype.uninit = function()
             }
         }
     }
-    
+
     xml += "</Update>";
-    
+
     this.bridgeworks.updateScene(xml);
 }
 
@@ -102,11 +102,11 @@ GameOfLife.prototype.start = function(tickMs)
     {
         this.stop();
     }
-    
+
     this.tick();
-    
+
     var that = this;
-    this.tickIntervalId = 
+    this.tickIntervalId =
     setInterval(function () {
         that.tick();
     }, tickMs);
@@ -124,15 +124,15 @@ GameOfLife.prototype.stop = function()
 GameOfLife.prototype.tick = function()
 {
     var xml = "<Update>";
-    
+
     for (var i=0; i < this.objCountX; i++)
-    {     
+    {
         for (var j=0; j < this.objCountY; j++)
-        {         
+        {
             for (var k=0; k < this.objCountZ; k++)
             {
                 this.nextGen[i][j][k] = this.currGen[i][j][k];
-                
+
                 var liveCount = this.getLiveNeighborCount(i, j, k);
                 switch (this.currGen[i][j][k])
                 {
@@ -145,7 +145,7 @@ GameOfLife.prototype.tick = function()
                             }
                         }
                         break;
-                        
+
                     case eGoLStatus.Alive:
                         {
                             if (liveCount < 2 || liveCount > 3)
@@ -159,42 +159,53 @@ GameOfLife.prototype.tick = function()
             }
         }
     }
-    
+
     xml += "</Update>";
-    
+
     this.bridgeworks.updateScene(xml);
-    
+
     this.currGen = this.nextGen;
 }
 
 GameOfLife.prototype.getLiveNeighborCount = function(i, j, k)
 {
     var count = 0;
-    
+
     for (var x = -1; x < 2; x++)
     {
         if (x+i < 0 || x+i >= this.objCountX) continue;
-        
+
         for (var y = -1; y < 2; y++)
         {
             if (y+j < 0 || y+j >= this.objCountY) continue;
-            
+
             for (var z = -1; z < 2; z++)
             {
                 if (z+k < 0 || z+k >= this.objCountZ) continue;
                 if (x == 0 && y == 0 && z == 0) continue; // don't count self
-                
+
                 if (this.currGen[x+i][y+j][z+k] == eGoLStatus.Alive)
                 {
                     count++;
-                    if (count > 3) 
-                    {   
+                    if (count > 3)
+                    {
                         return count;
                     }
                 }
             }
         }
     }
-    
+
     return count;
+}
+
+var gol = null;
+
+function playConway() {
+
+  // if there isn't already a game running
+  if (gol == null) {
+    gol = new GameOfLife(bridgeworks, "Conway");
+  }
+
 }

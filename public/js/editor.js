@@ -15,8 +15,8 @@ function setObject(Object)
 {
     var p = document.getElementById('Current_Object');
     var q = document.getElementById('Current_Object2');
-    p.innerHTML = "Target: " + Object;
-    q.innerHTML = "Target: " + Object;
+    p.innerHTML = Object;
+    q.innerHTML = Object;
 }
 
 function copy()
@@ -361,7 +361,8 @@ function loadModel(url)
     setObject(name);
     var objectPanel = document.getElementById("object-list");
     var row = document.createElement('div');
-    row.setAttribute("id", "row" + name)
+    row.setAttribute("id", "row" + name);
+    row.setAttribute("class", "row" + name);
     var nameColumn = document.createElement('div');
     // var colorColumn = document.createElement('div');
     var findColumn = document.createElement('div');
@@ -414,13 +415,13 @@ function loadModel(url)
     stopBtn.setAttribute("Title", 'Stop');
     stopBtn.setAttribute("onClick", "stopRoaming('" + name + "');");
 
-    nameColumn.setAttribute("class", "col-md-5");
+    nameColumn.setAttribute("class", "col-sm-6");
     // colorColumn.setAttribute("class", "col-md-5");
-    findColumn.setAttribute("class", "col-md-1");
-    trashColumn.setAttribute("class", "col-md-1");
-    playColumn.setAttribute("class", "col-md-1");
-    ffColumn.setAttribute("class", "col-md-1");
-    stopColumn.setAttribute("class", "col-md-1");
+    findColumn.setAttribute("class", "col-sm-1");
+    trashColumn.setAttribute("class", "col-sm-1");
+    playColumn.setAttribute("class", "col-sm-1");
+    ffColumn.setAttribute("class", "col-sm-1");
+    stopColumn.setAttribute("class", "col-sm-1");
 
     nameColumn.appendChild(a);
     findColumn.appendChild(findBtn);
