@@ -273,7 +273,30 @@ function playConway() {
   }
 }
 
+function addBlinker() {
+  gol.uninit();
+
+  var currGen = new Array(5);
+  for (var i=0; i < 5; i++)
+  {
+      currGen[i] = new Array(5);
+      for (var j=0; j < 5; j++)
+      {
+          currGen[i][j] = new Array(1);
+          currGen[i][j][0] = eGoLStatus.Dead;
+      }
+  }
+
+  currGen[2][1][0] = eGoLStatus.Alive;
+  currGen[2][2][0] = eGoLStatus.Alive;
+  currGen[2][3][0] = eGoLStatus.Alive;
+
+  gol.initWithGeneration(5, 5, 1, currGen);
+}
+
 function addPulsar() {
+  gol.uninit();
+
   var currGen = new Array(17);
   for (var i=0; i < 17; i++)
   {
@@ -343,4 +366,28 @@ function addPulsar() {
   currGen[14][12][0] = eGoLStatus.Alive;
 
   gol.initWithGeneration(17, 17, 1, currGen);
+}
+
+function addSpaceship() {
+  gol.uninit();
+  
+  var currGen = new Array(7);
+  for (var i=0; i < 7; i++)
+  {
+      currGen[i] = new Array(7);
+      for (var j=0; j < 7; j++)
+      {
+          currGen[i][j] = new Array(1);
+          currGen[i][j][0] = eGoLStatus.Dead;
+      }
+  }
+
+  currGen[2][1][0] = eGoLStatus.Alive;
+  currGen[2][2][0] = eGoLStatus.Alive;
+  currGen[2][3][0] = eGoLStatus.Alive;
+  currGen[0][2][0] = eGoLStatus.Alive;
+  currGen[1][1][0] = eGoLStatus.Alive;
+
+
+  gol.initWithGeneration(7, 7, 1, currGen);
 }

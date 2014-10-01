@@ -23,7 +23,7 @@
         </Group>
         <Group name="Models">
             <Model name="Grid" url="objects/Grid.lwo" moveable="false">
-                <scale x="100" y="100" z="100"/>
+                <scale x="100" y="1" z="100"/>
             </Model>
          <!--   <Model name="Cube" url="objects/Cube.lwo">
                 <position x="15" y="0" z="0"/>
