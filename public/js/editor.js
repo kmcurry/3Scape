@@ -366,6 +366,8 @@ function loadModel(url)
     // var colorColumn = document.createElement('div');
     var findColumn = document.createElement('div');
     var trashColumn = document.createElement('div');
+    var playColumn = document.createElement('div');
+    var stopColumn = document.createElement('div');
     a = document.createElement('a');
     a.innerHTML = name;
     a.setAttribute("id", name);
@@ -386,16 +388,34 @@ function loadModel(url)
     t.setAttribute("style", "margin-top:3px;");
     t.setAttribute("Title", 'Remove');
     t.setAttribute("onClick", "trashModel('" + name + "');");
-    nameColumn.setAttribute("class", "col-md-8");
+    playBtn = document.createElement('span');
+    playBtn.setAttribute("id", "play-roam" + name)
+    playBtn.setAttribute("class", 'shape icon-play');
+    playBtn.setAttribute("style", "margin-top:3px;");
+    playBtn.setAttribute("Title", 'Roam');
+    playBtn.setAttribute("onClick", "roam('" + name + "');");
+    stopBtn = document.createElement('span');
+    stopBtn.setAttribute("id", "stop-roam" + name)
+    stopBtn.setAttribute("class", 'shape icon-stop');
+    stopBtn.setAttribute("style", "margin-top:3px;");
+    stopBtn.setAttribute("Title", 'Stop');
+    stopBtn.setAttribute("onClick", "stopRoaming('" + name + "');");
+    nameColumn.setAttribute("class", "col-md-6");
     // colorColumn.setAttribute("class", "col-md-5");
-    findColumn.setAttribute("class", "col-md-2");
-    trashColumn.setAttribute("class", "col-md-2");
+    findColumn.setAttribute("class", "col-md-1");
+    trashColumn.setAttribute("class", "col-md-1");
+    playColumn.setAttribute("class", "col-md-1");
+    stopColumn.setAttribute("class", "col-md-1");
     nameColumn.appendChild(a);
     findColumn.appendChild(f);
     // colorColumn.appendChild(c);
     trashColumn.appendChild(t);
+    playColumn.appendChild(playBtn);
+    stopColumn.appendChild(stopBtn);
     row.appendChild(nameColumn);
     // row.appendChild(colorColumn)
+    row.appendChild(playColumn);
+    row.appendChild(stopColumn);
     row.appendChild(findColumn);
     row.appendChild(trashColumn);
     objectPanel.appendChild(row);
@@ -437,7 +457,6 @@ function loadModel(url)
     $("#rotys").slider("setValue", r.y);
     $("#rotzs").slider("setValue", r.z);
 
-    console.log($('#sidebar-button').hasClass("closed"))
 
     if($('#sidebar-button').hasClass("closed")){
         $('#sidebar-button').removeClass('btn-danger').addClass('btn-info');
@@ -524,11 +543,24 @@ function locate(name){
 
 }
 
-function roam() {
-    var name = selectedModel.name.getValueDirect().join("");
+function roam(name) {
+    if (!name) {
+      name = selectedModel.name.getValueDirect().join("");
+    }
     if (name === "Grid") return;
 
-    var cmd = "\<AnimalMover target='" + name + "' linearSpeed='.5' angularSpeed='25'/>";
+    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='.5' angularSpeed='25'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+}
+
+function stopRoaming(name) {
+    if (!name) {
+      name = selectedModel.name.getValueDirect().join("");
+    }
+    if (name === "Grid") return;
+
+    var cmd = "\<Remove target='" + name + "_roam'/>";
     console.log(cmd);
     bridgeworks.updateScene(cmd);
 }
