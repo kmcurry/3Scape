@@ -408,10 +408,13 @@
                           <li class="divider"></li>
                           <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                           <li class="divider"></li>
-                          <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();ancientLoaded = 0;">New Scene</a></li>
+                          <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();">New Scene</a></li>
+                          <li class="divider"></li>
                           <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
                           <li><a href="#" id="loadScene">Load Scene</a></li>
+                          <li class="divider"></li>
                           <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
+                          <li><a href="javascript:bridgeworks.contentDir='/BwContent/Entymology/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('formica_rufa.xml');$('#slides').empty();">Formica Rufa</a></li>
                         </ul>
                       </div>
                     </li>
@@ -938,9 +941,11 @@
               // $('#dialog').hide();
               $('#present-tray').show();
               $('#present-toolbar').show();
+
               if(ancientLoaded == 1) {
                   $('#click').show();
               }
+              
 
               var docElement
               var request;

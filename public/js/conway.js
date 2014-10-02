@@ -274,7 +274,8 @@ function playConway() {
 }
 
 function addBlinker() {
-  gol.uninit();
+  if (gol) gol.uninit();
+  else playConway();
 
   var currGen = new Array(5);
   for (var i=0; i < 5; i++)
@@ -295,7 +296,8 @@ function addBlinker() {
 }
 
 function addPulsar() {
-  gol.uninit();
+  if (gol) gol.uninit();
+  else playConway();
 
   var currGen = new Array(17);
   for (var i=0; i < 17; i++)
@@ -369,8 +371,9 @@ function addPulsar() {
 }
 
 function addSpaceship() {
-  gol.uninit();
-  
+  if (gol) gol.uninit();
+  else playConway();
+
   var currGen = new Array(7);
   for (var i=0; i < 7; i++)
   {
