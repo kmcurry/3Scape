@@ -1,0 +1,170 @@
+﻿body
+{
+    background-color: #ffffff;
+    margin: 0;
+    background-repeat: repeat;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    background-attachment: fixed;
+    background-position: left;
+
+}
+
+div.layerHeader
+{
+    background-color: #3A3834;
+    background-image: url(../images/tabbg.png);
+    background-repeat: repeat-x;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 3px;
+    width: 244px;
+}
+
+div.layerContent
+{
+    padding: 5px;
+}
+
+div.layerHeaderComms
+{
+    background-color: #3A3834;
+    background-repeat: repeat-x;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 3px;
+}
+
+#alert:link
+{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+#alert:visited
+{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.linkDark:link
+{
+    color: #3A3834;
+    text-decoration: underline;
+    font-style: italic;
+}
+.linkDark:visited
+{
+    color: #3A3834;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+
+#clock
+{
+    font-weight: bold;
+    color: #ffffff;
+    padding-top: 12px;
+    left: 120;
+    font-family: 'Times New Roman' , Times, serif;
+    font-size: 16px;
+}
+
+#pageTitle
+{
+    font-weight: bold;
+    color: #313833;
+    font-family: 'Times New Roman' , Times, serif;
+    font-size: 14px;
+}
+
+#map3d_container
+{
+    position: absolute;
+    top: 40px;
+    left: 295px;
+    background-color: #eeece2;
+    border: #333366 outset 1px; 
+    /*bottom: 30px; IE7 doesn't support this although bottom is used elsewhere*/  
+   
+    right: 30px;
+    bottom: 30px;
+}
+
+
+#BwContainer
+{
+    position: absolute;
+    background-color: #eeece2;
+    border: #333366 outset 1px; 
+    /*bottom: 30px; IE7 doesn't support this although bottom is used elsewhere*/  
+    height: 100%;
+    width: 100%;
+}
+
+#commspic
+{
+    position: absolute;
+    top: 40px;
+    left: 30px;
+}
+#KML_Container
+{
+    position: absolute;
+    top: 40px;
+    left: 30px;
+    background-color: #D1CBB7;
+    border: #333366 solid 1px;
+    padding-left: 0px;
+    /*height: 645px;*/
+    bottom: 30px;
+    width: 250px;
+}
+
+input.btnM
+{
+    font-size: 11px;
+    font-family: Arial;
+    font-weight: 100;
+    color: #3E453D;
+    border: 2px solid;
+    width: 115px;
+    cursor: hand;
+    border: 3px outset #eeece2;
+    padding: 0px 0px;
+   
+    background-color: #F2F1E8;
+}
+
+input.btnMhov
+{
+    color: #FFFFFF;
+    background-color: #A41128;
+}
+
+input.btnS
+{
+    font-size: 11px;
+    font-family: Arial;
+    font-weight: 100;
+    color: #3E453D;
+    background-color: #fed;
+    border: 1px solid;
+    width: 74px;
+    cursor: hand;
+    border: 3px outset #eeece2;
+    padding: 0px 0px;
+    margin: 2px 1px 2px 1px;
+    background-color: #F2F1E8;
+}
+
+input.btnShov
+{
+    color: #FFFFFF;
+    background-color: #A41128;
+}
+
+
+
+
+

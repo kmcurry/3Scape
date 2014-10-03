@@ -413,7 +413,7 @@
                           <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
                           <li><a href="#" id="loadScene">Load Scene</a></li>
                           <li class="divider"></li>
-                          <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
+                          <li><a href="javascript:bridgeworks.contentDir='/BwContent/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
                           <li><a href="javascript:bridgeworks.contentDir='/BwContent/Entymology/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('formica_rufa.xml');$('#slides').empty();">Formica Rufa</a></li>
                         </ul>
                       </div>
@@ -945,7 +945,7 @@
               if(ancientLoaded == 1) {
                   $('#click').show();
               }
-              
+
 
               var docElement
               var request;

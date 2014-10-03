@@ -1,0 +1,316 @@
+<html>
+  <head>
+    <title>BWJS Demo</title>
+    <script type="text/javascript" src="../../Common/Base.js"></script>
+    <script type="text/javascript" src="../../Common/Util.js"></script>
+    <script type="text/javascript" src="../../Common/BaseTypes.js"></script>
+    <script type="text/javascript" src="../../Common/Stack.js"></script> 
+    <script type="text/javascript" src="../../Common/Serialization.js"></script>
+    <script type="text/javascript" src="../../Common/xmlsax.js"></script>
+    <script type="text/javascript" src="../../Common/Timer.js"></script>  
+    <script type="text/javascript" src="../../Common/DomAbsPos.js"></script>   
+    <script type="text/javascript" src="../../Common/Enums.js"></script>     
+    <script type="text/javascript" src="../../Math/MathUtil.js"></script>
+    <script type="text/javascript" src="../../Math/Vector2D.js"></script>
+    <script type="text/javascript" src="../../Math/Vector3D.js"></script>
+    <script type="text/javascript" src="../../Math/Vector4D.js"></script>
+    <script type="text/javascript" src="../../Math/Matrix4x4.js"></script>
+    <script type="text/javascript" src="../../Math/MatrixStack.js"></script>
+    <script type="text/javascript" src="../../Math/Quaternion.js"></script>
+    <script type="text/javascript" src="../../Math/Line.js"></script>
+    <script type="text/javascript" src="../../Math/Plane.js"></script>    
+    <script type="text/javascript" src="../../Math/ViewVolume.js"></script>    
+    <script type="text/javascript" src="../../Math/CompGeom.js"></script>     
+    <script type="text/javascript" src="../../Attribute/AttributeType.js"></script>
+    <script type="text/javascript" src="../../Attribute/Attribute.js"></script>
+    <script type="text/javascript" src="../../Attribute/AttributeContainer.js"></script>
+    <script type="text/javascript" src="../../Attribute/AttributeRegistry.js"></script>
+    <script type="text/javascript" src="../../Attribute/BaseAttrs.js"></script>
+    <script type="text/javascript" src="../../Attribute/AttributeVector.js"></script>  
+    <script type="text/javascript" src="../../Attribute/StyleAttr.js"></script>      
+    <script type="text/javascript" src="../../Attribute/ContainerAttrs.js"></script>
+    <script type="text/javascript" src="../../Attribute/AttributeUtil.js"></script>
+    <script type="text/javascript" src="../../Common/Agent.js"></script>
+    <script type="text/javascript" src="../../Common/Spatial.js"></script>    
+    <script type="text/javascript" src="../../RenderContext/RenderContext.js"></script>
+    <script type="text/javascript" src="../../RenderContext/RenderState.js"></script>
+    <script type="text/javascript" src="../../RenderContext/VertexBuffer.js"></script> 
+    <script type="text/javascript" src="../../RenderContext/TextureObject.js"></script>
+    <script type="text/javascript" src="../../RenderContext/Plugins/webgl/webgl-debug.js"></script>
+    <script type="text/javascript" src="../../RenderContext/Plugins/webgl/webglRC.js"></script>
+    <script type="text/javascript" src="../../RenderContext/Plugins/webgl/webglVB.js"></script>
+    <script type="text/javascript" src="../../RenderContext/Plugins/webgl/webglTO.js"></script>
+    <script type="text/javascript" src="../../RenderContext/Plugins/webgl/shaders.js"></script>
+    <script type="text/javascript" src="../../ContentHandler/ContentHandler.js"></script>
+    <script type="text/javascript" src="../../ContentHandler/ContentBuilder.js"></script>
+    <script type="text/javascript" src="../../ContentHandler/BinaryParser.js"></script> 
+    <script type="text/javascript" src="../../ContentHandler/TextParser.js"></script>     
+    <script type="text/javascript" src="../../ContentHandler/XMLParser.js"></script>
+    <script type="text/javascript" src="../../Image/PixelFormat.js"></script>  
+    <script type="text/javascript" src="../../Image/ImageManip.js"></script>  
+    <script type="text/javascript" src="../../Image/MediaPlayback.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/SceneGraph.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/StyleMgr.js"></script> 
+    <script type="text/javascript" src="../../SceneGraph/GraphMgr.js"></script>   
+    <script type="text/javascript" src="../../SceneGraph/Node.js"></script>  
+    <script type="text/javascript" src="../../SceneGraph/SGNode.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/RenderableElement.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/ParentableMotionElement.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Directive.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/SGDirective.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/UpdateDirective.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Camera.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/PerspectiveCamera.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Light.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/DirectionalLight.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/PointLight.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/GlobalIllumination.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Group.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Isolator.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Dissolve.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/RenderDirective.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/RayPickDirective.js"></script> 
+    <script type="text/javascript" src="../../SceneGraph/BBoxDirective.js"></script>        
+    <script type="text/javascript" src="../../SceneGraph/Geometry.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/VertexGeometry.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/TriList.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Material.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Surface.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Model.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Texture.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/MediaTexture.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Evaluator.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/SceneInspector.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/ArcballInspector.js"></script>    
+    <script type="text/javascript" src="../../SceneGraph/KeyframeInterpolator.js"></script> 
+    <script type="text/javascript" src="../../SceneGraph/BBoxLocator.js"></script>     
+    <script type="text/javascript" src="../../SceneGraph/SceneGraphUtil.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/RasterComponent.js"></script>    
+    <script type="text/javascript" src="../../SceneGraph/Label.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/LineList.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/PointList.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Interpolate.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/State.js"></script>              
+    <script type="text/javascript" src="../../SceneGraph/DistanceSortAgent.js"></script> 
+    <script type="text/javascript" src="../../SceneGraph/MapProjectionCalculator.js"></script>   
+    <script type="text/javascript" src="../../SceneGraph/NullObject.js"></script>                        
+    <script type="text/javascript" src="../../SceneGraph/Transform.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/QuaternionRotate.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Rotate.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Scale.js"></script>
+    <script type="text/javascript" src="../../SceneGraph/Translate.js"></script>
+    <script type="text/javascript" src="../../Event/EventType.js"></script>
+    <script type="text/javascript" src="../../Event/Event.js"></script> 
+    <script type="text/javascript" src="../../Event/InputEvent.js"></script>
+    <script type="text/javascript" src="../../Event/MouseEvent.js"></script>
+    <script type="text/javascript" src="../../Event/EventAdapter.js"></script>
+    <script type="text/javascript" src="../../Event/EventListener.js"></script>
+    <script type="text/javascript" src="../../Event/EventMgr.js"></script>
+    <script type="text/javascript" src="../../Device/DeviceHandler.js"></script>
+    <script type="text/javascript" src="../../Device/MouseHandler.js"></script>
+    <script type="text/javascript" src="../../BwCore/Command.js"></script>
+    <script type="text/javascript" src="../../BwCore/Set.js"></script>
+    <script type="text/javascript" src="../../BwCore/ConnectAttributes.js"></script>
+    <script type="text/javascript" src="../../BwCore/AutoInterpolate.js"></script>  
+    <script type="text/javascript" src="../../BwCore/MotionInterpolate.js"></script>  
+    <script type="text/javascript" src="../../BwCore/Locate.js"></script>
+    <script type="text/javascript" src="../../BwCore/Play.js"></script>  
+    <script type="text/javascript" src="../../BwCore/Remove.js"></script>                  
+    <script type="text/javascript" src="../../BwCore/Stop.js"></script>  
+    <script type="text/javascript" src="../../BwCore/CommandSequence.js"></script>
+    <script type="text/javascript" src="../../BwCore/CommandMgr.js"></script>
+    <script type="text/javascript" src="../../BwCore/BwRegistry.js"></script>
+    <script type="text/javascript" src="../../BwCore/BwSceneInspector.js"></script>
+    <script type="text/javascript" src="../../BwCore/ObjectInspector.js"></script>
+    <script type="text/javascript" src="../../BwCore/ConnectionMgr.js"></script>
+    <script type="text/javascript" src="../../BwCore/RenderAgent.js"></script>
+    <script type="text/javascript" src="../../BwCore/RenderController.js"></script>
+    <script type="text/javascript" src="../../BwCore/SelectionListener.js"></script>    
+    <script type="text/javascript" src="../../BwCore/ViewportLayout.js"></script>
+    <script type="text/javascript" src="../../BwCore/GridLayout.js"></script>
+    <script type="text/javascript" src="../../BwCore/ViewportMgr.js"></script>
+    <script type="text/javascript" src="../../BwCore/RasterComponentEventListener.js"></script>
+    <script type="text/javascript" src="../../BwCore/ParentableMotionUtil.js"></script>
+    <script type="text/javascript" src="../../ContentHandler/LWObjectHandler.js"></script>
+    <script type="text/javascript" src="../../ContentHandler/LWObjectBuilder.js"></script>
+    <script type="text/javascript" src="../../ContentHandler/LWSceneHandler.js"></script>
+    <script type="text/javascript" src="../../ContentHandler/LWSceneBuilder.js"></script>
+    <script type="text/javascript" src="../../Attribute/AttributeFactory.js"></script>
+    <script type="text/javascript" src="../../BwCore/bridgeworks.js"></script>
+    <link type="text/css" rel="StyleSheet" href="../../bridgeworks.css"/>
+    <script type="text/javascript" src="./scripts/crossbrowser.js"></script>
+    <link type="text/css" rel="StyleSheet" href="../../bridgeworks.css"/>
+    <link href="StyleSheetResize.css" rel="stylesheet" type="text/css" />
+    <!-- jquery stuff -->
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<script src="../../Libs/jquery/jquery.hoverIntent.minified.js" type="text/javascript" charset="utf-8"></script> 
+	<script src="../../Libs/jquery/jquery.bgiframe.min.js" type="text/javascript" charset="utf-8"></script> 
+    <script src="../../Libs/jquery/bt/jquery.bt.min.js" type="text/javascript" ></script> 
+    <script src="../BwHelper.js"></script>
+
+    
+  </head> 
+  <body onclick="bridgeworks.handleEvent(event);" onmousedown="bridgeworks.handleEvent(event);" onmouseup="bridgeworks.handleEvent(event);" onmousemove="bridgeworks.handleEvent(event);" onresize="resize();">
+      
+      <script type="text/javascript">
+          var bridgeworks = null;
+          
+          var g_labelCount = 0;
+          var g_labelName = null;
+          var g_countStr = "";
+          
+          function createRecord()
+          {
+              $( "#dialog" ).dialog("open");
+              
+              adding = true;
+              
+              
+              var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+                          
+              g_labelCount = g_labelCount + 1;
+              g_countStr = g_labelCount.toString();
+              
+              g_labelName = "L-" + g_countStr;
+              
+              var xml = loadXMLFile("bwcontent/label.xml");
+              
+              var name = xml.getElementsByTagName("Model")[0].attributes[0];
+              name.value = g_labelName;
+              
+              var pos = xml.getElementsByTagName("position")[0];
+              pos.attributes["x"].value = pointWorld.x.toString();
+              pos.attributes["y"].value = pointWorld.y.toString();
+              pos.attributes["z"].value = pointWorld.z.toString();
+              
+              var label = xml.getElementsByTagName("Label")[0];
+              label.attributes["name"].value = "Label_" + name.value;
+              label.attributes["parent"].value = name.value;
+              
+              name = xml.getElementsByTagName("Group")[0].attributes[0];
+              name.value = "Group_" + g_labelName;
+              
+              
+              var xstr = (new XMLSerializer()).serializeToString(xml);
+              console.debug(xstr);
+              bridgeworks.updateScene(xstr);
+          }
+          
+          function addRecord()
+          {
+              var title = $( "#title" ).val();
+              if (title != "") {
+                  var update = "\<Set target='Label_" + g_labelName + "' text='" + title + "' show='true'/>";
+                  console.debug(update);
+                  bridgeworks.updateScene(update);
+
+                  // This flag is checked on dialog close. If true on close
+                  // then there are some things to undo.
+                  // If we made it this far then there is nothing to undo.
+                  adding = false;
+              }
+              $( "#dialog" ).dialog("close");
+          }
+          
+          function showTop()
+          {
+              bridgeworks.updateScene("top.xml");
+          }
+          
+          function showBottom()
+          {
+              bridgeworks.updateScene("bottom.xml");
+          }
+          
+          function showLeft()
+          {
+              bridgeworks.updateScene("left.xml");
+          }
+          
+          function showRight()
+          {
+              bridgeworks.updateScene("right.xml");
+          }
+          
+          function showHome()
+          {
+              bridgeworks.updateScene("home.xml");
+          }
+          
+          function showHelp()
+          {
+              alert ("1. 'Right-click' anywhere on the ant.\n2. Name the part you clicked.\n3. Submit.\n\n'Left-click', hold and drag to rotate.")
+          }
+      </script>
+
+      <img id="BackgroundImage" style="position: absolute; z-index: 1;" src="bwcontent/images/white.png"/>
+    
+      <center>
+          <H1 id="H1">Formica Rufa</H1>
+          <h4><a href="http://www.turbosquid.com/3d-models/3d-model-formica-rufa-ant/388875" target="top">3D model</a> by <a href="http://www.turbosquid.com/Search/Artists/3DMB" target="top">3DMB</a> on <a href="http://www.turbosquid.com/">TurboSquid</a></h4>
+    <div id="BwContainer" style="position: relative; resize: auto; width: 75%; height: 70%;" oncontextmenu="createRecord();">
+      <canvas id="Canvas" style="position: relative; z-index: 2; ">
+      </canvas>     
+    </div>
+    <div id="DVDControls" style="position:relative;">
+        <button onclick="showHome();">Home</button>
+        <button onclick="showTop();">Top</button>
+        <button onclick="showBottom();">Bottom</button>
+        <button onclick="showLeft();">Left</button>
+        <button onclick="showRight();">Right</button>
+        <a href="javascript:showHelp();">Instructions</a>
+    </div>
+</center>
+
+<div id="dialog" title="Name that part!">
+    <form id="my-form" enctype="multipart/form-data" method="post">
+        <p>Title: <input type="text" id="title"></p>
+        <p><input type="button" value="Submit" onclick="addRecord()"></p>
+    </form>
+</div>
+
+    
+    <!--<video controls="controls" src="http://localhost/bwjs/bwcontent/images/quake.mpg">
+    Your browser does not support the video tag.
+    </video>-->
+        
+        <script type="text/javascript">
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                
+                $('html').bind('keypress', function(e)
+                {
+                   if(e.keyCode == 13)
+                   {
+                       if ($("#dialog").dialog( "isOpen" )===true) {
+                           addRecord();
+                       }
+                       return false;
+                   }
+                });
+                
+                bridgeworks = init("formica_rufa.xml", document.getElementById("BwContainer"));
+                
+                $( "#dialog" ).dialog({ autoOpen: false });
+            
+                $( "#dialog" ).dialog({ show: { effect: "blind", duration: 200 } });
+            
+                $( "#dialog" ).dialog({ hide: { effect: "blind", duration: 200 } });
+          
+                $( "#dialog" ).dialog({
+                  close: function( event, ui ) {
+                      if (adding) {
+                          // if in the middle of adding and closed w/o submitting
+                          bridgeworks.updateScene("\<Remove target='" + "Group_L-" + g_countStr + "'/>");
+                      }
+                      adding = false;
+                  }
+                });
+            }
+        }
+        </script>
+
+  </body>
+</html>
