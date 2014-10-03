@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<Update>
+    <Group name="foo">
+        <Model name="foo" url="objects/cube.lwo">
+            <position x="0" y="0" z="0"/>
+            <scale x="0.02" y="0.02" z="0.02"/>
+            <color r="0" g="1" b="0"/>
+        </Model>
+        <Label name="foo" parent="foo" text="foo" show="false">
+            <labelStyle>
+                <fontStyle>
+                    <size>16</size>
+                </fontStyle>
+            </labelStyle>
+        </Label>
+    </Group>
+</Update>

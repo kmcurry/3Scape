@@ -1,4 +1,4 @@
-var eGoLStatus = 
+var eGoLStatus =
 {
     Dead           : 0,
     Alive          : 1,
@@ -24,20 +24,20 @@ GameOfLife.prototype.init = function(objCountX,
         objCountY <= 0 ||
         objCountZ <= 0)
         return;
-    
+
     this.objCountX = objCountX;
     this.objCountY = objCountY;
     this.objCountZ = objCountZ;
-    
+
     this.currGen = new Array(objCountX);
     this.nextGen = new Array(objCountX);
-    
+
     var objWidth = 1;
     var objHeight = 1;
     var objDepth = 1;
-    
+
     var seedRate = (1 / (max3(objCountX, objCountY, objCountZ)));
-    
+
     var xml = "<Update>";
     xml += "Set target='NodeMgr' sgPointer='" + this.sgPointer + "'/>";
     // add GoL Models
@@ -45,22 +45,22 @@ GameOfLife.prototype.init = function(objCountX,
     {
         this.currGen[i] = new Array(objCountY);
         this.nextGen[i] = new Array(objCountY);
-        
+
         for (var j=0, y=0; j < objCountY; j++, y+=objHeight/2)
         {
             this.currGen[i][j] = new Array(objCountZ);
             this.nextGen[i][j] = new Array(objCountZ);
-            
+
             for (var k=0, z=0; k < objCountZ; k++, z+=objDepth/2)
-            {            
+            {
                 var alive = Math.random() <= seedRate ? true : false;
                 this.currGen[i][j][k] = alive ? eGoLStatus.Alive : eGoLStatus.Dead;
                 this.nextGen[i][j][k] = eGoLStatus.Dead;
-                
+
                 var r = Math.random();
                 var g = Math.random();
                 var b = Math.random();
-                
+
                 xml += "<Cube name='GoL_" + i + "_" + j + "_" + k + "' show='" + alive + "' opacity='1'>";
                 xml += "<position x='" + x + "' y='" + y + "' z='" + z + "'/>";
                 xml += "<color r='" + r + "' y='" + g + "' z='" + b + "' a='1'/>";
@@ -70,16 +70,70 @@ GameOfLife.prototype.init = function(objCountX,
     }
 
     xml += "</Update>";
-    
+
+    this.bridgeworks.updateScene(xml);
+}
+
+GameOfLife.prototype.initWithGeneration = function(objCountX,
+                                                   objCountY,
+                                                   objCountZ,
+                                                   currGen)
+{
+    if (objCountX <= 0 ||
+        objCountY <= 0 ||
+        objCountZ <= 0)
+        return;
+
+    this.objCountX = objCountX;
+    this.objCountY = objCountY;
+    this.objCountZ = objCountZ;
+
+    this.currGen = currGen;
+    this.nextGen = new Array(objCountX);
+
+    var objWidth = 1;
+    var objHeight = 1;
+    var objDepth = 1;
+
+    var xml = "<Update>";
+    xml += "Set target='NodeMgr' sgPointer='" + this.sgPointer + "'/>";
+    // add GoL Models
+    for (var i=0, x=0; i < objCountX; i++, x+=objWidth/2)
+    {
+        this.nextGen[i] = new Array(objCountY);
+
+        for (var j=0, y=0; j < objCountY; j++, y+=objHeight/2)
+        {
+            this.nextGen[i][j] = new Array(objCountZ);
+
+            for (var k=0, z=0; k < objCountZ; k++, z+=objDepth/2)
+            {
+                var alive = this.currGen[i][j][k];
+                this.nextGen[i][j][k] = eGoLStatus.Dead;
+
+                var r = Math.random();
+                var g = Math.random();
+                var b = Math.random();
+
+                xml += "<Cube name='GoL_" + i + "_" + j + "_" + k + "' show='" + alive + "' opacity='1'>";
+                xml += "<position x='" + x + "' y='" + y + "' z='" + z + "'/>";
+                xml += "<color r='" + r + "' y='" + g + "' z='" + b + "' a='1'/>";
+                xml += "</Cube>";
+            }
+        }
+    }
+
+    xml += "</Update>";
+
     this.bridgeworks.updateScene(xml);
 }
 
 GameOfLife.prototype.uninit = function()
 {
     this.stop();
-    
+
     var xml = "<Update>";
-    
+
     for (var i=0; i < this.objCountX; i++)
     {
         for (var j=0; j < this.objCountY; j++)
@@ -90,9 +144,9 @@ GameOfLife.prototype.uninit = function()
             }
         }
     }
-    
+
     xml += "</Update>";
-    
+
     this.bridgeworks.updateScene(xml);
 }
 
@@ -102,11 +156,11 @@ GameOfLife.prototype.start = function(tickMs)
     {
         this.stop();
     }
-    
+
     this.tick();
-    
+
     var that = this;
-    this.tickIntervalId = 
+    this.tickIntervalId =
     setInterval(function () {
         that.tick();
     }, tickMs);
@@ -124,15 +178,15 @@ GameOfLife.prototype.stop = function()
 GameOfLife.prototype.tick = function()
 {
     var xml = "<Update>";
-    
+
     for (var i=0; i < this.objCountX; i++)
-    {     
+    {
         for (var j=0; j < this.objCountY; j++)
-        {         
+        {
             for (var k=0; k < this.objCountZ; k++)
             {
                 this.nextGen[i][j][k] = this.currGen[i][j][k];
-                
+
                 var liveCount = this.getLiveNeighborCount(i, j, k);
                 switch (this.currGen[i][j][k])
                 {
@@ -145,7 +199,7 @@ GameOfLife.prototype.tick = function()
                             }
                         }
                         break;
-                        
+
                     case eGoLStatus.Alive:
                         {
                             if (liveCount < 2 || liveCount > 3)
@@ -159,42 +213,184 @@ GameOfLife.prototype.tick = function()
             }
         }
     }
-    
+
     xml += "</Update>";
-    
+
     this.bridgeworks.updateScene(xml);
-    
-    this.currGen = this.nextGen;
+
+    // nextGen -> currGen
+    for (var i=0; i < this.objCountX; i++)
+    {
+        for (var j=0; j < this.objCountY; j++)
+        {
+            for (var k=0; k < this.objCountZ; k++)
+            {
+                this.currGen[i][j][k] = this.nextGen[i][j][k];
+            }
+        }
+    }
 }
 
 GameOfLife.prototype.getLiveNeighborCount = function(i, j, k)
 {
     var count = 0;
-    
+
     for (var x = -1; x < 2; x++)
     {
         if (x+i < 0 || x+i >= this.objCountX) continue;
-        
+
         for (var y = -1; y < 2; y++)
         {
             if (y+j < 0 || y+j >= this.objCountY) continue;
-            
+
             for (var z = -1; z < 2; z++)
             {
                 if (z+k < 0 || z+k >= this.objCountZ) continue;
                 if (x == 0 && y == 0 && z == 0) continue; // don't count self
-                
+
                 if (this.currGen[x+i][y+j][z+k] == eGoLStatus.Alive)
                 {
                     count++;
-                    if (count > 3) 
-                    {   
+                    if (count > 3)
+                    {
                         return count;
                     }
                 }
             }
         }
     }
-    
+
     return count;
+}
+
+var gol = null;
+
+function playConway() {
+
+  // if there isn't already a game running
+  if (gol == null) {
+    gol = new GameOfLife(bridgeworks, "Conway");
+  }
+}
+
+function addBlinker() {
+  if (gol) gol.uninit();
+  else playConway();
+
+  var currGen = new Array(5);
+  for (var i=0; i < 5; i++)
+  {
+      currGen[i] = new Array(5);
+      for (var j=0; j < 5; j++)
+      {
+          currGen[i][j] = new Array(1);
+          currGen[i][j][0] = eGoLStatus.Dead;
+      }
+  }
+
+  currGen[2][1][0] = eGoLStatus.Alive;
+  currGen[2][2][0] = eGoLStatus.Alive;
+  currGen[2][3][0] = eGoLStatus.Alive;
+
+  gol.initWithGeneration(5, 5, 1, currGen);
+}
+
+function addPulsar() {
+  if (gol) gol.uninit();
+  else playConway();
+
+  var currGen = new Array(17);
+  for (var i=0; i < 17; i++)
+  {
+      currGen[i] = new Array(17);
+      for (var j=0; j < 17; j++)
+      {
+          currGen[i][j] = new Array(1);
+          currGen[i][j][0] = eGoLStatus.Dead;
+      }
+  }
+  currGen[2][4][0] = eGoLStatus.Alive;
+  currGen[2][5][0] = eGoLStatus.Alive;
+  currGen[2][6][0] = eGoLStatus.Alive;
+  currGen[2][10][0] = eGoLStatus.Alive;
+  currGen[2][11][0] = eGoLStatus.Alive;
+  currGen[2][12][0] = eGoLStatus.Alive;
+
+  currGen[4][2][0] = eGoLStatus.Alive;
+  currGen[4][7][0] = eGoLStatus.Alive;
+  currGen[4][9][0] = eGoLStatus.Alive;
+  currGen[4][14][0] = eGoLStatus.Alive;
+
+  currGen[5][2][0] = eGoLStatus.Alive;
+  currGen[5][7][0] = eGoLStatus.Alive;
+  currGen[5][9][0] = eGoLStatus.Alive;
+  currGen[5][14][0] = eGoLStatus.Alive;
+
+  currGen[6][2][0] = eGoLStatus.Alive;
+  currGen[6][7][0] = eGoLStatus.Alive;
+  currGen[6][9][0] = eGoLStatus.Alive;
+  currGen[6][14][0] = eGoLStatus.Alive;
+
+  currGen[7][4][0] = eGoLStatus.Alive;
+  currGen[7][5][0] = eGoLStatus.Alive;
+  currGen[7][6][0] = eGoLStatus.Alive;
+  currGen[7][10][0] = eGoLStatus.Alive;
+  currGen[7][11][0] = eGoLStatus.Alive;
+  currGen[7][12][0] = eGoLStatus.Alive;
+
+  currGen[9][4][0] = eGoLStatus.Alive;
+  currGen[9][5][0] = eGoLStatus.Alive;
+  currGen[9][6][0] = eGoLStatus.Alive;
+  currGen[9][10][0] = eGoLStatus.Alive;
+  currGen[9][11][0] = eGoLStatus.Alive;
+  currGen[9][12][0] = eGoLStatus.Alive;
+
+  currGen[10][2][0] = eGoLStatus.Alive;
+  currGen[10][7][0] = eGoLStatus.Alive;
+  currGen[10][9][0] = eGoLStatus.Alive;
+  currGen[10][14][0] = eGoLStatus.Alive;
+
+  currGen[11][2][0] = eGoLStatus.Alive;
+  currGen[11][7][0] = eGoLStatus.Alive;
+  currGen[11][9][0] = eGoLStatus.Alive;
+  currGen[11][14][0] = eGoLStatus.Alive;
+
+  currGen[12][2][0] = eGoLStatus.Alive;
+  currGen[12][7][0] = eGoLStatus.Alive;
+  currGen[12][9][0] = eGoLStatus.Alive;
+  currGen[12][14][0] = eGoLStatus.Alive;
+
+  currGen[14][4][0] = eGoLStatus.Alive;
+  currGen[14][5][0] = eGoLStatus.Alive;
+  currGen[14][6][0] = eGoLStatus.Alive;
+  currGen[14][10][0] = eGoLStatus.Alive;
+  currGen[14][11][0] = eGoLStatus.Alive;
+  currGen[14][12][0] = eGoLStatus.Alive;
+
+  gol.initWithGeneration(17, 17, 1, currGen);
+}
+
+function addSpaceship() {
+  if (gol) gol.uninit();
+  else playConway();
+
+  var currGen = new Array(7);
+  for (var i=0; i < 7; i++)
+  {
+      currGen[i] = new Array(7);
+      for (var j=0; j < 7; j++)
+      {
+          currGen[i][j] = new Array(1);
+          currGen[i][j][0] = eGoLStatus.Dead;
+      }
+  }
+
+  currGen[2][1][0] = eGoLStatus.Alive;
+  currGen[2][2][0] = eGoLStatus.Alive;
+  currGen[2][3][0] = eGoLStatus.Alive;
+  currGen[0][2][0] = eGoLStatus.Alive;
+  currGen[1][1][0] = eGoLStatus.Alive;
+
+
+  gol.initWithGeneration(7, 7, 1, currGen);
 }

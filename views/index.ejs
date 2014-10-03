@@ -74,7 +74,7 @@
           var church = "Barnville/objects/Church.lwo";
           var medHV = "Vehicles/objects/Humvee_Medical.lwo";
           var boat = "Vehicles/objects/Fishing Boat.lwo";
-          var currentObj = "Target: X";
+          var currentObj = "";
           var editorOpen = 0;
           var slideCount = 1;
           var numSlides = 10;
@@ -382,7 +382,7 @@
                       </li>
 
                       <!-- As wide in px as the longest object name to avoid displacement bug. More elegant solution? -->
-                      <li><p class="navbar-text" id="Current_Object" style="width: 160px">Target: X</p></li>
+                      <li><p class="navbar-text" id="Current_Object" style="width: 160px;font-size:15px"></p></li>
 
                     <li>
                       <div class="btn-group navbar-btn" style="margin-left:10px;">
@@ -408,10 +408,13 @@
                           <li class="divider"></li>
                           <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                           <li class="divider"></li>
-                          <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();ancientLoaded = 0;">New Scene</a></li>
+                          <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();">New Scene</a></li>
+                          <li class="divider"></li>
                           <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
                           <li><a href="#" id="loadScene">Load Scene</a></li>
-                          <li><a href="javascript:bridgeworks.contentDir+='/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
+                          <li class="divider"></li>
+                          <li><a href="javascript:bridgeworks.contentDir='/BwContent/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
+                          <li><a href="javascript:bridgeworks.contentDir='/BwContent/Entymology/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('formica_rufa.xml');$('#slides').empty();">Formica Rufa</a></li>
                         </ul>
                       </div>
                     </li>
@@ -553,12 +556,13 @@
         <div class="row">
           <div id="container" style="width:300px; display: none;">
               <div id="side-nav" class="width sidebar collapse" style="padding:0; border:0;z-index:1029">
-                  <div style="padding: 20px; overflow:hidden; width:300px;">
+                  <div style="padding:10px; overflow:hidden; width:340px;">
                           <div>
                               <ul class="nav nav-tabs" style="clear:both">
                                 <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
-                                <li><a href="#animate" data-toggle="tab">Animate</a></li>
+                                <!--<li><a href="#animate" data-toggle="tab">Animate</a></li>-->
                                 <li><a href="#slides" data-toggle="tab">Slides</a></li>
+                                <li><a href="#conway" data-toggle="tab"><span class="glyphicon glyphicon-heart" style="font-size:1em;" onclick="playConway();"></span></a></li>
                                </ul>
                                   <div class="tab-content">
                                       <div class="tab-pane active" id="object-list">
@@ -586,6 +590,27 @@
                                           </ul>
                                       </div>
                                       <!--END PROJECT SCOPE-->
+                                      <div class="tab-pane" id="conway">
+                                        <br/><br/>
+                                        <!--<button onclick="bridgeworks.renderController.rewind();">RW</button>-->
+                                        <button onclick="gol.start(250);">Start</button>
+                                        <button onclick="gol.stop();">Stop</button>
+                                        <button onclick="gol.tick();">Tick</button>
+                                        <br/><br/>
+                                        <!--<button onclick="bridgeworks.renderController.fastForward();">FF</button>-->
+                                        Width: <input id="width" value="10" style="width:30px"/>
+                                        Height: <input id="height" value="10" style="width:30px" />
+                                        Depth: <input id="depth" value="10" style="width:30px" />
+                                        <br/><br/>
+                                        <button onclick="gol.uninit();gol.init(parseInt(document.getElementById('width').value),
+                                                                               parseInt(document.getElementById('height').value),
+                                                                               parseInt(document.getElementById('depth').value));">Reset</button>
+
+                                        <br/><br/>
+                                        <button onclick="addPulsar();">Pulsar</button>
+                                        <button onclick="addBlinker();">Blinker</button>
+                                        <button onclick="addSpaceship();">Spaceship</button>
+                                      </div>
                                   </div>
 
                           </div>
@@ -766,8 +791,8 @@
             <button type="button" class="btn btn-success navbar-btn" id="pFullscreen" role="button" onclick="closeFullScreen();" title="Exit Fullscreen">
               <span class="glyphicon glyphicon-resize-small" style="font-size:2em;"></span>
             </button>
-            <button style="margin-right:10px;" type="button" class="btn btn-warning navbar-btn" data-toggle="modal" data-target="#helpModal" title="Help">
-              <span class="fa fa-question-circle fa-2x"></span>
+            <button type="button" class="btn btn-success navbar-btn" id="pFullscreen" role="button" onclick="playConway();" title="Conway">
+              <span class="glyphicon glyphicon-heart" style="font-size:2em;"></span>
             </button>
           </div>
         </div>
@@ -787,7 +812,7 @@
 
     <div id="example" title="Caption this Scene for Facebook">
         <span style ="float: left; margin:0 7px 50px 0; width:550px; height:200px;"><img id="picCaption"></span>
-        <textarea name="fbCaption" id="fbCaption" style="width:100%"></textarea>
+        <textarea name="fbCaption" id="fbCaption" style="width:100%" value="3Scaping: "></textarea>
         <p><input id="submitCaption" type="submit" value="Submit"></p>
     </div>
 
@@ -916,9 +941,11 @@
               // $('#dialog').hide();
               $('#present-tray').show();
               $('#present-toolbar').show();
+
               if(ancientLoaded == 1) {
                   $('#click').show();
               }
+
 
               var docElement
               var request;

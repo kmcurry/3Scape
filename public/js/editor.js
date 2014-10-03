@@ -15,8 +15,8 @@ function setObject(Object)
 {
     var p = document.getElementById('Current_Object');
     var q = document.getElementById('Current_Object2');
-    p.innerHTML = "Target: " + Object;
-    q.innerHTML = "Target: " + Object;
+    p.innerHTML = Object;
+    q.innerHTML = Object;
 }
 
 function copy()
@@ -361,12 +361,17 @@ function loadModel(url)
     setObject(name);
     var objectPanel = document.getElementById("object-list");
     var row = document.createElement('div');
-    row.setAttribute("id", "row" + name)
+    row.setAttribute("id", "row" + name);
+    row.setAttribute("class", "row" + name);
     var nameColumn = document.createElement('div');
     // var colorColumn = document.createElement('div');
     var findColumn = document.createElement('div');
     var trashColumn = document.createElement('div');
-    a = document.createElement('a');
+    var playColumn = document.createElement('div');
+    var ffColumn = document.createElement('div');
+    var stopColumn = document.createElement('div');
+
+    var a = document.createElement('a');
     a.innerHTML = name;
     a.setAttribute("id", name);
     a.setAttribute("onclick", "setModel('"+name+"');"); // Instead of calling setAttribute
@@ -374,30 +379,66 @@ function loadModel(url)
     a.setAttribute("class", "object")
     a.style.cursor="pointer";
     a.style.cursor="hand";
-    f = document.createElement('span');
-    f.setAttribute("id", "find" + name)
-    f.setAttribute("class", 'shape fa fa-search');
-    f.setAttribute("style", "margin-top:3px;");
-    f.setAttribute("Title", 'Jump to Object');
-    f.setAttribute("onClick", "locate('" + name + "');");
-    t = document.createElement('span');
-    t.setAttribute("id", "trash" + name)
-    t.setAttribute("class", 'shape fa fa-trash-o');
-    t.setAttribute("style", "margin-top:3px;");
-    t.setAttribute("Title", 'Remove');
-    t.setAttribute("onClick", "trashModel('" + name + "');");
-    nameColumn.setAttribute("class", "col-md-8");
+
+    var findBtn = document.createElement('span');
+    findBtn.setAttribute("id", "find" + name);
+    findBtn.setAttribute("class", 'shape fa fa-search');
+    findBtn.setAttribute("style", "margin-top:3px;");
+    findBtn.setAttribute("Title", 'Jump to Object');
+    findBtn.setAttribute("onClick", "locate('" + name + "');");
+
+    var trashBtn = document.createElement('span');
+    trashBtn.setAttribute("id", "trash" + name);
+    trashBtn.setAttribute("class", 'shape fa fa-trash-o');
+    trashBtn.setAttribute("style", "margin-top:3px;");
+    trashBtn.setAttribute("Title", 'Remove');
+    trashBtn.setAttribute("onClick", "trashModel('" + name + "');");
+
+    var playBtn = document.createElement('span');
+    playBtn.setAttribute("id", "play-roam" + name);
+    playBtn.setAttribute("class", 'shape icon-play');
+    playBtn.setAttribute("style", "margin-top:3px;");
+    playBtn.setAttribute("Title", 'Roam');
+    playBtn.setAttribute("onClick", "roam('" + name + "');");
+
+    var ffBtn = document.createElement('span');
+    ffBtn.setAttribute("id", "fast-roam" + name);
+    ffBtn.setAttribute("class", 'shape icon-fast-forward');
+    ffBtn.setAttribute("style", "margin-top:3px;");
+    ffBtn.setAttribute("Title", 'Roam Faster');
+    ffBtn.setAttribute("onClick", "roamFaster('" + name + "');");
+
+    var stopBtn = document.createElement('span');
+    stopBtn.setAttribute("id", "stop-roam" + name);
+    stopBtn.setAttribute("class", 'shape icon-stop');
+    stopBtn.setAttribute("style", "margin-top:3px;");
+    stopBtn.setAttribute("Title", 'Stop');
+    stopBtn.setAttribute("onClick", "stopRoaming('" + name + "');");
+
+    nameColumn.setAttribute("class", "col-sm-6");
     // colorColumn.setAttribute("class", "col-md-5");
-    findColumn.setAttribute("class", "col-md-2");
-    trashColumn.setAttribute("class", "col-md-2");
+    findColumn.setAttribute("class", "col-sm-1");
+    trashColumn.setAttribute("class", "col-sm-1");
+    playColumn.setAttribute("class", "col-sm-1");
+    ffColumn.setAttribute("class", "col-sm-1");
+    stopColumn.setAttribute("class", "col-sm-1");
+
     nameColumn.appendChild(a);
-    findColumn.appendChild(f);
+    findColumn.appendChild(findBtn);
     // colorColumn.appendChild(c);
-    trashColumn.appendChild(t);
+    trashColumn.appendChild(trashBtn);
+    playColumn.appendChild(playBtn);
+    ffColumn.appendChild(ffBtn);
+    stopColumn.appendChild(stopBtn);
+
     row.appendChild(nameColumn);
     // row.appendChild(colorColumn)
+    row.appendChild(playColumn);
+    row.appendChild(ffColumn);
+    row.appendChild(stopColumn);
     row.appendChild(findColumn);
     row.appendChild(trashColumn);
+
     objectPanel.appendChild(row);
 
     var xml = loadXMLFile("BwContent/model.xml");
@@ -437,7 +478,6 @@ function loadModel(url)
     $("#rotys").slider("setValue", r.y);
     $("#rotzs").slider("setValue", r.z);
 
-    console.log($('#sidebar-button').hasClass("closed"))
 
     if($('#sidebar-button').hasClass("closed")){
         $('#sidebar-button').removeClass('btn-danger').addClass('btn-info');
@@ -524,11 +564,35 @@ function locate(name){
 
 }
 
-function roam() {
-    var name = selectedModel.name.getValueDirect().join("");
+function roam(name) {
+    if (!name) {
+      name = selectedModel.name.getValueDirect().join("");
+    }
     if (name === "Grid") return;
 
-    var cmd = "\<AnimalMover target='" + name + "' linearSpeed='.5' angularSpeed='25'/>";
+    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='.5' angularSpeed='25'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+}
+
+function roamFaster(name) {
+    if (!name) {
+      name = selectedModel.name.getValueDirect().join("");
+    }
+    if (name === "Grid") return;
+
+    var cmd = "\<Set target='" + name + "_roam' linearSpeed='3'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+}
+
+function stopRoaming(name) {
+    if (!name) {
+      name = selectedModel.name.getValueDirect().join("");
+    }
+    if (name === "Grid") return;
+
+    var cmd = "\<Remove target='" + name + "_roam'/>";
     console.log(cmd);
     bridgeworks.updateScene(cmd);
 }
