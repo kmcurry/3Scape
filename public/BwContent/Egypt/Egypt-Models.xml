@@ -65,7 +65,7 @@
         <Label name="Pyramid3" parent="MenkaurePyramid" text="The Menkaure Pyramid" show="false">
         </Label>
         <Label name="P1_Description" parent="Pyramid1_Label_1" text="The Great Pyramid" show="false"></Label>
-        <Label name="A1_Description" parent="Artifact1_label_1" text="A pharoh's sarcophagus" show="false"></Label>
+        <Label name="A1_Description" parent="Artifact1_label_1" text="A pharaoh's sarcophagus" show="false"></Label>
         <Label name="P2_Description" parent="KhafrePyramid" text="Pyramid of Khafre" show="false"></Label>
         <Label name="A2_Description" parent="Artifact_02" text="an urn" show="false"></Label>
         <Label name="P3_Description" parent="MenkaurePyramid" text="Pyramid of Menkaure" show="false"></Label>
