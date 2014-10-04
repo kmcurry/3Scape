@@ -570,7 +570,7 @@ function roam(name) {
     }
     if (name === "Grid") return;
 
-    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='.5' angularSpeed='25'/>";
+    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='.5' angularSpeed='20'/>";
     console.log(cmd);
     bridgeworks.updateScene(cmd);
 }
