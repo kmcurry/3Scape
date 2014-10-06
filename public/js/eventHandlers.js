@@ -140,7 +140,11 @@ function handleKey(e)
             break;
 
           case 37: //left
-            objectLeft(1);
+            if (e.shiftKey) {
+              copyLeft(1);
+            } else {
+              objectLeft(1);
+            }
             break;
 
           case 40: //down

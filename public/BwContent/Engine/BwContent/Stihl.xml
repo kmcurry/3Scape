@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwplugin url="BBD3D8Engine" action="load"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<Scene>
+    <Isolator name="Root">
+        <Selector name="Cameras">
+            <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="0.05" farDistance="500">
+                <position x="-1.05621" y="0.874561" z="2.89698"/>
+                <rotation x="6.56301" y="158.317" z="-0.345644"/>
+            </PerspectiveCamera>
+        </Selector>
+        <Group name="Lights">
+            <GlobalIllumination name="AmbientLight">
+                <ambient r="0.2" g="0.2" b="0.2"/>
+            </GlobalIllumination>
+            <PointLight name="Light" range="3.40282e+038" parent="Camera">
+                <position x="-0.92085" y="-0.104996" z="-0.323441"/>
+                <rotation x="9.80006" y="389.25" z="0"/>
+                <ambient r="0.05" g="0.05" b="0.05"/>
+                <diffuse r="0.9" g="0.9" b="0.9"/>
+                <specular r="0.9" g="0.9" b="0.9"/>
+            </PointLight>
+        </Group>
+        <Group name="Models">
+            <Model name="ValveSeat (1)" url="objects/ValveSeat.lwo">
+                <position x="0.095" y="0.766" z="0.0325"/>
+            </Model>
+            <Model name="CamFollowerL" url="objects/CamFollowerL.lwo">
+                <position x="0" y="0.615" z="0.39"/>
+                <rotation x="0" y="0" z="-2.2"/>
+            </Model>
+            <Model name="CamFollowerR" url="objects/CamFollowerR.lwo">
+                <position x="0" y="0.615" z="0.39"/>
+                <rotation x="0" y="0" z="2.5"/>
+            </Model>
+            <Model name="CrankShaft" url="objects/CrankShaft.lwo">
+                <rotation x="0" y="0" z="-900"/>
+            </Model>
+            <Model name="Exhaust2" url="objects/Exhaust2.lwo">
+                <position x="-0.099359" y="0.83958" z="0"/>
+                <scale x="0" y="0" z="0"/>
+            </Model>
+            <Model name="Exhaust3" url="objects/Exhaust3.lwo">
+                <position x="-0.1005" y="0.882" z="0"/>
+                <rotation x="0" y="0" z="-45.2"/>
+                <scale x="0" y="0" z="0"/>
+            </Model>
+            <Model name="InsideCombined" url="objects/InsideCombined.lwo">
+                <position x="0" y="0.71" z="0"/>
+            </Model>
+            <Model name="Intake01" url="objects/Intake01.lwo">
+                <position x="0" y="0.71" z="0"/>
+                <scale x="0" y="0" z="0"/>
+            </Model>
+            <Model name="Intake02" url="objects/Intake02.lwo">
+                <position x="0.1" y="0.8475" z="0"/>
+                <scale x="0" y="0" z="0"/>
+            </Model>
+            <Model name="Intake03" url="objects/Intake03.lwo">
+                <position x="0.3375" y="0.8825" z="0"/>
+                <scale x="0" y="0" z="0"/>
+            </Model>
+            <Model name="Lifter" url="objects/Lifter.lwo">
+                <position x="-0.095" y="1.1625" z="0.2125"/>
+                <rotation x="-3.22639" y="0" z="0"/>
+            </Model>
+            <Model name="Lifter2" url="objects/Lifter2.lwo">
+                <position x="0.095" y="1.1625" z="0.2125"/>
+                <rotation x="-2.8" y="0" z="0"/>
+            </Model>
+            <Model name="LifterPin (1)" url="objects/LifterPin.lwo">
+                <position x="-0.095" y="1.055" z="0.23"/>
+            </Model>
+            <Model name="LifterPin (2)" url="objects/LifterPin.lwo">
+                <position x="0.095" y="1.055" z="0.23"/>
+            </Model>
+            <Model name="Plug" url="objects/Plug.lwo">
+                <position x="0.001" y="0.9575" z="-0.22"/>
+                <rotation x="-65.3" y="180" z="0"/>
+            </Model>
+            <Model name="PushRod" url="objects/PushRod.lwo">
+                <position x="-0.11" y="0.91274" z="0.4025"/>
+                <rotation x="-2.5" y="0" z="-2.9"/>
+            </Model>
+            <Model name="PushRod2" url="objects/PushRod2.lwo">
+                <position x="0.11" y="0.911815" z="0.3775"/>
+                <rotation x="2.5" y="0" z="2.9"/>
+            </Model>
+            <Model name="Spark" url="objects/Spark.lwo">
+                <position x="0" y="0.721" z="-0.127"/>
+                <scale x="0" y="0" z="0"/>
+            </Model>
+            <Model name="SparkBall" url="objects/SparkBall.lwo">
+                <position x="0" y="0.6625" z="0"/>
+                <scale x="0" y="0" z="0"/>
+            </Model>
+            <Model name="Spring (1)" url="objects/Spring.lwo">
+                <position x="0.095" y="1.018" z="0.0325"/>
+                <scale x="1" y="0.806" z="1"/>
+            </Model>
+            <Model name="Valve" url="objects/Valve.lwo">
+                <position x="-0.095" y="0.749" z="0.0325"/>
+            </Model>
+            <Model name="Valve2" url="objects/Valve2.lwo">
+                <position x="0.095" y="0.749" z="0.0325"/>
+            </Model>
+            <Model name="BigGear" url="objects/BigGear.lwo">
+                <position x="0" y="0.325" z="0.3625"/>
+                <rotation x="0" y="0" z="-180"/>
+            </Model>
+            <Model name="Spring (2)" url="objects/Spring.lwo">
+                <position x="-0.095" y="1.018" z="0.0325"/>
+                <scale x="1" y="0.784315" z="1"/>
+            </Model>
+            <Model name="ValveSeat (2)" url="objects/ValveSeat.lwo">
+                <position x="-0.095" y="0.766" z="0.0325"/>
+            </Model>
+            <Model name="engine-block-whole" url="objects/engine-block-whole.lwo">
+                <position x="0" y="0.71" z="0"/>
+            </Model>
+            <Model name="PistonRod" url="objects/PistonRod.lwo" parent="CrankShaft">
+                <position x="0" y="-0.125" z="0"/>
+                <rotation x="0" y="0" z="-180"/>
+            </Model>
+            <Model name="SmallGear" url="objects/SmallGear.lwo" parent="CrankShaft">
+                <position x="0" y="0" z="0.303721"/>
+                <rotation x="0" y="0" z="10.5"/>
+            </Model>
+            <Model name="Piston" url="objects/Piston.lwo" parent="PistonRod">
+                <position x="0" y="0.445" z="0"/>
+            </Model>
+        </Group>
+    </Isolator>
+    <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
+    <Animations>
+        <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
+        <KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
+        <KeyframeInterpolator name="ValveSeat (1)Motion" url="motions/ValveSeat (1).mot" target="ValveSeat (1)"/>
+        <KeyframeInterpolator name="CamFollowerLMotion" url="motions/CamFollowerL.mot" target="CamFollowerL"/>
+        <KeyframeInterpolator name="CamFollowerRMotion" url="motions/CamFollowerR.mot" target="CamFollowerR"/>
+        <KeyframeInterpolator name="CrankShaftMotion" url="motions/CrankShaft.mot" target="CrankShaft"/>
+        <KeyframeInterpolator name="Exhaust2Motion" url="motions/Exhaust2.mot" target="Exhaust2"/>
+        <KeyframeInterpolator name="Exhaust3Motion" url="motions/Exhaust3.mot" target="Exhaust3"/>
+        <KeyframeInterpolator name="InsideCombinedMotion" url="motions/InsideCombined.mot" target="InsideCombined"/>
+        <KeyframeInterpolator name="Intake01Motion" url="motions/Intake01.mot" target="Intake01"/>
+        <KeyframeInterpolator name="Intake02Motion" url="motions/Intake02.mot" target="Intake02"/>
+        <KeyframeInterpolator name="Intake03Motion" url="motions/Intake03.mot" target="Intake03"/>
+        <KeyframeInterpolator name="LifterMotion" url="motions/Lifter.mot" target="Lifter"/>
+        <KeyframeInterpolator name="Lifter2Motion" url="motions/Lifter2.mot" target="Lifter2"/>
+        <KeyframeInterpolator name="LifterPin (1)Motion" url="motions/LifterPin (1).mot" target="LifterPin (1)"/>
+        <KeyframeInterpolator name="LifterPin (2)Motion" url="motions/LifterPin (2).mot" target="LifterPin (2)"/>
+        <KeyframeInterpolator name="PlugMotion" url="motions/Plug.mot" target="Plug"/>
+        <KeyframeInterpolator name="PushRodMotion" url="motions/PushRod.mot" target="PushRod"/>
+        <KeyframeInterpolator name="PushRod2Motion" url="motions/PushRod2.mot" target="PushRod2"/>
+        <KeyframeInterpolator name="SparkMotion" url="motions/Spark.mot" target="Spark"/>
+        <KeyframeInterpolator name="SparkBallMotion" url="motions/SparkBall.mot" target="SparkBall"/>
+        <KeyframeInterpolator name="Spring (1)Motion" url="motions/Spring (1).mot" target="Spring (1)"/>
+        <KeyframeInterpolator name="ValveMotion" url="motions/Valve.mot" target="Valve"/>
+        <KeyframeInterpolator name="Valve2Motion" url="motions/Valve2.mot" target="Valve2"/>
+        <KeyframeInterpolator name="BigGearMotion" url="motions/BigGear.mot" target="BigGear"/>
+        <KeyframeInterpolator name="Spring (2)Motion" url="motions/Spring (2).mot" target="Spring (2)"/>
+        <KeyframeInterpolator name="ValveSeat (2)Motion" url="motions/ValveSeat (2).mot" target="ValveSeat (2)"/>
+        <KeyframeInterpolator name="engine-block-wholeMotion" url="motions/engine-block-whole.mot" target="engine-block-whole"/>
+        <KeyframeInterpolator name="engine-block-wholeDissolve" url="envelopes/engine-block-whole.env" target="engine-block-whole" targetConnectionType="dissolve"/>
+        <KeyframeInterpolator name="PistonRodMotion" url="motions/PistonRod.mot" target="PistonRod"/>
+        <KeyframeInterpolator name="SmallGearMotion" url="motions/SmallGear.mot" target="SmallGear"/>
+        <KeyframeInterpolator name="PistonMotion" url="motions/Piston.mot" target="Piston"/>
+</Animations>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+    <Pause trigger="RenderAgent/elapsedTimeInSecs=10"/>
+</Scene>
