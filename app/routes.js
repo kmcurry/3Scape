@@ -1,12 +1,16 @@
 
 module.exports = function(app, passport) {
 //HOME PAGE(with login links) ======
+    /*
     app.get('/',isLoggedIn, function (req, res) {
         res.render('index.ejs',{
             user: req.user
         }); //load the index.ejs file
     });
-
+    */
+    app.get('/', function (req, res) {
+        res.render('index.ejs');
+    });
 
     // =====================================
     // PRIVACY ========
@@ -163,7 +167,7 @@ module.exports = function(app, passport) {
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
-	// if user is authenticated in the session, carry on 
+	// if user is authenticated in the session, carry on
 	if (req.isAuthenticated())
 		return next();
 
