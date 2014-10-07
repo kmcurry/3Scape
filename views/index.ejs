@@ -87,7 +87,7 @@
           var camStartPos;
           var modelName;
           var ancientLoaded = 0;
-          var selected;
+          var selectedThing;
           var selectedId;
           var edit = 0;
           var selectedText;
@@ -106,8 +106,6 @@
           var timer;
           //========================================================================
           var graphMgr;
-
-          var selectedModels = null;
 
           var capture = false;
 
@@ -444,7 +442,7 @@
                       </li>
                       <li>
                         <div class="btn-group dropdown">
-                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Add Label"onclick="if(selected){openLabelEdit();}">
+                          <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" title="Add Label"onclick="if(selectedThing){openLabelEdit();}">
                             <span class="shape fa fa-font" style="font-size:1.4em;"></span>
                           </button>
                           <ul class="dropdown-menu">
@@ -1051,7 +1049,7 @@
                        }
                        else if($("#dialog").dialog( "isOpen")===true && edit ==1){
 
-                           editLabel(selected);
+                           editLabel(selectedThing);
                        }
                        else if($("#dialog").dialog( "isOpen")===true && edit ==2)
                        {
@@ -1068,7 +1066,7 @@
                     }
                     else if(edit==1)
                     {
-                        editLabel(selected);
+                        editLabel(selectedThing);
                     }
                     else if(edit==2)
                     {

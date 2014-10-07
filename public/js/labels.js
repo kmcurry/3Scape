@@ -45,7 +45,7 @@ function addBalloon()
 function editLabel(labelName)
 {
   var nicE = new nicEditors.findEditor('title');
-  if(selected) {
+  if(selectedThing) {
       var title = nicE.getContent();
   }
   console.log("editLabel: "+labelName);

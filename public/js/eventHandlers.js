@@ -30,7 +30,7 @@ function handleEvent(e)
           if(selectedModel) {
               modelName = selectedModel.name.getValueDirect().join("");
               var name = selectedModel.name.getValueDirect().join(""); // what's going on here?
-              selected = null;
+              selectedThing = null;
 
               setObject(name);
               setColorPicker();
@@ -51,7 +51,7 @@ function handleEvent(e)
 
           }
           else {
-              selected = bridgeworks.selector.selectedName.getValueDirect().join("");
+              selectedThing = bridgeworks.selector.selectedName.getValueDirect().join("");
               selectedId = bridgeworks.selector.getAttribute("Selected").id;
               selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
           }
@@ -62,7 +62,7 @@ function handleEvent(e)
 
       case "dblclick":
       {
-          if(selected)
+          if(selectedThing)
           {
               openLabelEdit();
           }
@@ -115,9 +115,9 @@ function handleKey(e)
               break;
 
           case 46: //Delete Key
-              var slice = selected.slice(6,8);
+              var slice = selectedThing.slice(6,8);
                   console.log(slice);
-              var cmd = "\<Remove target='"+selected+"'/>";
+              var cmd = "\<Remove target='"+selectedThing+"'/>";
               bridgeworks.updateScene(cmd);
               var cmd2 = "\<Remove target='"+slice+"'/>"
               var div = document.getElementById(selectedId);
@@ -167,10 +167,10 @@ function handleKey(e)
           {      // x
               if (e.metaKey || e.ctrlKey) {
                   e.preventDefault();
-                  if(selected){
-                      var slice = selected.slice(6.8);
+                  if(selectedThing){
+                      var slice = selectedThing.slice(6.8);
                       console.log(slice);
-                      var cmd = "\<Remove target='"+selected+"'/>";
+                      var cmd = "\<Remove target='"+selectedThing+"'/>";
                       bridgeworks.updateScene(cmd);
                       var cmd2 = "\<Remove target='"+slice+"'/>"
                       var div = document.getElementById(selectedId);

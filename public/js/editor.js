@@ -32,11 +32,29 @@ function copy()
         rotZ = selectedModel.rotation.getValueDirect().z;
         copiedElement = 1;
     }
-    else if (selected)
+    else if (selectedThing)
     {
         copiedSelectedText = selectedText;
         console.log(copiedSelectedText);
         copiedElement = 2;
+    }
+}
+function cut()
+{
+    if (selectedModel) {
+        copy();
+        var name = selectedModel.name.getValueDirect().join("");
+        var c = "\<Remove target='" + name + "'/>"
+        bridgeworks.updateScene(c);
+        console.log(name);
+
+        var panel = document.getElementById("object-list");
+        var link = document.getElementById("row" + name);
+        panel.removeChild(link);
+    }
+    else {
+      var c = "\<Remove target='" + selectedThing + "'/>"
+      bridgeworks.updateScene(c);
     }
 }
 function switchModes()
@@ -73,11 +91,8 @@ function trashModel(name)
 function trashAnimation(name)
 {
          var cmd = "\<Remove target='" + name + "'/>";
-         //var cmd = "\<Stop target='" + name + "'/>";
          console.log(cmd);
-         //bridgeworks.renderController.stop();
          bridgeworks.updateScene(cmd);
-         //bridgeworks.updateScene(c);
 
          var panel = document.getElementById("animate");
          var link = document.getElementById("row" + name);
@@ -85,20 +100,7 @@ function trashAnimation(name)
 
 }
 
-function cut()
-{
-    if (selectedModel) {
-        copy();
-        var name = selectedModel.name.getValueDirect().join("");
-        var c = "\<Remove target='" + name + "'/>"
-        bridgeworks.updateScene(c);
-        console.log(name);
 
-        var panel = document.getElementById("object-list");
-        var link = document.getElementById("row" + name);
-        panel.removeChild(link);
-    }
-}
 var loaded = 0;
 function listLibrary()
 {
@@ -120,7 +122,6 @@ function listLibrary()
         loadDirectoryObject(url,"objects/9VBattery.lwo",panel,"9VBattery");
         loadDirectoryObject(url,"objects/sword.lwo",panel,"Sword");
         loadDirectoryObject(url,"objects/Satellite.lwo",panel,"Satellite");
-        //listDirectory(url + "objects/", panel);
 
         panel = document.getElementById("panel-lib-animalObjects");
         loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");
@@ -130,12 +131,11 @@ function listLibrary()
         loadDirectoryObject(url,"objects/elephant.lwo",panel,"Elephant");
         loadDirectoryObject(url,"objects/dolphin.lwo",panel,"Dolphin");
         loadDirectoryObject(url,"objects/dragon.lwo",panel,"Dragon");
-       // listDirectory(url + "Animals/objects/", panel);
 
         panel = document.getElementById("panel-lib-peopleObjects");
-		loadDirectoryObject(url,"Characters/objects/bobble-body.lwo",panel,"Bobble Head Body");
+		    loadDirectoryObject(url,"Characters/objects/bobble-body.lwo",panel,"Bobble Head Body");
         loadDirectoryObject(url,"Characters/objects/DanPatrick.lwo",panel,"Ham Patrick");
-		loadDirectoryObject(url,"People/objects/B rifleman.lwo",panel,"Rifleman");
+		    loadDirectoryObject(url,"People/objects/B rifleman.lwo",panel,"Rifleman");
         loadDirectoryObject(url,"People/objects/Civilian.lwo",panel,"Civilian");
         loadDirectoryObject(url,"People/objects/RECON.lwo",panel,"RECON");
         loadDirectoryObject(url,"People/objects/SOF_gun.lwo",panel,"SOF_gun");
@@ -144,18 +144,8 @@ function listLibrary()
         loadDirectoryObject(url,"People/objects/Soldier_look.lwo",panel,"Soldier_look");
 
         panel = document.getElementById("panel-lib-anatomyObjects");
-        // loadDirectoryObject(url,"Heart/objects/heart4.lwo",panel,"heart4");
-        // loadDirectoryObject(url,"Heart/objects/aortaw.lwo",panel,"aortaw");
-        // loadDirectoryObject(url,"Heart/objects/catheder.lwo",panel,"catheder");
-        // loadDirectoryObject(url,"Heart/objects/1.lwo",panel,"1");
-        // loadDirectoryObject(url,"Heart/objects/2.lwo",panel,"2");
-        // loadDirectoryObject(url,"Heart/objects/4.lwo",panel,"4");
-        // loadDirectoryObject(url,"Heart/objects/a.lwo",panel,"a");
-        // loadDirectoryObject(url,"Heart/objects/HumanHeart_1.lwo",panel,"HumanHeart_1");
         loadDirectoryObject(url,"Heart/objects/Heart_back.lwo",panel,"Heart_back");
-        // loadDirectoryObject(url,"Heart/objects/Heart_back2.lwo",panel,"Heart_back2");
         loadDirectoryObject(url,"Heart/objects/Heart_front.lwo",panel,"Heart_front");
-        // loadDirectoryObject(url,"Heart/objects/Heart_front2.lwo",panel,"Heart_front2");
         loadDirectoryObject(url,"Arm/objects/Arm.lwo",panel,"Arm");
         loadDirectoryObject(url,"Arm/objects/Bn_femur.lwo",panel,"Bn_femur");
         loadDirectoryObject(url,"Arm/objects/bones.lwo",panel,"bones");
@@ -180,7 +170,6 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Flag.lwo",panel,"Flag");
         loadDirectoryObject(url,"Buildings/objects/RadioTower.lwo",panel,"Radio Tower");
         loadDirectoryObject(url,"Buildings/objects/CheckPoint.lwo",panel,"Checkpoint");
-        // listDirectory(url + "Buildings/objects/", panel);
 
         panel = document.getElementById("panel-lib-landVehicleObjects");
         loadDirectoryObject(url,"Vehicles/objects/C2V.lwo",panel,"C2V");
@@ -190,7 +179,6 @@ function listLibrary()
         loadDirectoryObject(url,"Geography/objects/Camaro.lwo",panel,"Camaro");
         loadDirectoryObject(url,"Geography/objects/SemiTruck.lwo",panel,"SemiTruck");
         loadDirectoryObject(url,"Geography/objects/Truck3.lwo",panel,"Truck3");
-       // listDirectory(url + "Vehicles/objects/", panel);
 
         panel = document.getElementById("panel-lib-airVehicleObjects");
         loadDirectoryObject(url,"Vehicles/objects/AP_A10R.lwo",panel,"A10 Warthog");
@@ -220,18 +208,11 @@ function listLibrary()
         loadDirectoryObject(url,"Egypt/objects/KhafrePyramid.lwo",panel,"KhafrePyramid");
         loadDirectoryObject(url,"Egypt/objects/MenkaurePyramid.lwo",panel,"MenkaurePyramid");
         loadDirectoryObject(url,"Egypt/objects/Site_SkyDome.lwo",panel,"Site_SkyDome");
-       // listDirectory(url + "Egypt/objects/", panel);
 
         panel = document.getElementById("panel-lib-robotObjects");
         loadDirectoryObject(url,"Robots/objects/MULE_ARV_1.lwo",panel,"MULE_ARV_1");
-        // loadDirectoryObject(url,"Robots/objects/MULE_ARV_HIGH.lwo",panel,"MULE_ARV_HIGH");
         loadDirectoryObject(url,"Robots/objects/MULE_CM_1.lwo",panel,"MULE_CM_1");
-        // loadDirectoryObject(url,"Robots/objects/MULE_CM_HIGH.lwo",panel,"MULE_CM_HIGH");
         loadDirectoryObject(url,"Robots/objects/MULE_T_HIGH.lwo",panel,"MULE_T_HIGH");
-        // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_ARV_1.lwo",panel,"Shadow_MULE_ARV_1");
-        // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_CM_HIGH.lwo",panel,"Shadow_MULE_CM_HIGH");
-        // loadDirectoryObject(url,"Robots/objects/Shadow_MULE_T_HIGH.lwo",panel,"Shadow_MULE_T_HIGH");
-        // listDirectory(url + "Robots/objects/", panel);
 
         panel = document.getElementById("panel-lib-geoObjects");
         loadDirectoryObject(url,"objects/Terrain.lwo",panel,"Terrain");
@@ -241,7 +222,6 @@ function listLibrary()
         loadDirectoryObject(url,"Geography/objects/road.lwo",panel,"road");
         loadDirectoryObject(url,"objects/Water.lwo",panel,"Water");
         loadDirectoryObject(url,"objects/Sky2.lwo",panel,"Sky2");
-        // listDirectory(url + "Geography/objects/", panel);
 
         panel = document.getElementById("panel-motions");
         loadDirectoryObject(url,"motions/fly-loop.mot",panel,"Fly-loop");
@@ -250,19 +230,7 @@ function listLibrary()
         loadDirectoryObject(url,"motions/oscillate-scale.mot",panel,"Oscillate Scale");
         loadDirectoryObject(url,"motions/spin-y.mot",panel,"Spin");
     }
-    /*
-    url = document.location.href + "/../../Entymology/BwContent/"
-    listDirectory(url + "objects/", panel);
 
-    url = document.location.href + "/../../Paleontology/BwContent/"
-    listDirectory(url + "objects/", panel);*/
-
-    //panel = document.getElementById("panel-lib-motions");
-
-    //url = document.location.href + "/../BwContent/";
-
-    //listDirectory(url + "motions/", panel);
-    //listDirectory(url + "Vehicles/motions/", panel);
 }
 function loadDirectoryObject(url,href,panel,name){
     var A = document.createElement('a');
@@ -350,13 +318,6 @@ function loadModel(url)
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
     name = count.toString()+". "+name;
     count++;
-
-    // c = document.createElement('div');
-    // c.innerHTML = '<input id="heyColor">' {onImmediateChange:\'updateInfo(this);\'}" id="2myColor" value="FFFFFF"'
-    //             + 'onchange="applyColor();" style="height:20px;width:20px;"/>'
-    //             + '<input id="2info-r" size="2" type="hidden"/>'
-    //             + '<input id="2info-g" size="2" type="hidden"/>'
-    //             + '<input id="2info-b" size="2" type="hidden"/>';
 
     setObject(name);
     var objectPanel = document.getElementById("object-list");
@@ -513,7 +474,6 @@ function loadMotion(url)
     row.appendChild(trashColumn);
     animationPanel.appendChild(row); // Append the link to the div
 
-    //var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
 
     var xml = loadXMLFile("BwContent/motion.xml");
 
@@ -608,15 +568,6 @@ function setColorPicker()
     document.getElementById('myColor').color.fromRGB(r, g, b);
 }
 
-function setModel() //Where is this function called?
-{
-    var name = $('#objectname').val();
-    var xml = "\<Set target='" + name + "'/>";
-    console.log(xml);
-    bridgeworks.updateScene(xml);
-
-}
-
 function setModel(name)
 {
     var xml = "\<Set target='" + name + "'/>";
@@ -694,7 +645,6 @@ function paste()
         count += 1;
         selectedModel.scale.setValueDirect(Size, Size, Size);
         selectedModel.rotation.setValueDirect(rotX, rotY, rotZ);
-        //selectedModel.color.setValueDirect(R,G,B); There is no setValueDirect for color. Should look into adding that
         var cmd = "\<Set target='" + name + "'>" + "\<color r= '" + R + "' " + "g= '" + G + "' " + "b= '" + B + "'/>" + "</Set>";
         bridgeworks.updateScene(cmd);
     }
@@ -712,7 +662,6 @@ function show(name)
 function applyColor()
 {
     var name = selectedModel.name.getValueDirect().join("");
-    //($('#object-list a').attr('id'))
     var b = $('#info-b').val();
     var g = $('#info-g').val();
     var r = $('#info-r').val();
@@ -725,34 +674,4 @@ function remoteColor(name)
     var b = $('#' + name + 'info-b').val();
     var g = $('#' + name + 'info-g').val();
     var r = $('#' + name + 'info-r').val();
-}
-
-function showTop()
-{
-    bridgeworks.updateScene("top.xml");
-}
-
-function showBottom()
-{
-    bridgeworks.updateScene("bottom.xml");
-}
-
-function showLeft()
-{
-    bridgeworks.updateScene("left.xml");
-}
-
-function showRight()
-{
-    bridgeworks.updateScene("right.xml");
-}
-
-function showHome()
-{
-    bridgeworks.updateScene("home.xml");
-}
-
-function showHelp()
-{
-    alert ("1. 'Right-click' anywhere on an object.\n2. Name what you clicked.\n3. Submit.\n\n'Left-click', hold and drag to rotate.")
 }
