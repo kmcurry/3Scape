@@ -2,63 +2,63 @@
 function setScale(value) {
     // var value = $( "#scale" ).spinner( "value" );
 
-    if (selectedThing) {
+    if (selectedModel) {
         //var s = selectedThing.rotation.getValueDirect();
-        selectedThing.scale.setValueDirect(value, value, value);
+        selectedModel.scale.setValueDirect(value, value, value);
     }
 }
 
 function setRotationX(value) {
     //var value = $( "#rotationX" ).spinner( "value" );
 
-    if (selectedThing) {
-        var r = selectedThing.rotation.getValueDirect();
-        selectedThing.rotation.setValueDirect(value, r.y, r.z);
+    if (selectedModel) {
+        var r = selectedModel.rotation.getValueDirect();
+        selectedModel.rotation.setValueDirect(value, r.y, r.z);
     }
 }
 
 function setRotationY(value) {
     //var value = $( "#rotationY" ).spinner( "value" );
 
-    if (selectedThing) {
-        var r = selectedThing.rotation.getValueDirect();
-        selectedThing.rotation.setValueDirect(r.x, value, r.z);
+    if (selectedModel) {
+        var r = selectedModel.rotation.getValueDirect();
+        selectedModel.rotation.setValueDirect(r.x, value, r.z);
     }
 }
 
 function setRotationZ(value) {
     //var value = $( "#rotationZ" ).spinner( "value" );
 
-    if (selectedThing) {
-        var r = selectedThing.rotation.getValueDirect();
-        selectedThing.rotation.setValueDirect(r.x, r.y, value);
+    if (selectedModel) {
+        var r = selectedModel.rotation.getValueDirect();
+        selectedModel.rotation.setValueDirect(r.x, r.y, value);
     }
 }
 
 function setPositionX() {
     var value = $( "#positionX" ).spinner( "value" );
 
-    if (selectedThing) {
-        var p = selectedThing.position.getValueDirect();
-        selectedThing.position.setValueDirect(value, p.y, p.z);
+    if (selectedModel) {
+        var p = selectedModel.position.getValueDirect();
+        selectedModel.position.setValueDirect(value, p.y, p.z);
     }
 }
 
 function setPositionY() {
     var value = $( "#positionY" ).spinner( "value" );
 
-    if (selectedThing) {
-        var p = selectedThing.position.getValueDirect();
-        selectedThing.position.setValueDirect(p.x, value, p.z);
+    if (selectedModel) {
+        var p = selectedModel.position.getValueDirect();
+        selectedModel.position.setValueDirect(p.x, value, p.z);
     }
 }
 
 function setPositionZ() {
     var value = $( "#positionZ" ).spinner( "value" );
 
-    if (selectedThing) {
-        var p = selectedThing.position.getValueDirect();
-        selectedThing.position.setValueDirect(p.x, p.y, value);
+    if (selectedModel) {
+        var p = selectedModel.position.getValueDirect();
+        selectedModel.position.setValueDirect(p.x, p.y, value);
     }
 }
 
@@ -107,18 +107,18 @@ function setModelR() {
 function setModelG() {
     var value = $( "#modelG" ).spinner( "value" );
 
-    if (selectedThing) {
-        var c = selectedThing.color.getValueDirect();
-        selectedThing.color.setValueDirect(c.r, value, c.b);
+    if (selectedModel) {
+        var c = selectedModel.color.getValueDirect();
+        selectedModel.color.setValueDirect(c.r, value, c.b);
     }
 }
 
 function setModelB() {
     var value = $( "#modelB" ).spinner( "value" );
 
-    if (selectedThing) {
-        var c = selectedThing.ambient.getValueDirect();
-        selectedThing.ambient.setValueDirect(c.r, c.g, value);
+    if (selectedModel) {
+        var c = selectedModel.ambient.getValueDirect();
+        selectedModel.ambient.setValueDirect(c.r, c.g, value);
     }
 }
 
