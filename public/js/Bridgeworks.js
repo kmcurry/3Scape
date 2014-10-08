@@ -1,4 +1,4 @@
-﻿function Base() 
+﻿function Base()
 {
     this.userData = "";
     this.className = "";
@@ -25,48 +25,48 @@ Allocator.prototype.allocate = function()
 function loadBinaryResource(url)
 {
     var req = new XMLHttpRequest();
-    
+
     req.open('GET', url, false);
     req.overrideMimeType('text/plain; charset=x-user-defined');
     req.send();
-    
+
     if (req.status != 200)
     {
         return null;
     }
-    
+
     return req.responseText;
 }
 
 function loadXMLResource(url)
 {
     var req = new XMLHttpRequest();
- 
+
     req.open('GET', url, false);
-    req.overrideMimeType('text/plain; charset=x-user-defined');    
+    req.overrideMimeType('text/plain; charset=x-user-defined');
     req.send();
-    
+
     if (req.status != 200)
     {
         return null;
     }
-    
+
     return req.responseText;
 }
 
 function loadTextResource(url)
 {
     var req = new XMLHttpRequest();
- 
+
     req.open('GET', url, false);
-    req.overrideMimeType('text/plain; charset=x-user-defined');    
+    req.overrideMimeType('text/plain; charset=x-user-defined');
     req.send();
-    
+
     if (req.status != 200)
     {
         return null;
     }
-    
+
     return req.responseText;
 }
 
@@ -84,14 +84,14 @@ function isUpper(c)
 
 function isSpace(c)
 {
-    if (c == ' '  || 
+    if (c == ' '  ||
         c == '\f' ||
         c == '\n' ||
         c == '\r' ||
         c == '\t' ||
         c == '\v')
         return true;
-        
+
     return false;
 }
 
@@ -112,7 +112,7 @@ function getObjectClassName(obj) {
     return undefined;
 }
 
-/*  takes string to an absolute or relative URL 
+/*  takes string to an absolute or relative URL
     returns an array containing a valid Bw path
     and the expected content directory.
     DOES NOT ENSURE CONTENT EXISTS
@@ -121,10 +121,10 @@ function getObjectClassName(obj) {
 function formatPath(url)
 {
     var result = [];
-    
+
     var validPath = "";
     var validDir  = "";
-    
+
     try {
         $.ajax({
             url: url,
@@ -135,41 +135,41 @@ function formatPath(url)
                 console.debug(url + " does not exist.");
                 // could be a relative path
                 var href = document.location.href;
-                
+
                 validPath = href.substring(0, href.lastIndexOf("/")) + "/" + bridgeworks.contentDir + "/" + url;
-                
+
                 console.debug("Trying: " + validPath);
-                
+
                 var ndx = validPath.lastIndexOf("objects/");
                 if (ndx == -1) ndx = validPath.lastIndexOf("motions/");
                 if (ndx == -1) ndx = validPath.lastIndexOf("envelopes/");
                 if (ndx == -1) ndx = validPath.lastIndexOf("scenes/");
-                
+
                 validDir = validPath.substring(0, ndx);
-                
-                console.debug("With contentDir: " + validDir);  
+
+                console.debug("With contentDir: " + validDir);
             },
             success: function()
             {
                 validPath = url;
-                
+
                 var ndx = validPath.lastIndexOf("objects/");
                 if (ndx == -1) ndx = validPath.lastIndexOf("motions/");
                 if (ndx == -1) ndx = validPath.lastIndexOf("envelopes/");
                 if (ndx == -1) ndx = validPath.lastIndexOf("scenes/");
-                
+
                 validDir = validPath.substring(0, ndx);
-                
+
                 console.debug("File found: " + validPath);
             }
         });
-        
+
         result[0] = validPath;
         result[1] = validDir;
     } catch (e) {
-        
+
     }
-    
+
     return result;
 }
 
@@ -190,7 +190,7 @@ function isFullPath(filePath)
         {
             unc = true;
         }
-    }       
+    }
 
     // check if file path is a full path
     if (unc || filePath.indexOf(':') >= 0)
@@ -214,7 +214,7 @@ function formFullPath(filePath, dirPath)
     if (!filePath || !dirPath)
     {
         return null;
-    }      
+    }
 
     // check if file path is already a full path
     if (isFullPath(filePath))
@@ -232,7 +232,7 @@ function formFullPath(filePath, dirPath)
                 fullPath += '/';
             }
         }
-        
+
         // don't allow "//" in the filepath (Minefield doesn't like that)
         if (filePath[0] == '/' || filePath[0] == "\\")
         {
@@ -258,13 +258,13 @@ function getFileExtension(filename)
         return ext;
     }
 
-    return ext;    
+    return ext;
 }
 
 function getBrowserName()
 {
     var browser = new String(navigator.userAgent);
-    
+
     // chrome
     if (browser.indexOf("Chrome") >= 0) return "Chrome";
 
@@ -291,7 +291,7 @@ function Color()
 Color.prototype.v = function()
 {
     var values = [ this.r, this.g, this.b, this.a ];
-    return values; 
+    return values;
 }
 
 Color.prototype.load = function(r, g, b, a)
@@ -349,13 +349,13 @@ function Viewport()
     this.y = 0;
     this.width = 0;
     this.height = 0;
-    
+
     this.equals = function(rhs)
     {
         return (this.x == rhs.x &&
                 this.y == rhs.y &&
                 this.width == rhs.width &&
-                this.height == rhs.height); 
+                this.height == rhs.height);
     }
 }
 
@@ -389,7 +389,7 @@ function Stack(element)
 {
     this.stack = new Array();
     this.maxLength = 0;
-    
+
     if (element)
     {
         this.stack.push(element);
@@ -402,7 +402,7 @@ Stack.prototype.push = function(element)
 	{
 		this.pop();
 	}
-	
+
     this.stack.push(element);
 }
 
@@ -426,7 +426,7 @@ Stack.prototype.top = function()
     {
         return this.stack[this.stack.length-1];
     }
-    
+
     return null;
 }
 
@@ -436,7 +436,7 @@ Stack.prototype.getAt = function(index)
     {
         return this.stack[index];
     }
-    
+
     return null;
 }
 
@@ -463,7 +463,7 @@ function Queue(element)
 {
 	this.queue = new Array();
     this.maxLength = 0;
-    
+
     if (element)
     {
         this.queue.push(element);
@@ -476,7 +476,7 @@ Queue.prototype.push = function(element)
 	{
 		this.pop();
 	}
-	
+
     this.queue.push(element);
 }
 
@@ -500,7 +500,7 @@ Queue.prototype.front = function()
     {
         return this.queue[0];
     }
-    
+
     return null;
 }
 
@@ -510,7 +510,7 @@ Queue.prototype.getAt = function(index)
     {
         return this.queue[index];
     }
-    
+
     return null;
 }
 
@@ -557,7 +557,7 @@ function deserializeAttributeContainer(container, atts)
             deserializeAttribute(attribute, atts[i][1]);
         }
     }
-    
+
     container.flagDeserializedFromXML();
 }
 
@@ -568,7 +568,7 @@ function deserializeComplexAttribute(attribute, atts)
     {
         values.push(atts[i][1]);
     }
-    if (values.length > 0) 
+    if (values.length > 0)
     {
         if (!gAttributeBin)
         {
@@ -579,14 +579,14 @@ function deserializeComplexAttribute(attribute, atts)
             gAttributeBin.push(new Pair(attribute, values));
         }
     }
-    
+
     attribute.flagDeserializedFromXML();
 }
 
 function deserializeAttribute(attribute, value)
 {
     // TODO: search value for operators
-    
+
     if (!gAttributeBin)
     {
         setAttributeValue(attribute, value);
@@ -595,7 +595,7 @@ function deserializeAttribute(attribute, value)
     {
         gAttributeBin.push(new Pair(attribute, value));
     }
-    
+
     attribute.flagDeserializedFromXML();
 }
 
@@ -610,10 +610,10 @@ function resolveAttributeContainerReference(container, atts, registry)
             {
                 container.synchronize(resource, true);
                 return true;
-            } 
+            }
         }
     }
-    
+
     return false;
 }
 
@@ -787,7 +787,7 @@ XMLP.prototype._checkStructure = function(iEvent) {
 
     Author:   Scott Severtson
     *********************************************************************************************************************/
-  
+
 	if(XMLP._STATE_PROLOG == this.m_iState) {
 		if((XMLP._TEXT == iEvent) || (XMLP._ENTITY == iEvent)) {
             if(SAXStrings.indexOfNonWhitespace(this.getContent(), this.getContentBegin(), this.getContentEnd()) != -1) {
@@ -1024,7 +1024,7 @@ XMLP.prototype._parse = function() {
     else{
         return this._parseText   (this.m_iP);
     }
-	
+
 
 }  // end function _parse
 
@@ -1039,7 +1039,7 @@ XMLP.prototype._parseAttribute = function(iB, iE) {
     var cQuote, strN, strV;
 
 	this.m_cAlt = ""; //resets the value so we don't use an old one by accident (see testAttribute7 in the test suite)
-    
+
 	iNB = SAXStrings.indexOfNonWhitespace(this.m_xml, iB, iE);
     if((iNB == -1) ||(iNB >= iE)) {
         return iNB;
@@ -2186,7 +2186,7 @@ function __escapeString(str) {
 }
 
 /**
- * function __unescapeString 
+ * function __unescapeString
  *
  * author: David Joham djoham@yahoo.com
  *
@@ -2674,14 +2674,14 @@ function Timer()
 Timer.prototype.start = function()
 {
     var date = new Date();
-    
+
     this.startTime = date.getTime();
 }
 
 Timer.prototype.stop = function()
 {
     var date = new Date();
-    
+
     this.stopTime = date.getTime();
 }
 
@@ -2691,7 +2691,7 @@ Timer.prototype.getTime = function()
     {
         return (this.stopTime - this.startTime) / 1000;
     }
-        
+
     return 0;
 }
 // From: http://www.codeproject.com/KB/scripting/dom-element-abs-pos.aspx
@@ -2749,7 +2749,7 @@ function __parseBorderWidth(width)
         }
         else
         {
-            //do not know how to calculate other values 
+            //do not know how to calculate other values
             //(such as 0.5em or 0.1cm) correctly now
             //so just set the width to 1 pixel
             res = 1;
@@ -2836,7 +2836,7 @@ function getElementAbsolutePos(element)
                 }
 
 
-                //next lines are necessary to fix the problem 
+                //next lines are necessary to fix the problem
                 //with offsetParent
                 if (!__isIE && !__isOperaOld || __isIENew)
                 {
@@ -2861,7 +2861,7 @@ function getElementAbsolutePos(element)
             }
         }
     }
-    
+
     return res;
 }
 /**
@@ -2999,27 +2999,27 @@ function epsilonEqual(value1, value2, epsilon)
     {
         return true;
     }
-    
+
     return false;
 }
 
-function determinant2x2(_11, _12, 
+function determinant2x2(_11, _12,
                         _21, _23)
 {
     return (_11 * _23) - (_12 * _21);
 }
 
-function determinant3x3(_11, _12, _13, 
+function determinant3x3(_11, _12, _13,
                         _21, _22, _23,
                         _31, _32, _33)
 {
     var a = determinant2x2(_22, _23, _32, _33);
     var b = determinant2x2(_21, _23, _31, _33);
     var c = determinant2x2(_21, _22, _31, _32);
-    
+
     return (_11 * a) - (_12 * b) + (_13 * c);
 }
-        
+
 function determinant4x4(_11, _12, _13, _14,
                         _21, _22, _23, _24,
                         _31, _32, _33, _34,
@@ -3029,22 +3029,22 @@ function determinant4x4(_11, _12, _13, _14,
     var b = determinant3x3(_21, _23, _24, _31, _33, _34, _41, _43, _44);
     var c = determinant3x3(_21, _22, _24, _31, _32, _34, _41, _42, _44);
     var d = determinant3x3(_21, _22, _23, _31, _32, _33, _41, _42, _43);
-    
-    return (_11 * a) - (_12 * b) + (_13 * c) - (_14 * d);  
-}        
+
+    return (_11 * a) - (_12 * b) + (_13 * c) - (_14 * d);
+}
 
 function modf(x)
 {
     var integerPart = (x < 0 ? Math.ceil(x) : Math.floor(x));
     var fractionalPart = x - integerPart;
-    
+
     return { integerPart: integerPart, fractionalPart: fractionalPart };
 }
 
 function XYZtoH(x, y, z)
 {
     var heading = 0;
-    
+
     if (x == 0)
     {
         if (z >= 0)
@@ -3086,7 +3086,7 @@ function XYZtoH(x, y, z)
             heading = 3 * HALFPI + Math.atan(z / x);
         }
     }
-    
+
     return heading;
 }
 
@@ -3094,8 +3094,8 @@ function XYZtoHP(x, y, z)
 {
     var heading = 0;
     var pitch = 0;
-    
-    if (x == 0 && z == 0) 
+
+    if (x == 0 && z == 0)
     {
         heading = 0;
         if (y != 0)
@@ -3107,7 +3107,7 @@ function XYZtoHP(x, y, z)
             pitch = 0;
         }
     }
-    else 
+    else
     {
         if (z == 0)
         {
@@ -3133,7 +3133,7 @@ function XYZtoHP(x, y, z)
             pitch = Math.atan(y / x);
         }
     }
-    
+
     return { heading: heading, pitch: pitch };
 }
 
@@ -3144,7 +3144,7 @@ function rectContainsPoint(x, y, rect)
         x <= rect.right &&
         y <= rect.bottom)
         return true;
-        
+
     return false;
 }
 function Vector2D(x, y)
@@ -3265,11 +3265,11 @@ function dotProduct(v1, v2)
 function crossProduct(v1, v2)
 {
     var result = new Vector3D();
-    
+
     result.x = (v1.y * v2.z) - (v1.z * v2.y);
     result.y = (v1.z * v2.x) - (v1.x * v2.z);
     result.z = (v1.x * v2.y) - (v1.y * v2.x);
-    
+
     return result;
 }
 
@@ -3293,17 +3293,17 @@ function cosineAngleBetween(v1, v2)
 function midpoint(v1, v2)
 {
     var result = new Vector3D();
-    
+
     result.x = (v1.x + v2.x) / 2;
     result.y = (v1.y + v2.y) / 2;
     result.z = (v1.z + v2.z) / 2;
-    
+
     return result;
 }
 
 function distanceBetween(v1, v2)
 {
-    return Math.sqrt((v1.x - v2.x) * (v1.x - v2.x) + 
+    return Math.sqrt((v1.x - v2.x) * (v1.x - v2.x) +
                      (v1.y - v2.y) * (v1.y - v2.y) +
                      (v1.z - v2.z) * (v1.z - v2.z));
 }
@@ -3377,7 +3377,7 @@ Matrix4x4.prototype.alert = function()
     alert([[this._11, this._12, this._13, this._14].join(" "),
            [this._21, this._22, this._23, this._24].join(" "),
            [this._31, this._32, this._33, this._34].join(" "),
-           [this._41, this._42, this._43, this._44].join(" ")].join("\n") 
+           [this._41, this._42, this._43, this._44].join(" ")].join("\n")
     );
 }
 
@@ -3389,7 +3389,7 @@ Matrix4x4.prototype.flatten = function()
         this._31, this._32, this._33, this._34,
         this._41, this._42, this._43, this._44
     ];
-    
+
     return v;
 }
 
@@ -3408,7 +3408,7 @@ Matrix4x4.prototype.getAt = function(row, col)
             }
         }
         break;
-     
+
     case 1:
         {
             switch (col)
@@ -3420,7 +3420,7 @@ Matrix4x4.prototype.getAt = function(row, col)
             }
         }
         break;
-        
+
     case 2:
         {
             switch (col)
@@ -3432,7 +3432,7 @@ Matrix4x4.prototype.getAt = function(row, col)
             }
         }
         break;
-        
+
     case 3:
         {
             switch (col)
@@ -3462,7 +3462,7 @@ Matrix4x4.prototype.setAt = function(row, col, value)
             }
         }
         break;
-     
+
     case 1:
         {
             switch (col)
@@ -3474,7 +3474,7 @@ Matrix4x4.prototype.setAt = function(row, col, value)
             }
         }
         break;
-        
+
     case 2:
         {
             switch (col)
@@ -3486,7 +3486,7 @@ Matrix4x4.prototype.setAt = function(row, col, value)
             }
         }
         break;
-        
+
     case 3:
         {
             switch (col)
@@ -3510,17 +3510,17 @@ Matrix4x4.prototype.load = function(_11, _12, _13, _14,
     this._12 = _12;
     this._13 = _13;
     this._14 = _14;
-    
+
     this._21 = _21;
     this._22 = _22;
     this._23 = _23;
     this._24 = _24;
-    
+
     this._31 = _31;
     this._32 = _32;
     this._33 = _33;
     this._34 = _34;
-    
+
     this._41 = _41;
     this._42 = _42;
     this._43 = _43;
@@ -3533,17 +3533,17 @@ Matrix4x4.prototype.loadMatrix = function(matrix)
     this._12 = matrix._12;
     this._13 = matrix._13;
     this._14 = matrix._14;
-    
+
     this._21 = matrix._21;
     this._22 = matrix._22;
     this._23 = matrix._23;
     this._24 = matrix._24;
-    
+
     this._31 = matrix._31;
     this._32 = matrix._32;
     this._33 = matrix._33;
     this._34 = matrix._34;
-    
+
     this._41 = matrix._41;
     this._42 = matrix._42;
     this._43 = matrix._43;
@@ -3579,17 +3579,17 @@ Matrix4x4.prototype.loadIdentity = function()
     this._12 = 0;
     this._13 = 0;
     this._14 = 0;
-        
+
     this._21 = 0;
     this._22 = 1;
     this._23 = 0;
     this._24 = 0;
-    
+
     this._31 = 0;
     this._32 = 0;
     this._33 = 1;
     this._34 = 0;
-    
+
     this._41 = 0;
     this._42 = 0;
     this._43 = 0;
@@ -3599,7 +3599,7 @@ Matrix4x4.prototype.loadIdentity = function()
 Matrix4x4.prototype.loadTranslation = function(x, y, z)
 {
     this.loadIdentity();
-    
+
     this._41 = x;
     this._42 = y;
     this._43 = z;
@@ -3607,7 +3607,7 @@ Matrix4x4.prototype.loadTranslation = function(x, y, z)
 
 Matrix4x4.prototype.loadRotation = function(x, y, z, degrees)
 {
-    // build rotation (and inverse rotation) matrix to rotate space 
+    // build rotation (and inverse rotation) matrix to rotate space
     // about the X axis so that the rotation axis lies in the XZ plane
     var mX = new Matrix4x4();
     var mXinv = new Matrix4x4();
@@ -3628,7 +3628,7 @@ Matrix4x4.prototype.loadRotation = function(x, y, z, degrees)
         mXinv._33 =  z_v;
     }
 
-    // build rotation (and inverse rotation) matrix to rotate space 
+    // build rotation (and inverse rotation) matrix to rotate space
     // about the Y axis so that the rotation axis is aligned with the Z axis
     var mY = new Matrix4x4();
     var mYinv = new Matrix4x4();
@@ -3720,28 +3720,28 @@ Matrix4x4.prototype.loadXYZAxisRotation = function(degreesX, degreesY, degreesZ)
 Matrix4x4.prototype.getRotationAngles = function()
 {
     var x, y, z;
-    
+
     x = Math.asin(clamp(this._23, -1, 1));
     var cosx = Math.cos(x);
-    
+
     if (!epsilonEqual(cosx, 0, FLT_EPSILON))
     {
         y = Math.atan2(-(this._13) / cosx, this._33 / cosx);
-        z = Math.atan2(-(this._21) / cosx, this._22 / cosx); 
+        z = Math.atan2(-(this._21) / cosx, this._22 / cosx);
     }
     else // cosx == 0
     {
-        // remove x-axis rotation to obtain z-axis rotation by 
+        // remove x-axis rotation to obtain z-axis rotation by
         // multiplying this matrix with inverse of x-axis rotation
         var zAxisRot = new Matrix4x4();
         zAxisRot.loadXAxisRotation(toDegrees(x));
         zAxisRot.transpose(); // invert rotation
         zAxisRot.loadMatrix(zAxisRot.multiply(this));
-        
+
         y = 0;
         z = Math.atan2(-(zAxisRot._21), zAxisRot._22);
     }
-    
+
     return { x: toDegrees(x), y: toDegrees(y), z: toDegrees(z) };
 }
 
@@ -3757,34 +3757,34 @@ Matrix4x4.prototype.loadScale = function(x, y, z)
 Matrix4x4.prototype.getScalingFactors = function()
 {
     var a, b;
-    
+
     // x
     a = this.transform(1, 0, 0, 0);
     b = this.transform(2, 0, 0, 0);
     var scalingX = magnitude(b.x, b.y, b.z) - magnitude(a.x, a.y, a.z);
-    
+
     // y
     a = this.transform(0, 1, 0, 0);
     b = this.transform(0, 2, 0, 0);
     var scalingY = magnitude(b.x, b.y, b.z) - magnitude(a.x, a.y, a.z);
-    
+
     // z
     a = this.transform(0, 0, 1, 0);
     b = this.transform(0, 0, 2, 0);
     var scalingZ = magnitude(b.x, b.y, b.z) - magnitude(a.x, a.y, a.z);
-    
+
     return { x: scalingX, y: scalingY, z: scalingZ };
 }
 
 Matrix4x4.prototype.multiply = function(rhs)
 {
     var result = new Matrix4x4();
-    
+
     if (!rhs)
     {
-        return;    
+        return;
     }
-    
+
     result.load
     (
         this._11 * rhs._11 + this._12 * rhs._21 + this._13 * rhs._31 + this._14 * rhs._41,
@@ -3801,17 +3801,17 @@ Matrix4x4.prototype.multiply = function(rhs)
         this._31 * rhs._14 + this._32 * rhs._24 + this._33 * rhs._34 + this._34 * rhs._44,
         this._41 * rhs._11 + this._42 * rhs._21 + this._43 * rhs._31 + this._44 * rhs._41,
         this._41 * rhs._12 + this._42 * rhs._22 + this._43 * rhs._32 + this._44 * rhs._42,
-        this._41 * rhs._13 + this._42 * rhs._23 + this._43 * rhs._33 + this._44 * rhs._43,  
+        this._41 * rhs._13 + this._42 * rhs._23 + this._43 * rhs._33 + this._44 * rhs._43,
         this._41 * rhs._14 + this._42 * rhs._24 + this._43 * rhs._34 + this._44 * rhs._44
      );
-     
-     return result; 
+
+     return result;
 }
 
 Matrix4x4.prototype.leftMultiply = function(lhs)
 {
     var result = lhs.multiply(this);
-    
+
     return result;
 }
 
@@ -3819,7 +3819,7 @@ Matrix4x4.prototype.transpose = function()
 {
     var temp = new Matrix4x4();
     temp.loadMatrix(this);
-    
+
     this._11 = temp._11;
     this._12 = temp._21;
     this._13 = temp._31;
@@ -3852,11 +3852,11 @@ Matrix4x4.prototype.invert = function()
         // no inverse
         return;
     }
-    
+
     var inverse  = new Matrix4x4();
-    
+
     var i, j, i2, j2, k;
-    
+
     for (i=0; i < 4; i++)
     {
         for (j=0; j < 4; j++)
@@ -3888,7 +3888,7 @@ Matrix4x4.prototype.invert = function()
 Matrix4x4.prototype.transform = function(x, y, z, w)
 {
     var tx, ty, tz;
-    
+
     if (w == 0)
     {
         tx = this._11 * x + this._21 * y + this._31 * z;
@@ -3906,15 +3906,15 @@ Matrix4x4.prototype.transform = function(x, y, z, w)
         tx = this._11 * x + this._21 * y + this._31 * z + this._41 * w;
         ty = this._12 * x + this._22 * y + this._32 * z + this._42 * w;
         tz = this._13 * x + this._23 * y + this._33 * z + this._43 * w;
-    } 
-    
+    }
+
     return { x: tx, y: ty, z: tz };
 }
 
 Matrix4x4.prototype.transformw = function(x, y, z, w)
 {
     var tx, ty, tz, tw;
-    
+
     if (w == 0)
     {
         tx = this._11 * x + this._21 * y + this._31 * z;
@@ -3935,8 +3935,8 @@ Matrix4x4.prototype.transformw = function(x, y, z, w)
         ty = this._12 * x + this._22 * y + this._32 * z + this._42 * w;
         tz = this._13 * x + this._23 * y + this._33 * z + this._43 * w;
         tw = this._14 * x + this._24 * y + this._34 * z + this._44 * w;
-    } 
-    
+    }
+
     return { x: tx, y: ty, z: tz, w: tw };
 }
 
@@ -4031,32 +4031,32 @@ Quaternion.prototype.magnitude = function()
 Quaternion.prototype.normalize = function()
 {
     var magnitude = this.magnitude();
-    
+
     this.w /= magnitude;
     this.x /= magnitude;
     this.y /= magnitude;
-    this.z /= magnitude; 
+    this.z /= magnitude;
 }
 
 Quaternion.prototype.loadRotation = function(x, y, z, degrees)
 {
     var radians = toRadians(degrees) / 2;
-    
+
     var sinAngle = Math.sin(radians);
     var cosAngle = Math.cos(radians);
-    
+
     this.w = cosAngle;
     this.x = x * sinAngle;
     this.y = y * sinAngle;
     this.z = z * sinAngle;
-    
+
     this.normalize();
 }
 
 Quaternion.prototype.loadXAxisRotation = function(degrees)
 {
     var radians = toRadians(degrees) / 2;
-    
+
     this.w = Math.cos(radians);
     this.x = Math.sin(radians);
     this.y = 0;
@@ -4066,7 +4066,7 @@ Quaternion.prototype.loadXAxisRotation = function(degrees)
 Quaternion.prototype.loadYAxisRotation = function(degrees)
 {
     var radians = toRadians(degrees) / 2;
-    
+
     this.w = Math.cos(radians);
     this.x = 0
     this.y = Math.sin(radians);;
@@ -4076,7 +4076,7 @@ Quaternion.prototype.loadYAxisRotation = function(degrees)
 Quaternion.prototype.loadZAxisRotation = function(degrees)
 {
     var radians = toRadians(degrees) / 2;
-    
+
     this.w = Math.cos(radians);
     this.x = 0;
     this.y = 0;
@@ -4088,16 +4088,16 @@ Quaternion.prototype.loadXYZAxisRotation = function(degreesX, degreesY, degreesZ
     var radiansX = toRadians(degreesX) / 2;
     var radiansY = toRadians(degreesY) / 2;
     var radiansZ = toRadians(degreesZ) / 2;
-    
+
     var qX = new Quaternion();
     qX.load(Math.cos(radiansX), Math.sin(radiansX), 0, 0);
-    
+
     var qY = new Quaternion();
     qY.load(Math.cos(radiansY), 0, Math.sin(radiansY), 0);
-    
+
     var qZ = new Quaternion();
     qZ.load(Math.cos(radiansZ), 0, 0, Math.sin(radiansZ));
-    
+
     // sum rotations
     var result = qY.multiply(qX.multiply(qZ));
     this.loadQuaternion(result);
@@ -4106,22 +4106,22 @@ Quaternion.prototype.loadXYZAxisRotation = function(degreesX, degreesY, degreesZ
 Quaternion.prototype.multiply = function(rhs)
 {
     var result = new Quaternion();
-    
+
     result.load
     (
         this.w * rhs.w - this.x * rhs.x - this.y * rhs.y - this.z * rhs.z,
         this.w * rhs.x + this.x * rhs.w + this.y * rhs.z - this.z * rhs.y,
         this.w * rhs.y + this.y * rhs.w + this.z * rhs.x - this.x * rhs.z,
-        this.w * rhs.z + this.z * rhs.w + this.x * rhs.y - this.y * rhs.x    
+        this.w * rhs.z + this.z * rhs.w + this.x * rhs.y - this.y * rhs.x
     );
-    
+
     return result;
 }
 
 Quaternion.prototype.getMatrix = function()
 {
     var matrix = new Matrix4x4();
-    
+
     var x2 = this.x + this.x;
     var y2 = this.y + this.y;
     var z2 = this.z + this.z;
@@ -4154,7 +4154,7 @@ Quaternion.prototype.getMatrix = function()
     matrix._24 = 0;
     matrix._34 = 0;
     matrix._44 = 1;
-    
+
     return matrix;
 }
 
@@ -4168,7 +4168,7 @@ function Plane(point, normal)
     this.point = new Vector3D();
     this.normal = new Vector3D();
     this.dot = 0;
-    
+
     if (point && normal)
     {
         this.point.copy(point);
@@ -4191,7 +4191,7 @@ function Plane2(v0, v1, v2)
         normal = crossProduct(leg1, leg2);
         normal.normalize();
     }
-    
+
     Plane.call(this, v0, normal);
 }
 
@@ -4208,11 +4208,11 @@ function pointOnPlane(point, plane, tolerance)
 }
 
 /**
- * Determine if a point lies on the positive side of the plane; i.e., determine if the 
+ * Determine if a point lies on the positive side of the plane; i.e., determine if the
  * point lies in the half-space on the side of the plane in the direction of the normal.
  * @param point     - the point.
  * @param plane     - the plane.
- * @return bool     - true if the point lies on the positive side of the plane, false if 
+ * @return bool     - true if the point lies on the positive side of the plane, false if
  *                    it does not.
  */
 function pointOnPositiveSideOfPlane(point, plane)
@@ -4221,12 +4221,12 @@ function pointOnPositiveSideOfPlane(point, plane)
 }
 
 /**
- * Determine if a point lies on the negative side of the plane; i.e., determine if the 
- * point lies in the half-space on the side of the plane in the opposite direction of the 
+ * Determine if a point lies on the negative side of the plane; i.e., determine if the
+ * point lies in the half-space on the side of the plane in the opposite direction of the
  * normal.
  * @param point     - the point.
  * @param plane     - the plane.
- * @return bool     - true if the point lies on the negative side of the plane, false if 
+ * @return bool     - true if the point lies on the negative side of the plane, false if
  *                    it does not.
  */
 function pointOnNegativeSideOfPlane(point, plane)
@@ -4248,7 +4248,7 @@ function lineIntersectsPlane(line, plane)
 {
     var point = new Vector3D();
     var result;
-    
+
     // solve for t in terms of plane equation Ax + By + Cz = D
     var lhs = plane.normal.x * line.dir.x + plane.normal.y * line.dir.y + plane.normal.z * line.dir.z;
     if (lhs == 0)  // plane and line are parallel
@@ -4321,7 +4321,7 @@ function lineSegmentPlaneIntersection(a, b, plane)
 
     // if t is not in range [0, 1], then point of intersection is not
     // within line segment
-    if (t < 0 || t > 1) 
+    if (t < 0 || t > 1)
     {
         return { count: 0 };
     }
@@ -4362,7 +4362,7 @@ function planesIntersect(plane1, plane2)
     {
         return false;
     }
- 
+
     return true;
 }
 
@@ -4411,7 +4411,7 @@ ViewVolume.prototype.setPerspective = function(fovyRadians, aspectRatio, near, f
     // for a symmetric frustum volume
 
     // front quad
-   
+
     // derive 1/2 quad height from y-FOV and distance from origin
     var height = near * Math.tan(0.5 * fovyRadians);
 
@@ -4433,7 +4433,7 @@ ViewVolume.prototype.setPerspective = function(fovyRadians, aspectRatio, near, f
     var backBotLeft  = new Vector3D(-width,-height, far);
     var backBotRight = new Vector3D( width,-height, far);
 
-    // derive planes from frustum endpoints (specify points in 
+    // derive planes from frustum endpoints (specify points in
     // clockwise order so that plane normals point out of frustum)
     this.left   = new Plane2(frontTopLeft, frontBotLeft, backBotLeft);
     this.right  = new Plane2(frontBotRight, frontTopRight, backTopRight);
@@ -4460,7 +4460,7 @@ ViewVolume.prototype.setOrthographic = function(left, right, top, bottom, near, 
     var backBotLeft   = new Vector3D(left,  bottom, far);
     var backBotRight  = new Vector3D(right, bottom, far);
 
-    // derive planes from frustum endpoints (specify points in 
+    // derive planes from frustum endpoints (specify points in
     // clockwise order so that plane normals point out of frustum)
     this.left   = new Plane2(backBotLeft,   backTopLeft,   frontTopLeft);
     this.right  = new Plane2(frontBotRight, frontTopRight, backTopRight);
@@ -4471,15 +4471,15 @@ ViewVolume.prototype.setOrthographic = function(left, right, top, bottom, near, 
 }
 var EPSILON = 0.00000001;
 
-function SIGN3(v) 
+function SIGN3(v)
 {
     (((v).x < 0 ) ? 4 : 0 | ((v).y < 0) ? 2 : 0 | ((v).z < 0) ? 1 : 0);
 }
 
 /**
- * Solve quadratic equation with term coefficients a (2nd degree term), 
- * b (1st degree term), and c (constant term); return number of real roots; 
- * if 1 root exists, it is set to root1, if 2 roots exist, they are set to 
+ * Solve quadratic equation with term coefficients a (2nd degree term),
+ * b (1st degree term), and c (constant term); return number of real roots;
+ * if 1 root exists, it is set to root1, if 2 roots exist, they are set to
  * root1 and root2.
  * @param a      - 2nd degree term coefficient.
  * @param b      - 1st degree term coefficient.
@@ -4492,13 +4492,13 @@ function SIGN3(v)
  */
 function solveQuadraticEquation(a, b, c)
 {
-   if (a == 0) 
+   if (a == 0)
    {
        return { count: 0 };
    }
 
    var sqrt_term = b * b - 4 * a * c;
-   if (sqrt_term < 0) 
+   if (sqrt_term < 0)
    {
        return { count: 0 };
    }
@@ -4517,16 +4517,16 @@ function solveQuadraticEquation(a, b, c)
    return { count: 2, root1: root1, root2: root2 };
 }
 
-/** 
- * Determine if a ray intersects a triangle. 
+/**
+ * Determine if a ray intersects a triangle.
  *
  * Given a ray defined by an origin and a direction, and a triangle,
- * determine if the ray intersects the triangle; if an intersection exists, 
- * determine the distance t from the ray origin to the point of intersection, and the 
+ * determine if the ray intersects the triangle; if an intersection exists,
+ * determine the distance t from the ray origin to the point of intersection, and the
  * barycentric coordinates (u, v) inside the triangle;
  *
  * Algorithm adapted from:
- *    Tomas Moller and Ben Trumbore, "Fast, Minimum Storage Ray/Triangle 
+ *    Tomas Moller and Ben Trumbore, "Fast, Minimum Storage Ray/Triangle
  *    Intersection", journal of graphics tool, vol. 2, no. 1, pp. 21-28, 1997.
  *    http://www.ce.chalmers.se/staff/tomasm
  *
@@ -4535,9 +4535,9 @@ function solveQuadraticEquation(a, b, c)
  * @param v0         - first triangle vertex.
  * @param v1         - second triangle vertex.
  * @param v2         - third triangle vertex.
- * @param skipPosDet - if true, skip intersection test (return false) if the triangle's determinate 
+ * @param skipPosDet - if true, skip intersection test (return false) if the triangle's determinate
  *                     is positive.
- * @param skipNegDet - if true, skip intersection test (return false) if the triangle's determinate 
+ * @param skipNegDet - if true, skip intersection test (return false) if the triangle's determinate
  *                     is negative.
  * @return t         - distance from ray origin to intersection point (if ray intersects triangle).
  * @return u         - barycentric coordinate u of intersection point (if ray intersects triangle).
@@ -4553,23 +4553,23 @@ function rayTriangleIntersection(rayOrig, rayDir, v0, v1, v2, skipPosDet, skipNe
     // find vectors for two edges sharing v0
     var edge1 = new Vector3D(v1.x - v0.x, v1.y - v0.y, v1.z - v0.z);
     var edge2 = new Vector3D(v2.x - v0.x, v2.y - v0.y, v2.z - v0.z);
-   
+
     // calculate determinant
     var pvec = crossProduct(dir, edge2);
     var det = dotProduct(edge1, pvec);
 
     // if determinant is near zero, ray lies in plane of triangle
-    if (-EPSILON < det && det < EPSILON) 
+    if (-EPSILON < det && det < EPSILON)
     {
         return { result: false };
     }
 
     // if requested, skip triangles with negative/positive determinates
-    if (skipPosDet && det > 0) 
+    if (skipPosDet && det > 0)
     {
         return { result: false };
     }
-    if (skipNegDet && det < 0) 
+    if (skipNegDet && det < 0)
     {
         return { result: false };
     }
@@ -4590,7 +4590,7 @@ function rayTriangleIntersection(rayOrig, rayDir, v0, v1, v2, skipPosDet, skipNe
 
     // calculate v parameter and test bounds
     var v = dotProduct(dir, qvec) * inv_det;
-    if (v < 0 || u + v > 1) 
+    if (v < 0 || u + v > 1)
     {
         return { result: false };
     }
@@ -4605,7 +4605,7 @@ function rayTriangleIntersection(rayOrig, rayDir, v0, v1, v2, skipPosDet, skipNe
  * Determine if a ray intersects a sphere.
  *
  * Given a ray defined by an origination point (x0, y0, z0), and
- * destination point (x1, y1, z1), and represented by the parametric equations: 
+ * destination point (x1, y1, z1), and represented by the parametric equations:
  * x = x0 + t(x1 - x0), y = y0 + t(y1 - y0), z = z0 + t(z1 - z0),
  * determine if the ray intersects the sphere defined by center (a, b, c) and
  * radius r, and represented by the equation (x - a)² + (y - b)² + (z - c)² = r²;
@@ -4614,7 +4614,7 @@ function rayTriangleIntersection(rayOrig, rayDir, v0, v1, v2, skipPosDet, skipNe
  *
  * The intersection is found by substituting x, y, and z from the ray equations
  * into the sphere equation, and solving for t (after term collection):
- * 
+ *
  * (dx² + dy² + dz²)t² + 2[dx(x0 - a) + dy(y0 - b) + dz(z0 - c)]t
  *    + (x0 - a)² + (y0 - b)² + (z0 - c)² - r² = 0
  *
@@ -4636,7 +4636,7 @@ function raySphereIntersection(rayOrig, rayDir, center, radius)
     // normalize ray direction vector
     var dir = new Vector3D(rayDir.x, rayDir.y, rayDir.z);
     dir.normalize();
-    
+
     var rayDest = new Vector3D(rayOrig.x + dir.x, rayOrig.y + dir.y, rayOrig.z + dir.z);
 
     var dx = rayDest.x - rayOrig.x;
@@ -4646,8 +4646,8 @@ function raySphereIntersection(rayOrig, rayDir, center, radius)
     // a = dx * dx + dy * dy + dz * dz == 1
     // because distance from rayOrig to rayDest is 1
 
-    var b = 2 * (dx * (rayOrig.x - center.x) + 
-                 dy * (rayOrig.y - center.y) + 
+    var b = 2 * (dx * (rayOrig.x - center.x) +
+                 dy * (rayOrig.y - center.y) +
                  dz * (rayOrig.z - center.z));
 
     var c = (rayOrig.x - center.x) * (rayOrig.x - center.x) +
@@ -4659,26 +4659,26 @@ function raySphereIntersection(rayOrig, rayDir, center, radius)
 }
 
 /**
- * Determine if the triangle contains a point which is known to lie in the plane of the triangle.  
+ * Determine if the triangle contains a point which is known to lie in the plane of the triangle.
  * Adapted from "Triangle-Cube Intersection", Graphics Gems III, pp.236-239.
  * @param v0      - first triangle vertex.
  * @param v1      - second triangle vertex.
  * @param v2      - third triangle vertex.
  * @param point   - the point.
- * @return result - true if the triangle contains the point, false if not. 
+ * @return result - true if the triangle contains the point, false if not.
  */
 function triangleContainsPoint(v0, v1, v2, point)
 {
-    // for each triangle side, make a vector out of it by subtracting vertices; 
-    // make another vector from one vertex to the point; the cross-product of these 
-    // two vectors is orthogonal to both and the signs of its components indicate 
+    // for each triangle side, make a vector out of it by subtracting vertices;
+    // make another vector from one vertex to the point; the cross-product of these
+    // two vectors is orthogonal to both and the signs of its components indicate
     // whether the point was on the inside or on the outside of this triangle side
-    var sign12 = SIGN3(crossProduct(subtract3D(v0, v1), subtract3D(v0, point))); 
-    var sign23 = SIGN3(crossProduct(subtract3D(v1, v2), subtract3D(v1, point))); 
-    var sign31 = SIGN3(crossProduct(subtract3D(v2, v0), subtract3D(v2, point))); 
+    var sign12 = SIGN3(crossProduct(subtract3D(v0, v1), subtract3D(v0, point)));
+    var sign23 = SIGN3(crossProduct(subtract3D(v1, v2), subtract3D(v1, point)));
+    var sign31 = SIGN3(crossProduct(subtract3D(v2, v0), subtract3D(v2, point)));
 
     // if all three cross-product vectors agree in their component signs,
-    // then the point must be inside all three; the point cannot be outside all 
+    // then the point must be inside all three; the point cannot be outside all
     // three sides simultaneously.
     if ((sign12 == sign23) && (sign23 == sign31))
     {
@@ -4708,10 +4708,10 @@ function triangleOnPositiveSideOfPlane(v0, v1, v2, plane)
  * of intersection.
  * @param a       - one endpoint of the line segment.
  * @param b       - other endpoint of the line segment.
- * @param v0      - first triangle vertex. 
+ * @param v0      - first triangle vertex.
  * @param v1      - second triangle vertex.
  * @param v2      - third triangle vertex.
- * @return point  - the point of intersection (if line segment intersects triangle). 
+ * @return point  - the point of intersection (if line segment intersects triangle).
  * @return result - true if the line segment intersects the triangle, false if not.
  */
 function lineSegmentTriangleIntersection(a, b, v0, v1, v2)
@@ -4739,22 +4739,22 @@ function lineSegmentTriangleIntersection(a, b, v0, v1, v2)
     {
         return { result: true, point: result.point };
     }
-    
+
     return { result: false };
 }
 var eAttrType = {
     Unknown                     :-1,
-    
+
     Attribute                   :0,
-    
+
     AttributeContainer          :1,
-    
+
     AttributeVector             :2,
-    
+
     AttributeFactory            :3,
-    
+
     AttributeRegistry           :4,
-    
+
     BalloonTipLabelStyleAttr    :5,
     BBoxAttr                    :6,
     BooleanAttr                 :7,
@@ -4783,9 +4783,9 @@ var eAttrType = {
     ViewportAttr                :30,
     ViewVolumeAttr              :31,
     RenderableElementStyleAttr  :32,
-    
+
     Node                        :1000,
-       
+
     ParentableMotionElement     :1001,
     Camera                      :1002,
     PerspectiveCamera           :1003,
@@ -4793,32 +4793,32 @@ var eAttrType = {
     Light                       :1005,
     DirectionalLight            :1006,
     PointLight                  :1007,
-    SpotLight                   :1008, 
-    GlobalIllumination          :1009,           
+    SpotLight                   :1008,
+    GlobalIllumination          :1009,
     Material                    :1010,
-    Texture                     :1011, 
+    Texture                     :1011,
     RenderableElement           :1012,
     Geometry                    :1013,
     VertexGeoemtry              :1014,
-    TriList                     :1015, 
+    TriList                     :1015,
     Group                       :1016,
     Isolator                    :1017,
-    Dissolve                    :1018,  
-    Transform                   :1019,   
+    Dissolve                    :1018,
+    Transform                   :1019,
     QuaternionRotate            :1020,
     Scale                       :1021,
     Rotate                      :1022,
-    Translate                   :1023,   
+    Translate                   :1023,
     Model                       :1024,
     Surface                     :1025,
     MediaTexture                :1026,
-    NullObject                  :1027,   
+    NullObject                  :1027,
     Label                       :1028,
     HTMLLabel                   :1029,
-    BalloonTipLabel             :1030, 
+    BalloonTipLabel             :1030,
     PathTrace                   :1031,
     Cube                        :1032,
-    
+
     Evaluator                   :1100,
     SceneInspector              :1101,
     KeyframeInterpolator        :1102,
@@ -4828,7 +4828,7 @@ var eAttrType = {
     ObjectInspector             :1106,
     MultiTargetObserver			:1107,
     ObjectMover	 				:1108,
-    AnimalMover					:1109,   
+    AnimalMover					:1109,
     Evaluator_End               :1199, // all evaluator types must be given a type between Evaluator and Evaluator_End
 
     Node_End                    :1999,
@@ -4841,7 +4841,7 @@ var eAttrType = {
     SerializeDirective          :2005,
     CollideDirective            :2006,
     Directive_End               :2999,
-    
+
     Command                     :3000,
     CommandSequence             :3001,
     AppendNode                  :3002,
@@ -4862,7 +4862,7 @@ var eAttrType = {
     DeviceHandler               :4000,
     MouseHandler                :4001,
     DeviceHandler_End           :4999,
-    
+
     UserDefined                 :5000
 };
 
@@ -4872,7 +4872,7 @@ var eAttrElemType = {
 
     // attribute
     Attribute                   :0,
-    
+
     // standard C-types
     Int                         :1,
     UnsignedInt                 :2,
@@ -4887,7 +4887,7 @@ var eAttrElemType = {
 
 function enumerateAttributeTypes()
 {
-    var count = 0; 
+    var count = 0;
     for (var i in eAttrType)
     {
         if (eAttrType[i] == 0)
@@ -4905,7 +4905,7 @@ function enumerateAttributeElementTypes()
     }
 }
 var eAttrSetOp = {
-    Replace         :0,  
+    Replace         :0,
     Add				:1,
     Subtract		:2,
     Multiply		:3,
@@ -4918,8 +4918,8 @@ var eAttrSetOp = {
     NOR				:10
 };
 
-function AttributeTargetDesc(target, 
-                             sourceElementIndex, 
+function AttributeTargetDesc(target,
+                             sourceElementIndex,
                              targetElementIndex,
                              op,
                              converter)
@@ -4965,22 +4965,22 @@ function AttributeSetParams(elementIndex,
     this.alertModifiedCBs = alertModifiedCBs != undefined ? alertModifiedCBs : true;
     this.caller = caller != undefined ? caller : null;
 }
-                            
+
 Attribute.prototype = new Base();
 Attribute.prototype.constructor = Attribute;
 
-function Attribute() 
+function Attribute()
 {
     Base.call(this);
     this.className = "Attribute";
     this.attrType = eAttrType.Attribute;
     this.attrElemType = eAttrElemType.Attribute;
-    
+
     this.native = true;
     this.transient = false;
     this.persistent = false;
     this.deserialized = false;
-    
+
     this.values = [];
     this.lastValues = [];
     this.modifiedCBs = [];
@@ -4996,7 +4996,7 @@ Attribute.prototype.destroy = function()
     // remove all targeting associated with this
     this.removeAllSources();
     this.removeAllTargets();
-    
+
     // call base-class implementation
     Base.prototype.destroy.call(this);
 }
@@ -5009,7 +5009,7 @@ Attribute.prototype.clone = function()
 Attribute.prototype.getValue = function(values, params)
 {
     var elementIndex = (params ? params.elementIndex : -1);
-    
+
     if (elementIndex < 0)
     {
         if (this.values == null)
@@ -5031,7 +5031,7 @@ Attribute.prototype.getValue = function(values, params)
     else // elementIndex >= 0
     {
         var valueElementIndex = Math.max(0, params ? params.valueElementIndex : 0);
-            
+
         values[valueElementIndex] = this.values[elementIndex];
     }
 }
@@ -5039,7 +5039,7 @@ Attribute.prototype.getValue = function(values, params)
 Attribute.prototype.setValue = function(values, params)
 {
     this.lastValues = this.values.slice();
-    
+
     var elementIndex = (params ? params.elementIndex : -1);
     var op = (params ? params.op : eAttrSetOp.Replace);
 
@@ -5141,9 +5141,9 @@ Attribute.prototype.getLength = function()
     if (this.values.length == undefined)
     {
         return (this.values == undefined ? 0 : 1);
-    }   
-    
-    return this.values.length; 
+    }
+
+    return this.values.length;
 }
 
 Attribute.prototype.setLength = function(length)
@@ -5158,7 +5158,7 @@ Attribute.prototype.addModifiedCB = function(callback, data)
 }
 
 Attribute.prototype.removeModifiedCB = function(callback, data)
-{   
+{
     this.modifiedCBs.splice(this.modifiedCBs.indexOf(callback), 1);
     this.modifiedCBsData.splice(this.modifiedCBsData.indexOf(data), 1);
 }
@@ -5168,7 +5168,7 @@ Attribute.prototype.addTarget = function(target, op, converter, setValueOnTarget
     if (op == undefined) op = eAttrSetOp.Replace;
     if (converter == undefined) converter = null;
     if (setValueOnTargeting == undefined) setValueOnTargeting = true;
-    
+
     this.addElementTarget(target, -1, -1, op, converter, setValueOnTargeting);
 }
 
@@ -5241,7 +5241,7 @@ Attribute.prototype.removeElementTarget = function(target, sourceElementIndex, t
     {
         this.deleteTarget(new AttributeTargetDesc(target, sourceElementIndex, targetElementIndex));
 
-        // remove this as a source of target 
+        // remove this as a source of target
         target.deleteSource(new AttributeSourceDesc(this, sourceElementIndex, targetElementIndex));
     }
 }
@@ -5329,7 +5329,7 @@ Attribute.prototype.setNative = function(native)
 
 Attribute.prototype.isNative = function()
 {
-    return this.native;    
+    return this.native;
 }
 
 Attribute.prototype.setTransient = function(transient)
@@ -5339,7 +5339,7 @@ Attribute.prototype.setTransient = function(transient)
 
 Attribute.prototype.isTransient = function()
 {
-    return this.transient;    
+    return this.transient;
 }
 
 Attribute.prototype.setPersistent = function(persistent)
@@ -5349,7 +5349,7 @@ Attribute.prototype.setPersistent = function(persistent)
 
 Attribute.prototype.isPersistent = function()
 {
-    return this.persistent;    
+    return this.persistent;
 }
 
 Attribute.prototype.getRegistry = function()
@@ -5364,12 +5364,12 @@ Attribute.prototype.setRegistry = function(registry)
 
 Attribute.prototype.onRegister = function(registry)
 {
-    
+
 }
 
 Attribute.prototype.onUnregister = function(registry)
 {
-    
+
 }
 
 Attribute.prototype.flagDeserializedFromXML = function()
@@ -5425,7 +5425,7 @@ AttributeContainer.prototype.isContainer = function()
 AttributeContainer.prototype.registerAttribute = function(attribute, name)
 {
 	if (!attribute) return;
-	
+
     if (this.attrNameMap[name] == undefined)
     {
         this.attrNameMap[name] = new Array();
@@ -5447,7 +5447,7 @@ AttributeContainer.prototype.registerAttribute = function(attribute, name)
 AttributeContainer.prototype.unregisterAttribute = function(attribute)
 {
 	if (!attribute) return;
-	
+
     for (var i in this.attrNameMap)
     {
         for (var j=0; j < this.attrNameMap[i].length; j++)
@@ -5470,7 +5470,7 @@ AttributeContainer.prototype.getAttribute = function(name)
     {
         return null;
     }
-    
+
     return this.attrNameMap[name][0];
 }
 
@@ -5488,7 +5488,7 @@ AttributeContainer.prototype.getAttributeAt = function(index)
             count++;
         }
     }
-    
+
     return null;
 }
 
@@ -5524,7 +5524,7 @@ AttributeContainer.prototype.getAttributeNameAt = function(index)
             count++;
         }
     }
-    
+
     return null;
 }
 
@@ -5569,7 +5569,7 @@ AttributeContainer.prototype.addTarget = function(target, op, converter, setValu
         if (op == undefined) op = null;
         if (converter == undefined) converter = null;
         if (setValueOnTargeting == undefined) setValueOnTargeting = true;
-        
+
         var numAttributesToConnect = Math.max(this.getAttributeCount(), target.getAttributeCount());
         if (numAttributesToConnect == 0)
         {
@@ -5634,7 +5634,7 @@ AttributeContainer.prototype.synchronize = function(src, syncValues)
                 attr.setContainer(this);
                 this.registerAttribute(attr, i);
             }
-    
+
             if (attr && syncValues)
             {
                 attr.copyValue(src.attrNameMap[i]);
@@ -5653,7 +5653,7 @@ function AttributeContainer_AttributeModifiedCB(attribute, container)
 
 function AttributeContainer_AttributeModifiedCounterCB(attribute, container)
 {
-    container.incrementAttributeModificationCount(attribute);  
+    container.incrementAttributeModificationCount(attribute);
 }
 AttributeRegistry.prototype = new AttributeContainer();
 AttributeRegistry.prototype.constructor = AttributeRegistry;
@@ -5665,10 +5665,10 @@ function AttributeRegistry()
     this.attrType = eAttrType.AttributeRegistry;
 
     this.objectCount = 0;
-    
+
     this.typeRegistry = [];
     this.nameRegistry = [];
-    
+
     this.uniqueAttributes = [];
 }
 
@@ -5678,10 +5678,10 @@ AttributeRegistry.prototype.addUnique = function(attribute)
 	{
 		if (this.uniqueAttributes[i] == attribute) return;
 	}
-	
+
 	this.uniqueAttributes.push(attribute);
 }
-    
+
 AttributeRegistry.prototype.removeUnique = function(attribute)
 {
 	for (var i=0; i < this.uniqueAttributes.length; i++)
@@ -5693,14 +5693,14 @@ AttributeRegistry.prototype.removeUnique = function(attribute)
 		}
 	}
 }
-    
+
 AttributeRegistry.prototype.registerByType = function(attribute, type)
 {
     if (this.typeRegistry[type] == undefined)
     {
         this.typeRegistry[type] = new Array();
     }
-    
+
     this.typeRegistry[type].push(attribute);
 }
 
@@ -5710,7 +5710,7 @@ AttributeRegistry.prototype.registerByName = function(attribute, name)
     {
         name = "unnamed";
     }
-    
+
     if (this.nameRegistry[name] == undefined)
     {
         this.nameRegistry[name] = new Array();
@@ -5732,13 +5732,13 @@ AttributeRegistry.prototype.register = function(attribute)
         if (name)
         {
             this.registerByName(attribute, name.getValueDirect().join(""));
-            name.addModifiedCB(AttributeRegistry_AttributeContainerNameModifiedCB, this); 
+            name.addModifiedCB(AttributeRegistry_AttributeContainerNameModifiedCB, this);
         }
     }
-    
+
     this.addUnique(attribute);
     this.objectCount++;
-    
+
     attribute.onRegister(this);
 }
 
@@ -5756,7 +5756,7 @@ AttributeRegistry.prototype.unregisterByName = function(attribute, name)
     {
         name = "unnamed";
     }
-    
+
     if (this.nameRegistry[name])
     {
         this.nameRegistry[name].splice(this.nameRegistry[name].indexOf(attribute), 1);
@@ -5767,7 +5767,7 @@ AttributeRegistry.prototype.unregister = function(attribute)
 {
     // register using type
     this.unregisterByType(attribute, attribute.attrType);
-    
+
     // register using name attribute if container
     if (attribute.isContainer())
     {
@@ -5776,13 +5776,13 @@ AttributeRegistry.prototype.unregister = function(attribute)
         if (name)
         {
             this.unregisterByName(attribute, name.getValueDirect().join(""));
-            name.removeModifiedCB(AttributeRegistry_AttributeContainerNameModifiedCB, this); 
+            name.removeModifiedCB(AttributeRegistry_AttributeContainerNameModifiedCB, this);
         }
     }
-    
+
     this.removeUnique(attribute);
     this.objectCount--;
-    
+
     attribute.onUnregister(this);
 }
 
@@ -5812,7 +5812,7 @@ AttributeRegistry.prototype.getByType = function(type)
             return result;
         }
         break;
-        
+
     case eAttrType.Evaluator:
         {
             var result = [];
@@ -5825,17 +5825,17 @@ AttributeRegistry.prototype.getByType = function(type)
                     {
                         result.push(evaluators[j]);
                     }
-                }    
-            }   
+                }
+            }
             return result;
         }
         break;
-        
+
     default:
         {
             return this.typeRegistry[type];
         }
-        break;    
+        break;
     }
 }
 
@@ -5867,15 +5867,15 @@ AttributeRegistry.prototype.clear = function()
         this.typeRegistry[i] = [];
     }
     this.typeRegistry = [];
-    
+
     for (var i in this.nameRegistry)
     {
         this.nameRegistry[i] = [];
-    } 
+    }
     this.nameRegistry = [];
 
     this.uniqueAttributes = [];
-    
+
     this.objectCount = 0;
 }
 
@@ -5890,7 +5890,7 @@ AttributeRegistry.prototype.getObject = function(num)
     {
     	return this.uniqueAttributes[num];
     }
-    
+
     return null;
 }
 
@@ -6072,7 +6072,7 @@ function PulseAttr()
     BooleanAttr.call(this);
     this.className = "PulseAttr";
     this.attrType = eAttrType.PulseAttr;
-    
+
     this.setTransient(true); // don't serialize because by definition this attribute doesn't hold "true" (it pulses)
 }
 
@@ -6187,7 +6187,7 @@ StringAttr.prototype.setValueDirect = function(value, params)
 StringAttr.prototype.setValue = function(values, params)
 {
     this.values = [];
-    
+
     // call base-class implementation
     Attribute.prototype.setValue.call(this, values, params);
 }
@@ -6200,7 +6200,7 @@ function TernaryAttr(value)
     NumberAttr.call(this, value);
     this.className = "TernaryAttr";
     this.attrType = eAttrType.TernaryAttr;
-    
+
     // TODO: this.setRange(-1, 1);
 }
 
@@ -6322,19 +6322,19 @@ function AttributeVector(allocator) // TODO: not sure if allocator is needed
     AttributeContainer.call(this);
     this.className = "AttributeVector";
     this.attrType = eAttrType.AttributeVector;
-    
+
     this.vector = [];
-    
+
     this.allocator = allocator;
-    
+
     this.size = new NumberAttr(0);
     this.baseName = new StringAttr("item");
     this.appendParsedElements = new BooleanAttr(false);
     this.elementModified = new PulseAttr();
-    
+
     this.size.addModifiedCB(AttributeVector_SizeModifiedCB, this);
     this.baseName.addModifiedCB(AttributeVector_BaseNameModifiedCB, this);
-    
+
     this.registerAttribute(this.size, "size");
     this.registerAttribute(this.baseName, "baseName");
     this.registerAttribute(this.appendParsedElements, "appendParsedElements");
@@ -6369,7 +6369,7 @@ AttributeVector.prototype.getAt = function(index)
     {
         return this.vector[index];
     }
-    
+
     return null;
 }
 
@@ -6389,9 +6389,9 @@ AttributeVector.prototype.prev = function(element)
         {
             if (i > 0) return this.vector[i-1];
             break;
-        }        
+        }
     }
-    
+
     return null;
 }
 
@@ -6403,9 +6403,9 @@ AttributeVector.prototype.next = function(element)
         {
             if (i < (this.vector.length - 1)) return this.vector[i+1];
             break;
-        }        
+        }
     }
-    
+
     return null;
 }
 
@@ -6433,7 +6433,7 @@ AttributeVector.prototype.setElementName = function(element, name)
 {
     this.unregisterAttribute(element); // don't allow registration under multiple names
     this.registerAttribute(element, name);
-    
+
     // TODO: add to element name map
     console.debug("TODO: add to element name map");
 }
@@ -6506,7 +6506,7 @@ function StyleAttr()
     this.styleUrl = new StringAttr();
 
     this.styleUrl.addModifiedCB(StyleAttr_StyleUrlModifiedCB, this);
-    
+
     this.registerAttribute(this.setOp, "setOp");
     this.registerAttribute(this.styleUrl, "styleUrl");
 }
@@ -6541,7 +6541,7 @@ function StylesAttr()
 
     this.registeredCBs = [];
     this.registeredCBsData = [];
-    
+
     this.enabled = new BooleanAttr(true);
 
     this.registerAttribute(this.enabled, "enabled");
@@ -6634,7 +6634,7 @@ function StyleMapAttr()
 
     this.eventType = eEventType.Unknown;
     this.targetContainer = null;
-    
+
     this.event = new StringAttr();
     this.styles = new StylesAttr();
     this.styleUrl = new StringAttr();
@@ -6797,22 +6797,22 @@ function KeyframeAttr()
     AttributeContainer.call(this);
     this.className = "KeyframeAttr";
     this.attrType = eAttrType.KeyframeAttr;
-    
+
     this.time = new NumberAttr();
     this.value = new NumberAttr();
     this.shape = new NumberAttr();
     this.params = new AttributeVector();
-    
+
     for (var i=0; i < 6; i++)
     {
         this.params.push_back(new NumberAttr(0));
     }
-    
+
     this.registerAttribute(this.time, "time");
     this.registerAttribute(this.value, "value");
     this.registerAttribute(this.shape, "shape");
     this.registerAttribute(this.params, "params");
-    
+
     this.getTime = function() { return this.time.getValueDirect(); }
     this.getValue = function() { return this.value.getValueDirect(); }
     this.getShape = function() { return this.shape.getValueDirect(); }
@@ -6828,7 +6828,7 @@ function KeyframesAttr()
     this.className = "KeyframesAttr";
     this.attrType = eAttrType.KeyframesAttr;
 }
-    
+
 BBoxAttr.prototype = new AttributeContainer();
 BBoxAttr.prototype.constructor = BBoxAttr;
 
@@ -6837,10 +6837,10 @@ function BBoxAttr()
     AttributeContainer.call(this);
     this.className = "BBoxAttr";
     this.attrType = eAttrType.BBoxAttr;
-    
+
     this.min = new Vector3DAttr();
     this.max = new Vector3DAttr();
-    
+
     this.registerAttribute(this.min, "min");
     this.registerAttribute(this.max, "max");
 }
@@ -6865,12 +6865,12 @@ function ImageAttr()
     this.byteAlignment = new NumberAttr(0);
     this.pixelFormat = new NumberAttr(ePixelFormat.Unknown);
     this.pixels = new NumberArrayAttr();
-    
+
     this.registerAttribute(this.width, "width");
     this.registerAttribute(this.height, "height");
     this.registerAttribute(this.byteAlignment, "byteAlignment");
     this.registerAttribute(this.pixelFormat, "pixelFormat");
-    this.registerAttribute(this.pixels, "pixels");    
+    this.registerAttribute(this.pixels, "pixels");
 }
 
 RectAttr.prototype = new AttributeContainer();
@@ -6979,7 +6979,7 @@ FontStyleAttr.prototype.updateStyle = function(style)
     {
         this.color.copyValue(style.color, setOp);
     }
-	
+
 	// effects
     if (style.getAttributeModificationCount(style.effects))
     {
@@ -7178,7 +7178,7 @@ function HTMLLabelStyleAttr()
     StyleAttr.call(this);
     this.className = "HTMLLabelStyleAttr";
     this.attrType = eAttrType.HTMLLabelStyleAttr;
-    
+
     this.bgColor = new ColorAttr(1, 1, 1, 1); // white
     this.height = new NumberAttr(0); // 0 (auto-calculate)
     this.html = new StringAttr(); // empty string
@@ -7187,7 +7187,7 @@ function HTMLLabelStyleAttr()
     this.top = new NumberAttr(0);
     this.url = new StringAttr(); // empty string
     this.width = new NumberAttr(0); // 0 (auto-calculate)
-    
+
     this.registerAttribute(this.bgColor, "bgColor");
     this.registerAttribute(this.height, "height");
     this.registerAttribute(this.html, "html");
@@ -7207,14 +7207,14 @@ function BalloonTipLabelStyleAttr()
     StyleAttr.call(this);
     this.className = "BalloonTipLabelStyleAttr";
     this.attrType = eAttrType.BalloonTipLabelStyleAttr;
-    
+
     this.balloonOffset = new NumberAttr(100);
     this.bgColor = new ColorAttr(1, 1, 1, 1);
     this.displayMode = new StringAttr("default");
     this.htmlLabelStyle = new HTMLLabelStyleAttr();
     this.text = new StringAttr();
     this.textColor = new ColorAttr(0, 0, 0, 1);
-	
+
 	this.registerAttribute(this.balloonOffset, "balloonOffset");
 	this.registerAttribute(this.bgColor, "bgColor");
 	this.registerAttribute(this.displayMode, "displayMode");
@@ -7368,7 +7368,7 @@ function setAttributeValue(attribute, value)
         {
             if (value == "false" || value == "0")
                 attribute.setValueDirect(false);
-            else 
+            else
                 attribute.setValueDirect(true);
         }
         break;
@@ -7387,8 +7387,8 @@ function setAttributeValue(attribute, value)
             }
             attribute.setValue(value);
         }
-        break;   
-    
+        break;
+
     case eAttrType.NumberAttr:
         {
             // convert from string to numeric
@@ -7410,12 +7410,12 @@ function Agent()
 {
     AttributeContainer.call(this);
     this.className = "Agent";
-    
+
     this.running = false;
-    
+
     this.name = new StringAttr("");
     this.enabled = new BooleanAttr(true);
-    
+
     this.registerAttribute(this.name, "name");
     this.registerAttribute(this.enabled, "enabled");
 }
@@ -7446,7 +7446,7 @@ function RayIntersectRecord()
     this.triIndex = 0;
 }
 
-function RayIntersectParams(rayOrigin, 
+function RayIntersectParams(rayOrigin,
                             rayDir,
                             nearDistance,
                             farDistance,
@@ -7488,15 +7488,15 @@ function Sphere()
 Sphere.prototype.intersects = function(sphere)
 {
     // compare squared distances to keep from calling sqrt
-    /*return (((this.xcenter.x - sphere.xcenter.x) * (this.xcenter.x - sphere.xcenter.x) + 
+    /*return (((this.xcenter.x - sphere.xcenter.x) * (this.xcenter.x - sphere.xcenter.x) +
              (this.xcenter.y - sphere.xcenter.y) * (this.xcenter.y - sphere.xcenter.y) +
              (this.xcenter.z - sphere.xcenter.z) * (this.xcenter.z - sphere.xcenter.z)) < ((this.xradius + sphere.xradius) * (this.xradius + sphere.xradius)) ? true : false);
     */
     var distanceBetweenCenters = distanceBetween(this.xcenter, sphere.xcenter);
     var combinedRadii = this.xradius + sphere.xradius;
-    
+
     if (distanceBetweenCenters < combinedRadii) return true;
-    
+
     return false;
 }
 
@@ -7504,14 +7504,14 @@ function Region(minX, minY, minZ, maxX, maxY, maxZ)
 {
     this.min = new Vector3D(minX, minY, minZ);
     this.max = new Vector3D(maxX, maxY, maxZ);
-    
+
     this.xpos = new Plane();
     this.xneg = new Plane();
     this.ypos = new Plane();
     this.yneg = new Plane();
     this.zpos = new Plane();
     this.zneg = new Plane();
-    
+
     this.xpos_ypos_zpos = new Plane();
     this.xpos_ypos_zneg = new Plane();
     this.xpos_yneg_zpos = new Plane();
@@ -7520,7 +7520,7 @@ function Region(minX, minY, minZ, maxX, maxY, maxZ)
     this.xneg_ypos_zneg = new Plane();
     this.xneg_yneg_zpos = new Plane();
     this.xneg_yneg_zneg = new Plane();
-    
+
     this.setPlanes();
 }
 
@@ -7552,13 +7552,13 @@ Region.prototype.setPlanes = function()
     this.xneg_ypos_zpos = new Plane(xn_yp_zp, xn_yp_zp - xp_yn_zn);
     this.xneg_ypos_zneg = new Plane(xn_yp_zn, xn_yp_zn - xp_yn_zp);
     this.xneg_yneg_zpos = new Plane(xn_yn_zp, xn_yn_zp - xp_yp_zn);
-    this.xneg_yneg_zneg = new Plane(xn_yn_zn, xn_yn_zn - xp_yp_zp);   
+    this.xneg_yneg_zneg = new Plane(xn_yn_zn, xn_yn_zn - xp_yp_zp);
 }
 
 Region.prototype.containsGeometry = function(tris, triIndices)
 {
     var result = [];
-    
+
     for (var i=0; i < triIndices.length; i++)
     {
         if (this.containsTriangle(tris[triIndices[i]]))
@@ -7566,7 +7566,7 @@ Region.prototype.containsGeometry = function(tris, triIndices)
             result.push(triIndices[i]);
         }
     }
-    
+
     return result;
 }
 
@@ -7576,7 +7576,7 @@ Region.prototype.containsTriangle = function(tri)
     verts[0] = tri.v0;
     verts[1] = tri.v1;
     verts[2] = tri.v2;
-    
+
     // check if any vertices are within the region bounds (quick accept)
     for (var i=0; i < 3; i++)
     {
@@ -7590,7 +7590,7 @@ Region.prototype.containsTriangle = function(tri)
             return true;
         }
     }
-    
+
     // check if all vertices are outside a region plane (quick reject)
     if (triangleOnPositiveSideOfPlane(verts[0], verts[1], verts[2], this.xpos) ||
         triangleOnPositiveSideOfPlane(verts[0], verts[1], verts[2], this.xneg) ||
@@ -7609,7 +7609,7 @@ Region.prototype.containsTriangle = function(tri)
     {
         return false;
     }
-    
+
     // triangle has survived trivial acceptance/rejection tests...
 
     // test triangle line segments for cube face penetration
@@ -7622,7 +7622,7 @@ Region.prototype.containsTriangle = function(tri)
 
         // +X face
         result = lineSegmentPlaneIntersection(a, b, this.xpos);
-        if (result.count > 0) 
+        if (result.count > 0)
         {
             // if point lies within region face, triangle intersects region
             if (result.point.y >= this.min.y && result.point.y <= this.max.y &&
@@ -7634,7 +7634,7 @@ Region.prototype.containsTriangle = function(tri)
 
         // -X face
         result = lineSegmentPlaneIntersection(a, b, this.xneg);
-        if (result.count > 0) 
+        if (result.count > 0)
         {
             if (result.point.y >= this.min.y && result.point.y <= this.max.y &&
                 result.point.z >= this.min.z && result.point.z <= this.max.z)
@@ -7687,27 +7687,27 @@ Region.prototype.containsTriangle = function(tri)
             }
         }
     }
-    
+
     // triangle and region may still intersect if a region corner is poking
     // through the interior of the triangle; check for this case by
     // determining if any of the four region diagonals intersect the triangle
     // 0
-    result = lineSegmentTriangleIntersection(this.min, 
-                                             this.max, 
+    result = lineSegmentTriangleIntersection(this.min,
+                                             this.max,
                                              verts[0], verts[1], verts[2]);
-    if (result.count > 0) return true;    
+    if (result.count > 0) return true;
     // 1
-    result = lineSegmentTriangleIntersection(new Vector3D(this.min.x, this.max.y, this.min.z), 
+    result = lineSegmentTriangleIntersection(new Vector3D(this.min.x, this.max.y, this.min.z),
                                              new Vector3D(this.max.x, this.min.y, this.max.z),
                                              verts[0], verts[1], verts[2]);
     if (result.count > 0) return true;
     // 2
-    result = lineSegmentTriangleIntersection(new Vector3D(this.max.x, this.min.y, this.min.z), 
+    result = lineSegmentTriangleIntersection(new Vector3D(this.max.x, this.min.y, this.min.z),
                                              new Vector3D(this.min.x, this.max.y, this.max.z),
                                              verts[0], verts[1], verts[2]);
     if (result.count > 0) return true;
-    // 3                                        
-    result = lineSegmentTriangleIntersection(new Vector3D(this.min.x, this.min.y, this.max.z), 
+    // 3
+    result = lineSegmentTriangleIntersection(new Vector3D(this.min.x, this.min.y, this.max.z),
                                              new Vector3D(this.max.x, this.max.y, this.min.z),
                                              verts[0], verts[1], verts[2]);
     if (result.count > 0) return true;
@@ -7722,12 +7722,12 @@ function SphereTreeNode()
     this.level = 0;
     this.parent = null;
     this.children = [];
-    this.triIndices = [];    
+    this.triIndices = [];
 }
 
 SphereTreeNode.prototype.isLeaf = function()
 {
-    return this.children.length == 0 ? true : false;    
+    return this.children.length == 0 ? true : false;
 }
 
 SphereTreeNode.prototype.addChild = function(child)
@@ -7738,7 +7738,7 @@ SphereTreeNode.prototype.addChild = function(child)
 
 SphereTreeNode.prototype.intersects = function(sphereTreeNode)
 {
-    return (this.sphere.intersects(sphereTreeNode.sphere));    
+    return (this.sphere.intersects(sphereTreeNode.sphere));
 }
 
 function SphereHitRec()
@@ -7753,7 +7753,7 @@ function BoundingTree()
     this.min = new Vector3D();
     this.max = new Vector3D();
     this.tris = [];
-    this.visited = [];    
+    this.visited = [];
 }
 
 BoundingTree.prototype.setTriangles = function(tris, min, max)
@@ -7786,10 +7786,10 @@ SphereTree.prototype.transformNode = function(matrix, node)
     node.sphere.xcenter.x = result.x;
     node.sphere.xcenter.y = result.y;
     node.sphere.xcenter.z = result.z;
-    
+
     var scale = matrix.getScalingFactors();
     node.sphere.xradius = node.sphere.radius * max3(scale.x, scale.y, scale.z);
-    
+
     // recurse on node children
     for (var i = 0; i < node.children.length; i++)
     {
@@ -7825,19 +7825,19 @@ SphereTree.prototype.collides = function(tree)
         {
             sphereHit.target = this.root;
             sphereHit.testList = tree.root.children;
-        }       
+        }
         sphereHits.push(sphereHit);
 
         return this.testSphereHits(sphereHits);
     }
-    
+
     // root nodes do not collide
     return false;
 }
 
 SphereTree.prototype.nodesCollide = function(node1, node2)
 {
-    return (node1.intersects(node2));    
+    return (node1.intersects(node2));
 }
 
 SphereTree.prototype.testSphereHits = function(sphereHits)
@@ -7848,7 +7848,7 @@ SphereTree.prototype.testSphereHits = function(sphereHits)
         {
             return true;
         }
-        
+
         sphereHits.splice(0, 1);
     }
 
@@ -7903,9 +7903,9 @@ SphereTree.prototype.rayIntersectsTree = function(params)
 
 SphereTree.prototype.rayIntersectsTreeNode = function(root, params)
 {
-    // if this sphere tree node has children, and it is intersected by the ray, 
-    // recurse on all sphere tree nodes in the next level, saving the smallest positive 
-    // t value; if ray does not intersect this sphere tree node, or if no intersections 
+    // if this sphere tree node has children, and it is intersected by the ray,
+    // recurse on all sphere tree nodes in the next level, saving the smallest positive
+    // t value; if ray does not intersect this sphere tree node, or if no intersections
     // are found for the next level, return false
     if (root.children.length > 0)
     {
@@ -7935,7 +7935,7 @@ SphereTree.prototype.rayIntersectsTreeNode = function(root, params)
         }
     }
     else // root.children.empty()
-    {   
+    {
         // lowest sphere tree node level (no children); check against tris
         return this.rayIntersectsTriangleList(root.triIndices, params);
     }
@@ -8005,12 +8005,12 @@ SphereTree.prototype.rayIntersectsTriangleList = function(triIndices, params)
         if (result.result)
         {
             if (result.t >= params.nearDistance &&
-                result.t <= params.farDistance && 
+                result.t <= params.farDistance &&
                 result.t <  params.intersectRecord.distance)
             {
 				var pointModel = new Vector3D(tri.v0.x * (1 - result.u - result.v) + tri.v1.x * result.u + tri.v2.x * result.v,
 				                              tri.v0.y * (1 - result.u - result.v) + tri.v1.y * result.u + tri.v2.y * result.v,
-				                              tri.v0.z * (1 - result.u - result.v) + tri.v1.z * result.u + tri.v2.z * result.v);				
+				                              tri.v0.z * (1 - result.u - result.v) + tri.v1.z * result.u + tri.v2.z * result.v);
 				var pointWorld = params.worldMatrix.transform(pointModel.x, pointModel.y, pointModel.z, 1);
 				var pointView = params.worldViewMatrix.transform(pointModel.x, pointModel.y, pointModel.z, 1);
 
@@ -8041,7 +8041,7 @@ SphereTree.prototype.rayIntersectsTriangleList = function(triIndices, params)
         // mark triangle as tested
         this.visited[index] = true;
     }
-    
+
     return params.intersects;
 }
 
@@ -8056,10 +8056,10 @@ function Octree()
 Octree.prototype.buildTree = function(levels)
 {
     if (levels < 0) return;
-    
+
     // define root sphere
     var root = new SphereTreeNode();
-    
+
     // sphere center is the midpoint of min/max extents
     root.sphere.center.copy(midpoint(this.min, this.max));
     root.sphere.xcenter.copy(root.sphere.center);
@@ -8067,7 +8067,7 @@ Octree.prototype.buildTree = function(levels)
     // sphere radius is the distance between the midpoint of min/max extents and min/max extent
     root.sphere.radius = distanceBetween(root.sphere.center, this.max);
     root.sphere.xradius = root.sphere.radius;
-    
+
     // set triIndices
     root.triIndices.length = this.tris.length;
     for (var i=0; i < this.tris.length; i++)
@@ -8075,13 +8075,13 @@ Octree.prototype.buildTree = function(levels)
         root.triIndices[i] = i;
     }
 
-    // build subsequent levels (if requested) 
+    // build subsequent levels (if requested)
     if (levels > 0)
     {
         this.buildTreeLevels(levels, this.min, this.max, root, root.triIndices);
     }
 
-    this.root = root;    
+    this.root = root;
 }
 
 Octree.prototype.buildTreeLevels = function(levels, min, max, root, triIndices)
@@ -8091,12 +8091,12 @@ Octree.prototype.buildTreeLevels = function(levels, min, max, root, triIndices)
         // requested levels have been generated
         return;
     }
-    
+
     // define 8 equal sub-regions occupying the span from min to max
-    var mid = new Vector3D(min.x + ((max.x - min.x) / 2), 
+    var mid = new Vector3D(min.x + ((max.x - min.x) / 2),
                            min.y + ((max.y - min.y) / 2),
                            min.z + ((max.z - min.z) / 2));
-                           
+
     var regions = new Array(8);
     regions[0] = new Region(min.x, min.y, min.z, mid.x, mid.y, mid.z);
     regions[1] = new Region(mid.x, min.y, min.z, max.x, mid.y, mid.z);
@@ -8106,9 +8106,9 @@ Octree.prototype.buildTreeLevels = function(levels, min, max, root, triIndices)
     regions[5] = new Region(mid.x, mid.y, min.z, max.x, max.y, mid.z);
     regions[6] = new Region(min.x, mid.y, mid.z, mid.x, max.y, max.z);
     regions[7] = new Region(mid.x, mid.y, mid.z, max.x, max.y, max.z);
-    
-    // for each sub-region containing geometry, create a bounding sphere for the sub-region, 
-    // add to the list of the root sphere node's children, and recursively call for the child 
+
+    // for each sub-region containing geometry, create a bounding sphere for the sub-region,
+    // add to the list of the root sphere node's children, and recursively call for the child
     // sub-region
     for (var i=0; i < 8; i++)
     {
@@ -8117,7 +8117,7 @@ Octree.prototype.buildTreeLevels = function(levels, min, max, root, triIndices)
         {
             // create sphere node
             var node = new SphereTreeNode();
-          
+
             // set level
             node.level = root.level + 1;
 
@@ -8128,7 +8128,7 @@ Octree.prototype.buildTreeLevels = function(levels, min, max, root, triIndices)
             // set radius
             node.sphere.radius = distanceBetween(node.sphere.center, regions[i].max);
             node.sphere.xradius = node.sphere.radius;
-            
+
             // set triIndices
             node.triIndices = triIndicesContainedByRegion.slice();
 
@@ -8142,7 +8142,7 @@ Octree.prototype.buildTreeLevels = function(levels, min, max, root, triIndices)
 }
 
 function rayPick(tree,
-                 rayOrigin, 
+                 rayOrigin,
                  rayDir,
                  nearDistance,
                  farDistance,
@@ -8158,7 +8158,7 @@ function rayPick(tree,
     {
         return params.intersectRecord;
     }
-    
+
     return null;
 }
 function Context()
@@ -8177,7 +8177,7 @@ Context.prototype.clear = function()
 var eRenderContextMethod =
 {
 	Unknown									: 0,
-	
+
 	ApplyModelViewTransform    				: 1,
     ApplyProjectionTransform				: 2,
     Clear           						: 3,
@@ -8231,18 +8231,18 @@ function RenderContextMethodDesc(method, params)
 function DisplayListObj(renderContext)
 {
     this.renderContext = renderContext;
-    this.displayList = [];	
+    this.displayList = [];
 }
 
 DisplayListObj.prototype.record_begin = function()
 {
     this.clear();
-    this.renderContext.setDisplayList(this);    
+    this.renderContext.setDisplayList(this);
 }
 
 DisplayListObj.prototype.record_end = function()
 {
-    this.renderContext.setDisplayList(null);    
+    this.renderContext.setDisplayList(null);
 }
 
 DisplayListObj.prototype.play = function()
@@ -8250,139 +8250,139 @@ DisplayListObj.prototype.play = function()
     for (var i=0; i < this.displayList.length; i++)
     {
         this.invokeMethod(this.displayList[i]);
-    }    
+    }
 }
 
 DisplayListObj.prototype.addMethodDesc = function(desc)
 {
-    this.displayList.push(desc);    
+    this.displayList.push(desc);
 }
 
 DisplayListObj.prototype.clear = function()
 {
-    this.displayList = [];    
+    this.displayList = [];
 }
 
 DisplayListObj.prototype.invokeMethod = function(desc)
-{  
+{
     switch (desc.method)
     {
         case eRenderContextMethod.ApplyModelViewTransform:
         {
-            this.renderContext.applyModelViewTransform();    
-        }   
+            this.renderContext.applyModelViewTransform();
+        }
         break;
-        
+
         case eRenderContextMethod.ApplyProjectionTransform:
         {
             this.renderContext.applyProjectionTransform();
-        }   
+        }
         break;
-        
+
         case eRenderContextMethod.Clear:
         {
             return this.renderContext.clear();
         }
         break;
-        
+
         case eRenderContextMethod.ClearColor:
         {
             this.renderContext.clearColor(desc.params[0], desc.params[1], desc.params[2], desc.params[3]);
         }
         break;
-        
+
         case eRenderContextMethod.CreateVertexBuffer:
         {
-            return this.renderContext.createVertexBuffer(desc.params[0]);            
+            return this.renderContext.createVertexBuffer(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.CreateTextureObject:
         {
-            this.renderContext.createTextureObject();    
+            this.renderContext.createTextureObject();
         }
         break;
-        
+
         case eRenderContextMethod.Disable:
         {
             this.renderContext.disable(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.Enable:
         {
-            this.renderContext.enable(desc.params[0]);    
+            this.renderContext.enable(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.Enabled:
         {
-            return this.renderContext.enabled(desc.params[0]);    
+            return this.renderContext.enabled(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.EnableLight:
         {
-            this.renderContext.enableLight(desc.params[0], desc.params[1]);    
+            this.renderContext.enableLight(desc.params[0], desc.params[1]);
         }
         break;
-        
+
         case eRenderContextMethod.EnableTextureStage:
         {
-            this.renderContext.enableTextureStage(desc.params[0], desc.params[1]);    
+            this.renderContext.enableTextureStage(desc.params[0], desc.params[1]);
         }
         break;
-        
+
         case eRenderContextMethod.Finish:
         {
-            this.renderContext.finish();        
+            this.renderContext.finish();
         }
         break;
-        
+
         case eRenderContextMethod.GetEnabledLights:
         {
-            return this.renderContext.getEnabledLights();    
+            return this.renderContext.getEnabledLights();
         }
         break;
-        
+
         case eRenderContextMethod.GetGlobalIllumination:
         {
-            return this.renderContext.getGlobalIllumination();    
+            return this.renderContext.getGlobalIllumination();
         }
         break;
-        
+
         case eRenderContextMethod.GetLight:
         {
-            return this.renderContext.getLight(desc.params[0]);   
+            return this.renderContext.getLight(desc.params[0]);
         }
         break;
-            
+
         case eRenderContextMethod.GetMaxLightCount:
         {
-            return this.renderContext.getMaxLightCount();   
+            return this.renderContext.getMaxLightCount();
         }
         break;
-        
+
         case eRenderContextMethod.getMaxTextureStages:
         {
             return this.renderContext.getMaxTextureStages();
         }
         break;
-        
+
         case eRenderContextMethod.PerspectiveMatrixLH:
         {
             this.renderContext.perspectiveMatrixLH(desc.params[0], desc.params[1], desc.params[2],
-                desc.params[3], desc.params[4], desc.params[5]);   
+                desc.params[3], desc.params[4], desc.params[5]);
         }
         break;
-        
+
         case eRenderContextMethod.OrthographicMatrixLH:
         {
             this.renderContext.orthographicMatrixLH(desc.params[0], desc.params[1], desc.params[2],
                 desc.params[3], desc.params[4], desc.params[5]);
         }
         break;
-        
+
         case eRenderContextMethod.SetBlendFactor:
         {
             this.renderContext.setBlendFactor(desc.params[0], desc.params[1]);
@@ -8394,130 +8394,130 @@ DisplayListObj.prototype.invokeMethod = function(desc)
             this.renderContext.setEnabledLights(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.SetFrontMaterial:
         {
-            this.renderContext.setFrontMaterial(desc.params[0]);    
+            this.renderContext.setFrontMaterial(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.SetGlobalIllumination:
         {
-            this.renderContext.setGlobalIllumination(desc.params[0]);    
+            this.renderContext.setGlobalIllumination(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.SetLight:
         {
-            this.renderContext.setLight(desc.params[0], desc.params[1]);    
+            this.renderContext.setLight(desc.params[0], desc.params[1]);
         }
         break;
-        
+
         case eRenderContextMethod.SetTextureBlendFactor:
         {
-            this.renderContext.setTextureBlendFactor(desc.params[0]);   
+            this.renderContext.setTextureBlendFactor(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.SetTextureBlendOp:
         {
-            this.renderContext.setTextureBlendOp(desc.params[0]);    
+            this.renderContext.setTextureBlendOp(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.SetViewport:
         {
             this.renderContext.setViewport(desc.params[0], desc.params[1], desc.params[2],
-                desc.params[3]);    
+                desc.params[3]);
         }
         break;
-        
+
         case eRenderContextMethod.VB_SetPrimitiveType:
         {
             desc.params[0].setPrimitiveType(desc.params[1]);
         }
         break;
-        
+
         case eRenderContextMethod.VB_SetVertices:
         {
             desc.params[0].setVertices(desc.params[1]);
         }
         break;
-        
+
         case eRenderContextMethod.VB_SetNormals:
         {
             desc.params[0].setNormals(desc.params[1]);
         }
         break;
-        
+
         case eRenderContextMethod.VB_SetUVCoords:
         {
             desc.params[0].setUVCoords(desc.params[1], desc.params[2]);
         }
         break;
-        
+
         case eRenderContextMethod.VB_SetTextureStage:
         {
             desc.params[0].setTextureStage(desc.params[1], desc.params[2], desc.params[3],
                 desc.params[4], desc.params[5], desc.params[6]);
         }
         break;
-        
+
         case eRenderContextMethod.VB_Draw:
         {
             desc.params[0].draw();
         }
         break;
-        
+
         case eRenderContextMethod.TO_SetImage:
         {
-            desc.params[0].setImage(desc.params[1], desc.params[2], desc.params[3]);   
+            desc.params[0].setImage(desc.params[1], desc.params[2], desc.params[3]);
         }
         break;
-        
+
         case eRenderContextMethod.TO_SetImageData:
         {
-            desc.params[0].setImageData(desc.params[1], desc.params[2], desc.params[3], 
+            desc.params[0].setImageData(desc.params[1], desc.params[2], desc.params[3],
                 desc.params[4], desc.params[5]);
         }
         break;
-        
+
         case eRenderContextMethod.TO_SetVideo:
         {
             desc.params[0].setVideo(desc.params[1]);
         }
         break;
-        
+
         case eRenderContextMethod.SetMatrixMode:
         {
         	this.renderContext.setMatrixMode(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.PushMatrix:
         {
         	this.renderContext.pushMatrix();
         }
         break;
-        
+
         case eRenderContextMethod.PopMatrix:
         {
         	this.renderContext.popMatrix();
         }
         break;
-        
+
         case eRenderContextMethod.LoadMatrix:
         {
         	this.renderContext.loadMatrix(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.LeftMultMatrix:
         {
         	this.renderContext.leftMultMatrix(desc.params[0]);
         }
         break;
-        
+
         case eRenderContextMethod.RightMultMatrix:
         {
         	this.renderContext.rightMultMatrix(desc.params[0]);
@@ -8531,11 +8531,11 @@ function DL_ADD_METHOD_DESC(dlObj, method, params)
     if (dlObj)
     {
         dlObj.addMethodDesc(new RenderContextMethodDesc(method, params));
-    }    
+    }
 }
 
-/* 
- * enable caps 
+/*
+ * enable caps
  */
 var eRenderMode =
 {
@@ -8551,7 +8551,7 @@ var eRenderMode =
     PolygonOffset_Line      : 10,
     PolygonOffset_Point     : 11
 }
- 
+
 var RC_BLEND            = 0x0001;
 var RC_CULL_FACE        = 0x0B44;
 
@@ -8589,8 +8589,8 @@ function LightDesc()
     this.coneFalloff = 0;               // spot
 }
 
-/* 
- * material desc 
+/*
+ * material desc
  */
 var MATERIALDESC_AMBIENT_BIT        = 0x001;
 var MATERIALDESC_DIFFUSE_BIT        = 0x002;
@@ -8625,7 +8625,7 @@ function MaterialDesc()
 /*
  * blend factor
  */
-var RC_ZERO                         = 0x001;    
+var RC_ZERO                         = 0x001;
 var RC_ONE                          = 0x002;
 var RC_SRC_COLOR                    = 0x004;
 var RC_SRC_ALPHA                    = 0x008;
@@ -8647,13 +8647,13 @@ var RC_DECAL                        = 0x008;
 /*
  * texture coordinate source
  */
-var eTextureCoordSrc = 
+var eTextureCoordSrc =
 {
     VertexUVs                       : 1,
     ViewSpaceVertexPosition         : 2,
     ViewSpaceReflectionVector       : 3
 }
- 
+
 /*
  * texture wrap
  */
@@ -8674,33 +8674,33 @@ var RC_TEXTURE					   = 0x004;
 function RenderContext(canvas, background)
 {
     this.valid = false;
-    
+
     this.canvas = canvas;
     this.background = background;
-    
+
     this.projectionMatrixStack = new MatrixStack(new Matrix4x4());
     this.modelViewMatrixStack = new MatrixStack(new Matrix4x4());
     this.matrixMode = RC_MODELVIEW;
-    
+
     this.frontMaterial = new MaterialDesc();
-    
+
     this.displayListObj = null;
-    
+
     this.getDisplayList = function()
     {
-        return this.displayListObj;    
+        return this.displayListObj;
     }
-    
+
     this.setDisplayList = function(displayListObj)
     {
         this.displayListObj = displayListObj;
     }
-    
+
     this.getFrontMaterial = function()
     {
         var material = new MaterialDesc();
-        material.copy(this.frontMaterial); 
-        return material;             
+        material.copy(this.frontMaterial);
+        return material;
     }
 
     this.setBackgroundImage = function(url, width, height)
@@ -8712,18 +8712,18 @@ function RenderContext(canvas, background)
             this.background.height = height;
         }
     }
-    
-    this.setMatrixMode = function(mode) 
-    { 
+
+    this.setMatrixMode = function(mode)
+    {
     	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetMatrixMode, [mode]);
-    	
-    	this.matrixMode = mode; 
+
+    	this.matrixMode = mode;
     }
-    
+
     this.pushMatrix = function()
     {
     	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.PushMatrix, null);
-    	
+
     	switch (this.matrixMode)
     	{
     		case RC_MODELVIEW:
@@ -8731,19 +8731,19 @@ function RenderContext(canvas, background)
     			this.modelViewMatrixStack.push();
     		}
     		break;
-    		
+
     		case RC_PROJECTION:
     		{
     			this.projectionMatrixStack.push();
     		}
     		break;
-    	}	
+    	}
     }
-    
+
     this.popMatrix = function()
     {
     	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.PopMatrix, null);
-    	
+
     	switch (this.matrixMode)
     	{
     		case RC_MODELVIEW:
@@ -8751,7 +8751,7 @@ function RenderContext(canvas, background)
     			this.modelViewMatrixStack.pop();
     		}
     		break;
-    		
+
     		case RC_PROJECTION:
     		{
     			this.projectionMatrixStack.pop();
@@ -8759,11 +8759,11 @@ function RenderContext(canvas, background)
     		break;
     	}
     }
-    
+
     this.loadMatrix = function(matrix)
     {
     	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.LoadMatrix, [matrix]);
-    	
+
     	switch (this.matrixMode)
     	{
     		case RC_MODELVIEW:
@@ -8771,19 +8771,19 @@ function RenderContext(canvas, background)
     			this.modelViewMatrixStack.loadMatrix(matrix);
     		}
     		break;
-    		
+
     		case RC_PROJECTION:
     		{
     			this.projectionMatrixStack.loadMatrix(matrix);
     		}
     		break;
-    	}	
+    	}
     }
-    
+
     this.leftMultMatrix = function(matrix)
     {
     	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.LeftMultMatrix, [matrix]);
-    	
+
     	switch (this.matrixMode)
     	{
     		case RC_MODELVIEW:
@@ -8791,7 +8791,7 @@ function RenderContext(canvas, background)
     			this.modelViewMatrixStack.leftMultiply(matrix);
     		}
     		break;
-    		
+
     		case RC_PROJECTION:
     		{
     			this.projectionMatrixStack.leftMultiply(matrix);
@@ -8799,11 +8799,11 @@ function RenderContext(canvas, background)
     		break;
     	}
     }
-    
+
     this.rightMultMatrix = function(matrix)
     {
     	if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.RightMultMatrix, [matrix]);
-    	
+
     	switch (this.matrixMode)
     	{
     		case RC_MODELVIEW:
@@ -8811,20 +8811,20 @@ function RenderContext(canvas, background)
     			this.modelViewMatrixStack.rightMultiply(matrix);
     		}
     		break;
-    		
+
     		case RC_PROJECTION:
     		{
     			this.projectionMatrixStack.rightMultiply(matrix);
     		}
     		break;
-    	}	
+    	}
     }
 }
 
 function newRenderContext(api, canvas, background)
 {
     var rc = null;
-    
+
     switch (api)
     {
     case "webgl":
@@ -8834,7 +8834,7 @@ function newRenderContext(api, canvas, background)
         break;
     }
 
-    // return rc if valid    
+    // return rc if valid
     return rc.valid ? rc : null;
 }
 
@@ -8870,7 +8870,7 @@ function RenderState(rc)
     this.renderContext = rc;
 
     this.stateStack = new Stack();
-    
+
     this.push = function(mask)
     {
         var rec = this.getState(mask);
@@ -9006,7 +9006,7 @@ var RC_LINE_STRIP                   = 0x0003;
 var RC_TRIANGLES                    = 0x0004;
 var RC_TRIANGLE_STRIP               = 0x0005;
 var RC_TRIANGLE_FAN                 = 0x0006;
-    
+
 function VertexBuffer()
 {
     this.vertices = new Array();
@@ -9181,7 +9181,7 @@ function glEnumToString(value) {
  * @param {number} argumentIndx the index of the argument.
  * @param {*} value The value of the argument.
  * @return {string} The value as a string.
- */ 
+ */
 function glFunctionArgToString(functionName, argumentIndex, value) {
   var funcInfo = glValidEnumContexts[functionName];
   if (funcInfo !== undefined) {
@@ -9210,7 +9210,7 @@ function makeDebugContext(ctx, opt_onErrorFunc) {
         // apparently we can't do args.join(",");
         var argStr = "";
         for (var ii = 0; ii < args.length; ++ii) {
-          argStr += ((ii == 0) ? '' : ', ') + 
+          argStr += ((ii == 0) ? '' : ', ') +
               glFunctionArgToString(functionName, ii, args[ii]);
         }
         log("WebGL error "+ glEnumToString(err) + " in "+ functionName +
@@ -9294,7 +9294,7 @@ return {
    * Example:
    *   WebGLDebugUtil.init(ctx);
    *   var str = WebGLDebugUtil.glFunctionArgToString('bindTexture', 0, gl.TEXTURE_2D);
-   *   
+   *
    * would return 'TEXTURE_2D'
    *
    * @param {string} functionName the name of the WebGL function.
@@ -9354,7 +9354,7 @@ function gl_MaterialParameters()
     var diffuse;
     var specular;
     var emission;
-    var shininess; 
+    var shininess;
 }
 
 var gl_MaxTextureStages = 2;
@@ -9367,9 +9367,9 @@ function webglRC(canvas, background)
     //
     // initialization
     //
-    
+
     RenderContext.call(this, canvas, background);
-    
+
     var gl = getWebGLContext(canvas, false /*set to true for debug context*/);
     if (!gl) return;
 
@@ -9381,7 +9381,7 @@ function webglRC(canvas, background)
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.enable(gl.CULL_FACE);
     gl.cullFace(gl.BACK);
-   
+
     // create shaders
     var shaders = getShaders(gl, eShaderType.VertexLighting);
     if (!shaders.vertex || !shaders.fragment) return;
@@ -9397,15 +9397,15 @@ function webglRC(canvas, background)
     var vLightDescs = [];
     var vLightMatrices = [];
     var vLightEnabledStates = [];
-    
+
     //
     // methods
     //
-    
+
     this.applyModelViewTransform = function()
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.ApplyModelViewTransform, null);
-        
+
         gl.uniformMatrix4fv(program.modelViewMatrix, false, new Float32Array(this.modelViewMatrixStack.top().flatten()));
 
         var normalMatrix = new Matrix4x4();
@@ -9414,46 +9414,46 @@ function webglRC(canvas, background)
         normalMatrix.transpose();
         gl.uniformMatrix4fv(program.normalMatrix, false, new Float32Array(normalMatrix.flatten()));
     }
-    
+
     this.applyProjectionTransform = function()
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.ApplyProjectionTransform, null);
-        
+
         gl.uniformMatrix4fv(program.projectionMatrix, false, new Float32Array(this.projectionMatrixStack.top().flatten()));
     }
-    
+
     this.clear = function()
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.Clear, null);
-        
+
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);// | gl.STENCIL_BUFFER_BIT);
     }
 
     this.clearColor = function(r, g, b, a)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.ClearColor, [r, g, b, a]);
-        
+
         gl.clearColor(r, g, b, a);
     }
-    
+
     this.createVertexBuffer = function(numVerticesPerPrimitive)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.CreateVertexBuffer, [numVerticesPerPrimitive]);
-        
+
         return new webglVB(this, gl, program, numVerticesPerPrimitive);
     }
-    
+
     this.createTextureObject = function()
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.CreateTextureObject, null);
-        
+
         return new webglTO(this, gl, program);
     }
 
     this.disable = function(cap)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.Disable, [cap]);
-        
+
         switch (cap)
         {
             case eRenderMode.AlphaBlend:
@@ -9473,7 +9473,7 @@ function webglRC(canvas, background)
                 break;
 
             case eRenderMode.Lighting:
-                gl.uniform1i(program.lightingEnabled, false); 
+                gl.uniform1i(program.lightingEnabled, false);
                 break;
         }
     }
@@ -9481,7 +9481,7 @@ function webglRC(canvas, background)
     this.enable = function(cap)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.Enable, [cap]);
-        
+
         switch (cap)
         {
             case eRenderMode.AlphaBlend:
@@ -9509,7 +9509,7 @@ function webglRC(canvas, background)
     this.enabled = function(cap)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.Enabled, [cap]);
-        
+
         var e = false;
 
         switch (cap)
@@ -9521,7 +9521,7 @@ function webglRC(canvas, background)
             case eRenderMode.CullBackFace:
                 e = gl.getParameter(gl.CULL_FACE);
                 break;
-                
+
             case eRenderMode.DepthBufferWrite:
                 e = gl.getParameter(gl.DEPTH_WRITEMASK);
                 break;
@@ -9541,30 +9541,30 @@ function webglRC(canvas, background)
     this.enableLight = function(index, enable)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.EnableLight, [index, enable]);
-        
+
         gl.uniform1i(program.lightSource[index].enabled, enable);
 
         vLightEnabledStates[index] = enable;
     }
-    
+
     this.enableTextureStage = function(stage, enable)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.EnableTextureStage, [stage, enable]);
-        
+
         gl.uniform1i(program.textureStageEnabled[stage], enable);
     }
-    
+
     this.finish = function()
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.Finish, null);
-        
+
         gl.finish();
     }
 
     this.getEnabledLights = function()
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.GetEnabledLights, null);
-        
+
         var indices = [];
 
         for (var i = 0; i < vLightEnabledStates.length; i++)
@@ -9581,44 +9581,44 @@ function webglRC(canvas, background)
     this.getGlobalIllumination = function()
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.GetGlobalIllumination, null);
-        
+
         var values = gl.getUniform(program, program.globalAmbientLight);
 
         return { r: values[0], g: values[1], b: values[2], a: values[3] };
     }
-    
+
     this.getLight = function(index)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.GetLight, [index]);
-        
+
         return { desc: vLightDescs[index], matrix: vLightMatrices[index] };
     }
-    
+
     this.getMaxLightCount = function()
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.GetMaxLightCount, null);
-        
+
         return gl_MaxLights;
     }
-    
+
     this.getMaxTextureStages = function()
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.GetMaxTextureStages, null);
-        
+
         return gl_MaxTextureStages;
     }
-    
+
     this.perspectiveMatrixLH = function(left, right, top, bottom, near, far)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.PerspectiveMatrixLH, [left, right, top, bottom, near, far]);
-        
+
         var p = new Matrix4x4();
-        
+
         var a = (right + left) / (right - left);
         var b = (top + bottom) / (top - bottom);
         var c = (far + near) / (far - near);
         var d = (2 * far * near) / (far - near);
-        
+
         p._11 = (2 * near) / (right - left);
         p._13 = a;
         p._22 = (2 * near) / (top - bottom);
@@ -9627,76 +9627,76 @@ function webglRC(canvas, background)
         p._34 = 1;
         p._43 = -d;
         p._44 = 0;
-        
+
         return p;
     }
-    
+
     this.orthographicMatrixLH = function(left, right, top, bottom, near, far)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.OrthographicMatrixLH, [left, right, top, bottom, near, far]);
-        
+
         var p = new Matrix4x4();
-        
+
         p._11 =  2 / (right - left);
         p._22 =  2 / (top - bottom);
         p._33 = -2 / (far - near);
         p._41 = -((right + left) / (right - left));
         p._42 = -((top + bottom) / (top - bottom));
         p._43 = -((far + near) / (far - near)) / 2;
-              
+
         return p;
     }
-    
+
     this.readFrameBuffer = function(x, y, width, height)
     {
         var pixels = new Uint8Array(width * height * 4);
-        
+
         gl.readPixels(x, y, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-        
+
         return pixels;
     }
-    
+
     this.setBlendFactor = function(sfactor, dfactor)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetBlendFactor, [sfactor, dfactor]);
-        
+
         var gl_SrcFactor;
         switch (sfactor)
         {
         case RC_ZERO:                   gl_SrcFactor = gl.ZERO; break;
         case RC_ONE:                    gl_SrcFactor = gl.ONE; break;
         case RC_SRC_COLOR:              gl_SrcFactor = gl.SRC_COLOR; break;
-        case RC_SRC_ALPHA:              gl_SrcFactor = gl.SRC_ALPHA; break;        
+        case RC_SRC_ALPHA:              gl_SrcFactor = gl.SRC_ALPHA; break;
         case RC_ONE_MINUS_SRC_COLOR:    gl_SrcFactor = gl.ONE_MINUS_SRC_COLOR; break;
         case RC_ONE_MINUS_SRC_ALPHA:    gl_SrcFactor = gl.ONE_MINUS_SRC_ALPHA; break;
         case RC_DEST_COLOR:             gl_SrcFactor = gl.DEST_COLOR; break;
-        case RC_DEST_ALPHA:             gl_SrcFactor = gl.DEST_ALPHA; break;        
+        case RC_DEST_ALPHA:             gl_SrcFactor = gl.DEST_ALPHA; break;
         case RC_ONE_MINUS_DEST_COLOR:   gl_SrcFactor = gl.ONE_MINUS_DEST_COLOR; break;
         case RC_ONE_MINUS_DEST_ALPHA:   gl_SrcFactor = gl.ONE_MINUS_DEST_ALPHA; break;
-        }     
-        
+        }
+
         var gl_DestFactor;
         switch (dfactor)
         {
         case RC_ZERO:                   gl_DestFactor = gl.ZERO; break;
         case RC_ONE:                    gl_DestFactor = gl.ONE; break;
         case RC_SRC_COLOR:              gl_DestFactor = gl.SRC_COLOR; break;
-        case RC_SRC_ALPHA:              gl_DestFactor = gl.SRC_ALPHA; break;        
+        case RC_SRC_ALPHA:              gl_DestFactor = gl.SRC_ALPHA; break;
         case RC_ONE_MINUS_SRC_COLOR:    gl_DestFactor = gl.ONE_MINUS_SRC_COLOR; break;
         case RC_ONE_MINUS_SRC_ALPHA:    gl_DestFactor = gl.ONE_MINUS_SRC_ALPHA; break;
         case RC_DEST_COLOR:             gl_DestFactor = gl.DEST_COLOR; break;
-        case RC_DEST_ALPHA:             gl_DestFactor = gl.DEST_ALPHA; break;        
+        case RC_DEST_ALPHA:             gl_DestFactor = gl.DEST_ALPHA; break;
         case RC_ONE_MINUS_DEST_COLOR:   gl_DestFactor = gl.ONE_MINUS_DEST_COLOR; break;
         case RC_ONE_MINUS_DEST_ALPHA:   gl_DestFactor = gl.ONE_MINUS_DEST_ALPHA; break;
         }
-        
-        gl.blendFunc(gl_SrcFactor, gl_DestFactor);  
+
+        gl.blendFunc(gl_SrcFactor, gl_DestFactor);
     }
 
     this.setEnabledLights = function(indices)
     {
         if (this.displayListObj) if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetEnabledLights, [indices]);
-        
+
         // disable all previously enabled lights
         for (var i = 0; i < vLightEnabledStates.length; i++)
         {
@@ -9712,61 +9712,61 @@ function webglRC(canvas, background)
             this.enableLight(indices[i], true);
         }
     }
-    
+
     this.setFrontMaterial = function(desc)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetFrontMaterial, [desc]);
-        
+
         // ambient
         if (desc.validMembersMask & MATERIALDESC_AMBIENT_BIT)
         {
             gl.uniform4fv(program.frontMaterial.ambient, new Float32Array(desc.ambient.v()));
-            
+
             this.frontMaterial.ambient = desc.ambient;
         }
-        
+
         // diffuse
         if (desc.validMembersMask & MATERIALDESC_DIFFUSE_BIT)
         {
             gl.uniform4fv(program.frontMaterial.diffuse, new Float32Array(desc.diffuse.v()));
-            
+
             this.frontMaterial.diffuse = desc.diffuse;
         }
-        
+
         // specular
         if (desc.validMembersMask & MATERIALDESC_SPECULAR_BIT)
         {
             gl.uniform4fv(program.frontMaterial.specular, new Float32Array(desc.specular.v()));
-            
+
             this.frontMaterial.specular = desc.specular;
         }
-        
+
         // emissive
         if (desc.validMembersMask & MATERIALDESC_EMISSIVE_BIT)
         {
             // TODO
             //gl.uniform4fv(program.frontMaterial.emission, new Float32Array(desc.emissive.v()));
-            
+
             this.frontMaterial.emissive = desc.emissive;
         }
-        
+
         // glossiness
         if (desc.validMembersMask & MATERIALDESC_GLOSSINESS_BIT)
         {
             // glossiness - OpenGL accepts values in the range [0, 128].
             // use the range [5, 128], because values below 5 result in wash-out
             gl.uniform1f(program.frontMaterial.shininess, clamp(desc.glossiness * 128, 5, 128));
-            
+
             this.frontMaterial.glossiness = desc.glossiness;
         }
-        
+
         this.frontMaterial.validMembersMask |= desc.validMembersMask;
     }
 
     this.setGlobalIllumination = function(ambient)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetGlobalIllumination, [ambient]);
-        
+
         var values = [ ambient.r, ambient.g, ambient.g, ambient.a ];
 
         gl.uniform4fv(program.globalAmbientLight, new Float32Array(values));
@@ -9775,7 +9775,7 @@ function webglRC(canvas, background)
     this.setLight = function(index, desc)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetLight, [index, desc]);
-        
+
         // get current modelView transform
         var modelViewMatrix = this.modelViewMatrixStack.top();
 
@@ -9803,7 +9803,7 @@ function webglRC(canvas, background)
                         values[1] *= -1;
                         values[2] *= -1;
 
-                        // OpenGL gets a directional light's direction from position member                
+                        // OpenGL gets a directional light's direction from position member
                         gl.uniform4fv(program.lightSource[index].position, new Float32Array(values));
                     }
                     break;
@@ -9894,31 +9894,31 @@ function webglRC(canvas, background)
     this.setTextureBlendFactor = function(factor)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetTextureBlendFactor, [factor]);
-        
+
         // update material diffuse component alpha to blend factor
         var diffuse = [ this.frontMaterial.diffuse.r, this.frontMaterial.diffuse.g, this.frontMaterial.diffuse.b, factor ];
         gl.uniform4fv(program.frontMaterial.diffuse, new Float32Array(diffuse));
     }
-    
+
     this.setTextureBlendOp = function(op)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetTextureBlendOp, [op]);
-        
+
         gl.uniform1i(program.textureBlendOp, op);
     }
 
     this.setViewport = function(x, y, width, height)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetViewport, [x, y, width, height]);
-        
+
         gl.viewport(x, y, width, height);
     }
 }
 
-function getWebGLContext(canvas, debug) 
+function getWebGLContext(canvas, debug)
 {
     var gl = null;
-    try 
+    try
     {
         if (debug)
         {
@@ -9928,11 +9928,11 @@ function getWebGLContext(canvas, debug)
         {
             gl = (canvas.getContext("webgl", { antialias : true, preserveDrawingBuffer: true }) || canvas.getContext("experimental-webgl", { antialias : true, preserveDrawingBuffer: true }));
         }
-    }    
-    catch (e) 
+    }
+    catch (e)
     {
     }
-    if (!gl) 
+    if (!gl)
     {
         var div = document.createElement("div");
         div.innerHTML = "This demo requires a WebGL-enabled browser.";
@@ -9947,19 +9947,19 @@ function getProgram(gl, vShader, fShader)
 {
     var program = gl.createProgram();
     if (!program) return null;
-    
+
     gl.attachShader(program, vShader);
     gl.attachShader(program, fShader);
     gl.linkProgram(program);
-    
+
     if (!gl.getProgramParameter(program, gl.LINK_STATUS))
     {
         alert(gl.getProgramInfoLog(program));
         return null;
     }
-    
+
     gl.useProgram(program);
-    
+
     // get attributes
     program.vertexPositionAttribute = gl.getAttribLocation(program, "aVertexPosition");
     gl.enableVertexAttribArray(program.vertexPositionAttribute);
@@ -9971,9 +9971,9 @@ function getProgram(gl, vShader, fShader)
         program.textureCoordAttribute[i] = gl.getAttribLocation(program, "aTextureCoord" + i);
         gl.enableVertexAttribArray(program.textureCoordAttribute[i]);
     }
-    
+
     // get uniforms
-    
+
     // matrices
     program.projectionMatrix = gl.getUniformLocation(program, "uProjectionMatrix");
     program.modelViewMatrix = gl.getUniformLocation(program, "uModelViewMatrix");
@@ -9985,9 +9985,9 @@ function getProgram(gl, vShader, fShader)
     for (var i=0; i < gl_MaxLights; i++)
     {
         program.lightSource[i] = new gl_LightSourceParameters();
-      
+
         program.lightSource[i].enabled = gl.getUniformLocation(program, "uLightSource_enabled[" + i + "]");
-        program.lightSource[i].ambient = gl.getUniformLocation(program, "uLightSource_ambient[" + i + "]"); 
+        program.lightSource[i].ambient = gl.getUniformLocation(program, "uLightSource_ambient[" + i + "]");
         program.lightSource[i].diffuse = gl.getUniformLocation(program, "uLightSource_diffuse[" + i + "]");
         program.lightSource[i].specular = gl.getUniformLocation(program, "uLightSource_specular[" + i + "]");
         program.lightSource[i].position = gl.getUniformLocation(program, "uLightSource_position[" + i + "]");
@@ -9997,11 +9997,11 @@ function getProgram(gl, vShader, fShader)
         program.lightSource[i].constantAttenuation = gl.getUniformLocation(program, "uLightSource_constantAttenuation[" + i + "]");
         program.lightSource[i].linearAttenuation = gl.getUniformLocation(program, "uLightSource_linearAttenuation[" + i + "]");
         program.lightSource[i].quadraticAttenuation = gl.getUniformLocation(program, "uLightSource_quadraticAttenuation[" + i + "]");
-        
+
         // set initially disabled
         gl.uniform1i(program.lightSource[i].enabled, 0);
     }
-    
+
     // materials
     program.frontMaterial = new gl_MaterialParameters();
     program.frontMaterial.ambient = gl.getUniformLocation(program, "uFrontMaterial_ambient");
@@ -10009,7 +10009,7 @@ function getProgram(gl, vShader, fShader)
     program.frontMaterial.specular = gl.getUniformLocation(program, "uFrontMaterial_specular");
     program.frontMaterial.emission = gl.getUniformLocation(program, "uFrontMaterial_emission");
     program.frontMaterial.shininess = gl.getUniformLocation(program, "uFrontMaterial_shininess");
-     
+
     // textures
     program.textureSamplerColor = new Array(gl_MaxTextureStages);
     program.textureSamplerAlpha = new Array(gl_MaxTextureStages);
@@ -10021,17 +10021,17 @@ function getProgram(gl, vShader, fShader)
         program.textureStageEnabled[i] = gl.getUniformLocation(program, "uTextureStageEnabled[" + i + "]");
     }
     program.textureBlendOp = gl.getUniformLocation(program, "uTextureBlendOp");
-    
+
     // enabled
     program.lightingEnabled = gl.getUniformLocation(program, "uLightingEnabled");
     program.texturesEnabled = gl.getUniformLocation(program, "uTexturesEnabled");
-    
+
     // set initially enabled/disabled
     gl.uniform1i(program.lightingEnabled, 1);
-    gl.uniform1i(program.texturesEnabled, 1); 
-    gl.uniform1i(program.textureStageEnabled[0], 0); 
+    gl.uniform1i(program.texturesEnabled, 1);
+    gl.uniform1i(program.textureStageEnabled[0], 0);
     gl.uniform1i(program.textureStageEnabled[1], 0);
-    
+
     return program;
 }
 
@@ -10049,11 +10049,11 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
     //
     // initialization
     //
-    
+
     VertexBuffer.call(this);
-    
+
     this.numVerticesPerPrimitive = numVerticesPerPrimitive;
-    
+
     var rc = rc;
     var gl = gl;
     var program = program;
@@ -10063,15 +10063,15 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
     var uvEmpty = gl.createBuffer(); // for VBs with no texture coordinates (see below)
     var uvCoords = []; // indexed by texture
     var primitiveType = 0;
-    
+
     //
     // methods
     //
-    
+
     this.setPrimitiveType = function(type)
     {
         if (rc.displayListObj) DL_ADD_METHOD_DESC(rc.displayListObj, eRenderContextMethod.VB_SetPrimitiveType, [this, type]);
-        
+
         switch (type)
         {
         case RC_POINTS:         primitiveType = gl.POINTS; break;
@@ -10083,30 +10083,30 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
         case RC_TRIANGLE_FAN:   primitiveType = gl.TRIANGLE_FAN; break;
         }
     }
-    
+
     this.setVertices = function(vertices)
     {
         if (rc.displayListObj) DL_ADD_METHOD_DESC(rc.displayListObj, eRenderContextMethod.VB_SetVertices, [this, vertices]);
-        
+
         if (vertices.length)
         {
             gl.bindBuffer(gl.ARRAY_BUFFER, vb);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-            
+
             this.vertexCount = vertices.length / this.numVerticesPerPrimitive;
-            
+
             // create empty texture coordinate arrays for vb's with no textures (see below)
             gl.bindBuffer(gl.ARRAY_BUFFER, uvEmpty);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(new Array(this.vertexCount * 2)), gl.STATIC_DRAW);           
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(new Array(this.vertexCount * 2)), gl.STATIC_DRAW);
         }
-        
+
         this.vertices = vertices;
     }
-    
+
     this.setNormals = function(normals)
     {
         if (rc.displayListObj) DL_ADD_METHOD_DESC(rc.displayListObj, eRenderContextMethod.VB_SetNormals, [this, normals]);
-        
+
         if (normals.length)
         {
             if (nb == null)
@@ -10116,14 +10116,14 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
             gl.bindBuffer(gl.ARRAY_BUFFER, nb);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
         }
-        
+
         this.normals = normals;
     }
 
     this.setUVCoords = function(texture, coords)
     {
         if (rc.displayListObj) DL_ADD_METHOD_DESC(rc.displayListObj, eRenderContextMethod.VB_SetUVCoords, [this, texture, coords]);
-        
+
         uvCoords[texture] = new webglVB_uvb(gl.createBuffer(), coords.slice());
 
         // flip y
@@ -10132,14 +10132,14 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
             uvCoords[texture].coords[i] = 1 - uvCoords[texture].coords[i];
         }
     }
-    
+
     this.setTextureStage = function(stage, textureObj, widthWrap, heightWrap, textureCoordSrc, planeCoefficients)
     {
         if (rc.displayListObj) DL_ADD_METHOD_DESC(rc.displayListObj, eRenderContextMethod.VB_SetTextureStage, [this, stage, textureObj, widthWrap, heightWrap, textureCoordSrc, planeCoefficients]);
-        
+
         switch (stage)
         {
-        case 0: gl.activeTexture(gl.TEXTURE0); break;       
+        case 0: gl.activeTexture(gl.TEXTURE0); break;
         case 1: gl.activeTexture(gl.TEXTURE1); break;
         }
 
@@ -10147,15 +10147,15 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
         gl.uniform1i(program.textureSamplerColor[stage], stage);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, widthWrap);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, heightWrap);
-                
+
         if (uvCoords[textureObj])
         {
             gl.bindBuffer(gl.ARRAY_BUFFER, uvCoords[textureObj].buffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uvCoords[textureObj].coords), gl.STATIC_DRAW);  
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uvCoords[textureObj].coords), gl.STATIC_DRAW);
             uvb[stage] = uvCoords[textureObj].buffer;
-        }            
+        }
     }
-    
+
     this.draw = function()
     {
         if (rc.displayListObj) DL_ADD_METHOD_DESC(rc.displayListObj, eRenderContextMethod.VB_Draw, [this]);
@@ -10172,19 +10172,19 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
                 gl.bindBuffer(gl.ARRAY_BUFFER, nb);
                 gl.vertexAttribPointer(program.vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
             }
-            
+
             // texture coords
-            // NOTE: vertex shader silently fails if nothing is specified for a given program attribute, so if 
+            // NOTE: vertex shader silently fails if nothing is specified for a given program attribute, so if
             // no texture coords are specified, use the vertex uv buffer.
             for (var i=0; i < gl_MaxTextureStages; i++)
             {
-                if (uvb[i]) 
+                if (uvb[i])
                     gl.bindBuffer(gl.ARRAY_BUFFER, uvb[i]);
-                else 
+                else
                     gl.bindBuffer(gl.ARRAY_BUFFER, uvEmpty);
                 gl.vertexAttribPointer(program.textureCoordAttribute[i], 2, gl.FLOAT, false, 0, 0);
             }
-  
+
             gl.drawArrays(primitiveType, 0, this.vertexCount);
         }
     }
@@ -10197,15 +10197,15 @@ function webglTO(rc, gl, program)
     //
     // initialization
     //
-    
+
     TextureObject.call(this);
-    
+
     var rc = rc;
     var gl = gl;
     var program = program;
-    
+
     this.texture = gl.createTexture();
-    
+
     //
     // methods
     //
@@ -10289,7 +10289,7 @@ function webglTO(rc, gl, program)
 
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    
+
         gl.generateMipmap(gl.TEXTURE_2D);
 
         gl.bindTexture(gl.TEXTURE_2D, null);
@@ -10352,7 +10352,7 @@ function webglTO(rc, gl, program)
                 return;
                 break;
         }
-        
+
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
 
         gl.texImage2D(gl.TEXTURE_2D, 0, intFormat, width, height, 0, format, gl.UNSIGNED_BYTE,
@@ -10360,7 +10360,7 @@ function webglTO(rc, gl, program)
 
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    	
+
         gl.generateMipmap(gl.TEXTURE_2D);
 
         gl.bindTexture(gl.TEXTURE_2D, null);
@@ -10372,7 +10372,7 @@ function webglTO(rc, gl, program)
 
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
 
-        // different browsers require calls to different versions of texImage2D; possibly because 
+        // different browsers require calls to different versions of texImage2D; possibly because
         // complete webGL implementations are not yet available
         switch (getBrowserName())
         {
@@ -10419,7 +10419,7 @@ function getShaders(gl, type)
 {
     var source_vs = null;
     var source_fs = null;
-    
+
     switch (type)
     {
         case eShaderType.VertexLighting:
@@ -10436,8 +10436,8 @@ function getShaders(gl, type)
                     "attribute vec3 aVertexPosition;",
                     "attribute vec3 aVertexNormal;",
                     "attribute vec2 aTextureCoord0;",   // attributes cannot be arrays and must be specified
-                    "attribute vec2 aTextureCoord1;",   // attributes cannot be arrays and must be specified      
-                    "", 
+                    "attribute vec2 aTextureCoord1;",   // attributes cannot be arrays and must be specified
+                    "",
                     "uniform mat4 uProjectionMatrix;",
                     "uniform mat4 uModelViewMatrix;",
                     "uniform mat4 uNormalMatrix;",
@@ -10477,7 +10477,7 @@ function getShaders(gl, type)
                     "   float pf;",         // power factor
                     "",
                     "   lightDir = normalize(vec3(position));",
-                    "",	
+                    "",
                     "   nDotL = max(dot(normal, lightDir), 0.0);",
                     "   if (nDotL == 0.0)",
                     "   {",
@@ -10530,7 +10530,7 @@ function getShaders(gl, type)
                     "   {",
                     "       pf = pow(nDotHV, uFrontMaterial_shininess);",
                     "   }",
-                    "",    
+                    "",
                     "   gAmbient  += ambient * uFrontMaterial_ambient * attenuation;",
                     "   gDiffuse  += diffuse * uFrontMaterial_diffuse * nDotL * attenuation;",
                     "   gSpecular += specular * uFrontMaterial_specular * pf * attenuation;",
@@ -10549,7 +10549,7 @@ function getShaders(gl, type)
                     "       transformedNormal = normalize(uNormalMatrix * vec4(aVertexNormal, 0));",
                     "       viewPosition = uModelViewMatrix * vec4(0, 0, 0, 1);",
                     "       viewDirection = normalize(-viewPosition);",
-                    
+
                     "       gAmbient = vec4(0, 0, 0, 0);",
                     "       gDiffuse = vec4(0, 0, 0, 0);",
                     "       gSpecular = vec4(0, 0, 0, 0);",
@@ -10575,7 +10575,7 @@ function getShaders(gl, type)
                     "               }",
                     "               else", // spotlight
                     "               {",
-                    "               }",   
+                    "               }",
                     "           }",
                     "       }",
                     "",
@@ -10592,18 +10592,18 @@ function getShaders(gl, type)
                     "   }",
                     "",
                     "   vTextureCoord[0] = aTextureCoord0;",
-                    "   vTextureCoord[1] = aTextureCoord1;",        
+                    "   vTextureCoord[1] = aTextureCoord1;",
                     "   gl_Position = uProjectionMatrix * vertexPosition;",
                     "}"
                     ].join("\n");
-                    
+
                 source_fs = [
                     "#ifdef GL_ES",
                     "precision highp float;",
                     "#endif",
                     "",
                     "uniform int uTexturesEnabled;",
-                    "uniform int uTextureStageEnabled[" + gl_MaxTextureStages + "];",       
+                    "uniform int uTextureStageEnabled[" + gl_MaxTextureStages + "];",
                     "uniform sampler2D uTextureSamplerColor[" + gl_MaxTextureStages + "];",
                     "uniform sampler2D uTextureSamplerAlpha[" + gl_MaxTextureStages + "];",
                     "uniform int uTextureBlendOp;",
@@ -10663,15 +10663,15 @@ function getShaders(gl, type)
                     ].join("\n");
             }
             break;
-            
+
         case eShaderType.FragmentLighting:
             {
                 source_vs = [
                     "attribute vec3 aVertexPosition;",
                     "attribute vec3 aVertexNormal;",
                     "attribute vec2 aTextureCoord0;",   // attributes cannot be arrays and must be specified
-                    "attribute vec2 aTextureCoord1;",   // attributes cannot be arrays and must be specified      
-                    "", 
+                    "attribute vec2 aTextureCoord1;",   // attributes cannot be arrays and must be specified
+                    "",
                     "uniform mat4 uProjectionMatrix;",
                     "uniform mat4 uModelViewMatrix;",
                     "uniform mat4 uNormalMatrix;",
@@ -10689,11 +10689,11 @@ function getShaders(gl, type)
                     "   vViewPosition = uModelViewMatrix * vec4(0, 0, 0, 1);",
                     "   vViewDirection = normalize(-vViewPosition);",
                     "   vTextureCoord[0] = aTextureCoord0;",
-                    "   vTextureCoord[1] = aTextureCoord1;",        
+                    "   vTextureCoord[1] = aTextureCoord1;",
                     "   gl_Position = uProjectionMatrix * vVertexPosition;",
                     "}"
                     ].join("\n");
-                
+
                 source_fs = [
                     "#ifdef GL_ES",
                     "precision highp float;",
@@ -10758,7 +10758,7 @@ function getShaders(gl, type)
                     "",
                     "uniform int uLightingEnabled;",
                     "uniform int uTexturesEnabled;",
-                    "uniform int uTextureStageEnabled[" + gl_MaxTextureStages + "];",       
+                    "uniform int uTextureStageEnabled[" + gl_MaxTextureStages + "];",
                     "uniform sampler2D uTextureSamplerColor[" + gl_MaxTextureStages + "];",
                     "uniform sampler2D uTextureSamplerAlpha[" + gl_MaxTextureStages + "];",
                     "uniform int uTextureBlendOp;",
@@ -10777,7 +10777,7 @@ function getShaders(gl, type)
                     "   float pf;",         // power factor
                     "",
                     "   lightDir = normalize(vec3(position));",
-                    "",	
+                    "",
                     "   nDotL = max(dot(normal, lightDir), 0.0);",
                     "   if (nDotL == 0.0)",
                     "   {",
@@ -10830,7 +10830,7 @@ function getShaders(gl, type)
                     "   {",
                     "       pf = pow(nDotHV, uFrontMaterial_shininess);",
                     "   }",
-                    "",    
+                    "",
                     "   gAmbient  += ambient * uFrontMaterial_ambient * attenuation;",
                     "   gDiffuse  += diffuse * uFrontMaterial_diffuse * nDotL * attenuation;",
                     "   gSpecular += specular * uFrontMaterial_specular * pf * attenuation;",
@@ -10866,7 +10866,7 @@ function getShaders(gl, type)
                     "               }",
                     "               else", // spotlight
                     "               {",
-                    "               }",   
+                    "               }",
                     "           }",
                     "       }",
                     "",
@@ -10932,13 +10932,13 @@ function getShaders(gl, type)
                     ].join("\n");
             }
             break;
-        
+
         default:
             return { vertex: null, fragment: null };
             break;
     }
-    
-    var vs = gl.createShader(gl.VERTEX_SHADER); 
+
+    var vs = gl.createShader(gl.VERTEX_SHADER);
     if (vs)
     {
         gl.shaderSource(vs, source_vs);
@@ -10949,9 +10949,9 @@ function getShaders(gl, type)
             alert(gl.getShaderInfoLog(vs));
         }
     }
-    
-    var fs = gl.createShader(gl.FRAGMENT_SHADER); 
-    if (fs) 
+
+    var fs = gl.createShader(gl.FRAGMENT_SHADER);
+    if (fs)
     {
         gl.shaderSource(fs, source_fs);
         gl.compileShader(fs);
@@ -10960,7 +10960,7 @@ function getShaders(gl, type)
             alert(gl.getShaderInfoLog(fs));
         }
     }
-                    
+
     return { vertex: vs, fragment: fs };
 }
 ContentHandler.prototype = new AttributeContainer();
@@ -10970,10 +10970,10 @@ function ContentHandler()
 {
     AttributeContainer.call(this);
     this.className = "ContentHandler";
-    
+
     this.contentDirectory = new StringAttr("");
     this.url = new StringAttr("");
-    
+
     this.registerAttribute(this.contentDirectory, "contentDirectory");
     this.registerAttribute(this.url, "url");
 }
@@ -10993,13 +10993,13 @@ function ContentBuilder()
 {
     AttributeContainer.call(this);
     this.className = "ContentBuilder";
-    
+
     this.models = [];
     this.evaluators = [];
-    
+
     this.layer = 0;
     this.invertAlpha = new BooleanAttr(false);
-    
+
     this.registerAttribute(this.invertAlpha, "invertAlpha");
 }
 
@@ -11025,7 +11025,7 @@ function BinaryParser(stream, bigEndian)
 {
     this.stream = stream;
     this.bigEndian = bigEndian;
-    
+
     this.readUInt8  = function() { return this.decodeInt(8, false); }
     this.readUInt16 = function() { return this.decodeInt(16, false); }
     this.readUInt32 = function() { return this.decodeInt(32, false); }
@@ -11033,19 +11033,19 @@ function BinaryParser(stream, bigEndian)
     this.readInt16  = function() { return this.decodeInt(16, true); }
     this.readInt32  = function() { return this.decodeInt(32, true); }
     this.readFloat32 = function(){ return this.decodeFloat32(); }
-   
+
     var pos = 0;
-     
+
     this.decodeInt = function(bits, signed)
     {
         var sum = 0;
         var bytes = bits / 8;
         var byteValue = 0;
-        
+
         // sum bytes
         for (var B=0; B < bytes; B++)
         {
-            byteValue = this.bigEndian ? this.stream.charCodeAt(pos+B) 
+            byteValue = this.bigEndian ? this.stream.charCodeAt(pos+B)
                                        : this.stream.charCodeAt(pos+(bytes-B-1));
             // sum bits
             for (var b=7; b >= 0; b--)
@@ -11053,45 +11053,45 @@ function BinaryParser(stream, bigEndian)
                 sum = sum * 2 + ((1 << b) & byteValue ? 1 : 0);
             }
         }
-        
+
         // account for sign
         if (signed)
         {
             max = Math.pow(2, bits);
             sum = sum >= max / 2 ? sum - max : sum;
         }
-        
+
         // advance stream position
         pos += bytes;
-        
+
         return sum;
 	}
-	
+
 	// based upon example from: http://en.wikipedia.org/wiki/Binary32
 	this.decodeFloat32 = function()
 	{
 	    var sum = 0;
 	    var bytes = 4;
 	    var byteValue = new Array(bytes);
-	    
+
 	    // read the bytes representing the float
 	    for (var B=0; B < bytes; B++)
 	    {
 	        this.bigEndian ? byteValue[B] = this.stream.charCodeAt(pos+B)
 	                       : byteValue[B] = this.stream.charCodeAt(pos+(bytes-B-1));
 	    }
-	    
+
 	    // read sign bit (bit 31)
 	    var negative = byteValue[0] & 0x80;
 
 	    // read exponent bits (bits 30-23)
-	    var exponent = 0; 
+	    var exponent = 0;
 	    for (var e=6; e >= 0; e--)
         {
             exponent = exponent * 2 + ((1 << e) & byteValue[0] ? 1 : 0);
         }
         exponent = exponent * 2 + (0x80 & byteValue[1] ? 1 : 0);
-	    
+
 	    // read significand bits (bits 22-0)
 	    var significand = 0;
 	    // byte 1
@@ -11110,9 +11110,9 @@ function BinaryParser(stream, bigEndian)
 
         // decode exponent by subtracting 127
         var decodedExponent = exponent - 127;
-        
+
         // decode the significand using:
-        // each of the 24 bits of the significand, bit 23 to bit 0, represents a value, 
+        // each of the 24 bits of the significand, bit 23 to bit 0, represents a value,
         // starting at 1 and halves for each bit:
         // bit 23 = 1
         // bit 22 = 0.5
@@ -11129,43 +11129,43 @@ function BinaryParser(stream, bigEndian)
             decodedSignificand = decodedSignificand + ((1 << s) & significand ? bitvalue : 0);
             bitvalue /= 2;
         }
-        
+
         // multiply significand with the base, 2, to the power of the exponent to get the final result
         sum = decodedSignificand * Math.pow(2, decodedExponent) * (negative ? -1 : 1);
-        
+
 	    // advance stream position
 	    pos += bytes;
-	    
+
 	    return sum;
 	}
 }
 function TextParser(stream)
 {
     this.stream = stream;
-    
+
     var pos = 0;
-    
+
     this.readCharacter = function()
     {
         if (pos >= this.stream.length) return null;
-        
+
         return this.stream[pos++];
     }
-    
+
     this.readToken = function()
     {
         var c;
         var token = "";
-        
+
         if (pos >= this.stream.length) return null;
-        
+
         // read leading whitespace
         do
         {
             c = this.stream[pos++];
         }
         while (pos < this.stream.length && isSpace(c));
-        
+
         // read token
 		do
 		{
@@ -11173,32 +11173,32 @@ function TextParser(stream)
 			c = this.stream[pos++];
 		}
 		while (pos < this.stream.length && !isSpace(c));
-		
+
 		return (token.length > 0 ? token : null);
     }
-    
+
     this.readLine = function()
     {
         var line = "";
-        
+
         if (pos >= this.stream.length) return null;
-        
+
         while (pos < this.stream.length && this.stream[pos] != '\n')
         {
             line += this.stream[pos++];
         }
         pos++;
-        
-        return line;        
+
+        return line;
     }
-    
+
     this.readLineTokens = function()
     {
         var c;
         var p = 0;
         var token = "";
         var tokens = [];
-        
+
         var line = this.readLine();
         if (line == null) return null;
 
@@ -11210,7 +11210,7 @@ function TextParser(stream)
                 c = line[p++];
             }
             while (p < line.length && isSpace(c));
-            
+
             // read token
 		    do
 		    {
@@ -11218,11 +11218,11 @@ function TextParser(stream)
 			    c = line[p++];
 		    }
 		    while (p < line.length && !isSpace(c));
-    		
+
 		    tokens.push(token);
 		    token = "";
 		}
-		
+
 		return tokens;
     }
 }
@@ -11238,7 +11238,7 @@ function XMLParser(factory, registry, contentDir)
 XMLParser.prototype.parse = function(xml)
 {
     parser = new SAXDriver();
-   
+
     parser.setDocumentHandler(this);
     parser.setErrorHandler(this);
     parser.setLexicalHandler(this);
@@ -11280,15 +11280,15 @@ XMLParser.prototype.processingInstruction = function(target, data)
                             var pathInfo = formatPath(url);
                             console.debug("Include instruction for path: " + pathInfo[0]);
                             console.debug("Include content dir: " + pathInfo[1]);
-            
+
                             var contentHandler = new LWSceneHandler();
                             contentHandler.getAttribute("contentDirectory").setValueDirect(pathInfo[1]);
-            
-                            var contentBuilder = new LWSceneBuilder(); 
+
+                            var contentBuilder = new LWSceneBuilder();
                             contentBuilder.setRegistry(this.factory.registry);
                             contentBuilder.visitHandler(contentHandler);
-            
-                            contentHandler.parseFileStream(pathInfo[0]); 
+
+                            contentHandler.parseFileStream(pathInfo[0]);
                         }
                         break;
                     }
@@ -11298,29 +11298,29 @@ XMLParser.prototype.processingInstruction = function(target, data)
     }
 }
 
-XMLParser.prototype.startElement = function(name, atts) 
+XMLParser.prototype.startElement = function(name, atts)
 {
-    // by convention, AttributeContainers start with capital letters, and 
+    // by convention, AttributeContainers start with capital letters, and
     // complex attributes do not.
     if (isUpper(name[0]))
     {
         this.parseAttributeContainer(name, atts);
     }
-    else 
+    else
     {
         this.parseComplexAttribute(name, atts);
     }
 }
 
-XMLParser.prototype.endElement = function(name) 
+XMLParser.prototype.endElement = function(name)
 {
-    // by convention, AttributeContainers start with capital letters, and 
+    // by convention, AttributeContainers start with capital letters, and
     // complex attributes do not.
     if (isUpper(name[0]))
     {
         this.parseAttributeContainer(name);
     }
-    else 
+    else
     {
         this.parseComplexAttribute(name);
     }
@@ -11352,12 +11352,12 @@ XMLParser.prototype.characters = function(data, start, length)
     }
 }
 
-XMLParser.prototype.error = function(exception) 
+XMLParser.prototype.error = function(exception)
 {
     alert('Error: ' + exception.getMessage());
 }
 
-XMLParser.prototype.fatalError = function(exception) 
+XMLParser.prototype.fatalError = function(exception)
 {
     alert('Fatal Error: ' + exception.getMessage());
 }
@@ -11380,7 +11380,7 @@ XMLParser.prototype.parseAttributeContainer = function(name, atts)
         }
 
         this.registry.registerResource(attribute);
-        
+
         // if a collection is at the top of the attribute stack which does not allocate its elements,
         // add the attribute it to the collection
         var container = this.attributeStack.top();
@@ -11438,7 +11438,7 @@ XMLParser.prototype.parseComplexAttribute = function(name, atts)
         var attribute = container.getAttribute(name);
         if (!attribute)
         {
-            // check for collections here... if a collection is at the top of 
+            // check for collections here... if a collection is at the top of
             // the attribute stack, resize the collection (if necessary) to accomodate
             // the current attribute being deserialized
             if (container.isCollection())
@@ -11537,11 +11537,11 @@ function Serializer()
     this.DOM  = null;
     this.RootElement = null;
     this.elementStack = new Stack();
-    
+
     this.format = new StringAttr("xml");
     this.serializeMinimum = new BooleanAttr(false);
     this.serializeChildren = new BooleanAttr(false);
-    
+
     this.registerAttribute(this.format, "format");
     this.registerAttribute(this.serializeMinimum, "serializeMinimum");
     this.registerAttribute(this.serializeChildren, "serializeChildren");
@@ -11550,7 +11550,7 @@ function Serializer()
 Serializer.prototype.serialize = function(attribute, item, attributeName, container)
 {
 	this.RootElement = null;
-    this.DOM  = document.implementation.createDocument("", "__InitialRoot", null); 
+    this.DOM  = document.implementation.createDocument("", "__InitialRoot", null);
     if (this.DOM)
     {
         if (this.RootElement)
@@ -11579,13 +11579,13 @@ Serializer.prototype.serializeAttribute = function(attribute, item, attrName)
         {
             return;
         }
-        
+
         if (this.serializeMinimum.getValueDirect() == true &&
             !attribute.isDeserializedFromXML()) // if requested, don't serialize defaults
         {
             return;
         }
-        
+
         if (attribute.attrType == eAttrType.Model)
         {
             var model = attribute;
@@ -11625,7 +11625,7 @@ Serializer.prototype.serializeAttribute = function(attribute, item, attrName)
                 // so convert parentheses to a string that is value,
                 // which is then converted back to parentheses in the result
                 // of serialization
-                
+
                 var index = 0;
                 while (true)
                 {
@@ -11828,9 +11828,9 @@ Serializer.prototype.serializeModel = function(Model)
                 attr.getValue(values);
 
                 command.attributeValuePairs.push(new Pair(attr, values));
-                
+
                 this.serializeCommand(command);
-                
+
                 // setting the target on the SetCommand sets the attribute bin, which is normally
                 // cleared by adding the command to the CommandMgr, but this doesn't occur here, because
                 // it is only being serialized, not executed
@@ -11855,10 +11855,10 @@ Serializer.prototype.serializeCommand = function(command)
     {
         var element = null;
         var pcszType = command.className;
-               
+
         // don't serialize SerializeCommand
         if (pcszType == "Serialize") return;
-        
+
         var bstr = pcszType;
         if (bstr)
         {
@@ -11902,32 +11902,32 @@ Serializer.prototype.serializeCommand = function(command)
                 // 4. serialize "sourceAttribute", "targetAttribute", "target" (may be multiple source/target pairs)
                 var sources = [];
                 var targets = [];
-                for (i = 0; i < uiAttrCount; ++i) 
+                for (i = 0; i < uiAttrCount; ++i)
                 {
                     //attribute = command.getAttribute(i, pcszName);
                     var attr = command.getAttributeAt(i);
                     var attrName = command.getAttributeName(attr);
-                    if (attrName == "sourceAttribute") 
+                    if (attrName == "sourceAttribute")
                     {
                         sources.push(attr);
                     }
-                    else if (attrName == "targetAttribute") 
+                    else if (attrName == "targetAttribute")
                     {
                         targets.push(attr);
                     }
                 }
-                
+
                 // source/target pairs must be serialized together
-                for (i = 0; i < sources.length && i < targets.length; i++) 
+                for (i = 0; i < sources.length && i < targets.length; i++)
                 {
                     this.serializeAttribute(sources[i], -1, "sourceAttribute");
                     this.serializeAttribute(targets[i], -1, "targetAttribute");
                 }
                 // if "targetAttribute" specified, don't serialize "target"
-                if (targets.length == 0) 
+                if (targets.length == 0)
                 {
                     attribute = command.getAttribute("target");
-                    if (attribute) 
+                    if (attribute)
                     {
                         this.serializeAttribute(attribute, -1, "target");
                     }
@@ -11936,7 +11936,7 @@ Serializer.prototype.serializeCommand = function(command)
                 // 5. serialize the borrowed attributes that were modified by the command
                 var vNewVal;
                 var pRef;
-                for (i = 0; i < uiAttrCount; ++i) 
+                for (i = 0; i < uiAttrCount; ++i)
                 {
                     attribute = command.getAttributeAt(i);
                     var attrName = command.getAttributeName(attribute);
@@ -11944,17 +11944,17 @@ Serializer.prototype.serializeCommand = function(command)
                     if (borrowed.borrowed)
                     {
                         var pNewAttribute = newAttribute(attribute.className);
-                        if (pNewAttribute) 
+                        if (pNewAttribute)
                         {
                             setAttributeValue(pNewAttribute, borrowed.value);
                             pNewAttribute.flagDeserializedFromXML();
                             this.serializeAttribute(pNewAttribute, -1, attrName);
                         }
                     }
-                    else 
+                    else
                     {
                     	var borrowed = command.isBorrowedAndReferenceModified(attribute);
-                    	if (borrowed.borrowed) 
+                    	if (borrowed.borrowed)
                     	{
                         	this.serializeAttributeReference(attribute, borrowed.reference);
                         }
@@ -12074,7 +12074,7 @@ Serializer.prototype.doSerializeChildren = function(root)
     {
         return;
     }
-    
+
     for (var i=0; i < root.getChildCount(); i++)
     {
         this.serializeAttribute(root.getChild(i), 0, null);
@@ -12084,7 +12084,7 @@ Serializer.prototype.doSerializeChildren = function(root)
 Serializer.prototype.pushElement = function(element)
 {
 	this.elementStack.push(element);
-	    
+
     if (this.RootElement)
     {
         this.RootElement.appendChild(element);
@@ -12194,7 +12194,7 @@ Serializer.prototype.getAttributeStringValue = function(attr, item)
         }
             break;
     }
-    
+
     return strValue;
 }
 
@@ -12288,7 +12288,7 @@ function ScaleImage(pixelFormat, widthIn, heightIn, byteAlignmentIn, dataIn, wid
     var canvasIn = document.createElement("canvas");
     canvasIn.width = widthIn;
     canvasIn.height = heightIn;
-    
+
     var ctxIn = canvasIn.getContext("2d");
     var imageDataIn = ctxIn.createImageData(widthIn, heightIn);
 
@@ -12311,11 +12311,11 @@ function ScaleImage(pixelFormat, widthIn, heightIn, byteAlignmentIn, dataIn, wid
     canvasOut.height = heightOut;
 
     var ctxOut = canvasOut.getContext("2d");
-    
+
     ctxOut.drawImage(canvasIn,
                      0, 0, canvasIn.width, canvasIn.height,
                      0, 0, canvasOut.width, canvasOut.height);
-               
+
     var imageDataOut = ctxOut.getImageData(0, 0, widthOut, heightOut);
 
     i = 0;
@@ -12339,7 +12339,7 @@ var FRAME_FILTER_NEGATE_COLOR_BIT   = 0x004;    // invert rgb pixel data (subtra
 var FRAME_FILTER_NEGATE_ALPHA_BIT   = 0x008;    // invert alpha pixel data (subtract from 255)
 var FRAME_FILTER_ALPHA_ONOFF_BIT    = 0x010;    // set alpha pixel to 0 or 255; alpha values in the range
                                                 // [0, 127] are set to 0, [128, 255] are set to 255
-                                                
+
 function MediaPlayback(container, onload)
 {
     this.container = container;
@@ -12513,10 +12513,10 @@ MediaPlayback.prototype.newFrameDataAvailable = function()
  * @param buffer        - incoming buffer to receive pixel data.
  * @param filterMask    - zero or more OR'd filtering flags controlling how the image is filtered:
  *
- *                        FRAME_FILTER_SCALE_FRAME_BIT  - the frame is first scaled to the size 
+ *                        FRAME_FILTER_SCALE_FRAME_BIT  - the frame is first scaled to the size
  *                                                        of the incoming buffer before copying
  *                        FRAME_FILTER_INVERT_FRAME_BIT - the frame is inverted before copying
- *                        FRAME_FILTER_NEGATE_COLOR_BIT - the rgb pixel data is inverted (subtracted from 255) 
+ *                        FRAME_FILTER_NEGATE_COLOR_BIT - the rgb pixel data is inverted (subtracted from 255)
  *                        FRAME_FILTER_NEGATE_ALPHA_BIT - the alpha pixel data is inverted (subtracted from 255)
  *                        FRAME_FILTER_ALPHA_ONOFF_BIT  - set alpha pixel to 0 or 255; alpha values in the range
  *                                                        [0, 127] are set to 0, [128, 255] are set to 255
@@ -12588,7 +12588,7 @@ MediaPlayback.prototype.getFrameData = function(width, height, pitch, pixelForma
 		imagePitch += (4 - imagePitch % 4) % 4;
 
 		var scaledPixels = [];
-		if (!ScaleImage(imagePixelFormat, imageWidth, imageHeight, this.getPixelByteAlignment(), pixels, 
+		if (!ScaleImage(imagePixelFormat, imageWidth, imageHeight, this.getPixelByteAlignment(), pixels,
 			width, height, 4, scaledPixels))
 		{
 			return undefined;
@@ -12612,7 +12612,7 @@ MediaPlayback.prototype.getFrameData = function(width, height, pitch, pixelForma
         {
             buffer[i] = pixels[i];
         }
-        
+
         this.frameRetrieved = true;
         return frameRetrieved;
     }
@@ -12633,7 +12633,7 @@ MediaPlayback.prototype.getFrameData = function(width, height, pitch, pixelForma
 
 		// get alpha pixel format
 		alphaPixelFormat = this.alphaChannel.getPixelFormat();
-    
+
 		// currently only supporting alpha pixel formats: RGBA
 		if (alphaPixelFormat != ePixelFormat.R8G8B8A8)
 		{
@@ -12656,8 +12656,8 @@ MediaPlayback.prototype.getFrameData = function(width, height, pitch, pixelForma
 			    alphaPitch += (4 - alphaPitch % 4) % 4;
 
 			    var scaledAlphaPixels = [];
-			    if (ScaleImage(alphaPixelFormat, alphaWidth, alphaHeight, 
-				    this.alphaChannel.getPixelByteAlignment(), alphaPixels, imageWidth, 
+			    if (ScaleImage(alphaPixelFormat, alphaWidth, alphaHeight,
+				    this.alphaChannel.getPixelByteAlignment(), alphaPixels, imageWidth,
 				    imageHeight, 4, scaledAlphaPixels))
 			    {
 			        alphaPixels = scaledAlphaPixels;
@@ -12671,7 +12671,7 @@ MediaPlayback.prototype.getFrameData = function(width, height, pitch, pixelForma
 		    }
 		}
 	}
-	
+
     // determine dimensions to copy
     var copyWidth = Math.min(width, imageWidth);
     var copyHeight = Math.min(height, imageHeight);
@@ -12965,7 +12965,7 @@ function GraphMgr()
 {
     AttributeContainer.call(this);
     this.className = "GraphMgr";
-    
+
     this.renderContext = null;
     this.renderState = null;
     this.lightIndex = 0;
@@ -12978,9 +12978,9 @@ function GraphMgr()
     this.labelIndex = 1;
     this.balloonTipLabelIndex = 1;
     this.styleMgr = new StyleMgr();
-    
+
     this.name = new StringAttr("GraphMgr");
-    
+
     this.registerAttribute(this.name, "name");
 }
 
@@ -13042,7 +13042,7 @@ GraphMgr.prototype.getNextLabelIndex = function()
 
 GraphMgr.prototype.getNextBalloonTipLabelIndex = function()
 {
-    return this.balloonTipLabelIndex++;    
+    return this.balloonTipLabelIndex++;
 }
 
 GraphMgr.prototype.reset = function ()
@@ -13069,18 +13069,18 @@ function Node()
     AttributeContainer.call(this);
     this.className = "Node";
     this.attrType = eAttrType.Node;
-    
+
     this.children = [];
     this.parents = [];
     this.modificationCount = 0;
     this.thisModified = false;
     this.childModified = false;
     this.childrenModified = [];
-    
+
     this.name = new StringAttr("");
     this.enabled = new BooleanAttr(true);
     this.orphan = new BooleanAttr(false);
-    
+
     this.registerAttribute(this.name, "name");
     this.registerAttribute(this.enabled, "enabled");
     this.registerAttribute(this.orphan, "orphan");
@@ -13262,27 +13262,27 @@ Node.prototype.isNode = function()
 Node.prototype.addChild = function(child)
 {
     this.children.push(child);
-    
+
     this.incrementModificationCount();
-    
+
     child.addParent(this);
 }
 
 Node.prototype.insertChild = function(child, before)
 {
     this.children.splice(before, 0, child);
-    
+
     this.incrementModificationCount();
-    
+
     child.addParent(this);
 }
 
 Node.prototype.removeChild = function(child)
 {
     this.children.splice(this.children.indexOf(child), 1);
-    
+
     this.incrementModificationCount();
-    
+
     child.removeParent(this);
 }
 
@@ -13299,7 +13299,7 @@ Node.prototype.getChild = function(n)
     {
         return this.children[n];
     }
-    
+
     return null;
 }
 
@@ -13312,7 +13312,7 @@ Node.prototype.getNamedChild = function(name)
             return this.children[i];
         }
     }
-    
+
     return null;
 }
 
@@ -13327,7 +13327,7 @@ Node.prototype.getParent = function(n)
     {
         return this.parents[n];
     }
-    
+
     return null;
 }
 
@@ -13356,9 +13356,9 @@ Node.prototype.update = function(params, visitChildren)
         params.visited.push(this);
         return;
     }
-    
+
     params.visited.push(this);
-    
+
     if (visitChildren)
     {
         // call for all children
@@ -13367,7 +13367,7 @@ Node.prototype.update = function(params, visitChildren)
             this.children[i].update(params, visitChildren);
         }
     }
-    
+
     this.childModified = this.isChildModified();
 }
 
@@ -13385,14 +13385,14 @@ Node.prototype.apply = function(directive, params, visitChildren)
     switch (directive)
     {
         case "serialize":
-        {          
+        {
             var context = new Context();
             context.attribute = this;
 
             var factory = this.registry.find("AttributeFactory");
             var serializer = factory.create("Serializer");
             var xmlSerializer = new XMLSerializer();
-            
+
             // added required format setting - need to revisit to reduce number of required steps
             serializer.getAttribute("format").setValueDirect("xml");
             // set minimum flag so that only the minimum required for recreation is serialized
@@ -13412,7 +13412,7 @@ Node.prototype.apply = function(directive, params, visitChildren)
         }
         break;
     }
-    
+
     if (visitChildren)
     {
         if (params.path)
@@ -13459,7 +13459,7 @@ Node.prototype.setModified = function()
 Node.prototype.incrementModificationCount = function()
 {
     this.modificationCount++;
-    
+
     this.setModified();
 }
 
@@ -13495,16 +13495,16 @@ function SGNode()
 {
     Node.call(this);
     this.className = "SGNode";
-    
+
     this.graphMgr = null;
     this.recordDisplayList = false;
     this.disableDisplayLists = false;
     this.displayListObj = null;
-    
+
     this.enableDisplayList = new BooleanAttr(false);
     this.autoDisplayList = new BooleanAttr(false);
     this.updateDisplayList = new PulseAttr();
-    
+
     this.registerAttribute(this.enableDisplayList, "enableDisplayList");
     this.registerAttribute(this.autoDisplayList, "autoDisplayList");
     this.registerAttribute(this.updateDisplayList, "updateDisplayList");
@@ -13534,9 +13534,9 @@ SGNode.prototype.update = function(params, visitChildren)
         params.visited.push(this);
         return;
     }
-    
+
     params.visited.push(this);
-    
+
     var subtreeModified = false;
 
     if (this.thisModified)
@@ -13549,20 +13549,20 @@ SGNode.prototype.update = function(params, visitChildren)
     {
         subtreeModified = true;
     }
-    
+
     if (this.disableDisplayLists)
     {
         params.disableDisplayLists = true;
         this.disableDisplayLists = false;
     }
-    
+
     // if the subtree has been modified, disable display list for this node
     if (subtreeModified)
     {
         this.enableDisplayList.setValueDirect(false);
         this.recordDisplayList = true; // re-record when (and if) list is re-enabled
     }
-    
+
     // if using auto-display lists...
     // if the subtree has not been modified, enable display list for this node
     if (this.autoDisplayList.getValueDirect() && !subtreeModified)
@@ -13585,7 +13585,7 @@ SGNode.prototype.update = function(params, visitChildren)
 
             this.recordDisplayList = true;
         }
-        
+
         // if recording is set to false, do not visit children
         if (!this.recordDisplayList)
         {
@@ -13594,7 +13594,7 @@ SGNode.prototype.update = function(params, visitChildren)
 
         params.displayListObj = this.displayListObj;
     }
-    
+
     if (visitChildren)
     {
         // call for all children
@@ -13603,13 +13603,13 @@ SGNode.prototype.update = function(params, visitChildren)
             this.children[i].update(params, visitChildren);
         }
     }
-    
+
     // if display list object was set to the update params, clear it
     if (params.displayListObj == this.displayListObj)
     {
         params.displayListObj = null;
     }
-    
+
     this.childModified = this.isChildModified();
 }
 
@@ -13620,9 +13620,9 @@ SGNode.prototype.apply = function(directive, params, visitChildren)
     {
         return;
     }
-    
+
     var useDisplayList = false;
-    
+
     switch (directive)
     {
         case "render":
@@ -13631,20 +13631,20 @@ SGNode.prototype.apply = function(directive, params, visitChildren)
                 {
                     this.recordDisplayList = true;
                 }
-                
+
                 // determine if display list should be used; if a display list (from a parent node) is already operating, don't nest record or play...
                 // this node's display list operations  will be recorded by the currently operating display list; also check manual override flag for disabling
                 // display lists
-                useDisplayList = this.enableDisplayList.getValueDirect() && 
+                useDisplayList = this.enableDisplayList.getValueDirect() &&
                                  this.displayListObj &&
-                                 !params.displayListObj && 
+                                 !params.displayListObj &&
                                  !params.disableDisplayLists;
-    
+
                 if (useDisplayList)
                 {
                     // set as current display list
                     params.displayListObj = this.displayListObj;
-    
+
                     if (this.recordDisplayList)
                     {
                         // start recording render engine calls
@@ -13655,17 +13655,17 @@ SGNode.prototype.apply = function(directive, params, visitChildren)
                         // playback render engine calls and do not visit children
                         this.displayListObj.play();
                         visitChildren = false;
-                    }  
+                    }
                 }
             }
             break;
-            
+
         case "rayPick":
             {
                 params.currentNodePath.push(this);
             }
             break;
-            
+
         default:
             {
                 // call base-class implementation
@@ -13674,7 +13674,7 @@ SGNode.prototype.apply = function(directive, params, visitChildren)
             }
             break;
     }
-        
+
     if (visitChildren)
     {
         if (params.path)
@@ -13703,7 +13703,7 @@ SGNode.prototype.apply = function(directive, params, visitChildren)
             }
         }
     }
-    
+
     switch (directive)
     {
         case "render":
@@ -13716,13 +13716,13 @@ SGNode.prototype.apply = function(directive, params, visitChildren)
                         this.displayListObj.record_end();
                         this.recordDisplayList = false;
                     }
-    
+
                     // clear current display list
                     params.displayListObj = null;
                 }
             }
             break;
-            
+
         case "rayPick":
             {
                 params.currentNodePath.pop();
@@ -13736,37 +13736,37 @@ SGNode.prototype.isRecordingDisplayList = function()
     if (this.graphMgr.renderContext.getDisplayList())
     {
         return true;
-    }   
-    
-    return false; 
+    }
+
+    return false;
 }
 
 SGNode.prototype.createDisplayList = function()
 {
-    this.displayListObj = new DisplayListObj(this.graphMgr.renderContext);  
+    this.displayListObj = new DisplayListObj(this.graphMgr.renderContext);
 }
 
 SGNode.prototype.deleteDisplayList = function()
 {
-    this.displayListObj = null;    
+    this.displayListObj = null;
 }
 
 SGNode.prototype.enableDisplayListModified = function()
-{   
+{
 }
 
 function SGNode_EnableDisplayListModifiedCB(attribute, container)
 {
-    container.enableDisplayListModified();  
+    container.enableDisplayListModified();
 }
 
 function SGNode_AutoDisplayListModifiedCB(attribute, container)
-{    
+{
 }
 
 function SGNode_UpdateDisplayListModifiedCB(attribute, container)
 {
-    container.disableDisplayLists = true;    
+    container.disableDisplayLists = true;
 }
 
 RenderableElement.prototype = new SGNode();
@@ -13777,7 +13777,7 @@ function RenderableElement()
     SGNode.call(this);
     this.className = "RenderableElement";
     this.attrType = eAttrType.RenderableElement;
-    
+
     this.bbox = new BBoxAttr();
     this.renderSequenceSlot = new NumberAttr(0);
     this.hasFocus = new TernaryAttr(0);
@@ -13786,7 +13786,7 @@ function RenderableElement()
     this.stylesMap = new StylesMapAttr();
     this.renderableElementStyle = new RenderableElementStyleAttr();
     this.renderedSlot = new NumberAttr(0);
-    
+
     this.registerAttribute(this.bbox, "bbox");
     this.registerAttribute(this.renderSequenceSlot, "renderSequenceSlot");
     this.registerAttribute(this.hasFocus, "hasFocus");
@@ -13825,7 +13825,7 @@ function ParentableMotionElement()
     RenderableElement.call(this);
     this.className = "ParentableMotionElement";
     this.attrType = eAttrType.ParentableMotionElement;
-    
+
     this.translationMatrix = new Matrix4x4();           // matrix representing this element's position translation
     this.rotationQuat = new Quaternion();               // quaternion for calculating rotation
     this.rotationMatrix = new Matrix4x4();              // matrix representing this element's rotation
@@ -13835,12 +13835,12 @@ function ParentableMotionElement()
     this.stackMatrix = new Matrix4x4();                 // current matrix from the scene graph matrix stack (GcTransform nodes)
     this.transformSimple = new Matrix4x4();             // after Update(), contains this element's transformations (translation/
     // rotation/scale/pivot)
-    this.transformCompound = new Matrix4x4();           // after Update(), contains this element's transformations combined with 
+    this.transformCompound = new Matrix4x4();           // after Update(), contains this element's transformations combined with
     // parent's transformations (if any)
     this.sectorTransformSimple = new Matrix4x4();		// after Update(), contains this element's transformations (translation/
     // rotation/scale/pivot) for the current sector
-    this.sectorTransformCompound = new Matrix4x4();     // after Update(), contains this element's transformations combined with 
-                                                        // parent's transformations (if any) for the current sector                                        
+    this.sectorTransformCompound = new Matrix4x4();     // after Update(), contains this element's transformations combined with
+                                                        // parent's transformations (if any) for the current sector
     this.updatePosition = false;
     this.updateScale = false;
     this.updatePivot = false;
@@ -13852,7 +13852,7 @@ function ParentableMotionElement()
     this.inheritsPivot = true;
     this.nonZeroVelocity = false;
     this.motionParent = null;
-    
+
     this.position = new Vector3DAttr(0, 0, 0);
     this.rotation = new Vector3DAttr(0, 0, 0);
     this.scale = new Vector3DAttr(1, 1, 1);
@@ -13893,7 +13893,7 @@ function ParentableMotionElement()
     this.inheritPivot_Y = new BooleanAttr(true);
     this.inheritPivot_Z = new BooleanAttr(true);
     this.transformModified = new PulseAttr();               // pulsed when transform has been modified
-    
+
     this.position.addModifiedCB(ParentableMotionElement_PositionModifiedCB, this);
     this.rotation.addModifiedCB(ParentableMotionElement_RotationModifiedCB, this);
     this.scale.addModifiedCB(ParentableMotionElement_ScaleModifiedCB, this);
@@ -13917,7 +13917,7 @@ function ParentableMotionElement()
     this.linearVelocity.addModifiedCB(ParentableMotionElement_VelocityModifiedCB, this);
     this.angularVelocity.addModifiedCB(ParentableMotionElement_VelocityModifiedCB, this);
     this.scalarVelocity.addModifiedCB(ParentableMotionElement_VelocityModifiedCB, this);
-    
+
     this.registerAttribute(this.position, "position");
     this.registerAttribute(this.rotation, "rotation");
     this.registerAttribute(this.scale, "scale");
@@ -13926,11 +13926,11 @@ function ParentableMotionElement()
     this.registerAttribute(this.worldCenter, "worldCenter");
     this.registerAttribute(this.worldPosition, "worldPosition");
     this.registerAttribute(this.worldRotation, "worldRotation");
-    this.registerAttribute(this.worldScale, "worldScale");    
-    this.registerAttribute(this.screenPosition, "screenPosition"); 
-    this.registerAttribute(this.sectorOrigin, "sectorOrigin"); 
-    this.registerAttribute(this.sectorPosition, "sectorPosition"); 
-    this.registerAttribute(this.sectorWorldCenter, "sectorWorldCenter"); 
+    this.registerAttribute(this.worldScale, "worldScale");
+    this.registerAttribute(this.screenPosition, "screenPosition");
+    this.registerAttribute(this.sectorOrigin, "sectorOrigin");
+    this.registerAttribute(this.sectorPosition, "sectorPosition");
+    this.registerAttribute(this.sectorWorldCenter, "sectorWorldCenter");
     this.registerAttribute(this.sectorWorldPosition, "sectorWorldPosition");
     this.registerAttribute(this.worldTransform, "worldTransform");
     this.registerAttribute(this.sectorWorldTransform, "sectorWorldTransform");
@@ -13975,7 +13975,7 @@ ParentableMotionElement.prototype.update = function(params, visitChildren)
 	{
     	this.updateVelocityMotion(params.timeIncrement);
     }
-        
+
     if (this.updateInheritance)
     {
         this.updateInheritance = false;
@@ -13996,7 +13996,7 @@ ParentableMotionElement.prototype.update = function(params, visitChildren)
         this.inheritPivot_Y.getValueDirect() &&
         this.inheritPivot_Z.getValueDirect();
     }
-    
+
     // update this element's transformations (translation/rotation/scale/pivot)
     var modified = this.updateSimpleTransform();
     if (modified)
@@ -14009,7 +14009,7 @@ ParentableMotionElement.prototype.update = function(params, visitChildren)
     }
     this.updateCompoundTransform();
     this.updateWorldMotionInfo();
-    
+
     // call base-class implementation
     RenderableElement.prototype.update.call(this, params, visitChildren);
 }
@@ -14023,7 +14023,7 @@ ParentableMotionElement.prototype.apply = function(directive, params, visitChild
         RenderableElement.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
         case "render":
@@ -14034,7 +14034,7 @@ ParentableMotionElement.prototype.apply = function(directive, params, visitChild
         }
         break;
     }
-    
+
     // call base-class implementation
     RenderableElement.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -14050,13 +14050,13 @@ ParentableMotionElement.prototype.updateChildDisplayLists = function()
 ParentableMotionElement.prototype.applyTransform = function()
 {
     // TODO: if scaling factors are not 1, apply inverse scale before this transformation is
-    // applied to avoid translation caused by scaling  
-    
+    // applied to avoid translation caused by scaling
+
     // set transformation matrix
     this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
     this.graphMgr.renderContext.leftMultMatrix(this.sectorTransformCompound);
     this.graphMgr.renderContext.applyModelViewTransform();
-    
+
 	// TODO: if invsere scale was applied, re-apply scale
 }
 
@@ -14077,16 +14077,16 @@ ParentableMotionElement.prototype.updateVelocityMotion = function(timeIncrement)
         // update position
         position.x = position.x + (directionVectors.right.x   * panVelocity.x * timeIncrement) +
         						  (directionVectors.up.x 	  * panVelocity.y * timeIncrement) +
-        						  (directionVectors.forward.x * panVelocity.z * timeIncrement) + 
+        						  (directionVectors.forward.x * panVelocity.z * timeIncrement) +
         						  (linearVelocity.x * timeIncrement);
         position.y = position.y + (directionVectors.right.y   * panVelocity.x * timeIncrement) +
         						  (directionVectors.up.y 	  * panVelocity.y * timeIncrement) +
-        						  (directionVectors.forward.y * panVelocity.z * timeIncrement) + 
+        						  (directionVectors.forward.y * panVelocity.z * timeIncrement) +
         						  (linearVelocity.y * timeIncrement);
         position.z = position.z + (directionVectors.right.z   * panVelocity.x * timeIncrement) +
         						  (directionVectors.up.z 	  * panVelocity.y * timeIncrement) +
-        						  (directionVectors.forward.z * panVelocity.z * timeIncrement) + 
-        						  (linearVelocity.z * timeIncrement);						  
+        						  (directionVectors.forward.z * panVelocity.z * timeIncrement) +
+        						  (linearVelocity.z * timeIncrement);
 
         this.position.setValueDirect(position.x, position.y, position.z);
     }
@@ -14102,7 +14102,7 @@ ParentableMotionElement.prototype.updateVelocityMotion = function(timeIncrement)
         rotation.x = rotation.x + (angularVelocity.x * timeIncrement);
         rotation.y = rotation.y + (angularVelocity.y * timeIncrement);
         rotation.z = rotation.z + (angularVelocity.z * timeIncrement);
-        
+
         this.rotation.setValueDirect(rotation.x, rotation.y, rotation.z);
     }
 
@@ -14117,86 +14117,86 @@ ParentableMotionElement.prototype.updateVelocityMotion = function(timeIncrement)
         scale.x = scale.x + (scalarVelocity.x * timeIncrement);
         scale.y = scale.y + (scalarVelocity.y * timeIncrement);
         scale.z = scale.z + (scalarVelocity.z * timeIncrement);
-        
+
         this.scale.setValueDirect(scale.x, scale.y, scale.z);
-    }   
+    }
 }
 
 ParentableMotionElement.prototype.updateSimpleTransform = function()
 {
     var modified = false;
-    
+
     if (this.updatePosition || this.updateRotation || this.updateScale || this.updatePivot)
     {
         var values;
-        
+
         if (this.updatePosition)
         {
             this.updatePosition = false;
-            
+
             values = this.position.getValueDirect();
             this.translationMatrix.loadTranslation(values.x, values.y, values.z);
-            
+
             modified = true;
         }
-        
+
         if (this.updateRotation)
         {
             this.updateRotation = false;
-            
+
             values = this.rotation.getValueDirect();
             this.rotationQuat.loadXYZAxisRotation(values.x, values.y, values.z);
             this.rotationMatrix = this.rotationQuat.getMatrix();
-            
+
             modified = true;
         }
-        
+
         if (this.updateScale)
         {
             this.updateScale = false;
-            
+
             values = this.scale.getValueDirect();
             this.scaleMatrix.loadScale(values.x, values.y, values.z);
-            
+
             modified = true;
         }
-        
+
         if (this.updatePivot)
         {
             this.updatePivot = false;
-            
+
             values = this.pivot.getValueDirect();
             this.pivotMatrix.loadTranslation(-values.x, -values.y, -values.z);
-            
+
             modified = true;
         }
-        
+
         if (this.updateSectorPosition)
         {
             this.updateSectorPosition = false;
-            
+
             values = this.sectorPosition.getValueDirect();
             this.sectorTranslationMatrix.loadTranslation(values.x, values.y, values.z);
-            
+
             modified = true;
         }
-        
+
         if (modified)
         {
             this.transformModified.pulse();
-            
+
             // pre-multiply pivot/scale/rotation since this is applied to both regular and sector transforms
             var psr = new Matrix4x4();
             psr.loadMatrix(this.pivotMatrix.multiply(this.scaleMatrix.multiply(this.rotationMatrix)));
-    
+
             this.transformSimple.loadMatrix(psr.multiply(this.translationMatrix));
             this.sectorTransformSimple.loadMatrix(psr.multiply(this.sectorTranslationMatrix));
-            
+
             // force any motion children to update their display lists
             this.updateChildDisplayLists();
         }
     }
-    
+
     return modified;
 }
 
@@ -14204,7 +14204,7 @@ ParentableMotionElement.prototype.updateCompoundTransform = function()
 {
     this.transformCompound.loadMatrix(this.transformSimple);
     this.sectorTransformCompound.loadMatrix(this.sectorTransformSimple);
-    
+
     if (this.motionParent)
     {
         if (this.inheritsPosition && this.inheritsRotation && this.inheritsScale && this.inheritsPivot)
@@ -14223,7 +14223,7 @@ ParentableMotionElement.prototype.updateWorldMotionInfo = function()
 {
     this.worldTransform.setValueDirect(this.transformCompound);
     this.sectorWorldTransform.setValueDirect(this.sectorTransformCompound);
-    
+
     this.updateWorldCenter();
     this.updateWorldPosition();
     this.updateWorldRotation();
@@ -14235,7 +14235,7 @@ ParentableMotionElement.prototype.updateWorldCenter = function()
     var center = this.center.getValueDirect();
     center = this.transformCompound.transform(center.x, center.y, center.z, 1);
     this.worldCenter.setValueDirect(center.x, center.y, center.z);
-    
+
     center = this.center.getValueDirect();
     center = this.sectorTransformCompound.transform(center.x, center.y, center.z, 1);
     this.sectorWorldCenter.setValueDirect(center.x, center.y, center.z);
@@ -14245,7 +14245,7 @@ ParentableMotionElement.prototype.updateWorldPosition = function()
 {
     var position = this.transformCompound.transform(0, 0, 0, 1);
     this.worldPosition.setValueDirect(position.x, position.y, position.z);
-    
+
     position = this.sectorTransformCompound.transform(0, 0, 0, 1);
     this.sectorWorldPosition.setValueDirect(position.x, position.y, position.z);
 }
@@ -14264,7 +14264,7 @@ ParentableMotionElement.prototype.updateWorldScale = function()
 
 ParentableMotionElement.prototype.synchronizePosition = function()
 {
-    // synchronize position with sector position if necessary (don't sync if not necessary to avoid 
+    // synchronize position with sector position if necessary (don't sync if not necessary to avoid
     // the circular dependency between position & sector position
 
     // get sector origin (use [0, 0, 0] for parented objects)
@@ -14279,30 +14279,30 @@ ParentableMotionElement.prototype.synchronizePosition = function()
     {
         sectorOrigin = this.sectorOrigin.getValueDirect();
     }
-    
+
     // get sector position
     var sectorPosition = this.sectorPosition.getValueDirect();
-    
+
     // get world position
     var position = new Vector3D();
     position.x = sectorOrigin.x + sectorPosition.x;
     position.y = sectorOrigin.y + sectorPosition.y;
     position.z = sectorOrigin.z + sectorPosition.z;
-    
+
     // update position
     this.position.removeModifiedCB(ParentableMotionElement_PositionModifiedCB, this);
     this.position.setValueDirect(position.x, position.y, position.z);
     this.position.addModifiedCB(ParentableMotionElement_PositionModifiedCB, this);
-    
+
     // flag a position update
     this.updatePosition = true;
 }
 
 ParentableMotionElement.prototype.synchronizeSectorPosition = function()
 {
-    // synchronize sector position with position if necessary (don't sync if not necessary to avoid 
+    // synchronize sector position with position if necessary (don't sync if not necessary to avoid
     // the circular dependency between position & sector position
-	
+
     // get sector origin (use [0, 0, 0] for parented objects)
     var sectorOrigin = new Vector3D;
     if (this.motionParent)
@@ -14339,10 +14339,10 @@ ParentableMotionElement.prototype.getDirectionVectors = function()
     var up = this.sectorTransformCompound.transform(0, 1, 0, 0);
     var right = this.sectorTransformCompound.transform(1, 0, 0, 0);
     var forward = this.sectorTransformCompound.transform(0, 0, 1, 0);
-    
+
     return {
-        up: up, 
-        right: right, 
+        up: up,
+        right: right,
         forward: forward
     };
 }
@@ -14350,9 +14350,9 @@ ParentableMotionElement.prototype.getDirectionVectors = function()
 ParentableMotionElement.prototype.setMotionParent = function(parent)
 {
     this.motionParent = parent;
-    
+
     // set sector position to account for parenting
-    this.synchronizeSectorPosition();       
+    this.synchronizeSectorPosition();
 }
 
 ParentableMotionElement.prototype.velocityModified = function()
@@ -14441,11 +14441,11 @@ function Directive()
     AttributeContainer.call(this);
     this.className = "Directive";
     this.attrType = eAttrType.Directive;
-    
+
     this.name = new StringAttr("");
     this.enabled = new BooleanAttr(true);
     this.rootNode = new ReferenceAttr(null);
-    
+
     this.registerAttribute(this.name, "name");
     this.registerAttribute(this.enabled, "enabled");
     this.registerAttribute(this.rootNode, "rootNode");
@@ -14457,7 +14457,7 @@ function SGDirective()
 {
     Directive.call(this);
     this.className = "SGDirective";
-    
+
     this.graphMgr = null;
 }
 
@@ -14471,7 +14471,7 @@ UpdateParams.prototype.constructor = UpdateParams();
 function UpdateParams() // combined CUpdateParams & GtUpdateParams in this version
 {
     DirectiveParams.call(this);
-    
+
     this.pass = 0;
     this.timeIncrement = 0;
     this.visited = [];
@@ -14488,28 +14488,28 @@ function UpdateDirective()
     SGDirective.call(this);
     this.className = "UpdateDirective";
     this.attrType = eAttrType.UpdateDirective;
-    
+
     this.name.setValueDirect("UpdateDirective");
-    
+
     this.timeIncrement = new NumberAttr(0);
-    
+
     this.registerAttribute(this.timeIncrement, "timeIncrement");
 }
 
 UpdateDirective.prototype.execute = function(root, params)
 {
     root = root || this.rootNode.getValueDirect();
-    
+
     params.timeIncrement = this.timeIncrement.getValueDirect();
-    
+
     // update (perform first pass)
     root.update(params, true);
-    
+
     // update (perform subsequent passes while nextPass vector is not empty)
     while (params.nextPass.length > 0)
     {
         params.pass++;
-        
+
         // get nodes to visit this pass
         var nodes = [];
         for (var i=0; i < params.nextPass.length; i++)
@@ -14517,13 +14517,13 @@ UpdateDirective.prototype.execute = function(root, params)
             nodes[i] = params.nextPass[i];
         }
         params.nextPass.length = 0;
-          
+
         for (var i=0; i < nodes.length; i++)
         {
             nodes[i].update(params, false);
         }
     }
-    
+
     return params.visited;
 }
 Camera.prototype = new ParentableMotionElement();
@@ -14534,7 +14534,7 @@ function Camera()
     ParentableMotionElement.call(this);
     this.className = "Camera";
     this.attrType = eAttrType.Camera;
-    
+
     this.projectionMatrix = new Matrix4x4();
     this.viewport = new Viewport();
     this.updateNearDistance = false;
@@ -14542,17 +14542,17 @@ function Camera()
     this.updateClipPlanes = true;
     this.near = 0;
     this.far = 0;
-    
+
     this.nearDistance = new NumberAttr(0);
     this.farDistance = new NumberAttr(0);
     this.viewVolume = new ViewVolumeAttr();
     //this.viewports
     this.sectorOriginUpdatesEnabled = new BooleanAttr(false);
     //this.updateSectorOrigin
-    
+
     this.nearDistance.addModifiedCB(Camera_NearDistanceModifiedCB, this);
     this.farDistance.addModifiedCB(Camera_FarDistanceModifiedCB, this);
-    
+
     this.registerAttribute(this.nearDistance, "nearDistance");
     this.registerAttribute(this.farDistance, "farDistance");
     this.registerAttribute(this.viewVolume, "viewVolume");
@@ -14563,21 +14563,21 @@ Camera.prototype.update = function(params, visitChildren)
     if (this.updateNearDistance)
     {
         this.updateNearDistance = false;
-        
+
         this.near = this.nearDistance.getValueDirect();
-        
+
         this.updateClipPlanes = true;
     }
-    
+
     if (this.updateFarDistance)
     {
         this.updateFarDistance = false;
-        
+
         this.far = this.farDistance.getValueDirect();
-        
+
         this.updateClipPlanes = true;
     }
-    
+
     // call base-class implementation
     ParentableMotionElement.prototype.update.call(this, params, visitChildren);
 }
@@ -14624,16 +14624,16 @@ Camera.prototype.apply = function(directive, params, visitChildren)
 
         case "bbox":
             {
-                // caller wants bbox in view space; set view matrix so that geometry nodes 
+                // caller wants bbox in view space; set view matrix so that geometry nodes
                 // can multiply world matrix by view matrix to get worldView matrix
                 params.viewMatrix.loadMatrix(this.sectorTransformCompound);
                 params.viewMatrix.invert(); // put in view-space
             }
             break;
-            
+
         case "collide":
             {
-                // caller wants bbox in view space; set view matrix so that geometry nodes 
+                // caller wants bbox in view space; set view matrix so that geometry nodes
                 // can multiply world matrix by view matrix to get worldView matrix
                 params.viewMatrix.loadMatrix(this.sectorTransformCompound);
                 params.viewMatrix.invert(); // put in view-space
@@ -14675,13 +14675,13 @@ function OrthographicCamera()
     Camera.call(this);
     this.className = "OrthographicCamera";
     this.attrType = eAttrType.OrthographicCamera;
-    
+
     this.updateWidth = false;
-    
+
     this.width = new NumberAttr(2);
-    
+
     this.width.addModifiedCB(OrthographicCamera_WidthModifiedCB, this);
-    
+
     this.registerAttribute(this.width, "width");
 }
 
@@ -14693,7 +14693,7 @@ OrthographicCamera.prototype.update = function(params, visitChildren)
 
         this.updateClipPlanes = true;
     }
-    
+
     // call base-class implementation
     Camera.prototype.update.call(this, params, visitChildren);
 }
@@ -14707,7 +14707,7 @@ OrthographicCamera.prototype.apply = function(directive, params, visitChildren)
         Camera.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
     case "render":
@@ -14715,21 +14715,21 @@ OrthographicCamera.prototype.apply = function(directive, params, visitChildren)
             if (!this.viewport.equals(params.viewport))
             {
                 this.viewport = params.viewport;
-                this.updateClipPlanes = true;  
+                this.updateClipPlanes = true;
             }
-            
+
             if (this.updateClipPlanes)
             {
                 this.updateClipPlanes = false;
-                
+
                 this.setClipPlanes();
             }
-            
+
             this.applyOrthographicTransform();
         }
         break;
     }
-    
+
     // call base-class implementation
     Camera.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -14738,20 +14738,20 @@ OrthographicCamera.prototype.setClipPlanes = function()
 {
     var width = this.width.getValueDirect();
     var height = width * this.viewport.height / this.viewport.width;
-    
+
     this.top = height / 2;
     this.bottom = -this.top;
     this.right = width / 2;
     this.left = -this.right;
-    
+
     this.projectionMatrix.loadMatrix(this.graphMgr.renderContext.orthographicMatrixLH(this.left, this.right,
         this.top, this.bottom, this.near, this.far));
-        
+
     // update view-volume attribute
     var viewVolume = new ViewVolume();
     viewVolume.setOrthographic(this.left, this.right, this.top, this.bottom, this.near, this.far);
     this.viewVolume.setValueDirect(viewVolume.left, viewVolume.right, viewVolume.top, viewVolume.bottom,
-        viewVolume.near, viewVolume.far);    
+        viewVolume.near, viewVolume.far);
 }
 
 OrthographicCamera.prototype.applyOrthographicTransform = function()
@@ -14766,7 +14766,7 @@ OrthographicCamera.prototype.getViewSpaceRay = function(viewport, clickPoint)
     var normX =  ((clickPoint.x - viewport.x) / viewport.width  * 2 - 1);
     var normY = -((clickPoint.y - viewport.y) / viewport.height * 2 - 1);
 
-    // determine the width/2 of the visible portion of the x axis on the 
+    // determine the width/2 of the visible portion of the x axis on the
     // far clipping plane
     var farX  = (this.right - this.left) / 2;
 
@@ -14774,16 +14774,16 @@ OrthographicCamera.prototype.getViewSpaceRay = function(viewport, clickPoint)
     // far clipping plane
     var farY  = (this.top - this.bottom) / 2;
 
-    // set ray origin as point within visible portion of x, y on the 
+    // set ray origin as point within visible portion of x, y on the
     // near clipping plane corresponding to the normalized screen coordinates
     var origin = new Vector3D(normX * farX, normY * farY, this.near);
 
-    // set ray direction as point within visible portion of x, y on the 
+    // set ray direction as point within visible portion of x, y on the
     // far clipping plane corresponding to the normalized screen coordinates
     //rayDir = CVector3Df(normX * farX, normY * farY, m_far);
     var direction = new Vector3D(0, 0, 1);
-    
-    return { origin: origin, direction: direction };  
+
+    return { origin: origin, direction: direction };
 }
 
 function OrthographicCamera_WidthModifiedCB(attribute, container)
@@ -14799,18 +14799,18 @@ function PerspectiveCamera()
     Camera.call(this);
     this.className = "PerspectiveCamera";
     this.attrType = eAttrType.PerspectiveCamera;
-    
+
     this.updateZoom = false;
     this.fovyRadians = 0;
     this.left = 0;
     this.right = 0;
     this.top = 0;
     this.bottom = 0;
-    
+
     this.zoom = new NumberAttr(0);
-    
+
     this.zoom.addModifiedCB(PerspectiveCamera_ZoomModifiedCB, this);
-    
+
     this.registerAttribute(this.zoom, "zoom");
 }
 
@@ -14819,12 +14819,12 @@ PerspectiveCamera.prototype.update = function(params, visitChildren)
     if (this.updateZoom)
     {
         this.updateZoom = false;
-        
+
         this.fovyRadians = 2 * Math.atan2(1, this.zoom.getValueDirect());
 
         this.updateClipPlanes = true;
     }
-    
+
     // call base-class implementation
     Camera.prototype.update.call(this, params, visitChildren);
 }
@@ -14838,7 +14838,7 @@ PerspectiveCamera.prototype.apply = function(directive, params, visitChildren)
         Camera.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
     case "render":
@@ -14846,21 +14846,21 @@ PerspectiveCamera.prototype.apply = function(directive, params, visitChildren)
             if (!this.viewport.equals(params.viewport))
             {
                 this.viewport = params.viewport;
-                this.updateClipPlanes = true;  
+                this.updateClipPlanes = true;
             }
-            
+
             if (this.updateClipPlanes)
             {
                 this.updateClipPlanes = false;
-                
+
                 this.setClipPlanes();
             }
-            
+
             this.applyPerspectiveTransform();
         }
         break;
     }
-    
+
     // call base-class implementation
     Camera.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -14871,15 +14871,15 @@ PerspectiveCamera.prototype.setClipPlanes = function()
     this.bottom = -this.top;
     this.right = this.top * (this.viewport.width / this.viewport.height);
     this.left = -this.right;
-    
+
     this.projectionMatrix.loadMatrix(this.graphMgr.renderContext.perspectiveMatrixLH(this.left, this.right,
         this.top, this.bottom, this.near, this.far));
-        
+
     // update view-volume attribute
     var viewVolume = new ViewVolume();
     viewVolume.setPerspective(this.fovyRadians, this.viewport.width / this.viewport.height, this.near, this.far);
     this.viewVolume.setValueDirect(viewVolume.left, viewVolume.right, viewVolume.top, viewVolume.bottom,
-        viewVolume.near, viewVolume.far);    
+        viewVolume.near, viewVolume.far);
 }
 
 PerspectiveCamera.prototype.applyPerspectiveTransform = function()
@@ -14900,7 +14900,7 @@ PerspectiveCamera.prototype.getViewSpaceRay = function(viewport, clickPoint)
     // get horizontal field of view in radians
     var fovX = 2 * Math.atan(viewport.width / viewport.height * Math.tan(fovY / 2));
 
-    // determine the width/2 of the visible portion of the x axis on the 
+    // determine the width/2 of the visible portion of the x axis on the
     // far clipping plane
     var farX  = Math.tan(fovX / 2) * this.far;
 
@@ -14911,11 +14911,11 @@ PerspectiveCamera.prototype.getViewSpaceRay = function(viewport, clickPoint)
     // set ray origin
     var origin = new Vector3D(0, 0, 0);
 
-    // set ray direction as point within visible portion of x, y on the 
+    // set ray direction as point within visible portion of x, y on the
     // far clipping plane corresponding to the normalized screen coordinates
     var direction = new Vector3D(normX * farX, normY * farY, this.far);
-    
-    return { origin: origin, direction: direction };  
+
+    return { origin: origin, direction: direction };
 }
 
 function PerspectiveCamera_ZoomModifiedCB(attribute, container)
@@ -14931,7 +14931,7 @@ function Light()
     ParentableMotionElement.call(this);
     this.className = "Light";
     this.attrType = eAttrType.Light;
-    
+
     this.updateAmbient = true;
     this.updateDiffuse = true;
     this.updateSpecular = true;
@@ -14942,7 +14942,7 @@ function Light()
     this.lightDesc.validMembersMask = 0;
     this.lightIndex = 0;
     this.setLightDesc = false;
-    
+
     this.ambient = new ColorAttr(0, 0, 0, 1);
 	this.diffuse = new ColorAttr(1, 1, 1, 1);
 	this.specular = new ColorAttr(1, 1, 1, 1);
@@ -14970,13 +14970,13 @@ function Light()
 Light.prototype.setGraphMgr = function(graphMgr)
 {
     this.lightIndex = graphMgr.getAvailableLightIndex();
-    
+
     // call base-class implementation
     ParentableMotionElement.prototype.setGraphMgr.call(this, graphMgr);
 }
 
 Light.prototype.update = function(params, visitChildren)
-{  
+{
     if (this.updateAmbient)
     {
         this.updateAmbient = false;
@@ -15029,10 +15029,10 @@ Light.prototype.update = function(params, visitChildren)
     {
         this.setLightDesc = true;
     }
-    
+
     // ensure continued update (lights are transformed by view matrix)
     this.setModified();
-    
+
     // call base-class implementation
     ParentableMotionElement.prototype.update.call(this, params, visitChildren);
 }
@@ -15050,12 +15050,12 @@ Light.prototype.apply = function(directive, params, visitChildren)
             }
             break;
         }
-        
+
         // call base-class implementation
         ParentableMotionElement.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
     case "render":
@@ -15063,22 +15063,22 @@ Light.prototype.apply = function(directive, params, visitChildren)
             if (this.setLightDesc)
             {
                 this.setLightDesc = false;
-                
+
                 this.applyLightDesc();
             }
 
-            this.setLightEnabled();   
+            this.setLightEnabled();
         }
         break;
     }
-    
+
     // call base-class implementation
     ParentableMotionElement.prototype.apply.call(this, directive, params, visitChildren);
 }
 
 Light.prototype.applyLightDesc = function()
 {
-    this.graphMgr.renderContext.setLight(this.lightIndex, this.lightDesc);  
+    this.graphMgr.renderContext.setLight(this.lightIndex, this.lightDesc);
 }
 
 Light.prototype.setLightEnabled = function()
@@ -15109,7 +15109,7 @@ function Light_ConstantAttenuationModifiedCB(attribute, container)
     container.updateConstantAttenuation = true;
     container.incrementModificationCount();
 }
-    
+
 function Light_LinearAttenuationModifiedCB(attribute, container)
 {
     container.updateLinearAttenuation = true;
@@ -15130,14 +15130,14 @@ function DirectionalLight()
     Light.call(this);
     this.className = "DirectionalLight";
     this.attrType = eAttrType.DirectionalLight;
-    
+
     this.lightDesc.type = "directional";
 }
 
 DirectionalLight.prototype.update = function(params, visitChildren)
 {
     this.validMembersMask = 0;
-    
+
     // call base-class implementation
     Light.prototype.update.call(this, params, visitChildren);
 }
@@ -15151,22 +15151,22 @@ DirectionalLight.prototype.apply = function(directive, params, visitChildren)
         Light.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
     case "render":
-        {      
+        {
             var direction = this.sectorTransformCompound.transform(0, 0, 1, 0);
             this.lightDesc.direction.copy(direction);
-            this.lightDesc.validMembersMask |= LIGHTDESC_DIRECTION_BIT; 
-            
+            this.lightDesc.validMembersMask |= LIGHTDESC_DIRECTION_BIT;
+
             // must re-update direction every frame because OpenGL transforms
             // light direction by the current modelView matrix
             this.setLightDesc = true;
         }
         break;
     }
-    
+
     // call base-class implementation
     Light.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -15178,13 +15178,13 @@ function PointLight()
     Light.call(this);
     this.className = "PointLight";
     this.attrType = eAttrType.PointLight;
-    
+
     this.lightDesc.type = "point";
-    
+
     this.updateRange = false;
-    
+
     this.range = new NumberAttr();
-    
+
     this.range.addModifiedCB(PointLight_RangeModifiedCB, this);
 
     this.registerAttribute(this.range, "range");
@@ -15193,7 +15193,7 @@ function PointLight()
 PointLight.prototype.update = function(params, visitChildren)
 {
     this.validMembersMask = 0;
-    
+
     if (this.updateRange)
     {
         this.updateRange = false;
@@ -15201,7 +15201,7 @@ PointLight.prototype.update = function(params, visitChildren)
         this.lightDesc.range = this.range.getValueDirect();
         this.lightDesc.validMembersMask |= LIGHTDESC_RANGE_BIT;
     }
-    
+
     // call base-class implementation
     Light.prototype.update.call(this, params, visitChildren);
 }
@@ -15215,11 +15215,11 @@ PointLight.prototype.apply = function(directive, params, visitChildren)
         Light.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
     case "render":
-        {      
+        {
             var position = this.sectorTransformCompound.transform(0, 0, 0, 1);
             this.lightDesc.position.copy(position);
             this.lightDesc.validMembersMask |= LIGHTDESC_POSITION_BIT;
@@ -15227,14 +15227,14 @@ PointLight.prototype.apply = function(directive, params, visitChildren)
             // signifies this is a point light (not a spot light)
             this.lightDesc.outerConeDegrees = 180;
             this.lightDesc.validMembersMask |= LIGHTDESC_OUTER_CONE_DEG_BIT;
-            
+
             // must re-update position every frame because OpenGL transforms
             // light position by the current modelView matrix
             this.setLightDesc = true;
         }
         break;
     }
-    
+
     // call base-class implementation
     Light.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -15252,14 +15252,14 @@ function GlobalIllumination()
     SGNode.call(this);
     this.className = "GlobalIllumination";
     this.attrType = eAttrType.GlobalIllumination;
-    
+
     this.updateAmbient = true;
     this.setGlobalIllumination = false;
-    
+
     this.ambient = new ColorAttr(0, 0, 0, 1);
-    
+
     this.ambient.addModifiedCB(GlobalIllumination_AmbientModifiedCB, this);
-    
+
     this.registerAttribute(this.ambient, "ambient");
 }
 
@@ -15268,10 +15268,10 @@ GlobalIllumination.prototype.update = function(params, visitChildren)
     if (this.updateAmbient)
     {
         this.updateAmbient = false;
-        
+
         this.setGlobalIllumination = true;
     }
-    
+
     // call base-class implementation
     SGNode.prototype.update.call(this, params, visitChildren);
 }
@@ -15285,7 +15285,7 @@ GlobalIllumination.prototype.apply = function(directive, params, visitChildren)
         ParentableMotionElement.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
     case "render":
@@ -15293,13 +15293,13 @@ GlobalIllumination.prototype.apply = function(directive, params, visitChildren)
             if (this.setGlobalIllumination)
             {
                 this.setGlobalIllumination = false;
-                
+
                 this.applyGlobalIllumination();
             }
         }
         break;
     }
-    
+
     // call base-class implementation
     SGNode.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -15322,15 +15322,15 @@ function Group()
     SGNode.call(this);
     this.className = "Group";
     this.attrType = eAttrType.Group;
-    
+
     this.proxyChildAttrs = new BooleanAttr(false);
-    
+
     this.proxyChildAttrs.addModifiedCB(Group_ProxyChildAttrsModifiedCB, this);
-    
+
     this.registerAttribute(this.proxyChildAttrs, "proxyChildAttrs");
-    
+
     this.enableDisplayList.addModifiedCB(Group_EnableDisplayListModifiedCB, this);
-    
+
     // enable auto-display lists
     this.autoDisplayList.setValueDirect(true);
     this.autoDisplayList.addModifiedCB(Group_AutoDisplayListModifiedCB, this);
@@ -15379,7 +15379,7 @@ Group.prototype.insertChild = function(child, before)
     // call base-class implementation
     SGNode.prototype.insertChild.call(this, child, before);
 }
-    
+
 Group.prototype.removeChild = function(child)
 {
     if (this.proxyChildAttrs.getValueDirect() == true)
@@ -15414,12 +15414,12 @@ Group.prototype.replaceChild = function(replacement, replacee)
         autoDL.removeTarget(this.autoDisplayList, eAttrSetOp.AND);
         autoDL.removeModifiedCB(Group_ChildAutoDisplayListModifiedCB, this);
     }
-    
+
     autoDL = replacement.getAttribute("autoDisplayList");
     if (autoDL)
     {
     	autoDL.addTarget(this.autoDisplayList, eAttrSetOp.AND);
-    	autoDL.addModifiedCB(Group_ChildAutoDisplayListModifiedCB, this);	
+    	autoDL.addModifiedCB(Group_ChildAutoDisplayListModifiedCB, this);
     }
     else // cannot use auto display lists because replacement doesn't support them
 	{
@@ -15483,7 +15483,7 @@ function Group_ProxiedAttrModifiedCB(attribute, data)
 
 function Group_EnableDisplayListModifiedCB(attribute, container)
 {
-    var enableDL = attribute.getValueDirect();    
+    var enableDL = attribute.getValueDirect();
 }
 
 function Group_AutoDisplayListModifiedCB(attribute, container)
@@ -15495,7 +15495,7 @@ function Group_AutoDisplayListModifiedCB(attribute, container)
         {
             container.enableDisplayList.setValueDirect(attribute.getValueDirect());
         }
-    }  
+    }
 }
 
 function Group_ChildAutoDisplayListModifiedCB(attribute, container)
@@ -15512,14 +15512,14 @@ function Isolator()
     Group.call(this);
     this.className = "Isolator";
     this.attrType = eAttrType.Isolator;
-    
+
     this.updateIsolateTransforms = true;
     this.updateIsolateLights = true;
     this.updateIsolateMaterials = true;
     this.updateIsolateTextures = true;
     this.updateIsolateFog = true;
     this.updateIsolateClipPlanes = true;
-    
+
     this.isolateTransforms = new BooleanAttr(false);
     this.isolateLights = new BooleanAttr(false);
     this.isolateMaterials = new BooleanAttr(false);
@@ -15537,7 +15537,7 @@ function Isolator()
     this.isolateTextures.addModifiedCB(Isolator_IsolateTexturesModifiedCB, this);
     this.isolateFog.addModifiedCB(Isolator_IsolateFogModifiedCB, this);
     this.isolateClipPlanes.addModifiedCB(Isolator_IsolateClipPlanesModifiedCB, this);
-    
+
     this.registerAttribute(this.isolateTransforms, "isolateTransforms");
     this.registerAttribute(this.isolateLights, "isolateLights");
     this.registerAttribute(this.isolateMaterials, "isolateMaterials");
@@ -15577,7 +15577,7 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
     var lastProjMatrix = null;
     var lastViewMatrix = null;
     var lastWorldMatrix = null;
-    
+
     switch (directive)
     {
         case "render":
@@ -15592,20 +15592,20 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
                     lastProjMatrix = params.projMatrix;
                     lastViewMatrix = params.viewMatrix;
                     lastWorldMatrix = params.worldMatrix;
-                    
+
                     // TEMP -- move to pushIsolatedStates
                 	this.graphMgr.renderContext.setMatrixMode(RC_PROJECTION);
                 	this.graphMgr.renderContext.pushMatrix();
                 	this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
                 	this.graphMgr.renderContext.pushMatrix();
                 }
-                
+
                 // push textures
                 if (isolateTextures)
                 {
                     this.graphMgr.textureArrayStack.push(new TextureArray(this.graphMgr.textureArrayStack.top()));
 
-                    // TODO: projection stack 
+                    // TODO: projection stack
                 }
             }
             break;
@@ -15642,7 +15642,7 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
                 }
             }
             break;
-            
+
         case "collide":
             {
                 // push transforms
@@ -15671,20 +15671,20 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
                     params.projMatrix = lastProjMatrix;
                     params.viewMatrix = lastViewMatrix;
                     params.worldMatrix = lastWorldMatrix;
-                    
+
                     // TEMP -- move to popIsolatedStates
                     this.graphMgr.renderContext.setMatrixMode(RC_PROJECTION);
                 	this.graphMgr.renderContext.popMatrix();
                 	this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
                 	this.graphMgr.renderContext.popMatrix();
                 }
-                    
+
                 // pop textures
                 if (isolateTextures)
                 {
                     this.graphMgr.textureArrayStack.pop();
 
-                    // TODO: projection stack 
+                    // TODO: projection stack
                 }
             }
             break;
@@ -15721,7 +15721,7 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
                 }
             }
             break;
-            
+
         case "collide":
             {
                 // pop transforms
@@ -15737,8 +15737,8 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
 Isolator.prototype.pushIsolatedStates = function()
 {
     // TODO
-    
-    
+
+
 }
 
 Isolator.prototype.popIsolatedStates = function()
@@ -15763,7 +15763,7 @@ function Isolator_IsolateMaterialsModifiedCB(attribute, container)
     container.updateIsolateMaterials = true;
     container.incrementModificationCount();
 }
- 
+
 function Isolator_IsolateTexturesModifiedCB(attribute, container)
 {
     container.updateIsolateTextures = true;
@@ -15790,7 +15790,7 @@ function Dissolve()
     SGNode.call(this);
     this.className = "Dissolve";
     this.attrType = eAttrType.Dissolve;
-    
+
     this.lastDissolve = 0;
 
     this.dissolve = new NumberAttr(0);
@@ -15822,7 +15822,7 @@ Dissolve.prototype.apply = function(directive, params, visitChildren)
             {
                 var dissolve = this.dissolve.getValueDirect();
                 this.lastDissolve = dissolve;
-                
+
                 params.dissolve = dissolve;
             }
             break;
@@ -15840,7 +15840,7 @@ Dissolve.prototype.apply = function(directive, params, visitChildren)
 
 function Dissolve_DissolveModifiedCB(attribute, container)
 {
-    container.incrementModificationCount();   
+    container.incrementModificationCount();
 }
 RenderParams.prototype = new DirectiveParams();
 RenderParams.prototype.constructor = RenderParams();
@@ -15848,7 +15848,7 @@ RenderParams.prototype.constructor = RenderParams();
 function RenderParams()
 {
     DirectiveParams.call(this);
-    
+
     this.viewport = new Viewport();
     this.projMatrix = new Matrix4x4();
     this.viewMatrix = new Matrix4x4();
@@ -15870,11 +15870,11 @@ function RenderDirective()
     SGDirective.call(this);
     this.className = "RenderDirective";
     this.attrType = eAttrType.RenderDirective;
-    
+
     this.name.setValueDirect("RenderDirective");
 
     this.distanceSortAgent = new DistanceSortAgent();
-    
+
     this.viewport = new ViewportAttr();
     this.backgroundImageFilename = new StringAttr("");
     this.foregroundImageFilename = new StringAttr("");
@@ -15882,22 +15882,22 @@ function RenderDirective()
     this.foregroundFadeEnabled = new BooleanAttr(false);
     this.texturesEnabled = new BooleanAttr(true);
     this.timeIncrement = new NumberAttr(0);
-    
+
     this.viewport.addModifiedCB(RenderDirective_ViewportModifiedCB, this);
     this.backgroundImageFilename.addModifiedCB(RenderDirective_BackgroundImageFilenameModifiedCB, this);
-    
-    this.registerAttribute(this.viewport, "viewport"); 
+
+    this.registerAttribute(this.viewport, "viewport");
     this.registerAttribute(this.backgroundImageFilename, "backgroundImageFilename");
     this.registerAttribute(this.foregroundImageFilename, "foregroundImageFilename");
-    this.registerAttribute(this.foregroundAlphaFilename, "foregroundAlphaFilename");   
-    this.registerAttribute(this.foregroundFadeEnabled, "foregroundFadeEnabled");   
-    this.registerAttribute(this.texturesEnabled, "texturesEnabled");   
+    this.registerAttribute(this.foregroundAlphaFilename, "foregroundAlphaFilename");
+    this.registerAttribute(this.foregroundFadeEnabled, "foregroundFadeEnabled");
+    this.registerAttribute(this.texturesEnabled, "texturesEnabled");
     this.registerAttribute(this.timeIncrement, "timeIncrement");
-    
+
     this.updateDirective = new UpdateDirective();
     this.timeIncrement.addTarget(this.updateDirective.getAttribute("timeIncrement"));
     this.resetDisplayLists = false;
-    
+
     this.collideDirective = new CollideDirective();
 }
 
@@ -15906,7 +15906,7 @@ RenderDirective.prototype.setGraphMgr = function(graphMgr)
     this.distanceSortAgent.setGraphMgr(graphMgr);
     this.updateDirective.setGraphMgr(graphMgr);
     this.collideDirective.setGraphMgr(graphMgr);
-    
+
     // call base-class implementation
     SGDirective.prototype.setGraphMgr.call(this, graphMgr);
 }
@@ -15919,14 +15919,14 @@ RenderDirective.prototype.execute = function(root)
     var params = new UpdateParams();
     params.directive = this.updateDirective;
     params.disableDisplayLists = this.resetDisplayLists;
-     
+
     var visited = this.updateDirective.execute(root, params);
 
     // detect collisions
     var params = new CollideParams();
     params.directive = this.collideDirective;
     this.collideDirective.execute(root, params);
-    
+
     // render
     var params = new RenderParams();
     /*
@@ -15954,9 +15954,9 @@ RenderDirective.prototype.execute = function(root)
     	params.resetDisplayLists = true;
         this.resetDisplayLists = false;
     }
-        
+
     visited[0].apply("render", params, true);
-    
+
     // sort and draw semi-transparent geometries (if any)
     if (!this.distanceSortAgent.isEmpty())
     {
@@ -15977,11 +15977,11 @@ function RenderDirective_BackgroundImageFilenameModifiedCB(attribute, container)
 {
     var vp = container.viewport.getValueDirect();
     var pathInfo = formatPath(container.backgroundImageFilename.getValueDirect().join(""));
-    
+
     container.backgroundImageFilename.removeModifiedCB(RenderDirective_BackgroundImageFilenameModifiedCB, container);
     container.backgroundImageFilename.setValueDirect(pathInfo[0]);
     container.backgroundImageFilename.addModifiedCB(RenderDirective_BackgroundImageFilenameModifiedCB, container);
-    
+
     container.graphMgr.renderContext.setBackgroundImage(pathInfo[0], vp.width, vp.height);
 }
 RayPickParams.prototype = new DirectiveParams();
@@ -15990,7 +15990,7 @@ RayPickParams.prototype.constructor = RayPickParams();
 function RayPickParams()
 {
     DirectiveParams.call(this);
-    
+
     /// camera to perform selection testing with
     this.camera = null;
     /// current camera
@@ -16013,7 +16013,7 @@ function RayPickParams()
     this.worldMatrix = new Matrix4x4();
     /// current sector origin
     this.sectorOrigin = new Vector3D();
-    /// current material double-sided setting 
+    /// current material double-sided setting
     this.doubleSided = false;
     /// current material opacity setting
     this.opacity = 0;
@@ -16041,15 +16041,15 @@ function RayPickDirective()
     SGDirective.call(this);
     this.className = "RayPickDirective";
     this.attrType = eAttrType.RayPickDirective;
-    
+
     this.name.setValueDirect("RayPickDirective");
-    
+
     this.picked = [];
-    
+
     this.viewport = new ViewportAttr();
     this.camera = new ReferenceAttr(null);
     this.clickPoint = new Vector2DAttr();
-    
+
     this.registerAttribute(this.viewport, "viewport");
     this.registerAttribute(this.camera, "camera");
     this.registerAttribute(this.clickPoint, "clickPoint");
@@ -16058,10 +16058,10 @@ function RayPickDirective()
 RayPickDirective.prototype.execute = function(root)
 {
     root = root || this.rootNode.getValueDirect();
-    
+
     // clear previous picks
     this.picked.length = 0;
-    
+
     // pick
     var params = new RayPickParams();
     params.directive = this;
@@ -16116,7 +16116,7 @@ function BBoxDirective()
 
     this.min = new Vector3D();
     this.max = new Vector3D();
-    
+
     this.name.setValueDirect("BBoxDirective");
 
     this.viewSpace = new BooleanAttr(false);
@@ -16197,7 +16197,7 @@ Geometry.prototype.update = function(params, visitChildren)
 
         this.buildBoundingTree();
     }
-    
+
     // call base-class implementation
     RenderableElement.prototype.update.call(this, params, visitChildren);
 }
@@ -16242,7 +16242,7 @@ Geometry.prototype.apply = function(directive, params, visitChildren)
                     this.draw(dissolve);
                 }
             }
-            break;       
+            break;
 
         case "rayPick":
             {
@@ -16356,11 +16356,11 @@ function VertexGeometry()
     this.updateUVCoords = [];
     this.uvCoords = [];
     this.vertexBuffer = null;
-    
+
     this.vertices = new NumberArrayAttr();
-    
+
     this.vertices.addModifiedCB(VertexGeometry_VerticesModifiedCB, this);
-    
+
     this.registerAttribute(this.vertices, "vertices");
 }
 
@@ -16422,12 +16422,12 @@ VertexGeometry.prototype.getUVCoords = function(texture)
     {
         if (this.uvCoords[i].first == texture)
             return this.uvCoords[i].second;
-    }       
-    
+    }
+
     var uvCoords = new NumberArrayAttr();
     uvCoords.addModifiedCB(VertexGeometry_UVCoordsModifiedCB, this);
     this.uvCoords.push(new Pair(texture, uvCoords));
-    
+
     return uvCoords;
 }
 VertexGeometry.prototype.findUVCoords = function(texture)
@@ -16451,14 +16451,14 @@ VertexGeometry.prototype.update = function(params, visitChildren)
     if (this.updateVertices)
     {
         this.updateVertices = false;
-        
+
         this.vertexBuffer.setVertices(this.vertices.getValueDirect());
-        
+
         this.updateBoundingTree = true;
-        
+
         this.calculateBBox();
     }
-    
+
     if (this.updateUVCoords.length)
     {
         for (var i=0; i < this.updateUVCoords.length; i++)
@@ -16470,11 +16470,11 @@ VertexGeometry.prototype.update = function(params, visitChildren)
                     this.vertexBuffer.setUVCoords(this.uvCoords[j].first.textureObj, this.uvCoords[j].second.getValueDirect());
                     break;
                 }
-            }   
+            }
         }
         this.updateUVCoords.length = 0;
     }
-    
+
     // call base-class implementation
     Geometry.prototype.update.call(this, params, visitChildren);
 }
@@ -16488,7 +16488,7 @@ VertexGeometry.prototype.apply = function(directive, params, visitChildren)
         Geometry.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
         case "render":
@@ -16496,7 +16496,7 @@ VertexGeometry.prototype.apply = function(directive, params, visitChildren)
             }
             break;
     }
-    
+
     // call base-class implementation
     Geometry.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -16600,7 +16600,7 @@ VertexGeometry.prototype.drawTextured = function(dissolve)
         //texture1->Unlock();
         texture1 = null;
     }
-    
+
     // draw color texture(s)
     for (var i = 0; i < textureArray.textures[eTextureType.Color].length; i++)
     {
@@ -16672,7 +16672,7 @@ VertexGeometry.prototype.drawTextured = function(dissolve)
     {
         this.setSpecularMaterial(currMatDesc.specular, currMatDesc.glossiness);
         this.graphMgr.renderContext.setBlendFactor(RC_ONE, RC_ONE);
-        
+
         // if transparency texture, set to stage 0
         if (textureArray.textures[eTextureType.Transparency].length)
         {
@@ -16695,10 +16695,10 @@ VertexGeometry.prototype.drawTextured = function(dissolve)
                 texture1 = null;
             }
         }
-        
+
         // draw primitives
         this.vertexBuffer.draw();
-        
+
         if (texture0)
         {
             this.graphMgr.renderContext.enableTextureStage(0, 0);
@@ -16709,7 +16709,7 @@ VertexGeometry.prototype.drawTextured = function(dissolve)
     */
     // disable texture stage 0
     this.graphMgr.renderContext.enableTextureStage(0, 0);
-    
+
     // disable blending
     this.graphMgr.renderContext.disable(eRenderMode.AlphaBlend);
 
@@ -16717,14 +16717,14 @@ VertexGeometry.prototype.drawTextured = function(dissolve)
     this.graphMgr.renderState.pop(RENDERSTATE_MATERIAL_BIT);
 }
 
-VertexGeometry.prototype.setTextureStage = function(stage, type, texture, textureTransform, 
+VertexGeometry.prototype.setTextureStage = function(stage, type, texture, textureTransform,
 textureCoordSrc, planeCoefficients)
 {
     // get optional parameters
     textureTransform = textureTransform || new Matrix4x4();
     textureCoordSrc = textureCoordSrc || eTextureCoordSrc.VertexUVs;
-    planeCoefficients = planeCoefficients ||  new Matrix4x4();   
-    
+    planeCoefficients = planeCoefficients ||  new Matrix4x4();
+
     // enable texture stage
     this.graphMgr.renderContext.enableTextureStage(stage, 1);
 
@@ -16754,9 +16754,9 @@ textureCoordSrc, planeCoefficients)
             heightWrapType = RC_REPEAT;
             break;
     }
-    
+
     // set texture
-    this.vertexBuffer.setTextureStage(stage, texture.textureObj, 
+    this.vertexBuffer.setTextureStage(stage, texture.textureObj,
     widthWrapType, heightWrapType, textureCoordSrc, planeCoefficients);
 
     // set texture blend operation
@@ -16800,16 +16800,16 @@ textureCoordSrc, planeCoefficients)
     }
     this.graphMgr.renderContext.SetMatrixMode(mode);
     this.graphMgr.renderContext.LoadMatrix(textureTransform);
-    
+
     this.graphMgr.renderContext.SetMatrixMode(ReMatrixMode_WorldView);
      */
 }
 
-VertexGeometry.prototype.setBlendingMaterial = function(opacity, ambientLevel, diffuseLevel, 
+VertexGeometry.prototype.setBlendingMaterial = function(opacity, ambientLevel, diffuseLevel,
 specularLevel, emissiveLevel)
 {
     var matDesc = this.graphMgr.renderContext.getFrontMaterial();
-    
+
     // setup material for texture blending operations
     var ambientBlend  = opacity * ambientLevel;
     var diffuseBlend  = opacity * diffuseLevel;
@@ -16821,7 +16821,7 @@ specularLevel, emissiveLevel)
     matDesc.ambient.g = ambientBlend + matDesc.ambient.g * (1-opacity);
     matDesc.ambient.b = ambientBlend + matDesc.ambient.b * (1-opacity);
     //matDesc.ambient.a *= opacity;
-    
+
     // diffuse
     matDesc.diffuse.r = diffuseBlend + matDesc.diffuse.r * (1-opacity);
     matDesc.diffuse.g = diffuseBlend + matDesc.diffuse.g * (1-opacity);
@@ -16840,7 +16840,7 @@ specularLevel, emissiveLevel)
     matDesc.emissive.g = emissiveBlend + matDesc.emissive.g * (1-opacity);
     matDesc.emissive.b = emissiveBlend + matDesc.emissive.b * (1-opacity);
     //matDesc.emissive.a *= opacity;
-    
+
     matDesc.validMembersMask = MATERIALDESC_ALL_BITS;
 
     this.graphMgr.renderContext.setFrontMaterial(matDesc);
@@ -16861,10 +16861,10 @@ VertexGeometry.prototype.calculateBBox = function()
 {
     var vertices = this.vertices.getValueDirect();
     if (vertices.length < 3) return;
-    
+
     var min = new Vector3D(vertices[0], vertices[1], vertices[2]);
     var max = new Vector3D(vertices[0], vertices[1], vertices[2]);
-    
+
     for (var i=3; i < vertices.length; i+=3)
     {
         min.x = Math.min(min.x, vertices[i  ]);
@@ -16899,14 +16899,14 @@ function TriList()
     VertexGeometry.call(this);
     this.className = "TriList";
     this.attrType = eAttrType.TriList;
-    
+
     this.updateNormals = false;
-    
+
     this.normals = new NumberArrayAttr();
-    
+
     this.vertices.addModifiedCB(TriList_NormalsModifiedCB, this);
     this.normals.addModifiedCB(TriList_NormalsModifiedCB, this);
-    
+
     this.registerAttribute(this.normals, "normals");
 }
 
@@ -16917,14 +16917,14 @@ TriList.prototype.update = function(params, visitChildren)
         this.vertexBuffer = this.graphMgr.renderContext.createVertexBuffer(3);
         this.vertexBuffer.setPrimitiveType(RC_TRIANGLES);
     }
-       
+
     if (this.updateNormals)
     {
         this.updateNormals = false;
-        
+
         this.vertexBuffer.setNormals(this.normals.getValueDirect());
     }
-    
+
     // call base-class implementation
     VertexGeometry.prototype.update.call(this, params, visitChildren);
 }
@@ -16938,7 +16938,7 @@ TriList.prototype.apply = function(directive, params, visitChildren)
 TriList.prototype.draw = function(dissolve)
 {
     // TODO
-    
+
     // draw with textures
     this.drawTextured(dissolve);
 }
@@ -16947,7 +16947,7 @@ TriList.prototype.buildBoundingTree = function()
 {
     var min = this.bbox.getAttribute("min").getValueDirect();
     var max = this.bbox.getAttribute("max").getValueDirect();
-    
+
     this.boundingTree.setTriangles(this.getTriangles(), min, max);
     this.boundingTree.buildTree(this.approximationLevels.getValueDirect());
 }
@@ -16955,23 +16955,23 @@ TriList.prototype.buildBoundingTree = function()
 TriList.prototype.getTriangles = function()
 {
     var vertices = this.vertices.getValueDirect();
-    
+
     var tris = [];
     for (var i=0, vertex=0; vertex+8 < vertices.length; i++, vertex+=9)
     {
         tris.push(new Triangle(vertices[vertex  ],  // v0
                                vertices[vertex+1],
                                vertices[vertex+2],
-                               
+
                                vertices[vertex+3],  // v1
                                vertices[vertex+4],
                                vertices[vertex+5],
-                               
+
                                vertices[vertex+6],  // v2
                                vertices[vertex+7],
                                vertices[vertex+8]));
     }
-    
+
     return tris;
 }
 
@@ -16988,7 +16988,7 @@ function Material()
     SGNode.call(this);
     this.className = "Material";
     this.attrType = eAttrType.Material;
-    
+
     this.updateColor = false;
     this.updateAmbientLevel = false;
     this.updateDiffuseLevel = false;
@@ -17004,7 +17004,7 @@ function Material()
     this.lastDoubleSided = false;
     this.materialDesc = new MaterialDesc();
     this.materialDesc.validMembersMask = MATERIALDESC_ALL_BITS;
-    
+
     this.color = new ColorAttr(1, 1, 1, 1);
     this.ambientLevel = new NumberAttr(1);
     this.diffuseLevel = new NumberAttr(1);
@@ -17017,7 +17017,7 @@ function Material()
     this.glossiness = new NumberAttr(0);
     this.opacity = new NumberAttr(1);
     this.doubleSided = new BooleanAttr(false);
-	
+
     this.color.addModifiedCB(Material_ColorModifiedCB, this);
     this.ambientLevel.addModifiedCB(Material_AmbientLevelModifiedCB, this);
     this.diffuseLevel.addModifiedCB(Material_DiffuseLevelModifiedCB, this);
@@ -17064,7 +17064,7 @@ Material.prototype.update = function(params, visitChildren)
         if (this.updateAmbientLevel)
         {
             this.updateAmbientLevel = false;
-            
+
             var level = this.ambientLevel.getValueDirect();
             this.ambient.setValueDirect(color.r * level, color.g * level, color.b * level, color.a);
         }
@@ -17072,7 +17072,7 @@ Material.prototype.update = function(params, visitChildren)
         if (this.updateDiffuseLevel)
         {
             this.updateDiffuseLevel = false;
-            
+
             var level = this.diffuseLevel.getValueDirect();
             this.diffuse.setValueDirect(color.r * level, color.g * level, color.b * level, color.a);
         }
@@ -17080,7 +17080,7 @@ Material.prototype.update = function(params, visitChildren)
         if (this.updateSpecularLevel)
         {
             this.updateSpecularLevel = false;
-            
+
             var level = this.specularLevel.getValueDirect();
             this.specular.setValueDirect(color.r * level, color.g * level, color.b * level, color.a);
         }
@@ -17088,7 +17088,7 @@ Material.prototype.update = function(params, visitChildren)
         if (this.updateEmissiveLevel)
         {
             this.updateEmissiveLevel = false;
-            
+
             var level = this.emissiveLevel.getValueDirect();
             this.emissive.setValueDirect(color.r * level, color.g * level, color.b * level, color.a);
         }
@@ -17101,7 +17101,7 @@ Material.prototype.update = function(params, visitChildren)
     if (this.updateOpacity)
     {
         this.updateOpacity = false;
-        
+
         this.lastOpacity = opacity;
 
         // have to re-update all members
@@ -17111,7 +17111,7 @@ Material.prototype.update = function(params, visitChildren)
     if (this.updateAmbient || forceUpdate)
     {
         this.updateAmbient = false;
-        
+
         this.materialDesc.ambient.copy(this.ambient.getValueDirect());
         this.materialDesc.ambient.a *= opacity;
     }
@@ -17119,7 +17119,7 @@ Material.prototype.update = function(params, visitChildren)
     if (this.updateDiffuse || forceUpdate)
     {
         this.updateDiffuse = false;
-        
+
         this.materialDesc.diffuse.copy(this.diffuse.getValueDirect());
         this.materialDesc.diffuse.a *= opacity;
     }
@@ -17127,7 +17127,7 @@ Material.prototype.update = function(params, visitChildren)
     if (this.updateSpecular || forceUpdate)
     {
         this.updateSpecular = false;
-        
+
         this.materialDesc.specular.copy(this.specular.getValueDirect());
         this.materialDesc.specular.a *= opacity;
     }
@@ -17135,7 +17135,7 @@ Material.prototype.update = function(params, visitChildren)
     if (this.updateEmissive || forceUpdate)
     {
         this.updateEmissive = false;
-        
+
         this.materialDesc.emissive.copy(this.emissive.getValueDirect());
         this.materialDesc.emissive.a *= opacity;
     }
@@ -17143,10 +17143,10 @@ Material.prototype.update = function(params, visitChildren)
     if (this.updateGlossiness || forceUpdate)
     {
         this.updateGlossiness = false;
-        
+
         this.materialDesc.glossiness = this.glossiness.getValueDirect();
     }
-    
+
     // call base-class implementation
     SGNode.prototype.update.call(this, params, visitChildren);
 }
@@ -17160,19 +17160,19 @@ Material.prototype.apply = function(directive, params, visitChildren)
         SGNode.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     this.graphMgr.setCurrentMaterial(this);
-    
+
     switch (directive)
     {
         case "render":
         {
             params.opacity = this.lastOpacity; // set in update()
-            
+
             this.applyMaterialDesc();
         }
         break;
-        
+
         case "rayPick":
         {
             params.doubleSided = this.lastDoubleSided;
@@ -17180,7 +17180,7 @@ Material.prototype.apply = function(directive, params, visitChildren)
         }
         break;
     }
-    
+
     // call base-class implementation
     SGNode.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -17189,7 +17189,7 @@ Material.prototype.applyMaterialDesc = function()
 {
     // set material
     this.graphMgr.renderContext.setFrontMaterial(this.materialDesc);
-    
+
     // enable/disable backface culling
     var doubleSided = this.doubleSided.getValueDirect();
     this.lastDoubleSided = doubleSided;
@@ -17238,31 +17238,31 @@ function Material_AmbientModifiedCB(attribute, container)
     container.updateAmbient = true;
     container.incrementModificationCount();
 }
-    
+
 function Material_DiffuseModifiedCB(attribute, container)
 {
     container.updateDiffuse = true;
     container.incrementModificationCount();
 }
-    
+
 function Material_SpecularModifiedCB(attribute, container)
 {
     container.updateSpecular = true;
     container.incrementModificationCount();
 }
-    
+
 function Material_EmissiveModifiedCB(attribute, container)
 {
     container.updateEmissive = true;
     container.incrementModificationCount();
 }
-    
+
 function Material_GlossinessModifiedCB(attribute, container)
 {
     container.updateGlosiness = true;
     container.incrementModificationCount();
 }
-    
+
 function Material_OpacityModifiedCB(attribute, container)
 {
     container.updateOpacity = true;
@@ -17281,7 +17281,7 @@ function Surface()
     Isolator.call(this);
     this.className = "Surface";
     this.attrType = eAttrType.Surface;
-    
+
     this.color = new ColorAttr(1, 1, 1, 1);
     this.ambientLevel = new NumberAttr(1);
     this.diffuseLevel = new NumberAttr(1);
@@ -17305,7 +17305,7 @@ function Surface()
     this.numLuminosityTextures = new NumberAttr(0);
     this.numSpecularityTextures = new NumberAttr(0);
     this.numTransparencyTextures = new NumberAttr(0);
-    
+
     this.colorTexturesPresent.addModifiedCB(Surface_TexturesPresentModifiedCB, this);
     this.diffuseTexturesPresent.addModifiedCB(Surface_TexturesPresentModifiedCB, this);
     this.luminosityTexturesPresent.addModifiedCB(Surface_TexturesPresentModifiedCB, this);
@@ -17373,7 +17373,7 @@ Surface.prototype.setGraphMgr = function(graphMgr)
     this.luminosityTexturesNode.setGraphMgr(graphMgr);
     this.specularityTexturesNode.setGraphMgr(graphMgr);
     this.transparencyTexturesNode.setGraphMgr(graphMgr);
-    
+
     // call base-class implementation
     Isolator.prototype.setGraphMgr.call(this, graphMgr);
 }
@@ -17429,14 +17429,14 @@ function Model()
     ParentableMotionElement.call(this);
     this.className = "Model";
     this.attrType = eAttrType.Model;
-    
+
     this.geometry = [];
     this.geometryBBoxesMap = [];
     this.geometryAttrConnections = [];
     this.surfaceAttrConnections = [];
     this.boundingTree = new Octree();
     this.updateBoundingTree = false;
-    
+
     this.url = new StringAttr("");
     this.layer = new NumberAttr(0);//0xffffffff);
     this.selectable = new BooleanAttr(true);
@@ -17473,9 +17473,9 @@ function Model()
     this.detectCollision = new BooleanAttr(false);
     this.collisionDetected = new BooleanAttr(false);
     this.collisionList = new AttributeVector();
-    
+
     this.show.addTarget(this.enabled);
-    
+
     this.selectable.addModifiedCB(Model_GeometryAttrModifiedCB, this);
     this.cullable.addModifiedCB(Model_GeometryAttrModifiedCB, this);
     this.show.addModifiedCB(Model_GeometryAttrModifiedCB, this);
@@ -17543,7 +17543,7 @@ function Model()
     this.registerAttribute(this.detectCollision, "detectCollision");
     this.registerAttribute(this.collisionDetected, "collisionDetected");
     this.registerAttribute(this.collisionList, "collisionList");
-        
+
     this.isolatorNode = new Isolator();
     this.isolatorNode.getAttribute("name").setValueDirect("Isolator");
     this.isolatorNode.getAttribute("isolateDissolves").setValueDirect(true);
@@ -17797,7 +17797,7 @@ Model.prototype.setGraphMgr = function(graphMgr)
     this.isolatorNode.setGraphMgr(graphMgr);
     this.dissolveNode.setGraphMgr(graphMgr);
     this.surfacesNode.setGraphMgr(graphMgr);
-    
+
     // call base-class implementation
     ParentableMotionElement.prototype.setGraphMgr.call(this, graphMgr);
 }
@@ -17810,7 +17810,7 @@ Model.prototype.update = function(params, visitChildren)
 
         this.buildBoundingTree();
     }
-    
+
     // call base-class implementation
     ParentableMotionElement.prototype.update.call(this, params, visitChildren);
 }
@@ -17884,20 +17884,20 @@ Model.prototype.apply = function(directive, params, visitChildren)
                 lastWorldMatrix.loadMatrix(params.worldMatrix);
                 params.worldMatrix.loadMatrix(this.sectorTransformCompound.multiply(params.worldMatrix));
 
-                if (this.detectCollision.getValueDirect()) 
+                if (this.detectCollision.getValueDirect())
                 {
                     this.boundingTree.setTransform(params.worldMatrix);
                     params.detectCollisions[this.name.getValueDirect().join("")] = new CollideRec(this, this.boundingTree);
                     this.collisionDetected.setValueDirect(false);
                 }
-                
+
                 // call base-class implementation
                 ParentableMotionElement.prototype.apply.call(this, directive, params, visitChildren);
 
                 params.worldMatrix.loadMatrix(lastWorldMatrix);
             }
             break;
-            
+
         default:
             {
                 // call base-class implementation
@@ -17917,34 +17917,34 @@ Model.prototype.popMatrix = function()
 {
     this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
     this.graphMgr.renderContext.popMatrix();
-    this.graphMgr.renderContext.applyModelViewTransform();    
+    this.graphMgr.renderContext.applyModelViewTransform();
 }
 
 Model.prototype.addSurface = function(surface)
 {
     this.surfacesNode.addChild(surface);
-    
+
     // register surface to this for accessiblity with Set
     this.registerAttribute(surface, surface.getAttribute("name").getValueDirect().join(""));
-	
+
     this.connectSurfaceAttributes(surface);
 }
 
 Model.prototype.addGeometry = function(geometry, surface)
 {
     surface.addChild(geometry);
-    
+
     this.connectGeometryAttributes(geometry);
     this.addGeometryBBox(geometry);
     this.geometry.push(geometry);
-        
+
     this.updateBoundingTree = true;
 }
 
 Model.prototype.addIndexedGeometry = function(geometry, indices, surface)
 {
     this.addGeometry(geometry, surface);
-    
+
     // TODO: what to do with indices?
 }
 
@@ -17997,7 +17997,7 @@ Model.prototype.addGeometryBBox = function(geometry)
     if (geometry == null ||
         geometry == undefined)
         return;
-    
+
     geometry.bbox.min.addModifiedCB(Model_GeometryBBoxModifiedCB, this);
     geometry.bbox.max.addModifiedCB(Model_GeometryBBoxModifiedCB, this);
 
@@ -18009,12 +18009,12 @@ Model.prototype.updateGeometryBBox = function(geometry)
     if (geometry == null ||
         geometry == undefined)
         return;
-    
+
     var min = geometry.bbox.min.getValueDirect();
     var max = geometry.bbox.max.getValueDirect();
-    
+
     this.geometryBBoxesMap.push(new Pair(min, max));
-    
+
     this.updateBBox();
 }
 
@@ -18030,33 +18030,33 @@ Model.prototype.updateBBox = function()
             min.x = this.geometryBBoxesMap[i].first.x;
             min.y = this.geometryBBoxesMap[i].first.y;
             min.z = this.geometryBBoxesMap[i].first.z;
-            
+
             max.x = this.geometryBBoxesMap[i].second.x;
             max.y = this.geometryBBoxesMap[i].second.y;
             max.z = this.geometryBBoxesMap[i].second.z;
-            
+
             first = false;
             continue;
         }
-        
+
         min.x = Math.min(min.x, this.geometryBBoxesMap[i].first.x);
         min.y = Math.min(min.y, this.geometryBBoxesMap[i].first.y);
         min.z = Math.min(min.z, this.geometryBBoxesMap[i].first.z);
-        
+
         max.x = Math.max(max.x, this.geometryBBoxesMap[i].second.x);
         max.y = Math.max(max.y, this.geometryBBoxesMap[i].second.y);
         max.z = Math.max(max.z, this.geometryBBoxesMap[i].second.z);
     }
-    
+
     this.bbox.min.setValueDirect(min.x, min.y, min.z);
     this.bbox.max.setValueDirect(max.x, max.y, max.z);
-    
+
     var center = new Vector3D((min.x + max.x) / 2.0,
                               (min.y + max.y) / 2.0,
                               (min.z + max.z) / 2.0);
-                              
+
     this.center.setValueDirect(center.x, center.y, center.z);
-    
+
     this.updateBoundingTree = true;
 }
 
@@ -18067,7 +18067,7 @@ Model.prototype.buildBoundingTree = function()
     {
         tris = tris.concat(this.geometry[i].getTriangles());
     }
-    
+
     this.boundingTree = new Octree();
     this.boundingTree.setTriangles(tris, this.bbox.min.getValueDirect(), this.bbox.max.getValueDirect());
     this.boundingTree.buildTree(this.approximationLevels.getValueDirect());
@@ -18075,7 +18075,7 @@ Model.prototype.buildBoundingTree = function()
 
 Model.prototype.autoDisplayListModified = function()
 {
-    
+
 }
 
 function Model_AutoDisplayListModifiedCB(attribute, container)
@@ -18088,7 +18088,7 @@ function Model_SortPolygonsModifiedCB(attribute, container)
     // TODO
     //container.sortPolygonsModified();
 }
-    
+
 function Model_RenderSequenceSlotModifiedCB(attribute, container)
 {
     var slot = attribute.getValueDirect();
@@ -18117,7 +18117,7 @@ function Model_DissolveModifiedCB(attribute, container)
 function Model_OpacityModifiedCB(attribute, container)
 {
     var opacity = attribute.getValueDirect();
-    
+
     // if opacity is less than 1, cannot use display lists
     if (opacity < 1)
     {
@@ -18134,7 +18134,7 @@ function Model_TextureOpacityModifiedCB(attribute, container)
 function Model_Surface_NumTransparencyTexturesModifiedCB(attribute, container)
 {
     var numTransparencyTextures = attribute.getValueDirect();
-    
+
     // if count is greater than 0, cannot use display lists
     if (numTransparencyTextures > 0)
     {
@@ -18161,7 +18161,7 @@ function Model_GeometryAttrModifiedCB(attribute, container)
 function Model_DetectCollisionModifiedCB(attribute, container)
 {
 	var detectCollision = attribute.getValueDirect();
-    
+
     // if detecting collisions, cannot use display lists
     if (detectCollision)
     {
@@ -18181,7 +18181,7 @@ function Texture()
     ParentableMotionElement.call(this);
     this.className = "Texture";
     this.attrType = eAttrType.Texture;
-   
+
     this.updateImage = false;
     this.updateTextureType = false;
     this.updateMipmappingEnabled = false;
@@ -18189,16 +18189,16 @@ function Texture()
     this.imageSet = false;
     this.textureObj = null;
     this.pitch = 0;
-    
-    this.image = new ImageAttr(); 
+
+    this.image = new ImageAttr();
     this.opacity = new NumberAttr(1);
     this.textureType = new NumberAttr(eTextureType.Color);
     this.widthWrap = new NumberAttr(eTextureWrap.None);
     this.heightWrap = new NumberAttr(eTextureWrap.None);
     this.mipmappingEnabled = new BooleanAttr(false);
-    
+
     this.image.setTransient(true); // don't serialize image data
-    
+
     this.image.getAttribute("width").addModifiedCB(Texture_ImageModifiedCB, this);
     this.image.getAttribute("height").addModifiedCB(Texture_ImageModifiedCB, this);
     this.image.getAttribute("byteAlignment").addModifiedCB(Texture_ImageModifiedCB, this);
@@ -18222,7 +18222,7 @@ Texture.prototype.setGraphMgr = function(graphMgr)
 {
     // create texture object
     this.textureObj = graphMgr.renderContext.createTextureObject();
-    
+
     // call base-class implementation
     ParentableMotionElement.prototype.setGraphMgr.call(this, graphMgr);
 }
@@ -18295,7 +18295,7 @@ Texture.prototype.apply = function(directive, params, visitChildren)
                         }
                     }
                 }
-                
+
             }
             break;
     }
@@ -18318,7 +18318,7 @@ Texture.prototype.SetImage = function()
     {
         return false;
     }
-    
+
     var imageFormat;
     switch (this.textureType.getValueDirect())
     {
@@ -18338,7 +18338,7 @@ Texture.prototype.SetImage = function()
     this.textureObj.setImageData(width, height, pixelFormat, imageFormat, pixels);
 
     this.imageSet = true;
-    
+
     return true;
 }
 
@@ -18383,7 +18383,7 @@ function MediaTexture()
     Texture.call(this);
     this.className = "MediaTexture";
     this.attrType = eAttrType.MediaTexture;
-    
+
     this.updateImageFilename = false;
     this.updateAlphaFilename = false;
     this.updateNegateImage = false;
@@ -18392,19 +18392,19 @@ function MediaTexture()
     this.alphaPlayback = null;
     this.pixelMap = ePixelMap.Default;
     this.forceImageUpdate = false;
-    
+
     this.imageFilename = new StringAttr("");
     this.alphaFilename = new StringAttr("");
     this.negateImage = new BooleanAttr(false);
     this.negateAlpha = new BooleanAttr(false);
     this.frame = new NumberAttr(-1);
     this.frameRetrieved = new NumberAttr(-1);
-    
+
     this.imageFilename.addModifiedCB(MediaTexture_ImageFilenameModifiedCB, this);
     this.alphaFilename.addModifiedCB(MediaTexture_AlphaFilenameModifiedCB, this);
     this.negateImage.addModifiedCB(MediaTexture_NegateImageModifiedCB, this);
     this.negateAlpha.addModifiedCB(MediaTexture_NegateAlphaModifiedCB, this);
-   
+
     this.registerAttribute(this.imageFilename, "imageFilename");
     this.registerAttribute(this.alphaFilename, "alphaFilename");
     this.registerAttribute(this.negateImage, "negateImage");
@@ -18513,7 +18513,7 @@ MediaTexture.prototype.loadMedia = function()
     {
         // TODO: remove texture
     }
-    
+
     // increment modification count
     this.incrementModificationCount();
 }
@@ -18597,7 +18597,7 @@ MediaTexture.prototype.updateMediaTextureImage = function()
     {
         return;
     }
-    
+
     if (this.imagePlayback &&
         this.imagePlayback.ready &&
        (this.imagePlayback.newFrameDataAvailable() ||
@@ -18625,7 +18625,7 @@ MediaTexture.prototype.updateMediaTextureImage = function()
 
         this.forceImageUpdate = false;
     }
-    
+
     // increment modification count
     this.incrementModificationCount();
 }
@@ -18641,7 +18641,7 @@ MediaTexture.prototype.onImageLoad = function()
         this.incrementModificationCount();
         return;
     }
-    
+
     this.setImageSize();
 }
 
@@ -18718,9 +18718,9 @@ function Evaluator()
     SGNode.call(this);
     this.className = "Evaluator";
     this.attrType = eAttrType.Evaluator;
-    
+
     this.expired = new BooleanAttr(false);
-    
+
     this.registerAttribute(this.expired, "expired");
     this.registerAttribute(this.enabled, "evaluate");
 }
@@ -18738,7 +18738,7 @@ Evaluator.prototype.update = function(params, visitChildren)
     {
         this.evaluate();
     }
-    
+
     // call base-class implementation
     SGNode.prototype.update.call(this, params, visitChildren);
 }
@@ -18750,7 +18750,7 @@ function SceneInspector()
     Evaluator.call(this);
     this.className = "SceneInspector";
     this.attrType = eAttrType.SceneInspector;
-    
+
     this.viewPosition = new Vector3DAttr(0, 0, 0);
     this.viewRotation = new Vector3DAttr(0, 0, 0);
     this.translationDelta = new Vector3DAttr(0, 0, 0);
@@ -18764,7 +18764,7 @@ function SceneInspector()
     this.pivotPointWorld = new Vector3DAttr(0, 0, 0);
     this.resultPosition = new Vector3DAttr(0, 0, 0);
     this.resultRotation = new Vector3DAttr(0, 0, 0);
-    
+
     this.registerAttribute(this.viewPosition, "viewPosition");
     this.registerAttribute(this.viewRotation, "viewRotation");
     this.registerAttribute(this.translationDelta, "translationDelta");
@@ -18787,35 +18787,35 @@ SceneInspector.prototype.evaluate = function()
     {
         return;
     }
-    
+
     // get input values
-    
+
     // view position
     var viewPosition = this.viewPosition.getValueDirect();
-    
+
     // view rotation
     var viewRotation = this.viewRotation.getValueDirect();
-    
+
     // translation delta
     var translationDelta = this.translationDelta.getValueDirect();
-    
+
     // pan delta
     var panDelta = this.panDelta.getValueDirect();
-    
+
     // track delta
     var trackDelta = this.trackDelta.getValueDirect();
-    
+
     // rotation delta
     var rotationDelta = this.rotationDelta.getValueDirect();
-    
+
     // view-relative rotation flags
     var viewRelativeXAxisRotation = this.viewRelativeXAxisRotation.getValueDirect();
     var viewRelativeYAxisRotation = this.viewRelativeYAxisRotation.getValueDirect();
     var viewRelativeZAxisRotation = this.viewRelativeZAxisRotation.getValueDirect();
-    
+
     // pivot distance
     var pivotDistance = this.pivotDistance.getValueDirect();
-    
+
     // formulate view transform
     var viewTrans = new Matrix4x4();
     viewTrans.loadTranslation(-viewPosition.x, -viewPosition.y, -viewPosition.z);
@@ -18827,7 +18827,7 @@ SceneInspector.prototype.evaluate = function()
     var cameraUp = this.transformDirectionVector(0, 1, 0, viewTransform);
     var cameraRight = this.transformDirectionVector(1, 0, 0, viewTransform);
     var cameraForward = this.transformDirectionVector(0, 0, 1, viewTransform);
-    
+
     // set rotation matrix
     var sceneRotX = new Matrix4x4();
     var sceneRotY = new Matrix4x4();
@@ -18860,36 +18860,36 @@ SceneInspector.prototype.evaluate = function()
         sceneRotZ.loadXAxisRotation(-rotationDelta.z);
     }
     var sceneRot = sceneRotY.multiply(sceneRotX.multiply(sceneRotZ)); // this multiplication order eliminates roll when x- and y-axis rotations are combined
-    
+
     // set translation matrix
     var sceneTrans = new Matrix4x4();
     sceneTrans.loadTranslation(translationDelta.x, -translationDelta.y, -translationDelta.z);
-    
+
     // set pan/track
     if (panDelta.x != 0 || panDelta.y != 0 || panDelta.z != 0 ||
         trackDelta.x != 0 || trackDelta.y != 0 || trackDelta.z != 0)
     {
         // calculate direction vectors after scene rotation matrix is applied
         var cameraUpRot = this.transformDirectionVector(cameraUp.x, cameraUp.y, cameraUp.z, sceneRot);
-        var cameraRightRot = this.transformDirectionVector(cameraRight.x, cameraRight.y, cameraRight.z, sceneRot);    
-        var cameraForwardRot = this.transformDirectionVector(cameraForward.x, cameraForward.y, cameraForward.z, sceneRot);    
-            
+        var cameraRightRot = this.transformDirectionVector(cameraRight.x, cameraRight.y, cameraRight.z, sceneRot);
+        var cameraForwardRot = this.transformDirectionVector(cameraForward.x, cameraForward.y, cameraForward.z, sceneRot);
+
         var scenePan = new Matrix4x4();
         scenePan.loadTranslation(
-            cameraRightRot.x * panDelta.x + cameraUpRot.x * -panDelta.y + cameraForwardRot.x * -panDelta.z, 
-            cameraRightRot.y * panDelta.x + cameraUpRot.y * -panDelta.y + cameraForwardRot.y * -panDelta.z, 
+            cameraRightRot.x * panDelta.x + cameraUpRot.x * -panDelta.y + cameraForwardRot.x * -panDelta.z,
+            cameraRightRot.y * panDelta.x + cameraUpRot.y * -panDelta.y + cameraForwardRot.y * -panDelta.z,
             cameraRightRot.z * panDelta.x + cameraUpRot.z * -panDelta.y + cameraForwardRot.z * -panDelta.z);
-            
+
         sceneTrans = sceneTrans.multiply(scenePan);
-        
+
         // formulate "track" or "dolly" vectors:
-        // track forward = cameraForwardRot (calculated above) rotated about cameraRightRot 
+        // track forward = cameraForwardRot (calculated above) rotated about cameraRightRot
         // (calculated above) viewRotation.x (camera pitch) degrees;
         // track up = track forward rotated about the camera right vector 90 degrees;
         // track right = cameraRightRot (calculated above)
         var sceneTrack = new Matrix4x4();
         var cameraVectorRot = new Matrix4x4();
-        
+
         var flipIt = false;
         var abs_heading = Math.abs(viewRotation.y);
         var abs_pitch = Math.abs(viewRotation.x);
@@ -18909,7 +18909,7 @@ SceneInspector.prototype.evaluate = function()
                 flipIt = true;
             }
         }
-        
+
         var lastCameraForwardRot = cameraForwardRot;
 
         cameraVectorRot.loadRotation(cameraRightRot.x, cameraRightRot.y, cameraRightRot.z, viewRotation.x);
@@ -18920,13 +18920,13 @@ SceneInspector.prototype.evaluate = function()
         cameraVectorRot.loadRotation(cameraRightRot.x, cameraRightRot.y, cameraRightRot.z, 90);
         cameraUpRot = this.transformDirectionVector(cameraUpRot.x, cameraUpRot.y, cameraUpRot.z, cameraVectorRot);
         sceneTrack.loadTranslation(
-            cameraRightRot.x * trackDelta.x + cameraUpRot.x * -trackDelta.y + cameraForwardRot.x * -trackDelta.z, 
+            cameraRightRot.x * trackDelta.x + cameraUpRot.x * -trackDelta.y + cameraForwardRot.x * -trackDelta.z,
             cameraRightRot.y * trackDelta.x + cameraUpRot.y * -trackDelta.y + 0, /*cameraForwardRot.y * -trackDelta.z,*/ // don't set y-component when z-tracking
             cameraRightRot.z * trackDelta.x + cameraUpRot.z * -trackDelta.y + cameraForwardRot.z * -trackDelta.z);
 
         sceneTrans = sceneTrans.multiply(sceneTrack);
     }
-    
+
     // set pivot distance transforms
 
     // get camera position in world coordinates
@@ -18940,14 +18940,14 @@ SceneInspector.prototype.evaluate = function()
     pivotTrans.load(
         cameraPos.x + cameraForward.x * pivotDistance,
         cameraPos.y + cameraForward.y * pivotDistance,
-        cameraPos.z + cameraForward.z * pivotDistance);                
+        cameraPos.z + cameraForward.z * pivotDistance);
 	this.pivotPointWorld.setValueDirect(pivotTrans.x, pivotTrans.y, pivotTrans.z);
 
     var scenePivot = new Matrix4x4();
     var scenePivotInv = new Matrix4x4();
     scenePivot.loadTranslation(-pivotTrans.x, -pivotTrans.y, -pivotTrans.z);
     scenePivotInv.loadTranslation(pivotTrans.x, pivotTrans.y, pivotTrans.z);
-    
+
     // set overall transform
     var resultTransform = sceneTrans.multiply(scenePivot.multiply(sceneRot.multiply(scenePivotInv.multiply(viewTransform))));
 
@@ -18968,7 +18968,7 @@ SceneInspector.prototype.transformDirectionVector = function(x, y, z, matrix)
     var m = new Matrix4x4();
     m.loadMatrix(matrix);
     m.transpose(); // invert rotation
-    
+
     return m.transform(x, y, z, 0);
 }
 
@@ -19048,7 +19048,7 @@ ArcballInspector.prototype.evaluate = function()
 
     // viewport
     var vp = this.viewport;
- 
+
     // world transform
     var world = this.worldTransform.getValueDirect();
 
@@ -19069,7 +19069,7 @@ ArcballInspector.prototype.evaluate = function()
     mouseDown.y = 2 * (vp.height - mouseDown.y - vp.y) / vp.height - 1;
     mouseNow.x  = 2 * (mouseNow.x  - vp.x) / vp.width  - 1;
     mouseNow.y  = 2 * (vp.height - mouseNow.y  - vp.y) / vp.height - 1;
-    
+
     // get points on sphere corresponding to mouse down and mouse now
     var ptDown, ptNow;
     if (!constrain)
@@ -19103,14 +19103,14 @@ ArcballInspector.prototype.evaluate = function()
 
     // multiply drag quaternion with down quaternion
     quatDrag = quatDrag.multiply(quatDown);
-    
+
     this.resultQuat.setValueDirect(quatDrag);
 }
 
 ArcballInspector.prototype.getSpherePoint = function(mouse, center, radius)
 {
     var point = new Vector3D();
-    
+
     point.x = (mouse.x - center.x) / radius;
     point.y = (mouse.y - center.y) / radius;
 
@@ -19134,17 +19134,17 @@ ArcballInspector.prototype.getSpherePointAboutAxis = function(mouse, center, rad
     point = this.getSpherePoint(mouse, center, radius);
 
     var dot = dotProduct(point, axis);
-    
+
     axis.multiplyScalar(dot);
-    
+
     var proj = new Vector3D(point.x, point.y, point.z);
-    
+
     proj.subtractVector(axis);
-    
+
     var norm = magnitude(proj.x, proj.y, proj.z);
-    
+
     point = null;
-    
+
     if (norm > 0)
     {
         var s = 1 / Math.sqrt(norm);
@@ -19205,7 +19205,7 @@ function EndState()
     this.startTime = -FLT_MAX;    // across all channels
     this.endTime = FLT_MAX;     // across all channels
  }
-    
+
 function KeyframeInterpolator()
 {
     Evaluator.call(this);
@@ -19215,7 +19215,7 @@ function KeyframeInterpolator()
     this.lastTime = 0;
     this.evaluated = false;
     this.endState =  new EndState();
-    
+
     this.time = new NumberAttr(0);
     this.channels = new AttributeVector();
     this.startKeys = new AttributeVector();
@@ -19225,7 +19225,7 @@ function KeyframeInterpolator()
     this.resultValues = new AttributeVector();
 
     this.time.addModifiedCB(KeyframeInterpolator_TimeModifiedCB, this);
-    
+
     this.registerAttribute(this.time, "time");
     this.registerAttribute(this.channels, "channels");
     this.registerAttribute(this.startKeys, "startKeys");
@@ -19244,7 +19244,7 @@ KeyframeInterpolator.prototype.setNumChannels = function(numChannels)
     this.preBehaviors.resize(0);
     this.postBehaviors.resize(0);
     this.resultValues.resize(0);
-    
+
     for (var i=0; i < numChannels; i++)
     {
         this.channels.push_back(new KeyframesAttr());
@@ -19265,7 +19265,7 @@ KeyframeInterpolator.prototype.evaluate = function()
         this.updateEndState();
         this.endState.initialized = true;
     }
-    
+
     // get input values
 
     // time
@@ -19312,12 +19312,12 @@ KeyframeInterpolator.prototype.updateExpired = function()
     // an multi-channel Evaluator (i.e., KeyframeInterpolator) is considered
     // animating if any 1 of its channels meet the requirements for determining
     // whether or not Evaluate is called.  For KeyframeInterpolators, "at least
-    // one channel is animating" if any one of the channels' keys has a time 
+    // one channel is animating" if any one of the channels' keys has a time
     // value greater than the current time.
     var bAtLeastOneChannelAnimating = false;
 
     // for each channel in the interpolator, compare current time
-    // with both end behavior and stop time to determine whether or 
+    // with both end behavior and stop time to determine whether or
     // not this kfi should continue to be evaluated
     var fEvalTime = this.time.getValueDirect();
     var iPost = 0;
@@ -19331,7 +19331,7 @@ KeyframeInterpolator.prototype.updateExpired = function()
             iPost = postBehavior.getValueDirect();
         }
 
-        // if *expression* is TRUE then the end behavior is 
+        // if *expression* is TRUE then the end behavior is
         // repeat, oscillate, or some other continuous behavior
         if (iPost != eEndBehavior.Constant)
         {
@@ -19364,22 +19364,22 @@ KeyframeInterpolator.prototype.updateEndState = function()
     var startKey = -1, endKey = -1;
     var keyframes = null;
     var numChannels = this.channels.vector.length;
-    
+
     this.startKeys.resize(numChannels);
     this.endKeys.resize(numChannels);
-    
+
     for (var i=0; i < numChannels; i++)
     {
         keyframes = this.channels.getAt(i);
-        
+
         startKey = this.startKeys.vector.length > i ? this.startKeys.getAt(i).getValueDirect() : -1;
         endKey = this.endKeys.vector.length > i ? this.endKeys.getAt(i).getValueDirect() : -1;
-        
+
         if (endKey < startKey)
         {
             endKey = startKey;
         }
-        
+
         // set first/last keys to evaluate
         this.endState.startKeyIts[i] = keyframes.getAt(0);
         this.endState.endKeyIts[i] = keyframes.getAt(keyframes.vector.length - 1);
@@ -19403,7 +19403,7 @@ KeyframeInterpolator.prototype.updateEndState = function()
 	// save the longest end time for all channels
 	fLongest = fEndTime >= fLongest ? fEndTime : fLongest;
     }
-    
+
     this.endState.startTime = fShortest;
     this.endState.endTime = fLongest;
 }
@@ -19441,7 +19441,7 @@ function BBoxLocator()
     this.resultWidth = new NumberAttr(0);
     this.resultFarDistance = new NumberAttr(0);
     this.resultPivotDistance = new NumberAttr(0);
-    
+
     this.registerAttribute(this.viewPosition, "viewPosition");
     this.registerAttribute(this.viewTransform, "viewTransform");
     this.registerAttribute(this.viewVolume, "viewVolume");
@@ -19543,7 +19543,7 @@ BBoxLocator.prototype.evaluate = function()
         vvPlanes[4] = this.getPlane(near.point, center, near.normal, viewTransform);
 
         // for each bbox point, determine the maximum distance necessary to move all points to within the
-        // view-volume along the camera forward vector		
+        // view-volume along the camera forward vector
         for (var i = 0; i < 8; i++)
         {
             for (var j = 0; j < 5; j++)
@@ -19658,7 +19658,7 @@ BBoxLocator.prototype.distanceFromPlane = function(point, dir, plane)
         distance = distanceBetween(point, intersection.point);
         break;
 
-    case 2: // intersection at infinite points (line on plane) 
+    case 2: // intersection at infinite points (line on plane)
     default:
         distance = 0;
         break;
@@ -19674,7 +19674,7 @@ function worldUnitsPerPixelPersp(viewport, zoom, viewSpace_Z)
     // get horizontal field of view in radians
     var fovX = 2 * Math.atan(viewport.width / viewport.height * Math.tan(fovY / 2));
 
-    // determine the width of the visible portion of the x axis on the 
+    // determine the width of the visible portion of the x axis on the
     // clipping plane at viewSpace_Z
     var clipPlaneWidth  = Math.tan(fovX / 2) * viewSpace_Z * 2;
 
@@ -19685,7 +19685,7 @@ function worldUnitsPerPixelPersp(viewport, zoom, viewSpace_Z)
     // determine the per-pixel clipPlaneWidth and clipPlaneHeight
     var x = clipPlaneWidth  / viewport.width;
     var y = clipPlaneHeight / viewport.height;
-    
+
     return { x: x, y: y };
 }
 
@@ -19697,7 +19697,7 @@ function worldUnitsPerPixelOrtho(viewport, width)
     // determine the per-pixel width and height
     var x = width  / viewport.width;
     var y = height / viewport.height;
-    
+
     return { x: x, y: y };
 }
 
@@ -19715,7 +19715,7 @@ function toScreenSpace(world, view, proj, viewport)
     }
 
     // normalize to [-1, 1]
-    // (if x or y is outside the range (-w, w), the screen coordinate(s) will be 
+    // (if x or y is outside the range (-w, w), the screen coordinate(s) will be
     // outside the viewport
     screen.x /= screen.w;
     screen.y /= screen.w;
@@ -19725,9 +19725,9 @@ function toScreenSpace(world, view, proj, viewport)
     screen.x = viewport.x + viewport.width  - ((-screen.x + 1) * viewport.width  / 2);
     screen.y = viewport.y + viewport.height - (( screen.y + 1) * viewport.height / 2);
 	screen.z = 0;
-	
-	return { x: screen.x, y: screen.y, z: screen.z };    
-} 
+
+	return { x: screen.x, y: screen.y, z: screen.z };
+}
 RasterComponent.prototype = new ParentableMotionElement();
 RasterComponent.prototype.constructor = RasterComponent;
 
@@ -19736,9 +19736,9 @@ function RasterComponent()
     ParentableMotionElement.call(this);
     this.className = "RasterComponent";
     this.attrType = eAttrType.RasterComponent;
-    
+
     this.rcEventListener = null;
-    
+
     this.opacity = new NumberAttr(1);				// opaque
 	this.anchor = new Vector2DAttr(0, 0);			// 0, 0
 	this.origin = new StringAttr("bottomLeft");		// bottom-left
@@ -19753,7 +19753,7 @@ function RasterComponent()
 
 	this.stylesMap.size.addModifiedCB(RasterComponent_StylesMapSizeModifiedCB, this);
 	this.show.addModifiedCB(RasterComponent_ShowModifiedCB, this);
-	
+
 	this.registerAttribute(this.opacity, "opacity");
 	this.registerAttribute(this.anchor, "anchor");
 	this.registerAttribute(this.origin, "origin");
@@ -19832,7 +19832,7 @@ function RasterComponent_StylesMapSizeModifiedCB(attribute, container)
 
 function RasterComponent_StylesMapElementEventModifiedCB(attribute, container)
 {
-    container.stylesMapElementEventModified(attribute.getValueDirect().join(""));    
+    container.stylesMapElementEventModified(attribute.getValueDirect().join(""));
 }
 
 function RasterComponent_ShowModifiedCB(attribute, container)
@@ -19850,20 +19850,20 @@ function Label()
 
     this.iconRect = new Rect(0, 0, 0, 0);
     this.labelRect = new Rect(0, 0, 0, 0);
-    
+
     this.text = new StringAttr("");
     this.description = new StringAttr("");
     this.depthShadingEnabled = new BooleanAttr(true);
     this.labelStyle = new LabelStyleAttr();
     this.iconStyle = new IconStyleAttr();
     this.balloonTipLabelStyle = new BalloonTipLabelStyleAttr();
-    
+
     this.text.addModifiedCB(Label_TextModifiedCB, this);
     this.description.addModifiedCB(Label_DescriptionModifiedCB, this);
     this.labelStyle.backgroundColor.addModifiedCB(Label_LabelStyleBackgroundColorModifiedCB, this);
     this.labelStyle.backgroundOpacity.addModifiedCB(Label_LabelStyleBackgroundOpacityModifiedCB, this);
     this.labelStyle.fontStyle.borderColor.addModifiedCB(Label_LabelStyleFontBorderModifiedCB, this);
-    this.labelStyle.fontStyle.borderWidth.addModifiedCB(Label_LabelStyleFontBorderModifiedCB, this);    
+    this.labelStyle.fontStyle.borderWidth.addModifiedCB(Label_LabelStyleFontBorderModifiedCB, this);
     this.labelStyle.fontStyle.color.addModifiedCB(Label_LabelStyleFontStyleColorModifiedCB, this);
     this.labelStyle.fontStyle.font.addModifiedCB(Label_LabelStyleFontStyleFontModifiedCB, this);
     this.labelStyle.fontStyle.opacity.addModifiedCB(Label_LabelStyleFontStyleOpacityModifiedCB, this);
@@ -19873,14 +19873,14 @@ function Label()
     this.labelStyle.padding.addModifiedCB(Label_LabelStylePaddingModifiedCB, this);
     this.iconStyle.url.addModifiedCB(Label_IconStyleUrlModifiedCB, this);
     this.balloonTipLabelStyle.addModifiedCB(Label_BalloonTipLabelStyleModifiedCB, this);
-    
+
     this.registerAttribute(this.text, "text");
     this.registerAttribute(this.description, "description");
     this.registerAttribute(this.depthShadingEnabled, "depthShadingEnabled");
     this.registerAttribute(this.labelStyle, "labelStyle");
     this.registerAttribute(this.iconStyle, "iconStyle");
     this.registerAttribute(this.balloonTipLabelStyle, "balloonTipLabelStyle");
-    
+
     this.styles.registerStyle(this.iconStyle, "iconStyle");
 	this.styles.registerStyle(this.labelStyle, "labelStyle");
 	this.styles.registerStyle(this.balloonTipLabelStyle, "balloonTipLabelStyle");
@@ -19890,22 +19890,22 @@ Label.prototype.setGraphMgr = function(graphMgr)
 {
     // call base-class implementation
     RasterComponent.prototype.setGraphMgr.call(this, graphMgr);
-    
+
     // create id
     this.id = "Label" + this.graphMgr.getNextLabelIndex();
     this.labelId = this.id + "_label";
     this.iconId = this.id + "_icon";
-    
+
     // create html div for canvas overlay
     var htmlLabel = CreateHTMLLabel(this.id, this.labelId, this.iconId);
     this.htmlLabel = htmlLabel.label;
     this.htmlIconImg = htmlLabel.iconImg;
     this.htmlIconDiv = htmlLabel.iconDiv;
-    
+
     // initialize base dimensions of icon (used for scaling)
     this.htmlIconImg.baseWidth = 0;
     this.htmlIconImg.baseHeight = 0;
-    
+
     // set initial style
     Label_LabelStyleBackgroundColorModifiedCB(this.labelStyle.backgroundColor, this);
     Label_LabelStyleBackgroundOpacityModifiedCB(this.labelStyle.backgroundOpacity, this);
@@ -19925,7 +19925,7 @@ Label.prototype.update = function(params, visitChildren)
     // update icon scale
     // (necessary because dimensions are not available until image is actually loaded)
     this.updateIconScale();
-    
+
     // call base-class implementation
     RasterComponent.prototype.update.call(this, params, visitChildren);
 }
@@ -19933,14 +19933,14 @@ Label.prototype.update = function(params, visitChildren)
 Label.prototype.updateIconScale = function()
 {
     var scale = this.iconStyle.scale.getValueDirect();
-        
+
     // obtain original dimensions
     if (this.htmlIconImg.baseWidth == 0)
     {
         this.htmlIconImg.baseWidth = this.htmlIconImg.offsetWidth;
         this.htmlIconImg.baseHeight = this.htmlIconImg.offsetHeight;
     }
-    
+
     // scale
     if (this.htmlIconImg.baseWidth)
     {
@@ -19958,7 +19958,7 @@ Label.prototype.apply = function(directive, params, visitChildren)
         RasterComponent.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
     case "render":
@@ -19966,7 +19966,7 @@ Label.prototype.apply = function(directive, params, visitChildren)
             this.draw(params.viewport);
         }
         break;
-        
+
     case "rayPick":
         {
             if (this.selectable.getValueDirect() == true &&
@@ -19976,16 +19976,16 @@ Label.prototype.apply = function(directive, params, visitChildren)
                 {
                     var intersectRecord = new RayIntersectRecord();
                     intersectRecord.distance = 0;
-                    
-                    params.currentNodePath.push(this);           
-                    params.directive.addPickRecord(new RayPickRecord(params.currentNodePath, intersectRecord, params.camera));                   
+
+                    params.currentNodePath.push(this);
+                    params.directive.addPickRecord(new RayPickRecord(params.currentNodePath, intersectRecord, params.camera));
                     params.currentNodePath.pop();
                 }
-            }    
+            }
         }
         break;
     }
-    
+
     // call base-class implementation
     RasterComponent.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -20101,36 +20101,36 @@ Label.prototype.getRenderingPositions = function()
     var labelY = 0;
     var iconX = 0;
     var iconY = 0;
-    
+
     // get screen position
     var screen = this.screenPosition.getValueDirect();
-    
+
     // get anchor position
     var anchor = this.anchor.getValueDirect();
-    
+
     // get label offset
     var offset = this.labelStyle.offset.getValueDirect();
-    
-    if (this.htmlIconImg.offsetWidth > 0 && 
+
+    if (this.htmlIconImg.offsetWidth > 0 &&
         this.htmlLabel.offsetWidth > 0) // icon and label present
-    {	
+    {
         var labelWidth = this.htmlLabel.offsetWidth;// * this.htmlLabel.style.zoom;
         var labelHeight = this.htmlLabel.offsetHeight;// * this.htmlLabel.style.zoom;
         var iconWidth = this.htmlIconImg.offsetWidth;
         var iconHeight = this.htmlIconImg.offsetHeight;
-        
+
         // measure from origin
         if (this.origin.getValueDirect().join("") == "bottomLeft")
         {
             anchor.y = iconHeight - anchor.y;
         }
-        
-        // 
+
+        //
         iconX  = screen.x - anchor.x;
 		iconY  = screen.y - anchor.y;
 		labelX = iconX + offset.x;
 		labelY = iconY + offset.y;
-        
+
 		// adjust according to alignment
 		switch (this.labelStyle.textAlign.getValueDirect().join(""))
         {
@@ -20138,42 +20138,42 @@ Label.prototype.getRenderingPositions = function()
 			labelX -= labelWidth;
 			labelY -= labelHeight / 2;
 			break;
-			
+
 		case "middleLeft":
 			labelX -= labelWidth;
 			labelY += iconHeight / 2 - labelHeight / 2;
 		    break;
-		    
+
 		case "bottomLeft":
 			labelX -= labelWidth;
 			labelY += iconHeight - labelHeight / 2;
 			break;
-			
+
 		case "topCenter":
 			labelX += iconWidth / 2 - labelWidth / 2;
 			labelY -= labelHeight;
 		    break;
-		    
+
 	    case "middleCenter":
 			labelX += iconWidth / 2 - labelWidth / 2;
 			labelY += iconHeight / 2 - labelHeight / 2;
 			break;
-			
+
 		case "bottomCenter":
 			labelX += iconWidth / 2 - labelWidth / 2;
 			labelY += iconHeight;
 		    break;
-		    
+
 		case "topRight":
 			labelX += iconWidth;
 			labelY -= labelHeight / 2;
 		    break;
-		    
+
 		case "bottomRight":
 			labelX += iconWidth;
 			labelY += iconHeight - labelHeight / 2;
 			break;
-			
+
 		case "middleRight": // default
 		default:
 			labelX += iconWidth;
@@ -20182,14 +20182,14 @@ Label.prototype.getRenderingPositions = function()
 		}
     }
     else if (this.htmlLabel.offsetWidth > 0)
-    {   
+    {
         var labelWidth = this.htmlLabel.offsetWidth;// * this.htmlLabel.style.zoom;
         var labelHeight = this.htmlLabel.offsetHeight;// * this.htmlLabel.style.zoom;
-        
-        // 
+
+        //
         labelX = screen.x + anchor.x + offset.x;
         labelY = screen.y - anchor.y + offset.y;
-        
+
         // adjust according to alignment
         switch (this.labelStyle.textAlign.getValueDirect().join(""))
         {
@@ -20197,37 +20197,37 @@ Label.prototype.getRenderingPositions = function()
 	        labelX -= labelWidth;
 		    labelY -= labelHeight;
 		    break;
-    		
+
 	    case "middleLeft":
 	        labelX -= labelWidth;
-		    labelY -= labelHeight / 2;	
+		    labelY -= labelHeight / 2;
 		    break;
-    		
+
 	    case "bottomLeft":
 		    labelX -= labelWidth;
 	        break;
-    	    
+
 	    case "topCenter":
 		    labelX -= labelWidth / 2;
 		    labelY -= labelHeight;
 		    break;
-    		
+
 	    case "middleCenter":
 		    labelX -= labelWidth / 2;
 		    labelY -= labelHeight / 2;
 	        break;
-    	    
+
 	    case "bottomCenter":
 		    labelX -= labelWidth / 2;
 		    break;
-    		
+
 	    case "topRight":
 		    labelY -= labelHeight;
 		    break;
-    			
+
 	    case "bottomRight":
 		    break;
-    		
+
 	    case "middleRight": // default
 	    default:
 		    labelY -= labelHeight / 2;
@@ -20238,14 +20238,14 @@ Label.prototype.getRenderingPositions = function()
     {
         var iconWidth = this.htmlIconImg.offsetWidth;
         var iconHeight = this.htmlIconImg.offsetHeight;
-        
+
         // measure from bottom left
 		anchor.y = iconHeight - anchor.y;
 
 		iconX = screen.x - anchor.x;
 		iconY = screen.y - anchor.y;
     }
-    
+
     return { labelX: labelX, labelY: labelY, iconX: iconX, iconY: iconY };
 }
 
@@ -20266,18 +20266,18 @@ Label.prototype.labelStyleFontBorderModified = function()
     var color = this.labelStyle.fontStyle.borderColor.getValueDirect();
     color.a *= this.labelStyle.fontStyle.opacity.getValueDirect();
     var width = this.labelStyle.fontStyle.borderWidth.getValueDirect();
-    
+
     var shadow = "";
     for (var i=0; i < color.a; i+=0.2)
     {
         if (i > 0) shadow += ", ";
-        
-        shadow += "rgba(" + color.r * 255 + "," 
-                          + color.g * 255 + "," 
-                          + color.b * 255 + "," 
+
+        shadow += "rgba(" + color.r * 255 + ","
+                          + color.g * 255 + ","
+                          + color.b * 255 + ","
                           + color.a + ")" + " 0px 0px " + width * 2 + "px";
     }
- 
+
     this.htmlLabel.style.textShadow = shadow;
 }
 
@@ -20368,28 +20368,28 @@ function Label_DescriptionModifiedCB(attribute, container)
             if (width == 0) width = viewportMgr.getAttribute("width").getValueDirect() * 0.5;
             if (height == 0) height = viewportMgr.getAttribute("height").getValueDirect() * 0.5;
         }
-        
+
         var id = '#' + container.iconId;
-        description = "<div class='gmap' style='" + 
+        description = "<div class='gmap' style='" +
                       "width:" + (width + 12) + "px;" + // (+ 12 accounts for close button)
-                      "height:12px;'>" + 
+                      "height:12px;'>" +
                       "<a href='javascript:void($(\"" +
-                      id + 
-                      "\").btOff());'><img src='libs/jquery/bt/close.gif' alt='close' width='12' height='12' class='gmap-close' /></a> " + 
+                      id +
+                      "\").btOff());'><img src='libs/jquery/bt/close.gif' alt='close' width='12' height='12' class='gmap-close' /></a> " +
                       "</div>" +
                       "<div style='" +
                       "width:" + (width + 12) + "px;" + // (+ 12 accounts for close button)
-                      "height:" + height + "px;" + 
+                      "height:" + height + "px;" +
                       "overflow:auto;'>" +
                       description +
                       "</div>";
-            
+
         var bgColor = container.balloonTipLabelStyle.bgColor.getValueDirect();
-        var fill = "rgba(" + bgColor.r * 255 + "," 
-                           + bgColor.g * 255 + "," 
+        var fill = "rgba(" + bgColor.r * 255 + ","
+                           + bgColor.g * 255 + ","
                            + bgColor.b * 255 + ","
-                           + bgColor.a * 255 + ")"; 
-                                                  
+                           + bgColor.a * 255 + ")";
+
         $(id).bt(description, {trigger: 'click',
                                width: width + 12 + "px", // (+ 12 accounts for close button)
                                height: height + 12 + "px", // (+ 12 accounts for close button)
@@ -20421,8 +20421,8 @@ function Label_LabelStyleBackgroundColorModifiedCB(attribute, container)
 {
     var color = attribute.getValueDirect();
     color.a *= attribute.getContainer().getAttribute("backgroundOpacity").getValueDirect();
-    container.htmlLabel.style.backgroundColor = "rgba(" + color.r * 255 + "," 
-                                                        + color.g * 255 + "," 
+    container.htmlLabel.style.backgroundColor = "rgba(" + color.r * 255 + ","
+                                                        + color.g * 255 + ","
                                                         + color.b * 255 + ","
                                                         + color.a + ")";
 }
@@ -20441,8 +20441,8 @@ function Label_LabelStyleFontStyleColorModifiedCB(attribute, container)
 {
     var color = attribute.getValueDirect();
     color.a *= attribute.getContainer().getAttribute("opacity").getValueDirect();
-    container.htmlLabel.style.color = "rgba(" + color.r * 255 + "," 
-                                              + color.g * 255 + "," 
+    container.htmlLabel.style.color = "rgba(" + color.r * 255 + ","
+                                              + color.g * 255 + ","
                                               + color.b * 255 + ","
                                               + color.a + ")";
 }
@@ -20470,15 +20470,15 @@ function Label_LabelStyleFontStyleStyleModifiedCB(attribute, container)
     case "Bold":
         container.htmlLabel.style.fontWeight = "bold";
         break;
-        
+
     case "Heavy":
-        container.htmlLabel.style.fontWeight = "bolder";  
+        container.htmlLabel.style.fontWeight = "bolder";
         break;
-        
+
     case "Normal":
         container.htmlLabel.style.fontWeight = "normal";
         break;
-        
+
     case "Thin":
         container.htmlLabel.style.fontWeight = "lighter";
         break;
@@ -20498,7 +20498,7 @@ function Label_LabelStylePaddingModifiedCB(attribute, container)
     container.htmlLabel.style.paddingLeft = padding;
     container.htmlLabel.style.paddingRight = padding;
     container.htmlLabel.style.paddingTop = padding;
-    container.htmlLabel.style.paddingBottom = padding;    
+    container.htmlLabel.style.paddingBottom = padding;
 }
 
 function Label_IconStyleUrlModifiedCB(attribute, container)
@@ -20518,7 +20518,7 @@ function Label_IconStyleUrlModifiedCB(attribute, container)
 
 function Label_BalloonTipLabelStyleModifiedCB(attribute, container)
 {
-    Label_DescriptionModifiedCB(container.description, container);   
+    Label_DescriptionModifiedCB(container.description, container);
 }
 BalloonTipLabel.prototype = new RasterComponent();
 BalloonTipLabel.prototype.constructor = BalloonTipLabel;
@@ -20528,16 +20528,16 @@ function BalloonTipLabel()
     RasterComponent.call(this);
     this.className = "BallonTipLabel";
     this.attrType = eAttrType.BalloonTipLabel;
-    
+
     this.qtip = null;
     this.qtip_api = null;
-    
+
     this.labelRect = new Rect(0, 0, 0, 0);
-    
+
     this.balloonTipLabelStyle = new BalloonTipLabelStyleAttr();
     this.labelWidth = new NumberAttr(0);
     this.labelHeight = new NumberAttr(0);
-    
+
     this.balloonTipLabelStyle.bgColor.addModifiedCB(BalloonTipLabel_balloonTipLabelStyleBgColorModifiedCB, this);
     this.balloonTipLabelStyle.htmlLabelStyle.addModifiedCB(BalloonTipLabel_BalloonTipLabelStyleHTMLLabelStyleModifiedCB, this);
     this.balloonTipLabelStyle.displayMode.addModifiedCB(BalloonTipLabel_balloonTipLabelStyleDisplayModeModifiedCB, this);
@@ -20547,7 +20547,7 @@ function BalloonTipLabel()
     this.registerAttribute(this.balloonTipLabelStyle, "balloonTipLabelStyle");
     this.registerAttribute(this.labelWidth, "labelWidth");
     this.registerAttribute(this.labelHeight, "labelHeight");
-    
+
     this.styles.registerStyle(this.balloonTipLabelStyle, "balloonTipLabelStyle");
 }
 
@@ -20555,16 +20555,16 @@ BalloonTipLabel.prototype.setGraphMgr = function(graphMgr)
 {
     // call base-class implementation
     RasterComponent.prototype.setGraphMgr.call(this, graphMgr);
-    
+
     // create id
     this.id = "BalloonTipLabel" + this.graphMgr.getNextBalloonTipLabelIndex();
-    
+
     // create html components for canvas overlay
     var htmlBalloonTipLabel = CreateHTMLBalloonTipLabel(this.id);
     this.htmlBalloonTipLabel = htmlBalloonTipLabel.label;
     this.qtip = htmlBalloonTipLabel.qtip;
-    
-    // get qtip api 
+
+    // get qtip api
     this.qtip_api = $('a[id=' + this.id + ']').qtip("api");
 }
 
@@ -20594,7 +20594,7 @@ BalloonTipLabel.prototype.apply = function(directive, params, visitChildren)
         RasterComponent.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     switch (directive)
     {
     case "render":
@@ -20603,7 +20603,7 @@ BalloonTipLabel.prototype.apply = function(directive, params, visitChildren)
         }
         break;
     }
-    
+
     // call base-class implementation
     RasterComponent.prototype.apply.call(this, directive, params, visitChildren);
 }
@@ -20640,15 +20640,15 @@ BalloonTipLabel.prototype.draw = function()
      }
      */
     this.graphMgr.setCurrentBalloonTipLabel(this);
-    
+
     var bworks = this.registry.find("Bridgeworks");
-    
+
     // determine the rendering positions
     var positions = this.getRenderingPositions();
-    
+
     var labelWidth = this.htmlBalloonTipLabel.offsetWidth; // * this.htmlLabel.style.zoom;
     var labelHeight = this.htmlBalloonTipLabel.offsetHeight; // * this.htmlLabel.style.zoom;
-    
+
     // update positions if visible
     //if (this.show.getValueDirect())
     {
@@ -20659,7 +20659,7 @@ BalloonTipLabel.prototype.draw = function()
                             bworks.canvas.offsetTop + positions.labelY,
                             this.labelRect.left + labelWidth,
                             this.labelRect.top + labelHeight);
-        
+
         if (this.qtip_api)
         {
             this.qtip_api.reposition(null, false); // Reposition without animation
@@ -20670,7 +20670,7 @@ BalloonTipLabel.prototype.draw = function()
     //{
     //    this.labelRect.load(0, 0, 0, 0);
     //}
-    
+
     // update screen rect
     var screenRect = new Rect(0, 0, 0, 0);
     //if (this.show.getValueDirect())
@@ -20685,16 +20685,16 @@ BalloonTipLabel.prototype.getRenderingPositions = function()
     // initialize
     var labelX = 0;
     var labelY = 0;
-    
+
     // get screen position
     var screen = this.screenPosition.getValueDirect();
-    
+
     // get anchor position
     var anchor = this.anchor.getValueDirect();
-    
+
     labelX = screen.x + anchor.x;
     labelY = screen.y - anchor.y;
-    
+
     return { labelX: labelX, labelY: labelY };
 }
 
@@ -20727,7 +20727,7 @@ BalloonTipLabel.prototype.balloonTipLabelStyleDisplayModeModified = function(mod
             this.show.setValueDirect(true, false);
         }
         break;
-        
+
         case "hide":
         {
             // don't hide if parent has focus
@@ -20744,7 +20744,7 @@ BalloonTipLabel.prototype.balloonTipLabelStyleDisplayModeModified = function(mod
         }
         break;
     }
-        
+
     this.incrementModificationCount();
 }
 
@@ -20752,12 +20752,12 @@ BalloonTipLabel.prototype.balloonTipLabelStyleHtmlLabelStyleModified = function(
 {
     // html
     var html = this.balloonTipLabelStyle.htmlLabelStyle.html.getValueDirect().join("");
-    
+
     if (this.qtip_api)
     {
         this.qtip_api.set("content.text", html);
     }
-    
+
     this.incrementModificationCount();
 }
 
@@ -20818,7 +20818,7 @@ function CreateHTMLBalloonTipLabel(id)
             event: false
         }
     });
-   
+
     return { label: newA, qtip: qtip };
 }
 
@@ -20872,7 +20872,7 @@ LineList.prototype.update = function(params, visitChildren)
         this.vertexBuffer = this.graphMgr.renderContext.createVertexBuffer(3);
         this.vertexBuffer.setPrimitiveType(RC_LINES);
     }
-    
+
     // call base-class implementation
     VertexGeometry.prototype.update.call(this, params, visitChildren);
 }
@@ -20886,13 +20886,13 @@ LineList.prototype.apply = function(directive, params, visitChildren)
 LineList.prototype.draw = function(dissolve)
 {
     // TODO
-    
+
     this.vertexBuffer.draw();
 }
 
 LineList.prototype.buildBoundingTree = function()
 {
-    
+
 }
 PointList.prototype = new VertexGeometry();
 PointList.prototype.constructor = PointList;
@@ -20912,7 +20912,7 @@ PointList.prototype.update = function(params, visitChildren)
         this.vertexBuffer = this.graphMgr.renderContext.createVertexBuffer(3);
         this.vertexBuffer.setPrimitiveType(RC_POINTS);
     }
-    
+
     // call base-class implementation
     VertexGeometry.prototype.update.call(this, params, visitChildren);
 }
@@ -20926,13 +20926,13 @@ PointList.prototype.apply = function(directive, params, visitChildren)
 PointList.prototype.draw = function(dissolve)
 {
     // TODO
-    
+
     this.vertexBuffer.draw();
 }
 
 PointList.prototype.buildBoundingTree = function()
 {
-    
+
 }
 /*
 ======================================================================
@@ -20979,7 +20979,7 @@ function hermite( t )
    var h1 = 1 - h2;
    var h4 = t3 - t2;
    var h3 = h4 - t2 + t;
-   
+
    return { h1: h1, h2: h2, h3: h3, h4: h4 };
 }
 
@@ -21198,7 +21198,7 @@ function incoming( keys, key0, key1, last )
 ======================================================================
 interpolate()
 
-Given a list of keys and a time number, returns the interpolated 
+Given a list of keys and a time number, returns the interpolated
 value at that time.
 ====================================================================== */
 
@@ -21299,16 +21299,16 @@ function interpolate(time, keyframes, first, last, preBehavior, postBehavior)
         }
     }
 
-    // get the endpoints of the interval being evaluated 
+    // get the endpoints of the interval being evaluated
     var key0 = first;
-    while (keyframes.next(key0) && 
+    while (keyframes.next(key0) &&
            time > (keyframes.next(key0)).getTime())
     {
         key0 = keyframes.next(key0);
     }
     var key1 = keyframes.next(key0);
 
-    // check for singularities first 
+    // check for singularities first
     if (time == (key0).getTime())
     {
        return (key0).getValue() + offset;
@@ -21318,10 +21318,10 @@ function interpolate(time, keyframes, first, last, preBehavior, postBehavior)
        return (key1).getValue() + offset;
     }
 
-    // get interval length, time in [0, 1] 
+    // get interval length, time in [0, 1]
     var t = (time - (key0).getTime()) / ((key1).getTime() - (key0).getTime());
 
-    // interpolate 
+    // interpolate
     switch ((key1).getShape())
     {
     case eKeyframeShape.TCB:
@@ -21360,14 +21360,14 @@ function StateRec()
 function GetCurrentState(graphMgr)
 {
     var rec = new StateRec();
-	
+
     rec.material = graphMgr.getCurrentMaterial();
     rec.renderStateRec = graphMgr.renderState.getState(RENDERSTATE_ALL_BITS);
     rec.cullBackFace = graphMgr.renderContext.enabled(eRenderMode.CullBackFace);
     rec.textures = graphMgr.textureArrayStack.top();
     rec.projectionTextures = graphMgr.projectionTextureArrayStack.top();
     rec.globalIllumination.copy(graphMgr.renderContext.getGlobalIllumination());
-    
+
     return rec;
 }
 
@@ -21457,7 +21457,7 @@ DistanceSortAgent.prototype.addGeometry = function(geometry, min, max, dissolve)
 
     // add to list
     this.sortRecs.push(rec);
-    
+
 }
 
 DistanceSortAgent.prototype.clear = function()
@@ -21519,7 +21519,7 @@ var EARTH_RADIUS_KM_EQ = 6378;
 var EARTH_RADIUS_KM_P = 6377;
 
 /// Maximum width of a UTM zone (taken to be at equator)
-var UTM_ZONE_WIDTH_KM = 667.956; 
+var UTM_ZONE_WIDTH_KM = 667.956;
 
 // EqualArc projection - Metric
 var EQ_ARC_WIDTH_KM       = 40075.16;	// Earth circumference at Equator
@@ -21545,7 +21545,7 @@ function MapProjectionCalculator()
     this.unitsMultiplier = 1;
     this.positionCalculators = [];
     this.geoPositionCalculators = [];
-    
+
     this.mapProjection = new StringAttr("equalArc");
     this.elevationModel = new StringAttr();
     this.center2D = new Vector2DAttr(0, 0);
@@ -21557,7 +21557,7 @@ function MapProjectionCalculator()
 
     this.units.addModifiedCB(MapProjectionCalculator_UnitsModifiedCB, this);
     this.pointWorld.addModifiedCB(MapProjectionCalculator_PointWorldModifiedCB, this);
-    
+
     this.registerAttribute(this.mapProjection, "mapProjection");
     this.registerAttribute(this.elevationModel, "elevationModel");
     this.registerAttribute(this.center2D, "center2d");
@@ -21589,7 +21589,7 @@ MapProjectionCalculator.prototype.evaluate = function()
 MapProjectionCalculator.prototype.computePosition = function(lon, alt, lat)
 {
     var position = undefined;
-    
+
     var mapProjection = this.mapProjection.getValueDirect().join("");
     var computeFunc = this.positionCalculators[mapProjection];
     if (computeFunc)
@@ -21646,7 +21646,7 @@ function ComputeEqualArc3DPosition(lon, alt, lat, centerLon, centerLat, units)
 	{
 		return undefined;
 	}
-	
+
 	var x = (lon - centerLon) * EQ_ARC_ONE_DEG_LON_KM * units;
 	var y = alt;
 	var z = (lat - centerLat) * EQ_ARC_ONE_DEG_LAT_KM * units;
@@ -21658,8 +21658,8 @@ function ComputeEqualArcGeoPosition(x, y, z, centerLon, centerLat, units)
 {
 	var lon = (x / units / EQ_ARC_ONE_DEG_LON_KM) + centerLon;
 	var alt = y;
-	var lat = (z / units / EQ_ARC_ONE_DEG_LAT_KM) + centerLat;   
-    
+	var lat = (z / units / EQ_ARC_ONE_DEG_LAT_KM) + centerLat;
+
     return { lon: lon, alt: alt, lat: lat }
 }
 NullObject.prototype = new ParentableMotionElement();
@@ -21684,13 +21684,13 @@ function Transform()
     SGNode.call(this);
     this.className = "Transform";
     this.attrType = eAttrType.Transform;
-    
+
     this.matrix = new Matrix4x4Attr
        (1, 0, 0, 0,
         0, 1, 0, 0,
         0, 0, 1, 0,
         0, 0, 0, 1);
-        
+
     this.matrixTransform = this.matrix.getValueDirect();
     this.updateMatrix = true;
 
@@ -21713,7 +21713,7 @@ Transform.prototype.update = function(params, visitChildren)
 
         this.matrixTransform = this.matrix.getValueDirect();
     }
-    
+
     // call base-class implementation
     SGNode.prototype.update.call(this, params, visitChildren);
 }
@@ -21726,9 +21726,9 @@ Transform.prototype.apply = function(directive, params, visitChildren)
         SGNode.prototype.apply.call(this, directive, params, visitChildren);
         return;
     }
-    
+
     params.worldMatrix = params.worldMatrix.leftMultiply(this.matrixTransform);
-            
+
     switch (directive)
     {
         case "render":
@@ -21736,7 +21736,7 @@ Transform.prototype.apply = function(directive, params, visitChildren)
             this.applyTransform();
         }
         break;
-         
+
         default:
             break;
     }
@@ -21792,8 +21792,8 @@ QuaternionRotate.prototype.update = function(params, visitChildren)
 
         var rotation = matrix.getRotationAngles();
         this.rotation.setValueDirect(rotation.x, rotation.y, rotation.z);
-        
-        //console.debug("QuaternionRotate: rotation " + rotation.x + ", " + 
+
+        //console.debug("QuaternionRotate: rotation " + rotation.x + ", " +
         //rotation.y + ", " + rotation.z);
     }
 
@@ -21827,12 +21827,12 @@ function Rotate()
     Transform.call(this);
     this.className = "Rotate";
     this.attrType = eAttrType.Rotate;
-    
+
     this.rotation = new Vector3DAttr(0, 0, 0);
     this.updateRotation = true;
-    
+
     this.rotation.addModifiedCB(Rotate_RotationModifiedCB, this);
-	
+
     this.registerAttribute(this.rotation, "rotation");
 }
 
@@ -21879,12 +21879,12 @@ function Scale()
     Transform.call(this);
     this.className = "Scale";
     this.attrType = eAttrType.Scale;
-    
+
     this.scale = new Vector3DAttr(1, 1, 1);
     this.updateScale = true;
-    
+
     this.scale.addModifiedCB(Scale_ScaleModifiedCB, this);
-	
+
     this.registerAttribute(this.scale, "scale");
 }
 
@@ -21931,12 +21931,12 @@ function Translate()
     Transform.call(this);
     this.className = "Translate";
     this.attrType = eAttrType.Translate;
-    
+
     this.translation = new Vector3DAttr(0, 0, 0);
     this.updateTranslation = true;
-    
+
     this.translation.addModifiedCB(Translate_TranslationModifiedCB, this);
-	
+
     this.registerAttribute(this.translation, "translation");
 }
 
@@ -21983,9 +21983,9 @@ function MultiTargetObserver()
     Evaluator.call(this);
     this.className = "MultiTargetObserver";
     this.attrType = eAttrType.MultiTargetObserver;
-    
+
     this.targetPosition = [];
-    
+
     this.targets = new NumberAttr(0);
     this.position = new Vector3DAttr(0, 0, 0);
     this.distanceFromFirstTarget = new NumberAttr(0);
@@ -22023,7 +22023,7 @@ MultiTargetObserver.prototype.setNumberOfTargets = function(targets)
     if (targets > 0)
     {
         this.targetPosition.length = targets;
-        
+
         for (var i=0; i < targets; i++)
         {
         	this.targetPosition[i] = new Vector3DAttr(0, 0, 0);
@@ -22093,7 +22093,7 @@ MultiTargetObserver.prototype.evaluate = function()
 MultiTargetObserver.prototype.getObserverAndTargetPositions = function()
 {
 	var observer, target;
-	
+
     switch (this.targets.getValueDirect())
     {
     case 0:
@@ -22143,7 +22143,7 @@ MultiTargetObserver.prototype.getObserverAndTargetPositions = function()
         }
         break;
     }
-    
+
     return { observer: observer, target: target };
 }
 SerializeParams.prototype = new DirectiveParams();
@@ -22152,7 +22152,7 @@ SerializeParams.prototype.constructor = SerializeParams();
 function SerializeParams()
 {
     DirectiveParams.call(this);
-    
+
     this.serialized = null;
 }
 
@@ -22162,7 +22162,7 @@ SerializeDirective.prototype.constructor = SerializeDirective;
 function SerializeDirective()
 {
     SGDirective.call(this);
-    
+
     this.className = "SerializeDirective";
     this.attrType = eAttrType.SerializeDirective;
 
@@ -22208,7 +22208,7 @@ function CollideParams()
 function CollideRec(model, tree)
 {
     this.model = model;
-    this.tree = tree;    
+    this.tree = tree;
 }
 
 CollideDirective.prototype = new SGDirective();
@@ -22232,7 +22232,7 @@ CollideDirective.prototype.execute = function(root)
 
     // get list of models for collision detection
     root.apply("collide", params, true);
-    
+
     // detect collisions
     this.detectCollisions(params.detectCollisions);
 }
@@ -22242,29 +22242,29 @@ CollideDirective.prototype.detectCollisions = function(collideRecs)
     var models = [];
     var trees = [];
     var collisions = [];
-    
+
     for (var i in collideRecs)
     {
         models.push(collideRecs[i].model);
         trees.push(collideRecs[i].tree);
         collisions.push(false);
 
-        collideRecs[i].model.getAttribute("collisionList").clear();        
+        collideRecs[i].model.getAttribute("collisionList").clear();
     }
-    
+
     for (var i = 0; i < trees.length; i++)
     {
         for (var j = i+1; j < trees.length; j++)
         {
             if (trees[i].collides(trees[j]))
             {
-                models[i].getAttribute("collisionList").push_back(models[j]);                
+                models[i].getAttribute("collisionList").push_back(models[j]);
                 models[j].getAttribute("collisionList").push_back(models[i]);
                 collisions[i] = collisions[j] = true;
             }
         }
     }
-    
+
     for (var i = 0; i < collisions.length; i++)
     {
         models[i].getAttribute("collisionDetected").setValueDirect(collisions[i]);
@@ -22332,7 +22332,7 @@ ObjectMover.prototype.evaluate = function()
 {
 	// time
     var timeIncrement = this.timeIncrement.getValueDirect();
-    
+
     this.updateActiveMotion(timeIncrement);
 
     this.setMotion(this.activeMotion);
@@ -22342,29 +22342,29 @@ ObjectMover.prototype.setMotion = function(motion)
 {
     if (motion.validMembersMask & OBJECTMOTION_PAN_BIT)
     {
-        this.panVelocity.setValueDirect(motion.panVelocity.x, 
-                                        motion.panVelocity.y, 
+        this.panVelocity.setValueDirect(motion.panVelocity.x,
+                                        motion.panVelocity.y,
                                         motion.panVelocity.z);
     }
-    
+
     if (motion.validMembersMask & OBJECTMOTION_LINEAR_BIT)
-    {                       
-        this.linearVelocity.setValueDirect(motion.linearVelocity.x, 
-                                           motion.linearVelocity.y, 
+    {
+        this.linearVelocity.setValueDirect(motion.linearVelocity.x,
+                                           motion.linearVelocity.y,
                                            motion.linearVelocity.z);
     }
-        
+
     if (motion.validMembersMask & OBJECTMOTION_ANGULAR_BIT)
-    {                              
-        this.angularVelocity.setValueDirect(motion.angularVelocity.x, 
-                                            motion.angularVelocity.y, 
+    {
+        this.angularVelocity.setValueDirect(motion.angularVelocity.x,
+                                            motion.angularVelocity.y,
                                             motion.angularVelocity.z);
     }
-        
+
     if (motion.validMembersMask & OBJECTMOTION_SCALAR_BIT)
-    {                               
-        this.scalarVelocity.setValueDirect(motion.scalarVelocity.x, 
-                                           motion.scalarVelocity.y, 
+    {
+        this.scalarVelocity.setValueDirect(motion.scalarVelocity.x,
+                                           motion.scalarVelocity.y,
                                            motion.scalarVelocity.z);
     }
 }
@@ -22377,8 +22377,8 @@ ObjectMover.prototype.updateActiveMotion = function(timeIncrement)
        	this.activeDuration = 0;
     	this.activeMotion = this.motionQueue.front() || new ObjectMotionDesc();
     	this.motionQueue.pop();
-    }  
-     
+    }
+
     this.activeDuration += timeIncrement;
 }
 
@@ -22388,16 +22388,16 @@ ObjectMover.prototype.connectTarget = function(target)
 	this.linearVelocity.removeAllTargets();
 	this.angularVelocity.removeAllTargets();
 	this.scalarVelocity.removeAllTargets();
-	
+
 	if (target)
 	{
 		this.panVelocity.addTarget(target.getAttribute("panVelocity"));
 		this.linearVelocity.addTarget(target.getAttribute("linearVelocity"));
 		this.angularVelocity.addTarget(target.getAttribute("angularVelocity"));
-		this.scalarVelocity.addTarget(target.getAttribute("scalarVelocity"));	
+		this.scalarVelocity.addTarget(target.getAttribute("scalarVelocity"));
 		target.getAttribute("collisionDetected").addModifiedCB(ObjectMover_TargetCollisionDetectedModifiedCB, this);
 	}
-	
+
 	this.targetObject = target;
 }
 
@@ -22456,29 +22456,29 @@ AnimalMover.prototype.evaluate = function()
 		var motion = new ObjectMotionDesc();
 		motion.duration = FLT_MAX;
 		motion.panVelocity = new Vector3D(0, 0, this.linearSpeed.getValueDirect());
-		
+
 		this.motionQueue.push(motion);
 	}
-	
+
 	// call base-class implementation
 	ObjectMover.prototype.evaluate.call(this);
 }
 
 AnimalMover.prototype.collisionDetected = function(collisionList)
-{   
+{
     this.activeMotion = null;
     this.motionQueue.clear();
-    
+
     var turn = new ObjectMotionDesc();
     turn.duration = 1 / this.angularSpeed.getValueDirect();
     turn.angularVelocity = new Vector3D(0, this.angularSpeed.getValueDirect(), 0);
-        
+
     this.motionQueue.push(turn);
-      
+
     var walk = new ObjectMotionDesc();
     walk.duration = 1 / this.linearSpeed.getValueDirect();
     walk.panVelocity = new Vector3D(0, 0, this.linearSpeed.getValueDirect());
-        
+
     this.motionQueue.push(walk);
 }
 
@@ -22490,34 +22490,34 @@ function Cube()
     TriList.call(this);
     this.className = "Cube";
     this.attrType = eAttrType.Cube;
-    
+
     this.updateTriList = true; // update once
-    
+
     this.transform = new Matrix4x4();
     this.updateTransform = false;
-    
+
     this.materialNode = new Material();
     this.updateMaterial = false;
-    
+
     this.color = new ColorAttr(1, 1, 1, 1);
     this.opacity = new NumberAttr(1);
     this.position = new Vector3DAttr(0, 0, 0);
     this.rotation = new Vector3DAttr(0, 0, 0);
     this.scale = new Vector3DAttr(1, 1, 1);
-    
+
     this.color.addModifiedCB(Cube_MaterialModifiedCB, this);
     this.opacity.addModifiedCB(Cube_MaterialModifiedCB, this);
     this.position.addModifiedCB(Cube_PositionModifiedCB, this);
     this.rotation.addModifiedCB(Cube_RotationModifiedCB, this);
     this.scale.addModifiedCB(Cube_ScaleModifiedCB, this);
-    
+
     this.registerAttribute(this.color, "color");
     this.registerAttribute(this.opacity, "opacity");
     this.registerAttribute(this.position, "position");
     this.registerAttribute(this.rotation, "rotation");
     this.registerAttribute(this.scale, "scale");
-    
-    var vertices = 
+
+    var vertices =
     [
         -0.25, -0.25, 0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, 0.25, -0.25, 0.25, -0.25,
         0.25, -0.25, -0.25, 0.25, -0.25, 0.25, -0.25, -0.25, 0.25, -0.25, -0.25, -0.25, 0.25, -0.25, -0.25, -0.25, -0.25, 0.25,
@@ -22526,7 +22526,7 @@ function Cube()
         0.25, 0.25, -0.25, -0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, -0.25, -0.25, 0.25, -0.25, -0.25, 0.25, 0.25,
         0.25, -0.25, 0.25, 0.25, 0.25, 0.25, -0.25, 0.25, 0.25, -0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, 0.25, 0.25
     ];
-    
+
     var normals =
     [
         -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0,
@@ -22536,10 +22536,10 @@ function Cube()
         0, 1, -0, 0, 1, -0, 0, 1, -0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
         0, -0, 1, 0, -0, 1, 0, -0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1
     ];
-    
+
     this.vertices.setValue(vertices);
     this.normals.setValue(normals);
-    
+
     this.color.addTarget(this.materialNode.getAttribute("color"));
     this.opacity.addTarget(this.materialNode.getAttribute("opacity"));
 }
@@ -22551,31 +22551,31 @@ Cube.prototype.setGraphMgr = function(graphMgr)
 
     this.materialNode.setGraphMgr(graphMgr);
 }
-            
+
 Cube.prototype.update = function(params, visitChildren)
 {
     if (this.updateTransform)
     {
         this.updateTransform = false;
- 
+
         var position = this.position.getValueDirect();
         var translationMatrix = new Matrix4x4();
         translationMatrix.loadTranslation(position.x, position.y, position.z);
-        
+
         var rotation = this.rotation.getValueDirect();
         var rotationMatrix = new Matrix4x4();
         rotationMatrix.loadXYZAxisRotation(rotation.x, rotation.y, rotation.z);
-        
+
         var scale = this.scale.getValueDirect();
         var scaleMatrix = new Matrix4x4();
         scaleMatrix.loadScale(scale.x, scale.y, scale.z);
-        
+
         this.transform.loadMatrix(scaleMatrix.multiply(rotationMatrix.multiply(translationMatrix)));
     }
-    
+
     if (this.updateMaterial)
     {
-        this.updateMaterial = false;       
+        this.updateMaterial = false;
         this.materialNode.update(params, visitChildren);
     }
 
@@ -22594,7 +22594,7 @@ Cube.prototype.apply = function(directive, params, visitChildren)
     {
         return;
     }
-    
+
     switch (directive)
     {
         case "render":
@@ -22613,10 +22613,10 @@ Cube.prototype.draw = function(dissolve)
 
     this.graphMgr.renderContext.leftMultMatrix(this.transform);
     this.graphMgr.renderContext.applyModelViewTransform();
-    
+
     // draw primitives
     this.vertexBuffer.draw();
-    
+
     this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
     this.graphMgr.renderContext.popMatrix();
     this.graphMgr.renderContext.applyModelViewTransform();
@@ -22643,12 +22643,12 @@ function Cube_MaterialModifiedCB(attribute, container)
 }
 var eEventType = {
     Unknown                     :-1,
-    
+
     Render_First                :0,
     RenderBegin                 :1,
     RenderEnd                   :2,
     Render_End                  :9,
-    
+
     Mouse_First                 :100,
     MouseMove                   :101,
     MouseDown                   :102,
@@ -22682,14 +22682,14 @@ var eEventType = {
     Key_Down                    :201,
     Key_Up                      :202,
     Key_Last                    :299,
-    
+
     Element_First               :700,
     ElementSelected             :701,
     ElementUnselected           :702,
     ElementFocus                :703,
     ElementBlur                 :704,
     Element_Last                :799,
-    
+
     UserDefined                 :2000
 };
 
@@ -22730,13 +22730,13 @@ var eEventNameMap = {
 function getEventTypeByName(name)
 {
     var type = eEventNameMap[name];
-    
+
     if (type == undefined)
     {
-        // TODO  
-        type = eEventType.Unknown;      
-    }   
-    
+        // TODO
+        type = eEventType.Unknown;
+    }
+
     return type;
 }
 Event.prototype = new AttributeContainer();
@@ -22746,7 +22746,7 @@ function Event(type, time, userData)
 {
     AttributeContainer.call(this);
     this.className = "Event";
-    
+
     this.type = type || eEventType.Unknown;
     this.time = time || 0;
     this.userData = userData || null;
@@ -22765,7 +22765,7 @@ function InputEvent(type, time, inputId, modifiers, state, userData)
 {
     Event.call(this, type, time, userData);
     this.className = "InputEvent";
-    
+
     this.inputId = inputId || 0;
     this.modifiers = modifiers || 0;
     this.state = state || 0;
@@ -22790,7 +22790,7 @@ function MouseEvent(type, time, buttonId, modifiers, state, x, y, userData)
 {
     InputEvent.call(this, type, time, buttonId, modifiers, state, userData);
     this.className = "MouseEvent";
-    
+
     this.x = x || 0;
     this.y = y || 0;
 }
@@ -22808,11 +22808,11 @@ function EventAdapter()
 {
     AttributeContainer.call(this);
     this.className = "EventAdapter";
-    
+
     this.mouseState = new MouseEventState();
-    
+
     this.name = new StringAttr("EventAdapter");
-    
+
     this.registerAttribute(this.name, "name");
 }
 
@@ -22825,13 +22825,13 @@ EventAdapter.prototype.createKeyboardEvent = function(event)
 EventAdapter.prototype.createMouseEvent = function(event)
 {
     var date = new Date();
-    
+
     var type = eEventType.Unknown;
     var time = date.getTime();
     var buttonId = 0;
     var modifiers = 0;  // TODO
     var state = 0;      // TODO
-    
+
     var x = event.canvasX;
     var y = event.canvasY;
 
@@ -22844,7 +22844,7 @@ EventAdapter.prototype.createMouseEvent = function(event)
             case 0: type = eEventType.MouseLeftClick; break;
             case 1: type = eEventType.MouseMiddleDown; break;
             case 2: type = eEventType.MouseRightClick; break;
-            } 
+            }
         }
         break;
 
@@ -22855,42 +22855,42 @@ EventAdapter.prototype.createMouseEvent = function(event)
             case 0: type = eEventType.MouseLeftDblClick; break;
             case 1: type = eEventType.MouseMiddleDblClick; break;
             case 2: type = eEventType.MouseRightDblClick; break;
-            }    
+            }
         }
         break;
-        
+
     case "mousedown":
         {
             switch (event.button)
             {
             case 0:
-                { 
+                {
                     if (this.mouseState.rightButtonDown)
                     {
                         type = eEventType.MouseBothDown;
                     }
-                    else 
+                    else
                     {
                         type = eEventType.MouseLeftDown;
                     }
                     this.mouseState.leftButtonDown = true;
                 }
                 break;
-                
-            case 1: 
+
+            case 1:
                 {
                     type = eEventType.MouseMiddleDown;
                     this.mouseState.middleButtonDown = true;
                 }
                 break;
-                
-            case 2: 
+
+            case 2:
                 {
                     if (this.mouseState.leftButtonDown)
                     {
                         type = eEventType.MouseBothDown;
                     }
-                    else 
+                    else
                     {
                         type = eEventType.MouseRightDown;
                     }
@@ -22900,26 +22900,26 @@ EventAdapter.prototype.createMouseEvent = function(event)
             }
         }
         break;
-      
+
     case "mouseup":
         {
             switch (event.button)
             {
             case 0:
-                { 
-                    type = eEventType.MouseLeftUp; 
+                {
+                    type = eEventType.MouseLeftUp;
                     this.mouseState.leftButtonDown = false;
                 }
                 break;
-                
-            case 1: 
+
+            case 1:
                 {
                     type = eEventType.MouseMiddleUp;
                     this.mouseState.middleButtonDown = false;
                 }
                 break;
-                
-            case 2: 
+
+            case 2:
                 {
                     type = eEventType.MouseRightUp;
                     this.mouseState.rightButtonDown = false;
@@ -22928,27 +22928,27 @@ EventAdapter.prototype.createMouseEvent = function(event)
             }
         }
         break;
-        
+
     case "mousemove":
         {
             type = eEventType.MouseMove;
         }
         break;
-        
+
     default:
         {
             type = eEventType.UserDefined; // TEMPTEST (?)
         }
         break;
-    }       
-    
+    }
+
     // set which buttons are pressed to buttonId
     if (this.mouseState.leftButtonDown)     buttonId |= MOUSEEVENT_LEFT_BUTTON;
     if (this.mouseState.middleButtonDown)   buttonId |= MOUSEEVENT_MIDDLE_BUTTON;
     if (this.mouseState.rightButtonDown)    buttonId |= MOUSEEVENT_RIGHT_BUTTON;
-    
+
     var mouseEvent = new MouseEvent(type, time, buttonId, modifiers, state, x, y);
-    
+
     return mouseEvent;
 }
 EventListener.prototype = new Agent();
@@ -22958,16 +22958,16 @@ function EventListener()
 {
     Agent.call(this);
     this.className = "EventListener";
-    
+
     this.events = [];
-    
+
     this.listen = new BooleanAttr(true);
     this.trigger = new StringAttr("");
     this.numResponses = new NumberAttr(1);
     this.event = new StringAttr("");
-    
+
     this.event.addModifiedCB(EventListener_EventModifiedCB, this);
-    
+
     this.registerAttribute(this.listen, "listen");
     this.registerAttribute(this.trigger, "trigger");
     this.registerAttribute(this.numResponses, "numResponses");
@@ -22977,11 +22977,11 @@ function EventListener()
 EventListener.prototype.addEventType = function(type)
 {
     this.events.push(type);
-    
+
     // for serialization
     var name = this.event.getValueDirect().join("");
     var event = new StringAttr(name);
-    event.flagDeserializedFromXML(); 
+    event.flagDeserializedFromXML();
     this.events.push(event);
     this.registerAttribute(event, "event");
 }
@@ -23028,11 +23028,11 @@ function EventMgr()
 {
     AttributeContainer.call(this);
     this.className = "EventMgr";
-    
+
     this.listeners = [];
-    
+
     this.name = new StringAttr("EventMgr");
-    
+
     this.registerAttribute(this.name, "name");
 }
 
@@ -23042,7 +23042,7 @@ EventMgr.prototype.addListener = function(type, listener)
     {
         this.listeners[type] = [];
     }
-    
+
     // only add once
     if (this.listeners[type].indexOf(listener) == -1)
     {
@@ -23055,21 +23055,21 @@ EventMgr.prototype.removeListener = function(type, listener)
     if (this.listeners[type])
     {
         this.listeners[type].splice(this.listeners[type].indexOf(listener), 1);
-    }    
+    }
 }
 
 EventMgr.prototype.processEvent = function(event)
 {
     var type = event.type;
     var expired = [];
-    
+
     // process event for registered listeners
     if (this.listeners[type])
     {
         for (var i=0; i < this.listeners[type].length; i++)
         {
             this.listeners[type][i].eventPerformed(event);
-            
+
             // if listener has finished responding, add to expired list
             var numResponses = this.listeners[type][i].getAttribute("numResponses");
             if (numResponses && numResponses.getValueDirect() == 0)
@@ -23078,7 +23078,7 @@ EventMgr.prototype.processEvent = function(event)
             }
         }
     }
-    
+
     // remove expired listeners
     for (var i=0; i < expired.length; i++)
     {
@@ -23127,21 +23127,21 @@ function DeviceHandler()
     EventListener.call(this);
     this.className = "DeviceHandler";
     this.attrType = eAttrType.DeviceHandler;
-    
+
     this.inputMessage = new NumberAttr(0);
     this.inputId = new NumberAttr(0);
     this.inputModifier = new NumberAttr(0);
     this.inputState = new NumberAttr(0);
     this.prevInputState = new NumberAttr(0);
     this.output = new StringAttr("");
-    
+
     this.registerAttribute(this.inputMessage, "inputMessage");
     this.registerAttribute(this.inputId, "inputId");
     this.registerAttribute(this.inputModifier, "inputModifier");
     this.registerAttribute(this.inputState, "inputState");
     this.registerAttribute(this.prevInputState, "prevInputState");
     this.registerAttribute(this.output, "output");
-    
+
     // always respond to events
     this.numResponses.setValueDirect(-1);
 }
@@ -23161,24 +23161,24 @@ function MouseHandler()
     DeviceHandler.call(this);
     this.className = "MouseHandler";
     this.attrType = eAttrType.MouseHandler;
-    
+
     this.name.setValueDirect("MouseHandler");
-        
+
     this.lastX = 0;
     this.lastY = 0;
-    
+
     this.x = new NumberAttr(0);
     this.y = new NumberAttr(0);
     this.deltaX = new NumberAttr(0);
     this.deltaY = new NumberAttr(0);
     this.delta = new Vector2DAttr(0, 0);
-    
+
     this.registerAttribute(this.x, "deviceX");
     this.registerAttribute(this.y, "deviceY");
     this.registerAttribute(this.deltaX, "deltaX");
     this.registerAttribute(this.deltaY, "deltaY");
     this.registerAttribute(this.delta, "delta");
-   
+
     this.addEventType(eEventType.MouseMove);
     this.addEventType(eEventType.MouseLeftDown);
 }
@@ -23195,7 +23195,7 @@ MouseHandler.prototype.eventPerformed = function(event)
 			// do nothing
     	}
     	break;
-    	
+
     	default:
     	{
     		this.lastX = x;
@@ -23203,18 +23203,18 @@ MouseHandler.prototype.eventPerformed = function(event)
     	}
     	break;
     }
-   
+
     this.x.setValueDirect(x);
     this.y.setValueDirect(y);
-    
+
     this.deltaX.setValueDirect(this.lastX-x);
     this.deltaY.setValueDirect(this.lastY-y);
-    
+
     this.delta.setValueDirect(this.lastX-x, this.lastY-y);
-    
+
     this.lastX = x;
     this.lastY = y;
-    
+
     // call the base class to copy the rest of the InputEvent data
 	DeviceHandler.prototype.eventPerformed.call(this, event);
 
@@ -23230,18 +23230,18 @@ function Command()
     EventListener.call(this);
     this.className = "Command";
     this.attrType = eAttrType.Command;
-    
+
     this.borrowedAttributes = [];
     this.attributeValuePairs = [];
     this.attributeRefPairs = [];
-    
+
     this.target = new StringAttr("");
-    
+
     this.registerAttribute(this.target, "target");
 }
 
 Command.prototype.finalize = function()
-{  
+{
 }
 
 Command.prototype.eventPerformed = function(event)
@@ -23250,7 +23250,7 @@ Command.prototype.eventPerformed = function(event)
     {
         this.execute();
     }
-    
+
     // call base-class implementation
     EventListener.prototype.eventPerformed.call(this, event);
 }
@@ -23309,14 +23309,14 @@ function SetCommand()
     Command.call(this);
     this.className = "Set";
     this.attrType = eAttrType.Set;
-    
+
     this.target.addModifiedCB(SetCommand_TargetModifiedCB, this);
 }
 
 SetCommand.prototype.execute = function()
 {
     // TODO: enabled (? - there is a commandEnabled attaribute in .cpp)
-    
+
     this.applyAttributeValues();
 }
 
@@ -23344,24 +23344,24 @@ SetCommand.prototype.registerTargetAttributes = function(target, targetName)
 		if ((myAttribute = this.getAttribute(attributeName)) != null)
 		{
 			// insert relative path expression
-			sName = targetName + "_";	
-			sName += attributeName;	
+			sName = targetName + "_";
+			sName += attributeName;
 		}
 		else	// attribute is not already registered
 		{
 			sName = attributeName;
 		}
-		
+
 		this.registerAttribute(attribute, sName);
 		this.borrowedAttributes.push(attribute);
-    }    
+    }
 }
 
 function SetCommand_TargetModifiedCB(attribute, container)
-{ 
+{
     var target = attribute.getValueDirect().join("");
     var targets = target.split(",");
-    
+
     container.targets.length = 0;
     for (var i=0; i < targets.length; i++)
     {
@@ -23371,7 +23371,7 @@ function SetCommand_TargetModifiedCB(attribute, container)
             container.registerTargetAttributes(resource, targets[i]);
         }
     }
-    
+
     setAttributeBin(container.attributeValuePairs);
 }
 function ConnectionDesc()
@@ -23401,10 +23401,10 @@ function ConnectAttributesCommand()
     Command.call(this);
     this.className = "ConnectAttributes";
     this.attrType = eAttrType.ConnectAttributes;
-    
+
     this.connections = new Stack();
     this.connectionHelper = new Pair(null, null);
-    
+
     this.sourceContainer = new StringAttr("");
     this.targetContainer = new StringAttr("");
     this.sourceAttribute = new StringAttr("");
@@ -23413,17 +23413,17 @@ function ConnectAttributesCommand()
     this.negate = new BooleanAttr(false);   // if true, disconnect
     this.persist = new BooleanAttr(true);
     this.connectionType = new StringAttr("");
-    
+
     this.source.addTarget(this.sourceAttribute);
     this.target.addTarget(this.targetAttribute);
-    
+
     this.sourceContainer.addModifiedCB(ConnectAttributesCommand_SourceContainerModifiedCB, this);
     this.targetContainer.addModifiedCB(ConnectAttributesCommand_TargetContainerModifiedCB, this);
     this.sourceAttribute.addModifiedCB(ConnectAttributesCommand_SourceAttributeModifiedCB, this);
     this.targetAttribute.addModifiedCB(ConnectAttributesCommand_TargetAttributeModifiedCB, this);
     this.connectionType.addModifiedCB(ConnectAttributesCommand_ConnectionTypeModifiedCB, this);
     this.negate.addModifiedCB(ConnectAttributesCommand_NegateModifiedCB, this);
-    
+
     this.registerAttribute(this.sourceContainer, "sourceContainer");
 	this.registerAttribute(this.sourceContainer, "sourceEvaluator");
 	this.registerAttribute(this.targetContainer, "targetContainer");
@@ -23447,13 +23447,13 @@ ConnectAttributesCommand.prototype.finalize = function()
             var sourceAttribute = new StringAttr(connection.sourceAttributeName);
             sourceAttribute.flagDeserializedFromXML();
             this.registerAttribute(sourceAttribute, "sourceAttribute");
-            
+
             var targetAttribute = new StringAttr(connection.targetAttributeName);
             targetAttribute.flagDeserializedFromXML();
-            this.registerAttribute(targetAttribute, "targetAttribute"); 
-        }    
+            this.registerAttribute(targetAttribute, "targetAttribute");
+        }
     }
-    
+
     // call base-class implementation
     Command.prototype.finalize.call(this);
 }
@@ -23469,7 +23469,7 @@ ConnectAttributesCommand.prototype.execute = function()
 {
     var desc = this.connections.top();
     var persist = this.persist.getValueDirect();
-    
+
     var sourceEvaluator = null;
     if (desc.sourceContainer &&
         desc.sourceContainer.attrType >= eAttrType.Evaluator &&
@@ -23477,7 +23477,7 @@ ConnectAttributesCommand.prototype.execute = function()
     {
         sourceEvaluator = desc.sourceContainer;
     }
-    
+
     if (this.negate.getValueDirect() == false)
     {
         if (this.connectionHelper.first)
@@ -23487,19 +23487,19 @@ ConnectAttributesCommand.prototype.execute = function()
             {
                 // if source is evaluator, evaluate
                 if (sourceEvaluator) sourceEvaluator.evalute();
-                
+
                 this.connectionHelper.second(desc.sourceContainer, desc.targetContainer);
             }
         }
         else
         {
             this.addOrRemoveTargets(true);
-            
+
             if (!persist)
             {
                 // if source is evaluator, evaluate
                 if (sourceEvaluator) sourceEvaluator.evalute();
-                
+
                 this.addOrRemoveTargets(false);
             }
         }
@@ -23510,14 +23510,14 @@ ConnectAttributesCommand.prototype.execute = function()
         {
             var desc = this.connections.top();
             this.connectionHelper.second(desc.sourceContainer, desc.targetContainer);
-            
+
             // if source is evaluator, evaluate
             if (sourceEvaluator) sourceEvaluator.evalute();
         }
         else
         {
             this.addOrRemoveTargets(false);
-            
+
             // if source is evaluator, evaluate
             if (sourceEvaluator) sourceEvaluator.evalute();
         }
@@ -23537,24 +23537,24 @@ ConnectAttributesCommand.prototype.addOrRemoveTargets = function(add)
             {
                 desc.sourceAttribute.addElementTarget(desc.targetAttribute, desc.sourceIndex, desc.targetIndex);
             }
-            
+
             // detect connection of a screenPosition to anything and disable display lists
             var container = desc.sourceAttribute.getContainer();
             if (container)
-            {   
+            {
                 var screenPosition = container.getAttribute("screenPosition");
                 if (screenPosition && screenPosition == desc.sourceAttribute)
                 {
                     var autoDL = container.getAttribute("autoDisplayList");
                     if (autoDL)
                     {
-                        autoDL.setValueDirect(false);    
+                        autoDL.setValueDirect(false);
                     }
-                    
+
                     var enableDL = container.getAttribute("enableDisplayList");
                     if (enableDL)
                     {
-                        enableDL.setValueDirect(false);    
+                        enableDL.setValueDirect(false);
                     }
                 }
             }
@@ -23569,7 +23569,7 @@ function ConnectAttributesCommand_SourceContainerModifiedCB(attribute, container
         container.connections.push(new ConnectionDesc());
     }
     var connection = container.connections.top();
-    connection.sourceContainer = container.registry.find(attribute.getValueDirect().join(""));       
+    connection.sourceContainer = container.registry.find(attribute.getValueDirect().join(""));
 }
 
 function ConnectAttributesCommand_TargetContainerModifiedCB(attribute, container)
@@ -23578,21 +23578,21 @@ function ConnectAttributesCommand_TargetContainerModifiedCB(attribute, container
     {
         container.connections.push(new ConnectionDesc());
     }
-    var connection = container.connections.top();     
-    connection.targetContainer = container.registry.find(attribute.getValueDirect().join(""));       
+    var connection = container.connections.top();
+    connection.targetContainer = container.registry.find(attribute.getValueDirect().join(""));
 }
 
 function ConnectAttributesCommand_SourceAttributeModifiedCB(attribute, container)
 {
     var source = null;
     var index = -1;
-    
+
     if (container.connections.length() == 0)
     {
         container.connections.push(new ConnectionDesc());
     }
 
-    var connection = container.connections.top();    
+    var connection = container.connections.top();
     if (connection.sourceContainer)
     {
         var sourceTokens = attribute.getValueDirect().join("").split(":");
@@ -23600,7 +23600,7 @@ function ConnectAttributesCommand_SourceAttributeModifiedCB(attribute, container
         if (sourceTokens.length > 1)
         {
             index = sourceTokens[1];
-        }              
+        }
     }
     else
     {
@@ -23608,14 +23608,14 @@ function ConnectAttributesCommand_SourceAttributeModifiedCB(attribute, container
         if (source)
         {
             connection.sourceContainer = source.getContainer();
-            if (!connection.sourceContainer) connection.sourceContainer = source;     
+            if (!connection.sourceContainer) connection.sourceContainer = source;
         }
     }
-    
+
     connection.sourceAttribute = source;
     connection.sourceAttributeName = attribute.getValueDirect().join("");
     connection.sourceIndex = index;
-    
+
     // if source and target attributes have both been set, push another connection desc for the next source/target pair
     if (connection.sourceAttribute && connection.targetAttribute)
     {
@@ -23629,13 +23629,13 @@ function ConnectAttributesCommand_TargetAttributeModifiedCB(attribute, container
 {
     var target = null;
     var index = -1;
-    
+
     if (container.connections.length() == 0)
     {
         container.connections.push(new ConnectionDesc());
     }
-    
-    var connection = container.connections.top();    
+
+    var connection = container.connections.top();
     if (connection.targetContainer)
     {
         var targetTokens = attribute.getValueDirect().join("").split(":");
@@ -23643,7 +23643,7 @@ function ConnectAttributesCommand_TargetAttributeModifiedCB(attribute, container
         if (targetTokens.length > 1)
         {
             index = targetTokens[1];
-        }              
+        }
     }
     else
     {
@@ -23651,14 +23651,14 @@ function ConnectAttributesCommand_TargetAttributeModifiedCB(attribute, container
         if (target)
         {
             connection.targetContainer = target.getContainer();
-            if (!connection.targetContainer) connection.targetContainer = target;     
+            if (!connection.targetContainer) connection.targetContainer = target;
         }
     }
-    
+
     connection.targetAttribute = target;
     connection.targetAttributeName = attribute.getValueDirect().join("");
     connection.targetIndex = index;
-        
+
     // if source and target attributes have both been set, push another connection desc for the next source/target pair
     if (connection.sourceAttribute && connection.targetAttribute)
     {
@@ -23689,7 +23689,7 @@ function ConnectAttributesCommand_NegateModifiedCB(attribute, container)
     else // !negate
     {
         container.className = "ConnectAttributes";
-        container.attrType = eAttrType.ConnectAttributes;       
+        container.attrType = eAttrType.ConnectAttributes;
     }
 }
 AutoInterpolateCommand.prototype = new Command();
@@ -23705,7 +23705,7 @@ function AutoInterpolateCommand()
     this.numValueChannels = 0;
     this.numReferenceChannels = 0;
     this.numChannels = 0;
-    
+
     this.shape = new NumberAttr(eKeyframeShape.Linear);
     this.duration = new NumberAttr(1);
     this.preBehavior = new NumberAttr(eEndBehavior.Constant);
@@ -23743,7 +23743,7 @@ AutoInterpolateCommand.prototype.buildMotion = function()
     }
     this.kfi.getAttribute("enabled").setValueDirect(false);
     this.kfi.getAttribute("renderAndRelease").copyValue(this.renderAndRelease);
-    
+
     // TODO: name the interpolator based on the target
 
     for (var i = 0; i < this.attributeValuePairs.length; i++)
@@ -23801,7 +23801,7 @@ AutoInterpolateCommand.prototype.applyAttributeValues = function()
             var startVal = parseFloat(attr.getElement(j));
             var endVal = parseFloat(attr.getLength() > 1 ? value[j] : value);
 
-            // if the attribute is rotational (determined by "rotation" or "angle" as the attribute name), 
+            // if the attribute is rotational (determined by "rotation" or "angle" as the attribute name),
             // ensure motion will be the shortest path (eliminate the spin caused by 360's)
             if (this.isAttributeRotational(attr))
             {
@@ -23855,7 +23855,7 @@ AutoInterpolateCommand.prototype.applyAttributeRefs = function()
             var startVal = parseFloat(attr.getElement(j));
             var endVal = parseFloat(ref.getElement(j));
 
-            // if the attribute is rotational (determined by "rotation" or "angle" as the attribute name), 
+            // if the attribute is rotational (determined by "rotation" or "angle" as the attribute name),
             // ensure motion will be the shortest path (eliminate the spin caused by 360's)
             if (this.isAttributeRotational(attr))
             {
@@ -23936,7 +23936,7 @@ AutoInterpolateCommand.prototype.shortestPath = function(start, end)
 
     // calculate direct path
     var directPath = nend - nstart;
-    if (directPath <= 180 && directPath >= -180) 
+    if (directPath <= 180 && directPath >= -180)
     {
         return { start: start, end: end }; // direct path is shortest path, no changes necessary
     }
@@ -23955,14 +23955,14 @@ AutoInterpolateCommand.prototype.shortestPath = function(start, end)
     // update start/end so that shortest path is traversed
     start = nstart;
     if (nend > nstart)
-    {       
+    {
         end = nstart - shortestPath;
     }
     else
     {
         end = nstart + shortestPath;
     }
-    
+
     return { start: start, end: end };
 }
 
@@ -24001,7 +24001,7 @@ function MotionInterpolateCommand()
     this.midPosition = new Vector3DAttr();
 
     //this.resultPosition.addModifiedCB(MotionInterpolateCommand_ResultPositionModifiedCB, this);
-    
+
     this.registerAttribute(this.startPosition, "startPosition");
     this.registerAttribute(this.endPosition, "endPosition");
     this.registerAttribute(this.resultPosition, "resultPosition");
@@ -24054,7 +24054,7 @@ MotionInterpolateCommand.prototype.setKeyframes = function()
     var positionDelta = distanceBetween(startPosition, endPosition);
 
     // get position control vector
-    var positionControl = new Vector3D(); 
+    var positionControl = new Vector3D();
     positionControl.copy(this.positionControl.getValueDirect());
     positionControl.normalize();
 
@@ -24123,7 +24123,7 @@ function LocateCommand()
     this.directive = new BBoxDirective();
     this.locator = new BBoxLocator();
     this.inspector = null;
-    
+
 	this.duration = new NumberAttr(1);
 	this.transition = new BooleanAttr(true);
 	this.updateClipPlanes = new BooleanAttr(false);
@@ -24133,9 +24133,9 @@ function LocateCommand()
 	this.resultPosition = new Vector3DAttr();
 	this.resultFarDistance = new NumberAttr();
 	this.resultWidth = new NumberAttr();
-    
+
     this.target.addModifiedCB(LocateCommand_TargetModifiedCB, this);
-    
+
 	this.registerAttribute(this.duration, "duration");
 	this.registerAttribute(this.transition, "transition");
 	this.registerAttribute(this.updateClipPlanes, "updateClipPlanes");
@@ -24241,7 +24241,7 @@ LocateCommand.prototype.locate = function()
 
         locatorResultPosition.removeTarget(cameraPosition);
 
-        // removing null or non-targets is harmless, 
+        // removing null or non-targets is harmless,
         // so no need to check, just call remove
         locatorResultWidth.removeTarget(cameraWidth);
         locatorResultFarDistance.removeTarget(cameraFar);
@@ -24260,7 +24260,7 @@ LocateCommand.prototype.locate = function()
 
         locatorResultPosition.removeTarget(this.resultPosition);
 
-        // removing null or non-targets is harmless, 
+        // removing null or non-targets is harmless,
         // so no need to check, just call remove
         locatorResultWidth.removeTarget(this.resultWidth);
         locatorResultFarDistance.removeTarget(this.resultFarDistance);
@@ -24330,7 +24330,7 @@ function LocateCommand_TargetModifiedCB(attribute, container)
     if (resource)
     {
         container.targetNode = resource;
-        
+
         // try and locate a scene inspector for updating pivotDistance
         container.inspector = container.registry.find("SceneInspector");
     }
@@ -24354,9 +24354,9 @@ function PlayCommand()
 
     this.evaluators = [];
     this.negate = new BooleanAttr(false);   // if true, Pause
-    
+
     this.registerAttribute(this.negate, "negate");
-    
+
     this.target.addModifiedCB(PlayCommand_TargetModifiedCB, this);
     this.negate.addModifiedCB(PlayCommand_NegateModifiedCB, this);
 }
@@ -24384,7 +24384,7 @@ PlayCommand.prototype.execute = function()
         {
             for (var i = 0; i < this.evaluators.length; i++)
             {
-         
+
     			if (this.negate.getValueDirect() == false)
     			{
     				renderAgent.setEvaluatorPlayState(evaluators[i], ePlayState.Play);
@@ -24393,8 +24393,8 @@ PlayCommand.prototype.execute = function()
     			{
     				renderAgent.setEvaluatorPlayState(evaluators[i], ePlayState.Pause);
     			}
-            
-            }   
+
+            }
         }
 	}
 }
@@ -24427,7 +24427,7 @@ function PlayCommand_NegateModifiedCB(attribute, container)
     else // !negate
     {
         container.className = "Play";
-        container.attrType = eAttrType.Play;       
+        container.attrType = eAttrType.Play;
     }
 }
 RemoveCommand.prototype = new Command();
@@ -24440,7 +24440,7 @@ function RemoveCommand()
     this.attrType = eAttrType.Remove;
 
     this.targetAttribute = null;
-    
+
     this.target.addModifiedCB(RemoveCommand_TargetModifiedCB, this);
 }
 
@@ -24463,7 +24463,7 @@ RemoveCommand.prototype.execute = function()
 
         // remove from registry
         this.registry.unregister(this.targetAttribute);
-        
+
         // delete
         this.targetAttribute.destroy();
     }
@@ -24501,7 +24501,7 @@ function StopCommand()
     this.attrType = eAttrType.Stop;
 
     this.evaluators = [];
-    
+
     this.target.addModifiedCB(StopCommand_TargetModifiedCB, this);
 
 }
@@ -24522,9 +24522,9 @@ StopCommand.prototype.execute = function()
         {
             for (var i = 0; i < this.evaluators.length; i++)
             {
-         
+
     			renderAgent.setEvaluatorPlayState(evaluators[i], ePlayState.Stop);
-            }   
+            }
         }
 	}
 }
@@ -24553,7 +24553,7 @@ function CommandSequence()
     Command.call(this);
     this.className = "CommandSequence";
     this.attrType = eAttrType.CommandSequence;
-    
+
     this.sequence = [];
 }
 
@@ -24568,7 +24568,7 @@ CommandSequence.prototype.execute = function()
 CommandSequence.prototype.addCommand = function(command)
 {
     this.sequence.push(command);
-    
+
     // register command for serialization
     var num = this.sequence.length - 1;
     var name = "Command(" + num.toString() + ")";
@@ -24581,11 +24581,11 @@ function CommandMgr()
 {
     AttributeContainer.call(this);
     this.className = "CommandMgr";
-    
+
     this.commandSeqStack = new Stack();
-    
+
     this.name = new StringAttr("CommandMgr");
-    
+
     this.registerAttribute(this.name, "name");
 }
 
@@ -24608,16 +24608,16 @@ CommandMgr.prototype.addCommand = function(command)
 {
     setAttributeBin(null);
     setAttributePairs(null);
-    
+
     if (this.commandSeqStack.length() > 0)
     {
         this.commandSeqStack.top().addCommand(command);
         this.registry.unregister(command); // unregister here so command will not be serialized separately
         return;
     }
-    
+
     // execute the command or register it for events.  If the command
-    // was NOT configured for events, then Execute it and get rid of it             
+    // was NOT configured for events, then Execute it and get rid of it
     var events = command.getEventTypes();
     var trigger = command.getAttribute("trigger");
     if (events.length > 0)
@@ -24629,7 +24629,7 @@ CommandMgr.prototype.addCommand = function(command)
             {
                 eventMgr.addListener(events[i], command);
             }
-        }   
+        }
     }
     else if (trigger.getLength() > 0)
     {
@@ -24643,7 +24643,7 @@ CommandMgr.prototype.addCommand = function(command)
     }
 }
 
-CommandMgr.prototype.createCommandTrigger = function(command, trigger) 
+CommandMgr.prototype.createCommandTrigger = function(command, trigger)
  {
 
  	// TODO: Support Commands that Execute from Events AND Triggers
@@ -24674,7 +24674,7 @@ CommandMgr.prototype.createCommandTrigger = function(command, trigger)
             var itemString = "";
             var valueString = "";
             var rangeString = "";
-            
+
  			valueNdx = triggerString.lastIndexOf('!');
  			if (valueNdx > 0)
  			{
@@ -24684,21 +24684,21 @@ CommandMgr.prototype.createCommandTrigger = function(command, trigger)
 
  			valueNdx = triggerString.lastIndexOf('=');
 
- 			if(valueNdx > 0) 
+ 			if(valueNdx > 0)
  			{
  				itemNdx = triggerString.lastIndexOf('[');
- 				if(itemNdx > 0) 
+ 				if(itemNdx > 0)
  				{
- 					var itemNdx2 = triggerString.lastIndexOf(']', itemNdx); 
- 					itemString = triggerString.substring(itemNdx+1, itemNdx2 - itemNdx - 1); 
+ 					var itemNdx2 = triggerString.lastIndexOf(']', itemNdx);
+ 					itemString = triggerString.substring(itemNdx+1, itemNdx2 - itemNdx - 1);
  				}
 
- 				var range = FLT_MAX; 
+ 				var range = FLT_MAX;
  				var rangeNdx = triggerString.lastIndexOf(',');
  				if(rangeNdx > 0)
  				{
  					var rangeString = triggerString.substring(rangeNdx+1, trigger.length()-rangeNdx-1);
- 					range = rangeString.parseFloat(); 
+ 					range = rangeString.parseFloat();
  				}
  				rangeNdx = rangeNdx == -1 ? triggerString.length : rangeNdx;
  				// value is the string between '=' && (',' || end of string)
@@ -24708,7 +24708,7 @@ CommandMgr.prototype.createCommandTrigger = function(command, trigger)
  			else //TEMPEST
  			{
  				itemNdx = triggerString.lastIndexOf('[');
- 				if(itemNdx > 0) 
+ 				if(itemNdx > 0)
  				{
  					var itemNdx2 = triggerString.lastIndexOf(']', itemNdx);
  					itemString = triggerString.substring(itemNdx+1, itemNdx2-itemNdx-1);
@@ -24723,7 +24723,7 @@ CommandMgr.prototype.createCommandTrigger = function(command, trigger)
 
  			if(attr)
  			{
- 				var item = -1; 
+ 				var item = -1;
  				if(itemString != "")
  				{
  					item = parseInt(itemString);
@@ -24738,7 +24738,7 @@ CommandMgr.prototype.createCommandTrigger = function(command, trigger)
 
  			console.debug(trigger);
  			console.debug("\n");
- 		}		
+ 		}
  	}
  }
 
@@ -24781,7 +24781,7 @@ CommandMgr.prototype.createAttribute = function(attribute, value)
 //			}
 		  }
         //console.debug(newAttribute);
-		return newAttribute; 
+		return newAttribute;
 }
 
 function CommandMgr_CommandTriggerModifiedCB(attribute, container)
@@ -24803,9 +24803,9 @@ function AttributeTrigger(input, trigger, target, item, _not, _executionCount)
 
 	this.input.getValue(this.lastValues);
     this.attrType = eAttrType.AttributeTrigger;
-	
+
     this.item = item;
-    
+
     this.not = _not;
 
 
@@ -24835,7 +24835,7 @@ AttributeTrigger.prototype.execute = function()
             {
                 var vIn = [];
                 var vTrig = [];
-            
+
                 this.input.getValue(vIn);
                 this.trigger.getValue(vTrig);
 
@@ -24940,7 +24940,7 @@ function BwRegistry()
     AttributeRegistry.call(this);
     this.className = "BwRegistry";
     this.attrType = eAttrType.AttributeRegistry;
-    
+
     this.rootPtr = new ReferenceAttr(null);
     this.subtreePtr = new ReferenceAttr(null);
     this.sgPointer = new StringAttr("");
@@ -24948,12 +24948,12 @@ function BwRegistry()
 
     this.rootPtr.addModifiedCB(BwRegistry_RootPtrModifiedCB, this);
     this.sgPointer.addModifiedCB(BwRegistry_SgPointerModifiedCB, this);
-    
+
     this.registerAttribute(this.rootPtr, "rootPtr");
     this.registerAttribute(this.subtreePtr, "subtreePtr");
     this.registerAttribute(this.sgPointer, "sgPointer");
     this.registerAttribute(this.maxAnimationTimeInSecs, "maxAnimationTimeInSecs");
-    
+
     this.registerByName(this, "NodeMgr");      // backward-compatibility
     this.registerByName(this, "EvaluatorMgr"); // backward-compatibility
 }
@@ -24961,7 +24961,7 @@ function BwRegistry()
 BwRegistry.prototype.find = function(name)
 {
     if (!name) return null;
-    
+
     // tokenize name path
     var tokens = [];
     var index = 0;
@@ -24971,17 +24971,17 @@ BwRegistry.prototype.find = function(name)
         name = name.substring(index+1, name.length);
     }
     tokens.push(name);
-    
+
     // call get() on first token
     var resource = this.getByName(tokens[0]);
     if (resource) resource = resource[0];
-    
+
     // call getAttribute() on subsequent tokens
     for (var i=1; i < tokens.length && resource; i++)
     {
         resource = resource.getAttribute(tokens[i]);
     }
-    
+
     return resource;
 }
 
@@ -25011,7 +25011,7 @@ BwRegistry.prototype.register = function(container)
 {
     // call base-class implementation
     AttributeRegistry.prototype.register.call(this, container);
-    
+
     // TODO
 }
 
@@ -25019,7 +25019,7 @@ BwRegistry.prototype.unregister = function(container)
 {
     // call base-class implementation
     AttributeRegistry.prototype.unregister.call(this, container);
-    
+
     // TODO
 }
 
@@ -25028,16 +25028,16 @@ BwRegistry.prototype.clear = function()
     this.rootPtr.setValueDirect(null);
     this.subtreePtr.setValueDirect(null);
     this.sgPointer.setValueDirect(null);
-    
+
     // call base-class implementation
-    AttributeRegistry.prototype.clear.call(this);    
+    AttributeRegistry.prototype.clear.call(this);
 }
 
 BwRegistry.prototype.updateTree = function(node)
 {
     var root = this.rootPtr.getValueDirect();
     var subtree = this.subtreePtr.getValueDirect();
-  
+
     // by default, first node is the root
     if (root == null)
     {
@@ -25053,10 +25053,10 @@ BwRegistry.prototype.updateTree = function(node)
         {
             root.addChild(node);
         }
-        
+
         subtree = node;
     }
-    
+
     this.rootPtr.setValueDirect(root);
     this.subtreePtr.setValueDirect(subtree);
 }
@@ -25097,13 +25097,13 @@ function BwSceneInspector()
     SceneInspector.call(this);
     this.className = "BwSceneInspector";
     this.attrType = eAttrType.SceneInspector;
-    
+
     this.camera = null;
     this.viewport = new Viewport();
     this.worldUnitsPerPixel = new Vector2D();
     this.clickPosWorld = new Vector3D();
     this.last_d3 = 0;
-    
+
     this.translationSensitivity = new Vector3DAttr(1, 1, 1);
     this.panSensitivity = new Vector3DAttr(1, 1, 1);
     this.trackSensitivity = new Vector3DAttr(1, 1, 1);
@@ -25117,7 +25117,7 @@ function BwSceneInspector()
     this.invertedZoomDelta = new NumberAttr(0);
     this.selectionOccurred = new BooleanAttr(false);
     this.viewRelativeTranslationDelta = new Vector3DAttr(0, 0, 0);
-    
+
     this.translationDelta.addModifiedCB(BwSceneInspector_TranslationDeltaModifiedCB, this);
     this.panDelta.addModifiedCB(BwSceneInspector_PanDeltaModifiedCB, this);
     this.trackDelta.addModifiedCB(BwSceneInspector_TrackDeltaModifiedCB, this);
@@ -25130,7 +25130,7 @@ function BwSceneInspector()
     this.invertedZoomDelta.addModifiedCB(BwSceneInspector_InvertedZoomDeltaModifiedCB, this);
     this.selectionOccurred.addModifiedCB(BwSceneInspector_SelectionOccurredCB, this);
     this.viewRelativeTranslationDelta.addModifiedCB(BwSceneInspector_TrackDeltaModifiedCB, this);
-    
+
     this.registerAttribute(this.translationSensitivity, "translationSensitivity");
     this.registerAttribute(this.panSensitivity, "panSensitivity");
     this.registerAttribute(this.trackSensitivity, "trackSensitivity");
@@ -25144,10 +25144,10 @@ function BwSceneInspector()
     this.registerAttribute(this.invertedZoomDelta, "invertedZoomDelta");
     this.registerAttribute(this.selectionOccurred, "selectionOccurred");
     this.registerAttribute(this.viewRelativeTranslationDelta, "viewRelativeTranslationDelta");
-    
+
     // set orphan so that evaluator will not be added to scene graph
 	this.orphan.setValueDirect(true);
-	
+
 	this.enabled.addModifiedCB(BwSceneInspector_EnabledModifiedCB, this);
 }
 
@@ -25164,7 +25164,7 @@ BwSceneInspector.prototype.translate = function(delta)
         // no effect
         return;
     }
-    
+
     // get sensitivity
     var sensitivity = this.translationSensitivity.getValueDirect();
 
@@ -25177,7 +25177,7 @@ BwSceneInspector.prototype.translate = function(delta)
     var values = [delta.x, delta.y, delta.z];
     var params = new AttributeSetParams(-1, -1, 0, true, false);
 	this.translationDelta.setValue(values, params);
-	
+
     // evaluate scene inspector
 	this.evaluate();
 
@@ -25194,7 +25194,7 @@ BwSceneInspector.prototype.pan = function(delta)
         // no effect
         return;
     }
-    
+
     // if worldUnitsPerPixel hasn't been set, use pivot distance as default
     if (this.worldUnitsPerPixel.x == 0 && this.worldUnitsPerPixel.y == 0)
     {
@@ -25202,7 +25202,7 @@ BwSceneInspector.prototype.pan = function(delta)
         this.worldUnitsPerPixel.x = wupp.x;
         this.worldUnitsPerPixel.y = wupp.y;
     }
-    
+
     // get sensitivity
     var sensitivity = this.panSensitivity.getValueDirect();
 
@@ -25210,12 +25210,12 @@ BwSceneInspector.prototype.pan = function(delta)
     delta.x *= sensitivity.x * this.worldUnitsPerPixel.x;
     delta.y *= sensitivity.y * this.worldUnitsPerPixel.y;
     delta.z *= sensitivity.z * this.worldUnitsPerPixel.y; // use y for z
-    
+
     // set deltas
     var values = [delta.x, delta.y, delta.z];
     var params = new AttributeSetParams(-1, -1, 0, true, false);
 	this.panDelta.setValue(values, params);
-	
+
 	// update pivot distance if panning in z-direction
 	if (delta.z != 0)
 	{
@@ -25223,7 +25223,7 @@ BwSceneInspector.prototype.pan = function(delta)
 	    pivotDistance -= delta.z;
 	    this.pivotDistance.setValueDirect(pivotDistance);
 	}
-	
+
     // evaluate scene inspector
 	this.evaluate();
 
@@ -25234,7 +25234,7 @@ BwSceneInspector.prototype.pan = function(delta)
 }
 
 BwSceneInspector.prototype.track = function(delta)
-{   
+{
     if (delta.x == 0 && delta.y == 0 && delta.z == 0)
     {
         // no effect
@@ -25268,7 +25268,7 @@ BwSceneInspector.prototype.track = function(delta)
     // calculate deltas (scale by sensitivity & worldUnitsPerPixel)
     delta.x *= sensitivity.x * this.worldUnitsPerPixel.x;
     delta.y *= sensitivity.y * this.worldUnitsPerPixel.y;
-    
+
     // calculate z delta (scale by sensitivity)
     if (delta.z != 0)
     {
@@ -25277,14 +25277,14 @@ BwSceneInspector.prototype.track = function(delta)
 
         // Let cameraRot be the world-space rotation of the camera
         var cameraRot = this.camera.getAttribute("rotation").getValueDirect();
-    
+
         // Let cameraHeight be the delta between the clickPosWorld.y and cameraPos.y
         var cameraHeight = cameraPos.y - this.clickPosWorld.y;
-        
+
         // STEP 2: define d1 as the distance between cameraPos and clickPosWorld
         var d1 = distanceBetween(cameraPos, this.clickPosWorld);
 
-        // STEP 3: using the pythagorean theorem, a^2 + b^2 = c^2, where a = cameraHeight, 
+        // STEP 3: using the pythagorean theorem, a^2 + b^2 = c^2, where a = cameraHeight,
         //         b = unknown, and c = d1, find the length b1 of side b
         var b1 = Math.sqrt((d1 * d1) - (cameraHeight * cameraHeight));
 
@@ -25299,7 +25299,7 @@ BwSceneInspector.prototype.track = function(delta)
         // STEP 7: define d3 as b2 - b1
         var d3 = b2 - b1;
 
-        // as angle B approaches 90, use last calculated d3 (algorithm produces exponential results otherwise) 
+        // as angle B approaches 90, use last calculated d3 (algorithm produces exponential results otherwise)
         if (angleB_Radians >= toRadians(88) && angleB_Radians <= toRadians(92))
         {
             if (d3 < 0)
@@ -25336,7 +25336,7 @@ BwSceneInspector.prototype.track = function(delta)
         //mat.loadYAxisRotation(cameraRot.y);
         //var v = mat.transform(0, 0, 1, 0);
         //v.normalize();
-        
+
         var directions = this.camera.getDirectionVectors();
         v = new Vector3D(directions.forward.x, directions.forward.y, directions.forward.z);
         v.y = 0;
@@ -25348,7 +25348,7 @@ BwSceneInspector.prototype.track = function(delta)
         camToClick.normalize();
         var cosAngleBetweenCameraDirectionAndCamToClick = cosineAngleBetween(camToClick, v);
         var headingRads = Math.acos(cosAngleBetweenCameraDirectionAndCamToClick);
-    
+
         // method 2 for retrieval of angle C
         var fovx = 2 * Math.atan(this.viewport.width / this.viewport.height * Math.tan(fovy / 2));
         var radsPerPixelX = fovx / this.viewport.width;
@@ -25360,7 +25360,7 @@ BwSceneInspector.prototype.track = function(delta)
         }
         var angleC_Radians = Math.abs(this.viewport.width / 2 - clickPoint.x) * radsPerPixelX;
         headingRads = angleC_Radians;
-    
+
         var xTrans = Math.tan(headingRads) * d3;
 
         var plane = new Plane(cameraPos, directions.right);
@@ -25375,12 +25375,12 @@ BwSceneInspector.prototype.track = function(delta)
 
         delta.x += -xTrans;
     }
-    
+
     // set deltas
     var values = [delta.x, delta.y, delta.z];
     var params = new AttributeSetParams(-1, -1, 0, true, false);
 	this.trackDelta.setValue(values, params);
-	
+
 	// evaluate scene inspector
 	this.evaluate();
 
@@ -25410,7 +25410,7 @@ BwSceneInspector.prototype.rotate = function(delta)
     var values = [delta.x, delta.y, delta.z];
     var params = new AttributeSetParams(-1, -1, 0, true, false);
 	this.rotationDelta.setValue(values, params);
-	
+
     // evaluate scene inspector
 	this.evaluate();
 
@@ -25427,12 +25427,12 @@ BwSceneInspector.prototype.zoom = function(delta)
         // no effect
         return;
     }
-    
+
     if (!this.camera)
     {
         return;
     }
-    
+
     switch (this.camera.className)
     {
     case "PerspectiveCamera":
@@ -25443,7 +25443,7 @@ BwSceneInspector.prototype.zoom = function(delta)
             this.camera.getAttribute("zoom").setValueDirect(zoom);
         }
         break;
-        
+
     case "OrthographicCamera":
         {
             var width = this.camera.getAttribute("width").getValueDirect();
@@ -25469,13 +25469,13 @@ BwSceneInspector.prototype.getWorldUnitsPerPixel = function(viewSpace_Z)
 {
     var x = 0;
     var y = 0;
-    
+
     // get current viewport
     var selector = this.registry.find("Selector");
     if (selector)
     {
         var vp = selector.selections.viewports[selector.selections.viewports.length-1];
-        
+
         if (this.camera)
         {
             switch (this.camera.attrType)
@@ -25488,10 +25488,10 @@ BwSceneInspector.prototype.getWorldUnitsPerPixel = function(viewSpace_Z)
 				    // determine the per-pixel width and height at viewSpace_Z
 				    var result = worldUnitsPerPixelPersp(vp, zoom, viewSpace_Z);
 				    x = result.x;
-				    y = result.y;    
+				    y = result.y;
                 }
                 break;
-                
+
             case eAttrType.OrthographicCamera:
                 {
                     // get width
@@ -25506,7 +25506,7 @@ BwSceneInspector.prototype.getWorldUnitsPerPixel = function(viewSpace_Z)
             }
         }
     }
-    
+
     return { x: x, y: y };
 }
 
@@ -25518,7 +25518,7 @@ function BwSceneInspector_TranslationDeltaModifiedCB(attribute, container)
         container.translate(attribute.getValueDirect());
     }
 }
-    
+
 function BwSceneInspector_PanDeltaModifiedCB(attribute, container)
 {
     var enabled = container.enabled.getValueDirect();
@@ -25556,11 +25556,11 @@ function BwSceneInspector_InvertedTranslationDeltaModifiedCB(attribute, containe
         deltas.y *= -1;
         deltas.z *= -1;
         container.translate(deltas);
-        
+
         if (deltas.x != 0 || deltas.y != 0 || deltas.z != 0) alert("rotate");
     }
 }
- 
+
 function BwSceneInspector_InvertedPanDeltaModifiedCB(attribute, container)
 {
     var enabled = container.enabled.getValueDirect();
@@ -25628,13 +25628,13 @@ function BwSceneInspector_SelectionOccurredCB(attribute, container)
         {
             container.viewport.loadViewport(selector.selections.viewports[0]);
         }
-        
+
         // get click point in world-space
         container.clickPosWorld.copy(selector.getAttribute("pointWorld").getValueDirect());
-        
+
         // get click point in view-space
         var clickPosView = selector.getAttribute("pointView").getValueDirect();
-        
+
         // get world units per-pixel at click point z
         container.getWorldUnitsPerPixel(clickPosView.z);
     }
@@ -25654,7 +25654,7 @@ function ObjectInspector()
     ArcballInspector.call(this);
     this.className = "ObjectInspector";
     this.attrType = eAttrType.ObjectInspector;
-    
+
     this.camera = null;
     this.selectedObjects = [];
     this.pointView = new Vector3DAttr(1, 1, 1);
@@ -25664,41 +25664,41 @@ function ObjectInspector()
     this.rotationNow = new Vector3DAttr(0, 0, 0);
     this.selectionOccurred = new BooleanAttr(false);
     this.selectionCleared = new BooleanAttr(false);
-    
+
     this.translationDelta.addModifiedCB(ObjectInspector_TranslationDeltaModifiedCB, this);
     this.rotationDelta.addModifiedCB(ObjectInspector_RotationDeltaModifiedCB, this);
     this.translationNow.addModifiedCB(ObjectInspector_TranslationNowModifiedCB, this);
     this.rotationNow.addModifiedCB(ObjectInspector_RotationNowModifiedCB, this);
     this.selectionOccurred.addModifiedCB(ObjectInspector_SelectionOccurredCB, this);
     this.selectionCleared.addModifiedCB(ObjectInspector_SelectionClearedCB, this);
-    
+
     this.registerAttribute(this.pointView, "pointView");
     this.registerAttribute(this.translationDelta, "translationDelta");
-    this.registerAttribute(this.rotationDelta, "rotationDelta");    
-    this.registerAttribute(this.translationNow, "translationNow");    
-    this.registerAttribute(this.rotationNow, "rotationNow");    
+    this.registerAttribute(this.rotationDelta, "rotationDelta");
+    this.registerAttribute(this.translationNow, "translationNow");
+    this.registerAttribute(this.rotationNow, "rotationNow");
     this.registerAttribute(this.selectionOccurred, "selectionOccurred");
     this.registerAttribute(this.selectionCleared, "selectionCleared");
-    
+
     // set orphan so that evaluator will not be added to scene graph
-    this.orphan.setValueDirect(true);   
-    
-    this.enabled.addModifiedCB(ObjectInspector_EnabledModifiedCB, this)   
+    this.orphan.setValueDirect(true);
+
+    this.enabled.addModifiedCB(ObjectInspector_EnabledModifiedCB, this)
 }
 
 ObjectInspector.prototype.applyCameraRelativeRotation = function(selected)
 {
     var i;
-	
+
     // vectors
     var pivot  = null;
     var screen = null;
-	
+
     // matrices
     var camXform  = null;
     var proj  = null;
     var world = null;
-    
+
     // viewport
     var vp = this.viewport;
 
@@ -25710,11 +25710,11 @@ ObjectInspector.prototype.applyCameraRelativeRotation = function(selected)
 
     camXform = cam.getTransform();
     camXform.invert(); // put in view-space
-    
+
     projection = cam.projectionMatrix;
 
     screen = toScreenSpace(pivot, camXform, projection, vp);
-	
+
     this.sphereCenter.setValueDirect(screen.x, screen.y, 0);
 
     // sphere radius
@@ -25722,16 +25722,16 @@ ObjectInspector.prototype.applyCameraRelativeRotation = function(selected)
 
     // world transform
     world = selected.getTransform();
-    
+
     this.worldTransform.setValueDirect(world);
 
     // view transform
     camXform = cam.getTransform();
-	
+
     this.viewTransform.setValueDirect(camXform);
-    
+
     //var sPos = this.viewTransform.getValueDirect();
-    //console.debug("ObjectInspector.viewTransform: " + sPos._11 + ", " + 
+    //console.debug("ObjectInspector.viewTransform: " + sPos._11 + ", " +
     //    sPos._12 + ", " + sPos._13);
 }
 
@@ -25741,8 +25741,8 @@ ObjectInspector.prototype.applyCameraRelativeTranslation = function(selected)
 
     // get translation delta values
     var delta = this.translationDelta.getValueDirect();
-	
-    if (delta.x == 0 && delta.y == 0 && delta.z == 0) 
+
+    if (delta.x == 0 && delta.y == 0 && delta.z == 0)
     {
         return;
     }
@@ -25756,7 +25756,7 @@ ObjectInspector.prototype.applyCameraRelativeTranslation = function(selected)
     var camPos  = cam.sectorWorldPosition.getValueDirect();
 
     // calculate forward vector as vector from camera world position to node world position
-    var fwd = new Vector3D(nodePos.x - camPos.x, 
+    var fwd = new Vector3D(nodePos.x - camPos.x,
                            nodePos.y - camPos.y,
                            nodePos.z - camPos.z);
     fwd.normalize();
@@ -25769,24 +25769,24 @@ ObjectInspector.prototype.applyCameraRelativeTranslation = function(selected)
     var clickPtCamSpace = new Vector3D(v.x, v.y, v.z);
 
     var transDelta = null;
-    
+
     var xTransCamSpace = new Vector3D(1, 0, 0);
     var yTransCamSpace = new Vector3D(0, 1, 0);
     var zTransWorldSpace = new Vector3D(fwd.x, fwd.y, fwd.z);
-    
+
     var destCamSpace = new Vector3D(v.x, v.y, v.z);
-    
+
     var parent = selected.motionParent;
     var mParent = null;
-    if (parent) 
+    if (parent)
     {
         mParent = parent.getTransform();
         mParent.invert();
     }
-    
+
     var perPixelWidth = -1;
     var zoom_or_width = -1;
-    
+
     switch (cam.attrType)
     {
         case eAttrType.PerspectiveCamera:
@@ -25813,7 +25813,7 @@ ObjectInspector.prototype.applyCameraRelativeTranslation = function(selected)
         default:
             break;
     }
-    
+
     // multiply the per-pixel width by delta.x and use this to scale the
     // camera-space vector (1, 0, 0)
     xTransCamSpace.multiplyScalar(perPixelWidth.x);
@@ -25844,7 +25844,7 @@ ObjectInspector.prototype.applyCameraRelativeTranslation = function(selected)
     }
     clickPtCamSpace = camSectorXform.transform(clickPtCamSpace.x, clickPtCamSpace.y, clickPtCamSpace.z, 1);
     destCamSpace = camSectorXform.transform(destCamSpace.x, destCamSpace.y, destCamSpace.z, 1);
-    
+
     // calculate the translation delta as destCamSpace - clickPtCamSpace + zTransWorldSpace
     transDelta = new Vector3D(destCamSpace.x, destCamSpace.y, destCamSpace.z);
     transDelta.subtractVector(clickPtCamSpace);
@@ -25856,7 +25856,7 @@ ObjectInspector.prototype.applyCameraRelativeTranslation = function(selected)
     selected.sectorPosition.setValue(attrSetVals, attrSetParams);
 
     var sPos = selected.sectorPosition.getValueDirect();
-    console.debug("selected.sectorPosition: " + sPos.x + ", " + 
+    console.debug("selected.sectorPosition: " + sPos.x + ", " +
         sPos.y + ", " + sPos.z);
 }
 
@@ -25883,7 +25883,7 @@ ObjectInspector.prototype.translationDeltaModified = function()
     var zeroes = [0, 0, 0];
     var params = new AttributeSetParams(0,0,0, true, false);
 
-    this.translationDelta.setValue(zeroes, params);  
+    this.translationDelta.setValue(zeroes, params);
 }
 
 ObjectInspector.prototype.rotationDeltaModified = function()
@@ -25924,27 +25924,27 @@ ObjectInspector.prototype.rotationNowModified = function()
     if (this.selectedObjects == null ||
         this.selectedObjects == undefined)
         return;
-    
+
     var pme = null;
     for (var i=0; i < this.selectedObjects.length; i++)
     {
         pme = this.selectedObjects[i];
-		
+
         var moveable = pme.moveable.getValueDirect();
         if (moveable)
         {
 
             this.applyCameraRelativeRotation(pme);
-            
+
             var rNow = this.rotationNow.getValueDirect();
-            
+
             // mouse now (formulate so that mouse coords match windows standard
             // of (0, 0) at top-left, and (width, height) at bottom-right)
             this.mouseNow.setValueDirect(rNow.y, rNow.x);
-            
-            //console.debug("mouseNow: " + rNow.x + ", " + 
+
+            //console.debug("mouseNow: " + rNow.x + ", " +
             //    rNow.y);
-    
+
             this.evaluate();
         }
     }
@@ -25969,7 +25969,7 @@ ObjectInspector.prototype.runSelectionOccurred = function()
     var view = vpMgr.getViewportAtScreenXY(clickPoint.x, clickPoint.y);
     this.viewport = view.viewport;
     this.camera = view.camera;
-	
+
     // get selected movable objects
     // TODO: don't assume models?
     this.selectedObjects = selector.selections.models.slice();
@@ -25978,7 +25978,7 @@ ObjectInspector.prototype.runSelectionOccurred = function()
     var pQuatAtMouseDown = this.quatAtMouseDown;
     var pMouseDown = this.mouseDown;
     var pMouseNow = this.mouseNow;
-    
+
     var pSelected = null;
     var pIso = null;	// TODO: support more than just Isolators
     var pChildZero = null;
@@ -25990,7 +25990,7 @@ ObjectInspector.prototype.runSelectionOccurred = function()
     var pBox = null;
     var center = 0;
     var centerNeg = 0;
-	
+
     for (var i=0; i < this.selectedObjects.length; i++)
     {
         pResultQuat.removeAllTargets();
@@ -26013,13 +26013,13 @@ ObjectInspector.prototype.runSelectionOccurred = function()
                 // it would seem easier to setValueDirect(true) here given params are
                 // created with all default values but params are reused throughout this
                 // function and setting the intended params values, per the notes in .cpp,
-                // triggers a bug elsewhere. 
+                // triggers a bug elsewhere.
                 pQuat.enabled.setValue(values, params);
 
                 pRotQuatAttr = pQuat.rotationQuat;
 
                 pResultQuat.addTarget(pRotQuatAttr);
-				
+
                 var prq = pRotQuatAttr.getValueDirect();
                 pQuatAtMouseDown.setValueDirect(prq);
 
@@ -26029,12 +26029,12 @@ ObjectInspector.prototype.runSelectionOccurred = function()
                 center = new Vector3D(min.x, min.y, min.z);
                 center.addVector(max);
                 center.multiplyScalar(0.5);
-	
+
                 var pivot = pSelected.pivot.getValueDirect();
                 if (pSelected.pivotAboutGeometricCenter.getValueDirect())
                 {
                     pivot = center;
-                }				
+                }
                 var pivotNeg = new Vector3D(pivot.x, pivot.y, pivot.z);
                 pivotNeg.multiplyScalar(-1);
 
@@ -26052,12 +26052,12 @@ ObjectInspector.prototype.runSelectionOccurred = function()
                 values[1] = scaleInv.y;
                 values[2] = scaleInv.z;
                 pRotGroup.getChild(1).scale.setValue(values, params);
-                
+
                 values[0] = scale.x;
                 values[1] = scale.y;
                 values[2] = scale.z;
                 pRotGroup.getChild(3).scale.setValue(values, params);
-            
+
                 // translate back from pivot after applying quaternion rotation
                 // don't alert modified sinks here because this will cause antialiasing to reset
                 values[0] = pivotNeg.x;
@@ -26066,7 +26066,7 @@ ObjectInspector.prototype.runSelectionOccurred = function()
                 pRotGroup.getChild(4).translation.setValue(values, params);
             }
         }
-    }   
+    }
 }
 
 ObjectInspector.prototype.runSelectionCleared = function()
@@ -26133,11 +26133,11 @@ function ConnectionMgr()
 {
     AttributeContainer.call(this);
     this.className = "ConnectionMgr";
-    
+
     this.name = new StringAttr("ConnectionMgr");
-    
+
     this.registerAttribute(this.name, "name");
-    
+
     // TODO: finish adding connection helpers
     //registerConnectionHelper("DisconnectAllSources", null, ConnectionMgr.prototype.disconnectAllSources);
     registerConnectionHelper("DisconnectAllTargets", null, ConnectionMgr.prototype.disconnectAllTargets);
@@ -26147,7 +26147,7 @@ function ConnectionMgr()
 ConnectionMgr.prototype.connectSceneInspection = function(inspector, camera)
 {
     if (!inspector || !camera) return;
-    
+
     var lastCamera = inspector.getCamera();
     if (lastCamera == camera)
     {
@@ -26164,7 +26164,7 @@ ConnectionMgr.prototype.connectSceneInspection = function(inspector, camera)
 
     inspector.getAttribute("resultPosition").addTarget(camera.getAttribute("sectorPosition"), eAttrSetOp.Replace, null, false);
     inspector.getAttribute("resultRotation").addTarget(camera.getAttribute("rotation"), eAttrSetOp.Replace, null, false);
-    
+
     inspector.setCamera(camera);
 }
 
@@ -26187,13 +26187,13 @@ ConnectionMgr.prototype.disconnectAllTargets = function(source, target)
 ConnectionMgr.prototype.disconnectSceneInspection = function(inspector, camera)
 {
     if (!inspector || !camera) return;
-    
+
     camera.getAttribute("sectorPosition").removeTarget(inspector.getAttribute("viewPosition"));
     camera.getAttribute("rotation").removeTarget(inspector.getAttribute("viewRotation"));
-    
+
     inspector.getAttribute("resultPosition").removeTarget(camera.getAttribute("sectorPosition"));
     inspector.getAttribute("resultRotation").removeTarget(camera.getAttribute("rotation"));
-    
+
     inspector.setCamera(null);
 }
 
@@ -26216,7 +26216,7 @@ ConnectionMgr.prototype.disconnectMapProjectionCalculator = function(mpc, pme)
 ConnectionMgr.prototype.connectDissolve = function(evaluator, target)
 {
     if (!evaluator || !target) return;
-    
+
     var dissolve = target.getAttribute("dissolve");
     if (dissolve)
     {
@@ -26235,7 +26235,7 @@ ConnectionMgr.prototype.connectDissolve = function(evaluator, target)
 ConnectionMgr.prototype.disconnectDissolve = function(evaluator, target)
 {
     if (!evaluator || !target) return;
-    
+
     var dissolve = target.getAttribute("dissolve");
     if (dissolve)
     {
@@ -26256,7 +26256,7 @@ RenderAgent.prototype.constructor = RenderAgent;
 
 var ePlayState = {
     Unknown:    -1,
-    
+
     Play:       0,
     Pause:      1,
     Stop:       2,
@@ -26266,12 +26266,12 @@ function RenderAgent(bridgeworks)
 {
     Agent.call(this);
     this.className = "RenderAgent";
-    
+
     this.bridgeworks = bridgeworks;
-    
+
     this.name.setValueDirect("RenderAgent");
     this.timer = new Timer();
-    
+
     this.frameRate = new NumberAttr(0);
     this.desiredFrameRate = new NumberAttr(30);
     this.timeIncrement = new NumberAttr(0);
@@ -26280,7 +26280,7 @@ function RenderAgent(bridgeworks)
 
     this.desiredFrameRate.addModifiedCB(RenderAgent_DesiredFrameRateModified, this);
     this.globalTimeInSecs.addModifiedCB(RenderAgent_GlobalTimeInSecsModified, this);
-    
+
     this.registerAttribute(this.frameRate, "frameRate");
     this.registerAttribute(this.desiredFrameRate, "desiredFrameRate");
     this.registerAttribute(this.timeIncrement, "timeIncrement");
@@ -26294,7 +26294,7 @@ RenderAgent.prototype.render = function()
     var increment = this.timer.getTime();
     this.timer.start();
     this.timeIncrement.setValueDirect(increment);
-    
+
     var elapsedTime = this.elapsedTimeInSecs.getValueDirect() + increment;
     this.elapsedTimeInSecs.setValueDirect(elapsedTime);
     // update frame rate
@@ -26330,7 +26330,7 @@ RenderAgent.prototype.animateEvaluator = function(evaluator, timeIncrement)
                 evaluator.getAttribute("time").setValue(timeIncrement, params);
             }
             break;
-            
+
             case "ObjectMover":
             case "AnimalMover":
             {
@@ -26358,9 +26358,9 @@ RenderAgent.prototype.executeRenderDirectives = function()
         for (var i=0; i < directives.length; i++)
         {
         	directives[i].getAttribute("timeIncrement").setValueDirect(this.timeIncrement.getValueDirect());
-            directives[i].execute();    
+            directives[i].execute();
         }
-    }   
+    }
 }
 
 // never executes
@@ -26392,7 +26392,7 @@ RenderAgent.prototype.globalTimeInSecsModified = function()
                             time.setValueDirect(globalTime);
                         }
                     }
-                    
+
                     evaluator.evaluate(); // calling Evaluate() will reset "expired" flag based upon global time
                 }
             }
@@ -26419,7 +26419,7 @@ RenderAgent.prototype.setEvaluatorPlayState = function(evaluator, state)
     {
         return this.setEvaluatorPlayState(state);
     }
-    
+
     // perform state-specific processing
     var en = evaluator.getAttribute("enabled");
     switch (state)
@@ -26452,7 +26452,7 @@ RenderAgent.prototype.setEvaluatorPlayState = function(evaluator, state)
         }
         break;
     }
-    
+
     clearObjectPositionMap();
 }
 
@@ -26466,7 +26466,7 @@ RenderAgent.prototype.setEvaluatorsPlayState = function(state)
             for (i=0; i < evaluators.length; i++)
             {
                 var evaluator = evaluators[i];
-                
+
                 var type = evaluator.attrType;
 
                 // don't set play state for inspectors or any evaluators not in scenegraph
@@ -26506,9 +26506,9 @@ function RenderController(bridgeworks)
 {
     AttributeContainer.call(this);
     this.className = "RenderController";
-    
+
     this.playState = ePlayState.Pause;
-    
+
     this.renderAgent = bridgeworks.renderAgent;
 }
 
@@ -26520,7 +26520,7 @@ RenderController.prototype.fastForward = function()
     {
         this.renderAgent.desiredFrameRate.setValueDirect(FRAME_RATE_DEFAULT);
     }
-    
+
     if (rate < FRAME_RATE_MAX)
 	{
 		this.renderAgent.desiredFrameRate.setValueDirect(Math.abs(this.renderAgent.frameRate) * 2);
@@ -26541,7 +26541,7 @@ RenderController.prototype.pause = function()
 RenderController.prototype.play = function()
 {
     this.renderAgent.desiredFrameRate.setValueDirect(FRAME_RATE_DEFAULT);
-    this.renderAgent.setEvaluatorsPlayState(ePlayState.Play);    
+    this.renderAgent.setEvaluatorsPlayState(ePlayState.Play);
 }
 
 RenderController.prototype.rewind = function()
@@ -26558,7 +26558,7 @@ RenderController.prototype.rewind = function()
     }
     else
     {
-        this.renderAgent.desiredFrameRate.setValueDirect(FRAME_RATE_MIN);    
+        this.renderAgent.desiredFrameRate.setValueDirect(FRAME_RATE_MIN);
     }
 }
 
@@ -26572,22 +26572,22 @@ RenderController.prototype.stop = function()
 /**
  *	Reverses the frame rate and updates a status label with the
  *	current playback speed.  Rewind is a negative frame rate
- *  that doubles with each push of the button until 
+ *  that doubles with each push of the button until
  *  BridgeworksObject.FRAME_RATE_MIN is reached
- *	
+ *
  *	@param void
  *	@return void
-	
+
 function DVD_Rewind()
 {
     bridgeworks.updateScene("<Play/>");
-    
+
 
     if (bridgeworks.renderAgent.frameRate > 0)
     {
         bridgeworks.renderAgent.setDesiredFrameRate(FRAME_RATE_DEFAULT);
     }
-    
+
     if (bridgeworks.renderAgent.frameRate > FRAME_RATE_MIN)	// if fast forwarding or playing
 	{
 		bridgeworks.renderAgent.setDesiredFrameRate(Math.abs(bridgeworks.renderAgent.frameRate) * -2);
@@ -26597,7 +26597,7 @@ function DVD_Rewind()
 		// clamp to max rewind speed
 		bridgeworks.renderAgent.setDesiredFrameRate(FRAME_RATE_MIN);
 	}
-    
+
     g_paused = false;
 
 }
@@ -26608,19 +26608,19 @@ function DVD_Rewind()
  *	current playback speed.  Fast forward is a positive frame rate
  *  that doubles with each push of the button until
  *  BridgeworksObject.FRAME_RATE_MAX is reached
- *	
+ *
  *	@param void
  *	@return void
 
 function DVD_FastForward()
 {
     bridgeworks.updateScene("<Play/>");
-    
+
     if (bridgeworks.renderAgent.frameRate < 0)
     {
         bridgeworks.renderAgent.setDesiredFrameRate(FRAME_RATE_DEFAULT);
     }
-    
+
     if (bridgeworks.renderAgent.frameRate < FRAME_RATE_MAX)
 	{
 		bridgeworks.renderAgent.setDesiredFrameRate(Math.abs(bridgeworks.renderAgent.frameRate) * 2);
@@ -26630,11 +26630,11 @@ function DVD_FastForward()
 		// clamp to max fast forward speed
 		bridgeworks.renderAgent.setDesiredFrameRate(FRAME_RATE_MAX);
 	}
-    
+
     g_paused = false;
 
 }
- */	
+ */
 
 function Selections()
 {
@@ -26644,7 +26644,7 @@ function Selections()
     this.models = [];
     this.surfaces = [];
     this.labels = [];
-    
+
     this.clear = function()
     {
         this.viewports = [];
@@ -26669,7 +26669,7 @@ function SelectionListener()
     this.rayPick = null;
     this.selections = new Selections();
     this.selected = null;
-    
+
     this.selectionOccurred = new PulseAttr();
     this.selectionCleared = new PulseAttr();
     this.pointView = new Vector3DAttr();
@@ -26698,14 +26698,14 @@ function SelectionListener()
     this.registerAttribute(this.computePivotDistance, "computePivotDistance");
     this.registerAttribute(this.selectedName, "selectedName");
     this.registerAttribute(this.lastSelectedName, "lastSelectedName");
-    
+
     this.numResponses.setValueDirect(-1);
 }
 
 SelectionListener.prototype.setRayPick = function(rayPick)
 {
     this.rayPick = rayPick;
-    
+
     var clickPoint = this.rayPick.getAttribute("clickPoint");
     this.registerAttribute(clickPoint, "clickPoint");
     clickPoint.addModifiedCB(SelectionListener_ClickPointModifiedCB, this);
@@ -26721,14 +26721,14 @@ SelectionListener.prototype.eventPerformed = function(event)
             if (event.inputId & MOUSEEVENT_LEFT_BUTTON ||
                 event.inputId & MOUSEEVENT_MIDDLE_BUTTON ||
                 event.inputId & MOUSEEVENT_RIGHT_BUTTON)
-                return;        
+                return;
         }
         break;
     }
-    
+
     // TODO: allow for multi-select (clear if Ctrl is not pressed)
     this.clearSelections();
-    
+
     this.getAttribute("clickPoint").setValueDirect(event.x, event.y);
 }
 
@@ -26736,20 +26736,20 @@ SelectionListener.prototype.registerSelection = function(node, element)
 {
     // only register first item
     if (this.selected) return;
-    
+
     this.selected = node;
-    
+
     // registering an attribute that has a NULL container (Get/SetContainer()) will set
     // the calling object as the container; don't want this behavior here
     var lastContainer = this.selected.getContainer();
     this.registerAttribute(this.selected, "Selected");	// unregistered in clearSelections()
     this.selected.setContainer(lastContainer);
-	
+
     var name = node.getAttribute("name").getValueDirect().join("");
     //OutputDebugMsg("Selected: " + name);
 
     this.selectedName.setValueDirect(name);
-    
+
     if (element >= 0)
     {
         this.selectedElement.setValueDirect(element);
@@ -26760,7 +26760,7 @@ SelectionListener.prototype.registerSelection = function(node, element)
 SelectionListener.prototype.clearSelections = function()
 {
     this.selections.clear();
-   
+
     this.selectedElement.setValueDirect(-1);
     if (this.selected)
     {
@@ -26768,12 +26768,12 @@ SelectionListener.prototype.clearSelections = function()
     	{
         	this.selected.unregisterAttribute(this.selectedElement);
         }
-        
+
         this.selectedName.setValueDirect("");
     	this.unregisterAttribute(this.selected);
     	this.selected = null;
     }
-    
+
     this.selectionCleared.pulse();
 }
 
@@ -26782,7 +26782,7 @@ SelectionListener.prototype.processPick = function(pick)
     for (var i=0; i < pick.path.length; i++)
     {
         var node = pick.path[i];
-        
+
         // if selectable or show is false, or polygons are flipped, skip
         var selectable = node.getAttribute("selectable");
         var show = node.getAttribute("show");
@@ -26792,8 +26792,8 @@ SelectionListener.prototype.processPick = function(pick)
             (flipPolygons && flipPolygons.getValueDirect() == true))
             {
             continue;
-        }      
-        
+        }
+
         var element = -1;
         switch (node.attrType)
         {
@@ -26803,7 +26803,7 @@ SelectionListener.prototype.processPick = function(pick)
                 this.selections.cameras.push(node);
             }
             break;
-		    
+
             case eAttrType.DirectionalLight:
             case eAttrType.PointLight:
             case eAttrType.SpotLight:
@@ -26811,14 +26811,14 @@ SelectionListener.prototype.processPick = function(pick)
                 this.selections.lights.push(node);
             }
             break;
-		    
+
             case eAttrType.Model:
             {
                 this.selections.models.push(node);
                 this.registerSelection(node, element);
             }
             break;
-            
+
             case eAttrType.Surface:
             {
                 this.selections.surfaces.push(node);
@@ -26832,7 +26832,7 @@ SelectionListener.prototype.processPick = function(pick)
             }
         }
     }
-    
+
     if (this.selected)
     {
         this.pointObject.setValueDirect(pick.intersectRecord.pointModel.x, pick.intersectRecord.pointModel.y, pick.intersectRecord.pointModel.z);
@@ -26841,7 +26841,7 @@ SelectionListener.prototype.processPick = function(pick)
         this.triIndex.setValueDirect(pick.intersectRecord.triIndex);
         this.distance.setValueDirect(pick.intersectRecord.distance);
     }
-    
+
     return (this.selected ? true : false);
 }
 
@@ -26853,8 +26853,8 @@ SelectionListener.prototype.processPicks = function(picks)
         {
             return true;
         }
-    }   
-    
+    }
+
     return false;
 }
 
@@ -26915,14 +26915,14 @@ SelectionListener.prototype.updateDistanceFromScreenCenter = function(root)
     var x = bworks.canvas.width / 2;
     var y = bworks.canvas.height / 2;
     var lastClickPoint = this.rayPick.getAttribute("clickPoint").getValueDirect();
-    var params = new AttributeSetParams(-1, -1, 0, false, false);   
+    var params = new AttributeSetParams(-1, -1, 0, false, false);
     this.rayPick.getAttribute("clickPoint").setValueDirect(x, y, params);
-    
+
     // execute
     this.rayPick.execute(root);
-    
+
     // cycle through picked list and skip labels and poly lines
-    // NOTE: we may eventually want the convenience of pivoting about a label because labels are sometimes easier 
+    // NOTE: we may eventually want the convenience of pivoting about a label because labels are sometimes easier
     // to intersect (i.e., when the model is too small to intersect)
     var found = false;
     for (var i=0; i < this.rayPick.picked.length && !found; i++)
@@ -26937,7 +26937,7 @@ SelectionListener.prototype.updateDistanceFromScreenCenter = function(root)
     }
 
     // restore previous click point
-    this.rayPick.getAttribute("clickPoint").setValueDirect(lastClickPoint.x, lastClickPoint.y, params);   
+    this.rayPick.getAttribute("clickPoint").setValueDirect(lastClickPoint.x, lastClickPoint.y, params);
 }
 
 SelectionListener.prototype.updateSceneInspectionCamera = function(camera)
@@ -26946,7 +26946,7 @@ SelectionListener.prototype.updateSceneInspectionCamera = function(camera)
     if (si)
     {
         if (si.getCamera() == camera) return; // already connected
-        
+
         // disconnect old camera, connect new one
         var connectionMgr = this.registry.find("ConnectionMgr");
         if (connectionMgr)
@@ -26972,11 +26972,11 @@ function ViewportLayout()
 {
     AttributeContainer.call(this);
     this.className = "ViewportLayout";
-    
+
     this.name = new StringAttr("ViewportLayout");
     this.width = new NumberAttr(0);
     this.height = new NumberAttr(0);
-    
+
     this.registerAttribute(this.name, "name");
     this.registerAttribute(this.width, "width");
     this.registerAttribute(this.height, "height");
@@ -26997,12 +26997,12 @@ function GridLayout()
 {
     ViewportLayout.call(this);
     this.className = "GridLayout";
-    
+
     this.name.setValueDirect("GridLayout");
-    
+
     this.rows = new NumberAttr(1);
     this.cols = new NumberAttr(1);
-    
+
     this.registerAttribute(this.rows, "rows");
     this.registerAttribute(this.cols, "cols");
 }
@@ -27011,7 +27011,7 @@ GridLayout.prototype.initialize = function()
 {
     this.rows.setValueDirect(1);
     this.cols.setValueDirect(1);
-    
+
     // call base-class implementation
     ViewportLayout.prototype.initialize.call(this);
 }
@@ -27031,7 +27031,7 @@ GridLayout.prototype.layoutDirectives = function(directives)
     {
         return;
     }
-    
+
     var vpX = 0;
     var vpY = 0;
     var vpWidth = width / cols;
@@ -27064,18 +27064,18 @@ function ViewportMgr()
 {
     AttributeContainer.call(this);
     this.className = "ViewportMgr";
-    
+
     this.name = new StringAttr("ViewportMgr");
     this.cursor = new StringAttr("Arrow");
     this.width = new NumberAttr(0);
     this.height = new NumberAttr(0);
     this.layout = new ReferenceAttr(null);
-    
+
     this.cursor.addModifiedCB(ViewportMgr_CursorModifiedCB, this);
     this.width.addModifiedCB(ViewportMgr_WidthModifiedCB, this);
     this.height.addModifiedCB(ViewportMgr_HeightModifiedCB, this);
     this.layout.addModifiedCB(ViewportMgr_LayoutModifiedCB, this);
-    
+
     this.registerAttribute(this.name, "name");
     this.registerAttribute(this.cursor, "cursor");
     this.registerAttribute(this.width, "width");
@@ -27097,7 +27097,7 @@ ViewportMgr.prototype.layoutDirectives = function(directives)
     var layout = this.layout.getValueDirect();
     if (layout)
     {
-        layout.layoutDirectives(directives);   
+        layout.layoutDirectives(directives);
     }
 }
 
@@ -27105,14 +27105,14 @@ ViewportMgr.prototype.getViewportAtScreenXY = function(x, y)
 {
     var width = this.width.getValueDirect();
     var height = this.height.getValueDirect();
-    
+
     // make sure x, y fall between [0, viewport width/height]
     x = clamp(x, 0, width);
     y = clamp(y, 0, height);
-    
+
     // get cameras
     var cameras = this.registry.getByType(eAttrType.Camera);
-    
+
     // get smallest viewport containing screen x, y (necessary for picture-in-picture)
     var minWidth = width;
     var minHeight = height;
@@ -27129,7 +27129,7 @@ ViewportMgr.prototype.getViewportAtScreenXY = function(x, y)
             minHeight = cameras[i].viewport.height
         }
     }
-    
+
     return { viewport: viewport, camera: camera };
 }
 
@@ -27178,7 +27178,7 @@ function RasterComponentEventListener()
     this.rcListenMap = [];
     this.rcEventMap = [];
     this.styleMgr = null;
-    
+
     this.selectionEvent = new InputEvent(eEventType.Unknown, 0, 0xffffffff, 0, eEventType.Key_Up);
 
 	this.name.setValueDirect("RasterComponentEventListener");
@@ -27192,7 +27192,7 @@ RasterComponentEventListener.prototype.eventPerformed = function(event)
     {
         return;
     }
-    
+
     var currSelectionState, lastSelectionState, selectionEventSelectionState;
 	for (var i=0; i < this.rcs.length; i++)
 	{
@@ -27203,14 +27203,14 @@ RasterComponentEventListener.prototype.eventPerformed = function(event)
 
 		lastSelectionState = this.rcsSelectionState[i];
 		currSelectionState = this.rcs[i].eventPerformed(event);
-		
+
 		if (this.styleMgr)
 	    {
 		    if (currSelectionState)
 			{
 				this.styleMgr.eventPerformed(event, this.rcs[i]);
 
-				// send selected/focus/mouseover event depending upon event type and whether 
+				// send selected/focus/mouseover event depending upon event type and whether
 				// component doesn't have focus/didn't have selection
 				switch (event.type)
 				{
@@ -27222,7 +27222,7 @@ RasterComponentEventListener.prototype.eventPerformed = function(event)
 						{
 							this.selectionEvent.synchronize(event);
 							this.selectionEvent.type = eEventType.ElementFocus;
-							
+
 							selectionEventSelectionState = m_rcs[i].eventPerformed(this.selectionEvent);
 							this.styleMgr.eventPerformed(this.selectionEvent, this.rcs[i]);
 
@@ -27239,7 +27239,7 @@ RasterComponentEventListener.prototype.eventPerformed = function(event)
 						{
 							this.selectionEvent.synchronize(event);
 							this.selectionEvent.type = eEventType.ElementSelected;
-							
+
 							selectionEventSelectionState = this.rcs[i].eventPerformed(this.selectionEvent);
 							this.styleMgr.eventPerformed(this.selectionEvent, this.rcs[i]);
 							this.rcs[i].selected.setValueDirect(1);
@@ -27260,7 +27260,7 @@ RasterComponentEventListener.prototype.eventPerformed = function(event)
 			}
 			else // !currSelectionState
 			{
-				// send unselected/blur/mouseout event depending upon event type and whether 
+				// send unselected/blur/mouseout event depending upon event type and whether
 				// component has focus/had selection
 				switch (event.type)
 				{
@@ -27282,7 +27282,7 @@ RasterComponentEventListener.prototype.eventPerformed = function(event)
 						{
 							this.selectionEvent.synchronize(event);
 							this.selectionEvent.type = eEventType.ElementBlur;
-							
+
 							selectionEventSelectionState = this.rcs[i].eventPerformed(this.selectionEvent);
 							this.styleMgr.eventPerformed(this.selectionEvent, this.rcs[i]);
 
@@ -27299,7 +27299,7 @@ RasterComponentEventListener.prototype.eventPerformed = function(event)
 						{
 							this.selectionEvent.synchronize(event);
 							this.selectionEvent.type = eEventType.ElementUnselected;
-							
+
 							selectionEventSelectionState = this.rcs[i].eventPerformed(this.selectionEvent);
 							this.styleMgr.eventPerformed(this.selectionEvent, this.rcs[i]);
 							this.rcs[i].selected.setValueDirect(-1);
@@ -27332,7 +27332,7 @@ RasterComponentEventListener.prototype.registerComponent = function(rc, before)
         {
             var i = this.rcs.indexOf(before);
             if (i < 0) i = this.rcs.length;
-            
+
             this.rcs.splice(i, 0, rc);
             this.rcsSelectionState.splice(i, 0, rc);
         }
@@ -27449,9 +27449,9 @@ function addInspectionGroup(node, factory)
 
     // ensure that rotation group has not already been added
 	var rotGroup = getInspectionGroup(node);
-	
+
     if (rotGroup) return;
-		
+
 	var pGrp        = new Group();
     pGrp.setGraphMgr(factory.graphMgr);
     var pTranslate  = new Translate();
@@ -27464,14 +27464,14 @@ function addInspectionGroup(node, factory)
     pTransBack.setGraphMgr(factory.graphMgr);
     var pScale      = new Scale();
     pScale.setGraphMgr(factory.graphMgr);
-    
+
     pQuat.addModifiedCB(Util_InspectionGroup_RotationQuatModifiedCB, null);
 
     pGrp.name.setValueDirect("InspectionGroup");
 	pTranslate.name.setValueDirect("Translate");
     pScaleInv.name.setValueDirect("ScaleInverse");
 	pQuat.name.setValueDirect("Quaternion");
-	pTransBack.name.setValueDirect("TranslateBack");			
+	pTransBack.name.setValueDirect("TranslateBack");
     pScale.name.setValueDirect("Scale");
 
 	pGrp.addChild(pTranslate); // child 0
@@ -27532,7 +27532,7 @@ function deleteInspectionGroup(node)
 function getInspectionGroup(moveableNode)
 {
     var group = null;
-    
+
 	var childZero = moveableNode.getChild(0);
 	if (childZero)
 	{
@@ -27546,7 +27546,7 @@ function setInspectionGroupActivationState(node, enable)
 {
 	var pRotGroup = getInspectionGroup(node);
 	if (pRotGroup)
-	{	
+	{
 		var pQuat = pRotGroup.getChild(2);
 		if (pQuat)
 		{
@@ -27561,7 +27561,7 @@ function setInspectionGroupActivationState(node, enable)
 				quatAttr.setValueDirect(quat);
 			}
 		}
-		
+
 		var pPos = node.getAttribute("position");
 		if (enable)
 		{
@@ -27575,7 +27575,7 @@ function setInspectionGroupActivationState(node, enable)
 			var pos = g_objPosMap[node];
 			pPos.setValueDirect(pos);
 		}
-		
+
 	}
 
 	return;
@@ -27586,7 +27586,7 @@ function setInspectionGroupContainer(node)
 
 	var pRotGroup = getInspectionGroup(node);
 	if (pRotGroup)
-	{	
+	{
         node.unregisterAttribute(node.getAttribute("inspectionGroup_translate"));
         node.unregisterAttribute(node.getAttribute("inspectionGroup_scaleInverse"));
         node.unregisterAttribute(node.getAttribute("inspectionGroup_rotationQuat"));
@@ -27619,7 +27619,7 @@ function zeroInspectionGroup(node)
 {
    var pRotGroup = getInspectionGroup(node);
 	if (pRotGroup)
-	{	
+	{
 		var pQuat = pRotGroup.getChild(2);
 		if (pQuat)
 		{
@@ -27644,7 +27644,7 @@ function clearObjectPositionMap()
 // Doesn't do anything.
 function Util_InspectionGroup_RotationQuatModifiedCB(attribute, container)
 {
-    /* 
+    /*
     CQuaternionf q;
 	CQuaternionFloatAttr quat = dynamic_cast<CQuaternionFloatAttr>(attr);
 	if (quat)
@@ -27703,7 +27703,7 @@ SerializeCommand.prototype.serializeScene = function()
     {
         var factory = this.registry.find("AttributeFactory");
         var serializer = factory.create("Serializer");
-        var xmlSerializer = new XMLSerializer(); 
+        var xmlSerializer = new XMLSerializer();
         // set minimum flag so that only the minimum required for recreation is serialized
         serializer.serializeMinimum.setValueDirect(true);
 
@@ -27715,9 +27715,9 @@ SerializeCommand.prototype.serializeScene = function()
         {
             container = attrContainerRegistry.getObject(i);
             if (!container) continue;
-            
+
             // device handlers
-            if (container.attrType > eAttrType.DeviceHandler && 
+            if (container.attrType > eAttrType.DeviceHandler &&
                 container.attrType < eAttrType.DeviceHandler_End)
             {
                 context.attribute = container;
@@ -27729,7 +27729,7 @@ SerializeCommand.prototype.serializeScene = function()
                 this.serialized += serialized;
             }
             // root nodes (nodes without parents)
-            else if (container.attrType > eAttrType.Node && 
+            else if (container.attrType > eAttrType.Node &&
                 	 container.attrType < eAttrType.Node_End)
             {
             	if (container.getParentCount() == 0)
@@ -27760,7 +27760,7 @@ SerializeCommand.prototype.serializeScene = function()
                 this.serialized += "\"/>";
             }
             // remaining attributes not fitting other criteria and not a command (commands serialized below)
-            /*else if (container.attrType < eAttrType.Command || 
+            /*else if (container.attrType < eAttrType.Command ||
                 	 container.attrType > eAttrType.Command_End)
             {
                 context.attribute = container;
@@ -27778,7 +27778,7 @@ SerializeCommand.prototype.serializeScene = function()
         {
             container = attrContainerRegistry.getObject(i);
             if (!container) continue;
-            
+
    			if (container.className == "DisconnectAttributes")
             {
                 context.attribute = container;
@@ -27790,14 +27790,14 @@ SerializeCommand.prototype.serializeScene = function()
                 this.serialized += serialized;
             }
         }
-        
+
         // other commands
         for (i = 0; i < count; i++)
         {
             container = attrContainerRegistry.getObject(i);
             if (!container) continue;
-            
-   			if (container.attrType > eAttrType.Command && 
+
+   			if (container.attrType > eAttrType.Command &&
                 container.attrType < eAttrType.Command_End &&
                 container.className != "DisconnectAttributes")
             {
@@ -27810,7 +27810,7 @@ SerializeCommand.prototype.serializeScene = function()
                 this.serialized += serialized;
             }
         }
-            		
+
         /*
          // updateSectorOrigin
          const char* substr = NULL;
@@ -27878,9 +27878,9 @@ function ScreenCaptureCommand()
     this.attrType = eAttrType.ScreenCapture;
 
     this.canvasId = new StringAttr();
-    
+
     this.registerAttribute(this.canvasId, "canvasId");
-    
+
     this.numResponses.setValueDirect(0);
 }
 
@@ -27902,10 +27902,10 @@ ScreenCaptureCommand.prototype.screenCapture = function(canvasId)
     var cnt = imageData.lastIndexOf(',') + 1;
     imageData = imageData.substr(cnt);
     imgeData = Base64Binary.decode(imageData);
-    
+
     // copy to clipboard
     // TODO: investigate method described at: https://forums.mozilla.org/addons/viewtopic.php?t=9736&p=21119
-    
+
     // open in new window
 
     // download
@@ -27921,14 +27921,14 @@ ScreenCaptureCommand.prototype.eventPerformed = function(event)
         case eEventType.RenderEnd:
         {
             this.screenCapture(this.canvasId.getValueDirect().join(""));
-            return;        
+            return;
         }
         break;
     }
 }
 
 // TODO
-var eLWObjectTokens = 
+var eLWObjectTokens =
 {
     COLR    : 1129270354,
     DIFF    : 1145652806,
@@ -27971,7 +27971,7 @@ function LWO2SurfaceData()
     this.transparencyLevel = 0;
     this.glossiness = 0.4;
     this.doubleSided = false;
-    this.smoothingAngle = 0;  
+    this.smoothingAngle = 0;
     this.blocks = [];
     this.addBlock = function()
     {
@@ -27987,7 +27987,7 @@ function LWO2ClipData()
 {
     this.type = 0;
     this.negative = 0;
-    
+
     var filename = "";
     var platformNeutralFilename = "";
     this.setPlatformNeutralFilename = function(_filename)
@@ -28045,7 +28045,7 @@ function LWO2EnvelopeData()
     this.preBehavior = 0;
     this.postBehavior = 0;
     this.keyframes = [];
-    
+
     this.currentKyframe = function()
     {
         return this.keyframes.length > 0 ? this.keyframes[this.keyframes.length-1] : null;
@@ -28084,7 +28084,7 @@ function LWO2LayerData()
     this.vmadsTXUV = [];
     this.ptagsSURFMaxIndex = 0;
     this.pivot = new Vector3D();
-    
+
     this.getVmap = function(type, name)
     {
         switch (type)
@@ -28092,24 +28092,24 @@ function LWO2LayerData()
             case 'TXUV':
                 return this.vmapsTXUV[name];
                 break;
-            
-            default: 
+
+            default:
                 return null;
         }
     }
-    
+
     this.putVmap = function(type, name, vmap)
     {
         switch (type)
         {
             case 'TXUV':
-                if (this.vmapsTXUV[name] == undefined) 
+                if (this.vmapsTXUV[name] == undefined)
                     this.vmapsTXUV[name] = []
                 this.vmapsTXUV[name].push(vmap);
                 break;
         }
     }
-    
+
     this.getVmad = function(type, name)
     {
         switch (type)
@@ -28117,24 +28117,24 @@ function LWO2LayerData()
             case 'TXUV':
                 return this.vmadsTXUV[name];
                 break;
-            
-            default: 
+
+            default:
                 return null;
         }
     }
-    
+
     this.putVmad = function(type, name, vmad)
     {
         switch (type)
         {
             case 'TXUV':
-                if (this.vmadsTXUV[name] == undefined) 
+                if (this.vmadsTXUV[name] == undefined)
                     this.vmadsTXUV[name] = []
                 this.vmadsTXUV[name].push(vmad);
                 break;
         }
     }
-    
+
     this.putPtag = function(ptag)
     {
         this.ptagsSURF.push(ptag);
@@ -28152,7 +28152,7 @@ function LWO2Data()
     this.envelopes = [];
     this.subChunkContext = "";
     this.evaluators = [];
-    
+
     var currentClip = null;
     var currentEnvelope = null;
     var currentLayer = null;
@@ -28226,7 +28226,7 @@ function LWObjectHandler()
 {
     ContentHandler.call(this);
     this.className = "LWObjectHandler";
-    
+
     this.lwo2DataHandlers = [];
     this.lwo2DataHandlersData = [];
 }
@@ -28294,33 +28294,33 @@ LWObjectHandler.prototype.parseFileStream = function(url)
 LWObjectHandler.prototype.parseChunk = function(parser, data)
 {
     var bytesRead = 0;
-    
+
     // ASSUMPTION MADE:  file stream pointer is currently sitting at a tag
     // i.e., has been advanced past header.
 
     // read chunk tag
     var tag = parser.readUInt32(); // bytesRead accounted for at end of method
     //alert("tag: " + tag);
-    
+
     // read chunk size
     var chunkSize = parser.readUInt32(); // bytesRead accounted for at end of method
     //alert("chunkSize: " + chunkSize);
-    
+
     // read chunk size bytes
     switch (tag)
     {
         case 1279351122: // 'LAYR'
             {
                 var number = parser.readUInt16(); bytesRead += 2;
-            
+
                 var flags = parser.readUInt16(); bytesRead += 2;
 
                 var x = parser.readFloat32(); bytesRead += 4;
                 var y = parser.readFloat32(); bytesRead += 4;
                 var z = parser.readFloat32(); bytesRead += 4;
-            
+
                 var name = this.readString(parser); bytesRead += name.bytesRead;
-            
+
                 if (chunkSize > bytesRead)
                 {
                     var parent = parser.readUInt16(); bytesRead += 2;
@@ -28333,7 +28333,7 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
                 data.currentLayer().pivot.z = z;
             }
             break;
-    
+
         case 1347310675: // 'PNTS'
             {
                 var numPnts = chunkSize / 12;
@@ -28342,39 +28342,39 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
                 {
                     var x = parser.readFloat32(); bytesRead += 4;
                     var y = parser.readFloat32(); bytesRead += 4;
-                    var z = parser.readFloat32(); bytesRead += 4; 
-            
+                    var z = parser.readFloat32(); bytesRead += 4;
+
                     data.currentLayer().pnts[i] = new Vector3D();
                     data.currentLayer().pnts[i].x = x;
-                    data.currentLayer().pnts[i].y = y; 
-                    data.currentLayer().pnts[i].z = z;                
+                    data.currentLayer().pnts[i].y = y;
+                    data.currentLayer().pnts[i].z = z;
                 }
             }
             break;
-    
+
         case 1347374163: // 'POLS'
             {
                 var type = parser.readUInt32(); bytesRead += 4;
-            
+
                 var flags, numVerts;
                 while (chunkSize > bytesRead)
                 {
                     var poly = [];
-                
+
                     flags = parser.readUInt16(); bytesRead += 2;
                     numVerts = flags & 0x03ff;
                     for (var i=0; i < numVerts; i++)
                     {
                         var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
-                    
+
                         poly.push(index.index);
                     }
-                
+
                     data.currentLayer().pols.push(poly);
                 }
             }
             break;
-        
+
         case 1413564243: // 'TAGS'
             {
                 while (chunkSize > bytesRead)
@@ -28384,18 +28384,18 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
                 }
             }
             break;
-      		
+
         case 1347699015: // 'PTAG'
             {
                 var type = parser.readUInt32(); bytesRead += 4;
-            
+
                 while (chunkSize > bytesRead)
                 {
                     var ptag = new LWO2PTAGData();
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
                     ptag.poly = index.index;
                     ptag.tag = parser.readUInt16(); bytesRead += 2;
-                
+
                     switch (type)
                     {
                         case 1398100550: // 'SURF'
@@ -28408,25 +28408,25 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
                 }
             }
             break;
-    
+
         case 1447903568: // 'VMAP'
             {
                 var type = parser.readUInt32(); bytesRead += 4;
                 var dimension = parser.readUInt16(); bytesRead += 2;
                 var name = this.readString(parser); bytesRead += name.bytesRead;
-            
+
                 var u, v, value;
                 while (chunkSize > bytesRead)
                 {
-                    var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead; 
-                
+                    var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
+
                     switch (type)
                     {
                         case 1415075158: // 'TXUV'
                             {
                                 u = parser.readFloat32(); bytesRead += 4;
                                 v = parser.readFloat32(); bytesRead += 4;
-                        
+
                                 var vmapData = new LWO2VMAPData();
                                 vmapData.vertex = index.index;
                                 vmapData.u = u;
@@ -28434,39 +28434,39 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
                                 data.currentLayer().putVmap('TXUV', name.string, vmapData);
                             }
                             break;
-                    
+
                         default:
                             {
                                 for (var i=0; i < dimension; i++)
                                 {
-                                    value = parser.readFloat32(); bytesRead += 4;       
+                                    value = parser.readFloat32(); bytesRead += 4;
                                 }
                             }
-                            break;    
+                            break;
                     }
                 }
             }
             break;
-        
+
         case 1447903556: // 'VMAD'
             {
                 var type = parser.readUInt32(); bytesRead += 4;
                 var dimension = parser.readUInt16(); bytesRead += 2;
                 var name = this.readString(parser); bytesRead += name.bytesRead;
-            
+
                 var u, v, value;
                 while (chunkSize > bytesRead)
                 {
                     var vertIndex = this.readVariableLengthIndex(parser); bytesRead += vertIndex.bytesRead;
                     var polyIndex = this.readVariableLengthIndex(parser); bytesRead += polyIndex.bytesRead;
-                
+
                     switch (type)
                     {
                         case 1415075158: // 'TXUV'
                             {
                                 u = parser.readFloat32(); bytesRead += 4;
                                 v = parser.readFloat32(); bytesRead += 4;
-                        
+
                                 var vmadData = new LWO2VMADData();
                                 vmadData.vertex = vertIndex.index;
                                 vmadData.poly = polyIndex.index;
@@ -28475,27 +28475,27 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
                                 data.currentLayer().putVmad('TXUV', name.string, vmadData);
                             }
                             break;
-                    
+
                         default:
                             {
                                 for (var i=0; i < dimension; i++)
                                 {
-                                    value = parser.readFloat32(); bytesRead += 4;       
+                                    value = parser.readFloat32(); bytesRead += 4;
                                 }
                             }
-                            break;    
-                    }       
+                            break;
+                    }
                 }
             }
             break;
-        
+
         case 1398100550: // 'SURF'
             {
                 var name = this.readString(parser); bytesRead += name.bytesRead;
                 var source = this.readString(parser); bytesRead += source.bytesRead;
 
                 data.addSurface(name.string, source.string);
-            
+
                 // parse surface subchunks
                 while (chunkSize > bytesRead)
                 {
@@ -28503,14 +28503,14 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
                 }
             }
             break;
-        
+
         case 1129072976: // 'CLIP'
             {
                 var index = parser.readUInt32(); bytesRead += 4;
-            
+
                 data.addClip(index);
                 data.subChunkContext = tag;
-            
+
                 // parse clip subchunks
                 while (chunkSize > bytesRead)
                 {
@@ -28518,13 +28518,13 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
                 }
             }
             break;
-        
+
         case 1162761804: // 'ENVL'
             {
                 var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
-            
+
                 data.addEnvelope(index.index);
-            
+
                 // parse envelope subchunks
                 while (chunkSize > bytesRead)
                 {
@@ -28532,7 +28532,7 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
                 }
             }
             break;
-          
+
         default:
             {
                 // unrecognized tag - seek to end of chunk
@@ -28543,18 +28543,18 @@ LWObjectHandler.prototype.parseChunk = function(parser, data)
             }
             break;
     }
-    
+
     // read pad byte if chunk size is odd
     if (chunkSize & 0x1)
     {
         parser.readUInt8(); bytesRead++;
     }
-    
+
     // account for tag/chunk size (read at beginning of method)
     bytesRead += 8;
     //alert("bytesRead: " + bytesRead);
-    
-    return bytesRead;    
+
+    return bytesRead;
 }
 
 LWObjectHandler.prototype.parseSubChunk = function(parser, data)
@@ -28575,102 +28575,102 @@ LWObjectHandler.prototype.parseSubChunk = function(parser, data)
                 data.currentSurface().color.x = parser.readFloat32(); bytesRead += 4;
                 data.currentSurface().color.y = parser.readFloat32(); bytesRead += 4;
                 data.currentSurface().color.z = parser.readFloat32(); bytesRead += 4;
-            
+
                 if (subChunkSize > (bytesRead - 6))
                 {
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
-                }    
+                }
             }
             break;
-        
+
         case 1145652806: // 'DIFF'
             {
                 data.currentSurface().diffuseLevel = parser.readFloat32(); bytesRead += 4;
-            
-                if (subChunkSize > (bytesRead - 6))
-                {
-                    var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
-                } 
-            }
-            break;
-    
-        case 1280658761: // 'LUMI'  
-            {
-                data.currentSurface().luminosityLevel = parser.readFloat32(); bytesRead += 4;
-            
+
                 if (subChunkSize > (bytesRead - 6))
                 {
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
                 }
             }
             break;
-        
+
+        case 1280658761: // 'LUMI'
+            {
+                data.currentSurface().luminosityLevel = parser.readFloat32(); bytesRead += 4;
+
+                if (subChunkSize > (bytesRead - 6))
+                {
+                    var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
+                }
+            }
+            break;
+
         case 1397769539: // 'SPEC'
             {
                 data.currentSurface().specularLevel = parser.readFloat32(); bytesRead += 4;
-            
+
                 if (subChunkSize > (bytesRead - 6))
                 {
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
                 }
             }
             break;
-        
+
         case 1414676814: // 'TRAN'
             {
                 data.currentSurface().transparencyLevel = parser.readFloat32(); bytesRead += 4;
-            
+
                 if (subChunkSize > (bytesRead - 6))
                 {
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
                 }
             }
             break;
-        
+
         case 1196183379: // 'GLOS'
             {
                 data.currentSurface().glossiness = parser.readFloat32(); bytesRead += 4;
-            
+
                 if (subChunkSize > (bytesRead - 6))
                 {
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
                 }
             }
             break;
-        
+
         case 1397310533: // 'SIDE'
             {
-                data.currentSurface().doubleSided = (parser.readUInt16() == 3 ? true : false); bytesRead += 2;            
+                data.currentSurface().doubleSided = (parser.readUInt16() == 3 ? true : false); bytesRead += 2;
             }
             break;
-        
+
         case 1397571918: // 'SMAN'
             {
                 data.currentSurface().smoothingAngle = parser.readFloat32(); bytesRead += 4;
             }
             break;
-        
+
         case 1398032716: // 'STIL'
         case 1095649613: // 'ANIM'
         case 1230194001: // 'ISEQ'
             {
                 var filename = this.readString(parser); bytesRead += filename.bytesRead;
-            
+
                 // skip subsequent chunk data
                 while (subChunkSize > (bytesRead - 6))
                 {
                     parser.readUInt8(); bytesRead += 1;
                 }
-            
+
                 data.currentClip().type = tag;
                 data.currentClip().setFilename(filename.string);
             }
             break;
-        
+
         case 1313163073: // 'NEGA'
             {
                 var negative = parser.readUInt16(); bytesRead += 2;
-            
+
                 if (data.subChunkContext == 'IMAP')
                 {
                     data.currentSurface().currentBlock().negative = negative;
@@ -28681,172 +28681,172 @@ LWObjectHandler.prototype.parseSubChunk = function(parser, data)
                 }
             }
             break;
-        
+
         case 1112297291: // 'BLOK'
             {
                 data.currentSurface().addBlock();
             }
             break;
-        
+
         case 1229799760: // 'IMAP'
             {
                 var ordinal = this.readString(parser); bytesRead += ordinal.bytesRead;
-            
+
                 data.currentSurface().currentBlock().type = 'IMAP';
                 data.currentSurface().currentBlock().ordinal = ordinal.string;
                 data.subChunkContext = 'IMAP';
             }
             break;
-        
+
         case 1128808782: // 'CHAN'
             {
                 var channel = parser.readUInt32(); bytesRead += 4;
-            
+
                 if (data.subChunkContext == 'IMAP')
                 {
                     data.currentSurface().currentBlock().channel = channel;
                 }
             }
             break;
-        
+
         case 1162756418: // 'ENAB'
             {
                 data.currentSurface().currentBlock().enable = parser.readUInt16(); bytesRead += 2;
             }
             break;
-        
+
         case 1330659651: // 'OPAC'
             {
                 data.currentSurface().currentBlock().opacityType = parser.readUInt16(); bytesRead += 2;
                 data.currentSurface().currentBlock().opacity = parser.readFloat32(); bytesRead += 4;
-            
+
                 if (subChunkSize > (bytesRead - 6))
                 {
                     var envelope = this.readVariableLengthIndex(parser); bytesRead += envelope.bytesRead;
-                
+
                     data.currentSurface().currentBlock().opacityEnvelope = envelope.index;
                 }
             }
             break;
-        
+
         case 1414349136: // 'TMAP'
             {
             }
             break;
-         
+
         case 1129206866: // 'CNTR'
             {
                 data.currentSurface().currentBlock().center.x = parser.readFloat32(); bytesRead += 4;
                 data.currentSurface().currentBlock().center.y = parser.readFloat32(); bytesRead += 4;
                 data.currentSurface().currentBlock().center.z = parser.readFloat32(); bytesRead += 4;
-            
+
                 while (subChunkSize > (bytesRead - 6))
                 {
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
                 }
             }
             break;
-        
+
         case 1397316165: // 'SIZE'
             {
                 data.currentSurface().currentBlock().size.x = parser.readFloat32(); bytesRead += 4;
                 data.currentSurface().currentBlock().size.y = parser.readFloat32(); bytesRead += 4;
                 data.currentSurface().currentBlock().size.z = parser.readFloat32(); bytesRead += 4;
-            
+
                 while (subChunkSize > (bytesRead - 6))
                 {
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
                 }
             }
             break;
-        
+
         case 1129535827: // 'CSYS'
             {
                 data.currentSurface().currentBlock().coordSys = parser.readUInt16(); bytesRead += 2;
             }
             break;
-        
+
         case 1347571530: // 'PROJ'
             {
                 data.currentSurface().currentBlock().projMode = parser.readUInt16(); bytesRead += 2;
             }
             break;
-        
+
         case 1096304979: // 'AXIS'
             {
                 var axis = parser.readUInt16(); bytesRead += 2;
-            
+
                 if (data.subChunkContext == 'IMAP')
                 {
                     data.currentSurface().currentBlock().axis = axis;
                 }
             }
             break;
-        
+
         case 1229799751: // 'IMAG'
             {
                 var image = this.readVariableLengthIndex(parser); bytesRead += image.bytesRead;
-            
+
                 data.currentSurface().currentBlock().imageIndex = image.index;
             }
             break;
-        
+
         case 1465008464: // 'WRAP'
             {
                 data.currentSurface().currentBlock().widthWrap = parser.readUInt16(); bytesRead += 2;
                 data.currentSurface().currentBlock().heightWrap = parser.readUInt16(); bytesRead += 2;
             }
             break;
-        
+
         case 1465012311: // 'WRPW'
             {
                 data.currentSurface().currentBlock().widthWrapAmt = parser.readFloat32(); bytesRead += 4;
-            
+
                 if (subChunkSize > (bytesRead - 6))
                 {
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
                 }
             }
             break;
-        
+
         case 1465012296: // 'WRPH'
             {
                 data.currentSurface().currentBlock().heightWrapAmt = parser.readFloat32(); bytesRead += 4;
-            
+
                 if (subChunkSize > (bytesRead - 6))
                 {
                     var index = this.readVariableLengthIndex(parser); bytesRead += index.bytesRead;
                 }
             }
             break;
-        
+
         case 1447903568: // 'VMAP'
             {
                 var name = this.readString(parser); bytesRead += name.bytesRead;
-            
-                data.currentSurface().currentBlock().uvMapName = name.string; 
+
+                data.currentSurface().currentBlock().uvMapName = name.string;
             }
             break;
-        
+
         case 1415139397: // 'TYPE'
             {
                 data.currentEnvelope().userFormat = parser.readUInt8(); bytesRead += 1;
                 data.currentEnvelope().type = parser.readUInt8(); bytesRead += 1;
             }
             break;
-        
+
         case 1347568928: // 'PRE '
             {
                 data.currentEnvelope().preBehavior = parser.readUInt16(); bytesRead += 2;
             }
             break;
-        
+
             //case 1262836000: // 'KEY '
             {
-                // TODO        
+                // TODO
             }
             break;
-       
+
             //case 1397768526: // 'SPAN'
             {
                 // TODO
@@ -28858,7 +28858,7 @@ LWObjectHandler.prototype.parseSubChunk = function(parser, data)
                 //case 1279872581: // 'LINE'
             }
             break;
-        
+
         case 1347375956: // 'POST'
             {
                 data.currentEnvelope().postBehavior = parser.readUInt16(); bytesRead += 2;
@@ -28875,13 +28875,13 @@ LWObjectHandler.prototype.parseSubChunk = function(parser, data)
             }
             break;
     }
-    
+
     // read pad byte if subchunk size is odd
     if (subChunkSize & 0x1)
     {
         parser.readUInt8(); bytesRead += 1;
     }
-    
+
     return bytesRead;
 }
 
@@ -28894,15 +28894,15 @@ LWObjectHandler.prototype.readString = function(parser)
     {
         c = parser.readUInt8(); count++;
         s += String.fromCharCode(c);
-        
+
     } while (c);
-    
+
     // read pad byte if length is odd
     if (count & 0x1)
     {
-        parser.readUInt8(); count++;   
+        parser.readUInt8(); count++;
     }
-    
+
     return { string: s, bytesRead: count };
 }
 
@@ -28911,10 +28911,10 @@ LWObjectHandler.prototype.readVariableLengthIndex = function(parser)
     var i = 0;
     var c = new Array(4);
     var count = 0;
-    
+
     c[0] = parser.readUInt8(); count++;
     c[1] = parser.readUInt8(); count++;
-    
+
     if (c[0] < 0xff00) // 2-byte form
     {
         i = c[0] << 8 | c[1];
@@ -28923,7 +28923,7 @@ LWObjectHandler.prototype.readVariableLengthIndex = function(parser)
     {
         c[2] = parser.readUInt8(); count++;
         c[3] = parser.readUInt8(); count++;
-        
+
         i = c[1] << 16 | c[2] << 8 | c[3];
     }
 
@@ -28941,11 +28941,11 @@ function LWObjectBuilder()
 {
     ContentBuilder.call(this);
     this.className = "LWObjectBuilder";
-    
+
     this.graphMgr = null;
-    
+
     this.indexGeometry = new BooleanAttr(true);
-    
+
     this.registerAttribute(this.indexGeometry, "indexGeometry");
 }
 
@@ -28996,7 +28996,7 @@ LWObjectBuilder.prototype.allocateModel = function(data)
             this.models.push(model);
         }
         else model = this.models[0];
-        
+
         // TODO: matching model/replace model surfaces
 
         // define model attributes
@@ -29006,9 +29006,9 @@ LWObjectBuilder.prototype.allocateModel = function(data)
 
 LWObjectBuilder.prototype.describeModel = function(data, layer, model)
 {
-    
+
     var factory = this.registry.find("AttributeFactory");
-    
+
     // set pivot if not already set by scene
     var pivot = model.getAttribute("pivot");
     if (model.getAttributeModificationCount(pivot) == 0)
@@ -29097,7 +29097,7 @@ LWObjectBuilder.prototype.describeModel = function(data, layer, model)
         polyOrder[surfIndex] = [];
         triPolyNormals[surfIndex] = [];
 
-        // tris   
+        // tris
         var polys = triPolys[surfIndex];
         var numPolys = polys.length;
         var leg1 = new Vector3D();
@@ -29172,8 +29172,7 @@ LWObjectBuilder.prototype.describeModel = function(data, layer, model)
 
             triList.getAttribute("vertices").setValue(vertices);
             triList.getAttribute("normals").setValue(normals);
-console.log(vertices);
-console.log(normals);
+
             triLists[surfIndex] = triList;
             triVertices[surfIndex] = vertices;
         }
@@ -29182,55 +29181,55 @@ console.log(normals);
         vertices = [];
         polys = linePolys[surfIndex];
         numPolys = polys.length;
-        
+
         for (var polyIndex = 0; polyIndex < numPolys; polyIndex++)
         {
             var poly = layer.pols[polyIndex];
             if (poly.length < 2) continue;
-            
+
             for (var vertex = 0; vertex < 2; vertex++)
             {
                 var point = layer.pnts[poly[vertex]];
-                
+
                 vertices.push(point.x);
                 vertices.push(point.y);
                 vertices.push(point.z);
-                
+
             }
         }
-        
+
         if (vertices.length)
         {
             var lineList = factory.create("LineList");
 
-            model.addGeometry(lineList, surfaces[surfIndex]); // TODO: call method that accepts indices   
-            
+            model.addGeometry(lineList, surfaces[surfIndex]); // TODO: call method that accepts indices
+
             lineList.getAttribute("vertices").setValue(vertices);
         }
-        
+
         // points
         vertices = [];
         polys = pointPolys[surfIndex];
         numPolys = polys.length;
-        
+
         for (var polyIndex = 0; polyIndex < numPolys; polyIndex++)
         {
             var poly = layer.pols[polyIndex];
-            
+
             var point = layer.pnts[poly[0]];
-            
+
             vertices.push(point.x);
             vertices.push(point.y);
             vertices.push(point.z);
-                
+
         }
-        
+
         if (vertices.length)
         {
             var pointList = factory.create("PointList");
 
-            model.addGeometry(pointList, surfaces[surfIndex]); // TODO: call method that accepts indices   
-            
+            model.addGeometry(pointList, surfaces[surfIndex]); // TODO: call method that accepts indices
+
             pointList.getAttribute("vertices").setValue(vertices);
         }
     }
@@ -29243,7 +29242,7 @@ console.log(normals);
 
         var surface = data.getSurface(data.tags[surfIndex]);
         if (!surface) continue;
-        
+
         var smoothingAngle = surface.smoothingAngle;
         if (smoothingAngle <= 0) continue;
 
@@ -29319,12 +29318,12 @@ LWObjectBuilder.prototype.allocateSurface = function(data, layer, surfaceNumber)
 {
      var factory = this.registry.find("AttributeFactory");
      surface = factory.create("Surface");
-     
+
      var name = data.tags[surfaceNumber];
      surface.getAttribute("name").setValueDirect(name);
-     
+
      this.describeSurface(data.getSurface(name), surface);
-     
+
      return surface;
 }
 
@@ -29332,7 +29331,7 @@ LWObjectBuilder.prototype.describeSurface = function(data, surface)
 {
     // TEMPTEST
     if (!data) return;
-    
+
     // color
     var values = [];
     values.push(data.color.x);
@@ -29340,25 +29339,25 @@ LWObjectBuilder.prototype.describeSurface = function(data, surface)
     values.push(data.color.z);
     values.push(1);
     surface.getAttribute("color").setValue(values);
-    
+
     // ambient level (use diffuse since ambient level is not specified
     surface.getAttribute("ambientLevel").setValueDirect(data.diffuseLevel);
-    
+
     // diffuse level
     surface.getAttribute("diffuseLevel").setValueDirect(data.diffuseLevel);
-    
+
     // specular level
     surface.getAttribute("specularLevel").setValueDirect(data.specularLevel);
-    
+
     // emissive level
     surface.getAttribute("emissiveLevel").setValueDirect(data.luminosityLevel);
-    
+
     // glossiness
     surface.getAttribute("glossiness").setValueDirect(data.glossiness);
-    
+
     // opacity
     surface.getAttribute("opacity").setValueDirect(1 - data.transparencyLevel);
-    
+
     // double-sidedness
     surface.getAttribute("doubleSided").setValueDirect(data.doubleSided ? true : false);
 }
@@ -29417,59 +29416,59 @@ LWObjectBuilder.prototype.loadTextures = function(data, layer, surfaceData, surf
 }
 
 LWObjectBuilder.prototype.allocateTextures = function(type, data, layer, blocks, surface, textures)
-{  
+{
     // create a media texture object for each normal or additive texture layer; if subsequent
     // layer is alpha, add as texture alpha channel
     for (var i=0; i < blocks.length; i++)
     {
         var block = blocks[i];
-        if (block.opacityType != 0 && 
+        if (block.opacityType != 0 &&
             block.opacityType != 7)
             continue;
-            
+
         var imageClip = data.clips[block.imageIndex];
         if (!imageClip)
             continue;
-            
+
         var alphaClip = null;
         if (i+1 < blocks.length)
         {
             if (blocks[i+1].opacityType == 5)
             {
                 alphaClip = data.clips[blocks[i+1].imageIndex];
-            }    
-        } 
-        
+            }
+        }
+
         var widthWrap, heightWrap;
         switch (block.widthWrap)
         {
         case 0: widthWrap = eTextureWrap.None; break;
-        case 1: widthWrap = eTextureWrap.Repeat; break; 
+        case 1: widthWrap = eTextureWrap.Repeat; break;
         case 2: widthWrap = eTextureWrap.Mirror; break;
         case 3: widthWrap = eTextureWrap.Clamp; break;
-        } 
+        }
         switch (block.heightWrap)
         {
         case 0: heightWrap = eTextureWrap.None; break;
-        case 1: heightWrap = eTextureWrap.Repeat; break; 
+        case 1: heightWrap = eTextureWrap.Repeat; break;
         case 2: heightWrap = eTextureWrap.Mirror; break;
         case 3: heightWrap = eTextureWrap.Clamp; break;
-        }     
-        
+        }
+
         var filename = imageClip.getFilename();
-        
+
         // strip any local paths saved by the modeler
         var ndx = filename.lastIndexOf('/');
-        
+
         filename = ndx === -1 ? filename : filename.substring(ndx+1);
-         
+
         var clipFilename = data.contentDir + "images/" + filename;
-        
+
         // setup negate image flag based upon whether or not the graphics card uses
         // inverted alpha values, and if this is a transparency, diffuse, luminosity,
         // or specularity texture
         var negateImage = block.negative ? true : false;
-        if (this.invertAlpha && 
+        if (this.invertAlpha &&
            (type == eTextureType.Transparency ||
             type == eTextureType.Diffuse ||
             type == eTextureType.Luminosity ||
@@ -29478,7 +29477,7 @@ LWObjectBuilder.prototype.allocateTextures = function(type, data, layer, blocks,
             negateImage = !negateImage;
         }
 
-        // setup negate alpha flag based upon existance of an alpha clip and 
+        // setup negate alpha flag based upon existance of an alpha clip and
         // whether or not the graphics card uses inverted alpha values
         var negateAlpha = false;
         if (alphaClip)
@@ -29489,14 +29488,14 @@ LWObjectBuilder.prototype.allocateTextures = function(type, data, layer, blocks,
                 negateAlpha = !negateAlpha;
             }
         }
-        
+
         // TODO: check if texture with same attributes has already been created;
         // if not, or if an opacity envelope is being used, allocate new one
         var mediaTexture = null;
-        
+
         var factory = this.registry.find("AttributeFactory");
         mediaTexture = factory.create("MediaTexture");
-           
+
         mediaTexture.getAttribute("name").setValueDirect(""); // TODO
         mediaTexture.getAttribute("textureType").setValueDirect(type);
         mediaTexture.getAttribute("opacity").setValueDirect(block.opacity);
@@ -29510,12 +29509,12 @@ LWObjectBuilder.prototype.allocateTextures = function(type, data, layer, blocks,
         {
             mediaTexture.getAttribute("alphaFilename").setValueDirect(data.contentDir + alphaClip.getFilename());
         }
-        
+
         // TODO: if opacity is an envelope, create a KeyframeInterpolator and attach to texture opacity attr
 
         textures.push(new Pair(mediaTexture, block));
         surface.addTexture(mediaTexture);
-    }       
+    }
 }
 
 LWObjectBuilder.prototype.calculateTextureCoords = function(data, layer, blockData, vertices, polyNormals,
@@ -29702,7 +29701,7 @@ LWObjectBuilder.prototype.mapXYZtoUV = function(x, y, z, textureCenter, textureS
         x -= textureCenter.x;
         y -= textureCenter.y;
         z -= textureCenter.z;
-        
+
         switch(axis)
         {
         case 0: // x
@@ -29762,8 +29761,8 @@ LWObjectBuilder.prototype.mapXYZtoUV = function(x, y, z, textureCenter, textureS
 
         break;
     }
- 
-    return { u: u, v: v };   
+
+    return { u: u, v: v };
 }
 
 function LWObjectBuilder_ObjectHandler(data, builder)
@@ -29791,7 +29790,7 @@ function LWSceneHandler()
 {
     ContentHandler.call(this);
     this.className = "LWSceneHandler";
-    
+
     this.tokenHandlers = [];
     this.tokenHandlersData = [];
 }
@@ -29810,17 +29809,17 @@ LWSceneHandler.prototype.parseFileStream = function(url)
     {
         return -2;
     }
-    
+
     var parser = new TextParser(filestream);
-    
+
     var tokens;
     while (tokens = parser.readLineTokens())
     {
         // pass tokens to consumer(s)
         for (var i=0; i < this.tokenHandlers.length; i++)
         {
-            this.tokenHandlers[i](tokens, this.tokenHandlersData[i]);    
-        }    
+            this.tokenHandlers[i](tokens, this.tokenHandlersData[i]);
+        }
     }
 }
 LWSceneBuilder.prototype = new ContentBuilder();
@@ -29830,12 +29829,12 @@ function LWSceneBuilder()
 {
     ContentBuilder.call(this);
     this.className = "LWSceneBuilder";
-    
+
     this.graphMgr = null;
     this.currChannel = 0;   // motions
-    
+
     this.indexGeometry = new BooleanAttr(true);
-    
+
     this.registerAttribute(this.indexGeometry, "indexGeometry");
 }
 
@@ -29856,52 +29855,52 @@ LWSceneBuilder.prototype.matchesType = function(type)
 
 LWSceneBuilder.prototype.allocateSceneElement = function(tokens)
 {
-    
-    
+
+
     switch (tokens[0])
     {
         case "LoadObjectLayer":
         {
-            
+
         }
         break;
         case "NumChannels":
         {
             var numChannels = parseInt(tokens[1], 10);
-            
+
             var eval = this.evaluators[this.evaluators.length-1];
-            
+
             eval.setNumChannels(numChannels);
-            
+
             // attach to target (if specified)
             switch (numChannels)
             {
                 case 1:
-                    this.attachDissolveInterpolator(this.evaluators[this.evaluators.length-1], 
+                    this.attachDissolveInterpolator(this.evaluators[this.evaluators.length-1],
                         this.registry.find(this.evaluators[this.evaluators.length-1].getAttribute("target").getValueDirect().join("")));
                     break;
-                   
+
                 default:
-                    this.attachKeyframeInterpolator(this.evaluators[this.evaluators.length-1], 
+                    this.attachKeyframeInterpolator(this.evaluators[this.evaluators.length-1],
                         this.registry.find(this.evaluators[this.evaluators.length-1].getAttribute("target").getValueDirect().join("")));
                     break;
             }
         }
         break;
-        
+
         case "Channel":
         {
             this.currChannel = parseInt(tokens[1], 10);
         }
         break;
-        
+
         case "Key":
         {
             if (this.evaluators.length <= 0) break;
-            
+
             var keyframes = this.evaluators[this.evaluators.length-1].getAttribute("channels").getAt(this.currChannel);
             if (!keyframes) break;
-            
+
             var keyframe = new KeyframeAttr();
             for (var i=1; i < tokens.length; i++)
             {
@@ -29966,25 +29965,25 @@ LWSceneBuilder.prototype.allocateSceneElement = function(tokens)
                         break;
                 }
             }
-			
+
             // set to keyframe interpolator
             keyframes.push_back(keyframe);
         }
         break;
-        
+
         case "Behaviors":
         {
             if (this.evaluators.length <= 0) break;
-            
+
             var preBehaviors = this.evaluators[this.evaluators.length-1].getAttribute("preBehaviors").getAt(this.currChannel);
             var postBehaviors = this.evaluators[this.evaluators.length-1].getAttribute("postBehaviors").getAt(this.currChannel);
             if (!preBehaviors || !postBehaviors) break;
-            
+
             var pre = parseInt(tokens[1], 10);
             var post = parseInt(tokens[2], 10);
-            
+
             preBehaviors.setValueDirect(pre);
-            postBehaviors.setValueDirect(post);            
+            postBehaviors.setValueDirect(post);
         }
         break;
     }
@@ -29993,13 +29992,13 @@ LWSceneBuilder.prototype.allocateSceneElement = function(tokens)
 LWSceneBuilder.prototype.attachKeyframeInterpolator = function(kfi, target)
 {
     if (!kfi || !target) return;
-    
+
     var numChannels = kfi.getAttribute("channels").vector.length;
-    
+
     for (var channel=0; channel < numChannels; channel++)
     {
         var resultValue = kfi.getAttribute("resultValues").getAt(channel);
-        
+
         switch (channel)
         {
             case 0: // x pos
@@ -30037,18 +30036,18 @@ LWSceneBuilder.prototype.attachKeyframeInterpolator = function(kfi, target)
             case 8: // z scale
                 resultValue.addElementTarget(target.getAttribute("scale"), 0, 2);
                 break;
-        }   
+        }
     }
-    
+
     kfi.getAttribute("time").setValueDirect(0);
 }
 
 LWSceneBuilder.prototype.attachDissolveInterpolator = function(kfi, target)
 {
     if (!kfi || !target) return;
-    
+
     var resultValue = kfi.getAttribute("resultValues").getAt(0);
-    
+
     resultValue.addElementTarget(target.getAttribute("dissolve"), 0, 0);
 }
 
@@ -30064,17 +30063,17 @@ function AttributeFactory()
     AttributeContainer.call(this);
     this.className = "AttributeFactory";
     this.attrType = eAttrType.AttributeFactory;
-    
+
     this.newResourceProcs = [];
     this.configureProcs = [];
     this.finalizeProcs = [];
     this.registry = null;
     this.graphMgr = null;
-    
+
     this.name = new StringAttr("AttributeFactory");
-    
+
     this.registerAttribute(this.name, "name");
-    
+
     this.initializeNewResourceMap();
     this.initializeConfigureMap();
     this.initializeFinalizeMap();
@@ -30083,7 +30082,7 @@ function AttributeFactory()
 AttributeFactory.prototype.create = function(name)
 {
     var resource = null;
-    
+
     // invoke new resource proc
     var newResourceProc = this.newResourceProcs[name];
     if (newResourceProc)
@@ -30091,30 +30090,30 @@ AttributeFactory.prototype.create = function(name)
         resource = newResourceProc(name, this);
     }
     if (!resource) return null;
-    
+
     // invoke configuration proc (if specified)
     var configureProc = this.configureProcs[name];
     if (configureProc)
     {
         configureProc(resource, this);
     }
-    
+
     // if resource is a container, register name and userData if not already registered
 	if (resource.isContainer())
 	{
 	    if (!resource.getAttribute("name")) resource.registerAttribute(new StringAttr(""), "name");
 	    if (!resource.getAttribute("userData")) resource.registerAttribute(new StringAttr(""), "userData");
 	}
-	
+
 	// register resource
 	if (this.registry)
 	{
 	    this.registry.register(resource);
-	    resource.setRegistry(this.registry);   
+	    resource.setRegistry(this.registry);
 	}
-	
+
 	// invoke post-register proc (if specified)
-	
+
 	return resource;
 }
 
@@ -30217,7 +30216,7 @@ AttributeFactory.prototype.initializeConfigureMap = function()
     this.configureProcs["RenderDirective"] = configureDirective;
     this.configureProcs["SerializeDirective"] = configureDirective;
     this.configureProcs["UpdateDirective"] = configureDirective;
-    this.configureProcs["CollideDirective"] = configureDirective; 
+    this.configureProcs["CollideDirective"] = configureDirective;
 }
 
 AttributeFactory.prototype.initializeFinalizeMap = function()
@@ -30233,7 +30232,7 @@ AttributeFactory.prototype.initializeFinalizeMap = function()
     this.finalizeProcs["UpdateDirective"] = finalizeDirective;
     this.finalizeProcs["CollideDirective"] = finalizeDirective;
 
-    // evaluators 
+    // evaluators
     this.finalizeProcs["KeyframeInterpolator"] = finalizeEvaluator;
 
     // commands
@@ -30271,7 +30270,7 @@ AttributeFactory.prototype.setGraphMgr = function(graphMgr)
 function newAttribute(name, factory)
 {
     var resource = null;
-    
+
     switch (name)
     {
     case "BalloonTipLabelStyleAttr":    resource = new BalloonTipLabelStyleAttr(); break;
@@ -30305,14 +30304,14 @@ function newAttribute(name, factory)
     case "RenderableElementStyleAttr":  resource = new RenderableElementStyleAttr(); break;
     case "Serializer":                  resource = new Serializer(); break;
     }
-    
+
     return resource;
 }
 
 function newSGNode(name, factory)
 {
     var resource = null;
-    
+
     switch (name)
     {
     case "DirectionalLight":    resource = new DirectionalLight(); registerParentableAttributes(resource, factory); break;
@@ -30339,34 +30338,34 @@ function newSGNode(name, factory)
     case "Cube":                resource = new Cube(); break;
     case "Material":            resource = new Material(); break;
     }
-    
+
     if (resource)
     {
         resource.setGraphMgr(factory.graphMgr);
     }
-    
+
     return resource;
 }
 
 function newSGDirective(name, factory)
 {
     var resource = null;
-    
+
     switch (name)
     {
     case "BBoxDirective":               resource = new BBoxDirective(); break;
     case "RayPickDirective":            resource = new RayPickDirective(); break;
-    case "RenderDirective":             resource = new RenderDirective(); break;  
+    case "RenderDirective":             resource = new RenderDirective(); break;
     case "SerializeDirective":          resource = new SerializeDirective(); break;
     case "UpdateDirective":             resource = new UpdateDirective(); break;
     case "CollideDirective":            resource = new CollideDirective(); break;
     }
-    
+
     if (resource)
     {
         resource.setGraphMgr(factory.graphMgr);
     }
-    
+
     return resource;
 }
 
@@ -30390,9 +30389,9 @@ function newBBoxLocator(name, factory)
 function newKeyframeInterpolator(name, factory)
 {
     var resource = new KeyframeInterpolator();
-    
+
     registerEvaluatorAttributes(resource, factory);
-    
+
     return resource;
 }
 
@@ -30408,32 +30407,32 @@ function newMapProjectionCalculator(name, factory)
 function newObjectInspector(name, factory)
 {
     var resource = new ObjectInspector();
-    
+
     registerEvaluatorAttributes(resource, factory);
-    
+
     // target the Inspector's selection flag with the selector's clickPoint
     var selector = factory.registry.find("Selector");
     if (selector)
     {
         selector.getAttribute("selectionOccurred").addTarget(
             resource.getAttribute("selectionOccurred"), eAttrSetOp.Replace, null, false);
-            
+
         selector.getAttribute("selectionCleared").addTarget(
             resource.getAttribute("selectionCleared"), eAttrSetOp.Replace, null, false);
-            
+
         selector.getAttribute("pointView").addTarget(
             resource.getAttribute("pointView"), eAttrSetOp.Replace, null, false);
     }
-    
+
     return resource;
 }
 
 function newSceneInspector(name, factory)
 {
     var resource = new BwSceneInspector();
-    
+
     registerEvaluatorAttributes(resource, factory);
-   
+
     // target the Inspector's selection flag with the selector's clickPoint
     // target the Inspector's pivotDistance with the selector's distanceFromScreenCenter
     var selector = factory.registry.find("Selector");
@@ -30441,44 +30440,44 @@ function newSceneInspector(name, factory)
     {
         selector.getAttribute("selectionOccurred").addTarget(
             resource.getAttribute("selectionOccurred"), eAttrSetOp.Replace, null, false);
-            
+
         selector.getAttribute("distanceFromScreenCenter").addTarget(
             resource.getAttribute("pivotDistance"), eAttrSetOp.Replace, null, false);
     }
-     
+
     return resource;
 }
 
 function newTargetObserver(name, factory)
 {
 	var resource = new BwTargetObserver();
-    
+
     registerEvaluatorAttributes(resource, factory);
-   
-   	return resource;	
+
+   	return resource;
 }
 
 function newAnimalMover(name, factory)
 {
 	var resource = new AnimalMover();
-	
+
 	resource.setGraphMgr(factory.graphMgr);
 	registerEvaluatorAttributes(resource, factory);
-	
-	return resource;	
+
+	return resource;
 }
 
 function newCommand(name, factory)
 {
     var resource = null;
-    
+
     switch (name)
     {
     case "AppendNode":     	    resource = new AppendNodeCommand(); break;
     case "AutoInterpolate":     resource = new AutoInterpolateCommand(); break;
     case "CommandSequence":     resource = new CommandSequence(); break;
     case "ConnectAttributes":   resource = new ConnectAttributesCommand(); break;
-    case "ConnectOutputs":      resource = new ConnectAttributesCommand(); break;    
+    case "ConnectOutputs":      resource = new ConnectAttributesCommand(); break;
     case "DisconnectAttributes":resource = new ConnectAttributesCommand(); resource.getAttribute("negate").setValueDirect(true); break;
     case "DisconnectOutputs":   resource = new ConnectAttributesCommand(); resource.getAttribute("negate").setValueDirect(true); break;
     case "Locate":              resource = new LocateCommand(); break;
@@ -30499,21 +30498,21 @@ function newCommand(name, factory)
 	    if (commandMgr)
 	    {
 	        commandMgr.pushCommandSequence(resource);
-	    }    
+	    }
 	}
-	
+
 	return resource;
 }
 
 function newDeviceHandler(name, factory)
 {
     var resource = null;
-    
+
     switch (name)
     {
     case "MouseHandler":        resource = new MouseHandler(); break;
     }
-	
+
 	return resource;
 }
 
@@ -30528,7 +30527,7 @@ function configureDirective(directive, factory)
     var root = new StringAttr("");
     root.addModifiedCB(AttributeFactory_DirectiveRootModifiedCB, factory);
     directive.registerAttribute(root, "root");
-    
+
     var rootNode = factory.registry.getAttribute("rootPtr").getValueDirect();
     if (rootNode)
     {
@@ -30540,28 +30539,26 @@ function finalizeModel(model, factory)
 {
     // TODO
     console.debug("TODO: remove LWO assumption");
-    
+
     var url = model.getAttribute("url").getValueDirect();
     if (url) {
-        
+
         url = url.join("");
-        
+
         var pathInfo = formatPath(url);
-        console.debug("path: " + pathInfo[0]);
-        console.debug("content dir: " + pathInfo[1]);
-        
+
         var contentHandler = new LWObjectHandler();
         contentHandler.getAttribute("contentDirectory").setValueDirect(pathInfo[1]);
 
-        var contentBuilder = new LWObjectBuilder(); 
+        var contentBuilder = new LWObjectBuilder();
         contentBuilder.setRegistry(factory.registry);
         contentBuilder.models.push(model);
         contentBuilder.layer = model.getAttribute("layer").getValueDirect();
         contentBuilder.visitHandler(contentHandler);
-        
-        contentHandler.parseFileStream(pathInfo[0]);  
+
+        contentHandler.parseFileStream(pathInfo[0]);
     }
-    
+
     addInspectionGroup(model, factory);
 }
 
@@ -30572,7 +30569,7 @@ function finalizeDirective(directive, factory)
 function finalizeCommand(command, factory)
 {
     command.finalize();
-    
+
     var commandMgr = factory.registry.find("CommandMgr");
     if (commandMgr)
     {
@@ -30581,7 +30578,7 @@ function finalizeCommand(command, factory)
         {
             commandMgr.popCommandSequence();
         }
-        
+
         commandMgr.addCommand(command);
     }
 }
@@ -30603,27 +30600,27 @@ function finalizeEvaluator(evaluator, factory)
 {
     // TODO
     console.debug("TODO: " + arguments.callee.name);
-    
+
     switch (evaluator.className)
     {
     case "KeyframeInterpolator":
-        
+
         var url = evaluator.getAttribute("url").getValueDirect();
         if (url) {
-        
+
             url = url.join("");
-            
+
             var pathInfo = formatPath(url);
-            
+
             var contentHandler = new LWSceneHandler();
             contentHandler.getAttribute("contentDirectory").setValueDirect(pathInfo[1]);
-            
-            var contentBuilder = new LWSceneBuilder(); 
+
+            var contentBuilder = new LWSceneBuilder();
             contentBuilder.setRegistry(factory.registry);
             contentBuilder.evaluators.push(evaluator);
             contentBuilder.visitHandler(contentHandler);
-            
-            contentHandler.parseFileStream(pathInfo[0]); 
+
+            contentHandler.parseFileStream(pathInfo[0]);
         }
         AttributeFactory_EvaluatorTargetConnectionTypeModifiedCB(evaluator.getAttribute("targetConnectionType"), factory);
         break;
@@ -30638,21 +30635,21 @@ function registerEvaluatorAttributes(evaluator, factory)
     	var url = new StringAttr("");
     	evaluator.registerAttribute(url, "url");
 	}
-	
+
     // target
     if (!evaluator.getAttribute("target"))
     {
     	var target = new StringAttr("");
     	evaluator.registerAttribute(target, "target");
 	}
-	
+
     // renderAndRelease
     if (!evaluator.getAttribute("renderAndRelease"))
     {
     	var renderAndRelease = new BooleanAttr(false);
     	evaluator.registerAttribute(renderAndRelease, "renderAndRelease");
 	}
-	
+
     // targetConnectionType
     if (!evaluator.getAttribute("targetConnectionType"))
     {
@@ -30671,7 +30668,7 @@ function registerParentableAttributes(pme, factory)
 		pme.registerAttribute(label, "label");
 		label.addModifiedCB(AttributeFactory_ParentableLabelModifiedCB, factory);
 	}
-	
+
 	// geoPosition
 	if (!pme.getAttribute("geoPosition"))
 	{
@@ -30686,21 +30683,21 @@ function registerParentableAttributes(pme, factory)
 		var altitude = new NumberAttr();
 		pme.registerAttribute(altitude, "altitude");
 	}
-	
+
 	// latitude
 	if (!pme.getAttribute("latitude"))
 	{
 		var latitude = new NumberAttr();
 		pme.registerAttribute(latitude, "latitude");
 	}
-	
+
 	// longitude
 	if (!pme.getAttribute("longitude"))
 	{
 		var longitude = new NumberAttr();
 		pme.registerAttribute(longitude, "longitude");
 	}
-	
+
 	// misc modified callbacks
 	pme.getAttribute("worldCenter").addModifiedCB(AttributeFactory_ParentableWorldPositionModifiedCB, factory);
 }
@@ -30734,7 +30731,7 @@ function AttributeFactory_ParentableGeoPositionModifiedCB(attribute, container)
         if (cms && cms.length)
         {
             var cm = cms[0];
-            
+
             var mpcs = container.registry.getByType(eAttrType.MapProjectionCalculator);
             if (mpcs && mpcs.length)
             {
@@ -30756,7 +30753,7 @@ function AttributeFactory_ParentableWorldPositionModifiedCB(attribute, container
 }
 
 function AttributeFactory_EvaluatorTargetConnectionTypeModifiedCB(attribute, container)
-{  
+{
     var evaluator = attribute.getContainer();
     if (evaluator)
     {
@@ -30775,7 +30772,7 @@ function Bridgeworks(canvas, bgImage, contentDir)
 {
     AttributeContainer.call(this);
     this.className = "Bridgeworks";
-    
+
     this.renderContext =  newRenderContext("webgl", canvas, bgImage);
     if (!this.renderContext) return;
 
@@ -30783,12 +30780,12 @@ function Bridgeworks(canvas, bgImage, contentDir)
 
     this.canvas = canvas;
     this.contentDir = contentDir;
-    
+
     // allocate objects
     //this.renderContext = null;
     this.graphMgr = new GraphMgr();
     this.graphMgr.setRenderContext(this.renderContext)
-    
+
     this.styleMgr = new StyleMgr();
     this.registry = new BwRegistry();
     this.factory = new AttributeFactory();
@@ -30805,7 +30802,7 @@ function Bridgeworks(canvas, bgImage, contentDir)
     this.layout = new GridLayout();
     this.mapProjectionCalculator = new MapProjectionCalculator();
     this.rasterComponentEventListener = new RasterComponentEventListener();
-     
+
     // set registry to allocated objects
     this.graphMgr.setRegistry(this.registry);
     this.factory.setRegistry(this.registry);
@@ -30819,28 +30816,28 @@ function Bridgeworks(canvas, bgImage, contentDir)
     this.layout.setRegistry(this.registry);
     this.mapProjectionCalculator.setRegistry(this.registry);
     this.rasterComponentEventListener.setRegistry(this.registry);
-    
+
     // configure dependencies
     this.factory.setGraphMgr(this.graphMgr);
     this.selector.setRayPick(this.rayPick);
     this.rasterComponentEventListener.setStyleMgr(this.styleMgr);
     this.rasterComponents = null;
-    
+
     this.name = new StringAttr("Bridgeworks");
     this.onLoad = new StringAttr();
-    
+
     this.onLoad.addModifiedCB(Bridgeworks_OnLoadModifiedCB, this);
-    
+
     this.registerAttribute(this.name, "name");
     this.registerAttribute(this.onLoad, "onLoad");
-    
+
     this.viewportMgr.getAttribute("width").setValueDirect(this.canvas.width);
-    this.viewportMgr.getAttribute("height").setValueDirect(this.canvas.height);    
+    this.viewportMgr.getAttribute("height").setValueDirect(this.canvas.height);
     this.viewportMgr.getAttribute("layout").setValueDirect(this.layout);
-    
+
     enumerateAttributeTypes();
     enumerateAttributeElementTypes();
-    
+
     // TODO: remove the following when onLoadModified is defined
     console.debug("TODO: " + arguments.callee.name);
     this.initRegistry();
@@ -30856,7 +30853,7 @@ Bridgeworks.prototype.handleEvent = function(event)
     {
         case "MouseEvent":
             {
-                var absPos = getElementAbsolutePos(this.canvas);            
+                var absPos = getElementAbsolutePos(this.canvas);
                 event.canvasX = event.clientX - absPos.x;
                 event.canvasY = event.clientY - absPos.y;
                 bwEvent = this.eventAdapter.createMouseEvent(event);
@@ -30922,7 +30919,7 @@ Bridgeworks.prototype.initEventListeners = function()
     this.eventMgr.addListener(eEventType.MouseWheelUp, this.rasterComponentEventListener);
     this.eventMgr.addListener(eEventType.MouseBothDown, this.rasterComponentEventListener);
     this.eventMgr.addListener(eEventType.MouseHover, this.rasterComponentEventListener);
-    this.eventMgr.addListener(eEventType.MouseMove, this.rasterComponentEventListener);    
+    this.eventMgr.addListener(eEventType.MouseMove, this.rasterComponentEventListener);
 }
 
 Bridgeworks.prototype.onLoadModified = function()
@@ -30988,10 +30985,10 @@ Bridgeworks.prototype.resize = function(width, height)
 Bridgeworks.prototype.render = function()
 {
     this.eventMgr.processEvent(new Event(eEventType.RenderBegin));
-    
+
     this.renderContext.clear();
     this.renderAgent.render();
-    
+
     this.eventMgr.processEvent(new Event(eEventType.RenderEnd));
 }
 
@@ -31046,14 +31043,14 @@ function Bridgeworks_OnLoadModifiedCB(attribute, container)
 /**
 * hoverIntent r5 // 2007.03.27 // jQuery 1.1.2+
 * <http://cherne.net/brian/resources/jquery.hoverIntent.html>
-* 
+*
 * @param  f  onMouseOver function || An object with configuration options
 * @param  g  onMouseOut function  || Nothing (use configuration options object)
 * @author    Brian Cherne <brian@cherne.net>
 */
 (function($){$.fn.hoverIntent=function(f,g){var cfg={sensitivity:7,interval:100,timeout:0};cfg=$.extend(cfg,g?{over:f,out:g}:f);var cX,cY,pX,pY;var track=function(ev){cX=ev.pageX;cY=ev.pageY;};var compare=function(ev,ob){ob.hoverIntent_t=clearTimeout(ob.hoverIntent_t);if((Math.abs(pX-cX)+Math.abs(pY-cY))<cfg.sensitivity){$(ob).unbind("mousemove",track);ob.hoverIntent_s=1;return cfg.over.apply(ob,[ev]);}else{pX=cX;pY=cY;ob.hoverIntent_t=setTimeout(function(){compare(ev,ob);},cfg.interval);}};var delay=function(ev,ob){ob.hoverIntent_t=clearTimeout(ob.hoverIntent_t);ob.hoverIntent_s=0;return cfg.out.apply(ob,[ev]);};var handleHover=function(e){var p=(e.type=="mouseover"?e.fromElement:e.toElement)||e.relatedTarget;while(p&&p!=this){try{p=p.parentNode;}catch(e){p=this;}}if(p==this){return false;}var ev=jQuery.extend({},e);var ob=this;if(ob.hoverIntent_t){ob.hoverIntent_t=clearTimeout(ob.hoverIntent_t);}if(e.type=="mouseover"){pX=ev.pageX;pY=ev.pageY;$(ob).bind("mousemove",track);if(ob.hoverIntent_s!=1){ob.hoverIntent_t=setTimeout(function(){compare(ev,ob);},cfg.interval);}}else{$(ob).unbind("mousemove",track);if(ob.hoverIntent_s==1){ob.hoverIntent_t=setTimeout(function(){delay(ev,ob);},cfg.timeout);}}};return this.mouseover(handleHover).mouseout(handleHover);};})(jQuery);
 /* Copyright (c) 2006 Brandon Aaron (http://brandonaaron.net)
- * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) 
+ * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
  * $LastChangedDate: 2007-07-21 18:45:56 -0500 (Sat, 21 Jul 2007) $
