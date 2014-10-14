@@ -11,6 +11,13 @@ var rotZ;
 var copiedSelectedText;
 var copiedElement = 0;
 
+//Loads the file dialog when the loadScene hyperlink is clicked
+$('#loadScene').click(function(){
+  $('#files').click(); //This is commented out, this is from loading from a file
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene(scene);
+});
+
 function copy()
 {
     if (selectedModel) {

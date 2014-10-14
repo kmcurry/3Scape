@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<Update>
+    <Set target="RenderAgent" elapsedTimeInSecs="0"></Set>
+    <Play/>
+    <Pause trigger="RenderAgent/elapsedTimeInSecs=5"/>
+</Update>
