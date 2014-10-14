@@ -7,5 +7,5 @@ Make and share interactive stories online at [3Scape.me](http;//3Scape.me)
  2. Install [MongoDB](http://mongodb.org)
  3. Run Mongo
  4. Run 3Scape
- * from command line: node server.js
- * Look for "the magic happens on port `port`. In your browser and type in `hostname`/`port` and voila!
+   * from command line: node server.js
+   * Look for "the magic happens on port `port`. In your browser and type in `hostname`/`port` and voila!
