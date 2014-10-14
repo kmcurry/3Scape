@@ -98,20 +98,8 @@ function handleKey(e)
               if (e.metaKey || e.ctrlKey) {
                   e.preventDefault();
                   copy();
-                  copy(); // why is this called 2X?? - KMC
               }      // c
           }
-              break;
-          case 187: //Equal Sign
-//                        var command = "\<Serialize target='Root'/>";
-//                        bridgeworks.updateScene(command);
-//                            saveThis(serializedScene,"Scene");
-
-
-//                        var canvasId = "Canvas";
-//                        var xml = "<ScreenCapture canvasId='" + canvasId + "'/>"
-//                        console.debug(xml);
-//                        bridgeworks.updateScene(xml);
               break;
 
           case 46: //Delete Key
