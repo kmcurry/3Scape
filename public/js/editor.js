@@ -11,14 +11,6 @@ var rotZ;
 var copiedSelectedText;
 var copiedElement = 0;
 
-function setObject(Object)
-{
-    var p = document.getElementById('Current_Object');
-    var q = document.getElementById('Current_Object2');
-    p.innerHTML = Object;
-    q.innerHTML = Object;
-}
-
 function copy()
 {
     if (selectedModel) {
@@ -57,6 +49,25 @@ function cut()
       bridgeworks.updateScene(c);
     }
 }
+
+function new3Scape() {
+  bridgeworks.contentDir='/BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('grid-100.xml');
+  $('#object-list').empty();
+  $('#animate').empty();
+  $('#slides').empty();
+}
+
+function setObject(Object)
+{
+    var p = document.getElementById('Current_Object');
+    var q = document.getElementById('Current_Object2');
+    p.innerHTML = Object;
+    q.innerHTML = Object;
+}
+
+
 function switchModes()
 {
     var objectInspector =bridgeworks.registry.find("ObjectInspector");
@@ -98,6 +109,13 @@ function trashAnimation(name)
          var link = document.getElementById("row" + name);
          panel.removeChild(link);
 
+}
+
+<!-- Color Picker Script - ColorCodeHex.COM -->
+function updateInfo(color) {
+  document.getElementById('info-r').value = color.rgb[0];
+  document.getElementById('info-g').value = color.rgb[1];
+  document.getElementById('info-b').value = color.rgb[2];
 }
 
 

@@ -369,19 +369,20 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="http://3scape.me" target="_blank"><div style="height:45px; margin-top:-12px;"><img src="./images/logo-3S.png" style="max-width:100%; max-height:100%;"></div></a>
-                  <text style="color:#ffffff">ALPHA</text>
+                  <a class="navbar-brand" href="http://3scape.me" target="_blank"><div style="height:45px; margin-top:-12px;"><img src="./images/logo-3S.png" style="max-width:100%; max-height:100%;"></div>alpha</a>
 
           </div>
               <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav">
                       <li>
-                        <div class="fb-like" style="padding:0px;margin:0px;" data-href="http://3scape.me" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
                         <a href="http://eepurl.com/45Zz9" target="top">Newsletter</a>
+                      </li>
+                      <li>
+                        <a href="http://blog.3Scape.me" target="top">Blog</a>
                       </li>
 
                       <!-- As wide in px as the longest object name to avoid displacement bug. More elegant solution? -->
-                      <li><p class="navbar-text" id="Current_Object" style="width:160px;font-size:15px"></p></li>
+                      <li><p class="navbar-text" id="Current_Object" style="font-size:15px"></p></li>
 
                     <li>
                       <div class="btn-group navbar-btn" style="margin-left:10px;">
@@ -407,7 +408,7 @@
                           <li class="divider"></li>
                           <li><a href="#" data-toggle="modal" data-target="#myModal">Browse Objects...</a></li>
                           <li class="divider"></li>
-                          <li><a href="javascript:bridgeworks.contentDir='/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('grid-100.xml');$('#object-list').empty();$('#animate').empty();$('#slides').empty();">New 3Scape</a></li>
+                          <li><a href="javascript:new3Scape();">New 3Scape</a></li>
                           <li class="divider"></li>
                           <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
                           <li><a href="#" id="loadScene">Load Saved 3Scape</a></li>
@@ -424,14 +425,6 @@
                             <span class="shape icon-paintroll"></span>
                           </button>
                           <ul class="dropdown-menu color-dropdown" role="menu">
-                            <!-- Color Picker Script - ColorCodeHex.COM -->
-                            <script type="text/javascript">
-                            function updateInfo(color) {
-                              document.getElementById('info-r').value = color.rgb[0];
-                              document.getElementById('info-g').value = color.rgb[1];
-                              document.getElementById('info-b').value = color.rgb[2];
-                            }
-                            </script>
 
                             <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">
                             <input id="info-r" size="2" type="hidden"/>
@@ -468,7 +461,7 @@
                         </button>
                       </li>
                       <!--Where I put the load a scene button-->
-                              <input type="file" id="files" accept=".xmp" style="display:none"/>
+                      <input type="file" id="files" accept=".xmp" style="display:none"/>
 
                       <script>
                             //Loads the file dialog when the loadScene hyperlink is clicked
@@ -545,7 +538,9 @@
                           <span class="fa fa-question-circle fa-lg" style="font-size:2em;"></span>
                         </button>
                       </li>
-
+                      <li>
+                        <div class="fb-like" style="padding-top:2px;padding-left:4px;" data-href="http://3scape.me" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                      </li>
                   </ul>
               </div>
           </div>
