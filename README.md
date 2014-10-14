@@ -1,5 +1,5 @@
 
-3Scape is a way to unlock your imagination by making and sharing interactive, 3D stories over the web.
+3Scape is a site where you can make and share graphically rich stories online
 
 
 #Installation/Setup with Node 
