@@ -1,5 +1,5 @@
 
-3Scape is a site where you can make and share graphically rich stories online
+Make and share interactive stories online at [3Scape.me](http;//3Scape.me)
 
 
 #Installation/Setup with Node 
