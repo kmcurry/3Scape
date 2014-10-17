@@ -68,10 +68,12 @@ function new3Scape() {
 
 function setObject(Object)
 {
+    /*
     var p = document.getElementById('Current_Object');
     var q = document.getElementById('Current_Object2');
     p.innerHTML = Object;
     q.innerHTML = Object;
+    */
 }
 
 
