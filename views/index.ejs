@@ -137,10 +137,6 @@
 
           }
 
-
-
-
-
       </script>
 
       <!-- Fork ribbon -->
@@ -411,6 +407,7 @@
                           <li class="divider"></li>
                           <!--Loading the slides in the line below this, have to give how many slides you want loaded-->
                           <li><a href="#" id="loadScene">Load Saved 3Scape</a></li>
+
                           <li class="divider"></li>
                           <li><a href="javascript:bridgeworks.contentDir='/BwContent/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
                           <li><a href="javascript:bridgeworks.contentDir='/BwContent/Entymology/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('formica_rufa.xml');$('#slides').empty();">Formica Rufa</a></li>
@@ -454,7 +451,12 @@
                       <input type="file" id="files" accept=".xmp" style="display:none"/>
 
                       <script>
-
+                          //Loads the file dialog when the loadScene hyperlink is clicked
+                          $('#loadScene').click(function(){
+                            $('#files').click(); //This is commented out, this is from loading from a file
+                            bridgeworks.onLoadModified();
+                            bridgeworks.updateScene(scene);
+                          });
 
                           function handleFileSelect(evt) {
                               var files = evt.target.files; // FileList object
