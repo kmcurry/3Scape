@@ -32,7 +32,7 @@ function handleEvent(e)
               var name = selectedModel.name.getValueDirect().join(""); // what's going on here?
               selectedThing = null;
 
-              
+
               setColorPicker();
 
               myObject = document.getElementById(name);
@@ -42,12 +42,7 @@ function handleEvent(e)
               scaleValues = (selectedModel.scale.getValueDirect());
               x = scaleValues['x'] * 100
               $('#scales').slider('setValue', x);
-              /*
-              var r = selectedModel.rotation.getValueDirect();
-              $("#rotxs").slider("setValue", r.x);
-              $("#rotys").slider("setValue", r.y);
-              $("#rotzs").slider("setValue", r.z);
-              */
+
 
           }
           else {
@@ -79,7 +74,6 @@ function handleEvent(e)
               else {
                   cmd = "\<Locate target='" + name + "'/>";
               }
-              console.log(name);
               bridgeworks.updateScene(cmd);
 
               setColorPicker();

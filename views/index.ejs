@@ -665,22 +665,11 @@
         </script>
 
         <div id="map-controls">
-            <div id="Rotate">
-              <span id="rotate-counter" class="shape fa fa-undo" title="Rotate Counter-Clockwise" style="font-size: 2em;"></span>
-              <span id="rotate-clockwise" class="shape glyphicon glyphicon-repeat" title="Rotate Clockwise" style="font-size: 1.8em"></span>
-            </div>
-            <div id ="Tilt">
-              <span id="tilt-up" class="shape glyphicon glyphicon-circle-arrow-up" style="font-size:2em" title="Tilt Up" onmousedown="tiltUp();"></span>
-              <span id="tilt-down" class="shape glyphicon glyphicon-circle-arrow-down" style="font-size:2em" title="Tilt Down" onmousedown="tiltDown();"></span>
-            </div>
             <div id="Zoom">
               <span id="zoom-in" class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In"></span>
               <span id="zoom-out" class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out"></span>
             </div>
         </div>
-
-
-
 
         <div id="object-controls">
             <div>
@@ -1209,10 +1198,10 @@
   var toggleMode = function(){
     if($('.modeButton:first').hasClass("fa-video-camera")) {
       $('.toggleController').removeClass('btn-info').addClass('btn-danger');
-      $('.toggleGlyph').removeClass('fa-video-camera').addClass('fa-anchor');
+      $('.toggleGlyph').removeClass('fa-video-camera').addClass('icon-move');
     }else {
       $('.toggleController').removeClass('btn-danger').addClass('btn-info');
-      $('.toggleGlyph').removeClass('fa-anchor').addClass('fa-video-camera');
+      $('.toggleGlyph').removeClass('icon-move').addClass('fa-video-camera');
     }
   };
   var toggleMap = function(){
