@@ -66,16 +66,6 @@ function new3Scape() {
   $('#slides').empty();
 }
 
-function setObject(Object)
-{
-    /*
-    var p = document.getElementById('Current_Object');
-    var q = document.getElementById('Current_Object2');
-    p.innerHTML = Object;
-    q.innerHTML = Object;
-    */
-}
-
 
 function switchModes()
 {
@@ -346,7 +336,7 @@ function loadModel(url)
     name = count.toString()+". "+name;
     count++;
 
-    setObject(name);
+
     var objectPanel = document.getElementById("object-list");
     var row = document.createElement('div');
     row.setAttribute("id", "row" + name);
@@ -535,7 +525,7 @@ function locate(name){
     setColorPicker();
     console.log(cmd);
     bridgeworks.updateScene(cmd);
-    setObject(name);
+
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
@@ -602,7 +592,7 @@ function setModel(name)
     console.log(xml);
     setColorPicker();
     bridgeworks.updateScene(xml);
-    setObject(name);
+
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');

@@ -32,7 +32,7 @@ function handleEvent(e)
               var name = selectedModel.name.getValueDirect().join(""); // what's going on here?
               selectedThing = null;
 
-              setObject(name);
+              
               setColorPicker();
 
               myObject = document.getElementById(name);
@@ -51,6 +51,7 @@ function handleEvent(e)
 
           }
           else {
+            // this is so confusing
               selectedThing = bridgeworks.selector.selectedName.getValueDirect().join("");
               selectedId = bridgeworks.selector.getAttribute("Selected").id;
               selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
@@ -80,7 +81,7 @@ function handleEvent(e)
               }
               console.log(name);
               bridgeworks.updateScene(cmd);
-              setObject(name);
+
               setColorPicker();
           }
       }
