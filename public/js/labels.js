@@ -63,7 +63,7 @@ function createLabel()
   adding = true;
   editorOpen = 1;
 
-  var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+  var pointWorld = bridgeworks.selector.pointObject.getValueDirect();
 
   g_countStr = g_labelCount.toString();
   g_labelCount = g_labelCount + 1;
