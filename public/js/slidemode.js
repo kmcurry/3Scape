@@ -34,6 +34,17 @@ function addSlide() {
 
     a.setAttribute("onclick", "bridgeworks.updateScene('" + xmlText + "')");
 
+    //This makes it so the slides can be changed from active to non active to represent what slide we are on
+
+    $('.nav li a').click(function(e) {
+        $('.nav li').removeClass('activeSlide');
+
+        var $parent = $(this).parent();
+        if (!$parent.hasClass('activeSlide')) {
+            $parent.addClass('activeSlide');
+        }
+    });
+
   }
 }
 
