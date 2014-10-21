@@ -13,7 +13,7 @@
 
     <!-- jquery stuff -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -42,8 +42,8 @@
     <script type="text/javascript" src="./js/labels.js"></script>
     <script type="text/javascript" src="./js/objectmode.js"></script>
     <script type="text/javascript" src="./js/eventHandlers.js"></script>
-    <script type="text/javascript" src="./js/slidemode.js"></script>
     <script type="text/javascript" src="./js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="./js/slidemode.js"></script>
     <script type="text/javascript" src="./js/FileSaver.js"></script>
     <script type="text/javascript" src="./js/uservoice.js"></script>
     <script type="text/javascript" src="./js/facebook.js"></script>
@@ -76,8 +76,6 @@
           var boat = "Vehicles/objects/Fishing Boat.lwo";
           var currentObj = "";
           var editorOpen = 0;
-          var slideCount = 1;
-          var numSlides = 10;
           var elapsedTime = 0;
           var CameraMotion = "CameraMotion";
           var zoomUpdate;
@@ -86,7 +84,7 @@
           var objectInspector;
           var camStartPos;
           var modelName;
-          var ancientLoaded = 0;
+
           var selectedThing;
           var selectedId;
           var edit = 0;
@@ -95,17 +93,7 @@
           var textBoxMade = 0;
 
 
-          //Progress Bar ===========================================================
-          var interval;
-          var kfi;
-          var slideTime;
-          var playSlider;
-          var slidesPlayed;
-          var isPlaying;
-          var isStopped;
-          var timer;
           //========================================================================
-          var graphMgr;
 
           var capture = false;
 
@@ -409,9 +397,9 @@
                           <li><a href="#" id="loadScene">Load Saved 3Scape</a></li>
 
                           <li class="divider"></li>
-                          <li><a href="javascript:bridgeworks.contentDir='/BwContent/Egypt';bridgeworks.updateScene('Egypt-Models.xml')" onclick="loadSlides(numSlides);ancientLoaded = 1;">Ancient Egypt</a></li>
-                          <li><a href="javascript:bridgeworks.contentDir='/BwContent/Entymology/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('formica_rufa.xml');$('#slides').empty();">Formica Rufa</a></li>
-                          <li><a href="javascript:bridgeworks.contentDir='/BwContent/Engine/BwContent';bridgeworks.onLoadModified();bridgeworks.updateScene('Stihl.xml');" onclick="loadSlides(1);">2-Stroke Engine</a></li>
+                          <li><a href="javascript:loadEgypt();">Ancient Egypt</a></li>
+                          <li><a href="javascript:loadEntymology();">Entymology</a></li>
+                          <li><a href="javascript:loadTwoStroke();">2-Stroke Engine</a></li>
                         </ul>
                       </div>
                     </li>
@@ -539,60 +527,58 @@
                   <div style="padding:10px; overflow:hidden; width:340px;">
                           <div>
                               <ul class="nav nav-tabs" style="clear:both">
-                                <li class="active"><a href="#object-list" data-toggle="tab">Objects</a></li>
-                                <!--<li><a href="#animate" data-toggle="tab">Animate</a></li>-->
-                                <li><a href="#slides" data-toggle="tab">Slides</a></li>
+                                <li class="active"><a href="#object-panel" data-toggle="tab">Objects</a></li>
+                                <!--<li><a href="#animate-panel" data-toggle="tab">Animate</a></li>-->
+                                <li><a href="#slide-panel" data-toggle="tab">Slides</a></li>
                                 <li><a href="#conway" data-toggle="tab"><span class="glyphicon glyphicon-heart" style="font-size:1em;" onclick="playConway();"></span></a></li>
                                </ul>
-                                  <div class="tab-content">
-                                      <div class="tab-pane active" id="object-list">
-                                        <ul class="nav nav-sidebar">
-                                              <!--This is where the objects get loaded into the list-->
-                                        </ul>
-                                      </div>
-                                      <div class="tab-pane" id="animate">
-                                          <ul class="nav nav-sidebar">
-                                              <!--This is where the animations get loaded into the list-->
-                                          </ul>
+                              <div class="tab-content">
+                                  <div class="tab-pane active" id="object-panel">
+                                    <!--This is where the objects get loaded into the list-->
+                                  </div>
+                                  <div class="tab-pane" id="animate-panel">
+                                      <ul class="nav">
+                                          <!--This is where the animations get loaded into the list-->
+                                      </ul>
 
-                                          <ul class="nav nav-sidebar">
+                                      <ul class="nav">
 
-                                          </ul>
-                                      </div>
-                                      <!--BEGIN PROJECT SCOPE-->
-                                      <div class="tab-pane" id="slides" ng-controller="projectController">
-                                        <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(isPlaying == 0){playSlides();} else if(isPlaying == 2){isPlaying = 1;}"></span>
-                                        <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
-                                        <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(timer);window.clearInterval(playSlider);isPlaying = 0;slidesPlayed = 1;"></span>
-                                        <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
-                                        <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>
-                                          <ul class="nav nav-sidebar" id="slidePanel">
-                                          </ul>
-                                      </div>
-                                      <!--END PROJECT SCOPE-->
-                                      <div class="tab-pane" id="conway">
-                                        <br/><br/>
-                                        <!--<button onclick="bridgeworks.renderController.rewind();">RW</button>-->
-                                        <button onclick="gol.start(250);">Start</button>
-                                        <button onclick="gol.stop();">Stop</button>
-                                        <button onclick="gol.tick();">Tick</button>
-                                        <br/><br/>
-                                        <!--<button onclick="bridgeworks.renderController.fastForward();">FF</button>-->
-                                        Width: <input id="width" value="10" style="width:30px"/>
-                                        Height: <input id="height" value="10" style="width:30px" />
-                                        Depth: <input id="depth" value="10" style="width:30px" />
-                                        <br/><br/>
-                                        <button onclick="gol.uninit();gol.init(parseInt(document.getElementById('width').value),
-                                                                               parseInt(document.getElementById('height').value),
-                                                                               parseInt(document.getElementById('depth').value));">Reset</button>
-
-                                        <br/><br/>
-                                        <button onclick="addPulsar();">Pulsar</button>
-                                        <button onclick="addBlinker();">Blinker</button>
-                                        <button onclick="addSpaceship();">Spaceship</button>
-                                      </div>
+                                      </ul>
                                   </div>
 
+                                  <div class="tab-pane" id="slide-panel">
+                                    <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(g_isPlaying == 0){playSlides();} else if(g_isPlaying == 2){g_isPlaying = 1;}"></span>
+                                    <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
+                                    <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(g_timer);window.clearInterval(g_playSlider);g_isPlaying = 0;slidesPlayed = 1;"></span>
+                                    <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
+                                    <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>
+                                    <ul class="nav" id="slide-list">
+                                      <!--This is where the slides get loaded into the list-->
+                                    </ul>
+                                  </div>
+
+                                  <div class="tab-pane" id="conway">
+                                    <br/><br/>
+                                    <!--<button onclick="bridgeworks.renderController.rewind();">RW</button>-->
+                                    <button onclick="gol.start(250);">Start</button>
+                                    <button onclick="gol.stop();">Stop</button>
+                                    <button onclick="gol.tick();">Tick</button>
+                                    <br/><br/>
+                                    <!--<button onclick="bridgeworks.renderController.fastForward();">FF</button>-->
+                                    Width: <input id="width" value="10" style="width:30px"/>
+                                    Height: <input id="height" value="10" style="width:30px" />
+                                    Depth: <input id="depth" value="10" style="width:30px" />
+                                    <br/><br/>
+                                    <button onclick="gol.uninit();gol.init(parseInt(document.getElementById('width').value),
+                                                                           parseInt(document.getElementById('height').value),
+                                                                           parseInt(document.getElementById('depth').value));">Reset</button>
+
+                                    <br/><br/>
+                                    <button onclick="addPulsar();">Pulsar</button>
+                                    <button onclick="addBlinker();">Blinker</button>
+                                    <button onclick="addSpaceship();">Spaceship</button>
+                                  </div>
+                              </div>
                           </div>
                   </div>
               </div>
@@ -716,14 +702,6 @@
                 <span class="shape icon-paintroll" style="font-size:1.4em;"></span>
               </button>
               <ul class="dropdown-menu color-dropdown" role="menu">
-                <!-- Color Picker Script - ColorCodeHex.COM -->
-                <script type="text/javascript">
-                function updateInfo(color) {
-                  document.getElementById('info-r').value = color.rgb[0];
-                  document.getElementById('info-g').value = color.rgb[1];
-                  document.getElementById('info-b').value = color.rgb[2];
-                }
-                </script>
 
                 <input class="color {onImmediateChange:'updateInfo(this);'}" id="myColor" value="FFFFFF" onchange="applyColor();" style="margin-left: 2px;">
                 <input id="info-r" size="2" type="hidden"/>
@@ -792,70 +770,10 @@
       <script>
           //Progress Bar ===========================================================
           var bar = new progress_bar(document.getElementById('click'));
-          slidesPlayed = 0;
-          isPlaying = 0;
+
           //=======================================================================
 
-          //Play Slider============================================================
-          function playSlides(){
-              console.log(slidesPlayed);
-              isPlaying = 2;
-               timer = window.setInterval(function (){
-                  kfi = bridgeworks.registry.find("CameraMotion");
-                  slideTime = kfi.time.getValueDirect();
-                  Math.floor(slideTime);
-                  if(isPlaying == 1){
-                      bridgeworks.renderController.play();
-                      isPlaying = 2;
-                  }
-              },200);
-              playSlider = window.setInterval(function () {
-                  console.log(slidesPlayed);
-                  if (slideTime >= 5 && slidesPlayed == 0) {
-                      bridgeworks.updateScene("Slide1.xml");
-                      slidesPlayed = 1;
-                  }
-                  else if(slidesPlayed == 1){
-                      bridgeworks.updateScene("Slide2.xml");
-                      slidesPlayed = 2;
-                  }
-                  else if (slideTime >= 15 && slidesPlayed == 2){
-                      bridgeworks.updateScene("Slide3.xml");
-                      slidesPlayed = 3;
-                  }
-                  else if(slideTime >=20 && slidesPlayed == 3){
-                      bridgeworks.updateScene("Slide4.xml");
-                      slidesPlayed = 4;
-                  }
-                  else if (slideTime >=38 && slidesPlayed == 4){
-                      bridgeworks.updateScene("Slide5.xml");
-                      slidesPlayed = 5;
-                  }
-                  else if(slideTime >=43 && slidesPlayed == 5){
-                      bridgeworks.updateScene("Slide6.xml");
-                      slidesPlayed = 6;
-                  }
-                  else if(slideTime >=56 && slidesPlayed == 6){
-                      bridgeworks.updateScene("Slide7.xml");
-                      slidesPlayed = 7;
-                  }
-                  else if(slideTime >=61 && slidesPlayed == 7){
-                      bridgeworks.updateScene("Slide8.xml");
-                      slidesPlayed = 8;
-                  }
-                  else if(slideTime >=80 && slidesPlayed == 8){
-                      bridgeworks.updateScene("Slide9.xml");
-                      slidesPlayed = 9;
-                  }
-                  else if((slideTime >=86 && slidesPlayed == 9)){
-                      bridgeworks.updateScene("Slide10.xml");
-                      slidesPlayed = 0;
-                      isPlaying = 0;
-                      window.clearInterval(playSlider);
-                      window.clearInterval(timer);
-                  }
-              },4000);
-          }
+
 
           function closeFullScreen() {
             if (document.exitFullscreen) {
@@ -911,10 +829,6 @@
               $('#present-tray').show();
               $('#present-toolbar').show();
 
-              if(ancientLoaded == 1) {
-                  $('#click').show();
-              }
-
 
               var docElement
               var request;
@@ -926,9 +840,9 @@
               request.call(docElement);
               //  }
 
-              kfi = bridgeworks.registry.find("CameraMotion");
+              var kfi = bridgeworks.registry.find("CameraMotion");
               //Progress Bar ====================================
-              interval = window.setInterval(function () {
+              g_interval = window.setInterval(function () {
                   elapsedTime = kfi.time.getValueDirect();
                   elapsedTime = elapsedTime * 1.07;
                   bar.set_percentage(elapsedTime);
@@ -964,7 +878,7 @@
               $('#present-toolbar').hide();
               $('#click').hide();
 
-              window.clearInterval(interval);
+              window.clearInterval(g_interval);
           }
       </script>
 
@@ -997,14 +911,13 @@
 
                 sceneInspector = bridgeworks.registry.find("SceneInspector");
                 objectInspector =bridgeworks.registry.find("ObjectInspector");
-                graphMgr = bridgeworks.registry.find("GraphMgr");
+                var graphMgr = bridgeworks.registry.find("GraphMgr");
                 g_labelCount = graphMgr.labelIndex;
 
                 document.getElementById('saveScene').onclick = function(){
                     saveScene();
                 };
 
-                console.log(g_labelCount);
                 listLibrary();
 
                 $('html').bind('keypress', function(e)
@@ -1111,7 +1024,6 @@
         }
           $('#map-controls').mouseenter(function(){
             var sceneActive = sceneInspector.enabled.getValueDirect();
-            console.log(sceneActive);
             if(!sceneActive){
               sceneInspector.enabled.setValueDirect(true);
 
@@ -1125,16 +1037,15 @@
 
           //Helper method to create button-hold functions. Pass element id, desired function (leave out parentheses), and time between repeats in miliseconds.
           var onHoldFunction = function(id, method, time) {
-            var interval;
             $(id).on({
               mousedown : function () {
                 method(); // Still works on a single click
-                interval = window.setInterval(function(){
+                g_interval = window.setInterval(function(){
                   method();
                 }, time); //Repeats every (time) miliseconds
               },
               mouseup : function () {
-                window.clearInterval(interval);
+                window.clearInterval(g_interval);
               }
             });
           };

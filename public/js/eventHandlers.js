@@ -7,6 +7,8 @@ function handleDocMove(event)
 
 function handleEvent(e)
 {
+    if (!bridgeworks) return;
+    
     bridgeworks.handleEvent(e);
     switch(e.type) {
         case "mousedown":
@@ -96,8 +98,12 @@ function handleKey(e)
               }      // c
           }
               break;
-
+          case 'S'.charCodeAt(0):
+            {
+              addSlide();
+            }
           case 46: //Delete Key
+            if (selectedThing) {
               var slice = selectedThing.slice(6,8);
                   console.log(slice);
               var cmd = "\<Remove target='"+selectedThing+"'/>";
@@ -106,6 +112,7 @@ function handleKey(e)
               var div = document.getElementById(selectedId);
               bridgeworks.updateScene(cmd2);
               div.parentNode.removeChild(div);
+            }
           break;
 
           case 'V'.charCodeAt(0):

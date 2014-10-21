@@ -11,6 +11,15 @@ var rotZ;
 var copiedSelectedText;
 var copiedElement = 0;
 
+var g_currSlide = 0;
+var g_numSlides = 0;
+var g_slidesPlayed = 0;
+var g_isPlaying = 0;
+var g_playSlider = null;
+var g_timer = null;
+var g_interval = null;
+
+
 function copy()
 {
     if (selectedModel) {
@@ -40,7 +49,7 @@ function cut()
         bridgeworks.updateScene(c);
         console.log(name);
 
-        var panel = document.getElementById("object-list");
+        var panel = document.getElementById("object-panel");
         var link = document.getElementById("row" + name);
         panel.removeChild(link);
     }
@@ -50,20 +59,53 @@ function cut()
     }
 }
 
+function loadEgypt() {
+  reset();
+  bridgeworks.contentDir='/BwContent/Egypt';
+  //bridgeworks.onLoadModified();
+  bridgeworks.updateScene('Egypt-Models.xml');
+  loadSlides(10);
+}
+
+function loadEntymology() {
+  reset();
+  bridgeworks.contentDir='/BwContent/Entymology/BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('formica_rufa.xml');
+}
+
+function loadTwoStroke() {
+  reset();
+  bridgeworks.contentDir='/BwContent/Engine/BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('Stihl.xml');
+  loadSlides(1);
+}
+
 function new3Scape() {
   bridgeworks.contentDir='/BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('grid-100.xml');
-  $('#object-list').empty();
-  $('#animate').empty();
-  $('#slides').empty();
+  reset();
 }
 
+function reset() {
+
+  g_currSlide = 0;
+  g_isPlaying = 0;
+  g_labelCount = 0;
+  g_numSlides = 0;
+  g_slidesPlayed = 0;
+
+  $('#object-panel').empty();
+  $('#animate-panel').empty();
+  $('#slide-list').empty();
+}
 
 function switchModes()
 {
-    var objectInspector =bridgeworks.registry.find("ObjectInspector");
-    var sceneInspector =bridgeworks.registry.find("SceneInspector");
+    var objectInspector = bridgeworks.registry.find("ObjectInspector");
+    var sceneInspector = bridgeworks.registry.find("SceneInspector");
     var sceneActive = sceneInspector.enabled.getValueDirect();
 
     if(sceneActive)
@@ -86,20 +128,20 @@ function trashModel(name)
     console.log(c);
     bridgeworks.updateScene(c);
 
-    var panel = document.getElementById("object-list");
+    var panel = document.getElementById("object-panel");
     var link = document.getElementById("row" + name);
     panel.removeChild(link);
 }
 
 function trashAnimation(name)
 {
-         var cmd = "\<Remove target='" + name + "'/>";
-         console.log(cmd);
-         bridgeworks.updateScene(cmd);
+  var cmd = "\<Remove target='" + name + "'/>";
+  console.log(cmd);
+  bridgeworks.updateScene(cmd);
 
-         var panel = document.getElementById("animate");
-         var link = document.getElementById("row" + name);
-         panel.removeChild(link);
+  var panel = document.getElementById("animate-panel");
+  var link = document.getElementById("row" + name);
+  panel.removeChild(link);
 
 }
 
@@ -252,52 +294,7 @@ function loadDirectoryObject(url,href,panel,name){
     panel.appendChild(br);
 }
 
-function listDirectory(url, panel)
-{
-    // Models
-    var xhttp = CreateHTTPRequestObject();
-    xhttp.open("GET", url, false);
-    xhttp.send();
 
-    var dom = ParseHTTPResponse(xhttp, "text/html");
-    var objects = dom.getElementsByTagName("a");
-    var object = null;
-    var onclick = null;
-    var href = "";
-
-    var i = 0;
-
-    for (i = 0; i < objects.length; i++) {
-
-        object = objects[i].cloneNode(true);
-
-        var value = object.innerText;
-
-        href = object.getAttribute("href");
-
-        // skip subversion files - blecch
-        var ndx = href.indexOf('.svn') && value.indexOf('Parent Directory');
-        if (ndx != -1) continue;
-
-        ndx = href.lastIndexOf('/');
-
-        href = ndx == -1 ? href : href.substring(ndx+1);
-
-        object.innerText = object.innerText.substring(0,object.innerText.indexOf('.'));
-
-        object.setAttribute("id",object.innerText);
-        object.removeAttribute("href");
-        object.setAttribute("onclick", "load('" + url + href + "'),modalHide();");
-        //This takes care of the file having the lwo attached to it.
-        //console.debug(object.innerText);
-
-        panel.appendChild(object);
-        var br = document.createElement("br");
-        panel.appendChild(br);
-
-    }
-
-}
 
 function load(u)
 {
@@ -330,7 +327,7 @@ function loadModel(url)
     count++;
 
 
-    var objectPanel = document.getElementById("object-list");
+    var objectPanel = document.getElementById("object-panel");
     var row = document.createElement('div');
     row.setAttribute("id", "row" + name);
     row.setAttribute("class", "row" + name);
@@ -431,7 +428,7 @@ function loadModel(url)
 
 
     var xstr = (new XMLSerializer()).serializeToString(xml);
-    console.debug(xstr);
+    //console.debug(xstr);
     bridgeworks.updateScene(xstr);
 
     selectedModel = bridgeworks.registry.find(name);
@@ -462,7 +459,7 @@ function loadMotion(url)
     name = motionCount.toString()+". "+name;
     motionCount++;
 
-    var animationPanel = document.getElementById("animate");
+    var animationPanel = document.getElementById("animate-panel");
     var row = document.createElement('div');
     row.setAttribute("id", "row" + name)
     var nameColumn = document.createElement('div');
