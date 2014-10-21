@@ -110,10 +110,11 @@ function previousSlide(){
 //Play Slider============================================================
 function playSlides(){
     console.log(g_slidesPlayed);
+    var slideTime = 0;
     g_isPlaying = 2;
      g_timer = window.setInterval(function (){
         var kfi = bridgeworks.registry.find("CameraMotion");
-        var slideTime = kfi.time.getValueDirect();
+        slideTime = kfi.time.getValueDirect();
         Math.floor(slideTime);
         if(g_isPlaying == 1){
             bridgeworks.renderController.play();

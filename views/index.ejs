@@ -547,9 +547,9 @@
                                   </div>
 
                                   <div class="tab-pane" id="slide-panel">
-                                    <span class="glyphicon glyphicon-play dvd" title="Play" onclick="if(g_isPlaying == 0){playSlides();} else if(g_isPlaying == 2){g_isPlaying = 1;}"></span>
+                                    <span class="glyphicon glyphicon-play dvd" title="Play" onclick="bridgeworks.renderController.play();"></span>
                                     <span class="glyphicon glyphicon-pause dvd" title="Pause" onclick="bridgeworks.renderController.pause();"></span>
-                                    <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();bridgeworks.updateScene('Slide1.xml');window.clearInterval(g_timer);window.clearInterval(g_playSlider);g_isPlaying = 0;slidesPlayed = 1;"></span>
+                                    <span class="glyphicon glyphicon-stop dvd" title="Stop" onclick="bridgeworks.renderController.stop();"></span>
                                     <span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
                                     <span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>
                                     <ul class="nav" id="slide-list">
