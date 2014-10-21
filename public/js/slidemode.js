@@ -50,7 +50,7 @@ function loadSlides(num) {
     for(i = 1; i <= num; ++i) {
         var li = document.createElement('li');
         var aTag = document.createElement('a');
-        aTag.setAttribute("style", "cursor: pointer;visibility:visible");
+        aTag.setAttribute("style", "cursor: pointer;");
         aTag.setAttribute("onclick", "playSlide(" + i + ")");
         aTag.setAttribute("id", "Slide " + i);
         var text = document.createTextNode("Slide " + i);
@@ -69,11 +69,11 @@ function loadSlides(num) {
     //This makes it so the slides can be changed from active to non active to represent what slide we are on
 
     $('.nav li a').click(function(e) {
-        $('.nav li').removeClass('active');
+        $('.nav li').removeClass('activeSlide');
 
         var $parent = $(this).parent();
-        if (!$parent.hasClass('active')) {
-            $parent.addClass('active');
+        if (!$parent.hasClass('activeSlide')) {
+            $parent.addClass('activeSlide');
         }
     });
 

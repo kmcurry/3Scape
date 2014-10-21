@@ -15,6 +15,11 @@ html{
     overflow-y: auto;
 }
 
+.activeSlide a {
+  background-color: #1c75bc;
+  color: #ffffff;
+}
+
 .btn:focus {
   outline:none;
 }
