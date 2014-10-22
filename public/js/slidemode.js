@@ -7,12 +7,16 @@ function addSlide() {
 
     ++g_numSlides;
 
-    var Li = document.createElement('li');
+    var li = document.createElement('li');
+    li.setAttribute("style", "background-color:#dddddd;height:26px;");
+    var span = document.createElement('span');
+    span.setAttribute("class", "ui-icon ui-icon-arrowthick-2-n-s");
+    li.appendChild(span);
     var a = document.createElement('a');
     a.setAttribute("style", "cursor: pointer;");
     a.innerHTML = "Slide " + g_numSlides; // <a>INNER_TEXT</a>
-    Li.appendChild(a);
-    slideList.appendChild(Li);
+    li.appendChild(a);
+    slideList.appendChild(li);
 
     var camera = bridgeworks.registry.find("Camera");
 
@@ -60,6 +64,10 @@ function loadSlides(num) {
 
     for(i = 1; i <= num; ++i) {
         var li = document.createElement('li');
+        li.setAttribute("style", "background-color:#dddddd;height:26px;");
+        var span = document.createElement('span');
+        span.setAttribute("class", "ui-icon ui-icon-arrowthick-2-n-s");
+        li.appendChild(span);
         var aTag = document.createElement('a');
         aTag.setAttribute("style", "cursor: pointer;");
         aTag.setAttribute("onclick", "playSlide(" + i + ")");
