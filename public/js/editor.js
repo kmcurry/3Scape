@@ -59,6 +59,26 @@ function cut()
     }
 }
 
+function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = function(e) {
+            var text = reader.result;
+            console.log(text);
+            bridgeworks.onLoadModified();
+            bridgeworks.updateScene(text);
+        }
+
+        reader.readAsText(f);
+    }
+}
+
 function loadEgypt() {
   reset();
   bridgeworks.contentDir='/BwContent/Egypt';
