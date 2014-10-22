@@ -67,6 +67,7 @@ function createLabel()
 
   g_countStr = g_labelCount.toString();
   g_labelCount = g_labelCount + 1;
+  var graphMgr = bridgeworks.registry.find("GraphMgr");
   graphMgr.getNextLabelIndex();
   console.log(graphMgr.labelIndex);
 
