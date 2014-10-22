@@ -125,6 +125,11 @@
 
           }
 
+          $(function() {
+            $( "#slide-list" ).sortable();
+            $( "#slide-list" ).disableSelection();
+          });
+
       </script>
 
       <!-- Fork ribbon -->
@@ -545,6 +550,7 @@
 
                                       </ul>
                                   </div>
+
 
                                   <div class="tab-pane" id="slide-panel">
                                     <span class="glyphicon glyphicon-play dvd" title="Play" onclick="bridgeworks.renderController.play();"></span>
