@@ -63,7 +63,8 @@ function createLabel()
   adding = true;
   editorOpen = 1;
 
-  var pointWorld = bridgeworks.selector.pointObject.getValueDirect();
+  var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+  var pointObject = bridgeworks.selector.pointObject.getValueDirect();
 
   g_countStr = g_labelCount.toString();
   g_labelCount = g_labelCount + 1;
@@ -84,27 +85,27 @@ function createLabel()
 
   var label = xml.getElementsByTagName("Label")[0];
   label.attributes["name"].value = "Label_" + name.value;
-  if(selectedModel)
+  if (selectedModel)
   {
       label.attributes["parent"].value = modelName;
       console.log(modelName)
   }
-  else {
+  else 
+  {
       label.attributes["parent"].value = name.value;
       console.log("No Model");
   }
 
   var labPos = xml.getElementsByTagName("position")[1];
-  var posX = pointWorld.x - selectedModel.position.values[0];
-  var posY = pointWorld.y - selectedModel.position.values[1];
-  var posZ = pointWorld.z - selectedModel.position.values[2];
+  var posX = pointObject.x;
+  var posY = pointObject.y;
+  var posZ = pointObject.z;
   labPos.attributes["x"].value = posX.toString();
   labPos.attributes["y"].value = posY.toString();
   labPos.attributes["z"].value = posZ.toString();
 
   name = xml.getElementsByTagName("Group")[0].attributes[0];
   name.value = "Group_" + g_labelName;
-
 
   var xstr = (new XMLSerializer()).serializeToString(xml);
   console.debug(xstr);
