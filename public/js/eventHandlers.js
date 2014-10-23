@@ -7,6 +7,8 @@ function handleDocMove(event)
 
 function handleEvent(e)
 {
+    if (!bridgeworks) return;
+    
     bridgeworks.handleEvent(e);
     switch(e.type) {
         case "mousedown":
@@ -32,7 +34,7 @@ function handleEvent(e)
               var name = selectedModel.name.getValueDirect().join(""); // what's going on here?
               selectedThing = null;
 
-              setObject(name);
+
               setColorPicker();
 
               myObject = document.getElementById(name);
@@ -42,15 +44,11 @@ function handleEvent(e)
               scaleValues = (selectedModel.scale.getValueDirect());
               x = scaleValues['x'] * 100
               $('#scales').slider('setValue', x);
-              /*
-              var r = selectedModel.rotation.getValueDirect();
-              $("#rotxs").slider("setValue", r.x);
-              $("#rotys").slider("setValue", r.y);
-              $("#rotzs").slider("setValue", r.z);
-              */
+
 
           }
           else {
+            // this is so confusing
               selectedThing = bridgeworks.selector.selectedName.getValueDirect().join("");
               selectedId = bridgeworks.selector.getAttribute("Selected").id;
               selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
@@ -78,9 +76,8 @@ function handleEvent(e)
               else {
                   cmd = "\<Locate target='" + name + "'/>";
               }
-              console.log(name);
               bridgeworks.updateScene(cmd);
-              setObject(name);
+
               setColorPicker();
           }
       }
@@ -101,8 +98,12 @@ function handleKey(e)
               }      // c
           }
               break;
-
+          case 'S'.charCodeAt(0):
+            {
+              addSlide();
+            }
           case 46: //Delete Key
+            if (selectedThing) {
               var slice = selectedThing.slice(6,8);
                   console.log(slice);
               var cmd = "\<Remove target='"+selectedThing+"'/>";
@@ -111,6 +112,7 @@ function handleKey(e)
               var div = document.getElementById(selectedId);
               bridgeworks.updateScene(cmd2);
               div.parentNode.removeChild(div);
+            }
           break;
 
           case 'V'.charCodeAt(0):

@@ -15,6 +15,11 @@ html{
     overflow-y: auto;
 }
 
+.activeSlide a {
+  background-color: #1c75bc;
+  color: #ffffff;
+}
+
 .btn:focus {
   outline:none;
 }
@@ -467,3 +472,7 @@ fieldset[disabled] .btn-purple.active {
   color: #823B94;
   background-color: #FFFFFF;
 }
+
+#slide-list { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+#slide-list li { margin: 0 3px 3px 3px; padding: 0.0em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+#slide-list li span { position: absolute; margin-left: -1.3em; }

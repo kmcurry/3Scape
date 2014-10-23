@@ -33,6 +33,6 @@
         </Group>
        <!-- <Label text="Working??" parent="Cube"></Label> -->
     </Isolator>
-    <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
+    <RenderDirective name="RenderDirective"/>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 </Scene>
