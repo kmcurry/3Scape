@@ -8,7 +8,7 @@ function handleDocMove(event)
 function handleEvent(e)
 {
     if (!bridgeworks) return;
-    
+
     bridgeworks.handleEvent(e);
     switch(e.type) {
         case "mousedown":
@@ -30,6 +30,7 @@ function handleEvent(e)
           window.clearInterval(zoomUpdate);
           selectedModel = bridgeworks.selector.selections.models[0];
           if(selectedModel) {
+
               modelName = selectedModel.name.getValueDirect().join("");
               var name = selectedModel.name.getValueDirect().join(""); // what's going on here?
               selectedThing = null;
@@ -44,6 +45,15 @@ function handleEvent(e)
               scaleValues = (selectedModel.scale.getValueDirect());
               x = scaleValues['x'] * 100
               $('#scales').slider('setValue', x);
+
+              // if the selected model is not moveable switch modes between camera and objects
+              if (selectedModel.moveable.getValueDirect() == false) {
+                sceneInspector.enabled.setValueDirect(true);
+                objectInspector.enabled.setValueDirect(false);
+              } else {
+                sceneInspector.enabled.setValueDirect(false);
+                objectInspector.enabled.setValueDirect(true);
+              }
 
 
           }

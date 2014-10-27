@@ -477,11 +477,13 @@
                               <span class="fa fa-camera-retro fa-lg" style="font-size:2em;"></span>
                           </button>
                       </li>
+                      <!--
                       <li>
                         <button type="button" class="btn btn-info navbar-btn toggleController" id="navCamera" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="margin-right:3px;">
                           <span class="modeButton toggleGlyph fa fa-video-camera fa-lg" style="font-size:2em;"></span>
                         </button>
                       </li>
+                      -->
                       <li>
                         <button type="button" class="btn btn-purple navbar-btn toggleController" id="navMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="margin-right:3px;">
                           <span class="toggleGlyph fa fa-compass fa-lg" style="font-size:2em;"></span>
@@ -714,9 +716,11 @@
             <button type="button" class="btn btn-default" id="pPaste" role="button" onclick="paste();">
                   <span class="shape fa fa-clipboard fa-2x" style="font-size:2em;" title="Paste"></span>
             </button>
+            <!--
             <button type="button" class="btn btn-info navbar-btn toggleController" role="button" onclick="switchModes();toggleMode();" title="Toggle Camera/Object Mode" style="height:42px;">
               <span class="modeButton fa fa-video-camera fa-2x toggleGlyph"></span>
             </button>
+            -->
             <button type="button" class="btn btn-purple navbar-btn toggleController" id="pMap" role="button" onclick="toggleMap();" title="Toggle Map Controls" style="height:42px;">
               <span class="toggleGlyph fa fa-compass fa-2x"></span>
             </button>
@@ -1092,6 +1096,7 @@
       </script>
 
 <script type="text/javascript">
+  /*
   var toggleMode = function(){
     if($('.modeButton:first').hasClass("fa-video-camera")) {
       $('.toggleController').removeClass('btn-info').addClass('btn-danger');
@@ -1101,6 +1106,7 @@
       $('.toggleGlyph').removeClass('icon-move').addClass('fa-video-camera');
     }
   };
+  */
   var toggleMap = function(){
     $('#map-controls').fadeToggle();
     $('#object-controls').fadeToggle();

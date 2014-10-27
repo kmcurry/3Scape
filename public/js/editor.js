@@ -349,8 +349,8 @@ function loadModel(url)
 
     var objectPanel = document.getElementById("object-panel");
     var row = document.createElement('div');
-    row.setAttribute("id", "row" + name);
-    row.setAttribute("class", "row" + name);
+    //row.setAttribute("id", "row" + name);
+    //row.setAttribute("class", "row" + name);
     var nameColumn = document.createElement('div');
     // var colorColumn = document.createElement('div');
     var findColumn = document.createElement('div');
@@ -363,7 +363,7 @@ function loadModel(url)
     a.innerHTML = name;
     a.setAttribute("id", name);
     a.setAttribute("onclick", "setModel('"+name+"');"); // Instead of calling setAttribute
-    a.setAttribute("Title", "Select Object");
+    a.setAttribute("title", "Select Object");
     a.setAttribute("class", "object")
     a.style.cursor="pointer";
     a.style.cursor="hand";
