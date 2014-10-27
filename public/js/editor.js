@@ -353,6 +353,7 @@ function loadModel(url)
     //row.setAttribute("class", "row" + name);
     var nameColumn = document.createElement('div');
     // var colorColumn = document.createElement('div');
+    var moveColumn = document.createElement('div');
     var findColumn = document.createElement('div');
     var trashColumn = document.createElement('div');
     var playColumn = document.createElement('div');
@@ -360,7 +361,7 @@ function loadModel(url)
     var stopColumn = document.createElement('div');
 
     var a = document.createElement('a');
-    a.innerHTML = name;
+    a.innerHTML = name.substring(3);
     a.setAttribute("id", name);
     a.setAttribute("onclick", "setModel('"+name+"');"); // Instead of calling setAttribute
     a.setAttribute("title", "Select Object");
@@ -368,18 +369,25 @@ function loadModel(url)
     a.style.cursor="pointer";
     a.style.cursor="hand";
 
+    var moveBtn = document.createElement('span');
+    moveBtn.setAttribute("id", "moveable" + name);
+    moveBtn.setAttribute("class", 'shape icon-move');
+    moveBtn.setAttribute("style", "margin-top:3px;");
+    moveBtn.setAttribute("title", 'Toggle Moveable');
+    moveBtn.setAttribute("onClick", "toggleMoveable('" + name + "');");
+
     var findBtn = document.createElement('span');
     findBtn.setAttribute("id", "find" + name);
     findBtn.setAttribute("class", 'shape fa fa-search');
     findBtn.setAttribute("style", "margin-top:3px;");
-    findBtn.setAttribute("Title", 'Jump to Object');
+    findBtn.setAttribute("title", 'Jump to Object');
     findBtn.setAttribute("onClick", "locate('" + name + "');");
 
     var trashBtn = document.createElement('span');
     trashBtn.setAttribute("id", "trash" + name);
     trashBtn.setAttribute("class", 'shape fa fa-trash-o');
     trashBtn.setAttribute("style", "margin-top:3px;");
-    trashBtn.setAttribute("Title", 'Remove');
+    trashBtn.setAttribute("title", 'Remove');
     trashBtn.setAttribute("onClick", "trashModel('" + name + "');");
 
     var playBtn = document.createElement('span');
@@ -403,8 +411,9 @@ function loadModel(url)
     stopBtn.setAttribute("Title", 'Stop');
     stopBtn.setAttribute("onClick", "stopRoaming('" + name + "');");
 
-    nameColumn.setAttribute("class", "col-sm-6");
+    nameColumn.setAttribute("class", "col-sm-5");
     // colorColumn.setAttribute("class", "col-md-5");
+    moveColumn.setAttribute("class", "col-sm-1");
     findColumn.setAttribute("class", "col-sm-1");
     trashColumn.setAttribute("class", "col-sm-1");
     playColumn.setAttribute("class", "col-sm-1");
@@ -412,6 +421,7 @@ function loadModel(url)
     stopColumn.setAttribute("class", "col-sm-1");
 
     nameColumn.appendChild(a);
+    moveColumn.appendChild(moveBtn);
     findColumn.appendChild(findBtn);
     // colorColumn.appendChild(c);
     trashColumn.appendChild(trashBtn);
@@ -421,6 +431,7 @@ function loadModel(url)
 
     row.appendChild(nameColumn);
     // row.appendChild(colorColumn)
+    row.appendChild(moveColumn);
     row.appendChild(playColumn);
     row.appendChild(ffColumn);
     row.appendChild(stopColumn);
@@ -571,6 +582,17 @@ function roamFaster(name) {
     var cmd = "\<Set target='" + name + "_roam' linearSpeed='3'/>";
     console.log(cmd);
     bridgeworks.updateScene(cmd);
+}
+
+function toggleMoveable(name) {
+  if (!name) {
+    name = selectedModel.name.getValueDirect().join("");
+  }
+  var m = !(selectedModel.moveable.getValueDirect());
+
+  var cmd = "\<Set target='" + name + "' moveable='" + m + "'/>";
+  console.log(cmd);
+  bridgeworks.updateScene(cmd);
 }
 
 function stopRoaming(name) {
