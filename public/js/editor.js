@@ -349,7 +349,7 @@ function loadModel(url)
 
     var objectPanel = document.getElementById("object-panel");
     var row = document.createElement('div');
-    //row.setAttribute("id", "row" + name);
+    row.setAttribute("id", "row" + name);
     //row.setAttribute("class", "row" + name);
     var nameColumn = document.createElement('div');
     // var colorColumn = document.createElement('div');
