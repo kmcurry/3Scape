@@ -28,13 +28,13 @@
 		<Model name="GreatPyramid" url="objects/GreatPyramid.lwo">
 			<position x="116.492" y="0" z="-492.851"/>
 		</Model>
-		<Model name="KhafrePyramid" url="objects/KhafrePyramid.lwo">
+		<Model name="KhafrePyramid" url="objects/KhafrePyramid.lwo" moveable="false">
 			<position x="-247.374" y="0" z="-889.919"/>
 		</Model>
-		<Model name="MenkaurePyramid" url="objects/MenkaurePyramid.lwo">
+		<Model name="MenkaurePyramid" url="objects/MenkaurePyramid.lwo" moveable="false">
 			<position x="-521.325" y="0" z="-1328.76"/>
 		</Model>
-		<Model name="Site_SkyDome" url="objects/Site_SkyDome.lwo"/>
+		<Model name="Site_SkyDome" url="objects/Site_SkyDome.lwo" moveable="false"/>
 		<Model name="Artifact_01" url="objects/Artifact_01.lwo" dissolve="1">
 			<position x="244.377" y="20" z="-299.878"/>
 			<rotation x="-14.6" y="146" z="6.1"/>
