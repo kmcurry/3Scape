@@ -24,7 +24,7 @@
     </Set>
     <Set target="RenderAgent" globalTimeInSecs="0"></Set>
     <Group name="Models">
-        <Model name="EGYPT" url="objects/EGYPT.lwo"/>
+        <Model name="EGYPT" url="objects/EGYPT.lwo" moveable="false"/>
 		<Model name="GreatPyramid" url="objects/GreatPyramid.lwo">
 			<position x="116.492" y="0" z="-492.851"/>
 		</Model>
