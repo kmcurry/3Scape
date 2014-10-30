@@ -9370,6 +9370,8 @@ function webglRC(canvas, background)
 
     RenderContext.call(this, canvas, background);
 
+    console.log(background);
+
     var gl = getWebGLContext(canvas, false /*set to true for debug context*/);
     if (!gl) return;
 

@@ -10,7 +10,7 @@ function draw()
 function resize()
 {
     if (!bridgeworks) return;
-    
+
     var WIDTH = bridgeworks.container.offsetWidth;
     var HEIGHT = bridgeworks.container.offsetHeight;
     //console.debug("W = " + WIDTH + ", H = " + HEIGHT);
@@ -22,8 +22,8 @@ function resize()
         {
             WIDTH *= zoom;
             HEIGHT *= zoom;
-        }  
-        
+        }
+
         bridgeworks.resize(WIDTH, HEIGHT);
     }
 }
@@ -48,7 +48,7 @@ function getBrowserZoom()
 
 function init(scene, container)
 {
-    
+
     // create render context for BW if one does not exist
 
     var canvas = document.getElementById("Canvas");
@@ -60,7 +60,7 @@ function init(scene, container)
         canvas.style.zIndex = "2";
         container.appendChild(canvas)
     }
-    
+
     // TODO: don't assume XML specifies a bg image
     var bg = document.getElementById("BackgroundImage");
     if (!bg) {
@@ -71,7 +71,7 @@ function init(scene, container)
         bg.style.left = "0px";
         container.parentNode.appendChild(bg);
     }
-    
+
     var rcs = document.getElementById("RasterComponents");
     if (!rcs)
     {
@@ -79,21 +79,20 @@ function init(scene, container)
         rcs.id = "RasterComponents";
         container.appendChild(rcs);
     }
-    
-    
+
     // create BW
     bridgeworks                     = new Bridgeworks(canvas, bg);
     bridgeworks.container           = container;
     bridgeworks.rasterComponents    = rcs;
     bridgeworks.bgImage             = bg;
-    
-    bridgeworks.updateScene(scene);          
+
+    bridgeworks.updateScene(scene);
 
     //------------------------------------------------------------------------------
     //This calls the touch function that was already built into this project
     //I disabled this because I am implementing hammer.js in order to have better gesture control
 	//addTouchEvents();
-	
+
 	// gesture
 	/*document.addEventListener("gesturestart", function(event) {
 		event.preventDefault();
@@ -107,7 +106,7 @@ function init(scene, container)
 
     setInterval(draw, 1000/60);
     resize();
-    
+
     return bridgeworks;
 }
 
@@ -115,7 +114,7 @@ function init(scene, container)
 function showBG()
 {
     var eStage = bridgeworks.container;
-    
+
     if (eStage != null)
     {
         var pageX = eStage.offsetLeft;
@@ -128,7 +127,7 @@ function showBG()
             ebg.style.visibility = 'visible';
         }
     }
-    
+
 }
 
 // temporary, transitional re-factor
@@ -144,7 +143,7 @@ function addTouchEvents()
 			case 1: break;
 			case 2: return;
 			case 3: return;
-			case 4: return; 
+			case 4: return;
 		}
 		var mouseEvent = new MouseEvent("mousedown", 0, 0, 0, 0, 0, null);
 		mouseEvent.button = button-1;
@@ -170,7 +169,7 @@ function addTouchEvents()
 	}, false);
 	document.addEventListener("touchend", function(event) {
 		event.preventDefault();
-		// reset last touchmove record			
+		// reset last touchmove record
 		var button = event.touches.length;
 		switch (button)
 		{
