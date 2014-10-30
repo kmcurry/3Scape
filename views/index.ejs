@@ -913,6 +913,8 @@
                 }
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
 
+                //cubify();
+
                 sceneInspector = bridgeworks.registry.find("SceneInspector");
                 objectInspector =bridgeworks.registry.find("ObjectInspector");
                 var graphMgr = bridgeworks.registry.find("GraphMgr");
@@ -1030,7 +1032,6 @@
             var sceneActive = sceneInspector.enabled.getValueDirect();
             if(!sceneActive){
               sceneInspector.enabled.setValueDirect(true);
-
             }
           }).mouseleave(function(){
             var objectActive = objectInspector.enabled.getValueDirect();

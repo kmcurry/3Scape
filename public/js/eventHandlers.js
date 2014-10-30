@@ -108,11 +108,53 @@ function handleKey(e)
               }      // c
           }
               break;
+          case 'D'.charCodeAt(0):
+          {
+              if (!g_sceneInspector) {
+                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+              }
+              else {
+                g_sceneInspector.panDelta.setValueDirect(0,0,10);
+              }
+
+          }
+              break;
+          case 'E'.charCodeAt(0):
+          {
+              if (!g_sceneInspector) {
+                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+              }
+              else {
+                g_sceneInspector.panDelta.setValueDirect(0,0,-10);
+              }
+
+          }
           case 'S'.charCodeAt(0):
+          {
+              if (!g_sceneInspector) {
+                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+              }
+              else {
+                g_sceneInspector.panDelta.setValueDirect(10,0,0);
+              }
+
+          }
+          case 'F'.charCodeAt(0):
+          {
+              if (!g_sceneInspector) {
+                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+              }
+              else {
+                g_sceneInspector.panDelta.setValueDirect(-10,0,0);
+              }
+
+          }
+              break;
+          case 32: // Space bar
             {
               addSlide();
             }
-          case 46: //Delete Key
+          case 46: // Delete Key
             if (selectedThing) {
               var slice = selectedThing.slice(6,8);
                   console.log(slice);

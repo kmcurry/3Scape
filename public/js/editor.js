@@ -19,6 +19,8 @@ var g_playSlider = null;
 var g_timer = null;
 var g_interval = null;
 
+var g_sceneInspector = null;
+
 
 function copy()
 {
@@ -116,6 +118,7 @@ function reset() {
   g_labelCount = 0;
   g_numSlides = 0;
   g_slidesPlayed = 0;
+  g_sceneInspector = null;
 
   $('#object-panel').empty();
   $('#animate-panel').empty();
@@ -125,21 +128,21 @@ function reset() {
 function switchModes()
 {
     var objectInspector = bridgeworks.registry.find("ObjectInspector");
-    var sceneInspector = bridgeworks.registry.find("SceneInspector");
-    var sceneActive = sceneInspector.enabled.getValueDirect();
+    if (!g_sceneInspector) g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+    var sceneActive = g_sceneInspector.enabled.getValueDirect();
 
     if(sceneActive)
     {
-        sceneInspector.enabled.setValueDirect(false);
+        g_sceneInspector.enabled.setValueDirect(false);
         objectInspector.enabled.setValueDirect(true);
     }
     else if(!sceneActive)
     {
-        sceneInspector.enabled.setValueDirect(true);
+        g_sceneInspector.enabled.setValueDirect(true);
         objectInspector.enabled.setValueDirect(false);
     }
 
-    console.log(sceneInspector.enabled.getValueDirect());
+    console.log(g_sceneInspector.enabled.getValueDirect());
 
 }
 function trashModel(name)
@@ -714,7 +717,7 @@ function applyColor()
     var b = $('#info-b').val();
     var g = $('#info-g').val();
     var r = $('#info-r').val();
-    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '"+b+"'/>" +"</Set>";
+    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '"+b+"'/>" +"\</Set>";
     bridgeworks.updateScene(cmd);
 }
 
@@ -723,4 +726,26 @@ function remoteColor(name)
     var b = $('#' + name + 'info-b').val();
     var g = $('#' + name + 'info-g').val();
     var r = $('#' + name + 'info-r').val();
+}
+
+function cubify() {
+  var m = "\<Update>";
+
+    m += "\<Model url='objects/Cube.lwo'>";
+    m += "\<scale x='100' y='100' z='1'/>";
+    m += "\<position x='100' y='0' z='0'/>";
+    m += "\</Model>";
+
+    m += "\<Model url='objects/Cube.lwo'>";
+    m += "\<scale x='1' y='100' z='100'/>";
+    m += "\</Model>";
+
+    m += "\<Model url='objects/Cube.lwo'>";
+    m += "\<scale x='100' y='1' z='100'/>";
+    m += "\<position x='0' y='0' z='100'/>";
+    m += "\</Model>";
+
+  m += "\</Update>";
+  bridgeworks.updateScene(m);
+
 }
