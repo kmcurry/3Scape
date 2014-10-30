@@ -1,5 +1,9 @@
 var slideshow = loadXMLFile("BwContent/SlideShow.xml");
 
+function trashSlide(rowId) {
+  $("#" + rowId).remove();
+}
+
 function addSlide() {
   var slideList = document.getElementById("slide-list");
 
@@ -7,8 +11,14 @@ function addSlide() {
 
     ++g_numSlides;
 
+
+    var row = document.createElement('div');
+    row.setAttribute("id", "slide-" + g_numSlides);
+    slideList.appendChild(row);
+
     var li = document.createElement('li');
     li.setAttribute("style", "background-color:#dddddd;height:26px;");
+    li.setAttribute("class", "col-sm-6");
     var span = document.createElement('span');
     span.setAttribute("class", "ui-icon ui-icon-arrowthick-2-n-s");
     li.appendChild(span);
@@ -16,7 +26,18 @@ function addSlide() {
     a.setAttribute("style", "cursor: pointer;");
     a.innerHTML = "Slide " + g_numSlides; // <a>INNER_TEXT</a>
     li.appendChild(a);
-    slideList.appendChild(li);
+    row.appendChild(li);
+
+    var trashColumn = document.createElement('div');
+    trashColumn.setAttribute("class", "col-sm-1");
+    row.appendChild(trashColumn);
+    var trashBtn = document.createElement('span');
+    trashBtn.setAttribute("id", "trash" + name);
+    trashBtn.setAttribute("class", 'shape fa fa-trash-o');
+    trashBtn.setAttribute("style", "margin-top:3px;");
+    trashBtn.setAttribute("title", 'Remove');
+    trashBtn.setAttribute("onClick", "trashSlide('" + "slide-" + g_numSlides + "');");
+    trashColumn.appendChild(trashBtn);
 
     var camera = bridgeworks.registry.find("Camera");
 
@@ -43,7 +64,7 @@ function addSlide() {
     $('.nav li a').click(function(e) {
         $('.nav li').removeClass('activeSlide');
 
-        var $parent = $(this).parent();
+        var $parent = $(this).parent().parent();
         if (!$parent.hasClass('activeSlide')) {
             $parent.addClass('activeSlide');
         }
@@ -186,4 +207,8 @@ function playSlides(){
             window.clearInterval(g_timer);
         }
     },4000);
+}
+
+function saveSlides() {
+  
 }
