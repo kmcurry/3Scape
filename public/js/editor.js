@@ -197,6 +197,8 @@ function listLibrary()
         loadDirectoryObject(url,"objects/9VBattery.lwo",panel,"9VBattery");
         loadDirectoryObject(url,"objects/sword.lwo",panel,"Sword");
         loadDirectoryObject(url,"objects/Satellite.lwo",panel,"Satellite");
+        loadDirectoryObject(url,"objects/table.lwo",panel,"Table");
+        loadDirectoryObject(url,"objects/thor_hammer.lwo",panel,"Thor Hammmer");
 
         panel = document.getElementById("panel-lib-animalObjects");
         loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");
@@ -206,6 +208,8 @@ function listLibrary()
         loadDirectoryObject(url,"objects/elephant.lwo",panel,"Elephant");
         loadDirectoryObject(url,"objects/dolphin.lwo",panel,"Dolphin");
         loadDirectoryObject(url,"objects/dragon.lwo",panel,"Dragon");
+        loadDirectoryObject(url,"objects/Creature.lwo",panel,"Creature");
+        loadDirectoryObject(url,"objects/ammonite.lwo",panel,"Ammonite");
 
         panel = document.getElementById("panel-lib-peopleObjects");
 		    loadDirectoryObject(url,"Characters/objects/bobble-body.lwo",panel,"Bobble Head Body");
@@ -254,6 +258,7 @@ function listLibrary()
         loadDirectoryObject(url,"Geography/objects/Camaro.lwo",panel,"Camaro");
         loadDirectoryObject(url,"Geography/objects/SemiTruck.lwo",panel,"SemiTruck");
         loadDirectoryObject(url,"Geography/objects/Truck3.lwo",panel,"Truck3");
+        loadDirectoryObject(url,"Geography/objects/carriage.lwo",panel,"Carriage");
 
         panel = document.getElementById("panel-lib-airVehicleObjects");
         loadDirectoryObject(url,"Vehicles/objects/AP_A10R.lwo",panel,"A10 Warthog");
@@ -271,6 +276,8 @@ function listLibrary()
         loadDirectoryObject(url,"Vehicles/objects/Predator.lwo",panel,"Predator");
         loadDirectoryObject(url,"Vehicles/objects/RC12.lwo",panel,"RC12");
         loadDirectoryObject(url,"Vehicles/objects/U2.lwo",panel,"U2");
+        loadDirectoryObject(url,"objects/Aerostat.lwo",panel,"Aerostat");
+        loadDirectoryObject(url,"Vehicles/objects/stringray.lwo",panel,"Stingray");
 
 
         panel = document.getElementById("panel-lib-egyptObjects");
