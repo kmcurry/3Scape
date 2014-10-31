@@ -1,5 +1,9 @@
 var slideshow = loadXMLFile("BwContent/SlideShow.xml");
 
+function trashSlide(rowId) {
+  $("#" + rowId).remove();
+}
+
 function addSlide() {
   var slideList = document.getElementById("slide-list");
 
@@ -8,15 +12,31 @@ function addSlide() {
     ++g_numSlides;
 
     var li = document.createElement('li');
-    li.setAttribute("style", "background-color:#dddddd;height:26px;");
+    li.setAttribute("id", "slide-" + g_numSlides);
+    li.setAttribute("style", "background-color:#dddddd;height:26px;width:100%;");
+    li.setAttribute("class", "col-sm-6");
+    slideList.appendChild(li);
+
     var span = document.createElement('span');
     span.setAttribute("class", "ui-icon ui-icon-arrowthick-2-n-s");
     li.appendChild(span);
     var a = document.createElement('a');
     a.setAttribute("style", "cursor: pointer;");
+    a.setAttribute("class", "col-sm-9");
     a.innerHTML = "Slide " + g_numSlides; // <a>INNER_TEXT</a>
     li.appendChild(a);
-    slideList.appendChild(li);
+
+
+    var trashColumn = document.createElement('div');
+    trashColumn.setAttribute("class", "col-sm-1");
+    li.appendChild(trashColumn);
+    var trashBtn = document.createElement('span');
+    trashBtn.setAttribute("id", "trash" + name);
+    trashBtn.setAttribute("class", 'shape fa fa-trash-o');
+    trashBtn.setAttribute("style", "margin-top:3px;");
+    trashBtn.setAttribute("title", 'Remove');
+    trashBtn.setAttribute("onClick", "trashSlide('" + "slide-" + g_numSlides + "');");
+    trashColumn.appendChild(trashBtn);
 
     var camera = bridgeworks.registry.find("Camera");
 
@@ -40,8 +60,8 @@ function addSlide() {
 
     //This makes it so the slides can be changed from active to non active to represent what slide we are on
 
-    $('.nav li a').click(function(e) {
-        $('.nav li').removeClass('activeSlide');
+    $('#slide-list li a').click(function(e) {
+        $('#slide-list li').removeClass('activeSlide');
 
         var $parent = $(this).parent();
         if (!$parent.hasClass('activeSlide')) {
@@ -69,7 +89,7 @@ function loadSlides(num) {
         span.setAttribute("class", "ui-icon ui-icon-arrowthick-2-n-s");
         li.appendChild(span);
         var aTag = document.createElement('a');
-        aTag.setAttribute("style", "cursor: pointer;");
+        aTag.setAttribute("style", "cursor: pointer;padding-left:20px");
         aTag.setAttribute("onclick", "playSlide(" + i + ")");
         aTag.setAttribute("id", "Slide " + i);
         var text = document.createTextNode("Slide " + i);
@@ -87,8 +107,8 @@ function loadSlides(num) {
 
     //This makes it so the slides can be changed from active to non active to represent what slide we are on
 
-    $('.nav li a').click(function(e) {
-        $('.nav li').removeClass('activeSlide');
+    $('#slide-list li a').click(function(e) {
+        $('#slide-list li').removeClass('activeSlide');
 
         var $parent = $(this).parent();
         if (!$parent.hasClass('activeSlide')) {

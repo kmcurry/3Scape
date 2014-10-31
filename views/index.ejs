@@ -237,6 +237,7 @@
                     <h4 class="modal-title">Help</h4>
                 </div>
                 <!--Loading all the Libs and putting them in their respective places-->
+                <!-- TODO: MOVE THIS AND USE {{...}} TEMPLATE - KMC -->
                 <div class="modal-body row">
                     <ul class="nav nav-tabs" id="tabContent">
                         <li class="active"><a href="#helpIntro" data-toggle="tab">Intro</a></li>
@@ -251,6 +252,7 @@
                             3D scapes online. http://3scape.me/
                         </div>
                         <div class="tab-pane" id="helpControls">
+                          <div class="row">
                             <div class="col-md-4">
                                 <H3>Main</H3>
                                 <div class="controlBullet">
@@ -293,6 +295,28 @@
                                     <img src="./images/both-click.png"> Slide/Lift
                                 </div>
                             </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <H3>"Walk"</H3>
+                              <div class="controlBullet">
+                                  S - Left
+                              </div>
+                              <div class="controlBullet">
+                                  F - Right
+                              </div>
+                              <div class="controlBullet">
+                                  D - Forward
+                              </div>
+                              <div class="controlBullet">
+                                  E - Backward
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                          </div>
                         </div>
                         <div class="tab-pane" id="helpGuide">
                             <h3>
@@ -587,7 +611,8 @@
 
           <!-- CANVAS IS HERE-->
           <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
-                   <canvas id="Canvas" style="width:100%">
+                  <!--<img id="BackgroundImage" style="position: absolute; z-index: -1;width:100%;" src="BwContent/images/Sky2.jpg"/>-->
+                  <canvas id="Canvas" style="width:100%">
                   </canvas>
           </div>
 
@@ -912,6 +937,8 @@
                 }
                 bridgeworks = init("Happy-Halloween.xml", document.getElementById("BwContainer"));
 
+                //cubify();
+
                 sceneInspector = bridgeworks.registry.find("SceneInspector");
                 objectInspector =bridgeworks.registry.find("ObjectInspector");
                 var graphMgr = bridgeworks.registry.find("GraphMgr");
@@ -1029,7 +1056,6 @@
             var sceneActive = sceneInspector.enabled.getValueDirect();
             if(!sceneActive){
               sceneInspector.enabled.setValueDirect(true);
-
             }
           }).mouseleave(function(){
             var objectActive = objectInspector.enabled.getValueDirect();

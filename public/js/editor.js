@@ -19,6 +19,8 @@ var g_playSlider = null;
 var g_timer = null;
 var g_interval = null;
 
+var g_sceneInspector = null;
+
 
 function copy()
 {
@@ -116,6 +118,7 @@ function reset() {
   g_labelCount = 0;
   g_numSlides = 0;
   g_slidesPlayed = 0;
+  g_sceneInspector = null;
 
   $('#object-panel').empty();
   $('#animate-panel').empty();
@@ -125,21 +128,21 @@ function reset() {
 function switchModes()
 {
     var objectInspector = bridgeworks.registry.find("ObjectInspector");
-    var sceneInspector = bridgeworks.registry.find("SceneInspector");
-    var sceneActive = sceneInspector.enabled.getValueDirect();
+    if (!g_sceneInspector) g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+    var sceneActive = g_sceneInspector.enabled.getValueDirect();
 
     if(sceneActive)
     {
-        sceneInspector.enabled.setValueDirect(false);
+        g_sceneInspector.enabled.setValueDirect(false);
         objectInspector.enabled.setValueDirect(true);
     }
     else if(!sceneActive)
     {
-        sceneInspector.enabled.setValueDirect(true);
+        g_sceneInspector.enabled.setValueDirect(true);
         objectInspector.enabled.setValueDirect(false);
     }
 
-    console.log(sceneInspector.enabled.getValueDirect());
+    console.log(g_sceneInspector.enabled.getValueDirect());
 
 }
 function trashModel(name)
@@ -194,6 +197,8 @@ function listLibrary()
         loadDirectoryObject(url,"objects/9VBattery.lwo",panel,"9VBattery");
         loadDirectoryObject(url,"objects/sword.lwo",panel,"Sword");
         loadDirectoryObject(url,"objects/Satellite.lwo",panel,"Satellite");
+        loadDirectoryObject(url,"objects/table.lwo",panel,"Table");
+        loadDirectoryObject(url,"objects/thor_hammer.lwo",panel,"Thor Hammmer");
 
         panel = document.getElementById("panel-lib-animalObjects");
         loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");
@@ -203,6 +208,8 @@ function listLibrary()
         loadDirectoryObject(url,"objects/elephant.lwo",panel,"Elephant");
         loadDirectoryObject(url,"objects/dolphin.lwo",panel,"Dolphin");
         loadDirectoryObject(url,"objects/dragon.lwo",panel,"Dragon");
+        loadDirectoryObject(url,"objects/Creature.lwo",panel,"Creature");
+        loadDirectoryObject(url,"objects/ammonite.lwo",panel,"Ammonite");
 
         panel = document.getElementById("panel-lib-peopleObjects");
 		    loadDirectoryObject(url,"Characters/objects/bobble-body.lwo",panel,"Bobble Head Body");
@@ -251,6 +258,7 @@ function listLibrary()
         loadDirectoryObject(url,"Geography/objects/Camaro.lwo",panel,"Camaro");
         loadDirectoryObject(url,"Geography/objects/SemiTruck.lwo",panel,"SemiTruck");
         loadDirectoryObject(url,"Geography/objects/Truck3.lwo",panel,"Truck3");
+        loadDirectoryObject(url,"Geography/objects/carriage.lwo",panel,"Carriage");
 
         panel = document.getElementById("panel-lib-airVehicleObjects");
         loadDirectoryObject(url,"Vehicles/objects/AP_A10R.lwo",panel,"A10 Warthog");
@@ -268,6 +276,8 @@ function listLibrary()
         loadDirectoryObject(url,"Vehicles/objects/Predator.lwo",panel,"Predator");
         loadDirectoryObject(url,"Vehicles/objects/RC12.lwo",panel,"RC12");
         loadDirectoryObject(url,"Vehicles/objects/U2.lwo",panel,"U2");
+        loadDirectoryObject(url,"objects/Aerostat.lwo",panel,"Aerostat");
+        loadDirectoryObject(url,"Vehicles/objects/stringray.lwo",panel,"Stingray");
 
 
         panel = document.getElementById("panel-lib-egyptObjects");
@@ -714,7 +724,7 @@ function applyColor()
     var b = $('#info-b').val();
     var g = $('#info-g').val();
     var r = $('#info-r').val();
-    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '"+b+"'/>" +"</Set>";
+    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '"+b+"'/>" +"\</Set>";
     bridgeworks.updateScene(cmd);
 }
 
@@ -723,4 +733,26 @@ function remoteColor(name)
     var b = $('#' + name + 'info-b').val();
     var g = $('#' + name + 'info-g').val();
     var r = $('#' + name + 'info-r').val();
+}
+
+function cubify() {
+  var m = "\<Update>";
+
+    m += "\<Model url='objects/Cube.lwo'>";
+    m += "\<scale x='100' y='100' z='1'/>";
+    m += "\<position x='100' y='0' z='0'/>";
+    m += "\</Model>";
+
+    m += "\<Model url='objects/Cube.lwo'>";
+    m += "\<scale x='1' y='100' z='100'/>";
+    m += "\</Model>";
+
+    m += "\<Model url='objects/Cube.lwo'>";
+    m += "\<scale x='100' y='1' z='100'/>";
+    m += "\<position x='0' y='0' z='100'/>";
+    m += "\</Model>";
+
+  m += "\</Update>";
+  bridgeworks.updateScene(m);
+
 }

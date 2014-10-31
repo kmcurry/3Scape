@@ -4,7 +4,7 @@
 <Scene>
     <Isolator name="Root">
         <Selector name="Cameras">
-            <OrthographicCamera name="Camera" zoom="3.2" nearDistance="0.1" farDistance="10000">
+            <OrthographicCamera name="Camera" width="10" nearDistance="0.1" farDistance="10000">
                 <position x="0" y="2" z="0"/>
                 <rotation x="90" y="0" z="0"/>
             </OrthographicCamera>
