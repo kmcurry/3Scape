@@ -476,3 +476,7 @@ fieldset[disabled] .btn-purple.active {
 #slide-list { list-style-type: none; margin: 0; padding: 0; width: 100%; }
 #slide-list li { margin: 2px 0px 2px 0px; padding: 0.0em; padding-left: 0em; font-size: 1.2em; height: 26px; }
 #slide-list li span { position: absolute; margin-left: 0em; }
+
+.toggle-on {
+  color:#00ff00;
+}

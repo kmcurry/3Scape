@@ -379,8 +379,10 @@ function loadModel(url)
     a.style.cursor="pointer";
     a.style.cursor="hand";
 
+    var id = name.replace(' ', '_');
+
     var moveBtn = document.createElement('span');
-    moveBtn.setAttribute("id", "moveable" + name);
+    moveBtn.setAttribute("id", "moveable" + id);
     moveBtn.setAttribute("class", 'shape icon-move');
     moveBtn.setAttribute("style", "margin-top:3px;");
     moveBtn.setAttribute("title", 'Toggle Moveable');
@@ -449,6 +451,14 @@ function loadModel(url)
     row.appendChild(trashColumn);
 
     objectPanel.appendChild(row);
+
+    moveBtn.addEventListener("click", function() {
+      if ($(this).hasClass("toggle-on")) {
+        $(this).removeClass("toggle-on");
+      } else {
+        $(this).addClass("toggle-on");
+      }
+    });
 
     var xml = loadXMLFile("BwContent/model.xml");
 
