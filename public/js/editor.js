@@ -388,6 +388,14 @@ function loadModel(url)
     moveBtn.setAttribute("title", 'Toggle Moveable');
     moveBtn.setAttribute("onClick", "toggleMoveable('" + name + "');");
 
+    moveBtn.addEventListener("click", function() {
+      if ($(this).hasClass("toggle-on")) {
+        $(this).removeClass("toggle-on");
+      } else {
+        $(this).addClass("toggle-on");
+      }
+    });
+
     var findBtn = document.createElement('span');
     findBtn.setAttribute("id", "find" + name);
     findBtn.setAttribute("class", 'shape fa fa-search');
@@ -451,14 +459,6 @@ function loadModel(url)
     row.appendChild(trashColumn);
 
     objectPanel.appendChild(row);
-
-    moveBtn.addEventListener("click", function() {
-      if ($(this).hasClass("toggle-on")) {
-        $(this).removeClass("toggle-on");
-      } else {
-        $(this).addClass("toggle-on");
-      }
-    });
 
     var xml = loadXMLFile("BwContent/model.xml");
 

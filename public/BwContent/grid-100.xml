@@ -30,6 +30,14 @@
             <Model name="Grid" url="objects/Grid.lwo" moveable="false">
                 <scale x="100" y="1" z="100"/>
             </Model>
+            <!--
+            <Surface doubleSided="true">
+              <color r="1" g="0" b="0"/>
+            </Surface>
+            <TriList>
+              <vertices x0="0" y0="0" z0="0" x1="0" y1="100" z1="0" x2="10" y2="0" z2="100"/>
+            </TriList>
+          -->
          <!--   <Model name="Cube" url="objects/Cube.lwo">
                 <position x="15" y="0" z="0"/>
             </Model> -->
