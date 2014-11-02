@@ -104,6 +104,13 @@ function loadTwoStroke() {
   loadSlides(1);
 }
 
+function load2D3D() {
+  reset();
+  bridgeworks.contentDir='/BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('2D-vs-3D.xml');
+}
+
 function new3Scape() {
   bridgeworks.contentDir='/BwContent';
   bridgeworks.onLoadModified();
