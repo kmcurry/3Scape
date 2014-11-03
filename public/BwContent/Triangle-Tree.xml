@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<Scene>
+    <Isolator name="Root">
+        <Selector name="Cameras">
+            <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="1000000">
+                <position x="200" y="67" z="-206"/>
+                <rotation x="14" y="-44" z="0"/>
+            </PerspectiveCamera>
+        </Selector>
+        <Group name="Lights">
+            <GlobalIllumination name="AmbientLight">
+                <ambient r="0.25" g="0.25" b="0.25"/>
+            </GlobalIllumination>
+            <PointLight name="PointLight" range="3.40282" parent="Camera">
+                <position x="26.2248" y="73.9201" z="-93.7113"/>
+                <rotation x="35.6879" y="4.34871" z="0.723227"/>
+                <ambient r="0.05" g="0.05" b="0.05"/>
+                <diffuse r="1" g="1" b="1"/>
+                <specular r=".1" g=".1" b=".1"/>
+            </PointLight>
+            <SpotLight name="SpotLight" range="40" outerConeDegrees="45">
+                <ambient r="1" g="0.05" b="0.05"/>
+                <diffuse r="1" g="1" b="1"/>
+                <specular r=".1" g=".1" b=".1"/>
+            </SpotLight>
+        </Group>
+        <Group name="Models">
+            <Model name="Grid" url="objects/Grid.lwo" moveable="false">
+                <scale x="100" y="1" z="100"/>
+            </Model>
+
+            <Surface doubleSided="true">
+              <color r="0" g=".7" b="0"/>
+            </Surface>
+            <TriList>
+              <vertices x0="0" y0="0" z0="-100" x1="0" y1="100" z1="0" x2="0" y2="0" z2="100"/>
+            </TriList>
+            <Rotate>
+              <rotation x="0" y="90" z="0"/>
+            </Rotate>
+            <TriList>
+              <vertices x0="0" y0="0" z0="-100" x1="0" y1="100" z1="0" x2="0" y2="0" z2="100"/>
+            </TriList>
+            <Translate>
+              <translation x="0" y="50" z="0"/>
+            </Translate>
+            <TriList>
+              <vertices x0="0" y0="0" z0="-100" x1="0" y1="100" z1="0" x2="0" y2="0" z2="100"/>
+            </TriList>
+            <Rotate>
+              <rotation x="0" y="90" z="0"/>
+            </Rotate>
+            <TriList>
+              <vertices x0="0" y0="0" z0="-100" x1="0" y1="100" z1="0" x2="0" y2="0" z2="100"/>
+            </TriList>
+            <Translate>
+              <translation x="0" y="60" z="0"/>
+            </Translate>
+            <TriList>
+              <vertices x0="0" y0="0" z0="-100" x1="0" y1="100" z1="0" x2="0" y2="0" z2="100"/>
+            </TriList>
+            <Rotate>
+              <rotation x="0" y="90" z="0"/>
+            </Rotate>
+            <TriList>
+              <vertices x0="0" y0="0" z0="-100" x1="0" y1="100" z1="0" x2="0" y2="0" z2="100"/>
+            </TriList>
+
+         <!--   <Model name="Cube" url="objects/Cube.lwo">
+                <position x="15" y="0" z="0"/>
+            </Model> -->
+        </Group>
+        <Group name="Conway">
+        </Group>
+       <!-- <Label text="Working??" parent="Cube"></Label> -->
+    </Isolator>
+    <RenderDirective name="RenderDirective"/>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+</Scene>
