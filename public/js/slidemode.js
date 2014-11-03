@@ -44,17 +44,19 @@ function addSlide() {
     ai.setAttribute("name", "Slide-" + g_numSlides)
     ai.setAttribute("target", "Camera");
     var aiPos = slideshow.createElement("position");
-    aiPos.setAttribute("x", camera.position.values[0]);
-    aiPos.setAttribute("y", camera.position.values[1]);
-    aiPos.setAttribute("z", camera.position.values[2]);
+    aiPos.setAttribute("x", camera.position.values[0].toFixed(2));
+    aiPos.setAttribute("y", camera.position.values[1].toFixed(2));
+    aiPos.setAttribute("z", camera.position.values[2].toFixed(2));
     ai.appendChild(aiPos);
     var aiRot = slideshow.createElement("rotation");
-    aiRot.setAttribute("x", camera.rotation.values[0]);
-    aiRot.setAttribute("y", camera.rotation.values[1]);
-    aiRot.setAttribute("z", camera.rotation.values[2]);
+    aiRot.setAttribute("x", camera.rotation.values[0].toFixed(2));
+    aiRot.setAttribute("y", camera.rotation.values[1].toFixed(2));
+    aiRot.setAttribute("z", camera.rotation.values[2].toFixed(2));
     ai.appendChild(aiRot);
 
     var xmlText = new XMLSerializer().serializeToString(ai);
+
+    console.log(xmlText);
 
     a.setAttribute("onclick", "bridgeworks.updateScene('" + xmlText + "')");
 
