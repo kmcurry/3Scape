@@ -126,12 +126,14 @@
               bridgeworks.updateScene(command);
 
               // add slides, if any
-              /*
-              $(#slide-list).children().each() ( function (index) {
 
+              $("#slide-list").children().each( function (index) {
+                // this.innerHTML;
               });
-              */
 
+              // serializedScene is a global shared by Bridgeworks!
+              // Need to fix this.
+              // BwJS should probably use standard Elements - KMC
               saveThis(serializedScene,"Scene");
 
           }
