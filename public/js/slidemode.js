@@ -56,7 +56,7 @@ function addSlide() {
 
     var xmlText = new XMLSerializer().serializeToString(ai);
 
-    console.log(xmlText);
+    //console.log(xmlText);
 
     a.setAttribute("onclick", "bridgeworks.updateScene('" + xmlText + "')");
 
