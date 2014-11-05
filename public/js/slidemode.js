@@ -60,10 +60,13 @@ function addSlide() {
 
     a.setAttribute("onclick", "bridgeworks.updateScene('" + xmlText + "')");
 
-    //This makes it so the slides can be changed from active to non active to represent what slide we are on
+    // This makes it so the slides can be changed from active to non active
+    // to represent what slide we are on
 
     $('#slide-list li a').click(function(e) {
         $('#slide-list li').removeClass('activeSlide');
+
+        console.log(this);
 
         var $parent = $(this).parent();
         if (!$parent.hasClass('activeSlide')) {
@@ -76,7 +79,8 @@ function addSlide() {
 
 
 
-//Hacks in loadslides function. Right now you send it the number of slides you want loaded. And they have to be named SlideX in order for this to work
+//Hacks in loadslides function. Right now you send it the number
+// of slides you want loaded. And they have to be named SlideX in order for this to work
 function loadSlides(num) {
     g_isPlaying = 0;
     g_currSlide = 0;
@@ -97,7 +101,6 @@ function loadSlides(num) {
         var text = document.createTextNode("Slide " + i);
         aTag.appendChild(text);
 
-        //aTag.innerHTML = "Slide " + i; // <a>INNER_TEXT</a>
         li.appendChild(aTag);
         slideList.appendChild(li);
     }
@@ -105,7 +108,7 @@ function loadSlides(num) {
     g_numSlides = slideList.childNodes.length;
 
     console.log("loaded " + g_numSlides + " slides.");
-    console.log(slideList);
+    //console.log(slideList);
 
     //This makes it so the slides can be changed from active to non active to represent what slide we are on
 
