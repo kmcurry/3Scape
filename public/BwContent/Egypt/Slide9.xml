@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <Update>
 
+    <Set target="Pyramid1" show="false"></Set>
+    <Set target="Pyramid2" show="false"></Set>
+    <Set target="Pyramid3" show="false"></Set>
     <Set target="S_Description" show="false"></Set>
     <Set target="P2_Description" show="false"></Set>
     <Set target="A1_Description" show="false"></Set>
@@ -8,6 +11,7 @@
     <Set target="A2_Description" show="false"></Set>
     <Set target="A3_Description" show="false"></Set>
     <Set target="P3_Description" show="false"></Set>
+    <Set target="A4_Description" show="false"></Set>
     <Set target="CameraMotion" time="80"></Set>
     <Play></Play>
     <Pause trigger="CameraMotion/time=86"/>
