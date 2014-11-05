@@ -32,13 +32,12 @@ function handleEvent(e)
           if(selectedModel) {
 
               modelName = selectedModel.name.getValueDirect().join("");
-              var name = selectedModel.name.getValueDirect().join(""); // what's going on here?
               selectedThing = null;
 
 
               setColorPicker();
 
-              myObject = document.getElementById(name);
+              myObject = document.getElementById(modelName);
               $('.object').removeClass('current-object');
               $(myObject).addClass('current-object');
 
