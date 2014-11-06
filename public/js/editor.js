@@ -256,6 +256,7 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Flag.lwo",panel,"Flag");
         loadDirectoryObject(url,"Buildings/objects/RadioTower.lwo",panel,"Radio Tower");
         loadDirectoryObject(url,"Buildings/objects/CheckPoint.lwo",panel,"Checkpoint");
+        loadDirectoryObject(url,"objects/helmsdeep.lwo",panel,"Helms Deep");
 
         panel = document.getElementById("panel-lib-landVehicleObjects");
         loadDirectoryObject(url,"Vehicles/objects/C2V.lwo",panel,"C2V");

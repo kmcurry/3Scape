@@ -1,0 +1,154 @@
+newmtl hammer
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/hammer.jpg
+map_bump C:Users/joe/Desktop/thor/hammerbump.jpg
+bump C:Users/joe/Desktop/thor/hammerbump.jpg
+
+newmtl handle
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0.93 0.93 0.93
+Ns 340
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/handle.jpg
+map_bump C:Users/joe/Desktop/thor/bumpmaphandle.jpg
+bump C:Users/joe/Desktop/thor/bumpmaphandle.jpg
+
+newmtl tophammer
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/hammer.jpg
+map_bump C:Users/joe/Desktop/thor/hammer.jpg
+bump C:Users/joe/Desktop/thor/hammer.jpg
+
+newmtl trib1
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/thortribalbump.jpg
+map_bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+
+newmtl trib2
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/thortribalbump.jpg
+map_bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+
+newmtl trib3
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/thortribalbump.jpg
+map_bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+
+newmtl trib4
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/thortribalbump.jpg
+map_bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+
+newmtl trib5
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/thortribalbump.jpg
+map_bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+
+newmtl trib6
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/thortribalbump.jpg
+map_bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+
+newmtl trib7
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/thortribalbump.jpg
+map_bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+
+newmtl trib8
+Ka 0.784314 0.784314 0.784314
+Ke 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Ka C:Users/joe/Desktop/thor/thortribalbump.jpg
+map_bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+bump C:Users/joe/Desktop/thor/thortribalbump.jpg
+
