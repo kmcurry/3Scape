@@ -68,13 +68,21 @@ module.exports = function(app, passport) {
             user.scene = req.body.scene;
             user.save();
         })
-    })
+    });
 
 //Logout ==============================
     app.get('/logout', function (req, res) {
         req.logout();
         res.redirect('/');
     });
+
+/*
+    app.get('/scape/:scape?', function (req, res) {
+      if (req.params.scape) {
+        res.render('index', { scape: req.params.scape });
+      }
+    });
+    */
 }
 	// =====================================
 	// PROJECTS ============================
