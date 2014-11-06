@@ -66,11 +66,10 @@ function addSlide() {
     $('#slide-list li a').click(function(e) {
         $('#slide-list li').removeClass('activeSlide');
 
-        console.log(this);
-
-        var $parent = $(this).parent();
-        if (!$parent.hasClass('activeSlide')) {
-            $parent.addClass('activeSlide');
+        var parent = $(this).parent();
+        if (!parent.hasClass('activeSlide')) {
+            parent.addClass('activeSlide');
+            console.log(parent);
         }
     });
 
