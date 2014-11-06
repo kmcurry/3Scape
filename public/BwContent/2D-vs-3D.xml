@@ -112,65 +112,67 @@
     <Group>
       <name>Conway</name>
     </Group>
-    <Group>
-      <name>Group_L-1</name>
-      <Label>
-        <name>Label_L-1</name>
-        <position item0="-0.13392344002105716" item1="1.9999998807907104" item2="0.11387946208710886" />
-        <parent>1. Cube</parent>
-        <show>true</show>
-        <text>Cube</text>
-        <LabelStyleAttr>
-          <FontStyleAttr>
-            <size>16</size>
-          </FontStyleAttr>
-        </LabelStyleAttr>
-      </Label>
-    </Group>
-    <Group>
-      <name>Group_L-2</name>
-      <Label>
-        <name>Label_L-2</name>
-        <position item0="0.27926615692569356" item1="0.9316432529095117" item2="-0.5341783735452452" />
-        <parent>2. Pyramid</parent>
-        <show>true</show>
-        <text>Pyramid</text>
-        <LabelStyleAttr>
-          <FontStyleAttr>
-            <size>16</size>
-          </FontStyleAttr>
-        </LabelStyleAttr>
-      </Label>
-    </Group>
-    <Group>
-      <name>Group_L-4</name>
-      <Label>
-        <name>Label_L-4</name>
-        <position item0="0.18734206440165835" item1="1.8489097864687065" item2="0.4864549926141706" />
-        <parent>3. Sphere</parent>
-        <show>true</show>
-        <text>Sphere</text>
-        <LabelStyleAttr>
-          <FontStyleAttr>
-            <size>16</size>
-          </FontStyleAttr>
-        </LabelStyleAttr>
-      </Label>
-    </Group>
-    <Group>
-      <name>Group_L-5</name>
-      <Label>
-        <name>Label_L-5</name>
-        <position item0="-0.16988742334463325" item1="2" item2="0.847502288505666" />
-        <parent>4. Tube</parent>
-        <show>true</show>
-        <text>Cylinder</text>
-        <LabelStyleAttr>
-          <FontStyleAttr>
-            <size>16</size>
-          </FontStyleAttr>
-        </LabelStyleAttr>
-      </Label>
+    <Group name="Labels">
+      <Group>
+        <name>Group_L-1</name>
+        <Label>
+          <name>Label_L-1</name>
+          <position item0="-0.13392344002105716" item1="1.9999998807907104" item2="0.11387946208710886" />
+          <parent>1. Cube</parent>
+          <show>true</show>
+          <text>Cube</text>
+          <LabelStyleAttr>
+            <FontStyleAttr>
+              <size>16</size>
+            </FontStyleAttr>
+          </LabelStyleAttr>
+        </Label>
+      </Group>
+      <Group>
+        <name>Group_L-2</name>
+        <Label>
+          <name>Label_L-2</name>
+          <position item0="0.27926615692569356" item1="0.9316432529095117" item2="-0.5341783735452452" />
+          <parent>2. Pyramid</parent>
+          <show>true</show>
+          <text>Pyramid</text>
+          <LabelStyleAttr>
+            <FontStyleAttr>
+              <size>16</size>
+            </FontStyleAttr>
+          </LabelStyleAttr>
+        </Label>
+      </Group>
+      <Group>
+        <name>Group_L-4</name>
+        <Label>
+          <name>Label_L-4</name>
+          <position item0="0.18734206440165835" item1="1.8489097864687065" item2="0.4864549926141706" />
+          <parent>3. Sphere</parent>
+          <show>true</show>
+          <text>Sphere</text>
+          <LabelStyleAttr>
+            <FontStyleAttr>
+              <size>16</size>
+            </FontStyleAttr>
+          </LabelStyleAttr>
+        </Label>
+      </Group>
+      <Group>
+        <name>Group_L-5</name>
+        <Label>
+          <name>Label_L-5</name>
+          <position item0="-0.16988742334463325" item1="2" item2="0.847502288505666" />
+          <parent>4. Tube</parent>
+          <show>true</show>
+          <text>Cylinder</text>
+          <LabelStyleAttr>
+            <FontStyleAttr>
+              <size>16</size>
+            </FontStyleAttr>
+          </LabelStyleAttr>
+        </Label>
+      </Group>
     </Group>
   </Isolator>
   <RenderDirective>
