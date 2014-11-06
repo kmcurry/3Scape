@@ -1,173 +1,179 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?bw onload="initialize"?>
-<?bwinclude url="DefaultPreferences.xml"?>
+<?xml version="1.0" encoding="UTF-8" ?>
+<?bw onload="initialize" ?>
+<?bwinclude url="DefaultPreferences.xml" ?>
 <Session broadcast="false">
-  <Set target="Selector" computePivotDistance="true"/>
-    <Isolator><name>Root</name>
+  <Set target="Selector" computePivotDistance="true" />
+  <Isolator>
+    <name>Root</name>
     <PerspectiveCamera>
       <name>Camera</name>
-      <position item0="109.43549976192755" item1="97.97369672402462" item2="-126.73355272218085"/>
-      <rotation item0="32.99999852144588" item1="-41.00000001676024" item2="-3.077291328937904e-8"/>
+      <position item0="109.43549976192755" item1="97.97369672402462" item2="-126.73355272218085" />
+      <rotation item0="32.99999852144588" item1="-41.00000001676024" item2="-3.077291328937904e-8" />
       <nearDistance>1</nearDistance>
       <farDistance>1000000</farDistance>
       <zoom>3.2</zoom>
-      </PerspectiveCamera>
-      <Group>
-        <name>Lights</name>
-        <GlobalIllumination>
-          <name>AmbientLight</name>
-          <ambient item0="0.25" item1="0.25" item2="0.25" item3="1"/>
-          </GlobalIllumination>
-          <PointLight>
-            <name>Light</name>
-            <position item0="26.2248" item1="73.9201" item2="-93.7113"/>
-            <rotation item0="35.6879" item1="4.34871" item2="0.723227"/>
-            <parent>Camera</parent>
-            <ambient item0="0.05" item1="0.05" item2="0.05" item3="1"/>
-            <diffuse item0="1" item1="1" item2="1" item3="1"/>
-            <specular item0="0.1" item1="0.1" item2="0.1" item3="1"/>
-            <range>3.40282</range>
-            </PointLight>
-            </Group>
-            <Group>
-              <name>Models</name>
-              <Group name="Triangle">
-                <Surface doubleSided="true">
-                  <color r="0" g=".7" b="0"/>
-                </Surface>
-                <TriList>
-                  <vertices x0="-60" y0="0" z0="-20" x1="-60" y1="20" z1="0" x2="-60" y2="0" z2="20"/>
-                </TriList>
-              </Group>
-              <ModelRoot>
-                <Model>
-                  <name>Grid</name>
-                  <scale item0="100" item1="1" item2="100"/>
-                  <url>objects/Grid.lwo</url>
-                  <moveable>false</moveable>
-                </Model>
-                <Set>
-                  <target>Grid</target>
-                  <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0"/>
-                </Set>
-              </ModelRoot>
-              <ModelRoot>
-                <Model>
-                  <name>1. Cube</name>
-                  <position item0="-24.843352651532005" item1="0" item2="24.96274236666531"/>
-                  <rotation item0="0" item1="0" item2="0"/>
-                  <scale item0="7.66" item1="7.66" item2="7.66"/>
-                  <url>objects/Cube.lwo</url>
-                  <detectCollision>true</detectCollision>
-                </Model>
-                <Set>
-                  <target>1. Cube</target>
-                  <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0"/>
-                </Set>
-              </ModelRoot>
-              <ModelRoot>
-                  <Model>
-                    <name>2. Pyramid</name>
-                  <position item0="24.84025321559174" item1="0" item2="24.868732726422948"/><rotation item0="0" item1="0" item2="0"/>
-                  <scale item0="7.66" item1="7.66" item2="7.66"/>
-                  <url>objects/Pyramid.lwo</url>
-                  <detectCollision>true</detectCollision>
-                  </Model>
-                  <Set>
-                    <target>2. Pyramid</target>
-                    <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0"/></Set>
-                </ModelRoot>
-                <ModelRoot>
-                  <Model>
-                    <name>3. Sphere</name>
-                    <position item0="-25.023810555206428" item1="0" item2="-24.75101321593477"/>
-                    <rotation item0="0" item1="0" item2="0"/>
-                    <scale item0="7.66" item1="7.66" item2="7.66"/>
-                    <url>objects/Sphere.lwo</url>
-                    <detectCollision>true</detectCollision>
-                  </Model>
-                  <Set>
-                    <target>3. Sphere</target>
-                    <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0"/>
-                    </Set>
-                </ModelRoot>
-                <ModelRoot>
-                  <Model>
-                    <name>4. Tube</name>
-                    <position item0="25.13135198871867" item1="0" item2="-24.666742252672538"/>
-                    <rotation item0="0" item1="0" item2="0"/>
-                    <scale item0="7.66" item1="7.66" item2="7.66"/>
-                    <url>objects/Tube.lwo</url>
-                    <detectCollision>true</detectCollision>
-                  </Model>
-                  <Set>
-                  <target>4. Tube</target>
-                  <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0"/>
-                  </Set>
-                  </ModelRoot>
-                    </Group>
-                    <Group><name>Conway</name></Group>
-                    <Group><name>Group_L-1</name>
-                      <Label>
-                        <name>Label_L-1</name>
-                        <position item0="-0.13392344002105716" item1="1.9999998807907104" item2="0.11387946208710886"/>
-                        <parent>1. Cube</parent>
-                        <show>true</show>
-                        <text>Cube</text>
-                        <LabelStyleAttr>
-                          <FontStyleAttr>
-                            <size>16</size>
-                            </FontStyleAttr>
-                        </LabelStyleAttr>
-                      </Label>
-                    </Group>
-                    <Group>
-                      <name>Group_L-2</name>
-                      <Label>
-                        <name>Label_L-2</name>
-                        <position item0="0.27926615692569356" item1="0.9316432529095117" item2="-0.5341783735452452"/>
-                        <parent>2. Pyramid</parent>
-                        <show>true</show>
-                        <text>Pyramid</text>
-                        <LabelStyleAttr>
-                          <FontStyleAttr>
-                            <size>16</size>
-                          </FontStyleAttr>
-                        </LabelStyleAttr>
-                      </Label>
-                    </Group>
-                    <Group>
-                      <name>Group_L-4</name>
-                      <Label>
-                        <name>Label_L-4</name>
-                        <position item0="0.18734206440165835" item1="1.8489097864687065" item2="0.4864549926141706"/>
-                        <parent>3. Sphere</parent>
-                        <show>true</show>
-                        <text>Sphere</text>
-                        <LabelStyleAttr>
-                          <FontStyleAttr>
-                            <size>16</size>
-                          </FontStyleAttr>
-                        </LabelStyleAttr>
-                      </Label>
-                      </Group>
-                      <Group>
-                        <name>Group_L-5</name>
-                        <Label>
-                          <name>Label_L-5</name>
-                          <position item0="-0.16988742334463325" item1="2" item2="0.847502288505666"/>
-                          <parent>4. Tube</parent>
-                          <show>true</show>
-                          <text>Cylinder</text>
-                          <LabelStyleAttr>
-                            <FontStyleAttr>
-                              <size>16</size>
-                          </FontStyleAttr>
-                          </LabelStyleAttr>
-                        </Label>
-                      </Group>
-                </Isolator>
-<RenderDirective>
-  <name>RenderDirective</name>
+    </PerspectiveCamera>
+    <Group>
+      <name>Lights</name>
+      <GlobalIllumination>
+        <name>AmbientLight</name>
+        <ambient item0="0.25" item1="0.25" item2="0.25" item3="1" />
+      </GlobalIllumination>
+      <PointLight>
+        <name>Light</name>
+        <position item0="26.2248" item1="73.9201" item2="-93.7113" />
+        <rotation item0="35.6879" item1="4.34871" item2="0.723227" />
+        <parent>Camera</parent>
+        <ambient item0="0.05" item1="0.05" item2="0.05" item3="1" />
+        <diffuse item0="1" item1="1" item2="1" item3="1" />
+        <specular item0="0.1" item1="0.1" item2="0.1" item3="1" />
+        <range>3.40282</range>
+      </PointLight>
+    </Group>
+    <Group>
+      <name>Models</name>
+      <Group name="Triangle">
+        <Surface doubleSided="true">
+          <color r="0" g=".7" b="0" />
+        </Surface>
+        <TriList>
+          <vertices x0="-60" y0="0" z0="-20" x1="-60" y1="20" z1="0" x2="-60" y2="0" z2="20" />
+        </TriList>
+      </Group>
+      <ModelRoot>
+        <Model>
+          <name>Grid</name>
+          <scale item0="100" item1="1" item2="100" />
+          <url>objects/Grid.lwo</url>
+          <moveable>false</moveable>
+        </Model>
+        <Set>
+          <target>Grid</target>
+          <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0" />
+        </Set>
+      </ModelRoot>
+      <ModelRoot>
+        <Model>
+          <name>1. Cube</name>
+          <position item0="-24.843352651532005" item1="0" item2="24.96274236666531" />
+          <rotation item0="0" item1="0" item2="0" />
+          <scale item0="7.66" item1="7.66" item2="7.66" />
+          <url>objects/Cube.lwo</url>
+          <detectCollision>true</detectCollision>
+        </Model>
+        <Set>
+          <target>1. Cube</target>
+          <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0" />
+        </Set>
+      </ModelRoot>
+      <ModelRoot>
+        <Model>
+          <name>2. Pyramid</name>
+          <position item0="24.84025321559174" item1="0" item2="24.868732726422948" />
+          <rotation item0="0" item1="0" item2="0" />
+          <scale item0="7.66" item1="7.66" item2="7.66" />
+          <url>objects/Pyramid.lwo</url>
+          <detectCollision>true</detectCollision>
+        </Model>
+        <Set>
+          <target>2. Pyramid</target>
+          <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0" />
+        </Set>
+      </ModelRoot>
+      <ModelRoot>
+        <Model>
+          <name>3. Sphere</name>
+          <position item0="-25.023810555206428" item1="0" item2="-24.75101321593477" />
+          <rotation item0="0" item1="0" item2="0" />
+          <scale item0="7.66" item1="7.66" item2="7.66" />
+          <url>objects/Sphere.lwo</url>
+          <detectCollision>true</detectCollision>
+        </Model>
+        <Set>
+          <target>3. Sphere</target>
+          <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0" />
+        </Set>
+      </ModelRoot>
+      <ModelRoot>
+        <Model>
+          <name>4. Tube</name>
+          <position item0="25.13135198871867" item1="0" item2="-24.666742252672538" />
+          <rotation item0="0" item1="0" item2="0" />
+          <scale item0="7.66" item1="7.66" item2="7.66" />
+          <url>objects/Tube.lwo</url>
+          <detectCollision>true</detectCollision>
+        </Model>
+        <Set>
+          <target>4. Tube</target>
+          <inspectionGroup_rotationQuat item0="1" item1="0" item2="0" item3="0" />
+        </Set>
+      </ModelRoot>
+    </Group>
+    <Group>
+      <name>Conway</name>
+    </Group>
+    <Group>
+      <name>Group_L-1</name>
+      <Label>
+        <name>Label_L-1</name>
+        <position item0="-0.13392344002105716" item1="1.9999998807907104" item2="0.11387946208710886" />
+        <parent>1. Cube</parent>
+        <show>true</show>
+        <text>Cube</text>
+        <LabelStyleAttr>
+          <FontStyleAttr>
+            <size>16</size>
+          </FontStyleAttr>
+        </LabelStyleAttr>
+      </Label>
+    </Group>
+    <Group>
+      <name>Group_L-2</name>
+      <Label>
+        <name>Label_L-2</name>
+        <position item0="0.27926615692569356" item1="0.9316432529095117" item2="-0.5341783735452452" />
+        <parent>2. Pyramid</parent>
+        <show>true</show>
+        <text>Pyramid</text>
+        <LabelStyleAttr>
+          <FontStyleAttr>
+            <size>16</size>
+          </FontStyleAttr>
+        </LabelStyleAttr>
+      </Label>
+    </Group>
+    <Group>
+      <name>Group_L-4</name>
+      <Label>
+        <name>Label_L-4</name>
+        <position item0="0.18734206440165835" item1="1.8489097864687065" item2="0.4864549926141706" />
+        <parent>3. Sphere</parent>
+        <show>true</show>
+        <text>Sphere</text>
+        <LabelStyleAttr>
+          <FontStyleAttr>
+            <size>16</size>
+          </FontStyleAttr>
+        </LabelStyleAttr>
+      </Label>
+    </Group>
+    <Group>
+      <name>Group_L-5</name>
+      <Label>
+        <name>Label_L-5</name>
+        <position item0="-0.16988742334463325" item1="2" item2="0.847502288505666" />
+        <parent>4. Tube</parent>
+        <show>true</show>
+        <text>Cylinder</text>
+        <LabelStyleAttr>
+          <FontStyleAttr>
+            <size>16</size>
+          </FontStyleAttr>
+        </LabelStyleAttr>
+      </Label>
+    </Group>
+  </Isolator>
+  <RenderDirective>
+    <name>RenderDirective</name>
   </RenderDirective>
 </Session>

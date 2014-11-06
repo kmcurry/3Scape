@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Update>
+  <Remove target="Models"/>
     <LabelStyle name="myStyle">
         <labelStyle>
             <fontStyle>
@@ -7,7 +8,7 @@
             </fontStyle>
         </labelStyle>
     </LabelStyle>
-    <Remove target="Grid"/>
+  
 	<Set target="Camera" zoom="3.2" nearDistance="5" farDistance="50000">
 		<position x="-203.119" y="14020.4" z="-839.134"/>
 		<rotation x="90" y="0" z="0"/>
