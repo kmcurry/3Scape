@@ -56,7 +56,7 @@ function addSlide() {
 
     var xmlText = new XMLSerializer().serializeToString(ai);
 
-    //console.log(xmlText);
+    console.log(xmlText);
 
     a.setAttribute("onclick", "bridgeworks.updateScene('" + xmlText + "')");
 
@@ -66,10 +66,9 @@ function addSlide() {
     $('#slide-list li a').click(function(e) {
         $('#slide-list li').removeClass('activeSlide');
 
-        var parent = $(this).parent();
-        if (!parent.hasClass('activeSlide')) {
-            parent.addClass('activeSlide');
-            console.log(parent);
+        var $parent = $(this).parent();
+        if (!$parent.hasClass('activeSlide')) {
+            $parent.addClass('activeSlide');
         }
     });
 
