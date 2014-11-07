@@ -1,4 +1,4 @@
-﻿function Base() 
+function Base() 
 {
     this.userData = "";
     this.className = "";
@@ -23750,9 +23750,9 @@ AutoInterpolateCommand.prototype.buildMotion = function()
     {
         this.numValueChannels += this.attributeValuePairs[i].first.getLength();
     }
-    for (var i = 0; i < this.attributeReferencePairs.length; i++)
+    for (var i = 0; i < this.attributeRefPairs.length; i++)
     {
-        this.numReferenceChannels += this.attributeReferencePairs[i].first.getLength();
+        this.numReferenceChannels += this.attributeRefPairs[i].first.getLength();
     }
     this.numChannels = this.numValueChannels + this.numReferenceChannels;
     this.kfi.setNumChannels(this.numChannels);
@@ -23830,10 +23830,10 @@ AutoInterpolateCommand.prototype.applyAttributeRefs = function()
     // j = element of an Attribute, always 0 for primitive Attrs or 0-length-1 for complex
     // k = index in attribute values map
     var i, j, k;
-    for (i = 0, k = 0; k < this.attributeReferencePairs.length; k++)
+    for (i = 0, k = 0; k < this.attributeRefPairs.length; k++)
     {
-        var ref = this.attributeReferencePairs[k].first;
-        var attr = this.attributeReferencePairs[k].second;
+        var ref = this.attributeRefPairs[k].first;
+        var attr = this.attributeRefPairs[k].second;
 
         // for each channel:
         // 1. create a starting keyframe from target's current value for each attribute
@@ -23982,7 +23982,7 @@ function AutoInterpolateCommand_TargetModifiedCB(attribute, container)
     }
 
     setAttributeBin(container.attributeValuePairs);
-    setAttributePairs(container.attributeReferencePairs);
+    setAttributePairs(container.attributeRefPairs);
 }
 MotionInterpolateCommand.prototype = new AutoInterpolateCommand();
 MotionInterpolateCommand.prototype.constructor = MotionInterpolateCommand;
@@ -24300,15 +24300,15 @@ LocateCommand.prototype.locate = function()
                     var factory = this.registry.find("AttributeFactory");
                     var autoInterpolate = factory.create("AutoInterpolate");
 
-                    autoInterpolate.attributeReferencePairs.push(new Pair(this.resultPosition, cameraPosition));
+                    autoInterpolate.attributeRefPairs.push(new Pair(this.resultPosition, cameraPosition));
                 }
                 break;
         }
 
         if (updateClipPlanes)
         {
-            if (cameraWidth) autoInterpolate.attributeReferencePairs.push(new Pair(this.resultWidth, cameraWidth));
-            if (cameraFar) autoInterpolate.attributeReferencePairs.push(new Pair(this.resultFarDistance, cameraFar));
+            if (cameraWidth) autoInterpolate.attributeRefPairs.push(new Pair(this.resultWidth, cameraWidth));
+            if (cameraFar) autoInterpolate.attributeRefPairs.push(new Pair(this.resultFarDistance, cameraFar));
         }
 
         autoInterpolate.target = camera;
