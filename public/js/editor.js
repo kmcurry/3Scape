@@ -113,10 +113,10 @@ function load2D3D() {
 }
 
 function new3Scape() {
+  reset();
   bridgeworks.contentDir='/BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('grid-100.xml');
-  reset();
 }
 
 function reset() {
