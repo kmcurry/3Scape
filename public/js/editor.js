@@ -285,8 +285,7 @@ function listLibrary()
         loadDirectoryObject(url,"Vehicles/objects/Predator.lwo",panel,"Predator");
         loadDirectoryObject(url,"Vehicles/objects/RC12.lwo",panel,"RC12");
         loadDirectoryObject(url,"Vehicles/objects/U2.lwo",panel,"U2");
-        loadDirectoryObject(url,"objects/Aerostat.lwo",panel,"Aerostat");
-        loadDirectoryObject(url,"Vehicles/objects/stringray.lwo",panel,"Stingray");
+        loadDirectoryObject(url,"objects/Grunt2.lwo",panel,"Grunt");
 
 
         panel = document.getElementById("panel-lib-egyptObjects");
@@ -304,6 +303,8 @@ function listLibrary()
         loadDirectoryObject(url,"Robots/objects/MULE_ARV_1.lwo",panel,"MULE_ARV_1");
         loadDirectoryObject(url,"Robots/objects/MULE_CM_1.lwo",panel,"MULE_CM_1");
         loadDirectoryObject(url,"Robots/objects/MULE_T_HIGH.lwo",panel,"MULE_T_HIGH");
+        loadDirectoryObject(url,"objects/RB-Megatron TF3.lwo",panel,"Megatron");
+        loadDirectoryObject(url,"objects/RB-OptimusBoss.lwo",panel,"Optimus Prime");
 
         panel = document.getElementById("panel-lib-geoObjects");
         loadDirectoryObject(url,"objects/Terrain.lwo",panel,"Terrain");
