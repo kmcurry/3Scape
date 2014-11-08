@@ -85,7 +85,7 @@ function createLabel()
 
   var label = xml.getElementsByTagName("Label")[0];
   label.attributes["name"].value = "Label_" + name.value;
-  if (selectedModel)
+  if (g_selectedModel)
   {
       label.attributes["parent"].value = modelName;
       console.log(modelName)
@@ -137,7 +137,7 @@ function createBalloon()
 
   var label = xml.getElementsByTagName("BalloonTipLabel")[0];
   label.attributes["name"].value = "Label_" + name.value;
-  if(selectedModel)
+  if(g_selectedModel)
   {
       label.attributes["parent"].value = modelName;
       console.log(modelName)

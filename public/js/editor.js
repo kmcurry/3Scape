@@ -20,19 +20,20 @@ var g_timer = null;
 var g_interval = null;
 
 var g_sceneInspector = null;
+var g_selectedModel = null;
 
 
 function copy()
 {
-    if (selectedModel) {
-        copiedUrl = selectedModel.url.getValueDirect().join("");
-        R = selectedModel.color.values[0];
-        G = selectedModel.color.values[1];
-        B = selectedModel.color.values[2];
-        Size = selectedModel.scale.getValueDirect().x;
-        rotX = selectedModel.rotation.getValueDirect().x;
-        rotY = selectedModel.rotation.getValueDirect().y;
-        rotZ = selectedModel.rotation.getValueDirect().z;
+    if (g_selectedModel) {
+        copiedUrl = g_selectedModel.url.getValueDirect().join("");
+        R = g_selectedModel.color.values[0];
+        G = g_selectedModel.color.values[1];
+        B = g_selectedModel.color.values[2];
+        Size = g_selectedModel.scale.getValueDirect().x;
+        rotX = g_selectedModel.rotation.getValueDirect().x;
+        rotY = g_selectedModel.rotation.getValueDirect().y;
+        rotZ = g_selectedModel.rotation.getValueDirect().z;
         copiedElement = 1;
     }
     else if (selectedThing)
@@ -44,9 +45,9 @@ function copy()
 }
 function cut()
 {
-    if (selectedModel) {
+    if (g_selectedModel) {
         copy();
-        var name = selectedModel.name.getValueDirect().join("");
+        var name = g_selectedModel.name.getValueDirect().join("");
         var c = "\<Remove target='" + name + "'/>"
         bridgeworks.updateScene(c);
         console.log(name);
@@ -490,17 +491,17 @@ function loadModel(url)
     //console.debug(xstr);
     bridgeworks.updateScene(xstr);
 
-    selectedModel = bridgeworks.registry.find(name);
+    g_selectedModel = bridgeworks.registry.find(name);
 
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
 
-    scaleValues = (selectedModel.scale.getValueDirect());
+    scaleValues = (g_selectedModel.scale.getValueDirect());
     x = scaleValues['x'] * 100
     $('#scales').slider('setValue', x);
 
-    var r = selectedModel.rotation.getValueDirect();
+    var r = g_selectedModel.rotation.getValueDirect();
     $("#rotxs").slider("setValue", r.x);
     $("#rotys").slider("setValue", r.y);
     $("#rotzs").slider("setValue", r.z);
@@ -552,11 +553,28 @@ function loadMotion(url)
     u.value = url;
 
     var t = kfi.attributes["target"];
-    t.value = selectedModel.name.getValueDirect().join("");
+    t.value = g_selectedModel.name.getValueDirect().join("");
 
     var xstr = (new XMLSerializer()).serializeToString(xml);
     console.debug(xstr);
     bridgeworks.updateScene(xstr);
+}
+
+function loadScape(scape) {
+  switch (scape) {
+    case "egypt" :
+      loadEgypt();
+      break;
+    case "entymology" :
+      loadEntymology();
+      break;
+    case "2Dvs3D" :
+      load2D3D();
+      break;
+    case "two-stroke" :
+      loadTwoStroke();
+      break;
+  }
 }
 
 function locate() //Where is this function called?
@@ -570,7 +588,7 @@ function locate() //Where is this function called?
 //Locates the target given the name and also sets current object to be the object located
 function locate(name){
     var cmd = "\<Locate target='" + name + "'/>";
-    selectedModel = bridgeworks.registry.find(name); //Sets the selectedModel to whatever the name is of the model you click in the list.
+    g_selectedModel = bridgeworks.registry.find(name); //Sets the g_selectedModel to whatever the name is of the model you click in the list.
     setColorPicker();
     console.log(cmd);
     bridgeworks.updateScene(cmd);
@@ -579,11 +597,11 @@ function locate(name){
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
 
-    scaleValues = (selectedModel.scale.getValueDirect());
+    scaleValues = (g_selectedModel.scale.getValueDirect());
     x = scaleValues['x'] * 100
     $('#scales').slider('setValue', x);
 
-    var r = selectedModel.rotation.getValueDirect();
+    var r = g_selectedModel.rotation.getValueDirect();
     $("#rotxs").slider("setValue", r.x);
     $("#rotys").slider("setValue", r.y);
     $("#rotzs").slider("setValue", r.z);
@@ -592,7 +610,7 @@ function locate(name){
 
 function roam(name) {
     if (!name) {
-      name = selectedModel.name.getValueDirect().join("");
+      name = g_selectedModel.name.getValueDirect().join("");
     }
     if (name === "Grid") return;
 
@@ -603,7 +621,7 @@ function roam(name) {
 
 function roamFaster(name) {
     if (!name) {
-      name = selectedModel.name.getValueDirect().join("");
+      name = g_selectedModel.name.getValueDirect().join("");
     }
     if (name === "Grid") return;
 
@@ -614,9 +632,9 @@ function roamFaster(name) {
 
 function toggleMoveable(name) {
   if (!name) {
-    name = selectedModel.name.getValueDirect().join("");
+    name = g_selectedModel.name.getValueDirect().join("");
   }
-  var m = !(selectedModel.moveable.getValueDirect());
+  var m = !(g_selectedModel.moveable.getValueDirect());
 
   var cmd = "\<Set target='" + name + "' moveable='" + m + "'/>";
   console.log(cmd);
@@ -625,7 +643,7 @@ function toggleMoveable(name) {
 
 function stopRoaming(name) {
     if (!name) {
-      name = selectedModel.name.getValueDirect().join("");
+      name = g_selectedModel.name.getValueDirect().join("");
     }
     if (name === "Grid") return;
 
@@ -639,16 +657,16 @@ function setColorPicker()
     var g;
     var r;
     var b;
-    r = selectedModel.color.values[0];
-    g = selectedModel.color.values[1];
-    b = selectedModel.color.values[2];
+    r = g_selectedModel.color.values[0];
+    g = g_selectedModel.color.values[1];
+    b = g_selectedModel.color.values[2];
     document.getElementById('myColor').color.fromRGB(r, g, b);
 }
 
 function setModel(name)
 {
     var xml = "\<Set target='" + name + "'/>";
-    selectedModel = bridgeworks.registry.find(name);
+    g_selectedModel = bridgeworks.registry.find(name);
     console.log(xml);
     setColorPicker();
     bridgeworks.updateScene(xml);
@@ -657,11 +675,11 @@ function setModel(name)
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
 
-    scaleValues = (selectedModel.scale.getValueDirect());
+    scaleValues = (g_selectedModel.scale.getValueDirect());
     x = scaleValues['x'] * 100
     $('#scales').slider('setValue', x);
 
-    var r = selectedModel.rotation.getValueDirect();
+    var r = g_selectedModel.rotation.getValueDirect();
     $("#rotxs").slider("setValue", r.x);
     $("#rotys").slider("setValue", r.y);
     $("#rotzs").slider("setValue", r.z);
@@ -689,7 +707,7 @@ function paste()
 
         var label = xml.getElementsByTagName("Label")[0];
         label.attributes["name"].value = "Label_" + name.value;
-        if(selectedModel)
+        if(g_selectedModel)
         {
             label.attributes["parent"].value = modelName;
             console.log(modelName)
@@ -720,8 +738,8 @@ function paste()
         count -= 1;
         name = count.toString() + ". " + name;
         count += 1;
-        selectedModel.scale.setValueDirect(Size, Size, Size);
-        selectedModel.rotation.setValueDirect(rotX, rotY, rotZ);
+        g_selectedModel.scale.setValueDirect(Size, Size, Size);
+        g_selectedModel.rotation.setValueDirect(rotX, rotY, rotZ);
         var cmd = "\<Set target='" + name + "'>" + "\<color r= '" + R + "' " + "g= '" + G + "' " + "b= '" + B + "'/>" + "</Set>";
         bridgeworks.updateScene(cmd);
     }
@@ -738,7 +756,7 @@ function show(name)
 
 function applyColor()
 {
-    var name = selectedModel.name.getValueDirect().join("");
+    var name = g_selectedModel.name.getValueDirect().join("");
     var b = $('#info-b').val();
     var g = $('#info-g').val();
     var r = $('#info-r').val();

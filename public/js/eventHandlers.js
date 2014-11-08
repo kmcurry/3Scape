@@ -28,10 +28,10 @@ function handleEvent(e)
       case "click": {
           //Dishing out the event client x and y cordinates of the mouse for testing purposes
           window.clearInterval(zoomUpdate);
-          selectedModel = bridgeworks.selector.selections.models[0];
-          if(selectedModel) {
+          g_selectedModel = bridgeworks.selector.selections.models[0];
+          if(g_selectedModel) {
 
-              modelName = selectedModel.name.getValueDirect().join("");
+              modelName = g_selectedModel.name.getValueDirect().join("");
               selectedThing = null;
 
 
@@ -41,12 +41,12 @@ function handleEvent(e)
               $('.object').removeClass('current-object');
               $(myObject).addClass('current-object');
 
-              scaleValues = (selectedModel.scale.getValueDirect());
+              scaleValues = (g_selectedModel.scale.getValueDirect());
               x = scaleValues['x'] * 100
               $('#scales').slider('setValue', x);
 
               // if the selected model is not moveable switch modes between camera and objects
-              if (selectedModel.moveable.getValueDirect() == false) {
+              if (g_selectedModel.moveable.getValueDirect() == false) {
                 sceneInspector.enabled.setValueDirect(true);
                 objectInspector.enabled.setValueDirect(false);
               } else {
@@ -74,7 +74,7 @@ function handleEvent(e)
               openLabelEdit();
           }
           else {
-              var name = selectedModel.name.getValueDirect().join("");
+              var name = g_selectedModel.name.getValueDirect().join("");
               var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
               var cmd = "";
               if (e.metaKey || e.ctrlKey) {
