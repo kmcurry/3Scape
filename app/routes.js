@@ -8,8 +8,21 @@ module.exports = function(app, passport) {
         }); //load the index.ejs file
     });
     */
+
     app.get('/', function (req, res) {
-        res.render('index.ejs');
+      console.log("rendering index");
+          res.render('index');
+    });
+
+    app.get('/:scape', function (req, res) {
+        if (req.params.scape) {
+          var s = JSON.stringify(req.params.scape);
+          console.log("scape = " + s);
+          res.render('index', {scape: s});
+        } else {
+          console.log("no scape");
+          res.render('index');
+        }
     });
 
     // =====================================
@@ -75,14 +88,6 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
-
-/*
-    app.get('/scape/:scape?', function (req, res) {
-      if (req.params.scape) {
-        res.render('index', { scape: req.params.scape });
-      }
-    });
-    */
 }
 	// =====================================
 	// PROJECTS ============================
