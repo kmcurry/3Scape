@@ -940,7 +940,9 @@
                 }
                 bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"));
 
-
+                <% if (scape != 'undefined') { %>
+                  loadScape(<%- scape %>);
+                <% } %>
 
                 //cubify();
 
