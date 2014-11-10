@@ -493,7 +493,8 @@ function loadModel(url)
     bridgeworks.updateScene(xstr);
 
     g_selectedModel = bridgeworks.registry.find(name);
-
+    g_selectedModelName = name;
+    
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
@@ -710,8 +711,8 @@ function paste()
         label.attributes["name"].value = "Label_" + name.value;
         if(g_selectedModel)
         {
-            label.attributes["parent"].value = modelName;
-            console.log(modelName)
+            label.attributes["parent"].value = g_selectedModelName;
+            console.log(g_selectedModelName)
         }
         else {
             label.attributes["parent"].value = name.value;

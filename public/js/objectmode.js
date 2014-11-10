@@ -1,7 +1,7 @@
 function objectLeft(magnitude)
 {
   var cmd;
-  if(modelName != "Grid") {
+  if(g_selectedModelName != "Grid") {
       cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
       cmd += "\<position x='" + (g_selectedModel.position.values[0] -= magnitude) + "' y='" + g_selectedModel.position.values[1] + "' z='" + g_selectedModel.position.values[2] + "'/>"
       cmd += "\</Set>";
@@ -13,8 +13,8 @@ function objectLeft(magnitude)
 function objectRight(magnitude)
 {
   var cmd;
-    console.log(modelName);
-  if(modelName != "Grid") {
+    console.log(g_selectedModelName);
+  if(g_selectedModelName != "Grid") {
       cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
       cmd += "\<position x='" + (g_selectedModel.position.values[0] += magnitude) + "' y='" + g_selectedModel.position.values[1] + "' z='" + g_selectedModel.position.values[2] + "'/>"
       cmd += "\</Set>";
@@ -27,7 +27,7 @@ function objectRight(magnitude)
 function objectDown(magnitude)
 {
   var cmd;
-  if(modelName != "Grid") {
+  if(g_selectedModelName != "Grid") {
       cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
       cmd += "\<position x='" + (g_selectedModel.position.values[0]) + "' y='" + (g_selectedModel.position.values[1] -= magnitude) + "' z='" + g_selectedModel.position.values[2] + "'/>"
       cmd += "\</Set>";
@@ -39,7 +39,7 @@ function objectDown(magnitude)
 function objectBackward(magnitude)
 {
   var cmd;
-  if(modelName != "Grid") {
+  if(g_selectedModelName != "Grid") {
       cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
       cmd += "\<position x='" + (g_selectedModel.position.values[0]) + "' y='" + g_selectedModel.position.values[1] + "' z='" + (g_selectedModel.position.values[2] -= magnitude) + "'/>"
       cmd += "\</Set>";
@@ -50,7 +50,7 @@ function objectBackward(magnitude)
 function objectUp(magnitude)
 {
   var cmd;
-  if(modelName != "Grid") {
+  if(g_selectedModelName != "Grid") {
       cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
       cmd += "\<position x='" + (g_selectedModel.position.values[0]) + "' y='" + (g_selectedModel.position.values[1] += magnitude) + "' z='" + g_selectedModel.position.values[2] + "'/>"
       cmd += "\</Set>";
@@ -60,7 +60,7 @@ function objectUp(magnitude)
 
 function objectForward(magnitude){
   var cmd;
-  if(modelName !="Grid") {
+  if(g_selectedModelName !="Grid") {
       cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
       cmd += "\<position x='" + (g_selectedModel.position.values[0]) + "' y='" + g_selectedModel.position.values[1] + "' z='" + (g_selectedModel.position.values[2] += magnitude) + "'/>"
       cmd += "\</Set>";

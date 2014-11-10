@@ -86,7 +86,7 @@
           var sceneInspector;
           var objectInspector;
           var camStartPos;
-          var modelName;
+          var g_selectedModelName;
 
           var selectedThing;
           var selectedId;
@@ -635,8 +635,7 @@
               value: 0
             })
              .on("slide", function(ev){
-              console.log(ev.value)
-              if(modelName != "Grid")
+              if(g_selectedModelName != "Grid")
                     setRotationX(ev.value);
              });
           $('#rotys').slider({
@@ -648,8 +647,7 @@
             value: 0
           })
            .on("slide", function(ev){
-             console.log(ev.value);
-             if(modelName != "Grid")
+             if(g_selectedModelName != "Grid")
                 setRotationY(ev.value);
            });
           $('#rotzs').slider({
@@ -661,8 +659,7 @@
            value: 0
           })
           .on("slide", function(ev){
-           console.log(ev.value);
-           if(modelName != "Grid")
+           if(g_selectedModelName != "Grid")
                 setRotationZ(ev.value);
             });
           $('#scales').slider({
@@ -674,8 +671,7 @@
             value: 100
           })
           .on('slide', function(ev){
-            console.log(ev.value);
-            if(modelName != "Grid")
+            if(g_selectedModelName != "Grid")
                 setScale(ev.value / 100)
           });
         </script>

@@ -31,13 +31,13 @@ function handleEvent(e)
           g_selectedModel = bridgeworks.selector.selections.models[0];
           if(g_selectedModel) {
 
-              modelName = g_selectedModel.name.getValueDirect().join("");
+              g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
               selectedThing = null;
 
 
               setColorPicker();
 
-              myObject = document.getElementById(modelName);
+              myObject = document.getElementById(g_selectedModelName);
               $('.object').removeClass('current-object');
               $(myObject).addClass('current-object');
 

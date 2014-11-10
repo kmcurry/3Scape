@@ -87,8 +87,8 @@ function createLabel()
   label.attributes["name"].value = "Label_" + name.value;
   if (g_selectedModel)
   {
-      label.attributes["parent"].value = modelName;
-      console.log(modelName)
+      label.attributes["parent"].value = g_selectedModelName;
+      console.log(g_selectedModelName)
   }
   else 
   {
@@ -139,8 +139,8 @@ function createBalloon()
   label.attributes["name"].value = "Label_" + name.value;
   if(g_selectedModel)
   {
-      label.attributes["parent"].value = modelName;
-      console.log(modelName)
+      label.attributes["parent"].value = g_selectedModelName;
+      console.log(g_selectedModelName)
   }
   else {
       label.attributes["parent"].value = name.value;
