@@ -233,15 +233,12 @@ function zoomActivate() {
                 sceneInspector.panSensitivity.values[0] = distance * 0.05;
                 sceneInspector.panSensitivity.values[1] = distance * 0.05;
                 sceneInspector.panSensitivity.values[2] = distance * 0.05;
-                console.log(sceneInspector.panSensitivity.values[0]);
             }
         }
         else {
             sceneInspector.panSensitivity.values[0] = 1200;
             sceneInspector.panSensitivity.values[1] = 1200;
             sceneInspector.panSensitivity.values[2] = 1200;
-            console.log(sceneInspector.panSensitivity.values[0]);
-            console.log(distance);
         }
     }, 200);
 }

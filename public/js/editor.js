@@ -258,6 +258,7 @@ function listLibrary()
         loadDirectoryObject(url,"Buildings/objects/RadioTower.lwo",panel,"Radio Tower");
         loadDirectoryObject(url,"Buildings/objects/CheckPoint.lwo",panel,"Checkpoint");
         loadDirectoryObject(url,"objects/helmsdeep.lwo",panel,"Helms Deep");
+        loadDirectoryObject(url,"objects/pontez.lwo",panel,"Bridge");
 
         panel = document.getElementById("panel-lib-landVehicleObjects");
         loadDirectoryObject(url,"Vehicles/objects/C2V.lwo",panel,"C2V");
@@ -267,7 +268,8 @@ function listLibrary()
         loadDirectoryObject(url,"Geography/objects/Camaro.lwo",panel,"Camaro");
         loadDirectoryObject(url,"Geography/objects/SemiTruck.lwo",panel,"SemiTruck");
         loadDirectoryObject(url,"Geography/objects/Truck3.lwo",panel,"Truck3");
-        loadDirectoryObject(url,"Geography/objects/carriage.lwo",panel,"Carriage");
+        loadDirectoryObject(url,"objects/carriage.lwo",panel,"Carriage");
+        loadDirectoryObject(url,"objects/HQ_Movie cycle.lwo",panel,"Tron Cycle");
 
         panel = document.getElementById("panel-lib-airVehicleObjects");
         loadDirectoryObject(url,"Vehicles/objects/AP_A10R.lwo",panel,"A10 Warthog");
@@ -305,6 +307,7 @@ function listLibrary()
         loadDirectoryObject(url,"Robots/objects/MULE_T_HIGH.lwo",panel,"MULE_T_HIGH");
         loadDirectoryObject(url,"objects/RB-Megatron TF3.lwo",panel,"Megatron");
         loadDirectoryObject(url,"objects/RB-OptimusBoss.lwo",panel,"Optimus Prime");
+        loadDirectoryObject(url,"objects/RB-BumbleBee.lwo",panel,"Bumblebee");
 
         panel = document.getElementById("panel-lib-geoObjects");
         loadDirectoryObject(url,"objects/Terrain.lwo",panel,"Terrain");
@@ -494,7 +497,7 @@ function loadModel(url)
 
     g_selectedModel = bridgeworks.registry.find(name);
     g_selectedModelName = name;
-    
+
     myObject = document.getElementById(name);
     $('.object').removeClass('current-object');
     $(myObject).addClass('current-object');
