@@ -207,6 +207,7 @@ function listLibrary()
         loadDirectoryObject(url,"objects/Satellite.lwo",panel,"Satellite");
         loadDirectoryObject(url,"objects/table.lwo",panel,"Table");
         loadDirectoryObject(url,"objects/thor_hammer.lwo",panel,"Thor Hammmer");
+        loadDirectoryObject(url,"objects/captain_hat.lwo",panel,"Captain Hat");
 
         panel = document.getElementById("panel-lib-animalObjects");
         loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");

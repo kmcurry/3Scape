@@ -14,17 +14,6 @@ module.exports = function(app, passport) {
           res.render('index');
     });
 
-    app.get('/:scape', function (req, res) {
-        if (req.params.scape) {
-          var s = JSON.stringify(req.params.scape);
-          console.log("scape = " + s);
-          res.render('index', {scape: s});
-        } else {
-          console.log("no scape");
-          res.render('index');
-        }
-    });
-
     // =====================================
     // PRIVACY ========
     // =====================================
@@ -87,6 +76,25 @@ module.exports = function(app, passport) {
     app.get('/logout', function (req, res) {
         req.logout();
         res.redirect('/');
+    });
+
+    app.get('/sitemap', function (req, res) {
+        res.set('Content-Type', 'application/xml');
+        var options = {
+          root: __dirname + '/../'
+        }
+        res.sendFile('sitemap.xml', options);
+    });
+
+    app.get('/:scape', function (req, res) {
+        if (req.params.scape) {
+          var s = JSON.stringify(req.params.scape);
+          console.log("scape = " + s);
+          res.render('index', {scape: s});
+        } else {
+          console.log("no scape");
+          res.render('index');
+        }
     });
 }
 	// =====================================
