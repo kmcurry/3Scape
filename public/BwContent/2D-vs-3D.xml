@@ -53,7 +53,7 @@
         </Set>
       </ModelRoot>
       <ModelRoot>
-        <Model>
+        <Model highlight="true">
           <name>1. Cube</name>
           <position item0="-24.843352651532005" item1="0" item2="24.96274236666531" />
           <rotation item0="0" item1="0" item2="0" />
@@ -175,7 +175,7 @@
       </Group>
     </Group>
   </Isolator>
-  <RenderDirective>
+  <RenderDirective highlightType="2">
     <name>RenderDirective</name>
   </RenderDirective>
 </Session>

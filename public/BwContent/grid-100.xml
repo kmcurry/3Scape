@@ -35,6 +35,6 @@
         </Group>
        <!-- <Label text="Working??" parent="Cube"></Label> -->
     </Isolator>
-    <RenderDirective name="RenderDirective"/>
+    <RenderDirective name="RenderDirective" highlightType="1"/>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 </Scene>
