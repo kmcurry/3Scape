@@ -2934,6 +2934,16 @@ var eTextureWrap =
     EnumCount: 4
 };
 
+var eHighlightType =
+{
+    // disable highlights
+    None: 0,
+    // 4-pass
+    FourPass: 1,
+    // 8-pass
+    EightPass: 2  
+};
+
 var FLT_EPSILON = 1.192092896e-07;
 var FLT_MAX     = 3.402823466e+38;
 
@@ -4840,6 +4850,7 @@ var eAttrType = {
     BBoxDirective               :2004,
     SerializeDirective          :2005,
     CollideDirective            :2006,
+    HighlightDirective          :2007,
     Directive_End               :2999,
     
     Command                     :3000,
@@ -8182,44 +8193,52 @@ var eRenderContextMethod =
     ApplyProjectionTransform				: 2,
     Clear           						: 3,
     ClearColor								: 4,
-    CreateVertexBuffer					    : 5,
-    CreateTextureObject 					: 6,
-    Disable     							: 7,
-    Enable  								: 8,
-    Enabled	    							: 9,
-    EnableLight								: 10,
-    EnableTextureStage						: 11,
-    Finish  								: 12,
-    GetEnabledLights						: 13,
-    GetGlobalIllumination					: 14,
-    GetLight            					: 15,
-    GetMaxLightCount    					: 16,
-    GetMaxTextureStages						: 17,
-    PerspectiveMatrixLH						: 18,
-    OrthographicMatrixLH					: 19,
-    SetBlendFactor							: 20,
-    SetEnabledLights						: 21,
-    SetFrontMaterial						: 22,
-    SetGlobalIllumination					: 23,
-    SetLight 			                    : 24,
-    SetTextureBlendFactor					: 25,
-    SetTextureBlendOp						: 26,
-    SetViewport						        : 27,
-    VB_SetPrimitiveType                     : 28,
-    VB_SetVertices                          : 29,
-    VB_SetNormals                           : 30,
-    VB_SetUVCoords                          : 31,
-    VB_SetTextureStage                      : 32,
-    VB_Draw                                 : 33,
-    TO_SetImage                             : 34,
-    TO_SetImageData                         : 35,
-    TO_SetVideo                             : 36,
-    SetMatrixMode							: 37,
-    PushMatrix								: 38,
-    PopMatrix								: 39,
-    LoadMatrix								: 40,
-    LeftMultMatrix							: 41,
-    RightMultMatrix							: 42
+    ClearDepth                              : 5,
+    ClearStencil                            : 6,
+    CreateVertexBuffer					    : 7,
+    CreateTextureObject 					: 8,
+    Disable     							: 9,
+    Enable  								: 10,
+    Enabled	    							: 11,
+    EnableLight								: 12,
+    EnableTextureStage						: 13,
+    Finish  								: 14,
+    GetEnabledLights						: 15,
+    GetGlobalIllumination					: 16,
+    GetLight            					: 17,
+    GetMaxLightCount    					: 18,
+    GetMaxTextureStages						: 19,
+    PerspectiveMatrixLH						: 20,
+    OrthographicMatrixLH					: 21,
+    SetBlendFactor							: 22,
+    SetDepthFunc                            : 23,
+    SetEnabledLights						: 24,
+    SetFrontMaterial						: 25,
+    SetGlobalIllumination					: 26,
+    SetLight 			                    : 27,
+    SetShadeModel                           : 28,
+    SetStencilFunc                          : 29,
+    SetStencilMask                          : 30,
+    SetStencilOp                            : 31,
+    SetTextureBlendFactor					: 32,
+    SetTextureBlendOp						: 33,
+    SetViewport						        : 34,
+    VB_SetPrimitiveType                     : 35,
+    VB_SetVertices                          : 36,
+    VB_SetNormals                           : 37,
+    VB_SetColors                            : 38,
+    VB_SetUVCoords                          : 39,
+    VB_SetTextureStage                      : 40,
+    VB_Draw                                 : 41,
+    TO_SetImage                             : 42,
+    TO_SetImageData                         : 43,
+    TO_SetVideo                             : 44,
+    SetMatrixMode							: 45,
+    PushMatrix								: 46,
+    PopMatrix								: 47,
+    LoadMatrix								: 48,
+    LeftMultMatrix							: 49,
+    RightMultMatrix							: 50
 }
 
 function RenderContextMethodDesc(method, params)
@@ -8281,13 +8300,25 @@ DisplayListObj.prototype.invokeMethod = function(desc)
         
         case eRenderContextMethod.Clear:
         {
-            return this.renderContext.clear();
+            return this.renderContext.clear(desc.params[0]);
         }
         break;
         
         case eRenderContextMethod.ClearColor:
         {
             this.renderContext.clearColor(desc.params[0], desc.params[1], desc.params[2], desc.params[3]);
+        }
+        break;
+        
+        case eRenderContextMethod.ClearDepth:
+        {
+            this.renderContext.clearDepth(desc.params[0]);
+        }
+        break;
+        
+        case eRenderContextMethod.ClearStencil:
+        {
+            this.renderContext.clearStencil(desc.params[0]);
         }
         break;
         
@@ -8389,6 +8420,12 @@ DisplayListObj.prototype.invokeMethod = function(desc)
         }
         break;
 
+        case eRenderContextMethod.SetDepthFunc:
+        {
+            this.renderContext.setDepthFunc(desc.params[0]);
+        }
+        break;
+        
         case eRenderContextMethod.SetEnabledLights:
         {
             this.renderContext.setEnabledLights(desc.params[0]);
@@ -8410,6 +8447,30 @@ DisplayListObj.prototype.invokeMethod = function(desc)
         case eRenderContextMethod.SetLight:
         {
             this.renderContext.setLight(desc.params[0], desc.params[1]);    
+        }
+        break;
+        
+        case eRenderContextMethod.SetShadeModel:
+        {
+            this.renderContext.setShadeModel(desc.params[0]);
+        }
+        break;
+        
+        case eRenderContextMethod.SetStencilFunc:
+        {
+            this.renderContext.setStencilFunc(desc.params[0], desc.params[1], desc.params[2]);
+        }
+        break;
+                       
+        case eRenderContextMethod.SetStencilMask:
+        {
+            this.renderContext.setStencilMask(desc.params[0]);
+        }
+        break;
+        
+        case eRenderContextMethod.SetStencilOp:
+        {
+            this.renderContext.setStencilOp(desc.params[0], desc.params[1], desc.params[2]);
         }
         break;
         
@@ -8447,6 +8508,12 @@ DisplayListObj.prototype.invokeMethod = function(desc)
         case eRenderContextMethod.VB_SetNormals:
         {
             desc.params[0].setNormals(desc.params[1]);
+        }
+        break;
+        
+        case eRenderContextMethod.VB_SetColors:
+        {
+            desc.params[0].setColors(desc.params[1]);
         }
         break;
         
@@ -8552,6 +8619,58 @@ var eRenderMode =
     PolygonOffset_Point     : 11
 }
  
+/*
+ * depth func
+ */
+var eDepthFunc =
+{
+    Never                   : 1,
+    Less                    : 2,
+    LessEqual               : 3,
+    Equal                   : 4,
+    NotEqual                : 5,
+    GreaterEqual            : 6,
+    Greater                 : 7,
+    Always                  : 8 
+}
+
+/*
+ * stencil func
+ */
+var eStencilFunc =
+{
+    Never                   : 1,
+    Less                    : 2,
+    LessEqual               : 3,
+    Equal                   : 4,
+    NotEqual                : 5,
+    GreaterEqual            : 6,
+    Greater                 : 7,
+    Always                  : 8 
+}
+
+/*
+ * stencil op
+ */
+var eStencilOp = 
+{
+    Keep                    : 0,
+    Replace                 : 1,
+    Increment               : 2,
+    Decrement               : 3,
+    Invert                  : 4,
+    Zero                    : 5    
+}
+
+/*
+ * shade model
+ */
+var eShadeModel =
+{
+    Flat                    : 1,
+    Gouraud                 : 2
+}
+
 var RC_BLEND            = 0x0001;
 var RC_CULL_FACE        = 0x0B44;
 
@@ -8621,6 +8740,13 @@ function MaterialDesc()
         }
     }
 }
+
+/*
+ * clear mask
+ */
+var RC_COLOR_BUFFER_BIT             = 0x001;
+var RC_DEPTH_BUFFER_BIT             = 0x002;
+var RC_STENCIL_BUFFER_BIT           = 0x004;
 
 /*
  * blend factor
@@ -8819,6 +8945,18 @@ function RenderContext(canvas, background)
     		break;
     	}	
     }
+    
+    this.setEnabled = function(cap, enabled)
+    {
+        if (enabled)
+        {
+            this.enable(cap);    
+        }
+        else
+        {
+            this.disable(cap);
+        }
+    }
 }
 
 function newRenderContext(api, canvas, background)
@@ -8923,8 +9061,8 @@ function RenderState(rc)
 
         if (mask & RENDERSTATE_ZBUFFER_BIT)
         {
-            rec.zBufferEnabled = this.renderContext.enabled(eRenderMode.depthTest);
-            rec.zBufferWriteEnabled = this.renderContext.enabled(eRenderMode.depthBufferWrite);
+            rec.zBufferEnabled = this.renderContext.enabled(eRenderMode.DepthTest);
+            rec.zBufferWriteEnabled = this.renderContext.enabled(eRenderMode.DepthBufferWrite);
         }
 
         return rec;
@@ -8981,7 +9119,7 @@ function RenderState(rc)
         {
             if (rec.zBufferEnabled)
             {
-                this.renderContext.enable(eRenderMode.depthTest);
+                this.renderContext.enable(eRenderMode.DepthTest);
             }
             else
             {
@@ -8990,11 +9128,11 @@ function RenderState(rc)
 
             if (rec.zBufferWriteEnabled)
             {
-                this.renderContext.enable(eRenderMode.depthBufferWrite);
+                this.renderContext.enable(eRenderMode.DepthBufferWrite);
             }
             else
             {
-                this.renderContext.disable(eRenderMode.depthBufferWrite);
+                this.renderContext.disable(eRenderMode.DepthBufferWrite);
             }
         }
     }
@@ -9011,6 +9149,7 @@ function VertexBuffer()
 {
     this.vertices = new Array();
     this.normals = new Array();
+    this.colors = new Array();
     this.vertexCount = 0;
     this.numVerticesPerPrimitive = 0;
 }
@@ -9375,8 +9514,10 @@ function webglRC(canvas, background)
 
     gl.clearColor(0, 0, 0, background ? 0 : 1);
     gl.clearDepth(1);
+    gl.clearStencil(0);
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LEQUAL);
+    gl.disable(gl.STENCIL_TEST);
     gl.frontFace(gl.CW);
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.enable(gl.CULL_FACE);
@@ -9422,11 +9563,15 @@ function webglRC(canvas, background)
         gl.uniformMatrix4fv(program.projectionMatrix, false, new Float32Array(this.projectionMatrixStack.top().flatten()));
     }
     
-    this.clear = function()
+    this.clear = function(mask)
     {
-        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.Clear, null);
+        mask = mask || (RC_COLOR_BUFFER_BIT | RC_DEPTH_BUFFER_BIT);
         
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);// | gl.STENCIL_BUFFER_BIT);
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.Clear, [mask]);
+        
+        gl.clear((mask & RC_COLOR_BUFFER_BIT   ? gl.COLOR_BUFFER_BIT   : 0) |
+                 (mask & RC_DEPTH_BUFFER_BIT   ? gl.DEPTH_BUFFER_BIT   : 0) |
+                 (mask & RC_STENCIL_BUFFER_BIT ? gl.STENCIL_BUFFER_BIT : 0));
     }
 
     this.clearColor = function(r, g, b, a)
@@ -9434,6 +9579,20 @@ function webglRC(canvas, background)
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.ClearColor, [r, g, b, a]);
         
         gl.clearColor(r, g, b, a);
+    }
+    
+    this.clearDepth = function(d)
+    {
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.ClearDepth, [d]);
+        
+        gl.clearDepth(d);
+    }
+    
+    this.clearStencil = function(s)
+    {
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.ClearStencil, [s]);
+        
+        gl.clearStencil(s);  
     }
     
     this.createVertexBuffer = function(numVerticesPerPrimitive)
@@ -9475,6 +9634,10 @@ function webglRC(canvas, background)
             case eRenderMode.Lighting:
                 gl.uniform1i(program.lightingEnabled, false); 
                 break;
+                
+            case eRenderMode.StencilTest:
+                gl.disable(gl.STENCIL_TEST);
+                break;
         }
     }
 
@@ -9502,6 +9665,10 @@ function webglRC(canvas, background)
 
             case eRenderMode.Lighting:
                 gl.uniform1i(program.lightingEnabled, true);
+                break;
+                
+            case eRenderMode.StencilTest:
+                gl.enable(gl.STENCIL_TEST);
                 break;
         }
     }
@@ -9532,6 +9699,10 @@ function webglRC(canvas, background)
 
             case eRenderMode.Lighting:
                 e = gl.getUniform(program, program.lightingEnabled);
+                break;
+                
+            case eRenderMode.StencilTest:
+                e = gl.getParameter(gl.STENCIL_TEST);
                 break;
         }
 
@@ -9693,6 +9864,27 @@ function webglRC(canvas, background)
         gl.blendFunc(gl_SrcFactor, gl_DestFactor);  
     }
 
+    this.setDepthFunc = function(func)
+    {
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetDepthFunc, [func]);
+        
+        var gl_DepthFunc;
+        switch (func)
+        {
+        case eDepthFunc.Never:          gl_DepthFunc = gl.NEVER; break;
+        case eDepthFunc.Less:           gl_DepthFunc = gl.LESS; break;
+        case eDepthFunc.LessEqual:      gl_DepthFunc = gl.LEQUAL; break;
+        case eDepthFunc.Equal:          gl_DepthFunc = gl.EQUAL; break;
+        case eDepthFunc.NotEqual:       gl_DepthFunc = gl.NOTEQUAL; break;
+        case eDepthFunc.GreaterEqual:   gl_DepthFunc = gl.GEQUAL; break;
+        case eDepthFunc.Greater:        gl_DepthFunc = gl.GREATER; break;
+        case eDepthFunc.Always:         gl_DepthFunc = gl.ALWAYS; break;
+        }
+        
+        gl.depthFunc(gl_DepthFunc);
+           
+    }
+    
     this.setEnabledLights = function(indices)
     {
         if (this.displayListObj) if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetEnabledLights, [indices]);
@@ -9891,6 +10083,78 @@ function webglRC(canvas, background)
         vLightMatrices[index] = modelViewMatrix;
     }
 
+    this.setShadeModel = function(model)
+    {
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetShadeModel, [model]);
+        
+        // TODO
+    }
+    
+    this.setStencilFunc = function(func, ref, mask)
+    {
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetStencilFunc, [func, ref, mask]);
+        
+        var gl_StencilFunc;
+        switch (func)
+        {
+        case eDepthFunc.Never:          gl_StencilFunc = gl.NEVER; break;
+        case eDepthFunc.Less:           gl_StencilFunc = gl.LESS; break;
+        case eDepthFunc.LessEqual:      gl_StencilFunc = gl.LEQUAL; break;
+        case eDepthFunc.Equal:          gl_StencilFunc = gl.EQUAL; break;
+        case eDepthFunc.NotEqual:       gl_StencilFunc = gl.NOTEQUAL; break;
+        case eDepthFunc.GreaterEqual:   gl_StencilFunc = gl.GEQUAL; break;
+        case eDepthFunc.Greater:        gl_StencilFunc = gl.GREATER; break;
+        case eDepthFunc.Always:         gl_StencilFunc = gl.ALWAYS; break;
+        }
+        
+        gl.stencilFunc(gl_StencilFunc, ref, mask);
+    }
+            
+    this.setStencilMask = function(mask)
+    {
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetStencilMask, [mask]);
+        
+        gl.stencilMask(mask);
+    } 
+    
+    this.setStencilOp = function(fail, zFail, zPass)
+    {
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetStencilOp, [fail, zFail, zPass]);
+       
+        var gl_Fail;
+        switch (fail)
+        {
+        case eStencilOp.Keep:           gl_Fail = gl.KEEP; break;
+        case eStencilOp.Replace:        gl_Fail = gl.REPLACE; break;
+        case eStencilOp.Increment:      gl_Fail = gl.INCR; break;
+        case eStencilOp.Decrement:      gl_Fail = gl.DECR; break;
+        case eStencilOp.Invert:         gl_Fail = gl.INVERT; break;
+        case eStencilOp.Zero:           gl_Fail = gl.ZERO; break;
+        }
+        
+        switch (zFail)
+        {
+        case eStencilOp.Keep:           gl_ZFail = gl.KEEP; break;
+        case eStencilOp.Replace:        gl_ZFail = gl.REPLACE; break;
+        case eStencilOp.Increment:      gl_ZFail = gl.INCR; break;
+        case eStencilOp.Decrement:      gl_ZFail = gl.DECR; break;
+        case eStencilOp.Invert:         gl_ZFail = gl.INVERT; break;
+        case eStencilOp.Zero:           gl_ZFail = gl.ZERO; break;
+        }
+        
+        switch (zPass)
+        {
+        case eStencilOp.Keep:           gl_ZPass = gl.KEEP; break;
+        case eStencilOp.Replace:        gl_ZPass = gl.REPLACE; break;
+        case eStencilOp.Increment:      gl_ZPass = gl.INCR; break;
+        case eStencilOp.Decrement:      gl_ZPass = gl.DECR; break;
+        case eStencilOp.Invert:         gl_ZPass = gl.INVERT; break;
+        case eStencilOp.Zero:           gl_ZPass = gl.ZERO; break;
+        }
+        
+        gl.stencilOp(gl_Fail, gl_ZFail, gl_ZPass);
+    }
+    
     this.setTextureBlendFactor = function(factor)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetTextureBlendFactor, [factor]);
@@ -9922,11 +10186,12 @@ function getWebGLContext(canvas, debug)
     {
         if (debug)
         {
-            gl = WebGLDebugUtils.makeDebugContext(canvas.getContext("experimental-webgl", { antialias : false, preserveDrawingBuffer: true }));
+            gl = WebGLDebugUtils.makeDebugContext(canvas.getContext("experimental-webgl", { stencil: true, antialias: false, preserveDrawingBuffer: true }));
         }
         else // !debug
         {
-            gl = (canvas.getContext("webgl", { antialias : true, preserveDrawingBuffer: true }) || canvas.getContext("experimental-webgl", { antialias : true, preserveDrawingBuffer: true }));
+            gl = (canvas.getContext("webgl", { stencil: true, antialias: true, preserveDrawingBuffer: true }) || 
+                  canvas.getContext("experimental-webgl", { stencil: true, antialias: true, preserveDrawingBuffer: true }));
         }
     }    
     catch (e) 
@@ -9965,6 +10230,8 @@ function getProgram(gl, vShader, fShader)
     gl.enableVertexAttribArray(program.vertexPositionAttribute);
     program.vertexNormalAttribute = gl.getAttribLocation(program, "aVertexNormal");
     gl.enableVertexAttribArray(program.vertexNormalAttribute);
+    program.vertexColorAttribute = gl.getAttribLocation(program, "aVertexColor");
+    gl.enableVertexAttribArray(program.vertexColorAttribute);
     program.textureCoordAttribute = new Array(gl_MaxTextureStages);
     for (var i=0; i < gl_MaxTextureStages; i++)
     {
@@ -10059,6 +10326,8 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
     var program = program;
     var vb = gl.createBuffer();
     var nb = null;
+    var cb = null;
+    var cEmpty = gl.createBuffer(); // for VBs with no color coordinates (see below)
     var uvb = new Array(gl_MaxTextureStages);
     var uvEmpty = gl.createBuffer(); // for VBs with no texture coordinates (see below)
     var uvCoords = []; // indexed by texture
@@ -10095,6 +10364,10 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
             
             this.vertexCount = vertices.length / this.numVerticesPerPrimitive;
             
+            // create empty color array for vb's with no colors specified (see below)
+            gl.bindBuffer(gl.ARRAY_BUFFER, cEmpty);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.vertexCount * 4), gl.STATIC_DRAW);
+            
             // create empty texture coordinate arrays for vb's with no textures (see below)
             gl.bindBuffer(gl.ARRAY_BUFFER, uvEmpty);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(new Array(this.vertexCount * 2)), gl.STATIC_DRAW);           
@@ -10120,6 +10393,23 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
         this.normals = normals;
     }
 
+    this.setColors = function(colors)
+    {
+        if (rc.displayListObj) DL_ADD_METHOD_DESC(rc.displayListObj, eRenderContextMethod.VB_SetColors, [this, colors]);
+        
+        if (colors.length)
+        {
+            if (cb == null)
+            {
+                cb = gl.createBuffer();
+            }
+            gl.bindBuffer(gl.ARRAY_BUFFER, cb);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+        }
+        
+        this.colors = colors;
+    }
+    
     this.setUVCoords = function(texture, coords)
     {
         if (rc.displayListObj) DL_ADD_METHOD_DESC(rc.displayListObj, eRenderContextMethod.VB_SetUVCoords, [this, texture, coords]);
@@ -10167,11 +10457,18 @@ function webglVB(rc, gl, program, numVerticesPerPrimitive)
             gl.vertexAttribPointer(program.vertexPositionAttribute, this.numVerticesPerPrimitive, gl.FLOAT, false, 0, 0);
 
             // normals
-            if (nb != null)
+            if (nb)
             {
                 gl.bindBuffer(gl.ARRAY_BUFFER, nb);
                 gl.vertexAttribPointer(program.vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
             }
+            
+            // colors
+            if (cb)
+                gl.bindBuffer(gl.ARRAY_BUFFER, cb);    
+            else
+                gl.bindBuffer(gl.ARRAY_BUFFER, cEmpty);
+            gl.vertexAttribPointer(program.vertexColorAttribute, 4, gl.FLOAT, false, 0, 0);
             
             // texture coords
             // NOTE: vertex shader silently fails if nothing is specified for a given program attribute, so if 
@@ -10435,6 +10732,7 @@ function getShaders(gl, type)
                     "",
                     "attribute vec3 aVertexPosition;",
                     "attribute vec3 aVertexNormal;",
+                    "attribute vec4 aVertexColor;",
                     "attribute vec2 aTextureCoord0;",   // attributes cannot be arrays and must be specified
                     "attribute vec2 aTextureCoord1;",   // attributes cannot be arrays and must be specified      
                     "", 
@@ -10543,9 +10841,10 @@ function getShaders(gl, type)
                     "   vec4 viewPosition;",
                     "   vec4 viewDirection;",
                     "",
+                    "   vertexPosition = uModelViewMatrix * vec4(aVertexPosition, 1);",
+                    "",
                     "   if (uLightingEnabled != 0)",
-                    "   {",
-                    "       vertexPosition = uModelViewMatrix * vec4(aVertexPosition, 1);",
+                    "   {",                    
                     "       transformedNormal = normalize(uNormalMatrix * vec4(aVertexNormal, 0));",
                     "       viewPosition = uModelViewMatrix * vec4(0, 0, 0, 1);",
                     "       viewDirection = normalize(-viewPosition);",
@@ -10586,9 +10885,8 @@ function getShaders(gl, type)
                     "                           uFrontMaterial_specular.a / 3.0;",
                     "   }",
                     "   else", // uLightingEnabled == 0
-                    "   {",
-                    "",     // TODO: use vertex color
-                    "       vLightingFactor = vec4(1, 1, 1, 1);",
+                    "   {",  
+                    "       vLightingFactor = aVertexColor;",
                     "   }",
                     "",
                     "   vTextureCoord[0] = aTextureCoord0;",
@@ -10630,8 +10928,7 @@ function getShaders(gl, type)
                     "       }",
                     "       else",
                     "       {",
-                    "           fragmentColor = vec4(1, 1, 1, 1);",
-                    "           gl_FragColor = fragmentColor * vLightingFactor;",
+                    "           gl_FragColor = vLightingFactor;",
                     "       }",
                     "   }",
                     "   else if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 1)",
@@ -10650,14 +10947,12 @@ function getShaders(gl, type)
                     "       }",
                     "       else",
                     "       {",
-                    "           fragmentColor = vec4(1, 1, 1, 1);",
-                    "           gl_FragColor = fragmentColor * vLightingFactor;",
+                    "           gl_FragColor = vLightingFactor;",
                     "       }",
                     "   }",
-                    "   else", // uTexturesEnabled == 0
+                    "   else", // uTexturesEnabled == 0 || (uTextureStageEnabled[0] == 0 && uTextureStageEnabled[1] == 0)
                     "   {",
-                    "       fragmentColor = vec4(1, 1, 1, 1);",
-                    "       gl_FragColor = fragmentColor * vLightingFactor;",
+                    "       gl_FragColor = vLightingFactor;",
                     "   }",
                     "}"
                     ].join("\n");
@@ -10669,6 +10964,7 @@ function getShaders(gl, type)
                 source_vs = [
                     "attribute vec3 aVertexPosition;",
                     "attribute vec3 aVertexNormal;",
+                    "attribute vec4 aVertexColor;",
                     "attribute vec2 aTextureCoord0;",   // attributes cannot be arrays and must be specified
                     "attribute vec2 aTextureCoord1;",   // attributes cannot be arrays and must be specified      
                     "", 
@@ -10678,6 +10974,7 @@ function getShaders(gl, type)
                     "",
                     "varying vec4 vVertexPosition;",
                     "varying vec4 vTransformedNormal;",
+                    "varying vec4 vVertexColor;",
                     "varying vec4 vViewPosition;",
                     "varying vec4 vViewDirection;",
                     "varying vec2 vTextureCoord[" + gl_MaxTextureStages + "];",
@@ -10686,6 +10983,7 @@ function getShaders(gl, type)
                     "{",
                     "   vVertexPosition = uModelViewMatrix * vec4(aVertexPosition, 1);",
                     "   vTransformedNormal = normalize(uNormalMatrix * vec4(aVertexNormal, 0));",
+                    "   vVertexColor = aVertexColor;",
                     "   vViewPosition = uModelViewMatrix * vec4(0, 0, 0, 1);",
                     "   vViewDirection = normalize(-vViewPosition);",
                     "   vTextureCoord[0] = aTextureCoord0;",
@@ -10765,6 +11063,7 @@ function getShaders(gl, type)
                     "",
                     "varying vec4 vVertexPosition;",
                     "varying vec4 vTransformedNormal;",
+                    "varying vec4 vVertexColor;",
                     "varying vec4 vViewPosition;",
                     "varying vec4 vViewDirection;",
                     "varying vec2 vTextureCoord[" + gl_MaxTextureStages + "];",
@@ -10878,8 +11177,7 @@ function getShaders(gl, type)
                     "   }",
                     "   else", // uLightingEnabled == 0
                     "   {",
-                    "",     // TODO: use vertex color
-                    "       lightingFactor = vec4(1, 1, 1, 1);",
+                    "       lightingFactor = vVertexColor;",
                     "   }",
                     "",
                     "   vec4 fragmentColor;",
@@ -10899,8 +11197,7 @@ function getShaders(gl, type)
                     "       }",
                     "       else",
                     "       {",
-                    "           fragmentColor = vec4(1, 1, 1, 1);",
-                    "           gl_FragColor = fragmentColor * lightingFactor;",
+                    "           gl_FragColor = lightingFactor;",
                     "       }",
                     "   }",
                     "   else if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 1)",
@@ -10919,14 +11216,12 @@ function getShaders(gl, type)
                     "       }",
                     "       else",
                     "       {",
-                    "           fragmentColor = vec4(1, 1, 1, 1);",
-                    "           gl_FragColor = fragmentColor * lightingFactor;",
+                    "           gl_FragColor = lightingFactor;",
                     "       }",
                     "   }",
-                    "   else", // uTexturesEnabled == 0
+                    "   else", // uTexturesEnabled == 0 || (uTextureStageEnabled[0] == 0 && uTextureStageEnabled[1] == 1)
                     "   {",
-                    "       fragmentColor = vec4(1, 1, 1, 1);",
-                    "       gl_FragColor = fragmentColor * lightingFactor;",
+                    "       gl_FragColor = lightingFactor;",
                     "   }",
                     "}"
                     ].join("\n");
@@ -14639,6 +14934,16 @@ Camera.prototype.apply = function(directive, params, visitChildren)
                 params.viewMatrix.invert(); // put in view-space
             }
             break;
+            
+        case "highlight":
+            {
+                params.projMatrix.loadMatrix(this.projectionMatrix); // TODO: using jittered allows for antialiasing
+                params.viewMatrix.loadMatrix(this.transformCompound);
+                params.viewMatrix.invert(); // put in view-space
+                params.camera = this;
+                params.viewport = this.viewport;
+            }
+            break;
     }
 
     // call base-class implementation
@@ -15652,6 +15957,16 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
                 }
             }
             break;
+            
+        case "highlight":
+            {
+                // push transforms
+                if (isolateTransforms)
+                {
+                    lastWorldMatrix = params.worldMatrix;
+                }
+            }
+            break;
     }
 
     // call base-class implementation
@@ -15723,6 +16038,16 @@ Isolator.prototype.apply = function(directive, params, visitChildren)
             break;
             
         case "collide":
+            {
+                // pop transforms
+                if (isolateTransforms)
+                {
+                    params.worldMatrix = lastWorldMatrix;
+                }
+            }
+            break;
+            
+        case "highlight":
             {
                 // pop transforms
                 if (isolateTransforms)
@@ -15882,6 +16207,7 @@ function RenderDirective()
     this.foregroundFadeEnabled = new BooleanAttr(false);
     this.texturesEnabled = new BooleanAttr(true);
     this.timeIncrement = new NumberAttr(0);
+    this.highlightType = new NumberAttr(eHighlightType.None);
     
     this.viewport.addModifiedCB(RenderDirective_ViewportModifiedCB, this);
     this.backgroundImageFilename.addModifiedCB(RenderDirective_BackgroundImageFilenameModifiedCB, this);
@@ -15893,12 +16219,16 @@ function RenderDirective()
     this.registerAttribute(this.foregroundFadeEnabled, "foregroundFadeEnabled");   
     this.registerAttribute(this.texturesEnabled, "texturesEnabled");   
     this.registerAttribute(this.timeIncrement, "timeIncrement");
+    this.registerAttribute(this.highlightType, "highlightType");
     
     this.updateDirective = new UpdateDirective();
     this.timeIncrement.addTarget(this.updateDirective.getAttribute("timeIncrement"));
     this.resetDisplayLists = false;
     
     this.collideDirective = new CollideDirective();
+    
+    this.highlightDirective = new HighlightDirective();
+    this.highlightType.addTarget(this.highlightDirective.getAttribute("highlightType"));
 }
 
 RenderDirective.prototype.setGraphMgr = function(graphMgr)
@@ -15906,6 +16236,7 @@ RenderDirective.prototype.setGraphMgr = function(graphMgr)
     this.distanceSortAgent.setGraphMgr(graphMgr);
     this.updateDirective.setGraphMgr(graphMgr);
     this.collideDirective.setGraphMgr(graphMgr);
+    this.highlightDirective.setGraphMgr(graphMgr);
     
     // call base-class implementation
     SGDirective.prototype.setGraphMgr.call(this, graphMgr);
@@ -15964,6 +16295,25 @@ RenderDirective.prototype.execute = function(root)
         this.distanceSortAgent.draw();
         this.distanceSortAgent.clear();
     }
+    
+    // draw highlights
+    this.drawHighlights(root);
+}
+
+RenderDirective.prototype.drawHighlights = function(root)
+{
+    // apply highlight directive if specified
+    switch (this.highlightType.getValueDirect())
+    {
+    case eHighlightType.FourPass:
+    case eHighlightType.EightPass:
+        this.highlightDirective.execute(root);
+        break;
+
+    case eHighlightType.None:
+    default:
+        break;
+    }   
 }
 
 function RenderDirective_ViewportModifiedCB(attribute, container)
@@ -16174,6 +16524,7 @@ function Geometry()
     this.flipPolygons = new BooleanAttr(false);
     this.shadowCaster = new BooleanAttr(false);
     this.shadowTarget = new BooleanAttr(true);
+    this.highlight = new BooleanAttr(false);
 
     this.selectable.addModifiedCB(Geometry_SelectableModifiedCB, this);
     this.show.addModifiedCB(Geometry_ShowModifiedCB, this);
@@ -16187,6 +16538,7 @@ function Geometry()
     this.registerAttribute(this.flipPolygons, "flipPolygons");
     this.registerAttribute(this.shadowCaster, "shadowCaster");
     this.registerAttribute(this.shadowTarget, "shadowTarget");
+    this.registerAttribute(this.highlight, "highlight");
 }
 
 Geometry.prototype.update = function(params, visitChildren)
@@ -16309,6 +16661,18 @@ Geometry.prototype.apply = function(directive, params, visitChildren)
                 }
             }
             break;
+            
+        case "highlight":
+            {
+                if (this.highlight.getValueDirect())
+                {
+                    if (params.targets.length > 0)
+                    {
+                        params.targets[params.targets.length-1].geometries.push(this);
+                    }
+                }
+            }
+            break;
     }
 
     // call base-class implementation
@@ -16316,6 +16680,10 @@ Geometry.prototype.apply = function(directive, params, visitChildren)
 }
 
 Geometry.prototype.draw = function(dissolve)
+{
+}
+
+Geometry.prototype.drawPrimitives = function()
 {
 }
 
@@ -16707,8 +17075,9 @@ VertexGeometry.prototype.drawTextured = function(dissolve)
         }
     }
     */
-    // disable texture stage 0
+    // disable texture stage 0, 1
     this.graphMgr.renderContext.enableTextureStage(0, 0);
+    this.graphMgr.renderContext.enableTextureStage(1, 0);
     
     // disable blending
     this.graphMgr.renderContext.disable(eRenderMode.AlphaBlend);
@@ -16717,8 +17086,13 @@ VertexGeometry.prototype.drawTextured = function(dissolve)
     this.graphMgr.renderState.pop(RENDERSTATE_MATERIAL_BIT);
 }
 
+VertexGeometry.prototype.drawPrimitives = function()
+{
+    this.vertexBuffer.draw();
+}
+
 VertexGeometry.prototype.setTextureStage = function(stage, type, texture, textureTransform, 
-textureCoordSrc, planeCoefficients)
+                                                    textureCoordSrc, planeCoefficients)
 {
     // get optional parameters
     textureTransform = textureTransform || new Matrix4x4();
@@ -17473,6 +17847,9 @@ function Model()
     this.detectCollision = new BooleanAttr(false);
     this.collisionDetected = new BooleanAttr(false);
     this.collisionList = new AttributeVector();
+    this.highlight = new BooleanAttr(false);
+    this.highlightColor = new ColorAttr(1, 1, 0, 1);
+    this.highlightWidth = new NumberAttr(5);
     
     this.show.addTarget(this.enabled);
     
@@ -17543,6 +17920,9 @@ function Model()
     this.registerAttribute(this.detectCollision, "detectCollision");
     this.registerAttribute(this.collisionDetected, "collisionDetected");
     this.registerAttribute(this.collisionList, "collisionList");
+    this.registerAttribute(this.highlight, "highlight");
+    this.registerAttribute(this.highlightColor, "highlightColor");
+    this.registerAttribute(this.highlightWidth, "highlightWidth");
         
     this.isolatorNode = new Isolator();
     this.isolatorNode.getAttribute("name").setValueDirect("Isolator");
@@ -17897,7 +18277,32 @@ Model.prototype.apply = function(directive, params, visitChildren)
                 params.worldMatrix.loadMatrix(lastWorldMatrix);
             }
             break;
-            
+           
+        case "highlight":
+            {
+                if (this.highlight.getValueDirect())
+                {
+                    var target = new HighlightTarget();
+                    target.projMatrix = params.projMatrix;
+                    target.viewMatrix = params.viewMatrix;
+                    target.worldMatrix = this.sectorTransformCompound.multiply(params.worldMatrix);
+                    target.camera = params.camera;
+                    target.viewport = params.viewport;
+                    target.center = this.center.getValueDirect();
+                    var highlightColor = this.highlightColor.getValueDirect();
+                    target.highlightColor_r = highlightColor.r;
+                    target.highlightColor_g = highlightColor.g;
+                    target.highlightColor_b = highlightColor.b;
+                    target.highlightColor_a = highlightColor.a;
+                    target.highlightWidth = this.highlightWidth.getValueDirect();
+                    params.targets.push(target);
+
+                    // call base-class implementation
+                    ParentableMotionElement.prototype.apply.call(this, directive, params, visitChildren);
+                }
+            }
+            break;  
+         
         default:
             {
                 // call base-class implementation
@@ -17984,6 +18389,7 @@ Model.prototype.connectGeometryAttributes = function(geometry)
     this.connectGeometryAttribute(geometry, this.shadowCaster, "shadowCaster");
     this.connectGeometryAttribute(geometry, this.shadowTarget, "shadowTarget");
     this.connectGeometryAttribute(geometry, this.renderSequenceSlot, "renderSequenceSlot");
+    this.connectGeometryAttribute(geometry, this.highlight, "highlight");
 }
 
 Model.prototype.connectGeometryAttribute = function(geometry, attribute, name)
@@ -21733,10 +22139,20 @@ Transform.prototype.apply = function(directive, params, visitChildren)
     {
         case "render":
         {
+            params.worldMatrix = this.matrixTransform.multiply(params.worldMatrix);
             this.applyTransform();
         }
         break;
          
+        case "rayPick":
+        case "bbox":
+        case "collide":
+        case "highlight":
+        {
+            params.worldMatrix = this.matrixTransform.multiply(params.worldMatrix);
+        }
+        break;
+        
         default:
             break;
     }
@@ -22270,6 +22686,375 @@ CollideDirective.prototype.detectCollisions = function(collideRecs)
         models[i].getAttribute("collisionDetected").setValueDirect(collisions[i]);
     }
 }
+function HighlightTarget()
+{
+    this.projMatrix = new Matrix4x4();
+    this.viewMatrix = new Matrix4x4();
+    this.worldMatrix = new Matrix4x4();
+    this.camera = null;
+    this.viewport = new Viewport();
+    this.geometries = new Array();
+    this.center = new Vector3D();
+    this.highlightColor_r = 0;
+    this.highlightColor_g = 0;
+    this.highlightColor_b = 0;
+    this.highlightColor_a = 0;
+    this.highlightWidth = 0;
+};
+
+HighlightParams.prototype = new DirectiveParams();
+HighlightParams.prototype.constructor = HighlightParams();
+
+function HighlightParams()
+{
+    DirectiveParams.call(this);
+
+    this.projMatrix = new Matrix4x4();
+    this.viewMatrix = new Matrix4x4();
+    this.worldMatrix = new Matrix4x4();
+    this.camera = null;
+    this.viewport = new Viewport();
+    this.targets = new Array();
+}
+
+HighlightDirective.prototype = new SGDirective();
+HighlightDirective.prototype.constructor = HighlightDirective;
+
+function HighlightDirective()
+{
+    SGDirective.call(this);
+    this.className = "HighlightDirective";
+    this.attrType = eAttrType.HighlightDirective;
+
+    this.vertexBuffer = null;
+    
+    this.name.setValueDirect("HighlightDirective");
+        
+    this.highlightType = new NumberAttr(eHighlightType.None);
+    this.highlightColor = new ColorAttr(1, 1, 0, 1);
+    this.highlightWidth = new NumberAttr(5);
+    
+    this.highlightColor.addModifiedCB(HighlightDirective_HighlightColorModifiedCB, this);
+    
+    this.registerAttribute(this.highlightType, "highlightType");
+    this.registerAttribute(this.highlightColor, "highlightColor");
+    this.registerAttribute(this.highlightWidth, "highlightWidth");
+}
+
+HighlightDirective.prototype.setGraphMgr = function(graphMgr)
+{
+    // call base-class implementation
+    SGDirective.prototype.setGraphMgr.call(this, graphMgr);
+    
+    this.initHighlightSquareVB();
+}
+
+HighlightDirective.prototype.execute = function(root)
+{
+    root = root || this.rootNode.getValueDirect();
+
+    // setup collision Detect params structure
+    var params = new HighlightParams();
+
+    // get list of models for collision detection
+    root.apply("highlight", params, true);
+    
+    // draw highlights
+    this.drawHighlights(params);
+}
+
+HighlightDirective.prototype.drawHighlights = function(params)
+{
+    // if no targets, return
+    if (params.targets.length == 0)
+    {
+        return;
+    }
+
+    // get render engine
+    var renderContext = this.graphMgr.renderContext;
+    if (!renderContext)
+    {
+        return;
+    } 
+
+    var highlightType = this.highlightType.getValueDirect();
+
+    // for each target
+    var up, right, forward;
+    for (var i=0; i < params.targets.length; i++)
+    {
+        var target = params.targets[i];
+
+        // get camera direction vectors
+        var directions = target.camera.getDirectionVectors();
+        up = directions.up;
+        right = directions.right;
+        forward = directions.forward;
+
+        var wupp = this.getWorldUnitsPerPixel(target.center, target.worldMatrix, target.viewMatrix, target.camera, target.viewport);
+        var highlightWidth = target.highlightWidth * wupp;
+
+        // clear stencil buffer
+        renderContext.clearStencil(0);
+        renderContext.clear(RC_STENCIL_BUFFER_BIT);
+
+        // increment stencil for geometry in delta positions
+        var worldViewMatrix;
+        for (var j=0; j < target.geometries.length; j++)
+        {
+            switch (highlightType)
+            {
+            case eHighlightType.FourPass:
+                {
+                    for (var pass=0; pass < 4; pass++)
+                    {
+                        worldViewMatrix = this.getWorldViewMatrix(highlightType, highlightWidth, pass, up, right,
+                            forward, target.worldMatrix, target.viewMatrix);
+                        this.configureStencil_Target(renderContext, target.geometries[j], target.projMatrix, 
+                            worldViewMatrix, eStencilOp.Increment);
+                    }
+                }
+                break;
+
+            case eHighlightType.EightPass:
+                {
+                    for (var pass=0; pass < 8; pass++)
+                    {
+                        worldViewMatrix = this.getWorldViewMatrix(highlightType, highlightWidth, pass, up, right,
+                            forward, target.worldMatrix, target.viewMatrix);
+                        this.configureStencil_Target(renderContext, target.geometries[j], target.projMatrix,
+                            worldViewMatrix, eStencilOp.Increment);
+                    }
+                }
+                break;
+            }
+        }
+
+        // zero stencil for geometry in original position
+        worldViewMatrix = target.worldMatrix.multiply(target.viewMatrix);
+        for (var j=0; j < target.geometries.length; j++)
+        {
+            this.configureStencil_Target(renderContext, target.geometries[j], target.projMatrix, worldViewMatrix, eStencilOp.Zero);
+        }
+
+        // update highlight color
+        this.highlightColor.setValueDirect(target.highlightColor_r, target.highlightColor_g, target.highlightColor_b, target.highlightColor_a);
+
+        // render highlight square
+        this.renderHighlightSquare(params, renderContext);
+    } 
+}
+
+HighlightDirective.prototype.getWorldUnitsPerPixel = function(point, worldMatrix, viewMatrix, camera, viewport)
+{
+    // get geometry's center in view space
+    var worldViewMatrix = worldMatrix.multiply(viewMatrix);
+    var centerPtCamSpace = worldViewMatrix.transform(point.x, point.y, point.z, 1);
+
+    // determine the per-pixel width and height at geometry's center in view space
+    var perPixel = new Vector2D();
+    
+    // get camera node type
+    switch (camera.attrType)
+    {
+    case eAttrType.PerspectiveCamera:
+        {
+            // get zoom
+            var zoom = camera.getAttribute("zoom").getValueDirect();
+            perPixel = worldUnitsPerPixelPersp(viewport, zoom, centerPtCamSpace.z);
+        }
+        break;
+
+    case eAttrType.OrthographicCamera:
+        {
+            // get width
+            var width = camera.getAttribute("width").getValueDirect();
+            perPixel = worldUnitsPerPixelOrtho(viewport, width);
+        }
+        break;
+        
+    default:
+        break;
+    }
+    
+    return Math.max(perPixel.x, perPixel.y); 
+}
+
+HighlightDirective.prototype.getWorldViewMatrix = function(highlightType, highlightWidth, pass,
+                                                           cameraUp, cameraRight, cameraForward,
+                                                           world, view)
+{
+    var degrees = 0;
+    switch (highlightType)
+    {
+    case eHighlightType.FourPass:  degrees = 90; break;
+    case eHighlightType.EightPass: degrees = 45; break;
+    }
+
+    var rotate = new Matrix4x4();
+    rotate.loadZAxisRotation(degrees * pass);
+    var delta = rotate.transform(1, 0, 0, 0);
+    delta.x *= highlightWidth;
+    delta.y *= highlightWidth;
+    delta.z *= highlightWidth;
+
+    var translate = new Matrix4x4();
+    translate.loadTranslation(cameraRight.x * delta.x + cameraUp.x * delta.y,// + cameraForward.x * delta.z, 
+                              cameraRight.y * delta.x + cameraUp.y * delta.y,// + cameraForward.y * delta.z,
+                              cameraRight.z * delta.x + cameraUp.z * delta.y);// + cameraForward.z * delta.z);
+
+    return translate.multiply(world.multiply(view));
+}
+
+HighlightDirective.prototype.configureStencil_Target = function(renderContext,
+                                                               geometry,
+                                                               projMatrix,
+                                                               worldViewMatrix,
+                                                               stencilOp)
+{
+    // get current render states
+    var lastDepthBufferWrite = renderContext.enabled(eRenderMode.DepthBufferWrite);
+    var lastStencilTest = renderContext.enabled(eRenderMode.StencilTest);
+    var lastAlphaBlend = renderContext.enabled(eRenderMode.AlphaBlend);
+
+    // disable z-buffer writes (note: z-testing still occurs), and enable the
+    // stencil-buffer
+    renderContext.setEnabled(eRenderMode.DepthBufferWrite, false);
+    renderContext.setEnabled(eRenderMode.StencilTest, true);
+
+    // set depth function
+    renderContext.setDepthFunc(eDepthFunc.LessEqual);
+
+    // disable smooth shading
+    renderContext.setShadeModel(eShadeModel.Flat);
+
+    // set up stencil compare fuction, reference value, and masks.
+    // stencil test passes if ((ref & mask) cmpfn (stencil & mask)) is true.
+    renderContext.setStencilFunc(eStencilFunc.Always, 0, 0xFF);
+    renderContext.setStencilMask(0xFF);
+
+    // if depth-test passes, increment stencil buffer value
+    renderContext.setStencilOp(eStencilOp.Keep, stencilOp, stencilOp);
+
+    // make sure that no pixels get drawn to the frame buffer
+    renderContext.setEnabled(eRenderMode.AlphaBlend, true);
+    renderContext.setBlendFactor(RC_ZERO, RC_ONE);
+
+    // draw geometry in stencil only
+    renderContext.setMatrixMode(RC_PROJECTION);
+    renderContext.pushMatrix();
+    renderContext.loadMatrix(projMatrix);
+    renderContext.applyProjectionTransform();
+    renderContext.setMatrixMode(RC_MODELVIEW);
+    renderContext.pushMatrix();
+    renderContext.loadMatrix(worldViewMatrix);
+    renderContext.applyModelViewTransform();
+    geometry.drawPrimitives();
+    renderContext.setMatrixMode(RC_PROJECTION);
+    renderContext.popMatrix();
+    renderContext.setMatrixMode(RC_MODELVIEW);
+    renderContext.popMatrix();
+
+    // restore render states
+    renderContext.setEnabled(eRenderMode.DepthBufferWrite, lastDepthBufferWrite);
+    renderContext.setEnabled(eRenderMode.StencilTest, lastStencilTest);
+    renderContext.setDepthFunc(eDepthFunc.LessEqual);
+    renderContext.setShadeModel(eShadeModel.Gouraud);
+    renderContext.setEnabled(eRenderMode.AlphaBlend, lastAlphaBlend);
+}
+     
+HighlightDirective.prototype.renderHighlightSquare = function(params, renderContext)
+{
+    // get current render states
+    var lastDepthTest = renderContext.enabled(eRenderMode.DepthTest);
+    var lastStencilTest = renderContext.enabled(eRenderMode.StencilTest);
+    var lastAlphaBlend = renderContext.enabled(eRenderMode.AlphaBlend);
+    var lastLighting = renderContext.enabled(eRenderMode.Lighting);
+
+    // set render states
+    renderContext.setDepthFunc(eDepthFunc.LessEqual);
+    renderContext.setEnabled(eRenderMode.DepthTest, false);
+    renderContext.setEnabled(eRenderMode.StencilTest, true);
+    renderContext.setEnabled(eRenderMode.AlphaBlend, true);
+    renderContext.setEnabled(eRenderMode.Lighting, false);
+    renderContext.setBlendFactor(RC_SRC_ALPHA, RC_ONE_MINUS_SRC_ALPHA);
+
+    // only write where stencil val <= 1 (count indicates # of target fragments that
+    // overlap that pixel)
+    renderContext.setStencilFunc(eStencilFunc.LessEqual, 1, 0xFF);
+    renderContext.setStencilOp(eStencilOp.Keep, eStencilOp.Keep, eStencilOp.Keep); 
+
+    // draw the highlight square
+    var m = new Matrix4x4();
+    m.loadIdentity();
+    renderContext.setMatrixMode(RC_PROJECTION);
+    renderContext.pushMatrix();
+    renderContext.loadMatrix(m);
+    renderContext.applyProjectionTransform();
+    renderContext.setMatrixMode(RC_MODELVIEW);
+    renderContext.pushMatrix();
+    renderContext.loadMatrix(m);
+    renderContext.applyModelViewTransform();
+    this.vertexBuffer.draw();
+    renderContext.popMatrix();
+    renderContext.setMatrixMode(RC_PROJECTION);
+    renderContext.popMatrix();
+
+    // restore render states
+    renderContext.setDepthFunc(eDepthFunc.LessEqual);
+    renderContext.setEnabled(eRenderMode.DepthTest, lastDepthTest);
+    renderContext.setEnabled(eRenderMode.StencilTest, lastStencilTest);
+    renderContext.setEnabled(eRenderMode.AlphaBlend, lastAlphaBlend);
+    renderContext.setEnabled(eRenderMode.Lighting, lastLighting);
+    renderContext.setMatrixMode(RC_MODELVIEW);
+}
+                                      
+HighlightDirective.prototype.initHighlightSquareVB = function()
+{
+    this.vertexBuffer = this.graphMgr.renderContext.createVertexBuffer(3);
+    this.vertexBuffer.setPrimitiveType(RC_TRIANGLE_STRIP);
+    
+    var vertices = [ -1, -1,  1,
+                     -1,  1,  1,
+                      1, -1,  1,
+                      1,  1,  1 ];
+
+    var normals = [ 0,  0, -1,
+                    0,  0, -1,
+                    0,  0, -1,
+                    0,  0, -1 ];
+             
+    var color = this.highlightColor.getValueDirect();       
+    var colors = [ color.r, color.g, color.b, color.a,
+                   color.r, color.g, color.b, color.a,
+                   color.r, color.g, color.b, color.a,
+                   color.r, color.g, color.b, color.a ];
+                    
+    this.vertexBuffer.setVertices(vertices);
+    this.vertexBuffer.setNormals(normals);
+    this.vertexBuffer.setColors(colors);
+}
+
+HighlightDirective.prototype.highlightColorModified = function()
+{
+    if (this.vertexBuffer)
+    {
+        var color = this.highlightColor.getValueDirect();       
+        var colors = [ color.r, color.g, color.b, color.a,
+                       color.r, color.g, color.b, color.a,
+                       color.r, color.g, color.b, color.a,
+                       color.r, color.g, color.b, color.a ];
+
+        this.vertexBuffer.setColors(colors);
+    }
+}
+
+function HighlightDirective_HighlightColorModifiedCB(attribute, container)
+{
+    container.highlightColorModified();
+}
+
 var OBJECTMOTION_PAN_BIT		= 0x001;
 var OBJECTMOTION_LINEAR_BIT     = 0x002;
 var OBJECTMOTION_ANGULAR_BIT    = 0x004;
@@ -30204,7 +30989,8 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["SerializeDirective"] = newSGDirective;
     this.newResourceProcs["UpdateDirective"] = newSGDirective;
     this.newResourceProcs["CollideDirective"] = newSGDirective;
-
+    this.newResourceProcs["HighlightDirective"] = newSGDirective;
+    
     // evaluators
     this.newResourceProcs["BBoxLocator"] = newBBoxLocator;
     this.newResourceProcs["KeyframeInterpolator"] = newKeyframeInterpolator;
@@ -30247,7 +31033,8 @@ AttributeFactory.prototype.initializeConfigureMap = function()
     this.configureProcs["RenderDirective"] = configureDirective;
     this.configureProcs["SerializeDirective"] = configureDirective;
     this.configureProcs["UpdateDirective"] = configureDirective;
-    this.configureProcs["CollideDirective"] = configureDirective; 
+    this.configureProcs["CollideDirective"] = configureDirective;
+    this.configureProcs["HighlightDirective"] = configureDirective;
 }
 
 AttributeFactory.prototype.initializeFinalizeMap = function()
@@ -30262,6 +31049,7 @@ AttributeFactory.prototype.initializeFinalizeMap = function()
     this.finalizeProcs["SerializeDirective"] = finalizeDirective;
     this.finalizeProcs["UpdateDirective"] = finalizeDirective;
     this.finalizeProcs["CollideDirective"] = finalizeDirective;
+    this.finalizeProcs["HighlightDirective"] = finalizeDirective;
 
     // evaluators 
     this.finalizeProcs["KeyframeInterpolator"] = finalizeEvaluator;
@@ -30390,6 +31178,7 @@ function newSGDirective(name, factory)
     case "SerializeDirective":          resource = new SerializeDirective(); break;
     case "UpdateDirective":             resource = new UpdateDirective(); break;
     case "CollideDirective":            resource = new CollideDirective(); break;
+    case "HighlightDirective":          resource = new HighlightDirective(); break;
     }
     
     if (resource)
