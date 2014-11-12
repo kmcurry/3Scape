@@ -20,6 +20,7 @@ var g_timer = null;
 var g_interval = null;
 
 var g_sceneInspector = null;
+var g_objectInspector = null;
 var g_selectedModel = null;
 
 var g_modelCount = 1;
@@ -132,6 +133,7 @@ function reset() {
   g_modelCount = 1;
   g_motionCount = 1;
   g_sceneInspector = null;
+  g_objectInspector = null;
 
   $('#object-panel').empty();
   $('#animate-panel').empty();

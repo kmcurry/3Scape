@@ -9,6 +9,14 @@ function handleEvent(e)
 {
     if (!bridgeworks) return;
 
+    if (!g_sceneInspector) {
+      g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+    }
+
+    if (!g_objectInspector) {
+      g_objectInspector = bridgeworks.registry.find("ObjectInspector");
+    }
+
     bridgeworks.handleEvent(e);
     switch(e.type) {
         case "mousedown":
@@ -20,7 +28,6 @@ function handleEvent(e)
         case "mouseup":
         {
             capture = false;
-            sceneInspector = bridgeworks.registry.find("SceneInspector");
             zoomActivate();
 
         }
@@ -33,7 +40,7 @@ function handleEvent(e)
 
               g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
               console.log(g_selectedModelName);
-              selectedThing = null;
+              selectedThing = null; // ??? - KMC
 
 
               setColorPicker();
@@ -48,11 +55,11 @@ function handleEvent(e)
 
               // if the selected model is not moveable switch modes between camera and objects
               if (g_selectedModel.moveable.getValueDirect() == false) {
-                sceneInspector.enabled.setValueDirect(true);
-                objectInspector.enabled.setValueDirect(false);
+                g_sceneInspector.enabled.setValueDirect(true);
+                g_objectInspector.enabled.setValueDirect(false);
               } else {
-                sceneInspector.enabled.setValueDirect(false);
-                objectInspector.enabled.setValueDirect(true);
+                g_sceneInspector.enabled.setValueDirect(false);
+                g_objectInspector.enabled.setValueDirect(true);
               }
 
 
@@ -98,6 +105,10 @@ function handleEvent(e)
 
 function handleKey(e)
 {
+  if (!g_sceneInspector) {
+    g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+  }
+
   if(editorOpen == 0) {
       switch (e.keyCode) {
           case 'C'.charCodeAt(0):
@@ -110,44 +121,20 @@ function handleKey(e)
               break;
           case 'D'.charCodeAt(0):
           {
-              if (!g_sceneInspector) {
-                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
-              }
-              else {
-                g_sceneInspector.panDelta.setValueDirect(0,0,10);
-              }
-
+              g_sceneInspector.panDelta.setValueDirect(0,0,10);
           }
               break;
           case 'E'.charCodeAt(0):
           {
-              if (!g_sceneInspector) {
-                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
-              }
-              else {
-                g_sceneInspector.panDelta.setValueDirect(0,0,-10);
-              }
-
+              g_sceneInspector.panDelta.setValueDirect(0,0,-10);
           }
           case 'S'.charCodeAt(0):
           {
-              if (!g_sceneInspector) {
-                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
-              }
-              else {
-                g_sceneInspector.panDelta.setValueDirect(10,0,0);
-              }
-
+              g_sceneInspector.panDelta.setValueDirect(10,0,0);
           }
           case 'F'.charCodeAt(0):
           {
-              if (!g_sceneInspector) {
-                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
-              }
-              else {
-                g_sceneInspector.panDelta.setValueDirect(-10,0,0);
-              }
-
+              g_sceneInspector.panDelta.setValueDirect(-10,0,0);
           }
               break;
           case 32: // Space bar
@@ -228,18 +215,18 @@ function handleKey(e)
 // some kind of magic number helper for adjusting sensitivity based on pivot distance
 function zoomActivate() {
     zoomUpdate = window.setInterval(function () {
-        distance = sceneInspector.pivotDistance.getValueDirect()
+        distance = g_sceneInspector.pivotDistance.getValueDirect()
         if ((distance >= 0) && (distance < 4000)) {
-            if (distance * 0.05 != sceneInspector.panSensitivity.values[0]) {
-                sceneInspector.panSensitivity.values[0] = distance * 0.05;
-                sceneInspector.panSensitivity.values[1] = distance * 0.05;
-                sceneInspector.panSensitivity.values[2] = distance * 0.05;
+            if (distance * 0.05 != g_sceneInspector.panSensitivity.values[0]) {
+                g_sceneInspector.panSensitivity.values[0] = distance * 0.05;
+                g_sceneInspector.panSensitivity.values[1] = distance * 0.05;
+                g_sceneInspector.panSensitivity.values[2] = distance * 0.05;
             }
         }
         else {
-            sceneInspector.panSensitivity.values[0] = 1200;
-            sceneInspector.panSensitivity.values[1] = 1200;
-            sceneInspector.panSensitivity.values[2] = 1200;
+            g_sceneInspector.panSensitivity.values[0] = 1200;
+            g_sceneInspector.panSensitivity.values[1] = 1200;
+            g_sceneInspector.panSensitivity.values[2] = 1200;
         }
     }, 200);
 }

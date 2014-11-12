@@ -83,8 +83,6 @@
           var CameraMotion = "CameraMotion";
           var zoomUpdate;
           var distance;
-          var sceneInspector;
-          var objectInspector;
           var camStartPos;
           var g_selectedModelName;
 
@@ -936,8 +934,8 @@
 
                 //cubify();
 
-                sceneInspector = bridgeworks.registry.find("SceneInspector");
-                objectInspector =bridgeworks.registry.find("ObjectInspector");
+                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+                g_objectInspector =bridgeworks.registry.find("ObjectInspector");
                 var graphMgr = bridgeworks.registry.find("GraphMgr");
                 g_labelCount = graphMgr.labelIndex;
 
@@ -1050,14 +1048,14 @@
             }
         }
           $('#map-controls').mouseenter(function(){
-            var sceneActive = sceneInspector.enabled.getValueDirect();
+            var sceneActive = g_sceneInspector.enabled.getValueDirect();
             if(!sceneActive){
-              sceneInspector.enabled.setValueDirect(true);
+              g_sceneInspector.enabled.setValueDirect(true);
             }
           }).mouseleave(function(){
-            var objectActive = objectInspector.enabled.getValueDirect();
+            var objectActive = g_objectInspector.enabled.getValueDirect();
             if(objectActive){
-              sceneInspector.enabled.setValueDirect(false);
+              g_sceneInspector.enabled.setValueDirect(false);
             }
           })
 
