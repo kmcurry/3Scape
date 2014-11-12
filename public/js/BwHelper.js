@@ -46,19 +46,20 @@ function getBrowserZoom()
     return zoom;
 }
 
-function init(scene, container)
+function init(scene, container, recreateCanvas)
 {
 
     // create render context for BW if one does not exist
 
     var canvas = document.getElementById("Canvas");
-    if (!canvas)
+    if (!canvas || recreateCanvas)
     {
+        if (canvas) container.removeChild(canvas);
         canvas = document.createElement("canvas");
-        canvas.id = "Canvas"
+        canvas.id = "Canvas";
         canvas.style.position = "relative";
         canvas.style.zIndex = "2";
-        container.appendChild(canvas)
+        container.appendChild(canvas);
     }
 
     // TODO: don't assume XML specifies a bg image

@@ -10205,6 +10205,8 @@ function getWebGLContext(canvas, debug)
         canvasParent.replaceChild(div, canvas);
     }
 
+    var bits = gl.getParameter(gl.STENCIL_BITS);
+
     return gl;
 }
 
