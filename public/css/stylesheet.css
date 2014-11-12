@@ -175,7 +175,7 @@ html{
     padding: 13px;
     color: rgb(71, 169, 211);
     opacity: 0.4;
-    /*z-index: 2000;*/
+    z-index: 2000;
 }
 
 #object-controls {
@@ -188,7 +188,7 @@ html{
     padding: 13px;
     color: rgb(71, 169, 211);
     opacity: 0.4;
-    /*z-index: 2000; */
+    z-index: 2000;
 }
 
 #rotate{
