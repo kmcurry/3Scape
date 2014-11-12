@@ -18,6 +18,7 @@ function handleEvent(e)
     }
 
     bridgeworks.handleEvent(e);
+
     switch(e.type) {
         case "mousedown":
         {
@@ -35,8 +36,11 @@ function handleEvent(e)
       case "click": {
           //Dishing out the event client x and y cordinates of the mouse for testing purposes
           window.clearInterval(zoomUpdate);
+          g_selectedModel.getAttribute("highlight").setValueDirect(false);
           g_selectedModel = bridgeworks.selector.selections.models[0];
           if(g_selectedModel) {
+
+              g_selectedModel.getAttribute("highlight").setValueDirect(true);
 
               g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
               console.log(g_selectedModelName);
