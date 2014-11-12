@@ -131,28 +131,10 @@ function reset() {
   $('#object-panel').empty();
   $('#animate-panel').empty();
   $('#slide-list').empty();
+
+  g_selectedModel = null;
 }
 
-function switchModes()
-{
-    var objectInspector = bridgeworks.registry.find("ObjectInspector");
-    if (!g_sceneInspector) g_sceneInspector = bridgeworks.registry.find("SceneInspector");
-    var sceneActive = g_sceneInspector.enabled.getValueDirect();
-
-    if(sceneActive)
-    {
-        g_sceneInspector.enabled.setValueDirect(false);
-        objectInspector.enabled.setValueDirect(true);
-    }
-    else if(!sceneActive)
-    {
-        g_sceneInspector.enabled.setValueDirect(true);
-        objectInspector.enabled.setValueDirect(false);
-    }
-
-    console.log(g_sceneInspector.enabled.getValueDirect());
-
-}
 function trashModel(name)
 {
     var c = "\<Remove target='" + name + "'/>";

@@ -69,7 +69,7 @@ function handleEvent(e)
 
       case "dblclick":
       {
-          if(selectedThing)
+          if(selectedThing) // ??? KMC
           {
               openLabelEdit();
           }
