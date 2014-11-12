@@ -32,6 +32,7 @@ function handleEvent(e)
           if(g_selectedModel) {
 
               g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
+              console.log(g_selectedModelName);
               selectedThing = null;
 
 

@@ -22,6 +22,9 @@ var g_interval = null;
 var g_sceneInspector = null;
 var g_selectedModel = null;
 
+var g_modelCount = 1;
+var g_motionCount = 1;
+
 
 function copy()
 {
@@ -126,6 +129,8 @@ function reset() {
   g_labelCount = 0;
   g_numSlides = 0;
   g_slidesPlayed = 0;
+  g_modelCount = 1;
+  g_motionCount = 1;
   g_sceneInspector = null;
 
   $('#object-panel').empty();
@@ -343,14 +348,13 @@ function load(u)
     }
 }
 
-var count = 1;
-var motionCount = 1;
+
 
 function loadModel(url)
 {
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
-    name = count.toString()+". "+name;
-    count++;
+    name = g_modelCount.toString()+". "+name;
+    g_modelCount++;
 
 
     var objectPanel = document.getElementById("object-panel");
@@ -504,8 +508,8 @@ function loadModel(url)
 function loadMotion(url)
 {
     var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
-    name = motionCount.toString()+". "+name;
-    motionCount++;
+    name = g_motionCount.toString()+". "+name;
+    g_motionCount++;
 
     var animationPanel = document.getElementById("animate-panel");
     var row = document.createElement('div');
