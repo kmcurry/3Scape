@@ -22794,7 +22794,11 @@ HighlightDirective.prototype.drawHighlights = function(params)
         right = directions.right;
         forward = directions.forward;
 
-        var wupp = this.getWorldUnitsPerPixel(target.center, target.worldMatrix, target.viewMatrix, target.camera, target.viewport);
+        // get scaling factors from target's worldMatrix
+        var scalingFactors = target.worldMatrix.getScalingFactors();
+        var maxScalingFactor = max3(scalingFactors.x, scalingFactors.y, scalingFactors.z);
+        
+        var wupp = this.getWorldUnitsPerPixel(target.center, target.worldMatrix, target.viewMatrix, target.camera, target.viewport) / maxScalingFactor;
         var highlightWidth = target.highlightWidth * wupp;
 
         // clear stencil buffer

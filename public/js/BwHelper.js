@@ -48,9 +48,7 @@ function getBrowserZoom()
 
 function init(scene, container, recreateCanvas)
 {
-
-    // create render context for BW if one does not exist
-
+    // create render context for BW if one does not exist, or if recreateCanvas is set
     var canvas = document.getElementById("Canvas");
     if (!canvas || recreateCanvas)
     {
