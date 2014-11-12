@@ -132,7 +132,7 @@
             </Model>
         </Group>
     </Isolator>
-    <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
+    <RenderDirective name="RenderDirective" highlightType="2"/>
     <Animations>
         <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
         <KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
