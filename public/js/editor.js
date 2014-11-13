@@ -197,6 +197,7 @@ function listLibrary()
         loadDirectoryObject(url,"objects/table.lwo",panel,"Table");
         loadDirectoryObject(url,"objects/thor_hammer.lwo",panel,"Thor Hammmer");
         loadDirectoryObject(url,"objects/captain_hat.lwo",panel,"Captain Hat");
+        loadDirectoryObject(url,"objects/Twig.lwo",panel,"Twig");
 
         panel = document.getElementById("panel-lib-animalObjects");
         loadDirectoryObject(url,"Animals/objects/Cow.lwo",panel,"Cow");
@@ -730,7 +731,7 @@ function paste()
     else if(copiedElement == 1) { // if a model
         load(copiedUrl);
         //console.log("Pasting: " + g_selectedModel.name.getValueDirect());
-        
+
         g_selectedModel.scale.setValueDirect(Size, Size, Size);
         g_selectedModel.rotation.setValueDirect(rotX, rotY, rotZ);
         //g_selectedModel.color.setValueDirect(R, G, B); // ?? Y not? - KMC
