@@ -1025,7 +1025,8 @@
                   close: function( event, ui ) {
                       if (adding) {
                           // if in the middle of adding and closed w/o submitting
-                          bridgeworks.updateScene("\<Remove target='" + "Group_L-" + g_countStr + "'/>");
+                          var s = g_labelCount.toString();
+                          bridgeworks.updateScene("\<Remove target='" + "Group_L-" + s + "'/>");
                           var cmd = "\<Remove target='"+g_labelName+"'/>";
                           bridgeworks.updateScene(cmd);
                       }

@@ -375,7 +375,7 @@ function loadModel(url)
     var a = document.createElement('a');
     a.innerHTML = name.substring(3);
     a.setAttribute("id", name);
-    a.setAttribute("onclick", "setModel('"+name+"');"); // Instead of calling setAttribute
+    a.setAttribute("onclick", "selectModel('"+name+"');"); // Instead of calling setAttribute
     a.setAttribute("title", "Select Object");
     a.setAttribute("class", "object")
     a.style.cursor="pointer";
@@ -657,7 +657,7 @@ function setColorPicker()
     document.getElementById('myColor').color.fromRGB(r, g, b);
 }
 
-function setModel(name)
+function selectModel(name)
 {
     var xml = "\<Set target='" + name + "'/>";
     g_selectedModel = bridgeworks.registry.find(name);
@@ -680,14 +680,15 @@ function setModel(name)
 }
 function paste()
 {
-    if(copiedElement == 2)
+
+    if(copiedElement == 2) // if a label
     {
         var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
 
-        g_labelCount = g_labelCount + 1;
-        g_countStr = g_labelCount.toString();
+        g_labelCount++;
 
-        g_labelName = "L-" + g_countStr;
+
+        g_labelName = "L-" + g_labelCount.toString();
 
         var xml = loadXMLFile("BwContent/label.xml");
 
@@ -726,15 +727,17 @@ function paste()
         var cmd = "\<Remove target='"+g_labelName+"'/>";
         bridgeworks.updateScene(cmd);
     }
-    else if(copiedElement == 1) {
+    else if(copiedElement == 1) { // if a model
         load(copiedUrl);
-        var name = copiedUrl.substring(copiedUrl.lastIndexOf("/") + 1, copiedUrl.lastIndexOf("."));
-        count -= 1;
-        name = count.toString() + ". " + name;
-        count += 1;
+        //console.log("Pasting: " + g_selectedModel.name.getValueDirect());
+        
         g_selectedModel.scale.setValueDirect(Size, Size, Size);
         g_selectedModel.rotation.setValueDirect(rotX, rotY, rotZ);
+        //g_selectedModel.color.setValueDirect(R, G, B); // ?? Y not? - KMC
+
+        name = g_selectedModel.name.getValueDirect().join("");
         var cmd = "\<Set target='" + name + "'>" + "\<color r= '" + R + "' " + "g= '" + G + "' " + "b= '" + B + "'/>" + "</Set>";
+        console.log(cmd);
         bridgeworks.updateScene(cmd);
     }
 }
