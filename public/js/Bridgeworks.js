@@ -22163,9 +22163,21 @@ Transform.prototype.apply = function(directive, params, visitChildren)
         case "rayPick":
         case "bbox":
         case "collide":
+        {
+            params.worldMatrix = this.matrixTransform.multiply(params.worldMatrix);
+        }
+        break;
+        
         case "highlight":
         {
             params.worldMatrix = this.matrixTransform.multiply(params.worldMatrix);
+            
+            // apply to last target as well (covers object-inspection)
+            if (params.targets.length > 0)
+            {
+                params.targets[params.targets.length-1].worldMatrix = 
+                    this.matrixTransform.multiply(params.targets[params.targets.length-1].worldMatrix);
+            }
         }
         break;
         
