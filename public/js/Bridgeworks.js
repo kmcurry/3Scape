@@ -1,4 +1,4 @@
-function Base() 
+﻿function Base() 
 {
     this.userData = "";
     this.className = "";
@@ -10205,7 +10205,7 @@ function getWebGLContext(canvas, debug)
         canvasParent.replaceChild(div, canvas);
     }
 
-    var bits = gl.getParameter(gl.STENCIL_BITS);
+    var stencilBits = gl.getParameter(gl.STENCIL_BITS);
 
     return gl;
 }
@@ -16203,6 +16203,7 @@ function RenderDirective()
     this.distanceSortAgent = new DistanceSortAgent();
     
     this.viewport = new ViewportAttr();
+    this.backgroundColor = new ColorAttr(1, 1, 1, 1);
     this.backgroundImageFilename = new StringAttr("");
     this.foregroundImageFilename = new StringAttr("");
     this.foregroundAlphaFilename = new StringAttr("");
@@ -16212,9 +16213,11 @@ function RenderDirective()
     this.highlightType = new NumberAttr(eHighlightType.None);
     
     this.viewport.addModifiedCB(RenderDirective_ViewportModifiedCB, this);
+    this.backgroundColor.addModifiedCB(RenderDirective_BackgroundColorModifiedCB, this);
     this.backgroundImageFilename.addModifiedCB(RenderDirective_BackgroundImageFilenameModifiedCB, this);
     
-    this.registerAttribute(this.viewport, "viewport"); 
+    this.registerAttribute(this.viewport, "viewport");
+    this.registerAttribute(this.backgroundColor, "backgroundColor");
     this.registerAttribute(this.backgroundImageFilename, "backgroundImageFilename");
     this.registerAttribute(this.foregroundImageFilename, "foregroundImageFilename");
     this.registerAttribute(this.foregroundAlphaFilename, "foregroundAlphaFilename");   
@@ -16318,11 +16321,22 @@ RenderDirective.prototype.drawHighlights = function(root)
     }   
 }
 
+RenderDirective.prototype.backgroundColorModified = function()
+{
+    var color = this.backgroundColor.getValueDirect();
+    this.graphMgr.renderContext.clearColor(color.r, color.g, color.b, color.a);    
+}
+
 function RenderDirective_ViewportModifiedCB(attribute, container)
 {
-//    var vp = container.viewport.getValueDirect();
-//    var url = container.backgroundImageFilename.getValueDirect().join("");
-//    container.graphMgr.renderContext.setBackgroundImage(url, vp.width, vp.height);
+    var vp = container.viewport.getValueDirect();
+    var url = container.backgroundImageFilename.getValueDirect().join("");
+    container.graphMgr.renderContext.setBackgroundImage(url, vp.width, vp.height);
+}
+
+function RenderDirective_BackgroundColorModifiedCB(attribute, container)
+{
+    container.backgroundColorModified();
 }
 
 function RenderDirective_BackgroundImageFilenameModifiedCB(attribute, container)
@@ -24496,7 +24510,7 @@ function AutoInterpolateCommand()
     this.numValueChannels = 0;
     this.numReferenceChannels = 0;
     this.numChannels = 0;
-    
+
     this.shape = new NumberAttr(eKeyframeShape.Linear);
     this.duration = new NumberAttr(1);
     this.preBehavior = new NumberAttr(eEndBehavior.Constant);
@@ -24534,7 +24548,7 @@ AutoInterpolateCommand.prototype.buildMotion = function()
     }
     this.kfi.getAttribute("enabled").setValueDirect(false);
     this.kfi.getAttribute("renderAndRelease").copyValue(this.renderAndRelease);
-    
+
     // TODO: name the interpolator based on the target
 
     for (var i = 0; i < this.attributeValuePairs.length; i++)
@@ -24592,7 +24606,7 @@ AutoInterpolateCommand.prototype.applyAttributeValues = function()
             var startVal = parseFloat(attr.getElement(j));
             var endVal = parseFloat(attr.getLength() > 1 ? value[j] : value);
 
-            // if the attribute is rotational (determined by "rotation" or "angle" as the attribute name), 
+            // if the attribute is rotational (determined by "rotation" or "angle" as the attribute name),
             // ensure motion will be the shortest path (eliminate the spin caused by 360's)
             if (this.isAttributeRotational(attr))
             {
@@ -24646,7 +24660,7 @@ AutoInterpolateCommand.prototype.applyAttributeRefs = function()
             var startVal = parseFloat(attr.getElement(j));
             var endVal = parseFloat(ref.getElement(j));
 
-            // if the attribute is rotational (determined by "rotation" or "angle" as the attribute name), 
+            // if the attribute is rotational (determined by "rotation" or "angle" as the attribute name),
             // ensure motion will be the shortest path (eliminate the spin caused by 360's)
             if (this.isAttributeRotational(attr))
             {
@@ -24727,7 +24741,7 @@ AutoInterpolateCommand.prototype.shortestPath = function(start, end)
 
     // calculate direct path
     var directPath = nend - nstart;
-    if (directPath <= 180 && directPath >= -180) 
+    if (directPath <= 180 && directPath >= -180)
     {
         return { start: start, end: end }; // direct path is shortest path, no changes necessary
     }
@@ -24746,14 +24760,14 @@ AutoInterpolateCommand.prototype.shortestPath = function(start, end)
     // update start/end so that shortest path is traversed
     start = nstart;
     if (nend > nstart)
-    {       
+    {
         end = nstart - shortestPath;
     }
     else
     {
         end = nstart + shortestPath;
     }
-    
+
     return { start: start, end: end };
 }
 
@@ -24775,6 +24789,7 @@ function AutoInterpolateCommand_TargetModifiedCB(attribute, container)
     setAttributeBin(container.attributeValuePairs);
     setAttributePairs(container.attributeRefPairs);
 }
+
 MotionInterpolateCommand.prototype = new AutoInterpolateCommand();
 MotionInterpolateCommand.prototype.constructor = MotionInterpolateCommand;
 
@@ -24914,7 +24929,7 @@ function LocateCommand()
     this.directive = new BBoxDirective();
     this.locator = new BBoxLocator();
     this.inspector = null;
-    
+
 	this.duration = new NumberAttr(1);
 	this.transition = new BooleanAttr(true);
 	this.updateClipPlanes = new BooleanAttr(false);
@@ -24924,9 +24939,9 @@ function LocateCommand()
 	this.resultPosition = new Vector3DAttr();
 	this.resultFarDistance = new NumberAttr();
 	this.resultWidth = new NumberAttr();
-    
+
     this.target.addModifiedCB(LocateCommand_TargetModifiedCB, this);
-    
+
 	this.registerAttribute(this.duration, "duration");
 	this.registerAttribute(this.transition, "transition");
 	this.registerAttribute(this.updateClipPlanes, "updateClipPlanes");
@@ -25032,7 +25047,7 @@ LocateCommand.prototype.locate = function()
 
         locatorResultPosition.removeTarget(cameraPosition);
 
-        // removing null or non-targets is harmless, 
+        // removing null or non-targets is harmless,
         // so no need to check, just call remove
         locatorResultWidth.removeTarget(cameraWidth);
         locatorResultFarDistance.removeTarget(cameraFar);
@@ -25051,7 +25066,7 @@ LocateCommand.prototype.locate = function()
 
         locatorResultPosition.removeTarget(this.resultPosition);
 
-        // removing null or non-targets is harmless, 
+        // removing null or non-targets is harmless,
         // so no need to check, just call remove
         locatorResultWidth.removeTarget(this.resultWidth);
         locatorResultFarDistance.removeTarget(this.resultFarDistance);
@@ -25121,7 +25136,7 @@ function LocateCommand_TargetModifiedCB(attribute, container)
     if (resource)
     {
         container.targetNode = resource;
-        
+
         // try and locate a scene inspector for updating pivotDistance
         container.inspector = container.registry.find("SceneInspector");
     }
@@ -31600,7 +31615,7 @@ function Bridgeworks(canvas, bgImage, contentDir)
 {
     AttributeContainer.call(this);
     this.className = "Bridgeworks";
-    
+
     this.renderContext =  newRenderContext("webgl", canvas, bgImage);
     if (!this.renderContext) return;
 
@@ -31608,12 +31623,12 @@ function Bridgeworks(canvas, bgImage, contentDir)
 
     this.canvas = canvas;
     this.contentDir = contentDir;
-    
+
     // allocate objects
     //this.renderContext = null;
     this.graphMgr = new GraphMgr();
     this.graphMgr.setRenderContext(this.renderContext)
-    
+
     this.styleMgr = new StyleMgr();
     this.registry = new BwRegistry();
     this.factory = new AttributeFactory();
@@ -31630,7 +31645,7 @@ function Bridgeworks(canvas, bgImage, contentDir)
     this.layout = new GridLayout();
     this.mapProjectionCalculator = new MapProjectionCalculator();
     this.rasterComponentEventListener = new RasterComponentEventListener();
-     
+
     // set registry to allocated objects
     this.graphMgr.setRegistry(this.registry);
     this.factory.setRegistry(this.registry);
@@ -31644,33 +31659,37 @@ function Bridgeworks(canvas, bgImage, contentDir)
     this.layout.setRegistry(this.registry);
     this.mapProjectionCalculator.setRegistry(this.registry);
     this.rasterComponentEventListener.setRegistry(this.registry);
-    
+
     // configure dependencies
     this.factory.setGraphMgr(this.graphMgr);
     this.selector.setRayPick(this.rayPick);
     this.rasterComponentEventListener.setStyleMgr(this.styleMgr);
     this.rasterComponents = null;
-    
+
     this.name = new StringAttr("Bridgeworks");
     this.onLoad = new StringAttr();
-    
+
     this.onLoad.addModifiedCB(Bridgeworks_OnLoadModifiedCB, this);
-    
+
     this.registerAttribute(this.name, "name");
     this.registerAttribute(this.onLoad, "onLoad");
-    
+
     this.viewportMgr.getAttribute("width").setValueDirect(this.canvas.width);
-    this.viewportMgr.getAttribute("height").setValueDirect(this.canvas.height);    
+    this.viewportMgr.getAttribute("height").setValueDirect(this.canvas.height);
     this.viewportMgr.getAttribute("layout").setValueDirect(this.layout);
-    
+
     enumerateAttributeTypes();
     enumerateAttributeElementTypes();
-    
+
     // TODO: remove the following when onLoadModified is defined
     console.debug("TODO: " + arguments.callee.name);
     this.initRegistry();
     this.initEventListeners();
     this.viewportMgr.initLayout();
+}
+
+Bridgeworks.prototype.get = function(name) {
+  return this.registry.find(name);
 }
 
 Bridgeworks.prototype.handleEvent = function(event)
@@ -31681,7 +31700,7 @@ Bridgeworks.prototype.handleEvent = function(event)
     {
         case "MouseEvent":
             {
-                var absPos = getElementAbsolutePos(this.canvas);            
+                var absPos = getElementAbsolutePos(this.canvas);
                 event.canvasX = event.clientX - absPos.x;
                 event.canvasY = event.clientY - absPos.y;
                 bwEvent = this.eventAdapter.createMouseEvent(event);
@@ -31747,7 +31766,7 @@ Bridgeworks.prototype.initEventListeners = function()
     this.eventMgr.addListener(eEventType.MouseWheelUp, this.rasterComponentEventListener);
     this.eventMgr.addListener(eEventType.MouseBothDown, this.rasterComponentEventListener);
     this.eventMgr.addListener(eEventType.MouseHover, this.rasterComponentEventListener);
-    this.eventMgr.addListener(eEventType.MouseMove, this.rasterComponentEventListener);    
+    this.eventMgr.addListener(eEventType.MouseMove, this.rasterComponentEventListener);
 }
 
 Bridgeworks.prototype.onLoadModified = function()
@@ -31813,10 +31832,10 @@ Bridgeworks.prototype.resize = function(width, height)
 Bridgeworks.prototype.render = function()
 {
     this.eventMgr.processEvent(new Event(eEventType.RenderBegin));
-    
+
     this.renderContext.clear();
     this.renderAgent.render();
-    
+
     this.eventMgr.processEvent(new Event(eEventType.RenderEnd));
 }
 
@@ -31842,6 +31861,7 @@ function Bridgeworks_OnLoadModifiedCB(attribute, container)
 {
     container.onLoadModified();
 }
+
 /*
  * jQuery JavaScript Library v1.3.2
  * http://jquery.com/
