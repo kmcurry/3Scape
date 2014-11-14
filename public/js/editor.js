@@ -213,12 +213,12 @@ function listLibrary()
         panel = document.getElementById("panel-lib-peopleObjects");
 		    loadDirectoryObject(url,"Characters/objects/bobble-body.lwo",panel,"Bobble Head Body");
         loadDirectoryObject(url,"Characters/objects/DanPatrick.lwo",panel,"Ham Patrick");
-		    loadDirectoryObject(url,"People/objects/B rifleman.lwo",panel,"Rifleman");
+		    //loadDirectoryObject(url,"People/objects/B rifleman.lwo",panel,"Rifleman");
         loadDirectoryObject(url,"People/objects/Civilian.lwo",panel,"Civilian");
         loadDirectoryObject(url,"People/objects/RECON.lwo",panel,"RECON");
-        loadDirectoryObject(url,"People/objects/SOF_gun.lwo",panel,"SOF_gun");
-        loadDirectoryObject(url,"People/objects/Saw_Gunner.lwo",panel,"Saw_Gunner");
-        loadDirectoryObject(url,"People/objects/SOF.lwo",panel,"SOF");
+        //loadDirectoryObject(url,"People/objects/SOF_gun.lwo",panel,"SOF_gun");
+        //loadDirectoryObject(url,"People/objects/Saw_Gunner.lwo",panel,"Saw_Gunner");
+        //loadDirectoryObject(url,"People/objects/SOF.lwo",panel,"SOF");
         loadDirectoryObject(url,"People/objects/Soldier_look.lwo",panel,"Soldier_look");
 
         panel = document.getElementById("panel-lib-anatomyObjects");
