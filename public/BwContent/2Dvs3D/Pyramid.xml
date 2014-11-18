@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwplugin url="BBD3D8Engine" action="load"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<Scene>
+    <Isolator name="Root">
+        <Selector name="Cameras">
+            <PerspectiveCamera name="Camera" zoom="3.2" parent="Null_Camera" nearDistance="0.1" farDistance="1000">
+                <position x="-7.45058e-009" y="1" z="-7.195"/>
+            </PerspectiveCamera>
+        </Selector>
+        <Group name="Lights">
+            <GlobalIllumination name="AmbientLight">
+                <ambient r="0.05" g="0.05" b="0.05"/>
+            </GlobalIllumination>
+            <DirectionalLight name="Light" parent="Camera">
+                <position x="-0.213904" y="11.475" z="-17.277"/>
+                <rotation x="29" y="0.599997" z="0"/>
+                <ambient r="0.05" g="0.05" b="0.05"/>
+                <diffuse r="1" g="1" b="1"/>
+                <specular r="1" g="1" b="1"/>
+            </DirectionalLight>
+        </Group>
+        <Group name="Models">
+            <Model name="2D_Pyramid" url="objects/2D_Pyramid.lwo">
+                <position x="0" y="0" z="-1.0055"/>
+                <rotation x="-26.6" y="0" z="0"/>
+                <pivot x="0" y="0" z="-1.0055"/>
+            </Model>
+            <Model name="Pyramid" url="objects/Pyramid.lwo" dissolve="1"/>
+            <NullObject name="Null_Camera">
+                <position x="0" y="0.0630002" z="0"/>
+            </NullObject>
+        </Group>
+    </Isolator>
+    <RenderDirective name="RenderDirective"/>
+    <Animations>
+        <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
+        <KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
+        <KeyframeInterpolator name="2D_PyramidMotion" url="motions/2D_Pyramid.mot" target="2D_Pyramid"/>
+        <KeyframeInterpolator name="2D_PyramidDissolve" url="envelopes/2D_Pyramid.env" target="2D_Pyramid" targetConnectionType="dissolve"/>
+        <KeyframeInterpolator name="PyramidMotion" url="motions/Pyramid.mot" target="Pyramid"/>
+        <KeyframeInterpolator name="PyramidDissolve" url="envelopes/Pyramid.env" target="Pyramid" targetConnectionType="dissolve"/>
+        <KeyframeInterpolator name="Null_CameraMotion" url="motions/Null_Camera.mot" target="Null_Camera"/>
+    </Animations>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+    <Set target="Selector" computePivotDistance="true"/>
+</Scene>
