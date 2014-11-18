@@ -11,15 +11,25 @@
         </Selector>
         <Group name="Lights">
             <GlobalIllumination name="AmbientLight">
-                <ambient r="0.25" g="0.25" b="0.25"/>
+                <ambient r="0.05" g="0.05" b="0.05"/>
+                <diffuse r="0.05" g="0.05" b="0.05"/>
+                <specular r="0.05" g="0.05" b="0.05"/>
             </GlobalIllumination>
-            <PointLight name="PointLight" range="3.40282" parent="Camera">
-                <position x="26.2248" y="73.9201" z="-93.7113"/>
+            <PointLight name="PointLight1" range="3.40282">
+                <position x="200" y="50" z="200"/>
                 <rotation x="35.6879" y="4.34871" z="0.723227"/>
                 <ambient r="0.05" g="0.05" b="0.05"/>
                 <diffuse r="1" g="1" b="1"/>
                 <specular r=".1" g=".1" b=".1"/>
             </PointLight>
+            <PointLight name="PointLight2" range="3.40282">
+                <position x="-200" y="50" z="-200"/>
+                <rotation x="35.6879" y="4.34871" z="0.723227"/>
+                <ambient r="0.05" g="0.05" b="0.05"/>
+                <diffuse r="1" g="1" b="1"/>
+                <specular r=".1" g=".1" b=".1"/>
+            </PointLight>
+            <!-- Spot not yet implemented -->
             <SpotLight name="SpotLight" range="40" outerConeDegrees="45">
                 <ambient r="1" g="0.05" b="0.05"/>
                 <diffuse r="1" g="1" b="1"/>
