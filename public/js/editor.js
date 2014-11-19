@@ -88,9 +88,9 @@ function handleFileSelect(evt) {
 
 function loadEgypt() {
   reset();
-  bridgeworks.contentDir='/BwContent/Egypt';
-  bridgeworks.onLoadModified(); // why not here but everywhere else? - KMC
-  bridgeworks.updateScene('Egypt.xml');
+  bridgeworks.contentDir='BwContent/Egypt';
+  // don't call onloadModified b/c XML doesn't reset Bw
+  bridgeworks.updateScene('Egypt-Models.xml');
   loadSlides(10);
 }
 
