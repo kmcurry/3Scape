@@ -101,6 +101,13 @@ function loadEntymology() {
   bridgeworks.updateScene('formica_rufa.xml');
 }
 
+function loadLights() {
+  reset();
+  bridgeworks.contentDir='BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('Lights.xml');
+}
+
 function loadTwoStroke() {
   reset();
   bridgeworks.contentDir='/BwContent/Engine/BwContent';

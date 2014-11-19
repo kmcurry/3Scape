@@ -280,6 +280,66 @@ function OutputDebugMsg(msg)
     innerHTML += "&gt; " + msg + "<br>";
     document.getElementById("DebugOutput").innerHTML = innerHTML;
 }
+
+function addSlashAfterDriveSpecifier(filename)
+{
+    var index = filename.indexOf(":");
+    if (index == -1) return filename;
+    
+    filename = filename.slice(0, index+1) + "\\" + filename.slice(index+1);
+    return filename;
+}
+
+function hexStrToULong(string)
+{
+    // find end of string
+    var i = string.length - 1;
+
+    var value = 0;
+    var digit = 0;
+    var position = 0;
+    for ( ; i >= 0; i--, position++)
+    {
+        switch (string.charAt(i))
+        {
+        case '0': digit = 0;  break;
+        case '1': digit = 1;  break;
+        case '2': digit = 2;  break;
+        case '3': digit = 3;  break;
+        case '4': digit = 4;  break;
+        case '5': digit = 5;  break;
+        case '6': digit = 6;  break;
+        case '7': digit = 7;  break;
+        case '8': digit = 8;  break;
+        case '9': digit = 9;  break;
+
+        case 'a':
+        case 'A': digit = 10; break;
+
+        case 'b':
+        case 'B': digit = 11; break;
+
+        case 'c':
+        case 'C': digit = 12; break;
+
+        case 'd':
+        case 'D': digit = 13; break;
+
+        case 'e':
+        case 'E': digit = 14; break;
+
+        case 'f':
+        case 'F': digit = 15; break;
+
+        default:  digit = 0;  break;
+        }
+
+        value += (digit * Math.pow(16, position));
+    }
+
+    return value;
+}
+
 function Color()
 {
     this.r = 0;
@@ -2895,7 +2955,8 @@ var eKeyframeShape =
     Stepped: 1,
     TCB: 2,
     Bezier1D: 3,
-    Bezier2D: 4
+    Bezier2D: 4,
+    Hermite: 5
 };
 
 var eTextureType =
@@ -4828,6 +4889,8 @@ var eAttrType = {
     BalloonTipLabel             :1030, 
     PathTrace                   :1031,
     Cube                        :1032,
+    Bone                        :1033,
+    Selector                    :1034,
     
     Evaluator                   :1100,
     SceneInspector              :1101,
@@ -11291,6 +11354,10 @@ function ContentBuilder()
     AttributeContainer.call(this);
     this.className = "ContentBuilder";
     
+    this.factory = null;
+    
+    this.cameras = [];
+    this.lights = [];
     this.models = [];
     this.evaluators = [];
     
@@ -11298,6 +11365,13 @@ function ContentBuilder()
     this.invertAlpha = new BooleanAttr(false);
     
     this.registerAttribute(this.invertAlpha, "invertAlpha");
+}
+
+ContentBuilder.prototype.setRegistry = function(registry)
+{
+    AttributeContainer.prototype.setRegistry.call(this, registry); 
+    
+    this.factory = this.registry.find("AttributeFactory");   
 }
 
 ContentBuilder.prototype.visitHandler = function(handler)
@@ -16109,6 +16183,56 @@ function Isolator_IsolateClipPlanesModifiedCB(attribute, container)
     container.incrementModificationCount();
 }
 
+Selector.prototype = new Group();
+Selector.prototype.constructor = Selector;
+
+function Selector()
+{
+    Group.call(this);
+    this.className = "Selector";
+    this.attrType = eAttrType.Selector;
+    
+    this.selectee = new NumberAttr(0);
+    
+    this.registerAttribute(this.selectee, "selectee");
+}
+
+Selector.prototype.update = function(params, visitChildren)
+{
+    // call update for selected child    
+    var selectee = this.selectee.getValueDirect();
+    if (visitChildren && this.children.length > selectee)
+    {
+        this.children[selectee].update(params, visitChildren);
+        return;
+    }
+    
+    // call base-class implementation
+    Group.prototype.update.call(this, params, visitChildren);
+}
+
+Selector.prototype.apply = function(directive, params, visitChildren)
+{
+    var enabled = this.enabled.getValueDirect();
+    if (!enabled)
+    {
+        // call base-class implementation
+        Group.prototype.apply.call(this, directive, params, visitChildren);
+        return;
+    }
+
+    // call apply for selected child
+    var selectee = this.selectee.getValueDirect();
+    if (visitChildren && this.children.length > selectee)
+    {
+        this.children[selectee].apply(directive, params, visitChildren);
+        return;
+    }
+    
+    // call base-class implementation
+    Group.prototype.apply.call(this, directive, params, visitChildren);
+}
+
 Dissolve.prototype = new SGNode();
 Dissolve.prototype.constructor = Dissolve;
 
@@ -17866,6 +17990,7 @@ function Model()
     this.highlight = new BooleanAttr(false);
     this.highlightColor = new ColorAttr(1, 1, 0, 1);
     this.highlightWidth = new NumberAttr(5);
+    this.disableOnDissolve = new BooleanAttr(true);
     
     this.show.addTarget(this.enabled);
     
@@ -19803,9 +19928,10 @@ KeyframeInterpolator.prototype.updateEndState = function()
         }
         
         // set first/last keys to evaluate
-        this.endState.startKeyIts[i] = keyframes.getAt(0);
+        this.endState.startKeyIts[i] = keyframes.getAt(0); 
         this.endState.endKeyIts[i] = keyframes.getAt(keyframes.vector.length - 1);
-
+        if (!this.endState.startKeyIts[i] || !this.endState.endKeyIts[i]) continue;
+        
         if (startKey >= 0 && startKey < keyframes.vector.length)
         {
             this.endState.startKeyIts[i] = keyframes.getAt(startKey);
@@ -19816,14 +19942,14 @@ KeyframeInterpolator.prototype.updateEndState = function()
             this.endState.endKeyIts[i] = keyframes.getAt(endKey);
         }
 
-	fStartTime = this.endState.startKeyIts[i].getTime();
+	    fStartTime = this.endState.startKeyIts[i].getTime();
         fEndTime = this.endState.endKeyIts[i].getTime();
 
-	// save the smallest start time for all channels
-	fShortest = fStartTime < fShortest ? fStartTime : fShortest;
+	    // save the smallest start time for all channels
+	    fShortest = fStartTime < fShortest ? fStartTime : fShortest;
 
-	// save the longest end time for all channels
-	fLongest = fEndTime >= fLongest ? fEndTime : fLongest;
+	    // save the longest end time for all channels
+	    fLongest = fEndTime >= fLongest ? fEndTime : fLongest;
     }
     
     this.endState.startTime = fShortest;
@@ -29092,7 +29218,9 @@ LWObjectHandler.prototype.parseFileStream = function(url)
     data.contentDir = this.contentDirectory.getValueDirect().join("");
 
     // set the model name (filename w/o extension)
-    // TODO
+    var lastSlash = url.lastIndexOf("/");
+    var extension = url.lastIndexOf(".");
+    data.name = url.substring(lastSlash+1, extension);
 
     // read file chunks into LWOData
     while (fileSize > 0)
@@ -29825,6 +29953,18 @@ LWObjectBuilder.prototype.allocateModel = function(data)
 LWObjectBuilder.prototype.describeModel = function(data, layer, model)
 {
     var factory = this.registry.find("AttributeFactory");
+    
+    // set name if not already set by scene
+    var name = model.getAttribute("name");
+    if (model.getAttributeModificationCount(name) == 0)
+    {
+        var layerName = data.name;
+        if (data.layers.length > 1)
+        {
+            layerName += ":Layer" + this.layer;
+        }
+        name.setValueDirect(layerName);
+    }
     
     // set pivot if not already set by scene
     var pivot = model.getAttribute("pivot");
@@ -30664,13 +30804,55 @@ LWSceneHandler.prototype.parseFileStream = function(url)
     var tokens;
     while (tokens = parser.readLineTokens())
     {
+        // check for string
+        if (tokens[0].indexOf("\"") != -1)
+        {
+            tokens.push(tokens[0].substring(1, tokens[0].length-1));
+            tokens[0] = "String";    
+        }
+        
         // pass tokens to consumer(s)
         for (var i=0; i < this.tokenHandlers.length; i++)
         {
             this.tokenHandlers[i](tokens, this.tokenHandlersData[i]);    
         }    
     }
+    
+    // pass EOF to consumer(s)
+    for (var i=0; i < this.tokenHandlers.length; i++)
+    {
+        this.tokenHandlers[i](new Array("EOF"), this.tokenHandlersData[i]);    
+    }   
 }
+function TLWSCSceneData()
+{
+    var fps = 0;
+    var backgroundColorR = 0;
+    var backgroundColorG = 0;
+    var backgroundColorB = 0;
+    var backgroundImageFilename = "";
+    var foregroundImageFilename = "";
+    var foregroundAlphaFilename = "";
+    var fadeForeground = false;
+    var gridSize = 0;
+    var nearClipDistance = 0.25;
+}
+
+function TLWSCv3LightDesc()
+{
+    this.name = "";
+    this.type = 0;
+    this.colorR = 0;
+    this.colorG = 0;
+    this.colorB = 0;
+    this.intensity = 0;
+    this.range = 0;
+    this.coneAngle = 0; // for spot lights
+    this.edgeAngle = 0; // for spot lights
+    this.motion = null;
+    this.parentItem = 0;
+}
+
 LWSceneBuilder.prototype = new ContentBuilder();
 LWSceneBuilder.prototype.constructor = LWSceneBuilder;
 
@@ -30678,13 +30860,37 @@ function LWSceneBuilder()
 {
     ContentBuilder.call(this);
     this.className = "LWSceneBuilder";
-    
-    this.graphMgr = null;
+
+    this.root = null;
+    this.sgRoot = null;
+    this.evaluatorsGroup = null;
+    this.camerasSelector = null;
+    this.lightsGroup = null;
+    this.modelsGroup = null;
+    this.renderDirective = null;
+    this.boneFalloffType = 0;//GeBoneFalloffType_InverseDistance;
+    this.parsingBgImage = false;
+    this.parsingFgImage = false;
+    this.parsingFgAlphaImage = false;
+    this.imagePath = "";
+    this.currElement = null;
+    this.currKFI = null;
     this.currChannel = 0;   // motions
+    this.sceneData = new TLWSCSceneData();
+    this.ambientLightDesc = new TLWSCv3LightDesc();
+    this.globalLightDesc = new TLWSCv3LightDesc();
+    this.lightDescs = [];
+    this.parentItems = [];
     
     this.indexGeometry = new BooleanAttr(true);
     
     this.registerAttribute(this.indexGeometry, "indexGeometry");
+    
+    this.ambientLightDesc.colorR = 1;
+    this.ambientLightDesc.colorG = 1;
+    this.ambientLightDesc.colorB = 1;
+    this.ambientLightDesc.intensity = 0.05;
+    this.globalLightDesc.intensity = 1;
 }
 
 LWSceneBuilder.prototype.visitHandler = function(handler)
@@ -30694,7 +30900,7 @@ LWSceneBuilder.prototype.visitHandler = function(handler)
 
 LWSceneBuilder.prototype.finalize = function()
 {
-    }
+}
 
 LWSceneBuilder.prototype.matchesType = function(type)
 {
@@ -30702,140 +30908,716 @@ LWSceneBuilder.prototype.matchesType = function(type)
             type == "mot");
 }
 
-LWSceneBuilder.prototype.allocateSceneElement = function(tokens)
+LWSceneBuilder.prototype.handleToken = function(token, params)
 {
+    switch (token)
+    {
+        case "LWSC":
+            this.handleSceneToken(params);
+            break;
+            
+        case "LWMO":
+            this.handleMotionToken(params);
+            break;
+            
+        default:
+            this.handleCommandToken(token, params);
+            break;
+    }
+}
+
+LWSceneBuilder.prototype.handleSceneToken = function(params)
+{
+    this.allocateSceneGraph();
+}
+
+LWSceneBuilder.prototype.handleMotionToken = function(params)
+{
+
+}
+
+LWSceneBuilder.prototype.handleCommandToken = function(token, params)
+{
+    this.allocateSceneElement(token, params);
+}
+
+LWSceneBuilder.prototype.allocateSceneGraph = function()
+{
+    // root
+    this.root = this.factory.create("Isolator");
+    this.root.name.setValueDirect("Root");
+    this.root.isolateLights.setValueDirect(true);
+    this.registry.rootPtr.setValueDirect(this.root);
     
+    // evaluators group
+    this.evaluatorsGroup = this.factory.create("Group");
+    this.evaluatorsGroup.name.setValueDirect("Evaluators");
+    this.root.addChild(this.evaluatorsGroup);
     
-    switch (tokens[0])
+    // cameras group
+    this.camerasSelector = this.factory.create("Selector");
+    this.camerasSelector.name.setValueDirect("Cameras");
+    this.camerasSelector.selectee.setValueDirect(0);
+    this.root.addChild(this.camerasSelector);
+    
+    // lights group
+    this.lightsGroup = this.factory.create("Group");
+    this.lightsGroup.name.setValueDirect("Lights");
+    this.root.addChild(this.lightsGroup);
+    
+    // models group
+    this.modelsGroup = this.factory.create("Group");
+    this.modelsGroup.name.setValueDirect("Models");
+    this.root.addChild(this.modelsGroup);
+    
+    // render directive
+    this.renderDirective = this.factory.create("RenderDirective");
+    this.renderDirective.name.setValueDirect("RenderDirective");
+    this.renderDirective.rootNode.setValueDirect(this.root);
+   
+    return true;
+}
+
+LWSceneBuilder.prototype.allocateSceneElement = function(token, params)
+{
+    switch (token)
     {
         case "LoadObjectLayer":
         {
+            var model = this.factory.create("Model");            
+            this.currElement = model;
             
+            // layer
+            var layer = params[0];
+            model.layer.setValueDirect(layer);
+            
+            // combine tokens into one string (if filename has
+            // spaces, multiple tokens will be present)
+            var filename = params.slice(1).join();
+            filename = addSlashAfterDriveSpecifier(filename);
+            model.url.setValueDirect(filename);
+            
+            // don't allow disableOnDissolve, because this breaks label positioning when targeted to null-object models
+            model.disableOnDissolve.setValueDirect(false);
+            
+            this.models.push(model);
+            this.modelsGroup.addChild(model);
+            
+            // load model
+            finalizeModel(model, this.factory);
         }
         break;
+        
+        case "ObjectMotion":
+        {
+            var kfi = this.factory.create("KeyframeInterpolator");
+            this.currKFI = kfi;
+            
+            kfi.name.setValueDirect("Motion");
+            
+            this.evaluators.push(kfi);
+        }
+        break;
+        
         case "NumChannels":
         {
-            var numChannels = parseInt(tokens[1], 10);
-            
-            var eval = this.evaluators[this.evaluators.length-1];
-            
-            eval.setNumChannels(numChannels);
-            
-            // attach to target (if specified)
-            switch (numChannels)
+            if (this.currKFI)
             {
-                case 1:
-                    this.attachDissolveInterpolator(this.evaluators[this.evaluators.length-1], 
-                        this.registry.find(this.evaluators[this.evaluators.length-1].getAttribute("target").getValueDirect().join("")));
-                    break;
-                   
-                default:
-                    this.attachKeyframeInterpolator(this.evaluators[this.evaluators.length-1], 
-                        this.registry.find(this.evaluators[this.evaluators.length-1].getAttribute("target").getValueDirect().join("")));
-                    break;
+                var numChannels = parseInt(params[0]);
+                
+                this.initializeKeyframeInterpolator(this.currKFI, numChannels);
+                
+                if (this.currElement)
+                {
+                    switch (numChannels)
+                    {
+                        case 1:  this.attachDissolveInterpolator(this.currKFI, this.currElement); break;
+                        default: this.attachKeyframeInterpolator(this.currKFI, this.currElement); break;
+                    }
+                }
             }
         }
         break;
         
         case "Channel":
         {
-            this.currChannel = parseInt(tokens[1], 10);
+            this.currChannel = parseInt(params[0]);
         }
         break;
         
         case "Key":
         {
-            if (this.evaluators.length <= 0) break;
-            
-            var keyframes = this.evaluators[this.evaluators.length-1].getAttribute("channels").getAt(this.currChannel);
-            if (!keyframes) break;
-            
-            var keyframe = new KeyframeAttr();
-            for (var i=1; i < tokens.length; i++)
+            if (this.currKFI)
             {
-                switch (i)
+                var keyframes = this.currKFI.channels.getAt(this.currChannel);
+                var keyframe = new KeyframeAttr();
+                
+                for (var i=0; i < params.length; i++)
                 {
-                    // value
-                    case 1:
+                    switch (i)
                     {
-                        var f = parseFloat(tokens[i]);
-
-                        // if channel 3, 4, or 5, convert value to degrees
-                        if (this.currChannel == 3 || this.currChannel == 4 || this.currChannel == 5)
+                        case 0: // value
                         {
-                            f = toDegrees(f);
+                            var f = parseFloat(params[i]);
+                            
+                            // if channel 3, 4, or 5, convert value to degrees
+                            if (this.currChannel == 3 || this.currChannel == 4 || this.currChannel == 5)
+                            {
+                                f = toDegrees(f);
+                            }
+                            
+                            keyframe.value.setValueDirect(f);
                         }
-
-                        keyframe.getAttribute("value").setValueDirect(f);
-                    }
-                    break;
-                    // time
-                    case 2:
-                        keyframe.getAttribute("time").setValueDirect(parseFloat(tokens[i]));
                         break;
-                    case 3:
-                    {
-                        var shape = parseInt(tokens[i]);
-                        switch (shape)
+                        
+                        case 1: // time
                         {
-                            case 0:
-                                keyframe.getAttribute("shape").setValueDirect(eKeyframeShape.TCB);
-                                break;
-                            case 1:
-                                //keyframe.getAttribute("shape").setValueDirect();	// TODO: Hermite Spline
-                                break;
-                            case 2:
-                                keyframe.getAttribute("shape").setValueDirect(eKeyframeShape.Bezier1D);
-                                break;
-                            case 3:
-                                keyframe.getAttribute("shape").setValueDirect(eKeyframeShape.Linear);
-                                break;
-                            case 4:
-                                keyframe.getAttribute("shape").setValueDirect(eKeyframeShape.Stepped);
-                                break;
-                            case 5:
-                                keyframe.getAttribute("shape").setValueDirect(eKeyframeShape.Bezier2D);
-                                break;
-                            default:
-                                keyframe.getAttribute("shape").setValueDirect(eKeyframeShape.Linear);
-                                break;
+                            keyframe.time.setValueDirect(parseFloat(params[i]));
                         }
-                    }
-                    break;
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 9:
-                        keyframe.getAttribute("params").getAt(i-3-1).setValueDirect(parseFloat(tokens[i]));
                         break;
-                    default:
+                        
+                        case 2:
+                        {
+                            var shape = parseInt(params[i]);
+                            switch (shape)
+                            {
+                                case 0: keyframe.shape.setValueDirect(eKeyframeShape.TCB); break;
+                                case 1: keyframe.shape.setValueDirect(eKeyframeShape.Hermite); break;
+                                case 2: keyframe.shape.setValueDirect(eKeyframeShape.Bezier1D); break;
+                                case 3: keyframe.shape.setValueDirect(eKeyframeShape.Linear); break;
+                                case 4: keyframe.shape.setValueDirect(eKeyframeShape.Stepped); break;
+                                case 5: keyframe.shape.setValueDirect(eKeyframeShape.Bezier2D); break;
+                                default: keyframe.shape.setValueDirect(eKeyframeShape.Linear); break;
+                            }
+                        }
                         break;
+                        
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                            keyframe.params.getAt(i-3).setValueDirect(parseFloat(params[i]));
+                            break;
+                            
+                        default:
+                            break;
+                    }   
                 }
+                
+                keyframes.push_back(keyframe);
             }
-			
-            // set to keyframe interpolator
-            keyframes.push_back(keyframe);
         }
         break;
         
         case "Behaviors":
         {
-            if (this.evaluators.length <= 0) break;
+            if (this.currKFI)
+            {
+                this.currKFI.preBehaviors.getAt(this.currChannel).setValueDirect(parseInt(params[0]));
+                this.currKFI.postBehaviors.getAt(this.currChannel).setValueDirect(parseInt(params[1]));
+            }       
+        }
+        break;
+        
+        case "ObjectDissolve":
+        {
+            if (params[0] == "(envelope)")
+            {
+                var kfi = this.factory.create("KeyframeInterpolator");
+                this.currKFI = kfi;
+               
+                kfi.name.setValueDirect("Dissolve");
+                
+                this.initializeKeyframeInterpolator(kfi, 1);
+                
+                this.evaluators.push(kfi);
+            }
+            else // non-envelope dissolve
+            {
+                // set to last loaded model
+                if (this.models.length > 0)
+                {
+                    this.models[this.models.length-1].dissolve.setValueDirect(parseFloat(params[0]));
+                }
+            }
+        }
+        break;
+        
+        case "AddCamera":
+        {
+            var camera = this.factory.create("PerspectiveCamera");
+            this.currElement = camera;
             
-            var preBehaviors = this.evaluators[this.evaluators.length-1].getAttribute("preBehaviors").getAt(this.currChannel);
-            var postBehaviors = this.evaluators[this.evaluators.length-1].getAttribute("postBehaviors").getAt(this.currChannel);
-            if (!preBehaviors || !postBehaviors) break;
+            this.cameras.push(camera);
+            this.camerasSelector.addChild(camera);
+        }
+        break;
+        
+        case "CameraName":
+        {
+            // set to last loaded camera
+            if (this.cameras.length > 0)
+            {
+                this.cameras[this.cameras.length-1].name.setValueDirect(params[0]);
+            }
+        }
+        break;
+        
+        case "CameraMotion":
+        {
+            var kfi = this.factory.create("KeyframeInterpolator");
+            this.currKFI = kfi;
             
-            var pre = parseInt(tokens[1], 10);
-            var post = parseInt(tokens[2], 10);
+            kfi.name.setValueDirect("Motion");
             
-            preBehaviors.setValueDirect(pre);
-            postBehaviors.setValueDirect(post);            
+            this.evaluators.push(kfi);
+        }
+        break;
+        
+        case "ZoomFactor":
+        {
+            // set to last loaded camera
+            if (this.cameras.length > 0)
+            {
+                this.cameras[this.cameras.length-1].zoom.setValueDirect(parseFloat(params[0]));
+            }
+        }
+        break;
+        
+        case "AmbientColor":
+        {
+            this.ambientLightDesc.colorR = parseFloat(params[0]);
+            this.ambientLightDesc.colorG = parseFloat(params[1]); 
+            this.ambientLightDesc.colorB = parseFloat(params[2]); 
+        }
+        break;
+        
+        case "AmbientIntensity":
+        {
+            var globalIllumination = this.factory.create("GlobalIllumination");
+            globalIllumination.name.setValueDirect("GLight");
+            
+            var intensity = parseFloat(params[0]);
+            
+            globalIllumination.ambient.setValueDirect(this.ambientLightDesc.colorR * intensity,
+                                                      this.ambientLightDesc.colorG * intensity,
+                                                      this.ambientLightDesc.colorB * intensity,
+                                                      1);
+                                                      
+            this.lightsGroup.addChild(globalIllumination);
+        }
+        break;
+        
+        case "GlobalLightIntensity":
+        {
+            this.globalLightDesc.intensity = parseFloat(params[0]);
+        }
+        break;
+        
+        case "AddLight":
+        {
+            var lightDesc = new TLWSCv3LightDesc();
+            
+            // set default range (if unspecified in scene file)
+            lightDesc.range = Math.sqrt(FLT_MAX);
+            
+            this.lightDescs.push(lightDesc);
+            
+            this.currElement = null;
+        }
+        break;
+        
+        case "LightName":
+        {
+            if (this.lightDescs.length > 0)
+            {
+                this.lightDescs[this.lightDescs.length-1].name = params[0];
+            }
+        }
+        break;
+        
+        case "LightMotion":
+        {
+            var kfi = this.factory.create("KeyframeInterpolator");
+            this.currKFI = kfi;
+            
+            kfi.name.setValueDirect("Motion");
+            
+            // add to last light record
+            if (this.lightDescs.length > 0)
+            {
+                this.lightDescs[this.lightDescs.length-1].motion = kfi;
+            }
+                
+            this.evaluators.push(kfi);
+        }
+        break;
+        
+        case "LightColor":
+        {
+            // add to last light record
+            if (this.lightDescs.length > 0)
+            {
+                this.lightDescs[this.lightDescs.length-1].colorR = parseFloat(params[0]);
+                this.lightDescs[this.lightDescs.length-1].colorG = parseFloat(params[1]);
+                this.lightDescs[this.lightDescs.length-1].colorB = parseFloat(params[2]);
+            }
+        }
+        break;
+        
+        case "LightIntensity":
+        {
+            // add to last light record
+            if (this.lightDescs.length > 0)
+            {
+                this.lightDescs[this.lightDescs.length-1].intensity = parseFloat(params[0]);
+            }
+        }
+        break;
+        
+        case "LightRange":
+        {
+            // add to last light record
+            if (this.lightDescs.length > 0)
+            {
+                this.lightDescs[this.lightDescs.length-1].range = parseFloat(params[0]);
+            }
+        }
+        break;
+        
+        case "LightConeAngle":
+        {
+            // add to last light record
+            if (this.lightDescs.length > 0)
+            {
+                this.lightDescs[this.lightDescs.length-1].coneAngle = parseFloat(params[0]);
+            }
+        }
+        break;
+        
+        case "LightEdgeAngle":
+        {
+            // add to last light record
+            if (this.lightDescs.length > 0)
+            {
+                this.lightDescs[this.lightDescs.length-1].edgeAngle = parseFloat(params[0]);
+            }
+        }
+        break;
+        
+        case "LightType":
+        {
+            // add to last light record
+            if (this.lightDescs.length > 0)
+            {
+                this.lightDescs[this.lightDescs.length-1].type = parseInt(params[0]);
+            }
+        }
+        break;
+        
+        case "AddNullObject":
+        {
+            var nullObject = this.factory.create("NullObject");
+            this.currElement = nullObject;
+            
+            this.models.push(nullObject);
+            this.modelsGroup.addChild(nullObject);
+            
+            if (params[0])
+            {
+                nullObject.name.setValueDirect(params[0]);
+            }
+        }
+        break;
+        
+        case "PivotPosition":
+        {
+            if (this.currElement)
+            {
+                this.currElement.pivot.setValueDirect(parseFloat(params[0]), parseFloat(params[1]), parseFloat(params[2]));
+            }
+        }
+        break;
+        
+        case "ParentItem":
+        {
+            if (this.currElement)
+            {
+                this.parentItems.push(new Pair(this.currElement, params[0]));
+            }
+            else // !this.currElement -- current element is a light (this.currElement is NULL because 
+                 // light can't be allocated until later when type is known)
+            {
+                if (this.lightDescs.length > 0)
+                {
+                    this.lightDescs[this.lightDescs.length-1].parentItem = params[0];
+                }
+            }
+        }
+        
+        case "GridSize":
+        {
+            this.sceneData.gridSize = parseFloat(params[0]);
+        }
+        
+        case "NearClipDistance":
+        {
+            // set to last camera
+            if (this.cameras.length > 0)
+            {
+                this.cameras[this.cameras.length-1].nearDistance.setValueDirect(parseFloat(params[0]));
+            }
+        }
+        break;
+        
+        case "FramesPerSecond":
+        {
+            this.sceneData.fps = parseFloat(params[0]);
+        }
+        break;
+        
+        case "BackdropColor":
+        {
+            this.sceneData.backgroundColorR = parseFloat(params[0]);
+            this.sceneData.backgroundColorG = parseFloat(params[1]);
+            this.sceneData.backgroundColorB = parseFloat(params[2]);
+        }
+        break;
+        
+        case "}":
+        {
+            this.currChannel = 0;
+            
+            if (this.imagePath != "")
+            {
+                if (this.parsingBgImage)
+                {
+                    this.renderDirective.backgroundImageFilename.setValueDirect(this.imagePath);
+                    this.parsingBgImage = false;
+                }
+                else if (this.parsingFgImage)
+                {
+                    this.renderDirective.foregroundImageFilename.setValueDirect(this.imagePath);
+                    this.parsingFgImage = false;
+                }
+                else if (this.parsingFgAlphaImage)
+                {
+                    this.renderDirective.foregroundAlphaImageFilename.setValueDirect(this.imagePath);
+                    this.parsingFgAlphaImage = false;
+                }
+                
+                this.imagePath = "";
+            }
+        }
+        break;
+        
+        case "String":
+        {
+            if (this.parsingBgImage ||
+                this.parsingFgImage ||
+                this.parsingFgAlphaImage)
+            {
+                this.imagePath = params[0];
+            }
+        }
+        break;
+        
+        case "BGImage":
+        {
+            this.parsingBgImage = true;
+        }
+        break;
+        
+        case "FGImage":
+        {
+            this.parsingFgImage = true;
+        }
+        break;
+        
+        case "FGAlphaImage":
+        {
+            this.parsingFgAlphaImage = true;
+        }
+        break;
+        
+        case "EOF":
+        {
+            this.finalize();
+        }
+        break;
+        
+        default:
+        {
+            // unsupported tag
         }
         break;
     }
+}
+
+LWSceneBuilder.prototype.finalize = function()
+{
+    // place models into name bins
+    var nameBins = [];
+    for (var i=0; i < this.models.length; i++)
+    {
+        var name = this.models[i].name.getValueDirect().join("");
+        if (nameBins[name] == undefined)
+        {
+            nameBins[name] = new Array();
+        }
+        
+        nameBins[name].push(this.models[i]);
+    }
+    
+    // any name bins that contain more than 1 entry are duplicates and need to be renamed with "(n)" appended
+    for (var name in nameBins)
+    {
+        if (nameBins[name].length > 1)
+        {
+            for (var i=0; i < nameBins[name].length; i++)
+            {
+                nameBins[name][i].name.setValueDirect(name + " (" + (i+1) + ")")
+            }
+        }
+    }
+    
+    // set camera(s) clip planes
+    var nearDistance, farDistance;
+    for (var i=0; i < this.cameras.length; i++)
+    {
+        var zoom = this.cameras[i].zoom.getValueDirect();
+
+        nearDistance = this.sceneData.gridSize * 0.1 * zoom;
+        farDistance = nearDistance * 100000;
+        
+        this.cameras[i].nearDistance.setValueDirect(nearDistance);
+        this.cameras[i].farDistance.setValueDirect(farDistance);
+    }
+
+    // allocate lights
+    for (var i=0; i < this.lightDescs.length; i++)
+    {
+        var light = this.allocateLight(this.lightDescs[i]);
+        
+        // if parented, add entry in parent items map
+        if (this.lightDescs[i].parentItem)
+        {
+            this.parentItems.push(new Pair(light, this.lightDescs[i].parentItem));
+        }
+        
+        this.lights.push(light);
+        this.lightsGroup.addChild(light);
+    }
+    
+    // assign parents
+    for (var i=0; i < this.parentItems.length; i++)
+    {
+        this.setParentItem(this.parentItems[i].first, this.parentItems[i].second);    
+    }
+    
+    // setup motion controllers
+    // TODO
+    
+    // create bone effectors
+    // TODO
+    
+    // create morph effectors
+    // TODO
+    
+    // backdrop color
+    
+    // register evaluators; evaluate evaluators once so that their initial values 
+    // are set to their targets (e.g., models that depend upon KFI's for position)
+    for (var i=0; i < this.evaluators.length; i++)
+    {
+        this.evaluatorsGroup.addChild(this.evaluators[i]);
+        this.evaluators[i].evaluate();
+    }
+}
+
+LWSceneBuilder.prototype.allocateLight = function(lightDesc)
+{
+    var light = null;
+    switch (lightDesc.type)
+    {
+        case 0: // distance (directional)
+        case 3: // linear (use directional to approximate)
+            light = this.factory.create("DirectionalLight");
+            break;
+            
+        case 1: // point
+            light = this.factory.create("PointLight");
+            break;
+            
+        case 2: // spot
+        case 4: // area (use spot to approximate)
+            light = this.factory.create("SpotLight");
+            break;
+    }
+    if (!light) return null;
+    
+    // attach motion object
+    if (lightDesc.motion)
+    {
+        this.attachKeyframeInterpolator(lightDesc.motion, light);
+    }
+    
+    // set common attributes
+    
+    // name
+    light.name.setValueDirect(lightDesc.name);
+    
+    // light color
+    var red = lightDesc.colorR * lightDesc.intensity * this.globalLightDesc.intensity;
+    var green = lightDesc.colorR * lightDesc.intensity * this.globalLightDesc.intensity;
+    var blue = lightDesc.colorR * lightDesc.intensity * this.globalLightDesc.intensity;
+    var alpha = 1;
+    
+    // ambient color
+    light.ambient.setValueDirect(this.ambientLightDesc.colorR * this.ambientLightDesc.intensity,
+                                 this.ambientLightDesc.colorG * this.ambientLightDesc.intensity,
+                                 this.ambientLightDesc.colorB * this.ambientLightDesc.intensity,
+                                 1);
+    
+    // diffuse color
+    light.diffuse.setValueDirect(red, green, blue, alpha);
+    
+    // specular color
+    light.specular.setValueDirect(red, green, blue, alpha);
+    
+    // set type-specific attributes
+    switch (lightDesc.type)
+    {
+        case 0: // distance (directional)
+        case 3: // linear (use directional to approximate)
+            break;
+            
+        case 1: // point
+            // range
+            light.range.setValueDirect(lightDesc.range);
+            break;
+            
+        case 2: // spot
+        case 4: // area (use spot to approximate)
+            // range
+            light.range.setValueDirect(lightDesc.range);
+            // inner cone degrees
+            light.innerConeDegrees.setValueDirect(lightDesc.coneAngle);
+            // outer cone degrees
+            light.outerConeDegrees.setValueDirect(lightDesc.edgeAngle);
+            // cone falloff
+            light.coneFalloff.setValueDirect(1);
+            break;
+    }
+    
+    return light;
+}
+
+LWSceneBuilder.prototype.initializeKeyframeInterpolator = function(kfi, numChannels)
+{
+    kfi.setNumChannels(numChannels);
 }
 
 LWSceneBuilder.prototype.attachKeyframeInterpolator = function(kfi, target)
@@ -30900,9 +31682,56 @@ LWSceneBuilder.prototype.attachDissolveInterpolator = function(kfi, target)
     resultValue.addElementTarget(target.getAttribute("dissolve"), 0, 0);
 }
 
+LWSceneBuilder.prototype.setParentItem = function(object, parentItem)
+{
+    var itemNum = hexStrToULong(parentItem.substring(1));
+    var parent = null;
+    switch (parentItem.charAt(0))
+    {
+        case "1": // model parent
+            {
+                parent = this.models[itemNum];
+            }
+            break;
+    
+        case "2": // light parent
+            {
+                parent = this.lights[itemNum];
+            }
+            break;
+    
+        case "3": // camera parent
+            {
+                parent = this.cameras[itemNum];
+            }
+            break;
+    
+        case "4": // bone parent
+            {
+                // TODO
+            }
+            break;
+        
+        default:
+            return;
+    }
+    
+    // assign parent
+    switch (object.attrType)
+    {
+        case eAttrType.Bone:
+            // TODO
+            break;
+        
+        default:
+            object.setMotionParent(parent);
+            break;
+    }
+}
+
 function LWSceneBuilder_TokenHandler(tokens, builder)
 {
-    builder.allocateSceneElement(tokens);
+    builder.handleToken(tokens[0], tokens.slice(1));
 }
 AttributeFactory.prototype = new AttributeContainer();
 AttributeFactory.prototype.constructor = AttributeFactory;
@@ -31008,6 +31837,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["QuaternionRotate"] = newSGNode;
     this.newResourceProcs["Rotate"] = newSGNode;
     this.newResourceProcs["Scale"] = newSGNode;
+    this.newResourceProcs["Selector"] = newSGNode;
     this.newResourceProcs["Surface"] = newSGNode;
     this.newResourceProcs["Translate"] = newSGNode;
     this.newResourceProcs["TriList"] = newSGNode;
@@ -31182,6 +32012,7 @@ function newSGNode(name, factory)
     case "QuaternionRotate":    resource = new QuaternionRotate(); break;
     case "Rotate":              resource = new Rotate(); break;
     case "Scale":               resource = new Scale(); break;
+    case "Selector":            resource = new Selector(); break;
     case "Surface":             resource = new Surface(); break;
     case "Transform":           resource = new Transform(); break;
     case "Translate":           resource = new Translate(); break;
