@@ -89,8 +89,8 @@ function handleFileSelect(evt) {
 function loadEgypt() {
   reset();
   bridgeworks.contentDir='/BwContent/Egypt';
-  //bridgeworks.onLoadModified();
-  bridgeworks.updateScene('Egypt-Models.xml');
+  bridgeworks.onLoadModified(); // why not here but everywhere else? - KMC
+  bridgeworks.updateScene('Egypt.xml');
   loadSlides(10);
 }
 
