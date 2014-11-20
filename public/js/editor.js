@@ -1,5 +1,4 @@
-// functions are organized by alpha
-
+// consolidating globals here until refactored
 var copiedUrl = "";
 var R;
 var G;
@@ -22,10 +21,22 @@ var g_interval = null;
 var g_sceneInspector = null;
 var g_objectInspector = null;
 var g_selectedModel = null;
+var g_selectedModelName = "";
 
 var g_modelCount = 1;
 var g_motionCount = 1;
 
+// functions are organized by alpha until refactored
+
+function applyColor()
+{
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var b = $('#info-b').val();
+    var g = $('#info-g').val();
+    var r = $('#info-r').val();
+    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '"+b+"'/>" +"\</Set>";
+    bridgeworks.updateScene(cmd);
+}
 
 function copy()
 {
@@ -88,8 +99,8 @@ function handleFileSelect(evt) {
 
 function loadEgypt() {
   reset();
-  bridgeworks.contentDir='/BwContent/Egypt';
-  //bridgeworks.onLoadModified();
+  bridgeworks.contentDir='BwContent/Egypt';
+  // don't call onloadModified b/c XML doesn't reset Bw
   bridgeworks.updateScene('Egypt-Models.xml');
   loadSlides(10);
 }
@@ -103,7 +114,7 @@ function loadEntymology() {
 
 function loadLights() {
   reset();
-  bridgeworks.contentDir='/BwContent';
+  bridgeworks.contentDir='BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Lights.xml');
 }
@@ -118,65 +129,9 @@ function loadTwoStroke() {
 
 function load2D3D() {
   reset();
-  bridgeworks.contentDir='/BwContent';
+  bridgeworks.contentDir='/BwContent/2Dvs3D/';
   bridgeworks.onLoadModified();
-  bridgeworks.updateScene('2D-vs-3D.xml');
-}
-
-function new3Scape() {
-  reset();
-  bridgeworks.contentDir='/BwContent';
-  bridgeworks.onLoadModified();
-  bridgeworks.updateScene('grid-100.xml');
-}
-
-function reset() {
-
-  g_currSlide = 0;
-  g_isPlaying = 0;
-  g_labelCount = 0;
-  g_numSlides = 0;
-  g_slidesPlayed = 0;
-  g_modelCount = 1;
-  g_motionCount = 1;
-  g_sceneInspector = null;
-  g_objectInspector = null;
-
-  $('#object-panel').empty();
-  $('#animate-panel').empty();
-  $('#slide-list').empty();
-
-  g_selectedModel = null;
-}
-
-function trashModel(name)
-{
-    var c = "\<Remove target='" + name + "'/>";
-    console.log(c);
-    bridgeworks.updateScene(c);
-
-    var panel = document.getElementById("object-panel");
-    var link = document.getElementById("row" + name);
-    panel.removeChild(link);
-}
-
-function trashAnimation(name)
-{
-  var cmd = "\<Remove target='" + name + "'/>";
-  console.log(cmd);
-  bridgeworks.updateScene(cmd);
-
-  var panel = document.getElementById("animate-panel");
-  var link = document.getElementById("row" + name);
-  panel.removeChild(link);
-
-}
-
-<!-- Color Picker Script - ColorCodeHex.COM -->
-function updateInfo(color) {
-  document.getElementById('info-r').value = color.rgb[0];
-  document.getElementById('info-g').value = color.rgb[1];
-  document.getElementById('info-b').value = color.rgb[2];
+  bridgeworks.updateScene('Pyramid.xml');
 }
 
 
@@ -610,86 +565,17 @@ function locate(name){
 
 }
 
-function roam(name) {
-    if (!name) {
-      name = g_selectedModel.name.getValueDirect().join("");
-    }
-    if (name === "Grid") return;
-
-    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='.5' angularSpeed='20'/>";
-    console.log(cmd);
-    bridgeworks.updateScene(cmd);
+function new3Scape() {
+  reset();
+  bridgeworks.contentDir='/BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('grid-100.xml');
 }
 
-function roamFaster(name) {
-    if (!name) {
-      name = g_selectedModel.name.getValueDirect().join("");
-    }
-    if (name === "Grid") return;
-
-    var cmd = "\<Set target='" + name + "_roam' linearSpeed='3'/>";
-    console.log(cmd);
-    bridgeworks.updateScene(cmd);
-}
-
-function toggleMoveable(name) {
-  if (!name) {
-    name = g_selectedModel.name.getValueDirect().join("");
-  }
-  var m = !(g_selectedModel.moveable.getValueDirect());
-
-  var cmd = "\<Set target='" + name + "' moveable='" + m + "'/>";
-  console.log(cmd);
-  bridgeworks.updateScene(cmd);
-}
-
-function stopRoaming(name) {
-    if (!name) {
-      name = g_selectedModel.name.getValueDirect().join("");
-    }
-    if (name === "Grid") return;
-
-    var cmd = "\<Remove target='" + name + "_roam'/>";
-    console.log(cmd);
-    bridgeworks.updateScene(cmd);
-}
-
-function setColorPicker()
-{
-    var g;
-    var r;
-    var b;
-    r = g_selectedModel.color.values[0];
-    g = g_selectedModel.color.values[1];
-    b = g_selectedModel.color.values[2];
-    document.getElementById('myColor').color.fromRGB(r, g, b);
-}
-
-function selectModel(name)
-{
-    var xml = "\<Set target='" + name + "'/>";
-    g_selectedModel = bridgeworks.registry.find(name);
-    console.log(xml);
-    setColorPicker();
-    bridgeworks.updateScene(xml);
-
-    myObject = document.getElementById(name);
-    $('.object').removeClass('current-object');
-    $(myObject).addClass('current-object');
-
-    scaleValues = (g_selectedModel.scale.getValueDirect());
-    x = scaleValues['x'] * 100
-    $('#scales').slider('setValue', x);
-
-    var r = g_selectedModel.rotation.getValueDirect();
-    $("#rotxs").slider("setValue", r.x);
-    $("#rotys").slider("setValue", r.y);
-    $("#rotzs").slider("setValue", r.z);
-}
 function paste()
 {
 
-    if(copiedElement == 2) // if a label
+    if(copiedElement == 2) // if a label ??
     {
         var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
 
@@ -736,7 +622,10 @@ function paste()
         bridgeworks.updateScene(cmd);
     }
     else if(copiedElement == 1) { // if a model
+
+        // this will update g_selectedModel
         load(copiedUrl);
+
         //console.log("Pasting: " + g_selectedModel.name.getValueDirect());
 
         g_selectedModel.scale.setValueDirect(Size, Size, Size);
@@ -750,6 +639,136 @@ function paste()
     }
 }
 
+function reset() {
+
+  g_currSlide = 0;
+  g_isPlaying = 0;
+  g_labelCount = 0;
+  g_numSlides = 0;
+  g_slidesPlayed = 0;
+  g_modelCount = 1;
+  g_motionCount = 1;
+  g_sceneInspector = null;
+  g_objectInspector = null;
+
+  $('#object-panel').empty();
+  $('#animate-panel').empty();
+  $('#slide-list').empty();
+
+  g_selectedModel = null;
+  g_selectedModelName = "";
+}
+
+function roam(name) {
+    if (!name) {
+      name = g_selectedModel.name.getValueDirect().join("");
+    }
+    if (name === "Grid") return;
+
+    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='.5' angularSpeed='20'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+}
+
+function roamFaster(name) {
+    if (!name) {
+      name = g_selectedModel.name.getValueDirect().join("");
+    }
+    if (name === "Grid") return;
+
+    var cmd = "\<Set target='" + name + "_roam' linearSpeed='3'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+}
+
+function stopRoaming(name) {
+    if (!name) {
+      name = g_selectedModel.name.getValueDirect().join("");
+    }
+    if (name === "Grid") return;
+
+    var cmd = "\<Remove target='" + name + "_roam'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+}
+
+function setColorPicker()
+{
+    var g;
+    var r;
+    var b;
+    r = g_selectedModel.color.values[0];
+    g = g_selectedModel.color.values[1];
+    b = g_selectedModel.color.values[2];
+    document.getElementById('myColor').color.fromRGB(r, g, b);
+}
+
+function selectModel(name)
+{
+    var xml = "\<Set target='" + name + "'/>";
+    g_selectedModel = bridgeworks.registry.find(name);
+    console.log(xml);
+    setColorPicker();
+    bridgeworks.updateScene(xml);
+
+    myObject = document.getElementById(name);
+    $('.object').removeClass('current-object');
+    $(myObject).addClass('current-object');
+
+    scaleValues = (g_selectedModel.scale.getValueDirect());
+    x = scaleValues['x'] * 100
+    $('#scales').slider('setValue', x);
+
+    var r = g_selectedModel.rotation.getValueDirect();
+    $("#rotxs").slider("setValue", r.x);
+    $("#rotys").slider("setValue", r.y);
+    $("#rotzs").slider("setValue", r.z);
+}
+
+function toggleMoveable(name) {
+  if (!name) {
+    name = g_selectedModel.name.getValueDirect().join("");
+  }
+  var m = !(g_selectedModel.moveable.getValueDirect());
+
+  var cmd = "\<Set target='" + name + "' moveable='" + m + "'/>";
+  console.log(cmd);
+  bridgeworks.updateScene(cmd);
+}
+
+function trashModel(name)
+{
+    var c = "\<Remove target='" + name + "'/>";
+    console.log(c);
+    bridgeworks.updateScene(c);
+
+    var panel = document.getElementById("object-panel");
+    var link = document.getElementById("row" + name);
+    panel.removeChild(link);
+}
+
+function trashAnimation(name)
+{
+  var cmd = "\<Remove target='" + name + "'/>";
+  console.log(cmd);
+  bridgeworks.updateScene(cmd);
+
+  var panel = document.getElementById("animate-panel");
+  var link = document.getElementById("row" + name);
+  panel.removeChild(link);
+
+}
+
+<!-- Color Picker Script - ColorCodeHex.COM -->
+function updateInfo(color) {
+  document.getElementById('info-r').value = color.rgb[0];
+  document.getElementById('info-g').value = color.rgb[1];
+  document.getElementById('info-b').value = color.rgb[2];
+}
+
+
+
+
 function show(name)
 {
     var xml = "\<Locate target='" + name + "'/>";
@@ -759,15 +778,7 @@ function show(name)
 //Apply Color function takes the selected model and sets its color to whatever the color is
 //in the color patch
 
-function applyColor()
-{
-    var name = g_selectedModel.name.getValueDirect().join("");
-    var b = $('#info-b').val();
-    var g = $('#info-g').val();
-    var r = $('#info-r').val();
-    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '"+b+"'/>" +"\</Set>";
-    bridgeworks.updateScene(cmd);
-}
+
 
 function remoteColor(name)
 {

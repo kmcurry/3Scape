@@ -34,7 +34,6 @@ function handleEvent(e)
         }
           break;
       case "click": {
-          //Dishing out the event client x and y cordinates of the mouse for testing purposes
           window.clearInterval(zoomUpdate);
           if (g_selectedModel) g_selectedModel.getAttribute("highlight").setValueDirect(false);
           g_selectedModel = bridgeworks.selector.selections.models[0];
@@ -56,23 +55,21 @@ function handleEvent(e)
               scaleValues = (g_selectedModel.scale.getValueDirect());
               x = scaleValues['x'] * 100
               $('#scales').slider('setValue', x);
-
-              // if the selected model is not moveable switch modes between camera and objects
-              if (g_selectedModel.moveable.getValueDirect() == false) {
-                g_sceneInspector.enabled.setValueDirect(true);
-                g_objectInspector.enabled.setValueDirect(false);
-              } else {
-                g_sceneInspector.enabled.setValueDirect(false);
-                g_objectInspector.enabled.setValueDirect(true);
-              }
-
-
           }
           else {
             // this is so confusing
               selectedThing = bridgeworks.selector.selectedName.getValueDirect().join("");
               selectedId = bridgeworks.selector.getAttribute("Selected").id;
               selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
+          }
+
+          // if the selected model is not moveable switch modes between camera and objects
+          if (!g_selectedModel || g_selectedModel.moveable.getValueDirect() == false) {
+            g_sceneInspector.enabled.setValueDirect(true);
+            g_objectInspector.enabled.setValueDirect(false);
+          } else {
+            g_sceneInspector.enabled.setValueDirect(false);
+            g_objectInspector.enabled.setValueDirect(true);
           }
 
           capture = false;
