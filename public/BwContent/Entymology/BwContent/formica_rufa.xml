@@ -14,12 +14,11 @@
             <GlobalIllumination name="AmbientLight">
                 <ambient r="0.15" g="0.15" b="0.15"/>
             </GlobalIllumination>
-            <PointLight name="Light" range="1" parent="Camera">
-                <position x="2.11191" y="1.944122" z=".0994"/>
-                <rotation x="-0.635668" y="-3.56437" z="2.06735"/>
-                <ambient r="0.05" g="0.05" b="0.05"/>
-                <diffuse r="1" g="1" b="1"/>
-                <specular r="1" g="1" b="1"/>
+            <PointLight name="Light" range="5">
+                <position x="1.9336" y="10" z="2.36242"/>
+                <ambient r=".8" g=".8" b=".8"/>
+                <diffuse r=".5" g=".5" b=".5"/>
+                <specular r=".5" g=".5" b=".5"/>
             </PointLight>
         </Group>
         <Group name="Models">
@@ -27,7 +26,7 @@
             <Model name="formica_rufa_shadow" parent="formica_rufa" url="objects/formica_rufa_shadow.lwo" selectable="false" moveable="false"/>
         </Group>
     </Isolator>
-    <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
+    <RenderDirective name="RenderDirective" backgroundImageFilename="../../images/sky.jpg"/>
     <Animations>
         <KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light"/>
         <KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera"/>
