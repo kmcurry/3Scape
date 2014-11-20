@@ -447,6 +447,7 @@ function loadModel(url)
     //console.debug(xstr);
     bridgeworks.updateScene(xstr);
 
+    // set this here now so that controllers work on the loaded model
     g_selectedModel = bridgeworks.registry.find(name);
     g_selectedModelName = name;
 

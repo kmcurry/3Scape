@@ -34,7 +34,9 @@ function handleEvent(e)
         }
           break;
       case "click": {
+
           window.clearInterval(zoomUpdate);
+
           if (g_selectedModel) g_selectedModel.getAttribute("highlight").setValueDirect(false);
           g_selectedModel = bridgeworks.selector.selections.models[0];
           if(g_selectedModel) {
@@ -57,10 +59,15 @@ function handleEvent(e)
               $('#scales').slider('setValue', x);
           }
           else {
+
+              console.log("NO MODEL SELECTED");
+              g_selectedModel = null;
             // this is so confusing
               selectedThing = bridgeworks.selector.selectedName.getValueDirect().join("");
-              selectedId = bridgeworks.selector.getAttribute("Selected").id;
-              selectedText = bridgeworks.selector.getAttribute("Selected").text.getValueDirect().join("");
+              if (bridgeworks.selector.selected) {
+                selectedId = bridgeworks.selector.selected.id;
+                selectedText = bridgeworks.selector.selected.text.getValueDirect().join("");
+              }
           }
 
           // if the selected model is not moveable switch modes between camera and objects

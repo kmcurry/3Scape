@@ -12,10 +12,10 @@
         </Selector>
         <Group name="Lights">
             <GlobalIllumination name="AmbientLight">
-                <ambient r="0.25" g="0.25" b="0.25"/>
+                <ambient r="0.15" g="0.15" b="0.15"/>
             </GlobalIllumination>
-            <PointLight name="Light" range="3.40282e+038" parent="Camera">
-                <position x="2.11191" y="0.944122" z="-13.0994"/>
+            <PointLight name="Light" range="1" parent="Camera">
+                <position x="2.11191" y="1.944122" z=".0994"/>
                 <rotation x="-0.635668" y="-3.56437" z="2.06735"/>
                 <ambient r="0.05" g="0.05" b="0.05"/>
                 <diffuse r="1" g="1" b="1"/>
@@ -24,7 +24,7 @@
         </Group>
         <Group name="Models">
             <Model name="formica_rufa" url="objects/formica_rufa.lwo"/>
-            <Model name="formica_rufa_shadow" url="objects/formica_rufa_shadow.lwo"/>
+            <Model name="formica_rufa_shadow" parent="formica_rufa" url="objects/formica_rufa_shadow.lwo" selectable="false" moveable="false"/>
         </Group>
     </Isolator>
     <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
@@ -35,4 +35,5 @@
         <KeyframeInterpolator name="formica_rufa_shadowMotion" url="motions/formica_rufa_shadow.mot" target="formica_rufa_shadow"/>
     </Animations>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+    <Set target="Selector" computePivotDistance="true"/>
 </Scene>
