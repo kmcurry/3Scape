@@ -18,7 +18,7 @@
   <GlobalIllumination name="AmbientLight">
     <ambient r="0.341765" g="0.311569" b="0.292353"/>
   </GlobalIllumination>
-  <PointLight name="PointLight1" range="3.40282">
+  <PointLight name="PointLight1">
     <position x="-186.701" y="66052" z="-14287.5"/>
     <rotation x="88.2" y="0.5" z="0"/>
     <ambient r="0.0488236" g="0.0445098" b="0.0417647"/>

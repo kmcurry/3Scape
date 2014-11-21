@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <Update>
-
     <Set target="Pyramid1" show="false"></Set>
     <Set target="Pyramid2" show="false"></Set>
     <Set target="Pyramid3" show="false"></Set>
