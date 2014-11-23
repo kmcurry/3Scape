@@ -41,22 +41,30 @@ function handleEvent(e)
           g_selectedModel = bridgeworks.selector.selections.models[0];
           if(g_selectedModel) {
 
-              g_selectedModel.getAttribute("highlight").setValueDirect(true);
-
               g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
+
               console.log(g_selectedModelName);
-              selectedThing = null; // ??? - KMC
+
+              if (g_selectedModelName != 'Grid') {
+
+                console.log(g_selectedModelName);
+
+                g_selectedModel.getAttribute("highlight").setValueDirect(true);
 
 
-              setColorPicker();
+                selectedThing = null; // ??? - KMC
 
-              myObject = document.getElementById(g_selectedModelName);
-              $('.object').removeClass('current-object');
-              $(myObject).addClass('current-object');
 
-              scaleValues = (g_selectedModel.scale.getValueDirect());
-              x = scaleValues['x'] * 100
-              $('#scales').slider('setValue', x);
+                setColorPicker();
+
+                myObject = document.getElementById(g_selectedModelName);
+                $('.object').removeClass('current-object');
+                $(myObject).addClass('current-object');
+
+                scaleValues = (g_selectedModel.scale.getValueDirect());
+                x = scaleValues['x'] * 100
+                $('#scales').slider('setValue', x);
+              }
           }
           else {
 
