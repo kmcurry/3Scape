@@ -97,6 +97,20 @@ function handleFileSelect(evt) {
     }
 }
 
+function load2D3D() {
+  reset();
+  bridgeworks.contentDir='/BwContent/2Dvs3D/';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('Pyramid.xml');
+}
+
+function loadBrakes() {
+  reset();
+  bridgeworks.contentDir='BwContent/Motorcycle';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('BrakeAssemblyLWS.xml');
+}
+
 function loadEgypt() {
   reset();
   bridgeworks.contentDir='BwContent/Egypt';
@@ -127,14 +141,6 @@ function loadTwoStroke() {
   bridgeworks.updateScene('Stihl.xml');
   loadSlides(1);
 }
-
-function load2D3D() {
-  reset();
-  bridgeworks.contentDir='/BwContent/2Dvs3D/';
-  bridgeworks.onLoadModified();
-  bridgeworks.updateScene('Pyramid.xml');
-}
-
 
 var loaded = 0;
 function listLibrary()
@@ -325,6 +331,7 @@ function loadModel(url)
 
     var objectPanel = document.getElementById("object-panel");
     var row = document.createElement('div');
+    row.setAttribute("class", "row");
     row.setAttribute("id", "row" + name);
     //row.setAttribute("class", "row" + name);
     var nameColumn = document.createElement('div');
