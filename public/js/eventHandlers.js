@@ -49,7 +49,9 @@ function handleEvent(e)
 
                 console.log(g_selectedModelName);
 
-                g_selectedModel.getAttribute("highlight").setValueDirect(true);
+                if (g_selectedModel.moveable.getValueDirect()) {
+                  g_selectedModel.getAttribute("highlight").setValueDirect(true);
+                }
 
 
                 selectedThing = null; // ??? - KMC

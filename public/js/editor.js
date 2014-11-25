@@ -41,6 +41,7 @@ function applyColor()
 function copy()
 {
     if (g_selectedModel) {
+
         copiedUrl = g_selectedModel.url.getValueDirect().join("");
         R = g_selectedModel.color.values[0];
         G = g_selectedModel.color.values[1];
@@ -638,8 +639,12 @@ function paste()
     }
     else if(copiedElement == 1) { // if a model
 
+        if (g_selectedModel) g_selectedModel.getAttribute("highlight").setValueDirect(false);
+
         // this will update g_selectedModel
         load(copiedUrl);
+
+        g_selectedModel.getAttribute("highlight").setValueDirect(true);
 
         //console.log("Pasting: " + g_selectedModel.name.getValueDirect());
 
@@ -749,6 +754,8 @@ function toggleMoveable(name) {
   var cmd = "\<Set target='" + name + "' moveable='" + m + "'/>";
   console.log(cmd);
   bridgeworks.updateScene(cmd);
+
+  g_selectedModel.getAttribute("highlight").setValueDirect(m);
 }
 
 function trashModel(name)
