@@ -337,11 +337,17 @@ function loadModel(url)
     var nameColumn = document.createElement('div');
     // var colorColumn = document.createElement('div');
     var moveColumn = document.createElement('div');
+    moveColumn.setAttribute("style", "padding:0px;");
     var findColumn = document.createElement('div');
+    findColumn.setAttribute("style", "padding:0px;");
     var trashColumn = document.createElement('div');
+    trashColumn.setAttribute("style", "padding:0px;");
     var playColumn = document.createElement('div');
+    playColumn.setAttribute("style", "padding:0px;");
     var ffColumn = document.createElement('div');
+    ffColumn.setAttribute("style", "padding:0px;");
     var stopColumn = document.createElement('div');
+    stopColumn.setAttribute("style", "padding:0px;");
 
     var a = document.createElement('a');
     a.innerHTML = name.substring(3);
