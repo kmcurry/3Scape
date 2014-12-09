@@ -340,12 +340,12 @@ function hexStrToULong(string)
     return value;
 }
 
-function Color(r, g, b, a)
+function Color()
 {
-    this.r = r || 0;
-    this.g = g || 0;
-    this.b = b || 0;
-    this.a = a || 0;
+    this.r = 0;
+    this.g = 0;
+    this.b = 0;
+    this.a = 0;
 }
 
 Color.prototype.v = function()
@@ -13859,16 +13859,6 @@ Node.prototype.isChildModified = function()
 
     return false;
 }
-
-Node.prototype.onRemove = function()
-{
-    // recurse on children
-    for (var i=0; i < this.children.length; i++)
-    {
-        this.children[i].onRemove();
-    }
-}
-
 SGNode.prototype = new Node();
 SGNode.prototype.constructor = SGNode;
 
@@ -15477,15 +15467,6 @@ Light.prototype.setLightEnabled = function()
     this.graphMgr.renderContext.enableLight(this.lightIndex, this.enabled.getValueDirect() ? 1 : 0);
 }
 
-Light.prototype.onRemove = function()
-{
-    // disable light
-    this.graphMgr.renderContext.enableLight(this.lightIndex, 0);
-    
-    // call base-class implementation
-    ParentableMotionElement.prototype.onRemove.call(this);
-}
-
 function Light_AmbientModifiedCB(attribute, container)
 {
     container.updateAmbient = true;
@@ -15707,16 +15688,6 @@ GlobalIllumination.prototype.apply = function(directive, params, visitChildren)
 GlobalIllumination.prototype.applyGlobalIllumination = function()
 {
     this.graphMgr.renderContext.setGlobalIllumination(this.ambient.getValueDirect());
-}
-
-GlobalIllumination.prototype.onRemove = function()
-{
-    // disable global illumination (set to black)
-    var black = new Color(0, 0, 0, 0);
-    this.graphMgr.renderContext.setGlobalIllumination(black);
-    
-    // call base-class implementation
-    SGNode.prototype.onRemove.call(this);    
 }
 
 function GlobalIllumination_AmbientModifiedCB(attribute, container)
@@ -25432,9 +25403,6 @@ RemoveCommand.prototype.execute = function()
             }
 
             this.removeChildren(this.targetAttribute);
-            
-            // invoke onRemove
-            this.targetAttribute.onRemove();
         }
 
         // remove from registry
@@ -31164,7 +31132,6 @@ LWSceneBuilder.prototype.allocateSceneElement = function(token, params)
                 kfi.name.setValueDirect("Dissolve");
                 
                 this.initializeKeyframeInterpolator(kfi, 1);
-                this.attachDissolveInterpolator(kfi, this.models[this.models.length-1]);
                 
                 this.evaluators.push(kfi);
                 this.evaluatorsGroup.addChild(kfi);

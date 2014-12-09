@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?bw onLoad="initialize"?>
-<?bwinclude url="DefaultPreferences.xml"?>
+<?bwinclude url="DefaultPreferencesWalk.xml"?>
 <Scene>
     <Isolator name="Root">
         <Selector name="Cameras">
@@ -49,8 +49,63 @@
         </Group>
         <Group name="Conway">
         </Group>
-       <!-- <Label text="Working??" parent="Cube"></Label> -->
     </Isolator>
     <RenderDirective name="RenderDirective" highlightType="2" backgroundImageFilename="images/Sky2.jpg"/>
-    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+    <ConnectAttributes sourceContainer="Camera" targetContainer="PerspectiveProjector" persist="false">
+        <sourceAttribute>position</sourceAttribute>
+        <targetAttribute>position</targetAttribute>
+        <sourceAttribute>rotation</sourceAttribute>
+        <targetAttribute>rotation</targetAttribute>
+    </ConnectAttributes>
+    <ConnectOutputs targetContainer="Camera" sourceEvaluator="SceneInspector" connectionType="sceneInspection"/>
+    <ConnectAttributes targetContainer="Camera" sourceContainer="WalkSimulator" connectionType="walkSimulation"/>
+    <Set target="WalkSimulator" evaluate="true">
+      <linearSensitivity x="0.005" y="0.005" z="0.005"/>
+      <angularSensitivity>1</angularSensitivity>
+    </Set>
+    <Set target="SceneInspector" evaluate="false"/>
+    <Set name="Walk_Forward" event="VK_D.Down" numResponses="-1" undoable="false" target="Camera">
+      <linearVelocity_affectPosition_Y>false</linearVelocity_affectPosition_Y>
+      <panVelocity x="0" y="0" z="0.5"/>
+    </Set>
+    <Set name="Walk_Back" event="VK_D.Up" numResponses="-1" undoable="false" target="Camera">
+      <linearVelocity_affectPosition_Y>true</linearVelocity_affectPosition_Y>
+      <panVelocity x="0" y="0" z="0"/>
+    </Set>
+    <Set name="Walk_Backward" event="VK_E.Down" numResponses="-1" undoable="false" target="Camera">
+    	<linearVelocity_affectPosition_Y>false</linearVelocity_affectPosition_Y>
+      <panVelocity x="0" y="0" z="-0.5"/>
+    </Set>
+    <Set name="Walk_Backward_Stop" event="VK_E.Up" numResponses="-1" undoable="false" target="Camera">
+    	<linearVelocity_affectPosition_Y>true</linearVelocity_affectPosition_Y>
+      <panVelocity x="0" y="0" z="0"/>
+    </Set>
+    <Set name="Walk_StrafeRight" event="VK_F.Down" numResponses="-1" undoable="false" target="Camera">
+    	<linearVelocity_affectPosition_Y>false</linearVelocity_affectPosition_Y>
+      <panVelocity x="0.5" y="0" z="0.5"/>
+    </Set>
+    <Set name="Walk_StrafeRight_Stop" event="VK_F.Up" numResponses="-1" undoable="false" target="Camera">
+    	<linearVelocity_affectPosition_Y>true</linearVelocity_affectPosition_Y>
+      <panVelocity x="0" y="0" z="0"/>
+    </Set>
+    <Set name="Walk_StrafeLeft" event="VK_S.Down" numResponses="-1" undoable="false" target="Camera">
+    	<linearVelocity_affectPosition_Y>false</linearVelocity_affectPosition_Y>
+      <panVelocity x="-0.5" y="0" z="0.5"/>
+    </Set>
+    <Set name="Walk_StrafeLeft_Stop" event="VK_S.Up" numResponses="-1" undoable="false" target="Camera">
+    	<linearVelocity_affectPosition_Y>true</linearVelocity_affectPosition_Y>
+      <panVelocity x="0" y="0" z="0"/>
+    </Set>
+    <Set name="Walk_TurnRight" event="VK_A.Down" numResponses="-1" undoable="false" target="Camera">
+      <angularVelocity x="0" y="-20" z="0"/>
+    </Set>
+    <Set name="Walk_TurnRight_Stop" event="VK_A.Up" numResponses="-1" undoable="false" target="Camera">
+      <angularVelocity x="0" y="0" z="0"/>
+    </Set>
+    <Set name="Walk_TurnLeft" event="VK_G.Down" numResponses="-1" undoable="false" target="Camera">
+        <angularVelocity x="0" y="20" z="0"/>
+    </Set>
+    <Set name="Walk_TurnLeft_Stop" event="VK_G.Up" numResponses="-1" undoable="false" target="Camera">
+      <angularVelocity x="0" y="0" z="0"/>
+    </Set>
 </Scene>

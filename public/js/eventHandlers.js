@@ -5,7 +5,7 @@ function handleDocMove(event)
     if (capture) bridgeworks.handleEvent(event);
 }
 
-function handleEvent(e)
+function handleMouse(e)
 {
     if (!bridgeworks) return;
 
@@ -33,13 +33,16 @@ function handleEvent(e)
 
         }
           break;
-      case "click": {
+        case "click": {
 
           window.clearInterval(zoomUpdate);
 
-          if (g_selectedModel) g_selectedModel.getAttribute("highlight").setValueDirect(false);
+          if (g_selectedModel) {
+            g_selectedModel.getAttribute("highlight").setValueDirect(false);
+          }
           g_selectedModel = bridgeworks.selector.selections.models[0];
-          if(g_selectedModel) {
+
+          if (g_selectedModel) {
 
               g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
 
@@ -123,6 +126,9 @@ function handleEvent(e)
 
 function handleKey(e)
 {
+
+  bridgeworks.handleEvent(e);
+
   if (!g_sceneInspector) {
     g_sceneInspector = bridgeworks.registry.find("SceneInspector");
   }
@@ -135,24 +141,6 @@ function handleKey(e)
                   e.preventDefault();
                   copy();
               }      // c
-          }
-              break;
-          case 'D'.charCodeAt(0):
-          {
-              g_sceneInspector.panDelta.setValueDirect(0,0,10);
-          }
-              break;
-          case 'E'.charCodeAt(0):
-          {
-              g_sceneInspector.panDelta.setValueDirect(0,0,-10);
-          }
-          case 'S'.charCodeAt(0):
-          {
-              g_sceneInspector.panDelta.setValueDirect(10,0,0);
-          }
-          case 'F'.charCodeAt(0):
-          {
-              g_sceneInspector.panDelta.setValueDirect(-10,0,0);
           }
               break;
           case 32: // Space bar

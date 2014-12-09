@@ -550,13 +550,6 @@ function loadScape(scape) {
   }
 }
 
-function locate() //Where is this function called?
-{
-    var name = $('#objectname').val();
-    var xml = "\<Locate target='" + name + "'/>";
-    console.log(xml);
-    bridgeworks.updateScene(xml);
-}
 
 //Locates the target given the name and also sets current object to be the object located
 function locate(name){
@@ -677,6 +670,10 @@ function reset() {
 
   g_selectedModel = null;
   g_selectedModelName = "";
+
+  // serializedScene is a global shared by Bridgeworks!
+  // Need to fix this.
+  serializedScene = "";
 }
 
 function roam(name) {
