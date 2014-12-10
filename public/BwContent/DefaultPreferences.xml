@@ -38,19 +38,14 @@
 		<sourceAttribute>deltaY</sourceAttribute>
 		<targetAttribute>invertedPanDelta:1</targetAttribute>
 	</ConnectAttributes>
-	<!--<ConnectAttributes name="MButton2.Scene" event="MButton2.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
-	<sourceAttribute>deltaX</sourceAttribute>
-		<targetAttribute>translationDelta:0</targetAttribute>
-		<sourceAttribute>deltaY</sourceAttribute>
-		<targetAttribute>translationDelta:2</targetAttribute>
-	</ConnectAttributes>-->
+
 	<!--MOUSE PAN Z-->
 	<ConnectAttributes name="MButton3.Scene" event="MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
 		<sourceAttribute>deltaY</sourceAttribute>
 		<targetAttribute>panDelta:2</targetAttribute>
 	</ConnectAttributes>
 	<!-- OBJECT INSPECTION -->
-	<ConnectAttributes name="MButton2.Object" event="MButton1+MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
+	<ConnectAttributes name="Object.Rotate" event="VK_SHIFT+MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
 		<sourceAttribute>deviceY</sourceAttribute>
 		<targetAttribute>rotationNow:0</targetAttribute>
 		<sourceAttribute>deviceX</sourceAttribute>
