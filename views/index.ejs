@@ -12,6 +12,7 @@
     <script type="text/javascript" src="./js/conway.js"></script>
 
     <!-- jquery stuff -->
+    <!-- Install and use local files - KMC -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -122,7 +123,7 @@
           function saveScene()
           {
               serializedScene = "";
-              
+
               var command = "\<Serialize target='Root'/>";
               bridgeworks.updateScene(command);
 
@@ -921,33 +922,31 @@
                     // browser supports WebGL
                     document.location.href = "http://get.webgl.org/";
                 } else {
-                    var canvas = document.getElementById("Canvas");
-                    var ctx = canvas.getContext("webgl");
-                    if (!ctx) {
-                        // browser supports WebGL but initialization failed.
-                        window.location.href = "nowebgl";
-                    }
+                  bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"), true);
+
+                  g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+                  g_objectInspector =bridgeworks.registry.find("ObjectInspector");
+                  var graphMgr = bridgeworks.registry.find("GraphMgr");
+                  g_labelCount = graphMgr.labelIndex;
+
+
+
+                  // this loads a named 3Scape passed in with the URL
+                  // ex., http://3Scape.me/egypt
+                  <% if (typeof scape != 'undefined') { %>
+                    loadScape(<%- scape %>);
+                  <% } %>
+
+                  //cubify();
+
+
+
+                  document.getElementById('saveScene').onclick = function(){
+                      saveScene();
+                  };
+
+                  listLibrary();
                 }
-                bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"), true);
-
-                // this loads a named 3Scape passed in with the URL
-                // ex., http://3Scape.me/egypt
-                <% if (typeof scape != 'undefined') { %>
-                  loadScape(<%- scape %>);
-                <% } %>
-
-                //cubify();
-
-                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
-                g_objectInspector =bridgeworks.registry.find("ObjectInspector");
-                var graphMgr = bridgeworks.registry.find("GraphMgr");
-                g_labelCount = graphMgr.labelIndex;
-
-                document.getElementById('saveScene').onclick = function(){
-                    saveScene();
-                };
-
-                listLibrary();
 
                 $('html').bind('keypress', function(e)
                 {
@@ -1136,17 +1135,7 @@
       </script>
 
 <script type="text/javascript">
-  /*
-  var toggleMode = function(){
-    if($('.modeButton:first').hasClass("fa-video-camera")) {
-      $('.toggleController').removeClass('btn-info').addClass('btn-danger');
-      $('.toggleGlyph').removeClass('fa-video-camera').addClass('icon-move');
-    }else {
-      $('.toggleController').removeClass('btn-danger').addClass('btn-info');
-      $('.toggleGlyph').removeClass('icon-move').addClass('fa-video-camera');
-    }
-  };
-  */
+
   var toggleMap = function(){
     $('#map-controls').fadeToggle();
     $('#object-controls').fadeToggle();
@@ -1159,9 +1148,11 @@
 </script>
 
       <!-- Initialize Angular -->
+      <!-- Use local installation - KMC -->
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
       <script src="core.js"></script>
 
-      <a href="https://plus.google.com/112246128134687979668" rel="publisher">Google+</a>
+      <!-- Already verified
+      <a href="https://plus.google.com/112246128134687979668" rel="publisher">Google+</a> -->
   </body>
 </html>
