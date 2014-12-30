@@ -14,6 +14,10 @@ module.exports = function(app, passport) {
           res.render('index');
     });
 
+    app.get('/classroom', function (req, res) {
+      res.render('classroom.ejs')
+    });
+
     // =====================================
     // PRIVACY ========
     // =====================================
