@@ -78,6 +78,18 @@ function cut()
     }
 }
 
+function exportSelected() {
+
+  if (g_selectedModel) {
+
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var c = "\<Export target='" + name + "' url='" + name + ".stl'/>"
+    bridgeworks.updateScene(c);
+
+  }
+
+}
+
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
 
