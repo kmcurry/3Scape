@@ -143,6 +143,11 @@ function handleKey(e)
               }      // c
           }
               break;
+          case 'P'.charCodeAt(0):
+            {
+              exportSelected();
+            }
+            break;
           case 32: // Space bar
             {
               addSlide();
