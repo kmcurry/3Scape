@@ -23483,7 +23483,16 @@ function ObjectMotionDesc()
 	this.scalarVelocity = new Vector3D(0, 0, 0);
 	this.duration = 0; // seconds
 	this.stopOnCollision = true;
-	this.reverseOnCollision = false;
+}
+
+ObjectMotionDesc.prototype.assign = function(rhs)
+{
+    this.validMembersMask = rhs.validMembersMask;
+    this.panVelocity = rhs.panVelocity;
+    this.linearVelocity = rhs.linearVelocity;
+    this.angularVelocity = rhs.angularVelocity;
+    this.scalarVelocity = rhs.scalarVelocity;
+    this.duration = rhs.duration;   
 }
 
 ObjectMover.prototype = new Evaluator();
@@ -23497,7 +23506,9 @@ function ObjectMover()
 
     this.targetObject = null;
     this.motionQueue = new Queue();
+    this.activeMotion = null;
     this.activeDuration = 0;
+    this.lastCollisionDetected = false;
 
     this.target = new StringAttr("");
     this.timeIncrement = new NumberAttr(0);
@@ -23629,10 +23640,9 @@ function ObjectMover_TargetModifiedCB(attribute, container)
 function ObjectMover_TargetCollisionDetectedModifiedCB(attribute, container)
 {
     var collisionDetected = attribute.getValueDirect();
-    if (collisionDetected)
-    {
-        container.collisionDetected(attribute.getContainer().getAttribute("collisionList"));
-    }
+    var collisionList = attribute.getContainer().getAttribute("collisionList");
+    container.collisionDetected(collisionList);
+    container.lastCollisionDetected = collisionList.Size() > 0 ? true : false;
 }
 
 var ANIMALMOVER_MAX_QUEUE_LENGTH	= 2;
@@ -23645,17 +23655,19 @@ function AnimalMover()
     ObjectMover.call(this);
     this.className = "AnimalMover";
     this.attrType = eAttrType.AnimalMover;
+    
+    this.linearDirection = null;
 }
 
 AnimalMover.prototype.evaluate = function()
 {
-	if (this.motionQueue.length() < ANIMALMOVER_MAX_QUEUE_LENGTH)
+	if (this.motionQueue.length() == 0)
 	{
-		var motion = new ObjectMotionDesc();
-		motion.duration = FLT_MAX;
-		motion.panVelocity = new Vector3D(0, 0, this.linearSpeed.getValueDirect());
+	    var walk = new ObjectMotionDesc();
+		walk.duration = FLT_MAX;
+		walk.panVelocity = new Vector3D(0, 0, this.linearSpeed.getValueDirect());
 		
-		this.motionQueue.push(motion);
+		this.motionQueue.push(walk);
 	}
 	
 	// call base-class implementation
@@ -23664,20 +23676,44 @@ AnimalMover.prototype.evaluate = function()
 
 AnimalMover.prototype.collisionDetected = function(collisionList)
 {   
-    this.activeMotion = null;
-    this.motionQueue.clear();
-    
-    var turn = new ObjectMotionDesc();
-    turn.duration = 1 / this.angularSpeed.getValueDirect();
-    turn.angularVelocity = new Vector3D(0, this.angularSpeed.getValueDirect(), 0);
-        
-    this.motionQueue.push(turn);
-      
-    var walk = new ObjectMotionDesc();
-    walk.duration = 1 / this.linearSpeed.getValueDirect();
-    walk.panVelocity = new Vector3D(0, 0, this.linearSpeed.getValueDirect());
-        
-    this.motionQueue.push(walk);
+    if (collisionList.Size() > 0) // collision(s) occurred
+    {
+       this.motionQueue.clear();
+       this.activeMotion = null;
+
+       // determine vector to reverse collision by subtracting collider position(s) from this position
+       var thisPos = this.targetObject.getAttribute("sectorPosition").getValueDirect();
+       var linearDirection = new Vector3D(0, 0, 0);
+       for (var i=0; i < collisionList.Size(); i++)
+       {
+           var colliderPos = collisionList.getAt(i).getAttribute("sectorPosition").getValueDirect();
+           var deltaPos = new Vector3D(thisPos.x - colliderPos.x, /*thisPos.y - colliderPos.y*/0, thisPos.z - colliderPos.z);
+           linearDirection.addVector(deltaPos);
+       }
+       linearDirection.normalize();
+       
+       // scale by linear speed   
+       linearDirection.multiplyScalar(this.linearSpeed.getValueDirect());
+       this.linearDirection = linearDirection;
+       
+       // push linear velocity
+       var linear = new ObjectMotionDesc();
+       linear.linearVelocity = linearDirection;
+       linear.duration = FLT_MAX;
+       this.motionQueue.push(linear);
+       
+       // turn so this will travel in direction of this vector
+       var directionVectors = this.targetObject.getDirectionVectors();
+       var angleBetween = toDegrees(Math.acos(cosineAngleBetween(directionVectors.forward, this.linearDirection)));
+       if (angleBetween > 0)
+       {
+           var rotation = this.targetObject.getAttribute("rotation").getValueDirect();
+           this.targetObject.getAttribute("rotation").setValueDirect(rotation.x, 360 - angleBetween + rotation.y, rotation.z);
+       }
+    }
+    else // no collision(s)
+    {
+    }
 }
 
 WalkSimulator.prototype = new SceneInspector();
