@@ -45,7 +45,7 @@
 		<targetAttribute>panDelta:2</targetAttribute>
 	</ConnectAttributes>
 	<!-- OBJECT INSPECTION -->
-	<ConnectAttributes name="Object.Rotate" event="VK_SHIFT+MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
+	<ConnectAttributes name="Object.Rotate" event="MButton1.Down+VK_SHIFT" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
 		<sourceAttribute>deviceY</sourceAttribute>
 		<targetAttribute>rotationNow:0</targetAttribute>
 		<sourceAttribute>deviceX</sourceAttribute>

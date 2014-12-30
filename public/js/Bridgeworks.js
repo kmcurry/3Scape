@@ -107,6 +107,13 @@ function getObjectClassName(obj) {
         if (arr && arr.length == 2) {
             return arr[1];
         }
+        
+        // match [method name]
+        arr = obj.constructor.toString().split(" ");
+        
+        if (arr && arr.length == 2) {
+            return arr[1].substring(0, arr[1].length-1);
+        }
     }
 
     return undefined;
@@ -340,12 +347,12 @@ function hexStrToULong(string)
     return value;
 }
 
-function Color()
+function Color(r, g, b, a)
 {
-    this.r = 0;
-    this.g = 0;
-    this.b = 0;
-    this.a = 0;
+    this.r = r || 0;
+    this.g = g || 0;
+    this.b = b || 0;
+    this.a = a || 0;
 }
 
 Color.prototype.v = function()
@@ -4813,6 +4820,12 @@ function lineSegmentTriangleIntersection(a, b, v0, v1, v2)
     
     return { result: false };
 }
+
+function planeProject(v, plane)
+{
+    return crossProduct(plane.normal, crossProduct(v, plane.normal));
+}
+
 var eAttrType = {
     Unknown                     :-1,
     
@@ -4891,6 +4904,7 @@ var eAttrType = {
     Cube                        :1032,
     Bone                        :1033,
     Selector                    :1034,
+    ScreenRect                  :1035,
     
     Evaluator                   :1100,
     SceneInspector              :1101,
@@ -4901,7 +4915,8 @@ var eAttrType = {
     ObjectInspector             :1106,
     MultiTargetObserver			:1107,
     ObjectMover	 				:1108,
-    AnimalMover					:1109,   
+    AnimalMover					:1109, 
+    WalkSimulator               :1110,  
     Evaluator_End               :1199, // all evaluator types must be given a type between Evaluator and Evaluator_End
 
     Node_End                    :1999,
@@ -4931,10 +4946,12 @@ var eAttrType = {
     Stop                        :3012,
     ConnectAttributes           :3013,
     DisconnectAttributes        :3014,
+    Export                      :3015,
     Command_End                 :3999,
 
     DeviceHandler               :4000,
     MouseHandler                :4001,
+    KeyboardHandler             :4002,
     DeviceHandler_End           :4999,
     
     UserDefined                 :5000
@@ -8273,35 +8290,37 @@ var eRenderContextMethod =
     GetMaxTextureStages						: 19,
     PerspectiveMatrixLH						: 20,
     OrthographicMatrixLH					: 21,
-    SetBlendFactor							: 22,
-    SetDepthFunc                            : 23,
-    SetEnabledLights						: 24,
-    SetFrontMaterial						: 25,
-    SetGlobalIllumination					: 26,
-    SetLight 			                    : 27,
-    SetShadeModel                           : 28,
-    SetStencilFunc                          : 29,
-    SetStencilMask                          : 30,
-    SetStencilOp                            : 31,
-    SetTextureBlendFactor					: 32,
-    SetTextureBlendOp						: 33,
-    SetViewport						        : 34,
-    VB_SetPrimitiveType                     : 35,
-    VB_SetVertices                          : 36,
-    VB_SetNormals                           : 37,
-    VB_SetColors                            : 38,
-    VB_SetUVCoords                          : 39,
-    VB_SetTextureStage                      : 40,
-    VB_Draw                                 : 41,
-    TO_SetImage                             : 42,
-    TO_SetImageData                         : 43,
-    TO_SetVideo                             : 44,
-    SetMatrixMode							: 45,
-    PushMatrix								: 46,
-    PopMatrix								: 47,
-    LoadMatrix								: 48,
-    LeftMultMatrix							: 49,
-    RightMultMatrix							: 50
+    SetBlendColor                           : 22,
+    SetBlendFactor							: 23,
+    SetDepthFunc                            : 24,
+    SetEnabledLights						: 25,
+    SetFrontMaterial						: 26,
+    SetGlobalIllumination					: 27,
+    SetLight 			                    : 28,
+    SetShadeModel                           : 29,
+    SetStencilFunc                          : 30,
+    SetStencilMask                          : 31,
+    SetStencilOp                            : 32,
+    SetTextureBlendFactor					: 33,
+    SetTextureBlendOp						: 34,
+    SetTextureColorMask                     : 35,
+    SetViewport						        : 36,
+    VB_SetPrimitiveType                     : 37,
+    VB_SetVertices                          : 38,
+    VB_SetNormals                           : 39,
+    VB_SetColors                            : 40,
+    VB_SetUVCoords                          : 41,
+    VB_SetTextureStage                      : 42,
+    VB_Draw                                 : 43,
+    TO_SetImage                             : 44,
+    TO_SetImageData                         : 45,
+    TO_SetVideo                             : 46,
+    SetMatrixMode							: 47,
+    PushMatrix								: 48,
+    PopMatrix								: 49,
+    LoadMatrix								: 50,
+    LeftMultMatrix							: 51,
+    RightMultMatrix							: 52
 }
 
 function RenderContextMethodDesc(method, params)
@@ -8477,6 +8496,12 @@ DisplayListObj.prototype.invokeMethod = function(desc)
         }
         break;
         
+        case eRenderContextMethod.SetBlendColor:
+        {
+            this.renderContext.setBlendColor(desc.params[0], desc.params[1], desc.params[2], desc.params[3]);    
+        }
+        break;
+        
         case eRenderContextMethod.SetBlendFactor:
         {
             this.renderContext.setBlendFactor(desc.params[0], desc.params[1]);
@@ -8546,6 +8571,12 @@ DisplayListObj.prototype.invokeMethod = function(desc)
         case eRenderContextMethod.SetTextureBlendOp:
         {
             this.renderContext.setTextureBlendOp(desc.params[0]);    
+        }
+        break;
+        
+        case eRenderContextMethod.SetTextureColorMask:
+        {
+            this.renderContext.setTextureColorMask(desc.params[0], desc.params[1], desc.params[2], desc.params[3]);    
         }
         break;
         
@@ -9890,6 +9921,13 @@ function webglRC(canvas, background)
         return pixels;
     }
     
+    this.setBlendColor = function(r, g, b, a)
+    {
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetBlendColor, [r, g, b, a]);
+        
+        gl.blendColor(r, g, b, a);
+    }
+    
     this.setBlendFactor = function(sfactor, dfactor)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetBlendFactor, [sfactor, dfactor]);
@@ -10022,7 +10060,7 @@ function webglRC(canvas, background)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetGlobalIllumination, [ambient]);
         
-        var values = [ ambient.r, ambient.g, ambient.g, ambient.a ];
+        var values = [ ambient.r, ambient.g, ambient.b, ambient.a ];
 
         gl.uniform4fv(program.globalAmbientLight, new Float32Array(values));
     }
@@ -10233,7 +10271,16 @@ function webglRC(canvas, background)
         
         gl.uniform1i(program.textureBlendOp, op);
     }
-
+    
+    this.setTextureColorMask = function(r, g, b, a)
+    {
+        if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetTextureColorMask, [r, g, b, a]);
+        
+        var values = [ r, g, b, a ];
+        
+        gl.uniform4fv(program.textureColorMask, new Float32Array(values));   
+    }
+    
     this.setViewport = function(x, y, width, height)
     {
         if (this.displayListObj) DL_ADD_METHOD_DESC(this.displayListObj, eRenderContextMethod.SetViewport, [x, y, width, height]);
@@ -10353,7 +10400,12 @@ function getProgram(gl, vShader, fShader)
         program.textureStageEnabled[i] = gl.getUniformLocation(program, "uTextureStageEnabled[" + i + "]");
     }
     program.textureBlendOp = gl.getUniformLocation(program, "uTextureBlendOp");
+    program.textureColorMask = gl.getUniformLocation(program, "uTextureColorMask");
     
+    // TEMP
+    var v = [ 2, 2, 2, 2 ];
+    gl.uniform4fv(program.textureColorMask, new Float32Array(v));
+        
     // enabled
     program.lightingEnabled = gl.getUniformLocation(program, "uLightingEnabled");
     program.texturesEnabled = gl.getUniformLocation(program, "uTexturesEnabled");
@@ -10728,6 +10780,39 @@ function webglTO(rc, gl, program)
         gl.bindTexture(gl.TEXTURE_2D, null);
     }
 
+    //texImage2D(GLenum target, GLint level, GLenum internalformat,
+    //           GLenum format, GLenum type, HTMLCanvasElement canvas)
+    // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, gl.canvas);
+    
+    this.setImageWithCanvas = function(canvas)
+    {
+        // following taken from:
+        // http://www.khronos.org/webgl/wiki/WebGL_and_OpenGL_Differences
+        var canvasPOT = canvas;
+        if (!isPowerOfTwo(canvas.width) || !isPowerOfTwo(canvas.height))
+        {
+            // Scale up the texture to the next highest power of two dimensions.
+            canvasPOT = document.createElement("canvas");
+            canvasPOT.width = nextHighestPowerOfTwo(canvas.width);
+            canvasPOT.height = nextHighestPowerOfTwo(canvas.height);
+            var ctx = canvasPOT.getContext("2d");
+            ctx.drawImage(canvas,
+                0, 0, canvas.width, canvas.height,
+                0, 0, canvasPOT.width, canvasPOT.height);
+        }
+        
+        gl.bindTexture(gl.TEXTURE_2D, this.texture);
+
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvasPOT);
+
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);//LINEAR_MIPMAP_LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);//LINEAR);
+        
+        gl.generateMipmap(gl.TEXTURE_2D);
+        
+        gl.bindTexture(gl.TEXTURE_2D, null);   
+    }   
+                 
     this.setVideo = function(video)
     {
         if (rc.displayListObj) DL_ADD_METHOD_DESC(rc.displayListObj, eRenderContextMethod.TO_SetVideo, [this, video]);
@@ -10970,6 +11055,7 @@ function getShaders(gl, type)
                     "uniform sampler2D uTextureSamplerColor[" + gl_MaxTextureStages + "];",
                     "uniform sampler2D uTextureSamplerAlpha[" + gl_MaxTextureStages + "];",
                     "uniform int uTextureBlendOp;",
+                    "uniform vec4 uTextureColorMask;",
                     "",
                     "varying vec4 vLightingFactor;",
                     "varying vec2 vTextureCoord[" + gl_MaxTextureStages + "];",
@@ -10982,6 +11068,7 @@ function getShaders(gl, type)
                     "   if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 0)",
                     "   {",
                     "       fragmentColor = texture2D(uTextureSamplerColor[0], vec2(vTextureCoord[0].s, vTextureCoord[0].t));",
+                    "       if (fragmentColor.r == uTextureColorMask.r && fragmentColor.g == uTextureColorMask.g && fragmentColor.b == uTextureColorMask.b && fragmentColor.a == uTextureColorMask.a) discard;",
                     "       if (uTextureBlendOp == " + RC_MODULATE + ")",
                     "       {",
                     "           if (fragmentColor.a == 0.0) discard;",
@@ -11125,6 +11212,7 @@ function getShaders(gl, type)
                     "uniform sampler2D uTextureSamplerColor[" + gl_MaxTextureStages + "];",
                     "uniform sampler2D uTextureSamplerAlpha[" + gl_MaxTextureStages + "];",
                     "uniform int uTextureBlendOp;",
+                    "uniform vec4 uTextureColorMask;",
                     "",
                     "varying vec4 vVertexPosition;",
                     "varying vec4 vTransformedNormal;",
@@ -11251,6 +11339,7 @@ function getShaders(gl, type)
                     "   if (uTexturesEnabled == 1 && uTextureStageEnabled[0] == 1 && uTextureStageEnabled[1] == 0)",
                     "   {",
                     "       fragmentColor = texture2D(uTextureSamplerColor[0], vec2(vTextureCoord[0].s, vTextureCoord[0].t));",
+                    "       if (fragmentColor.r == uTextureColorMask.r && fragmentColor.g == uTextureColorMask.g && fragmentColor.b == uTextureColorMask.b && fragmentColor.a == uTextureColorMask.a) discard;",
                     "       if (uTextureBlendOp == " + RC_MODULATE + ")",
                     "       {",
                     "           if (fragmentColor.a == 0.0) discard;",
@@ -13744,6 +13833,9 @@ Node.prototype.update = function(params, visitChildren)
 
 Node.prototype.apply = function(directive, params, visitChildren)
 {
+    // commented this out because if an evaluator (e.g., WalkSimulator)
+    // happens to be the root node of a subtree and is currently disabled, its subtree will not be visited.
+    /*
     var enabled = this.enabled.getValueDirect();
     if (!enabled)
     {
@@ -13752,7 +13844,7 @@ Node.prototype.apply = function(directive, params, visitChildren)
             return;
         }
     }
-
+    */
     switch (directive)
     {
         case "serialize":
@@ -13859,6 +13951,16 @@ Node.prototype.isChildModified = function()
 
     return false;
 }
+
+Node.prototype.onRemove = function()
+{
+    // recurse on children
+    for (var i=0; i < this.children.length; i++)
+    {
+        this.children[i].onRemove();
+    }
+}
+
 SGNode.prototype = new Node();
 SGNode.prototype.constructor = SGNode;
 
@@ -14240,6 +14342,7 @@ function ParentableMotionElement()
     this.sectorWorldPosition = new Vector3DAttr(0, 0, 0);
     this.panVelocity = new Vector3DAttr(0, 0, 0);          // linear velocity along direction vectors in world-units/second
     this.linearVelocity = new Vector3DAttr(0, 0, 0);       // linear velocity in world-units/second
+    this.linearVelocity_affectPosition_Y = new BooleanAttr(true);
     this.angularVelocity = new Vector3DAttr(0, 0, 0);      // angular velocity in degrees/second
     this.scalarVelocity = new Vector3DAttr(0, 0, 0);       // scalar velocity in world-units/second
     this.worldTransform = new Matrix4x4Attr(1, 0, 0, 0,
@@ -14307,6 +14410,7 @@ function ParentableMotionElement()
     this.registerAttribute(this.sectorWorldTransform, "sectorWorldTransform");
     this.registerAttribute(this.panVelocity, "panVelocity");
     this.registerAttribute(this.linearVelocity, "linearVelocity");
+    this.registerAttribute(this.linearVelocity_affectPosition_Y, "linearVelocity_affectPosition_Y");
     this.registerAttribute(this.angularVelocity, "angularVelocity");
     this.registerAttribute(this.scalarVelocity, "scalarVelocity");
     this.registerAttribute(this.parent, "parent");
@@ -14444,16 +14548,22 @@ ParentableMotionElement.prototype.updateVelocityMotion = function(timeIncrement)
 
         // get direction vectors for pan
         var directionVectors = this.getDirectionVectors();
+        
+        // get affect position flags
+        var linearVelocity_affectPosition_Y = this.linearVelocity_affectPosition_Y.getValueDirect();
 
         // update position
         position.x = position.x + (directionVectors.right.x   * panVelocity.x * timeIncrement) +
         						  (directionVectors.up.x 	  * panVelocity.y * timeIncrement) +
         						  (directionVectors.forward.x * panVelocity.z * timeIncrement) + 
         						  (linearVelocity.x * timeIncrement);
+        if (linearVelocity_affectPosition_Y)
+        {
         position.y = position.y + (directionVectors.right.y   * panVelocity.x * timeIncrement) +
         						  (directionVectors.up.y 	  * panVelocity.y * timeIncrement) +
         						  (directionVectors.forward.y * panVelocity.z * timeIncrement) + 
         						  (linearVelocity.y * timeIncrement);
+        }
         position.z = position.z + (directionVectors.right.z   * panVelocity.x * timeIncrement) +
         						  (directionVectors.up.z 	  * panVelocity.y * timeIncrement) +
         						  (directionVectors.forward.z * panVelocity.z * timeIncrement) + 
@@ -15467,6 +15577,15 @@ Light.prototype.setLightEnabled = function()
     this.graphMgr.renderContext.enableLight(this.lightIndex, this.enabled.getValueDirect() ? 1 : 0);
 }
 
+Light.prototype.onRemove = function()
+{
+    // disable light
+    this.graphMgr.renderContext.enableLight(this.lightIndex, 0);
+    
+    // call base-class implementation
+    ParentableMotionElement.prototype.onRemove.call(this);
+}
+
 function Light_AmbientModifiedCB(attribute, container)
 {
     container.updateAmbient = true;
@@ -15688,6 +15807,16 @@ GlobalIllumination.prototype.apply = function(directive, params, visitChildren)
 GlobalIllumination.prototype.applyGlobalIllumination = function()
 {
     this.graphMgr.renderContext.setGlobalIllumination(this.ambient.getValueDirect());
+}
+
+GlobalIllumination.prototype.onRemove = function()
+{
+    // disable global illumination (set to black)
+    var black = new Color(0, 0, 0, 0);
+    this.graphMgr.renderContext.setGlobalIllumination(black);
+    
+    // call base-class implementation
+    SGNode.prototype.onRemove.call(this);    
 }
 
 function GlobalIllumination_AmbientModifiedCB(attribute, container)
@@ -16324,7 +16453,7 @@ function RenderDirective()
     
     this.name.setValueDirect("RenderDirective");
 
-    this.distanceSortAgent = new DistanceSortAgent();
+    this.backgroundImageSet = false;
     
     this.viewport = new ViewportAttr();
     this.backgroundColor = new ColorAttr(1, 1, 1, 1);
@@ -16354,10 +16483,36 @@ function RenderDirective()
     this.timeIncrement.addTarget(this.updateDirective.getAttribute("timeIncrement"));
     this.resetDisplayLists = false;
     
+    this.distanceSortAgent = new DistanceSortAgent();
+    
     this.collideDirective = new CollideDirective();
     
     this.highlightDirective = new HighlightDirective();
     this.highlightType.addTarget(this.highlightDirective.getAttribute("highlightType"));
+    
+    this.backgroundScreen = new Isolator();
+    this.backgroundScreen.isolateTextures.setValueDirect(true);
+    
+    this.backgroundTexture = new MediaTexture();
+    this.backgroundScreen.addChild(this.backgroundTexture);
+    
+    this.backgroundScreenRect = new ScreenRect();
+    this.backgroundScreenRect.setTexture(this.backgroundTexture);
+    this.backgroundScreen.addChild(this.backgroundScreenRect);
+}
+
+RenderDirective.prototype.setRegistry = function(registry)
+{
+    this.distanceSortAgent.setRegistry(registry);
+    this.updateDirective.setRegistry(registry);
+    this.collideDirective.setRegistry(registry);
+    this.highlightDirective.setRegistry(registry);
+    this.backgroundScreen.setRegistry(registry);
+    this.backgroundTexture.setRegistry(registry);
+    this.backgroundScreenRect.setRegistry(registry);
+    
+    // call base-class implementation
+    SGDirective.prototype.setRegistry.call(this, registry);    
 }
 
 RenderDirective.prototype.setGraphMgr = function(graphMgr)
@@ -16366,13 +16521,19 @@ RenderDirective.prototype.setGraphMgr = function(graphMgr)
     this.updateDirective.setGraphMgr(graphMgr);
     this.collideDirective.setGraphMgr(graphMgr);
     this.highlightDirective.setGraphMgr(graphMgr);
+    this.backgroundScreen.setGraphMgr(graphMgr);
+    this.backgroundTexture.setGraphMgr(graphMgr);
+    this.backgroundScreenRect.setGraphMgr(graphMgr);
     
     // call base-class implementation
     SGDirective.prototype.setGraphMgr.call(this, graphMgr);
 }
 
 RenderDirective.prototype.execute = function(root)
-{
+{  
+    // draw background
+    this.drawBackground();
+    
     root = root || this.rootNode.getValueDirect();
 
     // update; combined CUpdateParams & GtUpdateParams in this version
@@ -16383,12 +16544,12 @@ RenderDirective.prototype.execute = function(root)
     var visited = this.updateDirective.execute(root, params);
 
     // detect collisions
-    var params = new CollideParams();
+    params = new CollideParams();
     params.directive = this.collideDirective;
     this.collideDirective.execute(root, params);
     
     // render
-    var params = new RenderParams();
+    params = new RenderParams();
     /*
     renderParams.path = NULL;//m_path;
     renderParams.pathIndex = 1;
@@ -16415,6 +16576,7 @@ RenderDirective.prototype.execute = function(root)
         this.resetDisplayLists = false;
     }
         
+    this.backgroundScreen.apply("render", params, true);
     visited[0].apply("render", params, true);
     
     // sort and draw semi-transparent geometries (if any)
@@ -16427,6 +16589,26 @@ RenderDirective.prototype.execute = function(root)
     
     // draw highlights
     this.drawHighlights(root);
+}
+
+RenderDirective.prototype.drawBackground = function()
+{
+    if (!this.backgroundImageSet) return;
+    
+    // update
+    var params = new UpdateParams();
+    params.directive = this.updateDirective;
+
+    var visited = this.updateDirective.execute(this.backgroundScreen, params);
+    
+    // render
+    params = new RenderParams();
+    params.directive = this;
+    params.path = null;
+    params.pathIndex = 1;
+    params.viewport.loadViewport(this.viewport.getValueDirect());
+
+    visited[0].apply("render", params, true);
 }
 
 RenderDirective.prototype.drawHighlights = function(root)
@@ -16472,7 +16654,9 @@ function RenderDirective_BackgroundImageFilenameModifiedCB(attribute, container)
     container.backgroundImageFilename.setValueDirect(pathInfo[0]);
     container.backgroundImageFilename.addModifiedCB(RenderDirective_BackgroundImageFilenameModifiedCB, container);
     
-    container.graphMgr.renderContext.setBackgroundImage(pathInfo[0], vp.width, vp.height);
+    //container.graphMgr.renderContext.setBackgroundImage(pathInfo[0], vp.width, vp.height);
+    container.backgroundTexture.imageFilename.setValueDirect(pathInfo[0]);
+    container.backgroundImageSet = true;
 }
 RayPickParams.prototype = new DirectiveParams();
 RayPickParams.prototype.constructor = RayPickParams();
@@ -16861,15 +17045,19 @@ function VertexGeometry()
     this.attrType = eAttrType.VertexGeometry;
 
     this.updateVertices = false;
+    this.updateColors = false;
     this.updateUVCoords = [];
     this.uvCoords = [];
     this.vertexBuffer = null;
     
     this.vertices = new NumberArrayAttr();
+    this.colors = new NumberArrayAttr();
     
     this.vertices.addModifiedCB(VertexGeometry_VerticesModifiedCB, this);
+    this.colors.addModifiedCB(VertexGeometry_ColorsModifiedCB, this);
     
     this.registerAttribute(this.vertices, "vertices");
+    this.registerAttribute(this.colors, "colors");
 }
 
 VertexGeometry.prototype.postCloneChild = function(childClone,pathSrc,pathClone)
@@ -16965,6 +17153,13 @@ VertexGeometry.prototype.update = function(params, visitChildren)
         this.updateBoundingTree = true;
         
         this.calculateBBox();
+    }
+    
+    if (this.updateColors)
+    {
+        this.updateColors = false;
+        
+        this.vertexBuffer.setColors(this.colors.getValueDirect());    
     }
     
     if (this.updateUVCoords.length)
@@ -17274,28 +17469,7 @@ VertexGeometry.prototype.setTextureStage = function(stage, type, texture, textur
     widthWrapType, heightWrapType, textureCoordSrc, planeCoefficients);
 
     // set texture blend operation
-    var op;
-    switch (type)
-    {
-        case eTextureType.Color:
-            op = RC_MODULATE;
-            break;
-
-        case eTextureType.Diffuse:
-        case eTextureType.Luminosity:
-        case eTextureType.Specularity:
-            op = RC_REPLACE;
-            break;
-
-        case eTextureType.Transparency:
-            op = RC_MODULATE;//BLEND;
-            break;
-
-        default:
-            return;
-    }
-
-    this.graphMgr.renderContext.setTextureBlendOp(op);
+    this.graphMgr.renderContext.setTextureBlendOp(texture.blendOp.getValueDirect());
 
     /* TODO
     // set texture matrix
@@ -17400,6 +17574,12 @@ function VertexGeometry_VerticesModifiedCB(attribute, container)
     container.incrementModificationCount();
 }
 
+function VertexGeometry_ColorsModifiedCB(attribute, container)
+{
+    container.updateColors = true;
+    container.incrementModificationCount();
+}
+
 function VertexGeometry_UVCoordsModifiedCB(attribute, container)
 {
     container.updateUVCoords.push(attribute);
@@ -17414,6 +17594,7 @@ function TriList()
     this.className = "TriList";
     this.attrType = eAttrType.TriList;
     
+    this.primitiveType = RC_TRIANGLES;
     this.updateNormals = false;
     
     this.normals = new NumberArrayAttr();
@@ -17429,7 +17610,7 @@ TriList.prototype.update = function(params, visitChildren)
     if (!this.vertexBuffer)
     {
         this.vertexBuffer = this.graphMgr.renderContext.createVertexBuffer(3);
-        this.vertexBuffer.setPrimitiveType(RC_TRIANGLES);
+        this.vertexBuffer.setPrimitiveType(this.primitiveType);
     }
        
     if (this.updateNormals)
@@ -18024,6 +18205,7 @@ function Model()
     this.texturesEnabled.addModifiedCB(Model_SurfaceAttrModifiedCB, this);
     this.detectCollision.addModifiedCB(Model_DetectCollisionModifiedCB, this);
     this.collisionDetected.addModifiedCB(Model_CollisionDetectedModifiedCB, this);
+    this.vertices.addModifiedCB(Model_VerticesModifiedCB, this);
 
     this.registerAttribute(this.url, "url");
     this.registerAttribute(this.layer, "layer");
@@ -18720,6 +18902,11 @@ function Model_DetectCollisionModifiedCB(attribute, container)
 function Model_CollisionDetectedModifiedCB(attribute, container)
 {
 }
+
+function Model_VerticesModifiedCB(attribute, container)
+{
+}
+
 Texture.prototype = new ParentableMotionElement();
 Texture.prototype.constructor = Texture;
 
@@ -18730,7 +18917,6 @@ function Texture()
     this.attrType = eAttrType.Texture;
    
     this.updateImage = false;
-    this.updateTextureType = false;
     this.updateMipmappingEnabled = false;
     this.setImage = false;
     this.imageSet = false;
@@ -18743,6 +18929,7 @@ function Texture()
     this.widthWrap = new NumberAttr(eTextureWrap.None);
     this.heightWrap = new NumberAttr(eTextureWrap.None);
     this.mipmappingEnabled = new BooleanAttr(false);
+    this.blendOp = new NumberAttr(RC_MODULATE);
     
     this.image.setTransient(true); // don't serialize image data
     
@@ -18763,6 +18950,7 @@ function Texture()
     this.registerAttribute(this.widthWrap, "widthWrap");
     this.registerAttribute(this.heightWrap, "heightWrap");
     this.registerAttribute(this.mipmappingEnabled, "mipmappingEnabled");
+    this.registerAttribute(this.blendOp, "blendOp");
 }
 
 Texture.prototype.setGraphMgr = function(graphMgr)
@@ -18908,7 +19096,28 @@ function Texture_OpacityModifiedCB(attribute, container)
 
 function Texture_TextureTypeModifiedCB(attribute, container)
 {
-    container.updateTextureType = true;
+    // update blendOp based upon type
+    switch (attribute.getValueDirect())
+    {
+        case eTextureType.Color:
+            op = RC_MODULATE;
+            break;
+
+        case eTextureType.Diffuse:
+        case eTextureType.Luminosity:
+        case eTextureType.Specularity:
+            op = RC_REPLACE;
+            break;
+
+        case eTextureType.Transparency:
+            op = RC_MODULATE;//BLEND;
+            break;
+
+        default:
+            return;
+    }
+    
+    container.blendOp.setValueDirect(op);
     container.incrementModificationCount();
 }
 
@@ -19183,7 +19392,7 @@ MediaTexture.prototype.onImageLoad = function()
     if (this.textureType.getValueDirect() == eTextureType.Color &&
        !this.alphaPlayback)
     {
-        this.textureObj.setImage(this.imagePlayback.htmlImageElement, ePixelFormat.R8G8B8, eImageFormat.RGB);
+        this.textureObj.setImage(this.imagePlayback.htmlImageElement, ePixelFormat.R8G8B8A8, eImageFormat.RGBA);
         this.imageSet = true;
         this.incrementModificationCount();
         return;
@@ -19257,12 +19466,12 @@ function MediaTexture_NegateAlphaModifiedCB(attribute, container)
     container.updateNegateAlpha = true;
     container.incrementModificationCount();
 }
-Evaluator.prototype = new SGNode();
+Evaluator.prototype = new Node();
 Evaluator.prototype.constructor = Evaluator;
 
 function Evaluator()
 {
-    SGNode.call(this);
+    Node.call(this);
     this.className = "Evaluator";
     this.attrType = eAttrType.Evaluator;
     
@@ -19287,7 +19496,7 @@ Evaluator.prototype.update = function(params, visitChildren)
     }
     
     // call base-class implementation
-    SGNode.prototype.update.call(this, params, visitChildren);
+    Node.prototype.update.call(this, params, visitChildren);
 }
 SceneInspector.prototype = new Evaluator();
 SceneInspector.prototype.constructor = SceneInspector;
@@ -19298,6 +19507,8 @@ function SceneInspector()
     this.className = "SceneInspector";
     this.attrType = eAttrType.SceneInspector;
     
+    this.camera = null;
+        
     this.viewPosition = new Vector3DAttr(0, 0, 0);
     this.viewRotation = new Vector3DAttr(0, 0, 0);
     this.translationDelta = new Vector3DAttr(0, 0, 0);
@@ -19311,6 +19522,19 @@ function SceneInspector()
     this.pivotPointWorld = new Vector3DAttr(0, 0, 0);
     this.resultPosition = new Vector3DAttr(0, 0, 0);
     this.resultRotation = new Vector3DAttr(0, 0, 0);
+    /// indicates the up/right/forward vectors to use for pan/track; if zero,
+    /// camera up/right/forward vectors are used (default: zero)
+    this.upVector = new Vector3DAttr(0, 0, 0);
+    this.rightVector = new Vector3DAttr(0, 0, 0);
+    this.forwardVector = new Vector3DAttr(0, 0, 0);
+    /// indicate which components of resultPosition/resultRotation should be set; if true,
+    /// the component is set, if false, it is not (default: true)
+    this.affectPosition_X = new BooleanAttr(true);
+    this.affectPosition_Y = new BooleanAttr(true);
+    this.affectPosition_Z = new BooleanAttr(true);
+    this.affectRotation_X = new BooleanAttr(true);
+    this.affectRotation_Y = new BooleanAttr(true);
+    this.affectRotation_Z = new BooleanAttr(true);
     
     this.registerAttribute(this.viewPosition, "viewPosition");
     this.registerAttribute(this.viewRotation, "viewRotation");
@@ -19325,6 +19549,25 @@ function SceneInspector()
     this.registerAttribute(this.pivotPointWorld, "pivotPointWorld");
     this.registerAttribute(this.resultPosition, "resultPosition");
     this.registerAttribute(this.resultRotation, "resultRotation");
+    this.registerAttribute(this.upVector, "upVector");
+    this.registerAttribute(this.rightVector, "rightVector");
+    this.registerAttribute(this.forwardVector, "forwardVector");
+    this.registerAttribute(this.affectPosition_X, "affectPosition_X");
+    this.registerAttribute(this.affectPosition_Y, "affectPosition_Y");
+    this.registerAttribute(this.affectPosition_Z, "affectPosition_Z");
+    this.registerAttribute(this.affectRotation_X, "affectRotation_X");
+    this.registerAttribute(this.affectRotation_Y, "affectRotation_Y");
+    this.registerAttribute(this.affectRotation_Z, "affectRotation_Z");
+}
+
+SceneInspector.prototype.setCamera = function(camera)
+{
+    this.camera = camera;
+}
+
+SceneInspector.prototype.getCamera = function()
+{
+    return this.camera;
 }
 
 SceneInspector.prototype.evaluate = function()
@@ -19416,10 +19659,18 @@ SceneInspector.prototype.evaluate = function()
     if (panDelta.x != 0 || panDelta.y != 0 || panDelta.z != 0 ||
         trackDelta.x != 0 || trackDelta.y != 0 || trackDelta.z != 0)
     {
+        // pan up/right/forward vectors
+        var up = this.upVector.getValueDirect();
+        var right = this.rightVector.getValueDirect();
+        var forward = this.forwardVector.getValueDirect();
+        if (up.x == 0 && up.y == 0 && up.z == 0) up = cameraUp;
+        if (right.x == 0 && right.y == 0 && right.z == 0) right = cameraRight;
+        if (forward.x == 0 && forward.y == 0 && forward.z == 0) forward = cameraForward;
+        
         // calculate direction vectors after scene rotation matrix is applied
-        var cameraUpRot = this.transformDirectionVector(cameraUp.x, cameraUp.y, cameraUp.z, sceneRot);
-        var cameraRightRot = this.transformDirectionVector(cameraRight.x, cameraRight.y, cameraRight.z, sceneRot);    
-        var cameraForwardRot = this.transformDirectionVector(cameraForward.x, cameraForward.y, cameraForward.z, sceneRot);    
+        var cameraUpRot = up;
+        var cameraRightRot = right;    
+        var cameraForwardRot = forward;    
             
         var scenePan = new Matrix4x4();
         scenePan.loadTranslation(
@@ -19506,8 +19757,12 @@ SceneInspector.prototype.evaluate = function()
     resultPosition = resultTransform.transform(resultPosition.x, resultPosition.y, resultPosition.z, 0);
 
     // output results
-    this.resultPosition.setValueDirect(-resultPosition.x, -resultPosition.y, -resultPosition.z);
-    this.resultRotation.setValueDirect(-resultRotation.x, -resultRotation.y, -resultRotation.z);
+    this.resultPosition.setValueDirect(this.affectPosition_X.getValueDirect() ? -resultPosition.x : viewPosition.x, 
+                                       this.affectPosition_Y.getValueDirect() ? -resultPosition.y : viewPosition.y,
+                                       this.affectPosition_Z.getValueDirect() ? -resultPosition.z : viewPosition.z);
+    this.resultRotation.setValueDirect(this.affectRotation_X.getValueDirect() ? -resultRotation.x : viewRotation.x, 
+                                       this.affectRotation_Y.getValueDirect() ? -resultRotation.y : viewRotation.y, 
+                                       this.affectRotation_Z.getValueDirect() ? -resultRotation.z : viewRotation.z);
 }
 
 SceneInspector.prototype.transformDirectionVector = function(x, y, z, matrix)
@@ -23425,6 +23680,191 @@ AnimalMover.prototype.collisionDetected = function(collisionList)
     this.motionQueue.push(walk);
 }
 
+WalkSimulator.prototype = new SceneInspector();
+WalkSimulator.prototype.constructor = WalkSimulator;
+
+function WalkSimulator()
+{
+    SceneInspector.call(this);
+    this.className = "WalkSimulator";
+    this.attrType = eAttrType.WalkSimulator;
+    
+    this.sceneInspector_pivotDistanceValue = 0;
+    this.selector_computePivotDistanceValue = 0;
+    
+    this.groundPlane = new PlaneAttr();
+    this.linearDelta = new Vector3DAttr(0, 0, 0);
+    this.angularDelta = new Vector3DAttr(0, 0, 0);
+    this.linearSensitivity = new Vector3DAttr(1, 1, 1);
+    this.angularSensitivity = new Vector3DAttr(1, 1, 1);
+    this.resultLinear = new Vector3DAttr();
+    this.resultAngular = new Vector3DAttr();
+    
+    this.enabled.addModifiedCB(WalkSimulator_EnabledModifiedCB, this);
+    this.linearDelta.addModifiedCB(WalkSimulator_LinearDeltaModifiedCB, this);
+    this.angularDelta.addModifiedCB(WalkSimulator_AngularDeltaModifiedCB, this);
+    
+    this.registerAttribute(this.groundPlane, "groundPlane");
+    this.registerAttribute(this.linearDelta, "linearDelta");
+    this.registerAttribute(this.angularDelta, "angularDelta");
+    this.registerAttribute(this.linearSensitivity, "linearSensitivity");
+    this.registerAttribute(this.angularSensitivity, "angularSensitivity");
+    this.registerAttribute(this.resultLinear, "resultLinear");
+    this.registerAttribute(this.resultAngular, "resultAngular");
+    
+    this.viewRelativeXAxisRotation.setValueDirect(true);
+    this.viewRelativeYAxisRotation.setValueDirect(true);
+    this.viewRelativeZAxisRotation.setValueDirect(true);
+    this.groundPlane.normal.setValueDirect(0, 1, 0);
+}
+
+WalkSimulator.prototype.evaluate = function()
+{
+    var enabled = this.enabled.getValueDirect();
+    if (!enabled)
+    {
+        return;
+    }
+    
+    // get inputs
+    var linearDelta = this.linearDelta.getValueDirect();
+    // reverse pan x
+    linearDelta.x *= -1;
+    var linearSensitivity = this.linearSensitivity.getValueDirect();
+    var angularDelta = this.angularDelta.getValueDirect();
+    var angularSensitivity = this.angularSensitivity.getValueDirect();
+
+    var panDelta = new Vector3D(linearDelta.x, linearDelta.y, linearDelta.z);
+    panDelta.multiplyVector(linearSensitivity);
+    var rotationDelta = new Vector3D(angularDelta.x, angularDelta.y, angularDelta.z);
+    rotationDelta.multiplyVector(angularSensitivity);
+
+    // only evaluate if necessary
+    if (panDelta.x != 0 || panDelta.y != 0 || panDelta.z != 0 || 
+        rotationDelta.x != 0 || rotationDelta.y != 0 || rotationDelta.z != 0)
+    {
+        this.panDelta.setValueDirect(panDelta.x, panDelta.y, panDelta.z);
+        this.rotationDelta.setValueDirect(rotationDelta.x, rotationDelta.y, rotationDelta.z);
+
+        // set camera direction vectors based upon walkPlane
+        //if (m_updateDirectionVectors) // uncomment to retain forward direction when inspecting with mouse
+        {
+            // view position
+            var viewPosition = this.viewPosition.getValueDirect();
+
+            // view rotation
+            var viewRotation = this.viewRotation.getValueDirect();
+
+            // ground plane
+            var groundPlane = this.groundPlane.getValueDirect();
+
+            // formulate view transform
+            var viewTrans = new Matrix4x4();
+            viewTrans.loadTranslation(-viewPosition.x, -viewPosition.y, -viewPosition.z);
+            var viewRot = new Matrix4x4();
+            viewRot.loadXYZAxisRotation(-viewRotation.x, -viewRotation.y, -viewRotation.z);
+            var viewTransform = viewTrans.multiply(viewRot);
+
+            // formulate direction vectors
+            this.upVector.setValueDirect(groundPlane.normal.x, groundPlane.normal.y, groundPlane.normal.z);
+            
+            var xformedXYZ = this.transformDirectionVector(0, 0, 1, viewTransform);
+            var projectedXYZ = planeProject(xformedXYZ, groundPlane);
+            var vProjectedXYZ = new Vector3D(projectedXYZ.x, projectedXYZ.y, projectedXYZ.z);
+            vProjectedXYZ.normalize();
+            this.forwardVector.setValueDirect(vProjectedXYZ.x, vProjectedXYZ.y, vProjectedXYZ.z);
+
+            var m = new Matrix4x4();
+            m.loadYAxisRotation(90);
+            xformedXYZ = m.transform(vProjectedXYZ.x, vProjectedXYZ.y, vProjectedXYZ.z, 0);
+            this.rightVector.setValueDirect(xformedXYZ.x, xformedXYZ.y, xformedXYZ.z);
+            
+            //m_updateDirectionVectors = false;*/
+        }
+
+        // call base-class implementation
+        SceneInspector.prototype.evaluate.call(this);
+    }
+}
+
+WalkSimulator.prototype.enabledModified = function()
+{
+    var enabled = this.enabled.getValueDirect();
+    if (enabled)
+    {
+        this.enableSceneInspectionState(); // ensure scene inspection is enabled
+        //m_updateDirectionVectors = true;
+        this.affectRotation_Z.setValueDirect(false); // suspend bank
+    }
+    else if (this.lastEnabled) // only do the following if previously enabled
+    {
+        this.restoreSceneInspectionState(); // restore previous scene inspector state
+        //m_updateDirectionVectors = false;
+        this.affectRotation_Z.setValueDirect(true); // restore bank
+        this.upVector.setValueDirect(0, 0, 0, false);
+        this.rightVector.setValueDirect(0, 0, 0, false);
+        this.forwardVector.setValueDirect(0, 0, 0, false);
+    }
+
+    this.lastEnabled = enabled;
+}
+
+WalkSimulator.prototype.enableSceneInspectionState = function()
+{
+    var sceneInspector = this.registry.find("SceneInspector");
+    if (sceneInspector)
+    {
+        sceneInspector.enabled.setValueDirect(true);
+        this.sceneInspector_pivotDistanceValue = sceneInspector.pivotDistance.getValueDirect();
+        sceneInspector.pivotDistance.setValueDirect(0);
+    }
+    
+    var selector = this.registry.find("Selector");
+    if (selector)
+    {
+        this.selector_computePivotDistanceValue = selector.computePivotDistance.getValueDirect();
+        selector.computePivotDistance.setValueDirect(false);
+    }
+}
+
+WalkSimulator.prototype.restoreSceneInspectionState = function()
+{
+    var sceneInspector = this.registry.find("SceneInspector");
+    if (sceneInspector)
+    {
+        sceneInspector.pivotDistance.setValueDirect(this.sceneInspector_pivotDistanceValue);
+    }
+    
+    var selector = this.registry.find("Selector");
+    if (selector)
+    {
+        selector.computePivotDistance.setValueDirect(this.selector_computePivotDistanceValue);
+    }
+}
+
+function WalkSimulator_EnabledModifiedCB(attribute, container)
+{
+    container.enabledModified();
+}
+
+function WalkSimulator_LinearDeltaModifiedCB(attribute, container)
+{
+    // if orphaned, evaluate (otherwise graph will invoke evaluation)
+    //if (container.orphan.getValueDirect() == true)
+    {
+        container.evaluate();
+    }
+}
+
+function WalkSimulator_AngularDeltaModifiedCB(attribute, container)
+{
+    // if orphaned, evaluate (otherwise graph will invoke evaluation)
+    //if (container.orphan.getValueDirect() == true)
+    {
+        container.evaluate();
+    }
+}
+
 Cube.prototype = new TriList();
 Cube.prototype.constructor = Cube;
 
@@ -23475,9 +23915,9 @@ function Cube()
         -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0,
         0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0,
         0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
-        1, -0, 0, 1, -0, 0, 1, -0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
-        0, 1, -0, 0, 1, -0, 0, 1, -0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
-        0, -0, 1, 0, -0, 1, 0, -0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1
+        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
+        0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1
     ];
     
     this.vertices.setValue(vertices);
@@ -23584,6 +24024,108 @@ function Cube_MaterialModifiedCB(attribute, container)
 {
     container.updateMaterial = true;
 }
+ScreenRect.prototype = new TriList();
+ScreenRect.prototype.constructor = ScreenRect;
+
+function ScreenRect()
+{
+    TriList.call(this);
+    this.className = "ScreenRect";
+    this.attrType = eAttrType.ScreenRect;
+    
+    this.primitiveType = RC_TRIANGLE_STRIP;
+    
+    this.textureColorMask = new ColorAttr(0, 0, 0, 1);
+    
+    this.registerAttribute(this.textureColorMask, "textureColorMask");
+    
+    var vertices = 
+    [
+        -1, -1,  1,
+        -1,  1,  1,
+         1, -1,  1,
+         1,  1,  1
+    ];
+    
+    var normals =
+    [
+        0,  0,  -1,
+        0,  0,  -1,
+        0,  0,  -1,
+        0,  0,  -1
+    ];
+    
+    var colors =
+    [
+        1,  1,  1,  1,
+        1,  1,  1,  1,
+        1,  1,  1,  1,
+        1,  1,  1,  1
+    ];
+    
+    this.vertices.setValueDirect(vertices);
+    this.normals.setValueDirect(normals);
+    this.colors.setValueDirect(colors);
+}
+
+ScreenRect.prototype.update = function(params, visitChildren)
+{
+    // call base-class implementation
+    TriList.prototype.update.call(this, params, visitChildren);
+}
+
+ScreenRect.prototype.draw = function(dissolve)
+{
+    // set projection matrix
+    var m = new Matrix4x4();
+    this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.pushMatrix();
+    this.graphMgr.renderContext.loadMatrix(m);
+    this.graphMgr.renderContext.applyModelViewTransform();
+    this.graphMgr.renderContext.setMatrixMode(RC_PROJECTION);
+    this.graphMgr.renderContext.pushMatrix();
+    this.graphMgr.renderContext.loadMatrix(m);
+    this.graphMgr.renderContext.applyProjectionTransform();
+    
+    this.graphMgr.renderContext.disable(eRenderMode.DepthTest);
+    this.graphMgr.renderContext.disable(eRenderMode.DepthBufferWrite);
+    this.graphMgr.renderContext.disable(eRenderMode.Lighting);
+    
+    var textureColorMask = this.textureColorMask.getValueDirect();
+    this.graphMgr.renderContext.setTextureColorMask(textureColorMask.r, textureColorMask.g, textureColorMask.b, textureColorMask.a);
+    
+    // call base-class implementation
+    TriList.prototype.draw.call(this, dissolve);
+    
+    // restore projection matrix
+    this.graphMgr.renderContext.popMatrix();
+    this.graphMgr.renderContext.applyProjectionTransform();
+    this.graphMgr.renderContext.setMatrixMode(RC_MODELVIEW);
+    this.graphMgr.renderContext.popMatrix();
+    this.graphMgr.renderContext.applyModelViewTransform();
+    
+    this.graphMgr.renderContext.enable(eRenderMode.DepthTest);
+    this.graphMgr.renderContext.enable(eRenderMode.DepthBufferWrite);
+    this.graphMgr.renderContext.enable(eRenderMode.Lighting);
+    
+    // reset color mask that won't affect rendering
+    this.graphMgr.renderContext.setTextureColorMask(2, 2, 2, 2);
+}
+
+ScreenRect.prototype.setTexture = function(texture)
+{
+    var uvs =
+    [
+        0, 0,
+        0, 1,
+        1, 0,
+        1, 1
+    ];
+    
+    var uvCoords = this.getUVCoords(texture); 
+    uvCoords.setValueDirect(uvs);
+}
+
 var eEventType = {
     Unknown                     :-1,
     
@@ -23622,16 +24164,18 @@ var eEventType = {
     Mouse_Last                  :199,
 
     Key_First                   :200,
-    Key_Down                    :201,
-    Key_Up                      :202,
-    Key_Last                    :299,
+    KeyDown_First               :201,
+    KeyDown_Last                :500,
+    KeyUp_First                 :501,
+    KeyUp_Last                  :798,
+    Key_Last                    :799,
     
-    Element_First               :700,
-    ElementSelected             :701,
-    ElementUnselected           :702,
-    ElementFocus                :703,
-    ElementBlur                 :704,
-    Element_Last                :799,
+    Element_First               :800,
+    ElementSelected             :801,
+    ElementUnselected           :802,
+    ElementFocus                :803,
+    ElementBlur                 :804,
+    Element_Last                :899,
     
     UserDefined                 :2000
 };
@@ -23670,14 +24214,104 @@ var eEventNameMap = {
 	"Element.Blur"              : eEventType.ElementBlur
 };
 
+// map of VK_* strings to javascript key codes
+var eKeyCodeMap = {
+    "VK_BACK"                   : 8,
+    "VK_TAB"                    : 9,
+    "VK_ENTER"                  : 13,
+    "VK_SHIFT"                  : 16,
+    "VK_CONTROL"                : 17,
+    "VK_ALT"                    : 18,
+    "VK_PAUSE"                  : 19,
+    "VK_CAPITAL"                : 20,
+    "VK_ESCAPE"                 : 27,
+    "VK_PAGEUP"                 : 33,
+    "VK_PAGEDOWN"               : 34,
+    "VK_END"                    : 35,
+    "VK_HOME"                   : 36,
+    "VK_LEFT"                   : 37,
+    "VK_UP"                     : 38,
+    "VK_RIGHT"                  : 39,
+    "VK_DOWN"                   : 40,
+    "VK_INSERT"                 : 45,
+    "VK_DELETE"                 : 46,
+    "VK_0"                      : 48,
+    "VK_1"                      : 49,
+    "VK_2"                      : 50,
+    "VK_3"                      : 51,
+    "VK_4"                      : 52,
+    "VK_5"                      : 53,
+    "VK_6"                      : 54,
+    "VK_7"                      : 55,
+    "VK_8"                      : 56,
+    "VK_9"                      : 57,
+    "VK_A"                      : 65,
+    "VK_B"                      : 66,
+    "VK_C"                      : 67,
+    "VK_D"                      : 68,
+    "VK_E"                      : 69,
+    "VK_F"                      : 70,
+    "VK_G"                      : 71,
+    "VK_H"                      : 72,
+    "VK_I"                      : 73,
+    "VK_J"                      : 74,
+    "VK_K"                      : 75,
+    "VK_L"                      : 76,
+    "VK_M"                      : 77,
+    "VK_N"                      : 78,
+    "VK_O"                      : 79,  
+    "VK_P"                      : 80,
+    "VK_Q"                      : 81,
+    "VK_R"                      : 82,    
+    "VK_S"                      : 83,
+    "VK_T"                      : 84,
+    "VK_U"                      : 85,
+    "VK_V"                      : 86,
+    "VK_W"                      : 87,
+    "VK_X"                      : 88,
+    "VK_Y"                      : 89,
+    "VK_Z"                      : 90,
+    "VK_COMMA"                  : 189,
+    "VK_PERIOD"                 : 190,
+    "VK_SLASH"                  : 191
+};
+
 function getEventTypeByName(name)
 {
     var type = eEventNameMap[name];
     
     if (type == undefined)
     {
-        // TODO  
-        type = eEventType.Unknown;      
+        // key
+        if (name.indexOf("VK") != -1)
+        {
+            var key = name;
+            var state = "";
+            var dot = name.indexOf(".");
+            if (dot != -1)
+            {
+                // key
+                key = name.substring(0, dot);
+                // state
+                state = name.substring(dot+1);
+            }
+                
+            var keyCode = eKeyCodeMap[key];
+            if (keyCode)
+            {
+                switch (state)
+                {
+                    case "Down":
+                        type = eEventType.KeyDown_First + keyCode;
+                        break;
+                        
+                    case "Up":
+                    default:
+                        type = eEventType.KeyUp_First + keyCode;
+                        break;
+                }
+            }
+        }     
     }   
     
     return type;
@@ -23737,6 +24371,14 @@ function MouseEvent(type, time, buttonId, modifiers, state, x, y, userData)
     this.x = x || 0;
     this.y = y || 0;
 }
+KeyboardEvent.prototype = new InputEvent();
+KeyboardEvent.prototype.constructor = KeyboardEvent;
+
+function KeyboardEvent(type, time, buttonId, modifiers, state, userData)
+{
+    InputEvent.call(this, type, time, buttonId, modifiers, state, userData);
+    this.className = "KeyboardEvent";
+}
 function MouseEventState()
 {
     this.leftButtonDown = false;
@@ -23759,9 +24401,40 @@ function EventAdapter()
     this.registerAttribute(this.name, "name");
 }
 
-EventAdapter.prototype.createKeyboardEvent = function(event)
+EventAdapter.prototype.createKeyboardEvent = function(event, eventType /* optional; used for "keyup" */)
 {
-    var keyboardEvent = null;//new KeyboardEvent(type, time, buttonId, modifiers, state, x, y);
+    var date = new Date();
+    
+    var type = eEventType.Unknown;
+    var time = date.getTime();
+    var buttonId = event.keyCode;
+    var modifiers = 0;  // TODO
+    var state = 0;      // TODO
+    
+    var eventType = eventType || event.type;
+    switch (eventType)
+    {
+        case "keydown":
+            {
+                type = eEventType.KeyDown_First + buttonId;
+            }
+            break;
+            
+        case "keypress":
+            {
+                type = eEventType.KeyDown_First + buttonId - 32; //  not sure why keycodes have +32 compared to keydown events
+            }
+            break;
+            
+        case "keyup":
+            {
+                type = eEventType.KeyUp_First + buttonId;
+            }
+            break;
+    }
+    
+    var keyboardEvent = new KeyboardEvent(type, time, buttonId, modifiers, state);
+    
     return keyboardEvent;
 }
 
@@ -24165,6 +24838,28 @@ MouseHandler.prototype.eventPerformed = function(event)
 	this.deltaY.setValueDirect(0);
 	this.delta.setValueDirect(0, 0);
 }
+KeyboardHandler.prototype = new DeviceHandler();
+KeyboardHandler.prototype.constructor = KeyboardHandler;
+
+function KeyboardHandler()
+{
+    DeviceHandler.call(this);
+    this.className = "KeyboardHandler";
+    this.attrType = eAttrType.KeyboardHandler;
+    
+    this.name.setValueDirect("KeyboardHandler");
+    
+    this.keyString = new StringAttr();
+    
+    this.registerAttribute(this.keyString, "keyString");
+}
+
+KeyboardHandler.prototype.eventPerformed = function(event)
+{
+    
+}
+
+
 Command.prototype = new EventListener();
 Command.prototype.constructor = Command;
 
@@ -25403,6 +26098,9 @@ RemoveCommand.prototype.execute = function()
             }
 
             this.removeChildren(this.targetAttribute);
+            
+            // invoke onRemove
+            this.targetAttribute.onRemove();
         }
 
         // remove from registry
@@ -26042,7 +26740,6 @@ function BwSceneInspector()
     this.className = "BwSceneInspector";
     this.attrType = eAttrType.SceneInspector;
     
-    this.camera = null;
     this.viewport = new Viewport();
     this.worldUnitsPerPixel = new Vector2D();
     this.clickPosWorld = new Vector3D();
@@ -26397,16 +27094,6 @@ BwSceneInspector.prototype.zoom = function(delta)
         }
         break;
     }
-}
-
-BwSceneInspector.prototype.setCamera = function(camera)
-{
-    this.camera = camera;
-}
-
-BwSceneInspector.prototype.getCamera = function()
-{
-    return this.camera;
 }
 
 BwSceneInspector.prototype.getWorldUnitsPerPixel = function(viewSpace_Z)
@@ -27086,6 +27773,7 @@ function ConnectionMgr()
     //registerConnectionHelper("DisconnectAllSources", null, ConnectionMgr.prototype.disconnectAllSources);
     registerConnectionHelper("DisconnectAllTargets", null, ConnectionMgr.prototype.disconnectAllTargets);
     registerConnectionHelper("dissolve", ConnectionMgr.prototype.connectDissolve, ConnectionMgr.prototype.disconnectDissolve);
+    registerConnectionHelper("walkSimulation", ConnectionMgr.prototype.connectWalkSimulation, ConnectionMgr.prototype.disconnectWalkSimulation);
 }
 
 ConnectionMgr.prototype.connectSceneInspection = function(inspector, camera)
@@ -27193,6 +27881,16 @@ ConnectionMgr.prototype.disconnectDissolve = function(evaluator, target)
             }
         }
     }
+}
+
+ConnectionMgr.prototype.connectWalkSimulation = function(simulator, target)
+{
+    ConnectionMgr.prototype.connectSceneInspection.call(null, simulator, target);
+}
+
+ConnectionMgr.prototype.disconnectWalkSimulation = function(simulator, target)
+{
+    ConnectionMgr.prototype.disconnectSceneInspection.call(null, simulator, target);
 }
 
 RenderAgent.prototype = new Agent();
@@ -28822,39 +29520,100 @@ function ScreenCaptureCommand()
     this.attrType = eAttrType.ScreenCapture;
 
     this.canvasId = new StringAttr();
-    
+
     this.registerAttribute(this.canvasId, "canvasId");
-    
+
     this.numResponses.setValueDirect(0);
 }
 
 ScreenCaptureCommand.prototype.execute = function()
 {
     var bworks = this.registry.find("Bridgeworks");
+    bworks.eventMgr.addListener(eEventType.RenderBegin, this);
     bworks.eventMgr.addListener(eEventType.RenderEnd, this);
 }
 
 ScreenCaptureCommand.prototype.screenCapture = function(canvasId)
 {
     var canvas = document.getElementById(canvasId);
-    cimageData = canvas.toDataURL('image/png');
-    var imageData = cimageData;
+    var imageData = canvas.toDataURL('image/png');
 
-//    window.open(imageData);
+    // 3Scape-specific: decode the base64 data into 8bit array
+    cimageData = imageData;
+    //var cnt = imageData.lastIndexOf(',') + 1;
+    //imageData = imageData.substr(cnt);
+    //imageData = Base64Binary.decode(imageData);
+        
+    // for testing with Bug-60.htm
+    //document.getElementById('imgCapture').src = imageData;
 
-    //Decode the base64 data into 8bit array. Used Specifically for 3Scape
-    var cnt = imageData.lastIndexOf(',') + 1;
-    imageData = imageData.substr(cnt);
-    imgeData = Base64Binary.decode(imageData);
-    
     // copy to clipboard
     // TODO: investigate method described at: https://forums.mozilla.org/addons/viewtopic.php?t=9736&p=21119
-    
-    // open in new window
 
+    // open in new window
+    //window.open(imageData);
+    
     // download
     //var imageDataStream = imageData.replace("image/png", "image/octet-stream");
     //window.location.href = imageDataStream;
+}
+
+ScreenCaptureCommand.prototype.get2DElementCanvas = function(canvas3D)
+{
+    // create 2D canvas for labels
+    var canvas2D = document.createElement('canvas');
+    canvas2D.id = "canvas2D";
+    canvas2D.width = canvas3D.width;
+    canvas2D.height = canvas3D.height;
+    var ctx = canvas2D.getContext('2d');
+
+    // get labels
+    var labels = this.registry.getByType(eAttrType.Label);
+    
+    // calculate mask color which is different from all labels colors
+    var maskColor = "black";
+    
+    // setup img src data for labels
+    var data = "data:image/svg+xml," + 
+               "<svg xmlns='http://www.w3.org/2000/svg' width='" + canvas2D.width + "' height='" + canvas2D.height + "'>" + 
+               "<foreignObject width='100%' height='100%'>" + 
+               "<div xmlns='http://www.w3.org/1999/xhtml' style='background:" + maskColor + ";'>";   
+    for (var i=0; i < labels.length; i++)
+    {
+        var style = labels[i].htmlLabel.style;
+        data += "<span style='position:absolute; " +
+                "font-family:" + style.fontFamily + "; " +
+                "font-size:" + style.fontSize + "; " +
+                "font-weight:" + style.fontWeight + "; " +
+                "color:" + style.color + "; " +
+                "background-color:" + style.backgroundColor + "; " +
+                "text-shadow:" + style.textShadow + "; " +
+                "visibility:" + style.visibility + "; " +
+                "left:" + style.left + "; " +
+                "top:" + style.top + "; " +
+                "padding-left:" + style.paddingLeft + "; " +
+                "padding-right:" + style.paddingRight + "; " +
+                "padding-top:" + style.paddingTop + "; " +
+                "padding-bottom:" + style.paddingBottom + "; " +
+                "'>" + labels[i].text.getValueDirect().join("") + 
+                "</span>";                
+    }   
+    data += "</div>" +
+            "</foreignObject>" + 
+            "</svg>";
+        
+    // create Image and set data as its src
+    var img = new Image();
+    img.src = data;
+
+    // fill 2D canvas with background color
+    ctx.fillStyle = maskColor;
+    ctx.fillRect(0, 0, canvas2D.width, canvas2D.height);
+    
+    // draw image to 2D canvas
+    ctx.drawImage(img, 0, 0);
+
+    return { canvas: canvas2D, maskColor: maskColor }
 }
 
 ScreenCaptureCommand.prototype.eventPerformed = function(event)
@@ -28862,14 +29621,160 @@ ScreenCaptureCommand.prototype.eventPerformed = function(event)
     // if mouse-move event, don't process if any other mouse button is pressed (this affects object inspection)
     switch (event.type)
     {
+        case eEventType.RenderBegin:
+            {
+                var screenCaptureRect = this.registry.find("ScreenCaptureRect");                    // TODO: change name
+                var screenCaptureTexture = this.registry.find("ScreenCaptureTexture")
+                if (screenCaptureRect && screenCaptureTexture)
+                {
+                    // set 2D element canvas to screen capture texture
+                    var canvas2D = this.get2DElementCanvas(document.getElementById(this.canvasId.getValueDirect().join("")));
+                    screenCaptureTexture.textureObj.setImageWithCanvas(canvas2D.canvas);
+                    screenCaptureTexture.imageSet = true;
+                    // TODO: set blendOp/maskColor
+                    //screenCaptureTexture.setTextureColorMask(0, 0, 0, 1);
+
+                    // set screen capture texture to screen capture rect object
+                    screenCaptureRect.setTexture(screenCaptureTexture);
+
+                    // show screen capture rect object
+                    screenCaptureRect.enabled.setValueDirect(true);
+                }
+            }
+            break;
+
         case eEventType.RenderEnd:
-        {
-            this.screenCapture(this.canvasId.getValueDirect().join(""));
-            return;        
-        }
-        break;
+            {
+                this.screenCapture(this.canvasId.getValueDirect().join(""));
+                // hide screen capture rect object
+                var screenCaptureRect = this.registry.find("ScreenCaptureRect");
+                if (screenCaptureRect)
+                {
+                    screenCaptureRect.enabled.setValueDirect(false);
+                }
+            }
+            break;
     }
 }
+
+ExportCommand.prototype = new Command();
+ExportCommand.prototype.constructor = ExportCommand;
+
+function ExportCommand()
+{
+    Command.call(this);
+    this.className = "Export";
+    this.attrType = eAttrType.Export;
+
+    this.targetNode = null;
+    
+    this.url = new StringAttr();
+    
+    this.target.addModifiedCB(ExportCommand_TargetModifiedCB, this);
+
+    this.registerAttribute(this.url, "url");
+}
+
+ExportCommand.prototype.execute = function()
+{
+    if (!this.targetNode) return;
+    
+    var url = this.url.getValueDirect().join("");   
+    switch (getFileExtension(url))
+    {
+        case "stl":
+            this.exportSTL(this.targetNode, url);
+            break;
+            
+        default:
+            break;
+    }
+}
+
+ExportCommand.prototype.exportSTL = function(model, url)
+{
+    // name
+    var name = model.name.getValueDirect().join("");
+    
+    // vertices/normals
+    var vertices = [];
+    var normals = [];   
+    for (var i=0; i < model.geometry.length; i++)
+    {
+        var geometry = model.geometry[i];
+        switch (geometry.attrType)
+        {
+            case eAttrType.TriList:
+                {
+                    vertices = vertices.concat(geometry.vertices.getValueDirect());
+                    normals = normals.concat(geometry.vertices.getValueDirect());
+                }
+                break;
+        }
+    }
+    if (vertices.length == 0) return;
+    
+    // vertices cannot have negative values, so offset vertices if negative values are present
+    var x = FLT_MAX, y = FLT_MAX, z = FLT_MAX;
+    for (var i=0; i < vertices.length; i+=3)
+    {
+        x = Math.min(x, vertices[i  ]);
+        y = Math.min(y, vertices[i+1]);
+        z = Math.min(z, vertices[i+2]);
+    }
+    if (x < 0)
+    {
+        x = Math.abs(x);
+        for (var i=0; i < vertices.length; i+=3)
+        {
+            vertices[i  ] += x;
+        }
+    }
+    if (y < 0)
+    {
+        y = Math.abs(y);
+        for (var i=0; i < vertices.length; i+=3)
+        {
+            vertices[i+1] += y;
+        }
+    }
+    if (z < 0)
+    {
+        z = Math.abs(z);
+        for (var i=0; i < vertices.length; i+=3)
+        {
+            vertices[i+2] += z;
+        }
+    }
+    
+    var stl = "";
+    stl += "solid " + name + "\r\n";
+    for (var v=0, n=0; v < vertices.length && n < normals.length; v+=9, n+=9) // one normal per face
+    {
+    stl += "   facet normal " + normals[n].toExponential() + " " + normals[n+1].toExponential() + " " + normals[n+2].toExponential() + "\r\n";
+    stl += "      outer loop\r\n";
+    stl += "         vertex " + vertices[v  ].toExponential() + " " + vertices[v+1].toExponential() + " " + vertices[v+2].toExponential() + "\r\n";
+    stl += "         vertex " + vertices[v+3].toExponential() + " " + vertices[v+4].toExponential() + " " + vertices[v+5].toExponential() + "\r\n";
+    stl += "         vertex " + vertices[v+6].toExponential() + " " + vertices[v+7].toExponential() + " " + vertices[v+8].toExponential() + "\r\n";
+    stl += "      endloop\r\n";
+    stl += "   end facet\r\n";    
+    }
+    stl += "endsolid " + name;
+    
+    var blob = new Blob([stl], {type: "text/plain"});
+    saveAs(blob, url);
+}
+
+function ExportCommand_TargetModifiedCB(attribute, container)
+{
+    var target = attribute.getValueDirect().join("");
+    var resource = container.registry.find(target);
+    if (resource)
+    {
+        container.targetNode = resource;
+    }
+}
+
 
 // TODO
 var eLWObjectTokens = 
@@ -31132,6 +32037,7 @@ LWSceneBuilder.prototype.allocateSceneElement = function(token, params)
                 kfi.name.setValueDirect("Dissolve");
                 
                 this.initializeKeyframeInterpolator(kfi, 1);
+                this.attachDissolveInterpolator(kfi, this.models[this.models.length-1]);
                 
                 this.evaluators.push(kfi);
                 this.evaluatorsGroup.addChild(kfi);
@@ -31843,6 +32749,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["NullObject"] = newSGNode;
     this.newResourceProcs["Material"] = newSGNode;
     this.newResourceProcs["Cube"] = newSGNode;
+    this.newResourceProcs["ScreenRect"] = newSGNode;
 
     // directives
     this.newResourceProcs["BBoxDirective"] = newSGDirective;
@@ -31861,6 +32768,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["SceneInspector"] = newSceneInspector;
     this.newResourceProcs["TargetObserver"] = newTargetObserver;
     this.newResourceProcs["AnimalMover"] = newAnimalMover;
+    this.newResourceProcs["WalkSimulator"] = newWalkSimulator;
 
     // commands
     this.newResourceProcs["AppendNode"] = newCommand;
@@ -31870,6 +32778,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["ConnectOutputs"] = newCommand;
     this.newResourceProcs["DisconnectAttributes"] = newCommand;
     this.newResourceProcs["DisconnectOutputs"] = newCommand;
+    this.newResourceProcs["Export"] = newCommand;
     this.newResourceProcs["Locate"] = newCommand;
     this.newResourceProcs["MotionInterpolate"] = newCommand;
     this.newResourceProcs["Pause"] = newCommand;
@@ -31882,6 +32791,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
 
     // device handlers
     this.newResourceProcs["MouseHandler"] = newDeviceHandler;
+    this.newResourceProcs["KeyboardHandler"] = newDeviceHandler;
 }
 
 AttributeFactory.prototype.initializeConfigureMap = function()
@@ -31924,6 +32834,7 @@ AttributeFactory.prototype.initializeFinalizeMap = function()
     this.finalizeProcs["ConnectOutputs"] = finalizeCommand;
     this.finalizeProcs["DisconnectAttributes"] = finalizeCommand;
     this.finalizeProcs["DisconnectOutputs"] = finalizeCommand;
+    this.finalizeProcs["Export"] = finalizeCommand;
     this.finalizeProcs["Locate"] = finalizeCommand;
     this.finalizeProcs["MotionInterpolate"] = finalizeCommand;
     this.finalizeProcs["Pause"] = finalizeCommand;
@@ -31936,6 +32847,7 @@ AttributeFactory.prototype.initializeFinalizeMap = function()
 
     // device handlers
     this.finalizeProcs["MouseHandler"] = finalizeDeviceHandler;
+    this.finalizeProcs["KeyboardHandler"] = finalizeDeviceHandler;
 }
 
 AttributeFactory.prototype.setRegistry = function(registry)
@@ -32019,6 +32931,7 @@ function newSGNode(name, factory)
     case "NullObject":          resource = new NullObject(); registerParentableAttributes(resource, factory);  break;
     case "Cube":                resource = new Cube(); break;
     case "Material":            resource = new Material(); break;
+    case "ScreenRect":          resource = new ScreenRect(); break;
     }
     
     if (resource)
@@ -32144,10 +33057,18 @@ function newAnimalMover(name, factory)
 {
 	var resource = new AnimalMover();
 	
-	resource.setGraphMgr(factory.graphMgr);
 	registerEvaluatorAttributes(resource, factory);
 	
 	return resource;	
+}
+
+function newWalkSimulator(name, factory)
+{
+    var resource = new WalkSimulator();
+    
+    registerEvaluatorAttributes(resource, factory);
+    
+    return resource;
 }
 
 function newCommand(name, factory)
@@ -32163,6 +33084,7 @@ function newCommand(name, factory)
     case "ConnectOutputs":      resource = new ConnectAttributesCommand(); break;    
     case "DisconnectAttributes":resource = new ConnectAttributesCommand(); resource.getAttribute("negate").setValueDirect(true); break;
     case "DisconnectOutputs":   resource = new ConnectAttributesCommand(); resource.getAttribute("negate").setValueDirect(true); break;
+    case "Export":              resource = new ExportCommand(); break;
     case "Locate":              resource = new LocateCommand(); break;
     case "MotionInterpolate":   resource = new MotionInterpolateCommand(); break;
     case "Pause":               resource = new PlayCommand(); resource.getAttribute("negate").setValueDirect(true); break;
@@ -32194,6 +33116,7 @@ function newDeviceHandler(name, factory)
     switch (name)
     {
     case "MouseHandler":        resource = new MouseHandler(); break;
+    case "KeyboardHandler":     resource = new KeyboardHandler(); break;
     }
 	
 	return resource;
@@ -32534,7 +33457,7 @@ Bridgeworks.prototype.get = function(name) {
   return this.registry.find(name);
 }
 
-Bridgeworks.prototype.handleEvent = function(event)
+Bridgeworks.prototype.handleEvent = function(event, eventType /* optional type override */)
 {
     var bwEvent = null;
 
@@ -32548,10 +33471,14 @@ Bridgeworks.prototype.handleEvent = function(event)
                 bwEvent = this.eventAdapter.createMouseEvent(event);
             }
             break;
+        
         case "KeyboardEvent":
             {
-                bwEvent = this.eventAdapter.createKeyboardEvent(event);
+                bwEvent = this.eventAdapter.createKeyboardEvent(event, eventType);
             }
+            break;
+            
+        default:
             break;
     }
 
