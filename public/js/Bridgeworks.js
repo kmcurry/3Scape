@@ -4826,6 +4826,39 @@ function planeProject(v, plane)
     return crossProduct(plane.normal, crossProduct(v, plane.normal));
 }
 
+function distanceBetweenLineSegmentAndPoint(a, b, point)
+{
+    // if segment points are coincident, return
+    if (a.equals(b))
+    {
+        return distanceBetween(a, point);
+    }
+
+    var mag = magnitude(b.x - a.x, 
+                        b.y - a.y, 
+                        b.z - a.z);
+
+    var u = (((point.x - a.x) * (b.x - a.x)) +
+             ((point.y - a.y) * (b.y - a.y)) +
+             ((point.z - a.z) * (b.z - a.z))) / (mag * mag);
+
+    // if u is not in range [0, 1], shortest distance lies on line outside of segment -- chose closest endpoint
+    if (u < 0)
+    {
+        return distanceBetween(a, point);
+    }
+    else if (u > 1)
+    {
+        return distanceBetween(b, point);
+    }
+    else // u E [0, 1]
+    {
+        return distanceBetween(new Vector3D(a.x + (b.x - a.x) * u,
+                                            a.y + (b.y - a.y) * u,
+                                            a.z + (b.z - a.z) * u), point);
+    }
+}
+
 var eAttrType = {
     Unknown                     :-1,
     
@@ -7924,6 +7957,31 @@ SphereTree.prototype.collides = function(tree)
     
     // root nodes do not collide
     return false;
+}
+
+SphereTree.prototype.obstructs = function(tree, forward)
+{
+    if (!this.root || !tree.root) // must be non-NULL
+    {
+        return 0; // indicates no obstruction
+    }
+    
+    // construct cylinder representing tree's root sphere extruded along the forward vector
+    var cylA = tree.root.sphere.xcenter;
+    var cylB = new Vector3D(cylA.x + forward.x, 
+                            cylA.y + forward.y,
+                            cylA.z + forward.z);
+    var cylRadius = tree.root.sphere.xradius;
+    
+    // find distance between cylinder center segment and this' center
+    var distance = distanceBetweenLineSegmentAndPoint(cylA, cylB, this.root.sphere.xcenter);   
+ 
+    if (distance < (this.root.sphere.xradius + cylRadius))
+    {
+        return distance;         
+    }
+    
+    return 0; // indicates no obstruction
 }
 
 SphereTree.prototype.nodesCollide = function(node1, node2)
@@ -18165,9 +18223,14 @@ function Model()
     this.pivotAboutGeometricCenter = new BooleanAttr(true);
     this.screenScaleEnabled = new BooleanAttr(false);
     this.screenScalePixels = new Vector3DAttr(0, 0, 0);
+    // TODO:
+    //this.collider = new BooleanAttr(false);
+    //this.collidee = new BooleanAttr(false);
     this.detectCollision = new BooleanAttr(false);
     this.collisionDetected = new BooleanAttr(false);
     this.collisionList = new AttributeVector();
+    this.obstructionDetected = new BooleanAttr(false);
+    this.obstructionList = new AttributeVector(); // currently will only contain most threatening (closest) obstructor
     this.highlight = new BooleanAttr(false);
     this.highlightColor = new ColorAttr(1, 1, 0, 1);
     this.highlightWidth = new NumberAttr(5);
@@ -18243,6 +18306,8 @@ function Model()
     this.registerAttribute(this.detectCollision, "detectCollision");
     this.registerAttribute(this.collisionDetected, "collisionDetected");
     this.registerAttribute(this.collisionList, "collisionList");
+    this.registerAttribute(this.obstructionDetected, "obstructionDetected");
+    this.registerAttribute(this.obstructionList, "obstructionList");
     this.registerAttribute(this.highlight, "highlight");
     this.registerAttribute(this.highlightColor, "highlightColor");
     this.registerAttribute(this.highlightWidth, "highlightWidth");
@@ -23017,6 +23082,8 @@ SerializeDirective.prototype.execute = function(root)
 }
 
 
+var MAX_SEE_AHEAD   = 2;
+
 CollideParams.prototype = new DirectiveParams();
 CollideParams.prototype.constructor = CollideParams();
 
@@ -23060,6 +23127,9 @@ CollideDirective.prototype.execute = function(root)
     
     // detect collisions
     this.detectCollisions(params.detectCollisions);
+    
+    // detect obstructions
+    this.detectObstructions(params.detectCollisions);
 }
 
 CollideDirective.prototype.detectCollisions = function(collideRecs)
@@ -23074,9 +23144,9 @@ CollideDirective.prototype.detectCollisions = function(collideRecs)
         trees.push(collideRecs[i].tree);
         collisions.push(false);
 
-        collideRecs[i].model.getAttribute("collisionList").clear();        
+        collideRecs[i].model.getAttribute("collisionList").clear();
     }
-    
+
     for (var i = 0; i < trees.length; i++)
     {
         for (var j = i+1; j < trees.length; j++)
@@ -23093,6 +23163,51 @@ CollideDirective.prototype.detectCollisions = function(collideRecs)
     for (var i = 0; i < collisions.length; i++)
     {
         models[i].getAttribute("collisionDetected").setValueDirect(collisions[i]);
+    }
+}
+
+CollideDirective.prototype.detectObstructions = function(collideRecs)
+{
+    var models = [];
+    var trees = [];
+    var obstructions = [];
+    
+    for (var i in collideRecs)
+    {
+        models.push(collideRecs[i].model);
+        trees.push(collideRecs[i].tree);
+        obstructions.push(false);
+
+        collideRecs[i].model.getAttribute("obstructionList").clear();        
+    }
+
+    var distance = 0;
+    var minDistance = FLT_MAX;
+    for (var i = 0; i < trees.length; i++)
+    {
+        var directionVectors = models[i].getDirectionVectors();
+        directionVectors.forward.x *= MAX_SEE_AHEAD;
+        directionVectors.forward.y *= MAX_SEE_AHEAD;
+        directionVectors.forward.z *= MAX_SEE_AHEAD;
+        
+        for (var j = 0; j < trees.length; j++)
+        {
+            if (i == j) continue;
+            
+            if ((distance = trees[j].obstructs(trees[i], directionVectors.forward)) > 0 &&
+                 distance < minDistance)
+            {
+                models[i].getAttribute("obstructionList").clear();
+                models[i].getAttribute("obstructionList").push_back(models[j]);
+                obstructions[i] = true;
+                minDistance = distance;
+            }
+        }
+    }
+    
+    for (var i = 0; i < obstructions.length; i++)
+    {
+        models[i].getAttribute("obstructionDetected").setValueDirect(obstructions[i]);
     }
 }
 function HighlightTarget()
@@ -23605,12 +23720,17 @@ ObjectMover.prototype.connectTarget = function(target)
 		this.angularVelocity.addTarget(target.getAttribute("angularVelocity"));
 		this.scalarVelocity.addTarget(target.getAttribute("scalarVelocity"));	
 		target.getAttribute("collisionDetected").addModifiedCB(ObjectMover_TargetCollisionDetectedModifiedCB, this);
+		target.getAttribute("obstructionDetected").addModifiedCB(ObjectMover_TargetObstructionDetectedModifiedCB, this);
 	}
 	
 	this.targetObject = target;
 }
 
-ObjectMover.prototype.collisionDetected = function()
+ObjectMover.prototype.collisionDetected = function(collisionList)
+{
+}
+
+ObjectMover.prototype.obstructionDetected = function(obstructionList)
 {
 }
 
@@ -23645,6 +23765,13 @@ function ObjectMover_TargetCollisionDetectedModifiedCB(attribute, container)
     container.lastCollisionDetected = collisionList.Size() > 0 ? true : false;
 }
 
+function ObjectMover_TargetObstructionDetectedModifiedCB(attribute, container)
+{
+    var obstructionDetected = attribute.getValueDirect();
+    var obstructionList = attribute.getContainer().getAttribute("obstructionList");
+    container.obstructionDetected(obstructionList);
+}
+
 var ANIMALMOVER_MAX_QUEUE_LENGTH	= 2;
 
 AnimalMover.prototype = new ObjectMover();
@@ -23663,8 +23790,11 @@ AnimalMover.prototype.evaluate = function()
 {
 	if (this.motionQueue.length() == 0)
 	{
+	    var rand = Math.random();
+	    var negateAngle = rand < 0.5 ? -1 : 1;
 	    var walk = new ObjectMotionDesc();
-		walk.duration = FLT_MAX;
+		walk.duration = 5 * rand; // 
+		walk.angularVelocity = new Vector3D(0, this.angularSpeed.getValueDirect() * rand * negateAngle , 0);
 		walk.panVelocity = new Vector3D(0, 0, this.linearSpeed.getValueDirect());
 		
 		this.motionQueue.push(walk);
@@ -23676,46 +23806,62 @@ AnimalMover.prototype.evaluate = function()
 
 AnimalMover.prototype.collisionDetected = function(collisionList)
 {   
-    if (collisionList.Size() > 0) // collision(s) occurred
+}
+
+AnimalMover.prototype.obstructionDetected = function(obstructionList)
+{   
+    if (obstructionList.Size() > 0) // obstructions(s) occurred
     {
        this.motionQueue.clear();
        this.activeMotion = null;
 
-       // determine vector to reverse collision by subtracting collider position(s) from this position
+       // determine vector to avoid obstruction
+       var directionVectors = this.targetObject.getDirectionVectors();
        var thisPos = this.targetObject.getAttribute("sectorPosition").getValueDirect();
-       var linearDirection = new Vector3D(0, 0, 0);
-       for (var i=0; i < collisionList.Size(); i++)
+       var linearDirection = new Vector3D(directionVectors.forward.x, directionVectors.forward.y, directionVectors.forward.z);
+       var obstructorPos = obstructionList.getAt(0).getAttribute("sectorPosition").getValueDirect();
+       var angleBetween = toDegrees(Math.acos(cosineAngleBetween(directionVectors.forward, 
+                                                                 new Vector3D(obstructorPos.x - thisPos.x, 
+                                                                              obstructorPos.y - thisPos.y, 
+                                                                              obstructorPos.z - thisPos.z))));
+       // if angleBetween is 0, offset obstructorPos so that deltaPos is not (0, 0, 0)
+       if (angleBetween == 0)
        {
-           var colliderPos = collisionList.getAt(i).getAttribute("sectorPosition").getValueDirect();
-           var deltaPos = new Vector3D(thisPos.x - colliderPos.x, /*thisPos.y - colliderPos.y*/0, thisPos.z - colliderPos.z);
-           linearDirection.addVector(deltaPos);
+           obstructorPos.x += 0.1;
+           obstructorPos.z += 0.1;
        }
+       var mag = distanceBetween(thisPos, obstructorPos);       
+       var deltaPos = new Vector3D(((directionVectors.forward.x * mag) - (obstructorPos.x)), 
+                                   ((directionVectors.forward.y * mag) - (obstructorPos.y)), 
+                                   ((directionVectors.forward.z * mag) - (obstructorPos.z)));
+       deltaPos.normalize();
+       //deltaPos.multiplyScalar(MAX_AVOID_FORCE);
+       linearDirection.addVector(deltaPos);
        linearDirection.normalize();
        
        // scale by linear speed   
        linearDirection.multiplyScalar(this.linearSpeed.getValueDirect());
        this.linearDirection = linearDirection;
        
-       // push linear velocity
-       var linear = new ObjectMotionDesc();
-       linear.linearVelocity = linearDirection;
-       linear.duration = FLT_MAX;
-       this.motionQueue.push(linear);
-       
        // turn so this will travel in direction of this vector
-       var directionVectors = this.targetObject.getDirectionVectors();
-       var angleBetween = toDegrees(Math.acos(cosineAngleBetween(directionVectors.forward, this.linearDirection)));
+       var cosAngle = cosineAngleBetween(directionVectors.forward, this.linearDirection);
+       angleBetween = toDegrees(Math.acos(cosAngle));
        if (angleBetween > 0)
        {
+           if (cosAngle < 0) angleBetween = -angleBetween;
            var rotation = this.targetObject.getAttribute("rotation").getValueDirect();
-           this.targetObject.getAttribute("rotation").setValueDirect(rotation.x, 360 - angleBetween + rotation.y, rotation.z);
+           //this.targetObject.getAttribute("rotation").setValueDirect(rotation.x, angleBetween + rotation.y, rotation.z);
+           
+           var turn = new ObjectMotionDesc();
+           turn.angularVelocity = new Vector3D(0, angleBetween, 0);
+           turn.duration = angleBetween / this.angularSpeed.getValueDirect();
+           this.motionQueue.push(turn);
        }
     }
-    else // no collision(s)
+    else // no obstruction(s)
     {
     }
 }
-
 WalkSimulator.prototype = new SceneInspector();
 WalkSimulator.prototype.constructor = WalkSimulator;
 
@@ -29576,9 +29722,9 @@ ScreenCaptureCommand.prototype.screenCapture = function(canvasId)
 
     // 3Scape-specific: decode the base64 data into 8bit array
     cimageData = imageData;
-    //var cnt = imageData.lastIndexOf(',') + 1;
-    //imageData = imageData.substr(cnt);
-    //imageData = Base64Binary.decode(imageData);
+    var cnt = imageData.lastIndexOf(',') + 1;
+    imageData = imageData.substr(cnt);
+    imgeData = Base64Binary.decode(imageData);
         
     // for testing with Bug-60.htm
     //document.getElementById('imgCapture').src = imageData;
