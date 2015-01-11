@@ -16634,7 +16634,6 @@ RenderDirective.prototype.execute = function(root)
         this.resetDisplayLists = false;
     }
         
-    this.backgroundScreen.apply("render", params, true);
     visited[0].apply("render", params, true);
     
     // sort and draw semi-transparent geometries (if any)
