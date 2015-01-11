@@ -10,8 +10,11 @@ module.exports = function(app, passport) {
     */
 
     app.get('/', function (req, res) {
-      console.log("rendering index");
-          res.render('index');
+      res.render('index');
+    });
+
+    app.get('/create', function (req, res) {
+      res.render('create');
     });
 
     app.get('/classroom', function (req, res) {

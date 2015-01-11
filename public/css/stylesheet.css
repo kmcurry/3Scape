@@ -1,6 +1,7 @@
 body{
     padding:0;
     overflow: hidden;
+    color:#bbbbbb;
 }
 
 body.modal-open {
