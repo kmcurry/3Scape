@@ -1,7 +1,7 @@
 
 Make and share working virtual machines online. Bring your imagination to life in your browser at [3Scape.me](http;//3Scape.me)
 
-![Bring your imagination to life in your browser with 3Scape.]("https://github.com/kmcurry/3Scape/blob/master/public/images/logo-3S.png" =50x)
+![Bring your imagination to life in your browser with 3Scape.](./public/images/logo-3S.png =60x60)
 
 This is documentation for the code that runs 3Scape.
 
