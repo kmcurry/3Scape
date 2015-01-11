@@ -97,10 +97,10 @@ module.exports = function(app, passport) {
         if (req.params.scape) {
           var s = JSON.stringify(req.params.scape);
           console.log("scape = " + s);
-          res.render('index', {scape: s});
+          res.render('create', {scape: s});
         } else {
           console.log("no scape");
-          res.render('index');
+          res.render('create');
         }
     });
 }
