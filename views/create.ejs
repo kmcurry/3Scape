@@ -5,7 +5,6 @@
     <meta name="google-site-verification" content="HshVtf6HnSfl2YCmfMSpPEkQJT4lwYlxWt1x5XSbjoo" />
     <meta name="globalsign-domain-verification" content="0N60TGhkkTPLK6Kecx2W5DbZ8UKdDDPtT-xB1AdoqH" />
     <meta name="description" content="a place to make and share interactive 3D on the web">
-    <meta name="p:domain_verify" content="71238727c011f9da9c7b9445f91d4d7b"/>
 
     <!-- Bridgeworks-->
     <script src="./js/BwHelper.js"></script>
@@ -13,7 +12,6 @@
     <script type="text/javascript" src="./js/conway.js"></script>
 
     <!-- jquery stuff -->
-    <!-- Install and use local files - KMC -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -86,6 +84,7 @@
           var zoomUpdate;
           var distance;
           var camStartPos;
+          var g_selectedModelName;
 
           var selectedThing;
           var selectedId;
@@ -123,8 +122,6 @@
 
           function saveScene()
           {
-              serializedScene = "";
-
               var command = "\<Serialize target='Root'/>";
               bridgeworks.updateScene(command);
 
@@ -449,7 +446,6 @@
                           <li><a href="javascript:loadEntymology();">Entymology</a></li>
                           <li><a href="javascript:loadTwoStroke();">2-Stroke Engine</a></li>
                           <li><a href="javascript:load2D3D();">2D vs. 3D</a></li>
-                          <li><a href="javascript:loadLights();">Light</a></li>
                         </ul>
                       </div>
                     </li>
@@ -538,20 +534,18 @@
                           <span class="fa fa-question-circle fa-lg" style="font-size:2em;"></span>
                         </button>
                       </li>
-                  </ul>
-                  <ul>
-                    <li>
-                      <div class="fb-like" style="padding-top:2px;padding-left:4px;" data-href="http://3scape.me" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-                    </li>
+                      <li>
+                        <div class="fb-like" style="padding-top:2px;padding-left:4px;" data-href="http://3scape.me" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                      </li>
                   </ul>
               </div>
           </div>
       </div>
       <!-- End headerController scope -->
         <div class="row">
-          <div id="container" style="width:260px; display: none;">
+          <div id="container" style="width:300px; display: none;">
               <div id="side-nav" class="width sidebar collapse" style="padding:0; border:0;z-index:1029">
-                  <div style="padding:10px; overflow:hidden; width:240px;">
+                  <div style="padding:10px; overflow:hidden; width:340px;">
                           <div>
                               <ul class="nav nav-tabs" style="clear:both">
                                 <li class="active"><a href="#object-panel" data-toggle="tab">Objects</a></li>
@@ -613,7 +607,7 @@
           </div>
 
           <!-- CANVAS IS HERE-->
-          <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleMouse(event);" onclick="handleMouse(event);" onmousedown="handleMouse(event);" onmouseup="handleMouse(event);" onmousemove="handleMouse(event);">
+          <div class="col-sm-12" style="height:100%; width:100%; padding:0;padding-right: 0;" id="BwContainer" ondblclick="handleEvent(event);" onclick="handleEvent(event);" onmousedown="handleEvent(event);" onmouseup="handleEvent(event);" onmousemove="handleEvent(event);">
                   <!--<img id="BackgroundImage" style="position: absolute; z-index: -1;width:100%;" src="BwContent/images/Sky2.jpg"/>-->
                   <canvas id="Canvas" style="width:100%">
                   </canvas>
@@ -780,6 +774,10 @@
           </form>
       </div>
 
+      <script>
+      	$('.nicEdit-panelContain').css("color", "green !important");
+      </script>
+
     <div id="example" title="Caption this Scene for Facebook">
         <span style ="float: left; margin:0 7px 50px 0; width:550px; height:200px;"><img id="picCaption"></span>
         <textarea name="fbCaption" id="fbCaption" style="width:100%" value="3Scaping: "></textarea>
@@ -923,31 +921,33 @@
                     // browser supports WebGL
                     document.location.href = "http://get.webgl.org/";
                 } else {
-                  bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"), true);
-
-                  g_sceneInspector = bridgeworks.registry.find("SceneInspector");
-                  g_objectInspector =bridgeworks.registry.find("ObjectInspector");
-                  var graphMgr = bridgeworks.registry.find("GraphMgr");
-                  g_labelCount = graphMgr.labelIndex;
-
-
-
-                  // this loads a named 3Scape passed in with the URL
-                  // ex., http://3Scape.me/egypt
-                  <% if (typeof scape != 'undefined') { %>
-                    loadScape(<%- scape %>);
-                  <% } %>
-
-                  //cubify();
-
-
-
-                  document.getElementById('saveScene').onclick = function(){
-                      saveScene();
-                  };
-
-                  listLibrary();
+                    var canvas = document.getElementById("Canvas");
+                    var ctx = canvas.getContext("webgl");
+                    if (!ctx) {
+                        // browser supports WebGL but initialization failed.
+                        window.location.href = "nowebgl";
+                    }
                 }
+                bridgeworks = init("grid-100.xml", document.getElementById("BwContainer"), true);
+
+                // this loads a named 3Scape passed in with the URL
+                // ex., http://3Scape.me/egypt
+                <% if (typeof scape != 'undefined') { %>
+                  loadScape(<%- scape %>);
+                <% } %>
+
+                //cubify();
+
+                g_sceneInspector = bridgeworks.registry.find("SceneInspector");
+                g_objectInspector =bridgeworks.registry.find("ObjectInspector");
+                var graphMgr = bridgeworks.registry.find("GraphMgr");
+                g_labelCount = graphMgr.labelIndex;
+
+                document.getElementById('saveScene').onclick = function(){
+                    saveScene();
+                };
+
+                listLibrary();
 
                 $('html').bind('keypress', function(e)
                 {
@@ -1025,6 +1025,20 @@
                 }
                 });
 
+                document.getElementById('#dialog').blur();
+
+                $('#dialog').on('load', function(event) {
+                $('#submitLabel')
+                	event.preventDefault();
+                	$('#submitLabel').blur();
+                 	$('#title').focus();
+
+                	document.onselectstart = function() { return false; };
+                	event.target.ondragstart = function() { return false; };
+                	return false;
+                });
+
+
                 $( "#dialog" ).dialog({
                   close: function( event, ui ) {
                       if (adding) {
@@ -1038,6 +1052,7 @@
                       editorOpen = 0;
                   }
                 });
+
 
                 $(".btn-slide").click(function(){
                     $("#ControlPanel").slideToggle("medium");
@@ -1136,7 +1151,17 @@
       </script>
 
 <script type="text/javascript">
-
+  /*
+  var toggleMode = function(){
+    if($('.modeButton:first').hasClass("fa-video-camera")) {
+      $('.toggleController').removeClass('btn-info').addClass('btn-danger');
+      $('.toggleGlyph').removeClass('fa-video-camera').addClass('icon-move');
+    }else {
+      $('.toggleController').removeClass('btn-danger').addClass('btn-info');
+      $('.toggleGlyph').removeClass('icon-move').addClass('fa-video-camera');
+    }
+  };
+  */
   var toggleMap = function(){
     $('#map-controls').fadeToggle();
     $('#object-controls').fadeToggle();
@@ -1149,11 +1174,9 @@
 </script>
 
       <!-- Initialize Angular -->
-      <!-- Use local installation - KMC -->
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
       <script src="core.js"></script>
 
-      <!-- Already verified
-      <a href="https://plus.google.com/112246128134687979668" rel="publisher">Google+</a> -->
+      <a href="https://plus.google.com/112246128134687979668" rel="publisher">Google+</a>
   </body>
 </html>
