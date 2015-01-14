@@ -1,21 +1,22 @@
 
 module.exports = function(app, passport) {
 //HOME PAGE(with login links) ======
-    /*
-    app.get('/',isLoggedIn, function (req, res) {
-        res.render('index.ejs',{
+
+    app.get('/create',isLoggedIn, function (req, res) {
+        res.render('create',{
             user: req.user
-        }); //load the index.ejs file
+        });
     });
-    */
 
     app.get('/', function (req, res) {
       res.render('index');
     });
 
+    /*
     app.get('/create', function (req, res) {
       res.render('create');
     });
+    */
 
     app.get('/classroom', function (req, res) {
       res.render('classroom.ejs')
@@ -43,7 +44,7 @@ module.exports = function(app, passport) {
 
 //process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/', //redirect to the secure profile section
+        successRedirect: '/create', //redirect to the secure profile section
         failureRedirect: '/login', //redirect to the signup page if there is an error
         failureFlash: true //allow flash messages
     }));
@@ -56,7 +57,7 @@ module.exports = function(app, passport) {
 
 //process the signup form
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect: '/', //redirect to the secure profile section
+        successRedirect: '/create', //redirect to the secure profile section
         failureRedirect: '/signup', //redirect to the signup page if there is an error
         failureFlash: true //allow flash messages
     }));
