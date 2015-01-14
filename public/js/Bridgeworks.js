@@ -4949,7 +4949,8 @@ var eAttrType = {
     MultiTargetObserver			:1107,
     ObjectMover	 				:1108,
     AnimalMover					:1109, 
-    WalkSimulator               :1110,  
+    WalkSimulator               :1110,
+    MorphEffector               :1111,
     Evaluator_End               :1199, // all evaluator types must be given a type between Evaluator and Evaluator_End
 
     Node_End                    :1999,
@@ -4980,6 +4981,7 @@ var eAttrType = {
     ConnectAttributes           :3013,
     DisconnectAttributes        :3014,
     Export                      :3015,
+    Morph                       :3016,
     Command_End                 :3999,
 
     DeviceHandler               :4000,
@@ -18183,6 +18185,7 @@ function Model()
     this.attrType = eAttrType.Model;
     
     this.geometry = [];
+    this.geometryIndices = [];
     this.geometryBBoxesMap = [];
     this.geometryAttrConnections = [];
     this.surfaceAttrConnections = [];
@@ -18354,163 +18357,6 @@ Model.prototype.copyModel = function(clone,cloneChildren,pathSrc,pathClone)
     }
 }
 
-/*Model.prototype.postClone = function(clone,pathSrc,pathClone)
-{
-    var i;
-    var j;
-    var node;
-    var type;
-    // setup uv-coords for cloned vertex geometry
-
-    // find vertex geometry nodes under this node
-    var names = [];
-    var types = [];
-    if (!(types.push(eAttrType.TriList))) return;
-    if (!(types.push(eAttrType.LineList))) return;
-    if (!(types.push(eAttrType.PointList))) return;
-    var vertexGeometryNodes = [];
-    this.searchTree(names, types, false, true, false, null, null, null, vertexGeometryNodes);
-    //if (!(types.push(eAttrType.IndexedTriList))) return;
-    //if (!(Push_Back<eAttrType>(types, eAttrType_Node_IndexedLineList))) return;
-    //if (!(Push_Back<eAttrType>(types, eAttrType_Node_IndexedPointList))) return;
-
-
-    // find vertex geometry nodes under the clone
-    var vertexGeometryNodesClone = [];
-    for (i=0; i < pathClone.length(); i++)
-    {
-        node = pathClone.stack[i];
-        type = node.getAttribute();
-        if (type == eAttrType.TriList ||
-            type == eAttrType.LineList ||
-            type == eAttrType.PointList)
-//            type == eAttrType_Node_IndexedTriList ||
-//            type == eAttrType_Node_IndexedLineList ||
-//            type == eAttrType_Node_IndexedPointList)
-        {
-            if (!(vertexGeometryNodesClone.push(node))) return;
-        }
-    }
-
-    // find media texture nodes affecting this node
-    var textureNodes = [];
-    this.searchTree(null, eAttrType.MediaTexture, false, true, false, null, null, null, textureNodes);
-
-    // find media texture nodes affecting the clone
-    var textureNodesClone = [];
-    for (i=0; i < pathClone.length(); i++)
-    {
-        node = pathClone.stack[i];
-        if (node.getAttribute() == eAttrType.MediaTexture)
-        {
-            if (!(textureNodesClone.push(node))) return;
-        }
-    }
-
-    // for each vertex geometry node
-    for (i=0; i < vertexGeometryNodes.size(); i++)
-    {
-        // for each texture node, setup the uv-coords
-        var uvCoords = new NumberArrayAttr();
-        for (j=0; j < textureNodes.size() && j < textureNodesClone.size(); j++)
-        {
-            uvCoords = vertexGeometryNodes[i].findUVCoords(textureNodes[j]);
-            if (uvCoords)
-            {
-                var uvCoords2 = new NumberArrayAttr();
-                uvCoords2 = vertexGeometryNodesClone[i].getUVCoords(textureNodesClone[j]);
-                if (uvCoords2) uvCoords2.copyValue(uvCoords);
-            }
-        }
-    }
-
-    // setup m_geometry, m_geometryIndicesMap, m_geometryBBoxesMap, and m_surfaceNameMap
-    var modelClone = clone;
-
-    // find geometry nodes under the clone
-    var geometryNodesClone = [];
-    clone.searchesTree(names, types, false, true, false, null, null, null, geometryNodesClone);
-
-    // synchronize m_geometryAttrConnections using "OR" operation (this will ensure attributes set inline on the clone are not lost)
-    //std::vector<std::pair<CAttribute*, bool> >::const_iterator it;
-    //this.geometryAttrConnections[]
-    //std::vector<std::pair<CAttribute*, bool> >::iterator clone_it;
-    */
-   /* for (it = m_geometryAttrConnections.begin(), clone_it = modelClone->m_geometryAttrConnections.begin();
-         it != m_geometryAttrConnections.end(), clone_it != modelClone->m_geometryAttrConnections.end();
-         it++, clone_it++)*/
-    /*for(var i = 0;i<this.geometryAttrConnections.length;i++)
-    {
-        // if this node has had a geometry attribute set, and the clone has not, copy the value from this
-        if (it->second && !clone_it->second)
-        {
-            clone_it->first->CopyValue(it->first);
-        }
-
-        clone_it->second = clone_it->second | it->second;
-    }
-
-    var geometry;
-    var srcGeometry;
-    var srcIndices = [];
-    const std::pair<CVector3Df, CVector3Df>* srcBBox;
-    for (i=0; i < geometryNodesClone.size(); i++)
-    {
-        geometry = geometryNodesClone[i];
-
-        srcGeometry = GetGeometry(i);
-        srcIndices = GetGeometryIndices(srcGeometry);
-        srcBBox = GetGeometryBBox(srcGeometry);
-
-        if (!(Push_Back<GcGeometry*>(modelClone->m_geometry, geometry))) return;
-        if (srcIndices) modelClone.m_geometryIndicesMap[geometry] = *srcIndices;
-        if (srcBBox) modelClone->m_geometryBBoxesMap[geometry] = *srcBBox;
-
-        modelClone->UpdateGeometryAttrConnections(geometry, true);
-        modelClone->AddGeometryBBox(geometry);
-    }
-
-    // find surface nodes under the clone
-    var surfaceNodesClone = [];
-    clone.searchTree(null, eAttrType.Surface, false, true, false, null, null, null, surfaceNodesClone);
-
-    // synchronize m_surfaceAttrConnectionsMap using "OR" operation (this will ensure attributes set inline on the clone are not lost)
-    for (it = m_surfaceAttrConnections.begin(), clone_it = modelClone->m_surfaceAttrConnections.begin();
-         it != m_surfaceAttrConnections.end(), clone_it != modelClone->m_surfaceAttrConnections.end();
-         it++, clone_it++)
-    {
-        // if this node has had a surface attribute set, and the clone has not, copy the value from this
-        if (it->second && !clone_it->second)
-        {
-            clone_it->first->CopyValue(it->first);
-        }
-
-        clone_it->second = clone_it->second | it->second;
-    }
-
-    var surface;
-    for (i=0; i < surfaceNodesClone.size(); i++)
-    {
-        surface = surfaceNodesClone[i];
-
-        modelClone->m_surfaceNameMap[surface->GetName()->GetValueDirect(buffer, sizeof(buffer))] = surface;
-
-        // register surface to this for accessiblity with Set
-        modelClone->RegisterAttribute(surface, buffer);
-        if (surface.getContainer() == modelClone)
-        {
-            // don't want modelClone to be the registered container for the surface otherwise it will be released
-            // when unregistered
-            surface.setContainer(null);
-        }
-
-        modelClone->UpdateSurfaceAttrConnections(surface, true);
-    }
-
-    // call base-class implementation
-    this.postClone(clone, pathSrc, pathClone);
-}
-*/
 Model.prototype.initializeSurfaceAttrConnectionsMap = function()
 {
     this.surfaceAttrConnections.push(new Pair(this.color, false));
@@ -18722,22 +18568,16 @@ Model.prototype.addSurface = function(surface)
     this.connectSurfaceAttributes(surface);
 }
 
-Model.prototype.addGeometry = function(geometry, surface)
+Model.prototype.addGeometry = function(geometry, indices, surface)
 {
     surface.addChild(geometry);
     
     this.connectGeometryAttributes(geometry);
     this.addGeometryBBox(geometry);
     this.geometry.push(geometry);
+    this.geometryIndices.push(indices);
         
     this.updateBoundingTree = true;
-}
-
-Model.prototype.addIndexedGeometry = function(geometry, indices, surface)
-{
-    this.addGeometry(geometry, surface);
-    
-    // TODO: what to do with indices?
 }
 
 Model.prototype.connectSurfaceAttributes = function(surface)
@@ -24307,6 +24147,62 @@ ScreenRect.prototype.setTexture = function(texture)
     uvCoords.setValueDirect(uvs);
 }
 
+MorphEffector.prototype = new Evaluator();
+MorphEffector.prototype.constructor = MorphEffector;
+
+function MorphEffector()
+{
+    Evaluator.call(this);
+    this.className = "MorphEffector";
+    this.attrType = eAttrType.MorphEffector;
+    
+    this.morphAmt = new NumberAttr(0);
+    this.morphIncr = new NumberAttr(0);
+    this.sourceVertices = new NumberArrayAttr();
+    this.targetVertices = new NumberArrayAttr();
+    this.resultVertices = new NumberArrayAttr();
+    
+    this.registerAttribute(this.morphAmt, "morphAmt");
+    this.registerAttribute(this.morphIncr, "morphIncr");
+    this.registerAttribute(this.sourceVertices, "sourceVertices");
+    this.registerAttribute(this.targetVertices, "targetVertices");
+    this.registerAttribute(this.resultVertices, "resultVertices");
+}
+
+MorphEffector.prototype.evaluate = function()
+{
+    // get input values
+
+    // morph amount
+    var morphAmt = this.morphAmt.getValueDirect();
+
+    // morph increment
+    var morphIncr = this.morphIncr.getValueDirect();
+
+    // increment morph amount by morph increment
+    morphAmt += morphIncr;
+
+    // clamp morph amount to range [0, 1]
+    morphAmt = clamp(morphAmt, 0, 1);
+
+    // update morph amount attribute value
+    this.morphAmt.setValueDirect(morphAmt);
+
+    var sourceVertices = this.sourceVertices.getValueDirect();
+    var targetVertices = this.targetVertices.getValueDirect();
+    var resultVertices = [];
+    
+    var count = Math.min(sourceVertices.length, targetVertices.length);
+    resultVertices.length = count;
+    
+    for (var i = 0; i < count; i++)
+    {
+        resultVertices[i] = (targetVertices[i] - sourceVertices[i]) * morphAmt + sourceVertices[i];
+    }
+    
+    this.resultVertices.setValue(resultVertices);
+}
+
 var eEventType = {
     Unknown                     :-1,
     
@@ -28074,6 +27970,58 @@ ConnectionMgr.prototype.disconnectWalkSimulation = function(simulator, target)
     ConnectionMgr.prototype.disconnectSceneInspection.call(null, simulator, target);
 }
 
+ConnectionMgr.prototype.connectModelsToMorph = function(source, target, morphIncr)
+{
+    if (!source || !target) return;
+    
+    var factory = this.registry.find("AttributeFactory");
+    
+    // get target vertices
+    var targetVertices = target.getAttribute("vertices").getValueDirect();
+    
+    // for each geometry set in the source...
+    for (var i = 0; i < source.geometry.length; i++)
+    {
+        // get indices
+        var indices = source.geometryIndices[i];    
+        if (!indices) continue;
+        
+        // create morph effector    
+        var morpher = factory.create("MorphEffector");   
+        morpher.getAttribute("renderAndRelease").setValueDirect(true);
+        morpher.getAttribute("morphIncr").setValueDirect(morphIncr);
+        
+        // get source vertices from geometry and set to sourceVertices on morpher
+        var sourceVertices = source.geometry[i].getAttribute("vertices").getValueDirect();
+        morpher.getAttribute("sourceVertices").setValueDirect(sourceVertices);
+        
+        // set target vertices
+        var morpher_targetVertices = [];
+        for (var j = 0; j < indices.length; j++)
+        {
+            var index = indices[j];
+            
+            if (index * 3 + 2 < targetVertices.length)
+            {
+                morpher_targetVertices.push(targetVertices[index * 3    ]);
+                morpher_targetVertices.push(targetVertices[index * 3 + 1]);
+                morpher_targetVertices.push(targetVertices[index * 3 + 2]);
+            }
+            else // target deosn't contain enough points, use source
+            {
+                morpher_targetVertices.push(sourceVertices[j * 3    ]);
+                morpher_targetVertices.push(sourceVertices[j * 3 + 1]);
+                morpher_targetVertices.push(sourceVertices[j * 3 + 2]);
+            }
+        }
+        morpher.getAttribute("targetVertices").setValueDirect(morpher_targetVertices);
+        
+        // connect result vertices to source vertices
+        morpher.getAttribute("resultVertices").addTarget(source.geometry[i].getAttribute("vertices"));
+    }
+}
+
+
 RenderAgent.prototype = new Agent();
 RenderAgent.prototype.constructor = RenderAgent;
 
@@ -29957,6 +29905,61 @@ function ExportCommand_TargetModifiedCB(attribute, container)
 }
 
 
+MorphCommand.prototype = new Command();
+MorphCommand.prototype.constructor = MorphCommand;
+
+function MorphCommand()
+{
+    Command.call(this);
+    this.className = "Morph";
+    this.attrType = eAttrType.Morph;
+
+    this.sourceModel = null;
+    this.targetModel = null;
+    
+    this.source = new StringAttr("");
+    this.morphIncr = new NumberAttr(0.1);
+    
+    this.source.addModifiedCB(MorphCommand_SourceModifiedCB, this);
+    this.target.addModifiedCB(MorphCommand_TargetModifiedCB, this);
+
+    this.registerAttribute(this.source, "source");
+    this.registerAttribute(this.morphIncr, "morphIncr");
+}
+
+MorphCommand.prototype.execute = function()
+{
+    if (this.sourceModel && this.targetModel)
+    {
+        var connectionMgr = this.registry.find("ConnectionMgr");
+        if (connectionMgr)
+        {
+            connectionMgr.connectModelsToMorph(this.sourceModel, this.targetModel, this.morphIncr.getValueDirect());
+        }    
+    }
+}
+
+function MorphCommand_SourceModifiedCB(attribute, container)
+{
+    var source = attribute.getValueDirect().join("");
+    var resource = container.registry.find(source);
+    if (resource)
+    {
+        container.sourceModel = resource;
+    }
+}
+
+
+function MorphCommand_TargetModifiedCB(attribute, container)
+{
+    var target = attribute.getValueDirect().join("");
+    var resource = container.registry.find(target);
+    if (resource)
+    {
+        container.targetModel = resource;
+    }
+}
+
 // TODO
 var eLWObjectTokens = 
 {
@@ -31243,7 +31246,7 @@ LWObjectBuilder.prototype.describeModel = function(data, layer, model)
         {
             var triList = factory.create("TriList");
 
-            model.addGeometry(triList, surfaces[surfIndex]); // TODO: call method that accepts indices
+            model.addGeometry(triList, vertexOrder[surfIndex], surfaces[surfIndex]);
 
             triList.getAttribute("vertices").setValue(vertices);
             triList.getAttribute("normals").setValue(normals);
@@ -31277,7 +31280,7 @@ LWObjectBuilder.prototype.describeModel = function(data, layer, model)
         {
             var lineList = factory.create("LineList");
 
-            model.addGeometry(lineList, surfaces[surfIndex]); // TODO: call method that accepts indices   
+            model.addGeometry(lineList, null, surfaces[surfIndex]);
             
             lineList.getAttribute("vertices").setValue(vertices);
         }
@@ -31303,7 +31306,7 @@ LWObjectBuilder.prototype.describeModel = function(data, layer, model)
         {
             var pointList = factory.create("PointList");
 
-            model.addGeometry(pointList, surfaces[surfIndex]); // TODO: call method that accepts indices   
+            model.addGeometry(pointList, null, surfaces[surfIndex]);
             
             pointList.getAttribute("vertices").setValue(vertices);
         }
@@ -32950,6 +32953,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["TargetObserver"] = newTargetObserver;
     this.newResourceProcs["AnimalMover"] = newAnimalMover;
     this.newResourceProcs["WalkSimulator"] = newWalkSimulator;
+    this.newResourceProcs["MorphEffector"] = newMorphEffector;
 
     // commands
     this.newResourceProcs["AppendNode"] = newCommand;
@@ -32969,6 +32973,7 @@ AttributeFactory.prototype.initializeNewResourceMap = function()
     this.newResourceProcs["Serialize"] = newCommand;
     this.newResourceProcs["Set"] = newCommand;
     this.newResourceProcs["Stop"] = newCommand;
+    this.newResourceProcs["Morph"] = newCommand;
 
     // device handlers
     this.newResourceProcs["MouseHandler"] = newDeviceHandler;
@@ -33025,7 +33030,8 @@ AttributeFactory.prototype.initializeFinalizeMap = function()
     this.finalizeProcs["Serialize"] = finalizeCommand;
     this.finalizeProcs["Set"] = finalizeCommand;
     this.finalizeProcs["Stop"] = finalizeCommand;
-
+    this.finalizeProcs["Morph"] = finalizeCommand;
+    
     // device handlers
     this.finalizeProcs["MouseHandler"] = finalizeDeviceHandler;
     this.finalizeProcs["KeyboardHandler"] = finalizeDeviceHandler;
@@ -33252,6 +33258,15 @@ function newWalkSimulator(name, factory)
     return resource;
 }
 
+function newMorphEffector(name, factory)
+{
+    var resource = new MorphEffector();
+    
+    registerEvaluatorAttributes(resource, factory);
+    
+    return resource;
+}
+
 function newCommand(name, factory)
 {
     var resource = null;
@@ -33275,6 +33290,7 @@ function newCommand(name, factory)
     case "Serialize":           resource = new SerializeCommand(); break;
     case "Set":                 resource = new SetCommand(); break;
     case "Stop":                resource = new StopCommand(); break;
+    case "Morph":               resource = new MorphCommand(); break;
     }
 
 	// if command sequence, set to command mgr
