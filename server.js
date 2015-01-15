@@ -13,6 +13,11 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var methodOverride = require('method-override');
 var mongoStore = require('connect-mongodb');
+var nodemailer = require('nodemailer');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt-nodejs');
+var async = require('async');
+var crypto = require('crypto');
 
 
 // configuration ===============================================================

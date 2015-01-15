@@ -74,7 +74,7 @@ module.exports = function(passport) {
                 });
             }
 
-        });    
+        });
 
         });
 
