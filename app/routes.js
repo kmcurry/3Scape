@@ -46,7 +46,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     			});
     		},
     		function(token, user, done) {
-    			var smtpTransport = nodemailer.createTransport('SMTP', {
+    			var smtpTransport = nodemailer.createTransport({
     				service: 'SendGrid',
     				auth: {
     					user: '3Scape',
@@ -54,17 +54,22 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     				}
     			});
     			var mailOptions = {
-    				to: user.email,
-    				from: 'kevin@3Scape.me',
+            from: 'kevin@3Scape.me',
+            to: user.email,
     				subject: '3Scape Password Reset',
     				text: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account. \n\n' +
     					'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
     					'http://' + req.headers.host + '/reset/' + token + '\n\n' +
     					'If you did not request this, please ignore this email and your password will remain unchanged.\n'
     				};
-    				smtpTransport.sendMail(mailOptions, function(err) {
-    					req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
-    					done(err, 'done');
+    				smtpTransport.sendMail(mailOptions, function(err, info) {
+              if (err) {
+                console.log(err);
+              }
+              else {
+    					       req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
+    					       done(err, 'done');
+              }
     				});
     			}
     		], function(err) {
