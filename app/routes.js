@@ -1,5 +1,5 @@
 
-module.exports = function(app, passport) {
+module.exports = function(app, passport, async, crypto, nodemailer) {
 //HOME PAGE(with login links) ======
 
     app.get('/create',isLoggedIn, function (req, res) {
@@ -20,6 +20,8 @@ module.exports = function(app, passport) {
     });
 
     app.post('/forgot', function(req, res, next) {
+      console.log("posting forgot");
+      //console.log(req.body.email)
     	async.waterfall([
     		function(done) {
     			crypto.randomBytes(20, function(err, buf) {
@@ -28,6 +30,7 @@ module.exports = function(app, passport) {
     			});
     		},
     		function(token, done) {
+          var User = require('../app/models/user');
     			User.findOne({ email: req.body.email }, function(err, user) {
     				if (!user) {
     					req.flash('error', 'No account with that email address exists.');
@@ -35,7 +38,7 @@ module.exports = function(app, passport) {
     				}
 
     				user.resetPasswordToken = token;
-    				user.resetPasswordExpires = Date.now() = 3600000; //1 hour
+    				user.resetPasswordExpires = Date.now() + 3600000; //1 hour
 
     				user.save(function(err) {
     					done(err, token, user);
@@ -46,20 +49,20 @@ module.exports = function(app, passport) {
     			var smtpTransport = nodemailer.createTransport('SMTP', {
     				service: 'SendGrid',
     				auth: {
-    					user: '!!! YOUR SENDGRID USERNAME !!!',
-    					pass: '!!! YOUR SENDGRID PASSWORD !!!'
+    					user: '3Scape',
+    					pass: 'V>j$PzPq4[f/t'      // CHANGE TO CONFIG
     				}
     			});
     			var mailOptions = {
     				to: user.email,
-    				from: 'passwordreset@demo.com',
-    				subject: 'Node.js Password Reset',
+    				from: 'kevin@3Scape.me',
+    				subject: '3Scape Password Reset',
     				text: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account. \n\n' +
     					'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
     					'http://' + req.headers.host + '/reset/' + token + '\n\n' +
     					'If you did not request this, please ignore this email and your password will remain unchanged.\n'
     				};
-    				smptTransport.sendMail(mailOptions, function(err) {
+    				smtpTransport.sendMail(mailOptions, function(err) {
     					req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
     					done(err, 'done');
     				});
