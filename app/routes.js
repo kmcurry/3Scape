@@ -2,6 +2,9 @@
 module.exports = function(app, passport, async, crypto, nodemailer) {
 //HOME PAGE(with login links) ======
 
+  var User = require('../app/models/user');
+
+
     app.get('/create',isLoggedIn, function (req, res) {
         res.render('create',{
             user: req.user
@@ -30,8 +33,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     			});
     		},
     		function(token, done) {
-          var User = require('../app/models/user');
-    			User.findOne({ email: req.body.email }, function(err, user) {
+          User.findOne({ email: req.body.email }, function(err, user) {
     				if (!user) {
     					req.flash('error', 'No account with that email address exists.');
     					return res.redirect('/forgot');
