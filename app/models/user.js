@@ -11,8 +11,8 @@ var userSchema = mongoose.Schema({
     email: String,
     password: String,
     scene: String,
-    resetPasswordToken: "",
-    resetPasswordExpires: 0,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
 
     projects         : [{ type: Schema.Types.ObjectId, ref: 'Project'}]
 

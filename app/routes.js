@@ -51,8 +51,8 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     			var smtpTransport = nodemailer.createTransport({
     				service: 'SendGrid',
     				auth: {
-    					user: '3Scape',
-    					pass: 'V>j$PzPq4[f/t'      // CHANGE TO CONFIG
+    					user: config.smtp_user,
+    					pass: config.smtp_pass      // CHANGE TO CONFIG
     				}
     			});
     			var mailOptions = {
@@ -116,8 +116,8 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
 		  var smtpTransport = nodemailer.createTransport('SMTP', {
 			service: 'SendGrid',
 			auth: {
-			  user: '!!! YOUR SENDGRID USERNAME !!!',
-			  pass: '!!! YOUR SENDGRID PASSWORD !!!'
+			  user: '3Scape',
+			  pass: 'V>j$PzPq4[f/t'
 			}
 		  });
 		  var mailOptions = {
