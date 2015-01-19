@@ -19,7 +19,8 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
 
     app.get('/forgot', function(req, res) {
     	res.render('forgot.ejs', {
-    		user: req.user
+    		user: req.user,
+        message: req.flash('info')
     	});
     });
 
@@ -53,8 +54,8 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     			var smtpTransport = nodemailer.createTransport({
     				service: 'SendGrid',
     				auth: {
-    					user: config.smtp_user,
-    					pass: config.smtp_pass      // CHANGE TO CONFIG
+    					user: '3Scape',//config.smtp_user,
+    					pass: 'V>j$PzPq4[f/t'//config.smtp_pass      // CHANGE TO CONFIG
     				}
     			});
     			var mailOptions = {
@@ -175,7 +176,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
 
     app.get('/forgot', function (req, res) {
         //render the page and pass in any flash data if it exists
-        res.render('forgot.ejs', { message: req.flash('loginMessage')});
+        res.render('forgot.ejs', { message: req.flash('info')});
     });
 
 
