@@ -3,6 +3,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
 //HOME PAGE(with login links) ======
 
   var User = require('../app/models/user');
+  var config = require('../configLoader')(process.env.NODE_ENV || "local")
 
 
     app.get('/create',isLoggedIn, function (req, res) {
@@ -48,6 +49,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     			});
     		},
     		function(token, user, done) {
+          console.log(config.smtp_user);
     			var smtpTransport = nodemailer.createTransport({
     				service: 'SendGrid',
     				auth: {
@@ -116,8 +118,8 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
 		  var smtpTransport = nodemailer.createTransport('SMTP', {
 			service: 'SendGrid',
 			auth: {
-			  user: '3Scape',
-			  pass: 'V>j$PzPq4[f/t'
+			  user: config.smtp_user,
+			  pass: config.smtp_pass
 			}
 		  });
 		  var mailOptions = {
