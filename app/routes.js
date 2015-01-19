@@ -37,7 +37,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     		function(token, done) {
           User.findOne({ email: req.body.email }, function(err, user) {
     				if (!user) {
-    					req.flash('error', 'No account with that email address exists.');
+    					req.flash('info', 'No account with that email address exists.');
     					return res.redirect('/forgot');
     				}
 
