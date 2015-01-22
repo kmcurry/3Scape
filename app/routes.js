@@ -18,6 +18,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     });
 
     app.get('/forgot', function(req, res) {
+      console.log("MAIL USER: " + config.smtp_user);
     	res.render('forgot.ejs', {
     		user: req.user,
         message: req.flash('info')
@@ -51,8 +52,8 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
           var smtpTransport = nodemailer.createTransport({
     				service: 'SendGrid',
     				auth: {
-    					user: '3Scape',//config.smtp_user,
-    					pass: 'V>j$PzPq4[f/t'//config.smtp_pass      // CHANGE TO CONFIG
+    					user: config.smtp_user,
+    					pass: config.smtp_pass
     				}
     			});
     			var mailOptions = {
@@ -121,12 +122,11 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
 		  var smtpTransport = nodemailer.createTransport({
   			service: 'SendGrid',
   			auth: {
-  			  user: '3Scape',//config.smtp_user,
-  			  pass: 'V>j$PzPq4[f/t'//config.smtp_pass
+  			  user: config.smtp_user,
+  			  pass: config.smtp_pass
   			}
 		  });
-      console.log("confirming change with: " + user.email);
-		  var mailOptions = {
+      var mailOptions = {
   			from: 'kevin@3Scape.me',
         to: user.email,
         subject: 'Your password has been changed',
