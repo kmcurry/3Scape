@@ -12,7 +12,7 @@ var userSchema = mongoose.Schema({
     password: String,
     scene: String,
     resetPasswordToken: String,
-    resetPasswordExpires: Date,
+    resetPasswordExpires: Number,
 
     projects         : [{ type: Schema.Types.ObjectId, ref: 'Project'}]
 
