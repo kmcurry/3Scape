@@ -333,7 +333,14 @@ function load(u)
     }
 }
 
-
+//Issues an alert message saying the desired 3Scape doesnt exist
+//Also redirects the user to the landing page.
+function loadLandingPage() {
+  var errorMsg = '"These aren\'t the Scapes you\'re looking for." \n -Kevin Curry \n\n This 3Scape does not exist.';
+  alert(errorMsg);
+  window.onbeforeunload = null;
+  document.location.href = "http://3scape.me";
+}
 
 function loadModel(url)
 {
@@ -545,21 +552,6 @@ function loadMotion(url)
     bridgeworks.updateScene(xstr);
 }
 
-//Issues an alert message saying the desired 3Scape doesnt exist
-//Also redirects the user to the landing page.
-function curryWanKenobi() {
-  var errorMsg = '"These aren\'t the Scapes you\'re looking for." \n -Kevin Curry \n\n This 3Scape does not exist.';
-  alert(errorMsg);
-  window.onbeforeunload = null;
-  window.location.href = "www.3scape.me";
-  //switch (window.location.href) {
-  //  case "http://localhost:8080/bleh" :
-  //    window.location ="";
-  //  default :
-  //    window.location = "www.3scape.me";
-  //}
-}
-
 function loadScape(scape) {
   switch (scape) {
     case "egypt" :
@@ -575,7 +567,7 @@ function loadScape(scape) {
       loadTwoStroke();
       break;
     default:
-      document.location.href = "http://3Scape.me"
+      loadLandingPage();
       break;
   }
 }
