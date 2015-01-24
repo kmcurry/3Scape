@@ -333,7 +333,14 @@ function load(u)
     }
 }
 
-
+//Issues an alert message saying the desired 3Scape doesnt exist
+//Also redirects the user to the landing page.
+function loadLandingPage() {
+  var errorMsg = '"These aren\'t the Scapes you\'re looking for." \n -Kevin Curry \n\n This 3Scape does not exist.';
+  alert(errorMsg);
+  window.onbeforeunload = null;
+  document.location.href = "http://3scape.me";
+}
 
 function loadModel(url)
 {
@@ -558,6 +565,9 @@ function loadScape(scape) {
       break;
     case "two-stroke" :
       loadTwoStroke();
+      break;
+    default:
+      loadLandingPage();
       break;
   }
 }
