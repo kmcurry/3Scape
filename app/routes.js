@@ -22,15 +22,15 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     });
 
     app.get('/forgot', function(req, res) {
+      console.log("MAIL USER: " + config.smtp_user);
     	res.render('forgot.ejs', {
-    		user: req.user
+    		user: req.user,
+        message: req.flash('info')
     	});
     });
 
     app.post('/forgot', function(req, res, next) {
-      console.log("posting forgot");
-      //console.log(req.body.email)
-    	async.waterfall([
+      async.waterfall([
     		function(done) {
     			crypto.randomBytes(20, function(err, buf) {
     				var token = buf.toString('hex');
@@ -40,7 +40,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     		function(token, done) {
           User.findOne({ email: req.body.email }, function(err, user) {
     				if (!user) {
-    					req.flash('error', 'No account with that email address exists.');
+              req.flash('info', 'No account with that email address exists.');
     					return res.redirect('/forgot');
     				}
 
@@ -53,12 +53,11 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     			});
     		},
     		function(token, user, done) {
-          console.log(config.smtp_user);
-    			var smtpTransport = nodemailer.createTransport({
+          var smtpTransport = nodemailer.createTransport({
     				service: 'SendGrid',
     				auth: {
     					user: config.smtp_user,
-    					pass: config.smtp_pass      // CHANGE TO CONFIG
+    					pass: config.smtp_pass
     				}
     			});
     			var mailOptions = {
@@ -87,27 +86,32 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     	});
 
     app.get('/reset/:token', function(req, res) {
-    	User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
     		if (!user) {
-    			req.flash('error', 'Password reset token is invalid or has expired.');
+    			req.flash('info', 'Password reset token is invalid or has expired.');
     			return res.redirect('/forgot');
     		}
+        console.log("Date now at post 1: " + Date.now());
+
     		res.render('reset', {
-    			user: req.user
+    			token: user.resetPasswordToken,
+          message: req.flash('info')
     		});
     	});
     });
 
     app.post('/reset/:token', function(req, res) {
+
 	  async.waterfall([
 		function(done) {
-		  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+
+      User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
 			if (!user) {
-			  req.flash('error', 'Password reset token is invalid or has expired.');
+        req.flash('info', 'Password reset token is invalid or has expired.');
 			  return res.redirect('back');
 			}
 
-			user.password = req.body.password;
+			user.password = user.generateHash(req.body.password);
 			user.resetPasswordToken = undefined;
 			user.resetPasswordExpires = undefined;
 
@@ -119,27 +123,34 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
 		  });
 		},
 		function(user, done) {
-		  var smtpTransport = nodemailer.createTransport('SMTP', {
-			service: 'SendGrid',
-			auth: {
-			  user: config.smtp_user,
-			  pass: config.smtp_pass
-			}
+		  var smtpTransport = nodemailer.createTransport({
+  			service: 'SendGrid',
+  			auth: {
+  			  user: config.smtp_user,
+  			  pass: config.smtp_pass
+  			}
 		  });
-		  var mailOptions = {
-			to: user.email,
-			from: 'passwordreset@demo.com',
-			subject: 'Your password has been changed',
-			text: 'Hello,\n\n' +
-			  'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      var mailOptions = {
+  			from: 'kevin@3Scape.me',
+        to: user.email,
+        subject: 'Your password has been changed',
+  			text: 'Hello,\n\n' +
+  			  'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
 		  };
-		  smtpTransport.sendMail(mailOptions, function(err) {
-			req.flash('success', 'Success! Your password has been changed.');
-			done(err);
+		  smtpTransport.sendMail(mailOptions, function(err, info) {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          req.flash('info', 'Your email has been changed');
+          done(err, 'done');
+        }
 		  });
 		}
 	  ], function(err) {
-		res.redirect('/');
+		    res.render('login', {
+        message: req.flash('info', 'Success! Your password has been changed.')
+      });
 	  });
 	});
 
@@ -171,7 +182,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
 
     app.get('/forgot', function (req, res) {
         //render the page and pass in any flash data if it exists
-        res.render('forgot.ejs', { message: req.flash('loginMessage')});
+        res.render('forgot.ejs', { message: req.flash('info')});
     });
 
 

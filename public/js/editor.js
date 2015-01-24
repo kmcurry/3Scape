@@ -559,6 +559,9 @@ function loadScape(scape) {
     case "two-stroke" :
       loadTwoStroke();
       break;
+    default:
+      document.location.href = "http://3Scape.me"
+      break;
   }
 }
 
