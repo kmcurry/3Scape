@@ -95,7 +95,9 @@ function keepWorkInProgress(){
     }
   }
 
-  return serial+"autoSaved";
+  if (serial != "")
+    return serial+"autoSaved";
+  return serial;
 }
 
 function init(scene, container, recreateCanvas)
