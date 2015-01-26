@@ -20,7 +20,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
     app.get('/forgot', function(req, res) {
     	res.render('forgot.ejs', {
     		user: req.user,
-        message: req.flash('info')
+        	message: req.flash('info')
     	});
     });
 
