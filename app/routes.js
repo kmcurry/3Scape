@@ -25,7 +25,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
       console.log("MAIL USER: " + config.smtp_user);
     	res.render('forgot.ejs', {
     		user: req.user,
-        message: req.flash('info')
+        	message: req.flash('info')
     	});
     });
 
@@ -142,8 +142,10 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
           console.log(err);
         }
         else {
+
           req.flash('loginMessage', 'Success! Your password was changed. Please log in.')
         	done(err, 'done');
+
         }
 		  });
 		}
