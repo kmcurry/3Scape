@@ -142,15 +142,14 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
           console.log(err);
         }
         else {
-          req.flash('info', 'Your email has been changed');
-          done(err, 'done');
+          req.flash('loginMessage', 'Success! Your password was changed. Please log in.')
+        	done(err, 'done');
         }
 		  });
 		}
 	  ], function(err) {
-		    res.render('login', {
-        message: req.flash('info', 'Success! Your password has been changed.')
-      });
+      if (err) return next(err);
+      res.redirect('/login');
 	  });
 	});
 
