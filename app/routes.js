@@ -142,6 +142,7 @@ module.exports = function(app, passport, async, crypto, nodemailer) {
           console.log(err);
         }
         else {
+        	return res.redirect('/login');
           req.flash('info', 'Your email has been changed');
           done(err, 'done');
         }
