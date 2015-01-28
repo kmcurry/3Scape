@@ -6,7 +6,9 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
   app.get('/forgot', function(req, res) {
     res.render('forgot.ejs', {
       user: req.user,
-      message: req.flash('info')
+      info_message: req.flash('info'),
+      error_message: req.flash('error'),
+      success_message: req.flash('success')
     });
   });
 
@@ -21,7 +23,7 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
       function(token, done) {
         User.findOne({ email: req.body.email }, function(err, user) {
           if (!user) {
-            req.flash('info', 'No account with that email address exists.');
+            req.flash('error', 'No account with that email address exists.');
             return res.redirect('/forgot');
           }
 
@@ -55,7 +57,7 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
             console.log(err);
           }
           else {
-            req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
+            req.flash('success', 'An email has been sent to ' + user.email + ' with further instructions.');
             done(err, 'done');
           }
         });
