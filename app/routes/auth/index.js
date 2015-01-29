@@ -57,7 +57,7 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
             console.log(err);
           }
           else {
-            req.flash('success', 'An email has been sent to ' + user.email + ' with further instructions.');
+            req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
             done(err, 'done');
           }
         });
@@ -73,7 +73,11 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
   // GET
   app.get('/login', function (req, res) {
     //render the page and pass in any flash data if it exists
-    res.render('login.ejs', { message: req.flash('loginMessage')});
+    res.render('login.ejs', {
+    message: req.flash('loginMessage'),
+    info_message: req.flash('info'),
+    error_message: req.flash('error'),
+    success_message: req.flash('success')});
   });
 
   // POST
@@ -93,14 +97,16 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
   app.get('/reset/:token', function(req, res) {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
       if (!user) {
-        req.flash('info', 'Password reset token is invalid or has expired.');
+        req.flash('error', 'Password reset token is invalid or has expired.');
         return res.redirect('/forgot');
       }
       console.log("Date now at post 1: " + Date.now());
 
       res.render('reset', {
         token: user.resetPasswordToken,
-        message: req.flash('info')
+        info_message: req.flash('info'),
+      	error_message: req.flash('error'),
+      	success_message: req.flash('success')
       });
     });
   });
@@ -112,7 +118,7 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
 
         User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
-            req.flash('info', 'Password reset token is invalid or has expired.');
+            req.flash('error', 'Password reset token is invalid or has expired.');
             return res.redirect('back');
           }
 
@@ -148,7 +154,7 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
           }
           else {
 
-            req.flash('loginMessage', 'Success! Your password was changed. Please log in.')
+            req.flash('success', 'Success! Your password was changed. Please log in.')
             done(err, 'done');
 
           }
