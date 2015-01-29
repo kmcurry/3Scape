@@ -13,6 +13,10 @@ var userSchema = mongoose.Schema({
     scene: String,
     resetPasswordToken: String,
     resetPasswordExpires: Number,
+		avatar: String,
+		bio: String,
+		name: String,
+		fans: [],
 
     projects         : [{ type: Schema.Types.ObjectId, ref: 'Project'}]
 
