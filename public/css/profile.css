@@ -1,0 +1,61 @@
+@charset "utf-8";
+/* CSS Document */
+
+#container { width: 960px;
+margin: 0 auto;
+}
+
+h1 { margin: 0 auto;
+}
+
+#banner { width: 100%;
+}
+
+#edit a { background-image:url(../images/edit-profile-button-sprite-sheet.png);
+width: 150px;
+height: 26px;
+float: right;
+text-indent: -9999px;
+}
+
+#edit a:hover { background-position: 300.5px;
+}
+
+#edit a:active { background-position: 450px;
+}
+
+/* Place profile pics here */
+
+#avatar { margin: 0 auto;
+margin-top: 8%;
+width: 173px;
+height: 143px;
+background-image: url(profile-pic.png);
+}
+
+#info { width: 320px;
+height: 100px;
+margin: 0 auto;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+
+#category { margin: 0 auto;
+background-image:url(../images/category-3scapes.png);
+width: 80%;
+height: 85px;
+}
+
+#scapes { margin: 10px auto;
+width: 80%;
+height: 500px;
+}
+
+.scape {
+margin-bottom: 2%;
+margin-right: 3%;
+width: 30%;
+height: 250px;
+background-color: #0C0;
+clear: right;
+}
