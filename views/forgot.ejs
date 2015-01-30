@@ -35,9 +35,15 @@
     </center>
 
 		<!-- show any messages that come back with authentication -->
-		<% if (message.length > 0) { %>
-			<div class="alert alert-info"><%= message %></div>
-			<% } %>
+		<% if (info_message.length > 0) { %>
+			<div class="alert alert-info"><%= info_message %></div>
+		<% } %>
+		<% if (error_message.length > 0) { %>
+			<div class="alert alert-danger"><%= error_message %></div>
+		<% } %>
+		<% if (success_message.length > 0) { %>
+			<div class="alert alert-success"><%= success_message %></div>
+		<% } %>
 
 	<!-- LOGIN FORM -->
 	<form action="/forgot" method="post">
