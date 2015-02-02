@@ -62,8 +62,9 @@ module.exports = function(app) {
         res.sendFile('sitemap.xml', options);
     });
 
-    app.get('/:scape', function (req, res) {
-        if (req.params.scape) {
+    ////////////////////////////
+    app.get('/s/:scape', function (req, res) {
+       if (req.params.scape) {
           var s = JSON.stringify(req.params.scape);
           console.log("scape = " + s);
           res.render('create', {scape: s});
@@ -72,6 +73,14 @@ module.exports = function(app) {
           res.render('create');
         }
     });
+
+    //John Testing
+    function notFound(req, res) {
+      res.setHeader("Content-Type", 'text/html');
+      res.send(404, "404: This 3Scape doesnt exist anywhere!");
+    }
+
+    app.use(notFound);
 
     // note: the next method param is passed as well
     function checkForMobile(req, res, next) {
