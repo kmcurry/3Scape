@@ -11,11 +11,19 @@ module.exports = function(app) {
     });
 
     app.get('/create',isLoggedIn, function (req, res) {
-        res.render('create',{
+        if (req.query.s === undefined) {
+          res.render('create',{
             user: req.user
-        });
-    });
+          });
+        } else {
+          console.log("detected query string in create: " + req.query.s );
+          res.render('create',{
+            user: req.user,
+            scape: "'" + req.query.s + "'"
+          });
+        }
 
+    });
 
     app.get('/classroom', function (req, res) {
       res.render('classroom.ejs')
@@ -60,18 +68,6 @@ module.exports = function(app) {
           root: __dirname + '/../'
         }
         res.sendFile('sitemap.xml', options);
-    });
-
-    ////////////////////////////
-    app.get('/s/:scape', function (req, res) {
-       if (req.params.scape) {
-          var s = JSON.stringify(req.params.scape);
-          console.log("scape = " + s);
-          res.render('create', {scape: s});
-        } else {
-          console.log("no scape");
-          res.render('create');
-        }
     });
 
     //John Testing
