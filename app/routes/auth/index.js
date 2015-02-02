@@ -47,7 +47,7 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
           from: 'kevin@3Scape.me',
           to: user.email,
           subject: '3Scape Password Reset',
-          text: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account. \n\n' +
+          text: 'You are receiving this email because you (or someone else) requested to reset the password for your account. \n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
           'http://' + req.headers.host + '/reset/' + token + '\n\n' +
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
