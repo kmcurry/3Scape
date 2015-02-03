@@ -73,7 +73,7 @@ module.exports = function(app) {
     //John Testing
     function notFound(req, res) {
       res.setHeader("Content-Type", 'text/html');
-      res.send(404, "404: This 3Scape doesnt exist anywhere!");
+      res.status(404).send("404: This 3Scape doesnt exist anywhere!");
     }
 
     app.use(notFound);
