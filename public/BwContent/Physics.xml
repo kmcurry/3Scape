@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<!--<?bwplugin url="BBOGL11Engine" action="load"?>-->
+<?bwinclude url="./DefaultPreferences.xml"?>
+<Session>
+    <Scene>
+        <Isolator name="Root" isolateTransforms="true">
+            <Selector name="Cameras">
+                <PerspectiveCamera name="Camera" zoom="3.2" nearDistance=".25" farDistance="4000">
+                    <position x="0" y="3.75" z="-15"/>
+                    <rotation x="13.5" y="0" z="0"/>
+                </PerspectiveCamera>
+                <!--<OrthographicCamera name="OrthoCam" nearDistance=".25" farDistance="4000" width="6">
+                        <position x="0" y="6" z="0"/>
+                        <rotation x="90" y="0" z="0"/>
+                </OrthographicCamera>-->
+            </Selector>
+            <Group name="Lights">
+                <GlobalIllumination name="GlobalLight">
+                    <ambient r=".25" g=".25" b=".25"/>
+                </GlobalIllumination>
+                <PointLight name="theLight" range="100" parent="Camera">
+                    <ambient r="0.25" g="0.25" b="0.25"/>
+                    <diffuse r="1" g="1" b="1"/>
+                    <specular r="1" g="1" b="1"/>
+                    <position x="-40.688" y="47.9691" z="-52.0672"/>
+                </PointLight>
+            </Group>
+            <Group name="Effects"/>
+            <Group name="Models">
+                <Model name="grid" url="/objects/GridG.lwo" moveable="false">
+                    <position x="0" y="0" z="0"/>
+                    <rotation x="0" y="0" z="0"/>
+                    <scale x="2.5" y="2.5" z="2.5"/>
+                    <physicalProperties>
+                        <mass>0</mass>
+                    </physicalProperties>
+                </Model>
+                <Model name="UV_SphereG" indexedGeometry="false" url="/objects/UV_SphereG.lwo" detectCollision="true">
+                    <position x="0" y="4" z="0"/>
+                    <rotation x="0" y="0" z="0"/>
+                    <scale x="3" y="3" z="3"/>
+                    <physicalProperties>
+                        <mass>5</mass>
+                    </physicalProperties>                 
+                </Model>
+                <Model name="UV_BoxG2" indexedGeometry="false" url="/objects/UV_BoxG.lwo" detectCollision="true">
+                    <position x="0.45" y="6" z="0"/>
+                    <rotation x="0" y="0" z="0"/>
+                    <scale x="1" y="1" z="1"/>
+                    <physicalProperties>
+                        <mass>5</mass>
+                    </physicalProperties>                      
+                </Model>
+                <Model name="UV_BoxG3" indexedGeometry="false" url="/objects/UV_BoxG.lwo" detectCollision="true">
+                    <position x="-0.45" y="8" z="0"/>
+                    <rotation x="0" y="45" z="0"/>
+                    <scale x="2" y="2" z="2"/>
+                    <physicalProperties>
+                        <mass>5</mass>
+                    </physicalProperties>                      
+                </Model>
+                <Model name="UV_BoxG4" indexedGeometry="false" url="/objects/UV_BoxG.lwo" detectCollision="true">
+                    <position x="0" y="10" z="0.45"/>
+                    <rotation x="0" y="45" z="0"/>
+                    <scale x="1" y="1" z="1"/>
+                    <physicalProperties>
+                        <mass>5</mass>
+                    </physicalProperties>                  
+                </Model>
+                <Model name="UV_BoxG5" indexedGeometry="false" url="/objects/UV_BoxG.lwo" detectCollision="true">
+                    <position x="0" y="10" z="-0.45"/>
+                    <rotation x="0" y="0" z="0"/>
+                    <scale x="1.5" y="1.5" z="1.5"/>
+                    <physicalProperties>
+                        <mass>5</mass>
+                    </physicalProperties>                      
+                </Model>
+                <!--<Model name="cylinderRight" url="/objects/UV_CylinderG.lwo" enableSharing="false" detectCollision="true">
+                    <position x="2" y=".26" z="0"/>
+                    <rotation x="90" y="0" z="0"/>
+                    <scale x="1" y="1" z="1"/>
+                </Model>-->
+                <!--<Model name="cylinderLeft" url="/objects/UV_CylinderG.lwo" enableSharing="false">
+                     <position x="-2" y=".26" z="0"/>
+                     <rotation x="0" y="0" z="0"/>
+                     <scale x="1" y="1" z="1"/>
+                </Model>
+                <Model name="sphereBack" url="/objects/UV_SphereG.lwo">
+                     <position x="0" y=".25" z="2"/>
+                     <rotation x="0" y="0" z="0"/>
+                     <scale x="1" y="1" z="1"/>
+                </Model>
+                <Model name="sphereFront" url="/objects/UV_SphereG.lwo" enableSharing="false">
+                     <position x="0" y=".25" z="-2"/>
+                     <rotation x="0" y="0" z="0"/>
+                     <scale x="1" y="1" z="1"/>
+                </Model>-->
+            </Group>
+        </Isolator>
+        <RenderDirective name="RenderDirective" root="Root" antialiasType="0" antialiasWaitTimeMs="5000" backgroundImageFilename="images\Sky2.jpg"/>
+    </Scene>
+    <ConnectAttributes sourceContainer="Camera" targetContainer="PerspectiveProjector" persist="false">
+        <sourceAttribute>position</sourceAttribute>
+        <targetAttribute>position</targetAttribute>
+        <sourceAttribute>rotation</sourceAttribute>
+        <targetAttribute>rotation</targetAttribute>
+    </ConnectAttributes>
+    <ConnectOutputs targetContainer="Camera" sourceEvaluator="SceneInspector" connectionType="sceneInspection"/>
+    <ConnectAttributes targetContainer="UV_BoxG" sourceContainer="WalkSimulator" connectionType="walkSimulation"/>
+    <Set target="SceneInspector" pivotDistance="6"/>
+    <Set target="WalkSimulator">
+        <intersector>UV_BoxG</intersector>
+        <intersectees>
+            <intersectee>cylinderRight</intersectee>
+            <intersectee>cylinderLeft</intersectee>
+            <intersectee>sphereBack</intersectee>
+            <intersectee>sphereFront</intersectee>
+        </intersectees>
+    </Set>
+    <?bwinclude url="SendMessage.xml"?>
+    <PhysicsSimulator name="PhysicsSimulator" evaluate="true">
+        <bodies>
+            <body>grid</body>
+            <body>UV_SphereG</body>
+            <body>UV_BoxG2</body>
+            <body>UV_BoxG3</body>
+            <body>UV_BoxG4</body>
+            <body>UV_BoxG5</body>
+        </bodies>
+    </PhysicsSimulator>
+</Session>
