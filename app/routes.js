@@ -10,6 +10,7 @@ module.exports = function(app) {
       res.render('mobile');
     });
 
+    /*
     app.get('/create',isLoggedIn, function (req, res) {
         if (req.query.s === undefined) {
           res.render('create',{
@@ -23,6 +24,24 @@ module.exports = function(app) {
           });
         }
 
+    });
+    */
+
+    app.get('/create',isLoggedIn, function (req, res) {
+      res.render('create',{
+        user: req.user
+      });
+    });
+
+    app.get('/:scape', isLoggedIn, function (req, res) {
+      if (req.params.scape) {
+        var s = JSON.stringify(req.params.scape);
+        console.log("scape = " + s);
+        res.render('create', {scape: s});
+      } else {
+        console.log("no scape");
+        res.render('create');
+      }
     });
 
     app.get('/classroom', function (req, res) {
