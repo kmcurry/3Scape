@@ -17,7 +17,8 @@
     "morgan": "latest",
     "nodemailer": "^1.3.0",
     "passport": "^0.2.1",
-    "passport-local": "^0.1.6"
+    "passport-local": "^0.1.6",
+    "sendgrid": "1.5.0"
   },
   "scripts": {
     "start": "node server.js"
