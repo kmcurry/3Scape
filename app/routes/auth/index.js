@@ -150,9 +150,28 @@ module.exports = function(app, async, crypto, nodemailer, passport, utilities) {
   });
 
   //process the signup form
-  app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/create', //redirect to the secure profile section
-    failureRedirect: '/signup', //redirect to the signup page if there is an error
-    failureFlash: true //allow flash messages
-  }));
+  app.post('/signup', function (req, res, next) {
+    passport.authenticate('local-signup', function (err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/signup'); }
+      req.logIn(user, function(err) {
+        if (err) {
+          return next(err);
+        }
+        // email
+        if (config.email.smtpUser) {
+          utilities.emailer.sendTemplate({
+            subject: 'Welcome to 3Scape!',
+            to: user.email
+          }, "welcome", {
+            name: user.email, // TODO change to name
+            email: user.email
+          });
+
+        }
+        return res.redirect('/create');
+      });
+    })(req, res, next);
+
+  });
 };
