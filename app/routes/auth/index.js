@@ -1,4 +1,4 @@
-module.exports = function(app, async, crypto, nodemailer, passport, utilities) {
+module.exports = function(app, async, crypto, passport, utilities) {
 
   var User = require('../../../app/models/user');
   var config = require('../../../configLoader')(process.env.NODE_ENV || "local")
@@ -167,7 +167,6 @@ module.exports = function(app, async, crypto, nodemailer, passport, utilities) {
             name: user.email, // TODO change to name
             email: user.email
           });
-
         }
         return res.redirect('/create');
       });
