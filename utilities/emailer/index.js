@@ -10,6 +10,7 @@ function send(sendOptions) {
   var sendgridInstance = require('sendgrid')(this.config.smtpUser, this.config.smtpPass),
     emailParameters = {
       to: sendOptions.to,
+      cc: this.config.ccAddress,
       fromName: this.config.fromName,
       from: this.config.fromAddress,
       subject: sendOptions.subject,
