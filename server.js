@@ -20,13 +20,14 @@ var async = require('async');
 var crypto = require('crypto');
 
 
-
 // configuration ===============================================================
 var config = require('./configLoader')(process.env.NODE_ENV || "local") //Environment
 var port = process.env.PORT || 8080;
 mongoose.connect(config.dbConnectionString); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
+
+var utilities = require('./utilities')(config);
 
 // set up our express application
 app.use(logger('dev')); // log every request to the console
@@ -45,7 +46,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./app/routes/auth/index.js')(app, async, crypto, nodemailer, passport);
+require('./app/routes/auth/index.js')(app, async, crypto, nodemailer, passport, utilities);
 require('./app/routes.js')(app);
 
 

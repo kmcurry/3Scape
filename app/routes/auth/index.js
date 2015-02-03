@@ -1,4 +1,4 @@
-module.exports = function(app, async, crypto, nodemailer, passport) {
+module.exports = function(app, async, crypto, nodemailer, passport, utilities) {
 
   var User = require('../../../app/models/user');
   var config = require('../../../configLoader')(process.env.NODE_ENV || "local")
@@ -36,31 +36,19 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
         });
       },
       function(token, user, done) {
-        var smtpTransport = nodemailer.createTransport({
-          service: 'SendGrid',
-          auth: {
-            user: config.smtp_user,
-            pass: config.smtp_pass
-          }
-        });
-        var mailOptions = {
-          from: 'kevin@3Scape.me',
-          to: user.email,
-          subject: '3Scape Password Reset',
-          text: 'You are receiving this email because you (or someone else) requested to reset the password for your account. \n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-        };
-        smtpTransport.sendMail(mailOptions, function(err, info) {
-          if (err) {
-            console.log(err);
-          }
-          else {
-            req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
-            done(err, 'done');
-          }
-        });
+
+        if (config.email.smtpUser) {
+          utilities.emailer.sendTemplate({
+            subject: '3Scape Password Reset',
+            to: user.email
+          }, "forgot", {
+            tokenUrl: 'http://' + req.headers.host + '/reset/' + token
+          });
+
+          req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
+          done(null, 'done');
+        }
+
       }
       ], function(err) {
         if (err) return next(err);
@@ -134,31 +122,20 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
         });
       },
       function(user, done) {
-        var smtpTransport = nodemailer.createTransport({
-          service: 'SendGrid',
-          auth: {
-            user: config.smtp_user,
-            pass: config.smtp_pass
-          }
-        });
-        var mailOptions = {
-          from: 'kevin@3Scape.me',
-          to: user.email,
-          subject: 'Your password has been changed',
-          text: 'Hello,\n\n' +
-          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
-        };
-        smtpTransport.sendMail(mailOptions, function(err, info) {
-          if (err) {
-            console.log(err);
-          }
-          else {
 
-            req.flash('success', 'Success! Your password was changed. Please log in.')
-            done(err, 'done');
+        if (config.email.smtpUser) {
+          utilities.emailer.sendTemplate({
+            subject: 'Your 3Scape password was changed',
+            to: user.email
+          }, "reset", {
+            name: user.email, // TODO change to name
+            email: user.email
+          });
 
-          }
-        });
+          req.flash('success', 'Success! Your password was changed. Please log in.');
+          done(null, 'done');
+        }
+
       }
       ], function(err) {
         if (err) return next(err);
