@@ -70,6 +70,13 @@ module.exports = function(app) {
         res.sendFile('sitemap.xml', options);
     });
 
+    function notFound(req, res) {
+      res.setHeader("Content-Type", 'text/html');
+      res.send(404, "404: This 3Scape doesnt exist anywhere!");
+    }
+
+    app.use(notFound);
+
     // note: the next method param is passed as well
     function checkForMobile(req, res, next) {
       // check to see if the caller is a mobile device
