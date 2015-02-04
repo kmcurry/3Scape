@@ -38,11 +38,10 @@ module.exports = function(app, async, crypto, passport, utilities) {
       function(token, user, done) {
 
         if (config.email.smtpUser) {
-          utilities.emailer.sendTemplate({
-            subject: '3Scape Password Reset',
-            to: user.email
-          }, "forgot", {
-            tokenUrl: 'http://' + req.headers.host + '/reset/' + token
+          utilities.emailer.send({
+            to: user.email,
+            tokenUrl: 'http://' + req.headers.host + '/reset/' + token,
+            templateId: config.email.forgot
           });
 
           req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
@@ -124,12 +123,9 @@ module.exports = function(app, async, crypto, passport, utilities) {
       function(user, done) {
 
         if (config.email.smtpUser) {
-          utilities.emailer.sendTemplate({
-            subject: 'Your 3Scape password was changed',
-            to: user.email
-          }, "reset", {
-            name: user.email, // TODO change to name
-            email: user.email
+          utilities.emailer.send({
+            to: user.email,
+            templateId: config.email.reset
           });
 
           req.flash('success', 'Success! Your password was changed. Please log in.');
@@ -160,12 +156,9 @@ module.exports = function(app, async, crypto, passport, utilities) {
         }
         // email
         if (config.email.smtpUser) {
-          utilities.emailer.sendTemplate({
-            subject: 'Welcome to 3Scape!',
-            to: user.email
-          }, "welcome", {
-            name: user.email, // TODO change to name
-            email: user.email
+          utilities.emailer.send({
+            to: user.email,
+            templateId: config.email.welcome
           });
         }
         return res.redirect('/create');
