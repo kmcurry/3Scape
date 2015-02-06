@@ -512,7 +512,7 @@ function loadModel(url)
 
     var physics = bridgeworks.get("PhysicsSimulator");
     if (physics && g_selectedModel) {
-      physics.bodies.push_back(g_selectedModel);
+      physics.bodies.push_back(g_selectedModelName);
       console.log("# Bodies = " + physics.bodies.size.getValueDirect());
     }
 
