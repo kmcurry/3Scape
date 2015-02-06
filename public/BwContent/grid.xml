@@ -25,6 +25,6 @@
             <Model name="Grid" url="objects/Grid.lwo"/>
         </Group>
     </Isolator>
-    <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
+    <RenderDirective name="RenderDirective" backgroundImageFilename="images/Sky2.png"/>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 </Scene>
