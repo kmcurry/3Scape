@@ -10,23 +10,6 @@ module.exports = function(app) {
       res.render('mobile');
     });
 
-    /*
-    app.get('/create',isLoggedIn, function (req, res) {
-        if (req.query.s === undefined) {
-          res.render('create',{
-            user: req.user
-          });
-        } else {
-          console.log("detected query string in create: " + req.query.s );
-          res.render('create',{
-            user: req.user,
-            scape: "'" + req.query.s + "'"
-          });
-        }
-
-    });
-    */
-
     app.get('/create',isLoggedIn, function (req, res) {
       res.render('create',{
         user: req.user
