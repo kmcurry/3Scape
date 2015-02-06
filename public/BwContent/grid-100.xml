@@ -43,7 +43,7 @@
             </SpotLight>
         </Group>
         <Group name="Models">
-            <Model name="Grid" url="objects/Grid.lwo" moveable="false">
+            <Model name="Grid" url="objects/Grid.lwo" moveable="false" detectCollision="true">
                 <scale x="100" y="1" z="100"/>
                 <physicalProperties>
                   <mass>0</mass>
@@ -61,7 +61,7 @@
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
     <PhysicsSimulator name="PhysicsSimulator" evaluate="true">
       <bodies>
-        <body>grid</body>
+        <body>Grid</body>
       </bodies>
     </PhysicsSimulator>
 </Scene>
