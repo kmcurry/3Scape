@@ -1,5 +1,5 @@
 
-Make and share working virtual machines online. Bring your imagination to life in your browser at [3Scape.me](http;//3Scape.me)
+Make and share 3D contraptions. Bring your imagination to life in your browser at [3Scape.me](http;//3Scape.me)
 
 <img alt="Bring your imagination to life in your browser with 3Scape."" src="./public/images/logo-3S.png" width="60px"/>
 
