@@ -21,11 +21,28 @@ module.exports = function(app) {
       if (req.params.scape) {
         var s = JSON.stringify(req.params.scape);
         console.log("scape = " + s);
-        res.render('create', {scape: s});
-      } else {
-        console.log("no scape");
-        res.render('create');
-      }
+
+        switch(s) {
+          case "2Dvs3D" :
+          case "Egypt" :
+          case "egypt" :
+          case "Entymology" :
+          case "entymology" :
+          case "Physics" :
+          case "physics" :
+          case "Two-stroke" :
+          case "two-stroke" :
+            {
+              res.render('create', {scape: s});
+            }
+            break;
+          default:
+            {
+              res.status(404).render('404');
+            }
+            break;
+        }
+      } else { res.status(404).render('404'); }
     });
 
     app.get('/classroom', function (req, res) {
