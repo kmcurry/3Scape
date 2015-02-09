@@ -587,7 +587,7 @@ function loadScape(scape) {
       loadTwoStroke();
       break;
     default:
-      loadLandingPage();
+    //  loadLandingPage();
       break;
   }
 }

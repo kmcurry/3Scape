@@ -65,11 +65,10 @@ module.exports = function(app) {
     });
 
     function notFound(req, res) {
-      res.setHeader("Content-Type", 'text/html');
-      res.send(404, "404: This 3Scape doesnt exist anywhere!");
+      res.redirect('404');
     }
 
-    //app.use(notFound);
+    app.use(notFound);
 
     // note: the next method param is passed as well
     function checkForMobile(req, res, next) {
