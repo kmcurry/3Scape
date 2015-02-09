@@ -11,54 +11,48 @@ module.exports = function(app) {
     });
 
     app.get('/create',isLoggedIn, function (req, res) {
-        if (req.query.s === undefined) {
-          res.render('create',{
-            user: req.user
-          });
-        } else {
-          console.log("detected query string in create: " + req.query.s );
-          res.render('create',{
-            user: req.user,
-            scape: "'" + req.query.s + "'"
-          });
-        }
+      res.render('create',{
+        user: req.user
+      });
+    });
 
+    app.get('/:scape', isLoggedIn, function (req, res) {
+
+      if (req.params.scape) {
+        var s = JSON.stringify(req.params.scape);
+        console.log("scape = " + s);
+        res.render('create', {scape: s});
+      } else {
+        console.log("no scape");
+        res.render('create');
+      }
     });
 
     app.get('/classroom', function (req, res) {
-      res.render('classroom.ejs')
+      res.render('classroom')
     });
 
     // =====================================
     // PRIVACY ========
     // =====================================
     app.get('/privacy', function (req, res) {
-        res.render('privacy.ejs')
+        res.render('privacy')
     });
 
     // =====================================
     // NO WEB GL ========
     // =====================================
     app.get('/nowebgl', function (req, res) {
-        res.render('NoWebGL.ejs')
+        res.render('NoWebGL')
     });
 
 //Profile Section ===================
 //We will want this protected so you have to be logged in to visit
 //We will use route middleware to verify this(the isLoggedIn function)
     app.get('/profile', isLoggedIn, function (req, res) {
-        res.render('profile.ejs', {
+        res.render('profile', {
             user: req.user //get the user out of session and pass to template
         });
-    });
-
-//Change the Scene ===================
-    app.post('/changeScene', function (req, res) {
-        var User = require('../app/models/user');
-        User.findOne({'email': req.body.email}, function (err, user) {
-            user.scene = req.body.scene;
-            user.save();
-        })
     });
 
 
@@ -104,12 +98,14 @@ module.exports = function(app) {
     // route middleware to make sure a user is logged in
     function isLoggedIn(req, res, next) {
 
+      req.session.returnTo = req.path;
+
       // if user is authenticated in the session, carry on
       if (req.isAuthenticated()) {
         return next();
       }
 
-      // if they aren't redirect them to the home page
+      // if they aren't redirect them to the login page
       res.redirect('/login');
     }
 };

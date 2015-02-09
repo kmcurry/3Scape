@@ -67,12 +67,16 @@ module.exports = function(app, async, crypto, passport, utilities) {
     success_message: req.flash('success')});
   });
 
-  // POST
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/create', //redirect to the secure profile section
-    failureRedirect: '/login', //redirect to the signup page if there is an error
-    failureFlash: true //allow flash messages
-  }));
+  app.post('/login', function(req, res, next) {
+    passport.authenticate('local-login', function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/login'); }
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        return res.redirect(req.session.returnTo);
+      });
+    })(req, res, next);
+  });
 
   app.get('/logout', function (req, res) {
     req.logout();
@@ -82,7 +86,8 @@ module.exports = function(app, async, crypto, passport, utilities) {
   // RESET
 
   app.get('/reset/:token', function(req, res) {
-    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    User.findOne({ resetPasswordToken: req.params.token,
+      resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
       if (!user) {
         req.flash('error', 'Password reset token is invalid or has expired.');
         return res.redirect('/forgot');
@@ -103,7 +108,8 @@ module.exports = function(app, async, crypto, passport, utilities) {
     async.waterfall([
       function(done) {
 
-        User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        User.findOne({ resetPasswordToken: req.body.token,
+          resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
             req.flash('error', 'Password reset token is invalid or has expired.');
             return res.redirect('back');
