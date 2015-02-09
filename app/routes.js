@@ -20,9 +20,9 @@ module.exports = function(app) {
 
       if (req.params.scape) {
         var s = JSON.stringify(req.params.scape);
-        console.log("scape = " + s);
+        var s1 = s.replace(/\"/g, "");
 
-        switch(s) {
+        switch(s1) {
           case "2Dvs3D" :
           case "Egypt" :
           case "egypt" :
@@ -33,6 +33,8 @@ module.exports = function(app) {
           case "Two-stroke" :
           case "two-stroke" :
             {
+              console.log("loading scape: " + s);
+
               res.render('create', {scape: s});
             }
             break;
@@ -43,6 +45,7 @@ module.exports = function(app) {
             break;
         }
       } else { res.status(404).render('404'); }
+
     });
 
     app.get('/classroom', function (req, res) {
