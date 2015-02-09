@@ -75,7 +75,7 @@ module.exports = function(app) {
       res.send(404, "404: This 3Scape doesnt exist anywhere!");
     }
 
-    app.use(notFound);
+    //app.use(notFound);
 
     // note: the next method param is passed as well
     function checkForMobile(req, res, next) {
