@@ -5,21 +5,17 @@ module.exports = function(app) {
   var User = require('../app/models/user');
   var config = require('../configLoader')(process.env.NODE_ENV || "local")
 
-    app.get('/', checkForMobile);
+    app.get('/', isLoggedIn, checkForMobile);
     app.get('/mobile', function (req, res) {
       res.render('mobile');
     });
 
-    app.get('/create',isLoggedIn, function (req, res) {
-      res.render('create',{
-        user: req.user
-      });
-    });
+    app.get('/:scape?', isLoggedIn, function (req, res, next) {
 
-    app.get('/:scape', isLoggedIn, function (req, res) {
+      var s = "";
 
       if (req.params.scape) {
-        var s = JSON.stringify(req.params.scape);
+        s = JSON.stringify(req.params.scape);
         var s1 = s.replace(/\"/g, "");
 
         switch(s1) {
@@ -33,18 +29,21 @@ module.exports = function(app) {
           case "Two-stroke" :
           case "two-stroke" :
             {
-              console.log("loading scape: " + s);
-
-              res.render('create', {scape: s});
+              res.render('index', {
+                scape: s
+              });
             }
             break;
           default:
             {
-              res.status(404).render('404');
+              return next();
             }
             break;
         }
-      } else { res.status(404).render('404'); }
+      } else {
+        res.render('index');
+      }
+
 
     });
 
@@ -66,15 +65,11 @@ module.exports = function(app) {
         res.render('NoWebGL')
     });
 
-//Profile Section ===================
-//We will want this protected so you have to be logged in to visit
-//We will use route middleware to verify this(the isLoggedIn function)
     app.get('/profile', isLoggedIn, function (req, res) {
         res.render('profile', {
             user: req.user //get the user out of session and pass to template
         });
     });
-
 
     app.get('/sitemap', function (req, res) {
         res.set('Content-Type', 'application/xml');
@@ -84,8 +79,13 @@ module.exports = function(app) {
         res.sendFile('sitemap.xml', options);
     });
 
-    function notFound(req, res) {
-      res.redirect('404');
+    function notFound(err, req, res, next) {
+
+      if(err.status !== 404) {
+        return next();
+      }
+
+      res.render('404');
     }
 
     app.use(notFound);
