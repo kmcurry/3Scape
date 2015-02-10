@@ -4,36 +4,59 @@
 	<title>Node Authentication</title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/profile.css">
 	<style>
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+	$(window).resize(function(){
+	var width = $(window).width();
+
+	if (width < 768) {
+			$("#banner").attr("src","images/minimal-banner-template-blue.png");
+	}
+	if (width > 768) {
+			$("#banner").attr("src","images/banner.png");
+	}
+});
+</script>
 </head>
 <body>
 <div class="container">
+	<h1><a href="#"><img src="images/banner.png" id="banner" alt="3Scape Banner" /></a></h1>
 
-	<div class="page-header text-center">
-		<h1><span class="fa fa-move"></span> Profile Page</h1>
-		<a href="/" class="btn btn-default btn-sm">To 3Scape</a>
-		<a href="/logout" class="btn btn-default btn-sm">Logout</a>
-	</div>
-
-	<div class="row">
-
-		<!-- LOCAL INFORMATION -->
-		<div class="col-sm-6">
-			<div class="well">
-				<h3><span class="fa fa-user"></span> Local</h3>
-
-					<p>
-						<!--<strong>id</strong>: <%= user._id %><br>-->
-						<strong>email</strong>: <%= user.email %><br>
-						<!--<strong>password</strong>: <%= user.password %><br>-->
-                        <strong>scene</strong>: <%= user.scene%>
-					</p>
-			</div>
+	<div id="edit" class="row">
+		<a href="#">Edit Profile</a>
 		</div>
 
-	</div>
+		<div id="hexagon" class="row">
+		</div>
+
+		<div id="info" class="row">
+			<div class="col-md-12"><strong>email</strong>: <%= user.email %><br></div>
+		</div>
+
+		<div id="category" class="row">
+		</div>
+
+		<div id="scapes">
+				<div class="row">
+					<div class="scape col-md-4"></div>
+					<div class="scape col-md-4"></div>
+					<div class="scape col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="scape col-md-4"></div>
+					<div class="scape col-md-4"></div>
+					<div class="scape col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="scape col-md-4"></div>
+					<div class="scape col-md-4"></div>
+					<div class="scape col-md-4"></div>
+				</div>
+		</div>
 
 </div>
 
