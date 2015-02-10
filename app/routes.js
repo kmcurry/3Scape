@@ -20,12 +20,32 @@ module.exports = function(app) {
 
       if (req.params.scape) {
         var s = JSON.stringify(req.params.scape);
-        console.log("scape = " + s);
-        res.render('create', {scape: s});
-      } else {
-        console.log("no scape");
-        res.render('create');
-      }
+        var s1 = s.replace(/\"/g, "");
+
+        switch(s1) {
+          case "2Dvs3D" :
+          case "Egypt" :
+          case "egypt" :
+          case "Entymology" :
+          case "entymology" :
+          case "Physics" :
+          case "physics" :
+          case "Two-stroke" :
+          case "two-stroke" :
+            {
+              console.log("loading scape: " + s);
+
+              res.render('create', {scape: s});
+            }
+            break;
+          default:
+            {
+              res.status(404).render('404');
+            }
+            break;
+        }
+      } else { res.status(404).render('404'); }
+
     });
 
     app.get('/classroom', function (req, res) {
@@ -64,10 +84,8 @@ module.exports = function(app) {
         res.sendFile('sitemap.xml', options);
     });
 
-    //John Testing
     function notFound(req, res) {
-      res.setHeader("Content-Type", 'text/html');
-      res.status(404).send("404: This 3Scape doesnt exist anywhere!");
+      res.redirect('404');
     }
 
     app.use(notFound);
