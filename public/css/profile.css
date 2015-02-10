@@ -6,15 +6,20 @@ margin: 0 auto;
 }
 
 h1 { margin: 0 auto;
+
 }
 
 #banner { width: 100%;
 }
 
-#edit a { background-image:url(../images/edit-profile-button-sprite-sheet.png);
-width: 150px;
-height: 26px;
+/* Edit Profile Button begin */
+#edit { width: 10%;
 float: right;
+margin-top: 1%;
+}
+
+#edit a { background-image:url(../images/edit-profile-button-sprite-sheet.png);
+width: 100%;
 text-indent: -9999px;
 }
 
@@ -23,39 +28,110 @@ text-indent: -9999px;
 
 #edit a:active { background-position: 450px;
 }
+/* Edit Profile Button end */
+
 
 /* Place profile pics here */
 
-#avatar { margin: 0 auto;
-margin-top: 8%;
-width: 173px;
-height: 143px;
-background-image: url(profile-pic.png);
+#hexagon { width: 100px;
+  height: 55px;
+  background: grey;
+  position: relative;
+  margin: 0 auto;
+  clear: both;
+  margin-top: 10%;
+  margin-bottom: 5%;
 }
 
-#info { width: 320px;
-height: 100px;
-margin: 0 auto;
+#hexagon:before { content: "";
+position: absolute;
+top: -25px;
+left: 0;
+width: 0;
+height: 0;
+border-left: 50px solid transparent;
+border-right: 50px solid transparent;
+border-bottom: 25px solid grey;
+}
+
+#hexagon:after { content: "";
+position: absolute;
+bottom: -25px;
+left: 0;
+width: 0;
+height: 0;
+border-left: 50px solid transparent;
+border-right: 50px solid transparent;
+border-top: 25px solid grey;
+}
+
+/* Place profile pics here end */
+
+#info { height: 100px;
+margin: auto;
 margin-top: 20px;
 margin-bottom: 20px;
+text-align: center;
 }
 
+
 #category { margin: 0 auto;
+margin-bottom: 1%;
 background-image:url(../images/category-3scapes.png);
 width: 80%;
 height: 85px;
+clear: both;
 }
 
-#scapes { margin: 10px auto;
+#scapes { margin: 0 auto;
 width: 80%;
 height: 500px;
+
 }
 
 .scape {
-margin-bottom: 2%;
-margin-right: 3%;
-width: 30%;
+margin: 1%;
+width: 31%;
 height: 250px;
+background-image: url(../images/puppy.jpg);
 background-color: #0C0;
-clear: right;
+border-style: solid;
+border-width: 10px;
+border-color: #cccccc;
+border-radius: 25px;
+}
+
+
+/* Tablet Size */
+
+@media (max-width: 768px) {
+
+h1 { background-image: url(../images/minimal-banner-blue.png);
+}
+
+#container {width: 100%;
+}
+
+#edit {width: 70%;
+}
+
+#category { width: 100%;
+}
+
+.scape { width: 80%;
+
+}
+}
+
+
+/* Smart Phone Size */
+
+@media (max-width: 480px) {
+
+#container {width: 100%;
+}
+
+.scape {width: 100%;
+}
+
 }
