@@ -5,7 +5,7 @@ module.exports = function(app) {
   var User = require('../app/models/user');
   var config = require('../configLoader')(process.env.NODE_ENV || "local")
 
-    app.get('/', isLoggedIn, checkForMobile);
+    app.get('/', checkForMobile);
     app.get('/mobile', function (req, res) {
       res.render('mobile');
     });
@@ -117,7 +117,8 @@ module.exports = function(app) {
     // route middleware to make sure a user is logged in
     function isLoggedIn(req, res, next) {
 
-      req.session.returnTo = req.path;
+      if (req.path !== undefined)
+        req.session.returnTo = req.path;
 
       // if user is authenticated in the session, carry on
       if (req.isAuthenticated()) {
