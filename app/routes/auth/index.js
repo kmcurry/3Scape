@@ -76,7 +76,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
         if (req.session.returnTo)
           return res.redirect(req.session.returnTo);
         else
-          return res.redirect('/');
+          return res.render('index');
       });
     })(req, res, next);
   });
