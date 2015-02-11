@@ -4,7 +4,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
   var config = require('../../../configLoader')(process.env.NODE_ENV || "local")
 
   app.get('/forgot', function(req, res) {
-    res.render('forgot.ejs', {
+    res.render('forgot', {
       user: req.user,
       info_message: req.flash('info'),
       error_message: req.flash('error'),
@@ -60,7 +60,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
   // GET
   app.get('/login', function (req, res) {
     //render the page and pass in any flash data if it exists
-    res.render('login.ejs', {
+    res.render('login', {
     message: req.flash('loginMessage'),
     info_message: req.flash('info'),
     error_message: req.flash('error'),
@@ -73,14 +73,17 @@ module.exports = function(app, async, crypto, passport, utilities) {
       if (!user) { return res.redirect('/login'); }
       req.logIn(user, function(err) {
         if (err) { return next(err); }
-        return res.redirect(req.session.returnTo);
+        if (req.session.returnTo)
+          return res.redirect(req.session.returnTo);
+        else
+          return res.render('index');
       });
     })(req, res, next);
   });
 
   app.get('/logout', function (req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('login');
   });
 
   // RESET
@@ -148,7 +151,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
   //SignUp============================
   app.get('/signup', function (req, res) {
     //render the page and pass any flash data if it exists
-    res.render('signup.ejs', {message: req.flash('signupMessage')});
+    res.render('signup', {message: req.flash('signupMessage')});
   });
 
   //process the signup form
@@ -167,7 +170,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
             templateId: config.email.welcome
           });
         }
-        return res.redirect('/create');
+        return res.redirect('/');
       });
     })(req, res, next);
 

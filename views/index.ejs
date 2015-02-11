@@ -4,24 +4,25 @@
     <meta name="robots" content="noindex">
     <link rel="shortcut icon" href="/favicon.ico?v=2" />
     <meta name="google-site-verification" content="HshVtf6HnSfl2YCmfMSpPEkQJT4lwYlxWt1x5XSbjoo" />
-    <meta name="globalsign-domain-verification" content="0N60TGhkkTPLK6Kecx2W5DbZ8UKdDDPtT-xB1AdoqH" />
     <meta name="description" content="a place to make and share interactive 3D on the web">
     <meta name="p:domain_verify" content="71238727c011f9da9c7b9445f91d4d7b"/>
 
     <!-- Bridgeworks-->
-    <script src="./js/BwHelper.js"></script>
-    <script type="text/javascript" src="./js/Bridgeworks-min.js"></script>
-    <script type="text/javascript" src="./js/conway.js"></script>
+    <script type="text/javascript" src="js/BwHelper.js"></script>
+    <script type="text/javascript" src="js/Bridgeworks-min.js"></script>
+    <script type="text/javascript" src="js/conway.js"></script>
 
     <!-- jquery stuff -->
     <!-- Install and use local files - KMC -->
-    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
+
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="js/jquery.qtip.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
     <script src="js/nicEdit.js"></script>
 
     <!-- jsColor Color Picker -->
@@ -29,28 +30,28 @@
 
     <!-- WebHostingHub Glyphs -->
     <link rel="stylesheet" type="text/css" media="all" href="css/whhg.css" />
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="css/slider.css">
     <!-- Custom styles for this template -->
 
     <!-- Styles made by 3Scape team -->
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
     <!-- application scripts -->
-    <script type="text/javascript" src="./js/crossbrowser.js"></script>
-    <script type="text/javascript" src="./js/editor.js"></script>
-    <script type="text/javascript" src="./js/controls.js"></script>
-    <script type="text/javascript" src="./js/MapControls.js"></script>
-    <script type="text/javascript" src="./js/BinaryDecode.js"></script>
-    <script type="text/javascript" src="./js/labels.js"></script>
-    <script type="text/javascript" src="./js/objectmode.js"></script>
-    <script type="text/javascript" src="./js/eventHandlers.js"></script>
-    <script type="text/javascript" src="./js/bootstrap-slider.js"></script>
-    <script type="text/javascript" src="./js/slidemode.js"></script>
-    <script type="text/javascript" src="./js/FileSaver.js"></script>
-    <!-- <script type="text/javascript" src="./js/uservoice.js"></script> -->
-    <script type="text/javascript" src="./js/facebook.js"></script>
-    <script type="text/javascript" src="./js/google.js"></script>
+    <script type="text/javascript" src="js/crossbrowser.js"></script>
+    <script type="text/javascript" src="js/editor.js"></script>
+    <script type="text/javascript" src="js/controls.js"></script>
+    <script type="text/javascript" src="js/MapControls.js"></script>
+    <script type="text/javascript" src="js/BinaryDecode.js"></script>
+    <script type="text/javascript" src="js/labels.js"></script>
+    <script type="text/javascript" src="js/objectmode.js"></script>
+    <script type="text/javascript" src="js/eventHandlers.js"></script>
+    <script type="text/javascript" src="js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="js/slidemode.js"></script>
+    <script type="text/javascript" src="js/FileSaver.js"></script>
+    <!-- <script type="text/javascript" src="js/uservoice.js"></script> -->
+    <script type="text/javascript" src="js/facebook.js"></script>
+    <script type="text/javascript" src="js/google.js"></script>
     <style id="holderjs-style" type="text/css"></style>
     <meta property="og:image" content="https://go.3Scape.me/logo-3S.png"/>
     <meta property="og:description" content="Make and share interactive 3D. If you can imagine it you can 3Scape it." />
@@ -1164,7 +1165,18 @@
 
       <!-- Initialize Angular -->
       <!-- Use local installation - KMC -->
-      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+      <script src="bower_components/angular/angular.min.js"></script>
+
+      <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-26989160-4', 'auto');
+      ga('send', 'pageview');
+
+      </script>
 
   </body>
 </html>
