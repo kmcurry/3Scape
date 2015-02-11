@@ -60,7 +60,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
   // GET
   app.get('/login', function (req, res) {
     //render the page and pass in any flash data if it exists
-    res.render('login.ejs', {
+    res.render('login', {
     message: req.flash('loginMessage'),
     info_message: req.flash('info'),
     error_message: req.flash('error'),
