@@ -147,6 +147,13 @@ function loadLights() {
   bridgeworks.updateScene('Lights.xml');
 }
 
+function loadPhysics() {
+  reset();
+  bridgeworks.contentDir='BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('Physics.xml');
+}
+
 function loadTwoStroke() {
   reset();
   bridgeworks.contentDir='/BwContent/Engine/BwContent';
@@ -333,7 +340,14 @@ function load(u)
     }
 }
 
-
+//Issues an alert message saying the desired 3Scape doesnt exist
+//Also redirects the user to the landing page.
+function loadLandingPage() {
+  var errorMsg = '"These aren\'t the Scapes you\'re looking for." \n -Kevin Curry \n\n This 3Scape does not exist.';
+  alert(errorMsg);
+  window.onbeforeunload = null;
+  document.location.href = "/";
+}
 
 function loadModel(url)
 {
@@ -496,6 +510,12 @@ function loadModel(url)
         $('#sidebar-button').removeClass('btn-danger').addClass('btn-info');
     }
 
+    var physics = bridgeworks.get("PhysicsSimulator");
+    if (physics && g_selectedModel) {
+      physics.bodies.push_back(g_selectedModel.getAttribute("name"));
+      console.log("# Bodies = " + physics.bodies.size.getValueDirect());
+    }
+
 }
 
 function loadMotion(url)
@@ -547,17 +567,27 @@ function loadMotion(url)
 
 function loadScape(scape) {
   switch (scape) {
-    case "egypt" :
-      loadEgypt();
-      break;
-    case "entymology" :
-      loadEntymology();
-      break;
     case "2Dvs3D" :
       load2D3D();
       break;
+    case "Egypt" :
+    case "egypt" :
+      loadEgypt();
+      break;
+    case "Entymology" :
+    case "entymology" :
+      loadEntymology();
+      break;
+    case "Physics" :
+    case "physics" :
+      loadPhysics();
+      break;
+    case "Two-stroke" :
     case "two-stroke" :
       loadTwoStroke();
+      break;
+    default:
+    //  loadLandingPage();
       break;
   }
 }
