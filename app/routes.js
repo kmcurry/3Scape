@@ -53,16 +53,12 @@ module.exports = function(app) {
     res.render('classroom')
   });
 
-  // =====================================
-  // PRIVACY ========
-  // =====================================
+
   app.get('/privacy', function (req, res) {
       res.render('privacy')
   });
 
-  // =====================================
-  // NO WEB GL ========
-  // =====================================
+
   app.get('/nowebgl', function (req, res) {
       res.render('NoWebGL')
   });
