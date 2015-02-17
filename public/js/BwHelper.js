@@ -77,7 +77,7 @@ function autoSaveScene(){
   }
 }
 
-var saveInterval = setInterval(function() {autoSaveScene()}, 5000);//300000);
+//var saveInterval = setInterval(function() {autoSaveScene()}, 5000);//300000);
 
 function keepWorkInProgress(){
   var serial = "";
