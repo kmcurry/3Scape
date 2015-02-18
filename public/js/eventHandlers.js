@@ -37,7 +37,7 @@ function handleMouse(e)
         case "click":
             {
                 window.clearInterval(zoomUpdate);
-                
+
                 if (g_selectedModel)
                 {
                     g_selectedModel.getAttribute("highlight").setValueDirect(false);
@@ -66,7 +66,7 @@ function handleMouse(e)
                         selectedThing = null; // ??? - KMC
 
 
-                        setColorPicker();
+                        /* setColorPicker();
 
                         myObject = document.getElementById(g_selectedModelName);
                         $('.object').removeClass('current-object');
@@ -75,6 +75,7 @@ function handleMouse(e)
                         scaleValues = (g_selectedModel.scale.getValueDirect());
                         x = scaleValues['x'] * 100
                         $('#scales').slider('setValue', x);
+                        */
                     }
                 }
                 else {

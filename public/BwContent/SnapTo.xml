@@ -78,7 +78,7 @@
               </Model>
             </Group>
         </Isolator>
-        <RenderDirective name="RenderDirective" root="Root" antialiasType="0" antialiasWaitTimeMs="5000" backgroundImageFilename="images/Sky2.jpg"/>
+        <RenderDirective name="RenderDirective" root="Root" antialiasType="0" antialiasWaitTimeMs="5000" backgroundImageFilename="images/Sky2.jpg" highlightType="2" />
     </Scene>
     <ConnectOutputs targetContainer="Camera" sourceEvaluator="SceneInspector" connectionType="sceneInspection"/>
     <Set target="SceneInspector" pivotDistance="6"/>
