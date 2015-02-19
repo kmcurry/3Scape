@@ -8,18 +8,5 @@
         <physicalProperties>
           <mass>5</mass>
         </physicalProperties>
-        <plugConnectors>
-          <plugConnector type="110v">
-            <normal x="0" y="-1" z="0"/>
-            <pin1>
-              <center x="0.5" y="0.5" z="0"/>
-              <radius>0.5</radius>
-            </pin1>
-            <pin2>
-              <center x="-0.5" y="0.5" z="0"/>
-              <radius>0.5</radius>
-            </pin2>
-          </plugConnector>
-        </plugConnectors>
     </Model>
 </Update>
