@@ -20,5 +20,6 @@
               <radius>0.5</radius>
             </pin2>
           </plugConnector>
+        </plugConnectors>
     </Model>
 </Update>
