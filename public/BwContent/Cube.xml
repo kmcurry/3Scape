@@ -9,17 +9,74 @@
           <mass>5</mass>
         </physicalProperties>
         <socketConnectors>
-          <socketConnector type="110v">
-            <normal x="0" y="1" z="0"/>
+          <socketConnector type="default">
+            <normal x="1" y="0" z="0"/>
             <slot1>
-              <center x="0.5" y="0.5" z="0"/>
-              <radius>0.5</radius>
+              <center x="0.25" y="0" z="0"/>
+              <radius>0.2</radius>
             </slot1>
             <slot2>
-              <center x="0.5" y="-0.5" z="0"/>
-              <radius>0.5</radius>
+              <center x="0.25" y="0" z="0"/>
+              <radius>0.2</radius>
+            </slot2>
+          </socketConnector>
+          <socketConnector type="default">
+            <normal x="0" y="1" z="0"/>
+            <slot1>
+              <center x="0" y="0.25" z="0"/>
+              <radius>0.2</radius>
+            </slot1>
+            <slot2>
+              <center x="0" y="0.25" z="0"/>
+              <radius>0.2</radius>
+            </slot2>
+          </socketConnector>
+          <socketConnector type="default">
+            <normal x="0" y="0" z="1"/>
+            <slot1>
+              <center x="0" y="0" z="0.25"/>
+              <radius>0.2</radius>
+            </slot1>
+            <slot2>
+              <center x="0" y="0" z="0.25"/>
+              <radius>0.2</radius>
             </slot2>
           </socketConnector>
         </socketConnectors>
+        <plugConnectors>
+          <plugConnector type="default">
+            <normal x="-1" y="0" z="0"/>
+            <pin1>
+              <center x="-0.25" y="0" z="0"/>
+              <radius>0.2</radius>
+            </pin1>
+            <pin2>
+              <center x="-0.25" y="0" z="0"/>
+              <radius>0.2</radius>
+            </pin2>
+          </plugConnector>
+          <plugConnector type="default">
+            <normal x="0" y="-1" z="0"/>
+            <pin1>
+              <center x="0" y="-0.25" z="0"/>
+              <radius>0.2</radius>
+            </pin1>
+            <pin2>
+              <center x="0" y="-0.25" z="0"/>
+              <radius>0.2</radius>
+            </pin2>
+          </plugConnector>
+          <plugConnector type="default">
+            <normal x="0" y="0" z="-1"/>
+            <pin1>
+              <center x="0" y="0" z="-0.25"/>
+              <radius>0.2</radius>
+            </pin1>
+            <pin2>
+              <center x="0" y="0" z="-0.25"/>
+              <radius>0.2</radius>
+            </pin2>
+          </plugConnector>
+        </plugConnectors>
     </Model>
 </Update>
