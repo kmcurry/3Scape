@@ -149,7 +149,7 @@ function init(scene, container, recreateCanvas)
       bridgeworks.updateScene(scene);
 
 	addKeyEvents();
-	addTouchEvents();
+	//addTouchEvents();
 
 	// gesture
 	/*document.addEventListener("gesturestart", function(event) {
@@ -213,7 +213,7 @@ function addKeyEvents()
 
     if (window.addEventListener)
     {
-        window.addEventListener("keypress",
+        window.addEventListener("keydown",
             function(event)
             {
                 console.debug("keydown");
@@ -223,7 +223,7 @@ function addKeyEvents()
     }
     else
     {
-        window.attachEvent("keypress",
+        window.attachEvent("keydown",
             function(event)
             {
                 console.debug("keydown");
