@@ -3,6 +3,7 @@
  */
 function zoomOut()
 {
+    console.log("zoom out");
     //Should be moved to a config file
     var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
     var totalDelta = sceneInspec.panDelta.values[2];
@@ -36,6 +37,7 @@ function zoomOut()
 
 function zoomIn()
 {
+    console.log("zoom out");
     //Should be moved to a config file
     var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
     var totalDelta = sceneInspec.panDelta.values[2];

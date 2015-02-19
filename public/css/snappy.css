@@ -36,3 +36,30 @@
   border-color: #cccccc;
   border-radius: 15px;
 }
+
+.shape {
+  cursor: pointer;
+  cursor: hand;
+  -webkit-transition: color 0.5s;
+  -moz-transition:    color 0.5s;
+  -ms-transition:     color 0.5s;
+  -o-transition:      color 0.5s;
+  transition:         color 0.5s;
+}
+.shape:hover{
+  color: #07c;
+}
+
+#zoom-controls {
+
+  text-align: center;
+  position:fixed;
+  right: 2%;
+  top: 30%;
+  background-color:#000;
+  border-radius: 10px;
+  padding: 13px;
+  color: rgb(71, 169, 211);
+  opacity: 0.4;
+  z-index: 2000;
+}

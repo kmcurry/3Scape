@@ -19,8 +19,6 @@ function handleMouse(e)
         g_objectInspector = bridgeworks.registry.find("ObjectInspector");
     }
 
-    bridgeworks.handleEvent(e);
-
     switch (e.type) {
         case "mousedown":
             {
@@ -39,6 +37,7 @@ function handleMouse(e)
                   g_selectedModel.getAttribute("highlight").setValueDirect(false);
                   g_selectedModel = null;
               }
+
               if (bridgeworks.selector.selections.models.length > 0)
               {
                   g_selectedModel = bridgeworks.selector.selections.models[0];
@@ -48,18 +47,11 @@ function handleMouse(e)
 
                   g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
 
-                  console.log(g_selectedModelName);
-
                   if (g_selectedModelName != 'Grid') {
 
-                      console.log(g_selectedModelName);
-
                       if (g_selectedModel.moveable.getValueDirect()) {
-                          g_selectedModel.getAttribute("highlight").setValueDirect(true);
+                        g_selectedModel.getAttribute("highlight").setValueDirect(true);
                       }
-
-
-                      selectedThing = null; // ??? - KMC
 
                   }
               }
@@ -67,12 +59,7 @@ function handleMouse(e)
 
                   console.log("NO MODEL SELECTED");
                   g_selectedModel = null;
-                  // this is so confusing
-                  selectedThing = bridgeworks.selector.selectedName.getValueDirect().join("");
-                  if (bridgeworks.selector.selected) {
-                      selectedId = bridgeworks.selector.selected.id;
-                      selectedText = bridgeworks.selector.selected.text.getValueDirect().join("");
-                  }
+
               }
 
               // if the selected model is not moveable switch modes between camera and objects
@@ -85,34 +72,29 @@ function handleMouse(e)
               }
 
               capture = false;
-        }
+            }
         break;
 
         case "dblclick":
-        {
-            if (selectedThing) // ??? KMC
-            {
-                openLabelEdit();
+          {
+            var name = g_selectedModel.name.getValueDirect().join("");
+            var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+            var cmd = "";
+            if (e.metaKey || e.ctrlKey) {
+                cmd = "\<AutoInterpolate target='" + name + "'>";
+                cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
+                cmd += "\</AutoInterpolate>";
             }
             else {
-                var name = g_selectedModel.name.getValueDirect().join("");
-                var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-                var cmd = "";
-                if (e.metaKey || e.ctrlKey) {
-                    cmd = "\<AutoInterpolate target='" + name + "'>";
-                    cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
-                    cmd += "\</AutoInterpolate>";
-                }
-                else {
-                    cmd = "\<Locate target='" + name + "'/>";
-                }
-                bridgeworks.updateScene(cmd);
-
-                setColorPicker();
+                cmd = "\<Locate target='" + name + "'/>";
             }
-        }
+            bridgeworks.updateScene(cmd);
+          }
         break;
     }
+
+    bridgeworks.handleEvent(e);
+
 
 }
 

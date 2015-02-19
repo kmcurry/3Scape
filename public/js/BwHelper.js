@@ -145,19 +145,16 @@ function init(scene, container, recreateCanvas)
     if (savedScene != "" && (savedScene.indexOf("autoSaved") > -1)){
       bridgeworks.updateScene(properScene);
     }
-    else
+    else {
       bridgeworks.updateScene(scene);
+    }
+    
+    window.onkeydown = handleKey;
+	  addKeyEvents();
+	  //addTouchEvents();
 
-	addKeyEvents();
-	//addTouchEvents();
 
-	// gesture
-	/*document.addEventListener("gesturestart", function(event) {
-		event.preventDefault();
-		alert("gesturestart");
-	}, false);*/
-    // disable right-click context menu
-    // KMC: why?
+    // disable right-click context menu until replaced.
     document.oncontextmenu = function() { return false; }
     // disable selection
     document.onselectstart = function() { return true; }
