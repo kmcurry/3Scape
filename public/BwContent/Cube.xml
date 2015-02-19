@@ -8,5 +8,18 @@
         <physicalProperties>
           <mass>5</mass>
         </physicalProperties>
+        <socketConnectors>
+          <socketConnector type="110v">
+            <normal x="0" y="1" z="0"/>
+            <slot1>
+              <center x="0.5" y="0.5" z="0"/>
+              <radius>0.5</radius>
+            </slot1>
+            <slot2>
+              <center x="0.5" y="-0.5" z="0"/>
+              <radius>0.5</radius>
+            </slot2>
+          </socketConnector>
+        </socketConnectors>
     </Model>
 </Update>
