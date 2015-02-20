@@ -1,6 +1,8 @@
 <html>
 	<head>
-		<title>BWJS Demo</title>
+		<title>3Scape Snappy</title>
+		<meta http-equiv="x-ua-compatible" content="IE=10">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script type="text/javascript" src="js/BwHelper.js"></script>
 		<script type="text/javascript" src="js/crossbrowser.js"></script>
 		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
@@ -14,7 +16,7 @@
 		<link rel="stylesheet" type="text/css" href="css/snappy.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
-
+		<link rel="stylesheet" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
 	</head>
 	<body onresize="resize();">
 
@@ -49,18 +51,14 @@
 
 		<div id="model-menu" class="menu">
 			<div class="rotater">
-				<div class="btn btn-icon" onclick="">
-					<i class="fa fa-wrench"></i>
+				<div class="btn btn-icon" onclick="cut();$('#model-menu').toggleClass('active');">
+					<i class="fa fa-cut"></i>
 				</div>
 			</div>
 			<div class="rotater">
-				<div class="btn btn-icon" onclick="">
-					<i class="fa fa-edit"></i>
-				</div>
-			</div>
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="">
-					<i class="fa fa-copy"></i>
+				<div class="btn btn-icon" name="model-color-item">
+					<i class="fa fa-paint-brush"></i>
+					<input type="text" value="CCC" name="model-color" class="pick-a-color form-control">
 				</div>
 			</div>
 		</div>
@@ -77,9 +75,27 @@
 
 					onHoldFunction('#zoom-in', zoomIn, 20);
 					onHoldFunction('#zoom-out', zoomOut, 20);
+
+					$(".pick-a-color").pickAColor({
+						showAdvanced						: false,
+						showSpectrum            : false,
+						showSavedColors         : false,
+						saveColorsPerElement    : false,
+						fadeMenuToggle          : true,
+						showHexInput            : false,
+						showBasicColors         : true,
+						allowBlank              : false,
+						inlineDropdown          : false
+					});
+
+					$("#model-color input").on("change", function () {
+						applyColor($(this).val());
+					});
 				}
 			}
 		</script>
 		<script type="text/javascript" src="js/contextmenu.js"></script>
+		<script src="bower_components/pick-a-color/build/dependencies/tinycolor-0.9.15.min.js"></script>
+		<script src="bower_components/pick-a-color/build/1.2.3/js/pick-a-color-1.2.3.min.js"></script>
 	</body>
 </html>

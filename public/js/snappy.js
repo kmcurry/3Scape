@@ -13,6 +13,16 @@ var g_interval = null;
 
 // functions are organized by alpha until refactored
 
+function applyColor(hex)
+{
+  var name = g_selectedModel.name.getValueDirect().join("");
+  var r = parseInt(hex.substring(0, 2), 16)/256;
+  var g = parseInt(hex.substring(2, 4), 16)/256;
+  var b = parseInt(hex.substring(4, 6), 16)/256;
+  var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '" +b+ "' a='1'" + "/>" +"\</Set>";
+  bridgeworks.updateScene(cmd);
+}
+
 function copy()
 {
   if (g_selectedModel) {
@@ -101,9 +111,14 @@ function paste()
     // this will update g_selectedModel
     loadModel(modelName + ".xml");
 
-    //g_copyModel.scale.setValueDirect(Size, Size, Size);
-    //g_copyModel.rotation.setValueDirect(rotX, rotY, rotZ);
-    //g_copyModel.color.setValueDirect(R, G, B); // ?? Y not? - KMC
+    var s = g_copyModel.scale.getValueDirect();
+    g_selectedModel.scale.setValueDirect(s.x, s.y, s.z);
+
+    var r = g_copyModel.scale.getValueDirect();
+    g_selectedModel.scale.setValueDirect(r.x, r.y, r.z);
+
+    var c = g_copyModel.color.getValueDirect();
+    g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a); 
 
     // TODO: g_copyModel.copyModel();
   }
