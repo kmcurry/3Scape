@@ -18,6 +18,20 @@
   background-color: #57ba56;
 }
 
+#ZoomControls {
+
+  text-align: center;
+  position:fixed;
+  right: 2%;
+  top: 30%;
+  background-color:#000;
+  border-radius: 10px;
+  padding: 13px;
+  color: rgb(71, 169, 211);
+  opacity: 0.4;
+  z-index: 2000;
+}
+
 .h-button {
   position: absolute;
   z-index: 2000;
@@ -32,7 +46,7 @@
   height: 60px;
   background-color: #0C0;
   border-style: solid;
-  border-width: 10px;
+  border-width: 4px;
   border-color: #cccccc;
   border-radius: 15px;
 }
@@ -48,18 +62,4 @@
 }
 .shape:hover{
   color: #07c;
-}
-
-#zoom-controls {
-
-  text-align: center;
-  position:fixed;
-  right: 2%;
-  top: 30%;
-  background-color:#000;
-  border-radius: 10px;
-  padding: 13px;
-  color: rgb(71, 169, 211);
-  opacity: 0.4;
-  z-index: 2000;
 }
