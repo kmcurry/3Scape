@@ -148,14 +148,11 @@ function init(scene, container, recreateCanvas)
     else {
       bridgeworks.updateScene(scene);
     }
-    
+
     window.onkeydown = handleKey;
 	  addKeyEvents();
 	  //addTouchEvents();
 
-
-    // disable right-click context menu until replaced.
-    document.oncontextmenu = function() { return false; }
     // disable selection
     document.onselectstart = function() { return true; }
 

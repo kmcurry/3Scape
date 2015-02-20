@@ -73,6 +73,8 @@ function loadModel(url)
     physics.bodies.push_back(g_selectedModel.getAttribute("name"));
   }
 
+  $(".menu").removeClass("active");
+
 }
 
 var onHoldFunction = function(id, method, time) {
