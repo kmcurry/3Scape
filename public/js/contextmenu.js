@@ -1,15 +1,14 @@
-document.oncontextmenu = function() {
-  if (g_selectedModel) {
-    positionMenu(window.event, modelMenu);
-    $("#model-menu").toggleClass("active");
+document.addEventListener('contextmenu', function(e) {
+  if (e.button === 2) {
+    if (g_selectedModel) {
+      positionMenu(e, modelMenu);
+      $("#model-menu").toggleClass("active");
+    }
+    e.preventDefault();
+    return false;
   }
-  else {
-    // context menu for other things -
-    // ex., camera when nothing selected?
-  }
+}, false);
 
-  return false;
-}
 
 function positionMenu(e, menu) {
   var xPosition = e.clientX - (menu.clientWidth / 2);
