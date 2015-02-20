@@ -18,6 +18,10 @@
   background-color: #57ba56;
 }
 
+#Toolbar .row {
+  margin: 8px;
+}
+
 #ZoomControls {
 
   text-align: center;
@@ -41,8 +45,7 @@
 }
 
 .tool-button {
-  margin: 1%;
-  width: 31%;
+  margin: 4px;
   height: 60px;
   background-color: #0C0;
   border-style: solid;
