@@ -25,9 +25,7 @@ var g_interval = null;
 
 function copy()
 {
-  if (g_selectedModel) {
-    g_copyModel = g_selectedModel;
-  }
+  // nothing to do
 }
 
 function cut()
@@ -98,24 +96,22 @@ var onHoldFunction = function(id, method, time) {
 
 function paste()
 {
-  if (g_copyModel) {
+  if (g_selectedModel) {
     console.log("pasting...");
 
-    g_copyModel.getAttribute("highlight").setValueDirect(false);
+    g_selectedModel.getAttribute("highlight").setValueDirect(false);
 
-    var url = g_copyModel.url.getValueDirect().join("");
+    var url = g_selectedModel.url.getValueDirect().join("");
     var modelName = url.substring(url.indexOf('/')+1, url.indexOf('.'));
     console.log(modelName);
 
     // this will update g_selectedModel
     loadModel(modelName + ".xml");
 
-    //console.log("Pasting: " + g_selectedModel.name.getValueDirect());
-
     //g_selectedModel.scale.setValueDirect(Size, Size, Size);
     //g_selectedModel.rotation.setValueDirect(rotX, rotY, rotZ);
     //g_selectedModel.color.setValueDirect(R, G, B); // ?? Y not? - KMC
 
-    // TODO: g_copyModel.copyModel();
+    // TODO: g_selectedModel.copyModel();
   }
 }
