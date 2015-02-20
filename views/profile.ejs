@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Node Authentication</title>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/profile.css">
@@ -9,25 +10,16 @@
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
 	<script src="js/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript">
-	$(window).resize(function(){
-	var width = $(window).width();
-
-	if (width < 768) {
-			$("#banner").attr("src","images/minimal-banner-template-blue.png");
-	}
-	if (width > 768) {
-			$("#banner").attr("src","images/banner.png");
-	}
-});
-</script>
 </head>
 <body>
 <div class="container">
-	<h1><a href="#"><img src="images/banner.png" id="banner" alt="3Scape Banner" /></a></h1>
+	<h1><a href="#">
+		<img src="images/banner.png" class="banner visible-md visible-lg" alt="3Scape Banner" />
+		<img src="images/minimal-banner-template-blue.png" class="banner hidden-md hidden-lg" alt="3Scape Banner" />
+	</a></h1>
 
-	<div id="edit" class="row">
-		<a href="#">Edit Profile</a>
+	<div class="row">
+		<a class="edit pull-right" href="#">Edit Profile</a>
 		</div>
 
 		<div id="hexagon" class="row">
@@ -42,19 +34,17 @@
 
 		<div id="scapes">
 				<div class="row">
-					<div class="scape col-md-4"></div>
-					<div class="scape col-md-4"></div>
-					<div class="scape col-md-4"></div>
-				</div>
-				<div class="row">
-					<div class="scape col-md-4"></div>
-					<div class="scape col-md-4"></div>
-					<div class="scape col-md-4"></div>
-				</div>
-				<div class="row">
-					<div class="scape col-md-4"></div>
-					<div class="scape col-md-4"></div>
-					<div class="scape col-md-4"></div>
+					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
+					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
+					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
+
+					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
+					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
+					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
+
+					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
+					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
+					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
 				</div>
 		</div>
 
