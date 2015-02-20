@@ -1,5 +1,4 @@
 // consolidating globals here until refactored
-var g_copiedUrl = "";
 var g_copyModel = null;
 
 
@@ -16,7 +15,9 @@ var g_interval = null;
 
 function copy()
 {
-  // nothing to do
+  if (g_selectedModel) {
+    g_copyModel = g_selectedModel;
+  }
 }
 
 function cut()
@@ -90,18 +91,18 @@ var onHoldFunction = function(id, method, time) {
 
 function paste()
 {
-  if (g_selectedModel) {
+  if (g_copyModel) {
 
-    var url = g_selectedModel.url.getValueDirect().join("");
+    var url = g_copyModel.url.getValueDirect().join("");
     var modelName = url.substring(url.indexOf('/')+1, url.indexOf('.'));
 
     // this will update g_selectedModel
     loadModel(modelName + ".xml");
 
-    //g_selectedModel.scale.setValueDirect(Size, Size, Size);
-    //g_selectedModel.rotation.setValueDirect(rotX, rotY, rotZ);
-    //g_selectedModel.color.setValueDirect(R, G, B); // ?? Y not? - KMC
+    //g_copyModel.scale.setValueDirect(Size, Size, Size);
+    //g_copyModel.rotation.setValueDirect(rotX, rotY, rotZ);
+    //g_copyModel.color.setValueDirect(R, G, B); // ?? Y not? - KMC
 
-    // TODO: g_selectedModel.copyModel();
+    // TODO: g_copyModel.copyModel();
   }
 }
