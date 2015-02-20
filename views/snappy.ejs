@@ -18,6 +18,22 @@
 	</head>
 	<body onresize="resize();">
 
+		<div class="form-group">
+			<a for="Toolbar" class="h-button btn btn-info" data-toggle="collapse" href="#Toolbar" aria-expanded="true" aria-controls="Toolbar"><span class="glyphicon glyphicon-chevron-down"></span></a>
+			<div id="Toolbar" class="collapse in">
+				<div class="row">
+					<div class="tool-button col-xs-1 col-xs-offset-1" onclick="loadModel('Cube.xml');">Cube</div>
+					<div class="tool-button col-xs-1" onclick="loadModel('Pyramid.xml');">Pyramid</div>
+					<div class="tool-button col-xs-1" onclick="loadModel('Sphere.xml');">Sphere</div>
+					<div class="tool-button col-xs-1" onclick="loadModel('Tube.xml');">Tube</div>
+					<div class="tool-button col-xs-1" onclick="loadModel('Gear.xml');">Gear</div>
+					<div class="tool-button col-xs-1" onclick="loadModel('Beam.xml');">Beam</div>
+					<div class="tool-button col-xs-1" onclick="loadModel('Wall.xml');">Wall</div>
+					<div class="tool-button col-xs-1" onclick="loadModel('Ring.xml');">Ring</div>
+				</div>
+			</div>
+		</div>
+
 		<div id="zoom-controls">
 			<div id="Zoom">
 				<span id="zoom-in" class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In"></span>
@@ -30,48 +46,6 @@
 			</canvas>
 		</div>
 
-		<div id="menu" class="menu">
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="loadModel('Cube.xml');">
-					<i class="fa fa-cube"></i>
-				</div>
-			</div>
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="loadModel('Pyramid.xml');">
-					<i class="fa fa-eject"></i>
-				</div>
-			</div>
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="loadModel('Sphere.xml');">
-					<i class="fa fa-circle"></i>
-				</div>
-			</div>
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="loadModel('Tube.xml');">
-					<i class="fa fa-database"></i>
-				</div>
-			</div>
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="loadModel('Gear.xml');">
-					<i class="fa fa-gear"></i>
-				</div>
-			</div>
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="loadModel('Beam.xml');">
-					<i class="fa fa-italic"></i>
-				</div>
-			</div>
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="loadModel('Wall.xml');">
-					<i class="fa fa-square"></i>
-				</div>
-			</div>
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="loadModel('Ring.xml');">
-					<i class="fa fa-circle-o"></i>
-				</div>
-			</div>
-		</div>
 
 		<div id="model-menu" class="menu">
 			<div class="rotater">
@@ -95,7 +69,6 @@
 		<script type="text/javascript">
 			var bridgeworks = null;
 
-			var menu = document.querySelector(".menu");
 			var modelMenu = document.querySelector("#model-menu");
 
 			document.onreadystatechange = function () {
@@ -104,35 +77,9 @@
 
 					onHoldFunction('#zoom-in', zoomIn, 20);
 					onHoldFunction('#zoom-out', zoomOut, 20);
-
-					document.oncontextmenu = function() {
-						if (g_selectedModel) {
-							positionMenu(window.event, modelMenu);
-							$("#model-menu").toggleClass("active");
-						}
-						else {
-							positionMenu(window.event, menu);
-							$("#menu").toggleClass("active");
-						}
-
-						return false;
-					}
-
-					setTimeout(function() {$("#menu").toggleClass("active")},2000)
-					setTimeout(function() {$("#menu").toggleClass("active")},4000);
 				}
 			}
-
-			function positionMenu(e, menu) {
-				var xPosition = e.clientX - (menu.clientWidth / 2);
-				var yPosition = e.clientY - (menu.clientHeight / 2);
-
-				menu.style.left = xPosition + "px";
-				menu.style.top = yPosition + "px";
-
-			}
-
-
 		</script>
+		<script type="text/javascript" src="js/contextmenu.js"></script>
 	</body>
 </html>
