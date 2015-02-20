@@ -53,7 +53,7 @@ function handleMouse(e)
                         g_selectedModel.getAttribute("highlight").setValueDirect(true);
                       }
 
-                  }
+                  } else { g_selectedModel = null; }
               }
               else {
 

@@ -30,7 +30,7 @@
 			</canvas>
 		</div>
 
-		<div class="menu">
+		<div id="menu" class="menu">
 			<div class="rotater">
 				<div class="btn btn-icon" onclick="loadModel('Cube.xml');">
 					<i class="fa fa-cube"></i>
@@ -73,11 +73,30 @@
 			</div>
 		</div>
 
+		<div id="model-menu" class="menu">
+			<div class="rotater">
+				<div class="btn btn-icon" onclick="">
+					<i class="fa fa-twitter"></i>
+				</div>
+			</div>
+			<div class="rotater">
+				<div class="btn btn-icon" onclick="">
+					<i class="fa fa-facebook"></i>
+				</div>
+			</div>
+			<div class="rotater">
+				<div class="btn btn-icon" onclick="">
+					<i class="fa fa-pinterest"></i>
+				</div>
+			</div>
+		</div>
+
 
 		<script type="text/javascript">
 			var bridgeworks = null;
 
-			var theThing = document.querySelector(".menu");
+			var menu = document.querySelector(".menu");
+			var modelMenu = document.querySelector("#model-menu");
 
 			document.onreadystatechange = function () {
 				if (document.readyState == "complete") {
@@ -87,19 +106,29 @@
 					onHoldFunction('#zoom-out', zoomOut, 20);
 
 					document.oncontextmenu = function() {
-						positionMenu(window.event);
-						$(".menu").toggleClass("active");
+						if (g_selectedModel) {
+							positionMenu(window.event, modelMenu);
+							$("#model-menu").toggleClass("active");
+						}
+						else {
+							positionMenu(window.event, menu);
+							$("#menu").toggleClass("active");
+						}
+
 						return false;
 					}
+
+					setTimeout(function() {$("#menu").toggleClass("active")},2000)
+					setTimeout(function() {$("#menu").toggleClass("active")},4000);
 				}
 			}
 
-			function positionMenu(e) {
-				var xPosition = e.clientX - (theThing.clientWidth / 2);
-				var yPosition = e.clientY - (theThing.clientHeight / 2);
+			function positionMenu(e, menu) {
+				var xPosition = e.clientX - (menu.clientWidth / 2);
+				var yPosition = e.clientY - (menu.clientHeight / 2);
 
-				theThing.style.left = xPosition + "px";
-				theThing.style.top = yPosition + "px";
+				menu.style.left = xPosition + "px";
+				menu.style.top = yPosition + "px";
 
 			}
 
