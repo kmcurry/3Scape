@@ -1,15 +1,6 @@
 // consolidating globals here until refactored
 var g_copiedUrl = "";
 var g_copyModel = null;
-var R;
-var G;
-var B;
-var Size;
-var rotY;
-var rotX;
-var rotZ;
-var copiedSelectedText;
-var copiedElement = 0;
 
 
 var g_sceneInspector = null;
@@ -35,13 +26,16 @@ function cut()
     var name = g_selectedModel.name.getValueDirect().join("");
     var c = "\<Remove target='" + name + "'/>"
     bridgeworks.updateScene(c);
-    console.log(name);
-
   }
 }
 
 function loadModel(url)
 {
+
+  if (g_selectedModel) {
+    g_selectedModel.getAttribute("highlight").setValueDirect(false);
+  }
+
   var name = url.substring(url.lastIndexOf("/")+1, url.lastIndexOf("."));
   name = g_modelCount.toString()+". "+name;
   g_modelCount++;
@@ -64,18 +58,18 @@ function loadModel(url)
 
 
   var xstr = (new XMLSerializer()).serializeToString(xml);
-  console.debug(xstr);
   bridgeworks.updateScene(xstr);
 
   // set this here now so that controllers work on the loaded model
   g_selectedModel = bridgeworks.registry.find(name);
   g_selectedModelName = name;
 
+  g_selectedModel.getAttribute("highlight").setValueDirect(true);
+
 
   var physics = bridgeworks.get("PhysicsSimulator");
   if (physics && g_selectedModel) {
     physics.bodies.push_back(g_selectedModel.getAttribute("name"));
-    console.log("# Bodies = " + physics.bodies.size.getValueDirect());
   }
 
 }
@@ -97,13 +91,9 @@ var onHoldFunction = function(id, method, time) {
 function paste()
 {
   if (g_selectedModel) {
-    console.log("pasting...");
-
-    g_selectedModel.getAttribute("highlight").setValueDirect(false);
 
     var url = g_selectedModel.url.getValueDirect().join("");
     var modelName = url.substring(url.indexOf('/')+1, url.indexOf('.'));
-    console.log(modelName);
 
     // this will update g_selectedModel
     loadModel(modelName + ".xml");
