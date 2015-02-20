@@ -122,22 +122,7 @@ function handleKey(e)
                 exportSelected();
             }
             break;
-        case 32: // Space bar
-        {
-            addSlide();
-        }
-        case 46: // Delete Key
-            if (selectedThing) {
-                var slice = selectedThing.slice(6, 8);
-                console.log(slice);
-                var cmd = "\<Remove target='" + selectedThing + "'/>";
-                bridgeworks.updateScene(cmd);
-                var cmd2 = "\<Remove target='" + slice + "'/>"
-                var div = document.getElementById(selectedId);
-                bridgeworks.updateScene(cmd2);
-                div.parentNode.removeChild(div);
-            }
-            break;
+
 
         case 'V'.charCodeAt(0):
             {      // v
@@ -177,17 +162,6 @@ function handleKey(e)
             {      // x
                 if (e.metaKey || e.ctrlKey) {
                     e.preventDefault();
-                    if (selectedThing) {
-                        var slice = selectedThing.slice(6.8);
-                        console.log(slice);
-                        var cmd = "\<Remove target='" + selectedThing + "'/>";
-                        bridgeworks.updateScene(cmd);
-                        var cmd2 = "\<Remove target='" + slice + "'/>"
-                        var div = document.getElementById(selectedId);
-                        bridgeworks.updateScene(cmd2);
-                        div.parentNode.removeChild(div);
-                        copy();
-                    }
                     cut();
                 }
             }
