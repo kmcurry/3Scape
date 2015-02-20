@@ -13,12 +13,10 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var methodOverride = require('method-override');
 var mongoStore = require('connect-mongodb');
-var nodemailer = require('nodemailer');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
 var async = require('async');
 var crypto = require('crypto');
-
 
 
 // configuration ===============================================================
@@ -27,6 +25,8 @@ var port = process.env.PORT || 8080;
 mongoose.connect(config.dbConnectionString); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
+
+var utilities = require('./utilities')(config);
 
 // set up our express application
 app.use(logger('dev')); // log every request to the console
@@ -45,7 +45,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./app/routes/auth/index.js')(app, async, crypto, nodemailer, passport);
+require('./app/routes/auth/index.js')(app, async, crypto, passport, utilities);
 require('./app/routes.js')(app);
 
 

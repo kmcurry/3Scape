@@ -1,10 +1,10 @@
-module.exports = function(app, async, crypto, nodemailer, passport) {
+module.exports = function(app, async, crypto, passport, utilities) {
 
   var User = require('../../../app/models/user');
   var config = require('../../../configLoader')(process.env.NODE_ENV || "local")
 
   app.get('/forgot', function(req, res) {
-    res.render('forgot.ejs', {
+    res.render('forgot', {
       user: req.user,
       info_message: req.flash('info'),
       error_message: req.flash('error'),
@@ -36,31 +36,18 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
         });
       },
       function(token, user, done) {
-        var smtpTransport = nodemailer.createTransport({
-          service: 'SendGrid',
-          auth: {
-            user: config.smtp_user,
-            pass: config.smtp_pass
-          }
-        });
-        var mailOptions = {
-          from: 'kevin@3Scape.me',
-          to: user.email,
-          subject: '3Scape Password Reset',
-          text: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account. \n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-        };
-        smtpTransport.sendMail(mailOptions, function(err, info) {
-          if (err) {
-            console.log(err);
-          }
-          else {
-            req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
-            done(err, 'done');
-          }
-        });
+
+        if (config.email.smtpUser) {
+          utilities.emailer.send({
+            to: user.email,
+            tokenUrl: 'http://' + req.headers.host + '/reset/' + token,
+            templateId: config.email.forgot
+          });
+
+          req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
+          done(null, 'done');
+        }
+
       }
       ], function(err) {
         if (err) return next(err);
@@ -73,29 +60,37 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
   // GET
   app.get('/login', function (req, res) {
     //render the page and pass in any flash data if it exists
-    res.render('login.ejs', {
+    res.render('login', {
     message: req.flash('loginMessage'),
     info_message: req.flash('info'),
     error_message: req.flash('error'),
     success_message: req.flash('success')});
   });
 
-  // POST
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/create', //redirect to the secure profile section
-    failureRedirect: '/login', //redirect to the signup page if there is an error
-    failureFlash: true //allow flash messages
-  }));
+  app.post('/login', function(req, res, next) {
+    passport.authenticate('local-login', function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/login'); }
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        if (req.session.returnTo)
+          return res.redirect(req.session.returnTo);
+        else
+          return res.render('index');
+      });
+    })(req, res, next);
+  });
 
   app.get('/logout', function (req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('login');
   });
 
   // RESET
 
   app.get('/reset/:token', function(req, res) {
-    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    User.findOne({ resetPasswordToken: req.params.token,
+      resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
       if (!user) {
         req.flash('error', 'Password reset token is invalid or has expired.');
         return res.redirect('/forgot');
@@ -116,7 +111,8 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
     async.waterfall([
       function(done) {
 
-        User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        User.findOne({ resetPasswordToken: req.body.token,
+          resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
             req.flash('error', 'Password reset token is invalid or has expired.');
             return res.redirect('back');
@@ -134,31 +130,17 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
         });
       },
       function(user, done) {
-        var smtpTransport = nodemailer.createTransport({
-          service: 'SendGrid',
-          auth: {
-            user: config.smtp_user,
-            pass: config.smtp_pass
-          }
-        });
-        var mailOptions = {
-          from: 'kevin@3Scape.me',
-          to: user.email,
-          subject: 'Your password has been changed',
-          text: 'Hello,\n\n' +
-          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
-        };
-        smtpTransport.sendMail(mailOptions, function(err, info) {
-          if (err) {
-            console.log(err);
-          }
-          else {
 
-            req.flash('success', 'Success! Your password was changed. Please log in.')
-            done(err, 'done');
+        if (config.email.smtpUser) {
+          utilities.emailer.send({
+            to: user.email,
+            templateId: config.email.reset
+          });
 
-          }
-        });
+          req.flash('success', 'Success! Your password was changed. Please log in.');
+          done(null, 'done');
+        }
+
       }
       ], function(err) {
         if (err) return next(err);
@@ -169,13 +151,28 @@ module.exports = function(app, async, crypto, nodemailer, passport) {
   //SignUp============================
   app.get('/signup', function (req, res) {
     //render the page and pass any flash data if it exists
-    res.render('signup.ejs', {message: req.flash('signupMessage')});
+    res.render('signup', {message: req.flash('signupMessage')});
   });
 
   //process the signup form
-  app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/create', //redirect to the secure profile section
-    failureRedirect: '/signup', //redirect to the signup page if there is an error
-    failureFlash: true //allow flash messages
-  }));
+  app.post('/signup', function (req, res, next) {
+    passport.authenticate('local-signup', function (err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/signup'); }
+      req.logIn(user, function(err) {
+        if (err) {
+          return next(err);
+        }
+        // email
+        if (config.email.smtpUser) {
+          utilities.emailer.send({
+            to: user.email,
+            templateId: config.email.welcome
+          });
+        }
+        return res.redirect('/');
+      });
+    })(req, res, next);
+
+  });
 };
