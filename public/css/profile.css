@@ -9,26 +9,28 @@ h1 { margin: 0 auto;
 
 }
 
-#banner { width: 100%;
+.banner { width: 100%;
 }
 
-/* Edit Profile Button begin */
-#edit { width: 10%;
-float: right;
-margin-top: 1%;
+/* Edit Profile Button */
+a.edit {color: white;
+text-decoration: none;
+display: inline-block;
+padding: 10px;
+background:linear-gradient( 90deg, rgb(87,186,85) , rgb(186,213,50) , rgb(87,186,85) );
+background-size: 200% 100%;
+border-radius: 20px;
+transition: all ease 0.2s;
+
+
 }
 
-#edit a { background-image:url(../images/edit-profile-button-sprite-sheet.png);
-width: 100%;
-text-indent: -9999px;
+a.edit:hover { background-position: -100% 0;
+
 }
 
-#edit a:hover { background-position: 300.5px;
+a.edit:active { border-radius: 0;
 }
-
-#edit a:active { background-position: 450px;
-}
-/* Edit Profile Button end */
 
 
 /* Place profile pics here */
@@ -86,52 +88,4 @@ clear: both;
 #scapes { margin: 0 auto;
 width: 80%;
 height: 500px;
-
-}
-
-.scape {
-margin: 1%;
-width: 31%;
-height: 250px;
-background-image: url(../images/puppy.jpg);
-background-color: #0C0;
-border-style: solid;
-border-width: 10px;
-border-color: #cccccc;
-border-radius: 25px;
-}
-
-
-/* Tablet Size */
-
-@media (max-width: 768px) {
-
-h1 { background-image: url(../images/minimal-banner-blue.png);
-}
-
-#container {width: 100%;
-}
-
-#edit {width: 70%;
-}
-
-#category { width: 100%;
-}
-
-.scape { width: 80%;
-
-}
-}
-
-
-/* Smart Phone Size */
-
-@media (max-width: 480px) {
-
-#container {width: 100%;
-}
-
-.scape {width: 100%;
-}
-
 }
