@@ -3,6 +3,12 @@
 		<title>3Scape Snappy</title>
 		<meta http-equiv="x-ua-compatible" content="IE=10">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/contextmenu.css"/>
+		<link rel="stylesheet" type="text/css" href="css/snappy.css"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
+		<link rel="stylesheet" type="text/css" href="css/slider.css">
 		<script type="text/javascript" src="js/BwHelper.js"></script>
 		<script type="text/javascript" src="js/crossbrowser.js"></script>
 		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
@@ -11,12 +17,7 @@
 		<script type="text/javascript" src="js/MapControls.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-		<link rel="stylesheet" type="text/css" href="css/contextmenu.css"/>
-		<link rel="stylesheet" type="text/css" href="css/snappy.css"/>
-		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
+		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
 	</head>
 	<body onresize="resize();">
 
@@ -36,7 +37,7 @@
 					<div class="tool-button col-xs-1" onclick="loadModel('Ring.xml');">Ring</div>
 					<div class="tool-button col-xs-1" onclick="loadModel('Elbow.xml');">Elbow</div>
 					<div class="tool-button col-xs-1" onclick="loadModel('Wedge.xml');">Wedge</div>
-					<div class="tool-button col-xs-1" onclick="loadModel('Wheel.xml');">Wheel</div>
+					<div class="tool-button col-xs-1" onclick="loadModel('Plank.xml');">Plank</div>
 				</div>
 			</div>
 		</div>
@@ -64,6 +65,11 @@
 				<div class="btn btn-icon" name="model-color-item">
 					<i class="fa fa-paint-brush"></i>
 					<input type="text" value="CCC" name="model-color" class="pick-a-color form-control">
+				</div>
+			</div>
+			<div class="rotater">
+				<div class="btn btn-icon" name="model-scale-item">
+					<input id="scales" data-slider-id='scale-slider' type="text"/>
 				</div>
 			</div>
 		</div>
