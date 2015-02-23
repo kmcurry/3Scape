@@ -73,7 +73,7 @@ Channel 8
 
 ShadowOptions 7
 
-LoadObjectLayer 1 objects/sea floor.lwo
+LoadObjectLayer 1 objects/sea_floor.lwo
 ShowObject 7 3
 ObjectMotion
 NumChannels 9
@@ -281,7 +281,7 @@ RayTraceEffects 0
 DepthBufferAA 0
 RayRecursionLimit 16
 RayTraceOptimization 1
-DataOverlayLabel  
+DataOverlayLabel
 SaveRGB 0
 SaveAlpha 0
 

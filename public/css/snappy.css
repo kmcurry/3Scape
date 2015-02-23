@@ -36,12 +36,52 @@
   z-index: 2000;
 }
 
+#scale-slider .slider-handle:focus {
+  outline:none;
+}
+
+#scale-slider{
+  position:fixed;
+  width:120px;
+  right: 2%;
+  top: 70%;
+  z-index: 2000;
+}
+
 .h-button {
   position: absolute;
   z-index: 2000;
   left: 50%;
   top: 0px;
   width: 60px;
+}
+
+.icon {
+  background-image: url('../images/icon-sprite-sheet.png');
+  background-repeat: no-repeat;
+  padding: 0 0 0 0px;
+  display: block;
+  height: 376px;
+  width: 751px;
+  resize:auto;
+}
+.icon-cube {
+  background-position: 0px 0px;
+}
+.icon-pyramid {
+  background-position: -140px 0px;
+}
+.icon-sphere {
+  background-position: -280px 0px;
+}
+.icon-tube {
+  background-position: -560px 0px;
+}
+.icon-gear {
+  background-position: -420px 0px;
+}
+.icon-plane {
+  background-position: -700px 0px;
 }
 
 .tool-button {
