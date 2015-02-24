@@ -15,7 +15,6 @@
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
 		<script type="text/javascript" src="js/snappy.js"></script>
 		<script type="text/javascript" src="js/MapControls.js"></script>
-		<script type="text/javascript" src="js/controls.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
@@ -58,8 +57,8 @@
 
 		<div id="model-menu" class="menu">
 			<div class="rotater">
-				<div class="btn btn-icon" onclick="cut();$('#model-menu').toggleClass('active');">
-					<i class="fa fa-cut"></i>
+				<div class="btn btn-icon" name="model-scale-item" style="background: rgba(255, 255, 255, 0);">
+					<input id="model-scale-slider" data-slider-id='scale-slider' type="text"/>
 				</div>
 			</div>
 			<div class="rotater">
@@ -69,8 +68,13 @@
 				</div>
 			</div>
 			<div class="rotater">
-				<div class="btn btn-icon" name="model-scale-item" style="background: rgba(255, 255, 255, 0);">
-					<input id="model-scale-slider" data-slider-id='scale-slider' type="text"/>
+				<div class="btn btn-icon" onclick="cut();$('#model-menu').toggleClass('active');">
+					<i class="fa fa-cut"></i>
+				</div>
+			</div>
+			<div class="rotater">
+				<div class="btn btn-icon shape" onclick="roam();">
+					<i class="fa fa-bolt"></i>
 				</div>
 			</div>
 		</div>

@@ -21,6 +21,8 @@ function handleMouse(e)
 
     bridgeworks.handleEvent(e);
 
+    $("#model-menu").toggleClass('active',false);
+
     switch (e.type) {
 
         case "mousedown":
@@ -58,12 +60,13 @@ function handleMouse(e)
                         g_selectedModel.getAttribute("highlight").setValueDirect(true);
                       }
 
-                  } else { g_selectedModel = null; $("#model-menu").prop('disabled',true);}//$("#model-menu").toggleClass("active");} //turn off context menu on deselect
+                  } else {
+                    g_selectedModel = null;
+                  }
               }
               else {
 
-                  console.log("NO MODEL SELECTED");
-                  g_selectedModel = null;
+                g_selectedModel = null;
 
               }
 
@@ -81,18 +84,20 @@ function handleMouse(e)
 
         case "dblclick":
           {
-            var name = g_selectedModel.name.getValueDirect().join("");
-            var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-            var cmd = "";
-            if (e.metaKey || e.ctrlKey) {
-                cmd = "\<AutoInterpolate target='" + name + "'>";
-                cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
-                cmd += "\</AutoInterpolate>";
+            if (g_selectedModel) {
+              var name = g_selectedModel.name.getValueDirect().join("");
+              var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+              var cmd = "";
+              if (e.metaKey || e.ctrlKey) {
+                  cmd = "\<AutoInterpolate target='" + name + "'>";
+                  cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
+                  cmd += "\</AutoInterpolate>";
+              }
+              else {
+                  cmd = "\<Locate target='" + name + "'/>";
+              }
+              bridgeworks.updateScene(cmd);
             }
-            else {
-                cmd = "\<Locate target='" + name + "'/>";
-            }
-            bridgeworks.updateScene(cmd);
           }
         break;
     }

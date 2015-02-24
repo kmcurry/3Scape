@@ -104,6 +104,18 @@ var onHoldFunction = function(id, method, time) {
   });
 }
 
+function roam(name) {
+    if (!name) {
+      name = g_selectedModel.name.getValueDirect().join("");
+    }
+    if (name === "Grid") return;
+
+    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='.5' angularSpeed='20'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+}
+
+
 function paste()
 {
   if (g_copyModel) {
