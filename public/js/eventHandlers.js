@@ -19,7 +19,10 @@ function handleMouse(e)
         g_objectInspector = bridgeworks.registry.find("ObjectInspector");
     }
 
+    bridgeworks.handleEvent(e);
+
     switch (e.type) {
+
         case "mousedown":
             {
                 capture = true;
@@ -32,6 +35,7 @@ function handleMouse(e)
             break;
         case "click":
             {
+              console.log(bridgeworks.selector.selections.models.length)
               if (g_selectedModel)
               {
                   g_selectedModel.getAttribute("highlight").setValueDirect(false);
@@ -46,6 +50,7 @@ function handleMouse(e)
               if (g_selectedModel) {
 
                   g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
+                  console.log(g_selectedModelName);
 
                   if (g_selectedModelName != 'Grid') {
 
@@ -71,7 +76,6 @@ function handleMouse(e)
                   g_objectInspector.enabled.setValueDirect(true);
               }
 
-              capture = false;
             }
         break;
 
@@ -92,8 +96,6 @@ function handleMouse(e)
           }
         break;
     }
-
-    bridgeworks.handleEvent(e);
 
 
 }

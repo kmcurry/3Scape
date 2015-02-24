@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
 		<script type="text/javascript" src="js/snappy.js"></script>
 		<script type="text/javascript" src="js/MapControls.js"></script>
+		<script type="text/javascript" src="js/controls.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
@@ -64,12 +65,12 @@
 			<div class="rotater">
 				<div class="btn btn-icon" name="model-color-item">
 					<i class="fa fa-paint-brush"></i>
-					<input type="text" value="CCC" name="model-color" class="pick-a-color form-control">
+					<input type="text" value="333" name="model-color" class="pick-a-color">
 				</div>
 			</div>
 			<div class="rotater">
-				<div class="btn btn-icon" name="model-scale-item">
-					<input id="scales" data-slider-id='scale-slider' type="text"/>
+				<div class="btn btn-icon" name="model-scale-item" style="background: rgba(255, 255, 255, 0);">
+					<input id="model-scale-slider" data-slider-id='scale-slider' type="text"/>
 				</div>
 			</div>
 		</div>
@@ -87,21 +88,7 @@
 					onHoldFunction('#zoom-in', zoomIn, 20);
 					onHoldFunction('#zoom-out', zoomOut, 20);
 
-					$(".pick-a-color").pickAColor({
-						showAdvanced						: false,
-						showSpectrum            : false,
-						showSavedColors         : false,
-						saveColorsPerElement    : false,
-						fadeMenuToggle          : true,
-						showHexInput            : false,
-						showBasicColors         : true,
-						allowBlank              : false,
-						inlineDropdown          : false
-					});
-
-					$("#model-color input").on("change", function () {
-						applyColor($(this).val());
-					});
+					addContextMenu();
 
 				}
 			}

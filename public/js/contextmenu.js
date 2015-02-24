@@ -18,3 +18,38 @@ function positionMenu(e, menu) {
   menu.style.top = yPosition + "px";
 
 }
+
+function addContextMenu() {
+
+    // Format and add the color picker
+  $(".pick-a-color").pickAColor({
+    showAdvanced						: false,
+    showSpectrum            : false,
+    showSavedColors         : false,
+    saveColorsPerElement    : false,
+    fadeMenuToggle          : true,
+    showHexInput            : false,
+    showBasicColors         : true,
+    allowBlank              : false,
+    inlineDropdown          : false
+  });
+
+  $("#model-color input").on("change", function () {
+    applyColor($(this).val());
+  });
+
+  // Format and add the scale slider
+  $('#model-scale-slider').slider({
+    formater: function(value) {
+      return 'scale: ' + (value);
+    },
+    min: 0,
+    max: 1000,
+    value: 500
+  })
+  .on('slide', function(ev){
+    if(g_selectedModelName != "Grid") // TODO
+        setScale(ev.value / 100)
+  });
+
+}
