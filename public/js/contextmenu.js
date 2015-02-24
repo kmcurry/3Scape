@@ -78,7 +78,7 @@ function addContextMenu() {
   })
   .on('slide', function(ev){
     if(g_selectedModelName != "Grid") // TODO
-        setScale(ev.value / 100)
+        setModelScale(ev.value / 100)
   });
 
 }

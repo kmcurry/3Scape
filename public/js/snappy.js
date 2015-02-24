@@ -126,3 +126,10 @@ function paste()
     // TODO: g_copyModel.copyModel();
   }
 }
+
+function setModelScale(value) {
+
+    if (g_selectedModel) {
+        g_selectedModel.scale.setValueDirect(value, value, value);
+    }
+}
