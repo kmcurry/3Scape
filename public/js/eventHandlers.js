@@ -58,7 +58,7 @@ function handleMouse(e)
                         g_selectedModel.getAttribute("highlight").setValueDirect(true);
                       }
 
-                  } else { g_selectedModel = null; }
+                  } else { g_selectedModel = null; $("#model-menu").prop('disabled',true);}//$("#model-menu").toggleClass("active");} //turn off context menu on deselect
               }
               else {
 
