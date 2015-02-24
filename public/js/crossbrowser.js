@@ -73,7 +73,7 @@ function CreateXMLDocumentObject(rootName) {
 
 function ParseHTTPResponse(httpRequest, type) {
     var xmlDoc = httpRequest.responseXML;
-    
+
     if (type == null) type = "text/xml";
 
     // if responseXML is not valid, try to create the XML document from the responseText property
@@ -134,10 +134,17 @@ function loadXMLFile(filename)
 {
     // TODO: try / catch
     var xhttp = CreateHTTPRequestObject();
+    xhttp.onreadystatechange=function()
+    {
+      if (xhttp.readyState === 4 //request finished, response ready
+          && xhttp.status === 200 //check for "OK" status (200)
+          ){
+            var dom = ParseHTTPResponse(xhttp);
+            return dom;
+        }
+    }
     xhttp.open("GET",filename,false);
     xhttp.send();
-    var dom = ParseHTTPResponse(xhttp);
-    return dom;
 }
 
 // not sure this helps much since every time it's called it's followed by an 8+ line switch
