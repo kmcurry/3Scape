@@ -130,21 +130,25 @@ function IsRequestSuccessful(httpRequest) {
     return success;
 }
 
+function loadFile (sURL, fCallback) {
+  var oReq = new XMLHttpRequest();
+  oReq.callback = fCallback;
+  oReq.arguments = Array.prototype.slice.call(arguments, 2);
+  oReq.onload = xhrSuccess;
+  oReq.onerror = xhrError;
+  oReq.open("get", sURL, true);
+  oReq.send(null);
+}
+
+// DEPRECATED. DO  NOT USE. USE loadFile
 function loadXMLFile(filename)
 {
     // TODO: try / catch
     var xhttp = CreateHTTPRequestObject();
-    xhttp.onreadystatechange=function()
-    {
-      if (xhttp.readyState === 4 //request finished, response ready
-          && xhttp.status === 200 //check for "OK" status (200)
-          ){
-            var dom = ParseHTTPResponse(xhttp);
-            return dom;
-        }
-    }
     xhttp.open("GET",filename,false);
     xhttp.send();
+    var dom = ParseHTTPResponse(xhttp);
+    return dom;
 }
 
 // not sure this helps much since every time it's called it's followed by an 8+ line switch
@@ -164,3 +168,7 @@ function whichBrowser()
     }
     return code;
 }
+
+function xhrSuccess () { this.callback.apply(this, this.arguments); }
+
+function xhrError () { console.error(this.statusText); }

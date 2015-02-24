@@ -52,9 +52,12 @@ function loadModel(url)
   g_modelCount++;
 
 
-  var xml = loadXMLFile("BwContent/" + url);
+  loadFile("BwContent/" + url, processModelXML, name);
+}
 
-  var model = xml.getElementsByTagName("Model")[0];
+function processModelXML(name) {
+
+  var model = this.responseXML.getElementsByTagName("Model")[0];
 
   var n = model.attributes["name"];
   n.value = name;
@@ -62,13 +65,13 @@ function loadModel(url)
 
   var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
 
-  var pos = xml.getElementsByTagName("position")[0];
+  var pos = model.getElementsByTagName("position")[0];
   pos.attributes["x"].value = pointWorld.x.toString();
   pos.attributes["y"].value = pointWorld.y.toString();
   pos.attributes["z"].value = pointWorld.z.toString();
 
 
-  var xstr = (new XMLSerializer()).serializeToString(xml);
+  var xstr = (new XMLSerializer()).serializeToString(model);
   bridgeworks.updateScene(xstr);
 
   // set this here now so that controllers work on the loaded model
@@ -118,7 +121,7 @@ function paste()
     g_selectedModel.scale.setValueDirect(r.x, r.y, r.z);
 
     var c = g_copyModel.color.getValueDirect();
-    g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a); 
+    g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a);
 
     // TODO: g_copyModel.copyModel();
   }
