@@ -275,69 +275,69 @@ body {
   resize:auto;
 }
 .icon-cube {
-  background-image: url('../images/cube.png');
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: 55px 6px;
 }
 
 .icon-pyramid {
-  background-image: url("../images/pyramid.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -45px 6px;
 }
 
 .icon-sphere {
-  background-image: url("../images/sphere.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -140px 6px;
 }
 
 .icon-tube {
-  background-image: url("../images/tube.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -242px 6px;
 }
 
 .icon-gear {
-  background-image: url("../images/gear.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -342px 6px;
 }
 
 .icon-beam {
-  background-image: url("../images/beam.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -436px 6px;
 }
 
 .icon-wall {
-  background-image: url("../images/wall.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -545px 6px;
 }
 
 .icon-ring {
-  background-image: url("../images/ring.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -646px 6px;
 }
 
 .icon-elbow {
-  background-image: url("../images/elbow.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -746px 6px;
 }
 
 .icon-wedge {
-  background-image: url("../images/wedge.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -846px 6px;
 }
 
 .icon-plank {
-  background-image: url("../images/plank.png");
+  background-image: url('../images/icon-sprite-sheet.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: -946px 6px;
 }
 
 /* END ICONS */
