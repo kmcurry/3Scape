@@ -4,7 +4,7 @@
     <Model name="Wedge" url="objects/Wedge.lwo" detectCollision="true">
         <position x="0" y="0" z="0"/>
         <rotation x="0" y="0" z="0"/>
-        <scale x="3" y="3" z="3" />
+        <scale x="2" y="2" z="2" />
         <physicalProperties>
           <mass>5</mass>
         </physicalProperties>
