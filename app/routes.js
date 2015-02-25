@@ -6,7 +6,7 @@ module.exports = function(app) {
   var config = require('../configLoader')(process.env.NODE_ENV || "local")
 
   app.get('/', isLoggedIn, function (req, res) {
-    res.render('index');
+    res.render('snappy');
   });
 
   app.get('/:scape?', isLoggedIn, function (req, res, next) {

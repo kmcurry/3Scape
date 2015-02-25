@@ -5,8 +5,8 @@
     <Isolator name="Root">
         <Selector name="Cameras">
             <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="1000000">
-                <position x="200" y="67" z="-206"/>
-                <rotation x="14" y="-44" z="0"/>
+                <position x="200" y="30" z="-50"/>
+                <rotation x="14" y="-55" z="0"/>
             </PerspectiveCamera>
         </Selector>
         <Group name="Lights">

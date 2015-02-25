@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Update>
+    <Set target="NodeMgr" sgPointer="Models"/>
+    <Model name="Plank" url="objects/Plank.lwo" detectCollision="true">
+        <position x="0" y="0" z="0"/>
+        <rotation x="0" y="0" z="0"/>
+        <scale x="2" y="4" z="1" />
+        <physicalProperties>
+          <mass>5</mass>
+        </physicalProperties>
+    </Model>
+</Update>
