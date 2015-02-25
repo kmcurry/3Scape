@@ -21,8 +21,6 @@ function handleMouse(e)
 
     bridgeworks.handleEvent(e);
 
-    $("#model-menu").toggleClass('active',false);
-
     switch (e.type) {
 
         case "mousedown":
@@ -62,12 +60,13 @@ function handleMouse(e)
 
                   } else {
                     g_selectedModel = null;
+                    $("#model-menu").toggleClass('active',false);
                   }
               }
               else {
 
                 g_selectedModel = null;
-
+                $("#model-menu").toggleClass('active',false);
               }
 
               // if the selected model is not moveable switch modes between camera and objects
@@ -77,6 +76,15 @@ function handleMouse(e)
               } else {
                   g_sceneInspector.enabled.setValueDirect(false);
                   g_objectInspector.enabled.setValueDirect(true);
+
+                  if (e.shiftKey) {
+                    console.log("shifty");
+                    bridgeworks.get("Object.Move").listen.setValueDirect(false);
+                    bridgeworks.get("Object.Rotate").listen.setValueDirect(true);
+                  } else {
+                    bridgeworks.get("Object.Move").listen.setValueDirect(true);
+                    bridgeworks.get("Object.Rotate").listen.setValueDirect(false);
+                  }
               }
 
             }
