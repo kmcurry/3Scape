@@ -1,74 +1,58 @@
 <!doctype html>
 <html>
 <head>
-	<title>3Scape</title>
+	<title>3Scape Login</title>
 	<meta name="robots" content="noindex">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<meta name="description" content="a place to make and share interactive 3D on the web">
 	<meta name=viewport content="width=device-width, initial-scale=1">
-	<style>
-		body {
-		    padding-top:80px;
-		}
-		body::after {
-          content: "";
-          background-image: url("images/background.png");
-          opacity: 0.2;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          position: absolute;
-          z-index: -1;
-        }
-	</style>
 </head>
 <body>
-<div class="container">
-<div class="col-sm-6 col-sm-offset-3">
 
-    <center>
-        <img src="images/logo.png" width="250px" height="200px">
-        <br/>
-        <h3>make and share interactive 3D</h3>
-    </center>
-	<!-- show any messages that come back with authentication -->
-	<% if (message.length > 0) { %>
-			<div class="alert alert-info"><%= info_message %></div>
-		<% } %>
-	<% if (info_message.length > 0) { %>
-			<div class="alert alert-info"><%= info_message %></div>
-		<% } %>
-		<% if (error_message.length > 0) { %>
-			<div class="alert alert-danger"><%= error_message %><a href="/forgot">  Forgot Password?</a></div>
-		<% } %>
-		<% if (success_message.length > 0) { %>
-			<div class="alert alert-success"><%= success_message %></div>
-		<% } %>
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4" style="padding-top:5%;">
 
-	<!-- LOGIN FORM -->
-	<form action="/login" method="post">
-		<div class="form-group">
-			<label>Email</label>
-			<input type="text" class="form-control" name="email">
+		    <center>
+		        <img src="images/logo.png" width="250px" height="200px">
+		        <br/>
+		        <h3>make and share <br/>interactive 3D</h3>
+		    </center>
+			<!-- show any messages that come back with authentication -->
+			<% if (message.length > 0) { %>
+					<div class="alert alert-info"><%= info_message %></div>
+				<% } %>
+			<% if (info_message.length > 0) { %>
+					<div class="alert alert-info"><%= info_message %></div>
+				<% } %>
+				<% if (error_message.length > 0) { %>
+					<div class="alert alert-danger"><%= error_message %><a href="/forgot">  Forgot Password?</a></div>
+				<% } %>
+				<% if (success_message.length > 0) { %>
+					<div class="alert alert-success"><%= success_message %></div>
+				<% } %>
+
+			<!-- LOGIN FORM -->
+			<form action="/login" method="post">
+				<div class="form-group">
+					<label>Email</label>
+					<input type="text" class="form-control" name="email">
+				</div>
+				<div class="form-group">
+					<label>Password</label>
+					<input type="password" class="form-control" name="password">
+				</div>
+
+				<button type="submit" class="btn btn-warning btn-lg">Login</button>
+			</form>
+
+			<hr>
+
+			<p>Need an account? <a href="/signup">Signup</a> | <a href="/privacy">Privacy Policy</a></p>
+
 		</div>
-		<div class="form-group">
-			<label>Password</label>
-			<input type="password" class="form-control" name="password">
-		</div>
-
-		<button type="submit" class="btn btn-warning btn-lg">Login</button>
-	</form>
-
-	<hr>
-
-	<p>Need an account? <a href="/signup">Signup</a></p>
-	<p><a href="/privacy">Privacy Policy</a>.</p>
-	<p><a href="/logout">Logout</a>.</p>
-
 </div>
 
-</div>
 <a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
 </body>
 </html>
