@@ -117,6 +117,20 @@ function roam(name) {
     bridgeworks.updateScene(cmd);
 }
 
+function rotateLeft() {
+  if (g_selectedModel) {
+    var sRot = g_selectedModel.rotation.getValueDirect();
+    g_selectedModel.rotation.setValueDirect(sRot.x, sRot.y-45, sRot.z);
+  }
+}
+
+
+function rotateRight() {
+  if (g_selectedModel) {
+    var sRot = g_selectedModel.rotation.getValueDirect();
+    g_selectedModel.rotation.setValueDirect(sRot.x, sRot.y+45, sRot.z);
+  }
+}
 
 function paste()
 {

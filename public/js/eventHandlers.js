@@ -77,6 +77,7 @@ function handleMouse(e)
                   g_sceneInspector.enabled.setValueDirect(false);
                   g_objectInspector.enabled.setValueDirect(true);
 
+                  // if the shift key is down switch from move to rotate object
                   if (e.shiftKey) {
                     console.log("shifty");
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
