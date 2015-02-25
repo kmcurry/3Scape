@@ -37,6 +37,8 @@ function cut()
     var name = g_selectedModel.name.getValueDirect().join("");
     var c = "\<Remove target='" + name + "'/>"
     bridgeworks.updateScene(c);
+
+    $('#model-menu').toggleClass('active', false);
   }
 }
 
