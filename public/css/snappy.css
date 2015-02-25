@@ -205,7 +205,6 @@
 }
 
 body {
-
 }
 
 #BwContainer {
@@ -253,8 +252,13 @@ body {
   position:fixed;
   width:120px;
   right: 2%;
-  top: 70%;
   z-index: 2000;
+}
+
+#model-scale-slider {
+  position:relative;
+  top:1%;
+  left:1%;
 }
 
 .h-button {
