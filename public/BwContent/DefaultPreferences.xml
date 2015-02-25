@@ -40,19 +40,19 @@
 	</ConnectAttributes>
 
 	<!--MOUSE PAN Z-->
-	<ConnectAttributes name="MButton3.Scene" event="MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+	<ConnectAttributes name="Object.Zoom" event="MButton3.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="SceneInspector">
 		<sourceAttribute>deltaY</sourceAttribute>
 		<targetAttribute>panDelta:2</targetAttribute>
 	</ConnectAttributes>
 	<!-- OBJECT INSPECTION -->
-	<ConnectAttributes name="Object.Rotate" event="MButton1.Down+VK_SHIFT" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
+	<ConnectAttributes name="Object.Rotate" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
 		<sourceAttribute>deviceY</sourceAttribute>
 		<targetAttribute>rotationNow:0</targetAttribute>
 		<sourceAttribute>deviceX</sourceAttribute>
 		<targetAttribute>rotationNow:1</targetAttribute>
 	</ConnectAttributes>
 	<!-- MOUSE PAN -->
-	<ConnectAttributes name="MButton1.Object" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
+	<ConnectAttributes name="Object.Move" event="MButton1.Down" numResponses="-1" undoable="false" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
 		<sourceAttribute>delta:0</sourceAttribute>
 		<targetAttribute>translationDelta:0</targetAttribute>
 		<sourceAttribute>delta:1</sourceAttribute>
