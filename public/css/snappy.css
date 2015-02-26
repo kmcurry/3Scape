@@ -235,12 +235,9 @@ body {
   text-align: center;
   position:fixed;
   right: 2%;
-  top: 30%;
-  background-color:#000;
-  border-radius: 10px;
+  top: 80%;
   padding: 13px;
-  color: rgb(71, 169, 211);
-  opacity: 0.4;
+  color: rgba(50, 50, 50, .7);
   z-index: 2000;
 }
 
