@@ -70,11 +70,11 @@ function addContextMenu() {
   // Format and add the scale slider
   $('#model-scale-slider').slider({
     formater: function(value) {
-      return 'scale: ' + (value);
+      return 'scale: ' + (value) + '%';
     },
     min: 0,
-    max: 1000,
-    value: 500
+    max: 2000,
+    value: 100
   })
   .on('slide', function(ev){
     if(g_selectedModelName != "Grid") // TODO

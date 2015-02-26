@@ -106,6 +106,29 @@ var onHoldFunction = function(id, method, time) {
   });
 }
 
+function paste()
+{
+  if (g_copyModel) {
+
+    var url = g_copyModel.url.getValueDirect().join("");
+    var modelName = url.substring(url.indexOf('/')+1, url.indexOf('.'));
+
+    // this will update g_selectedModel
+    loadModel(modelName + ".xml");
+
+    var s = g_copyModel.scale.getValueDirect();
+    g_selectedModel.scale.setValueDirect(s.x, s.y, s.z);
+
+    var r = g_copyModel.scale.getValueDirect();
+    g_selectedModel.scale.setValueDirect(r.x, r.y, r.z);
+
+    var c = g_copyModel.color.getValueDirect();
+    g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a);
+
+    // TODO: g_copyModel.copyModel();
+  }
+}
+
 function roam(name) {
     if (!name) {
       name = g_selectedModel.name.getValueDirect().join("");
@@ -143,29 +166,6 @@ function rotateUp() {
   if (g_selectedModel) {
     var sRot = g_selectedModel.rotation.getValueDirect();
     g_selectedModel.rotation.setValueDirect(sRot.x+10, sRot.y, sRot.z);
-  }
-}
-
-function paste()
-{
-  if (g_copyModel) {
-
-    var url = g_copyModel.url.getValueDirect().join("");
-    var modelName = url.substring(url.indexOf('/')+1, url.indexOf('.'));
-
-    // this will update g_selectedModel
-    loadModel(modelName + ".xml");
-
-    var s = g_copyModel.scale.getValueDirect();
-    g_selectedModel.scale.setValueDirect(s.x, s.y, s.z);
-
-    var r = g_copyModel.scale.getValueDirect();
-    g_selectedModel.scale.setValueDirect(r.x, r.y, r.z);
-
-    var c = g_copyModel.color.getValueDirect();
-    g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a);
-
-    // TODO: g_copyModel.copyModel();
   }
 }
 
