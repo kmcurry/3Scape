@@ -28,17 +28,46 @@
 			</a>
 			<div id="Toolbar" class="collapse in">
 				<div class="row">
-					<div class="tool-button icon-cube col-xs-1" onclick="loadModel('Cube.xml');">Cube</div>
-					<div class="tool-button icon-pyramid col-xs-1" onclick="loadModel('Pyramid.xml');">Pyramid</div>
-					<div class="tool-button icon-sphere col-xs-1" onclick="loadModel('Sphere.xml');">Sphere</div>
-					<div class="tool-button icon-tube col-xs-1" onclick="loadModel('Tube.xml');">Tube</div>
-					<div class="tool-button icon-gear col-xs-1" onclick="loadModel('Gear.xml');">Gear</div>
-					<div class="tool-button icon-beam col-xs-1" onclick="loadModel('Beam.xml');">Beam</div>
-					<div class="tool-button icon-wall col-xs-1" onclick="loadModel('Wall.xml');">Wall</div>
-					<div class="tool-button icon-ring col-xs-1" onclick="loadModel('Ring.xml');">Ring</div>
-					<div class="tool-button icon-elbow col-xs-1" onclick="loadModel('Elbow.xml');">Elbow</div>
-					<div class="tool-button icon-wedge col-xs-1" onclick="loadModel('Wedge.xml');">Wedge</div>
-					<div class="tool-button icon-plank col-xs-1" onclick="loadModel('Plank.xml');">Plank</div>
+					<div class="col-md-1">
+						<button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+							<span class="shape glyphicon glyphicon-chevron-down" style="font-size:1.4em;" title="Click for actions"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li>SHARE</li>
+							<li class="divider"></li>
+							<li>
+								<span class="shape fa fa-facebook fa-2x" title="Share a picture on Facebook" onclick=""></span>
+								<span class="shape fa fa-twitter fa-2x" title="Share a picture on Twitter" onclick=""></span>
+								<span class="shape fa fa-pinterest fa-2x" title="Share a picture on Pinterest" onclick=""></span>
+								<span class="shape fa fa-instagram fa-2x" title="Share a picture on Instagram" onclick=""></span>
+							</li>
+							<li class="divider"></li>
+							<li>GO-TO</li>
+							<li class="divider"></li>
+							<li><a href="profile">Your Profile</a></li>
+							<li><a href="http://blog.3scape.me">3Scape Blog</a></li>
+							<li class="divider"></li>
+							<li>3SCAPE ACTIONS</li>
+							<li class="divider"></li>
+							<li><a href="javascript:new3Scape();">New 3Scape</a></li>
+							<li class="divider"></li>
+							<!--Loading the slides in the line below this, have to give how many slides you want loaded-->
+							<li><a href="#" id="loadScene">Load Saved 3Scape</a></li>
+						</ul>
+					</div>
+					<div class="col-md-11">
+						<div class="tool-button icon-cube col-xs-1" onclick="loadModel('Cube.xml');">Cube</div>
+						<div class="tool-button icon-pyramid col-xs-1" onclick="loadModel('Pyramid.xml');">Pyramid</div>
+						<div class="tool-button icon-sphere col-xs-1" onclick="loadModel('Sphere.xml');">Sphere</div>
+						<div class="tool-button icon-tube col-xs-1" onclick="loadModel('Tube.xml');">Tube</div>
+						<div class="tool-button icon-gear col-xs-1" onclick="loadModel('Gear.xml');">Gear</div>
+						<div class="tool-button icon-beam col-xs-1" onclick="loadModel('Beam.xml');">Beam</div>
+						<div class="tool-button icon-wall col-xs-1" onclick="loadModel('Wall.xml');">Wall</div>
+						<div class="tool-button icon-ring col-xs-1" onclick="loadModel('Ring.xml');">Ring</div>
+						<div class="tool-button icon-elbow col-xs-1" onclick="loadModel('Elbow.xml');">Elbow</div>
+						<div class="tool-button icon-wedge col-xs-1" onclick="loadModel('Wedge.xml');">Wedge</div>
+						<div class="tool-button icon-plank col-xs-1" onclick="loadModel('Plank.xml');">Plank</div>
+					</div>
 				</div>
 			</div>
 		</div>
