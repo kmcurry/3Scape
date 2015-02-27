@@ -81,10 +81,17 @@ function handleMouse(e)
                   if (e.shiftKey) {
                     console.log("shifty");
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
+                    bridgeworks.get("Object.Zoom").listen.setValueDirect(false);
                     bridgeworks.get("Object.Rotate").listen.setValueDirect(true);
-                  } else {
-                    bridgeworks.get("Object.Move").listen.setValueDirect(true);
+                  } else if (e.ctrlKey || e.metaKey) {
+                    console.log("zoomy");
+                    bridgeworks.get("Object.Move").listen.setValueDirect(false);
                     bridgeworks.get("Object.Rotate").listen.setValueDirect(false);
+                    bridgeworks.get("Object.Zoom").listen.setValueDirect(true);
+                  } else {
+                    bridgeworks.get("Object.Rotate").listen.setValueDirect(false);
+                    bridgeworks.get("Object.Zoom").listen.setValueDirect(false);
+                    bridgeworks.get("Object.Move").listen.setValueDirect(true);
                   }
               }
 

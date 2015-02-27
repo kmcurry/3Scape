@@ -235,12 +235,9 @@ body {
   text-align: center;
   position:fixed;
   right: 2%;
-  top: 30%;
-  background-color:#000;
-  border-radius: 10px;
+  top: 80%;
   padding: 13px;
-  color: rgb(71, 169, 211);
-  opacity: 0.4;
+  color: rgba(50, 50, 50, .7);
   z-index: 2000;
 }
 
@@ -253,6 +250,11 @@ body {
   width:120px;
   right: 2%;
   z-index: 2000;
+}
+
+#model-menu {
+  top:0;
+  left:0; 
 }
 
 #model-scale-slider {

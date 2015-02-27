@@ -156,7 +156,8 @@ function init(scene, container, recreateCanvas)
     // disable selection
     document.onselectstart = function() { return true; }
 
-    setInterval(draw, 1000/60);
+    var interval = 1000/60;
+    setInterval(draw, interval);
     resize();
 
     return bridgeworks;
