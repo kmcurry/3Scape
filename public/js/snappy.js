@@ -59,6 +59,7 @@ function loadModel(url, copy)
   loadFile("BwContent/" + url, processModelXML, name, copy);
 }
 
+// callback for loadFile
 function processModelXML(name, copy) {
 
   var model = this.responseXML.getElementsByTagName("Model")[0];
@@ -156,7 +157,7 @@ function roam(name) {
     }
     if (name === "Grid") return;
 
-    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='.5' angularSpeed='20'/>";
+    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='1' angularSpeed='20'/>";
     console.log(cmd);
     bridgeworks.updateScene(cmd);
 }
