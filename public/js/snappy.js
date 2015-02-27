@@ -15,12 +15,13 @@ var g_interval = null;
 
 function applyColor(hex)
 {
-  var name = g_selectedModel.name.getValueDirect().join("");
-  var r = parseInt(hex.substring(0, 2), 16)/256;
-  var g = parseInt(hex.substring(2, 4), 16)/256;
-  var b = parseInt(hex.substring(4, 6), 16)/256;
-  var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '" +b+ "' a='1'" + "/>" +"\</Set>";
-  bridgeworks.updateScene(cmd);
+  if (g_selectedModel) {
+    var r = parseInt(hex.substring(0, 2), 16)/256;
+    var g = parseInt(hex.substring(2, 4), 16)/256;
+    var b = parseInt(hex.substring(4, 6), 16)/256;
+    var color = g_selectedModel.color.getValueDirect();
+    g_selectedModel.color.setValueDirect(r, g, b, color.a);
+  }
 }
 
 function copy()
