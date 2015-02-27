@@ -42,8 +42,9 @@ function cut()
   }
 }
 
-function loadModel(url)
+function loadModel(url, copy)
 {
+  copy = copy || false;
 
   if (g_selectedModel) {
     g_selectedModel.getAttribute("highlight").setValueDirect(false);
@@ -54,10 +55,10 @@ function loadModel(url)
   g_modelCount++;
 
 
-  loadFile("BwContent/" + url, processModelXML, name);
+  loadFile("BwContent/" + url, processModelXML, name, copy);
 }
 
-function processModelXML(name) {
+function processModelXML(name, copy) {
 
   var model = this.responseXML.getElementsByTagName("Model")[0];
 
@@ -81,6 +82,18 @@ function processModelXML(name) {
   g_selectedModelName = name;
 
   g_selectedModel.getAttribute("highlight").setValueDirect(true);
+
+  if (copy) {
+    // TODO: g_copyModel.copyModel();
+
+    var s = g_copyModel.scale.getValueDirect();
+    var r = g_copyModel.rotation.getValueDirect();
+    var c = g_copyModel.color.getValueDirect();
+
+    g_selectedModel.scale.setValueDirect(s.x, s.y, s.z);
+    g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a);
+    g_selectedModel.rotation.setValueDirect(r.x, r.y, r.z);
+  }
 
 
   var physics = bridgeworks.get("PhysicsSimulator");
@@ -106,6 +119,13 @@ var onHoldFunction = function(id, method, time) {
   });
 }
 
+function new3Scape() {
+  reset();
+  bridgeworks.contentDir='/BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('grid-50.xml');
+}
+
 function paste()
 {
   if (g_copyModel) {
@@ -114,19 +134,19 @@ function paste()
     var modelName = url.substring(url.indexOf('/')+1, url.indexOf('.'));
 
     // this will update g_selectedModel
-    loadModel(modelName + ".xml");
-
-    var s = g_copyModel.scale.getValueDirect();
-    g_selectedModel.scale.setValueDirect(s.x, s.y, s.z);
-
-    var r = g_copyModel.scale.getValueDirect();
-    g_selectedModel.scale.setValueDirect(r.x, r.y, r.z);
-
-    var c = g_copyModel.color.getValueDirect();
-    g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a);
-
-    // TODO: g_copyModel.copyModel();
+    loadModel(modelName + ".xml", true);
   }
+}
+
+function reset() {
+
+  g_modelCount = 1;
+
+  g_sceneInspector = null;
+  g_objectInspector = null;
+
+  g_selectedModel = null;
+
 }
 
 function roam(name) {
