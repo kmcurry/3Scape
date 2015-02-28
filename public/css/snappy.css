@@ -220,15 +220,17 @@ body {
   z-index: 2;
 }
 
+#ToolbarContainer {
+  border-bottom: 2px solid gray;
+}
+
 #Toolbar {
   top: 0px;
   height: 70px;
-  margin: 4px;
-  background-color: #57ba56;
 }
 
 #Toolbar .row {
-  margin: 8px;
+  margin: 4px;
 }
 
 #ZoomControls {
@@ -254,7 +256,7 @@ body {
 
 #model-menu {
   top:0;
-  left:0; 
+  left:0;
 }
 
 #model-scale-slider {
@@ -349,12 +351,8 @@ body {
 /* END ICONS */
 
 .tool-button {
-  margin: 4px;
+  margin-top: 4px;
   height: 60px;
-  background-color: #fff;
-  border-style: solid;
-  border-width: 4px;
-  border-color: #cccccc;
   border-radius: 15px;
 }
 
