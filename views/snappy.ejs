@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
-		
+
 
 	</head>
 	<body onresize="resize();">
@@ -80,19 +80,12 @@
 								</a>
 							</li>
 							<li class="divider"></li>
-							<!--Loading the slides in the line below this, have to give how many slides you want loaded-->
 							<li>
 								<a href="#" id="loadScene">
 									Load Saved 3Scape
 								</a>
 							</li>
 							<li class="divider"></li>
-							<!--Loading the slides in the line below this, have to give how many slides you want loaded-->
-							<li>
-								<a href="javaScript:spinZ();" id="">
-									<span class="shape fa fa-wrench fa-2x" title="Build a Fish"></span>
-								</a>
-							</li>
 						</ul>
 					</div>
 					<div class="tool-button icon-cube col-xs-1" onclick="loadModel('Cube.xml');" title="Cube"></div>
@@ -115,7 +108,9 @@
 			<span id="zoom-out" class="shape glyphicon glyphicon-zoom-out" style="font-size:4em" title="Zoom Out"></span>
 		</div>
 
-		<div id="BwContainer" onclick="handleMouse(event);" onmousedown="handleMouse(event);" onmouseup="handleMouse(event);" onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
+		<div id="BwContainer" onclick="handleMouse(event);"
+				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
+				 onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
 			<canvas id="Canvas">
 			</canvas>
 		</div>
