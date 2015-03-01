@@ -4,43 +4,22 @@
 <Scene>
     <Isolator name="Root">
         <Selector name="Cameras">
-            <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="1000000">
+            <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="10000">
                 <position x="0" y="15" z="-20"/>
                 <rotation x="20" y="0" z="0"/>
             </PerspectiveCamera>
         </Selector>
         <Group name="Lights">
-            <GlobalIllumination name="AmbientLight">
-                <ambient r="0.05" g="0.05" b="0.05"/>
-                <diffuse r="0.05" g="0.05" b="0.05"/>
-                <specular r="0.05" g="0.05" b="0.05"/>
+            <GlobalIllumination name="GlobalLight">
+                <ambient r=".25" g=".25" b=".25"/>
             </GlobalIllumination>
-            <PointLight name="PointLight1" range="3.40282">
-                <position x="200" y="100" z="200"/>
-                <rotation x="35.6879" y="4.34871" z="0.723227"/>
-                <ambient r="0.05" g="0.05" b="0.05"/>
-                <diffuse r=".5" g=".5" b=".5"/>
-                <specular r=".1" g=".1" b=".1"/>
-            </PointLight>
-            <PointLight name="PointLight2">
-                <position x="-200" y="100" z="-200"/>
-                <rotation x="35.6879" y="4.34871" z="0.723227"/>
-                <ambient r="0.05" g="0.05" b="0.05"/>
-                <diffuse r=".5" g=".5" b=".5"/>
-                <specular r=".1" g=".1" b=".1"/>
-            </PointLight>
-            <PointLight name="PointLight3">
-                <position x="0" y="40000" z="0"/>
-                <ambient r="0.05" g="0.05" b="0.05"/>
-                <diffuse r=".3" g=".3" b=".3"/>
-                <specular r=".1" g=".1" b=".1"/>
-            </PointLight>
-            <!-- Spot not yet implemented -->
-            <SpotLight name="SpotLight" range="40" outerConeDegrees="45">
-                <ambient r="1" g="0.05" b="0.05"/>
+            <PointLight name="PointLight1" parent="LightModel">
+                <ambient r="0.25" g="0.25" b="0.25"/>
                 <diffuse r="1" g="1" b="1"/>
-                <specular r=".1" g=".1" b=".1"/>
-            </SpotLight>
+                <specular r=".5" g=".5" b=".5"/>
+                <rotation x="35" y="0" z="0"/>
+                <position x="0" y="20" z="-250"/>
+            </PointLight>
         </Group>
         <Group name="Models">
             <Model name="Grid" url="objects/Grid.lwo" moveable="false" detectCollision="true">
@@ -48,6 +27,10 @@
                 <physicalProperties>
                   <mass>0</mass>
                 </physicalProperties>
+            </Model>
+            <Model name="LightModel" url="objects/Sphere.lwo">
+                <color r="1" g="1" b=".4"/>
+                <position x="0" y="20" z="-250"/>
             </Model>
             <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
               <MediaTexture name="ScreenCaptureTexture"/>
@@ -62,4 +45,7 @@
         <body>Grid</body>
       </bodies>
     </PhysicsSimulator>
+    <Set target="ShadowDirective" enabled="false">
+      <casterWorldPosition x="0" y="10" z="0"/>
+    </Set>
 </Scene>

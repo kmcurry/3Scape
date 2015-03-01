@@ -11,15 +11,7 @@
 		<link rel="stylesheet" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
 
-		<script type="text/javascript" src="js/BwHelper.js"></script>
-		<script type="text/javascript" src="js/crossbrowser.js"></script>
-		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
-		<script type="text/javascript" src="js/eventHandlers.js"></script>
-		<script type="text/javascript" src="js/snappy.js"></script>
-		<script type="text/javascript" src="js/MapControls.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
+
 	</head>
 	<body onresize="resize();">
 
@@ -36,15 +28,15 @@
 		</script>
 		<div id="fb-root"></div><!-- FB Javascript SDK -->
 
-		<div>
+		<div id="ToolbarContainer">
 			<a for="Toolbar" class="h-button btn btn-info" data-toggle="collapse" href="#Toolbar" aria-expanded="true" aria-controls="Toolbar">
 				<span class="glyphicon glyphicon-chevron-down"></span>
 			</a>
 			<div id="Toolbar" class="collapse in">
 				<div class="row">
-					<div class="col-md-1">
+					<div class="col-xs-1">
 						<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" style="margin-top:25%;">
-							<span class="shape fa fa-bars" title="Click for actions"></span>
+							<span class="shape fa fa-bars" title="Click for actions">&nbsp;Menu</span>
 						</button>
 						<ul class="dropdown-menu">
 							<li>SHARE</li>
@@ -60,32 +52,52 @@
 							<li>GO-TO</li>
 							<li class="divider"></li>
 							<li>
-								<a class="shape fa fa-user" href="profile" title="Change your settings. See your saved 3Scapes.">Your Profile</a>
+								<a class="shape fa fa-user" href="profile"
+									 title="Change your settings. See your saved 3Scapes.">
+									Your Profile
+								</a>
 							</li>
-							<li><a class="shape fa fa-laptop" href="http://blog.3scape.me" title="Our latest updates, tips and tricks.">3Scape Blog</a></li>
+							<li>
+								<a class="shape fa fa-laptop" href="http://blog.3scape.me"
+									 title="Our latest updates, tips and tricks.">
+									3Scape Blog
+								</a>
+							</li>
 							<li class="divider"></li>
 							<li>3SCAPE ACTIONS</li>
 							<li class="divider"></li>
-							<li><a class="shape fa fa-arrows-alt" href="javascript:" title="Hide toolbars and extras. Hit ESC or click the exit button to exit full screen.">Full Screen</a></li>
-							<li><a class="shape fa fa-plus" href="javascript:new3Scape();" title="Create a new 3Scape. This one will automatically be saved.">New 3Scape</a></li>
+							<li>
+								<a class="shape fa fa-arrows-alt" href="javascript:"
+									 title="Hide toolbars and extras. Hit ESC or click the exit button to exit full screen.">
+									Full Screen
+								</a>
+							</li>
+							<li>
+								<a class="shape fa fa-plus" href="javascript:new3Scape();"
+									 title="Create a new 3Scape. This one will automatically be saved.">
+									New 3Scape
+								</a>
+							</li>
 							<li class="divider"></li>
 							<!--Loading the slides in the line below this, have to give how many slides you want loaded-->
-							<li><a href="#" id="loadScene">Load Saved 3Scape</a></li>
+							<li>
+								<a href="#" id="loadScene">
+									Load Saved 3Scape
+								</a>
+							</li>
 						</ul>
 					</div>
-					<div class="col-md-11">
-						<div class="tool-button icon-cube col-xs-1" onclick="loadModel('Cube.xml');">Cube</div>
-						<div class="tool-button icon-pyramid col-xs-1" onclick="loadModel('Pyramid.xml');">Pyramid</div>
-						<div class="tool-button icon-sphere col-xs-1" onclick="loadModel('Sphere.xml');">Sphere</div>
-						<div class="tool-button icon-tube col-xs-1" onclick="loadModel('Tube.xml');">Tube</div>
-						<div class="tool-button icon-gear col-xs-1" onclick="loadModel('Gear.xml');">Gear</div>
-						<div class="tool-button icon-beam col-xs-1" onclick="loadModel('Beam.xml');">Beam</div>
-						<div class="tool-button icon-wall col-xs-1" onclick="loadModel('Wall.xml');">Wall</div>
-						<div class="tool-button icon-ring col-xs-1" onclick="loadModel('Ring.xml');">Ring</div>
-						<div class="tool-button icon-elbow col-xs-1" onclick="loadModel('Elbow.xml');">Elbow</div>
-						<div class="tool-button icon-wedge col-xs-1" onclick="loadModel('Wedge.xml');">Wedge</div>
-						<div class="tool-button icon-plank col-xs-1" onclick="loadModel('Plank.xml');">Plank</div>
-					</div>
+					<div class="tool-button icon-cube col-xs-1" onclick="loadModel('Cube.xml');" title="Cube"></div>
+					<div class="tool-button icon-pyramid col-xs-1" onclick="loadModel('Pyramid.xml');" title="Pyramid"></div>
+					<div class="tool-button icon-sphere col-xs-1" onclick="loadModel('Sphere.xml');" title="Sphere"></div>
+					<div class="tool-button icon-tube col-xs-1" onclick="loadModel('Tube.xml');" title="Tube"></div>
+					<div class="tool-button icon-gear col-xs-1" onclick="loadModel('Gear.xml');" title="Gear"></div>
+					<div class="tool-button icon-beam col-xs-1" onclick="loadModel('Beam.xml');" title="Beam"></div>
+					<div class="tool-button icon-wall col-xs-1" onclick="loadModel('Wall.xml');" title="Wall"></div>
+					<div class="tool-button icon-ring col-xs-1" onclick="loadModel('Ring.xml');" title="Ring"></div>
+					<div class="tool-button icon-elbow col-xs-1" onclick="loadModel('Elbow.xml');" title="Elbow"></div>
+					<div class="tool-button icon-wedge col-xs-1" onclick="loadModel('Wedge.xml');" title="Wedge"></div>
+					<div class="tool-button icon-plank col-xs-1" onclick="loadModel('Plank.xml');" title="Plank"></div>
 				</div>
 			</div>
 		</div>
@@ -163,6 +175,16 @@
 				}
 			}
 		</script>
+
+		<script type="text/javascript" src="js/BwHelper.js"></script>
+		<script type="text/javascript" src="js/crossbrowser.js"></script>
+		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
+		<script type="text/javascript" src="js/eventHandlers.js"></script>
+		<script type="text/javascript" src="js/snappy.js"></script>
+		<script type="text/javascript" src="js/MapControls.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
 
 		<script type="text/javascript" src="js/contextmenu.js"></script>
 		<script src="bower_components/pick-a-color/build/dependencies/tinycolor-0.9.15.min.js"></script>
