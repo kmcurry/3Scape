@@ -10,7 +10,8 @@
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
-
+		<script type="text/javascript" src="js/eventHandlers.js"></script>
+		
 
 	</head>
 	<body onresize="resize();">
@@ -83,6 +84,13 @@
 							<li>
 								<a href="#" id="loadScene">
 									Load Saved 3Scape
+								</a>
+							</li>
+							<li class="divider"></li>
+							<!--Loading the slides in the line below this, have to give how many slides you want loaded-->
+							<li>
+								<a href="javaScript:spinZ();" id="">
+									<span class="shape fa fa-wrench fa-2x" title="Build a Fish"></span>
 								</a>
 							</li>
 						</ul>
@@ -179,7 +187,6 @@
 		<script type="text/javascript" src="js/BwHelper.js"></script>
 		<script type="text/javascript" src="js/crossbrowser.js"></script>
 		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
-		<script type="text/javascript" src="js/eventHandlers.js"></script>
 		<script type="text/javascript" src="js/snappy.js"></script>
 		<script type="text/javascript" src="js/MapControls.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
