@@ -15,10 +15,10 @@
             </GlobalIllumination>
             <PointLight name="PointLight1" parent="LightModel">
                 <ambient r="0.25" g="0.25" b="0.25"/>
-                <diffuse r="1" g="1" b="1"/>
+                <diffuse r=".6" g=".6" b=".6"/>
                 <specular r=".5" g=".5" b=".5"/>
                 <rotation x="35" y="0" z="0"/>
-                <position x="0" y="20" z="-250"/>
+                <position x="0" y="200" z="-350"/>
             </PointLight>
         </Group>
         <Group name="Models">
@@ -27,10 +27,6 @@
                 <physicalProperties>
                   <mass>0</mass>
                 </physicalProperties>
-            </Model>
-            <Model name="LightModel" url="objects/Sphere.lwo">
-                <color r="1" g="1" b=".4"/>
-                <position x="0" y="20" z="-250"/>
             </Model>
             <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
               <MediaTexture name="ScreenCaptureTexture"/>
