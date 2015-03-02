@@ -37,12 +37,28 @@
 <a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
 
 <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<!--
+<form action="/charge" method="POST">
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_3MnIIPctq6FSKqodwe6iXm5U"
+            data-image="/images/logo-3S.png"
+            data-name="1 Year Subscription: $8.00"
+            data-description="Free Trial Expires After 14 Days"
+            data-amount="800"
+            data-label="Sign Up"
+    >
+    </script>
+</form>
+-->
 <script src="https://checkout.stripe.com/checkout.js"></script>
-
 <script>
     var handler = StripeCheckout.configure({
         key: 'pk_test_3MnIIPctq6FSKqodwe6iXm5U',
         image: '/images/logo-3S.png',
+        name: '1 Year Subscription: $8.00',
+        description: 'Free Trail Expires After 14 Days',
+        amount: 800,
+        panelLabel: 'Sign Up',
         token: function(token) {
             // Use the token to create the charge with a server-side script.
             // You can access the token ID with `token.id`
@@ -51,18 +67,14 @@
 
     $('#customButton').on('click', function(e) {
         // Open Checkout with further options
-        handler.open({
-            name: '1 Year Subscription: $8.00',
-            description: 'Free Trial Expires After 14 Days',
-						panelLabel: 'Sign Up',
-            amount: 000
-        });
+        handler.open();
         e.preventDefault();
     });
 
     // Close Checkout on page navigation
     $(window).on('popstate', function() {
         handler.close();
+        return false;
     });
 </script>
 </body>
