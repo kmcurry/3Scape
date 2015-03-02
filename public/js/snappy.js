@@ -43,6 +43,13 @@ function cut()
   }
 }
 
+function loadFish() {
+  reset();
+  bridgeworks.contentDir='/BwContent/Fish/';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('scene.xml');
+}
+
 function loadModel(url, copy)
 {
   copy = copy || false;
@@ -57,54 +64,6 @@ function loadModel(url, copy)
 
 
   loadFile("BwContent/" + url, processModelXML, name, copy);
-}
-
-// callback for loadFile
-function processModelXML(name, copy) {
-
-  var model = this.responseXML.getElementsByTagName("Model")[0];
-
-  var n = model.attributes["name"];
-  n.value = name;
-
-
-  var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-
-  var pos = model.getElementsByTagName("position")[0];
-  pos.attributes["x"].value = pointWorld.x.toString();
-  pos.attributes["y"].value = pointWorld.y.toString();
-  pos.attributes["z"].value = pointWorld.z.toString();
-
-
-  var xstr = (new XMLSerializer()).serializeToString(model);
-  bridgeworks.updateScene(xstr);
-
-  // set this here now so that controllers work on the loaded model
-  g_selectedModel = bridgeworks.registry.find(name);
-  g_selectedModelName = name;
-
-  g_selectedModel.getAttribute("highlight").setValueDirect(true);
-
-  if (copy) {
-    // TODO: g_copyModel.copyModel();
-
-    var s = g_copyModel.scale.getValueDirect();
-    var r = g_copyModel.rotation.getValueDirect();
-    var c = g_copyModel.color.getValueDirect();
-
-    g_selectedModel.scale.setValueDirect(s.x, s.y, s.z);
-    g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a);
-    g_selectedModel.rotation.setValueDirect(r.x, r.y, r.z);
-  }
-
-
-  var physics = bridgeworks.get("PhysicsSimulator");
-  if (physics && g_selectedModel) {
-    physics.bodies.push_back(g_selectedModel.getAttribute("name"));
-  }
-
-  $(".menu").removeClass("active");
-
 }
 
 var onHoldFunction = function(id, method, time) {
@@ -139,6 +98,56 @@ function paste()
     loadModel(modelName + ".xml", true);
   }
 }
+
+// callback for loadFile
+function processModelXML(name, copy) {
+
+  var model = this.responseXML.getElementsByTagName("Model")[0];
+
+  var n = model.attributes["name"];
+  n.value = name;
+
+
+  var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+
+  var pos = model.getElementsByTagName("position")[0];
+  pos.attributes["x"].value = pointWorld.x.toString();
+  pos.attributes["y"].value = pointWorld.y.toString();
+  pos.attributes["z"].value = pointWorld.z.toString();
+
+
+  var xstr = (new XMLSerializer()).serializeToString(model);
+  bridgeworks.updateScene(xstr);
+
+  // set this here now so that controllers work on the loaded model
+  g_selectedModel = bridgeworks.registry.find(name);
+  g_selectedModelName = name;
+
+  g_selectedModel.getAttribute("highlight").setValueDirect(true);
+
+  if (copy) {
+    // TODO: g_copyModel.copyModel();
+    console.log("copying...");
+
+    var s = g_copyModel.scale.getValueDirect();
+    var r = g_copyModel.rotation.getValueDirect();
+    var c = g_copyModel.color.getValueDirect();
+
+    g_selectedModel.scale.setValueDirect(s.x, s.y, s.z);
+    g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a);
+    g_selectedModel.rotation.setValueDirect(r.x, r.y, r.z);
+  }
+
+
+  var physics = bridgeworks.get("PhysicsSimulator");
+  if (physics && g_selectedModel) {
+    physics.bodies.push_back(g_selectedModel.getAttribute("name"));
+  }
+
+  $(".menu").removeClass("active");
+
+}
+
 
 function reset() {
 
@@ -196,4 +205,20 @@ function setModelScale(value) {
     if (g_selectedModel) {
         g_selectedModel.scale.setValueDirect(value, value, value);
     }
+}
+
+function spinZ() {
+  if (!g_selectedModel) return false;
+
+  var name = g_selectedModel.name.getValueDirect().join("");
+
+  var xml = "<AutoInterpolate target='" + name + "'>";
+  xml +=      "<rotation x='0' y='0' z='360'/>";
+  xml +=    "</AutoInterpolate>";
+
+  console.log(xml);
+
+  bridgeworks.updateScene(xml);
+
+  return true;
 }

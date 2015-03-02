@@ -1,3 +1,24 @@
+// temporary, transitional re-factor
+function addTouchEvents()
+{
+  var el = document.getElementsByTagName("canvas")[0];
+
+	// touch
+	el.addEventListener("touchstart", function(e) {
+		e.preventDefault();
+		console.log('touchstart');
+	}, false);
+	el.addEventListener("touchmove", function(e) {
+		e.preventDefault();
+		console.log('touchmove');
+	}, false);
+	el.addEventListener("touchend", function(e) {
+		e.preventDefault();
+		// reset last touchmove record
+		console.log('touchend');
+	}, false);
+}
+
 // This function makes it so that mouse interaction with the scene
 // continues when the cursor moves out of the Bridgeworks frame.
 function handleDocMove(event)
