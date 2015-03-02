@@ -3,22 +3,19 @@
 <?bwinclude url="DefaultPreferences.xml"?>
 <Scene>
     <Isolator name="Root">
-        <Selector name="Cameras">
-            <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="10000">
-                <position x="0" y="15" z="-20"/>
-                <rotation x="20" y="0" z="0"/>
-            </PerspectiveCamera>
-        </Selector>
+        <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="10000">
+            <position x="0" y="15" z="-20"/>
+            <rotation x="20" y="0" z="0"/>
+        </PerspectiveCamera>
         <Group name="Lights">
             <GlobalIllumination name="GlobalLight">
                 <ambient r=".25" g=".25" b=".25"/>
             </GlobalIllumination>
-            <PointLight name="PointLight1" parent="LightModel">
+            <PointLight name="PointLight1" parent="Camera">
                 <ambient r="0.25" g="0.25" b="0.25"/>
                 <diffuse r=".6" g=".6" b=".6"/>
                 <specular r=".5" g=".5" b=".5"/>
-                <rotation x="35" y="0" z="0"/>
-                <position x="0" y="200" z="-350"/>
+                <position x="0" y="25" z="0"/>
             </PointLight>
         </Group>
         <Group name="Models">
@@ -34,14 +31,14 @@
             </Isolator>
         </Group>
     </Isolator>
-    <RenderDirective name="RenderDirective" highlightType="2" backgroundImageFilename="images/Sky2.jpg"/>
+    <RenderDirective name="RenderDirective" highlightType="2" backgroundImageFilename="images/Sky2.jpg" shadowsEnabled="false"/>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
     <PhysicsSimulator name="PhysicsSimulator" evaluate="true">
       <bodies>
         <body>Grid</body>
       </bodies>
     </PhysicsSimulator>
-    <Set target="ShadowDirective" enabled="false">
+    <Set target="ShadowDirective">
       <casterWorldPosition x="0" y="10" z="0"/>
     </Set>
 </Scene>
