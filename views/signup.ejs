@@ -5,20 +5,58 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <meta name="description" content="a place to make and share interactive 3D on the web">
     <meta name=viewport content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+      // This identifies your website in the createToken call below
+      Stripe.setPublishableKey('pk_test_3MnIIPctq6FSKqodwe6iXm5U');
+      // ...
+    </script>
 
 </head>
 <body>
 
 <div class="row">
     <div class="col-sm-4"></div>
-    <div class="col-sm-4" style="padding-top:5%;">
+    <div class="col-sm-4" style="padding-top:2%;">
 
         <center>
             <img src="images/logo.png" width="250px" height="200px">
             <br/>
             <h3>make and share <br/>interactive 3D</h3>
-                    <br/>
-                    <button id="customButton" class="btn btn-default btn-success" style="font-size:36px;">Try Now!</button>
+                    <form action="/signup" method="POST" id="payment-form">
+                      <span class="payment-errors"></span>
+
+                      <div class="form-group" align="left">
+                        <label>Email</label>
+                          <input type="text" class="form-control" name="email">
+                      </div>
+
+                      <div class="form-group" align="left">
+                          <label>Password</label>
+                          <input type="password" class="form-control" name="password">
+                      </div>
+
+                      <div class="form-group" align="left">
+                        <label><span>Card Number</span>
+                          <input type="text" size="20" data-stripe="number"/>
+                        </label>
+                        <label><span>CVC</span>
+                          <input type="text" size="4" data-stripe="cvc"/>
+                        </label>
+                      </div>
+
+                      <div class="form-row" align="left">
+                        <label>
+                          <span>Expiration (MM/YYYY)</span>
+                          <input type="text" size="2" data-stripe="exp-month"/>
+                        </label>
+                        <span> / </span>
+                        <input type="text" size="4" data-stripe="exp-year"/>
+                      </div>
+
+                      <button type="submit">Submit Payment</button>
+                    </form>
+                    <!--<button id="customButton" class="btn btn-default btn-success" style="font-size:36px;">Try Now!</button>-->
         </center>
 
         <!-- show any messages that come back with authentication -->
@@ -37,27 +75,77 @@
 <a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
 
 <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-<!--
-<form action="/charge" method="POST">
+
+<!--<form action="/signup" method="POST" id="payment-form">
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="pk_test_3MnIIPctq6FSKqodwe6iXm5U"
             data-image="/images/logo-3S.png"
             data-name="1 Year Subscription: $8.00"
             data-description="Free Trial Expires After 14 Days"
-            data-amount="800"
+            data-amount="50000"
             data-label="Sign Up"
     >
     </script>
-</form>
--->
+</form>-->
+
+
+<script>
+  $('#payment-form').submit(function(event) {
+    var $form = $(this);
+
+    // Disable the submit button to prevent repeated clicks
+    $form.find('button').prop('disabled', true);
+
+    Stripe.card.createToken($form, stripeResponseHandler);
+
+    // Prevent the form from submitting with the default action
+    return false;
+  });
+
+function stripeResponseHandler(status, response) {
+  var $form = $('#payment-form');
+  console.log("got stripe response");
+
+  if (response.error) {
+    // Show the errors on the form
+    $form.find('.payment-errors').text(response.error.message);
+    $form.find('button').prop('disabled', false);
+  } else {
+    // response contains id and card, which contains additional card details
+    var token = response.id;
+    // Insert the token into the form so it gets submitted to the server
+    $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+    // and submit
+    console.log("submitting signup");
+    $form.get(0).submit();
+  }
+};
+</script>
+
+<!--
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script>
+    // Define handler to be called when Stripe returns a card token
+    function onReceiveToken(token, args) {
+        // Submit token to server so it can charge the card
+        $.ajax({
+            url: '/charge',
+            type: 'POST',
+            data: {
+                   stripeToken: token.id
+            }
+           });
+    }
+
     var handler = StripeCheckout.configure({
         key: 'pk_test_3MnIIPctq6FSKqodwe6iXm5U',
+        token: onReceiveToken,
+
         image: '/images/logo-3S.png',
         name: '1 Year Subscription: $8.00',
         description: 'Free Trail Expires After 14 Days',
-        amount: 800,
+        amount: 50000,
         panelLabel: 'Sign Up',
         token: function(token) {
             // Use the token to create the charge with a server-side script.
@@ -65,17 +153,17 @@
         }
     });
 
-    $('#customButton').on('click', function(e) {
+    $('#customButton').on('click', function() {
         // Open Checkout with further options
         handler.open();
-        e.preventDefault();
+        return false;
+        //e.preventDefault();
     });
 
     // Close Checkout on page navigation
-    $(window).on('popstate', function() {
-        handler.close();
-        return false;
-    });
-</script>
+    //$(window).on('popstate', function() {
+    //    handler.close();
+    //});
+</script>-->
 </body>
 </html>
