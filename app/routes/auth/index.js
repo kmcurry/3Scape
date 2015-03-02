@@ -2,6 +2,9 @@ module.exports = function(app, async, crypto, passport, utilities) {
 
   var User = require('../../../app/models/user');
   var config = require('../../../configLoader')(process.env.NODE_ENV || "local")
+  var bodyParser = require('body-parser');
+  var stripe = require('stripe')('sk_test_gilKHGlFzeRA0lFhoXdY8oIk');
+
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -163,6 +166,14 @@ module.exports = function(app, async, crypto, passport, utilities) {
         if (err) {
           return next(err);
         }
+        //Stripe Payment
+        var stripeToken = req.body.stripeToken;
+        var amount = 800;
+        stripe.charges.create({
+            card: stripeToken, //token.id??
+            currency: 'usd',
+            amount: amount
+        })
         // email
         if (config.email.smtpUser) {
           utilities.emailer.send({

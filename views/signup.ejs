@@ -1,68 +1,81 @@
 <!doctype html>
 <html>
 <head>
-	<title>3Scape Signup</title>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<meta name="description" content="a place to make and share interactive 3D on the web">
-	<meta name=viewport content="width=device-width, initial-scale=1">
+    <title>3Scape Signup</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <meta name="description" content="a place to make and share interactive 3D on the web">
+    <meta name=viewport content="width=device-width, initial-scale=1">
 
 </head>
 <body>
 
 <div class="row">
-	<div class="col-sm-4"></div>
-	<div class="col-sm-4" style="padding-top:5%;">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4" style="padding-top:5%;">
 
-	    <center>
-	        <img src="images/logo.png" width="250px" height="200px">
-	        <br/>
-	        <h3>make and share <br/>interactive 3D</h3>
-					<br/>
-					<button id="customButton" class="btn btn-default btn-success" style="font-size:36px;">Try Now!</button>
-	    </center>
+        <center>
+            <img src="images/logo.png" width="250px" height="200px">
+            <br/>
+            <h3>make and share <br/>interactive 3D</h3>
+                    <br/>
+                    <button id="customButton" class="btn btn-default btn-success" style="font-size:36px;">Try Now!</button>
+        </center>
 
-		<!-- show any messages that come back with authentication -->
-		<% if (message.length > 0) { %>
-			<div class="alert alert-danger"><%= message %></div>
-		<% } %>
+        <!-- show any messages that come back with authentication -->
+        <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
 
-		<hr>
+        <hr>
 
-		<p>Already have an account? <a href="/login">Login</a> | <a href="/privacy">Privacy Policy</a></p>
+        <p>Already have an account? <a href="/login">Login</a> | <a href="/privacy">Privacy Policy</a></p>
 
-	</div>
-	<div class="col-sm-4"></div>
+    </div>
+    <div class="col-sm-4"></div>
 </div>
 
 <a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
 
 <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<!--
+<form action="/charge" method="POST">
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_3MnIIPctq6FSKqodwe6iXm5U"
+            data-image="/images/logo-3S.png"
+            data-name="1 Year Subscription: $8.00"
+            data-description="Free Trial Expires After 14 Days"
+            data-amount="800"
+            data-label="Sign Up"
+    >
+    </script>
+</form>
+-->
 <script src="https://checkout.stripe.com/checkout.js"></script>
-
 <script>
-	var handler = StripeCheckout.configure({
-		key: 'pk_test_3MnIIPctq6FSKqodwe6iXm5U',
-		image: '/images/logo-3S.png',
-		token: function(token) {
-			// Use the token to create the charge with a server-side script.
-			// You can access the token ID with `token.id`
-		}
-	});
+    var handler = StripeCheckout.configure({
+        key: 'pk_test_3MnIIPctq6FSKqodwe6iXm5U',
+        image: '/images/logo-3S.png',
+        name: '1 Year Subscription: $8.00',
+        description: 'Free Trail Expires After 14 Days',
+        amount: 800,
+        panelLabel: 'Sign Up',
+        token: function(token) {
+            // Use the token to create the charge with a server-side script.
+            // You can access the token ID with `token.id`
+        }
+    });
 
-	$('#customButton').on('click', function(e) {
-		// Open Checkout with further options
-		handler.open({
-			name: '3Scape',
-			description: '1 Year of 3Scape',
-			amount: 800
-		});
-		e.preventDefault();
-	});
+    $('#customButton').on('click', function(e) {
+        // Open Checkout with further options
+        handler.open();
+        e.preventDefault();
+    });
 
-	// Close Checkout on page navigation
-	$(window).on('popstate', function() {
-		handler.close();
-	});
+    // Close Checkout on page navigation
+    $(window).on('popstate', function() {
+        handler.close();
+        return false;
+    });
 </script>
 </body>
 </html>
