@@ -53,23 +53,39 @@
             <input class="form-control" type="password" name="password">
         </div>
 
-        <div class="form-group">
-          <label><span>Card Number</span>
-            <input class="form-control" type="text" size="20" data-stripe="number"/>
-          </label>
-          <label><span>CVC</span>
-            <input class="form-control" type="text" size="4" data-stripe="cvc"/>
-          </label>
-        </div>
+        <div class="panel panel-default row">
+          <div class="panel-body">
+            <div class="form-group">
+              <div class="col-md-7 col-sm-7">
+                <label><span>Card Number</span>
+                  <input class="form-control" type="text" size="20" data-stripe="number"/>
+                </label>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <label><span>CVC</span>
+                  <input class="form-control" type="text" size="4" data-stripe="cvc"/>
+                </label>
+              </div>
+            </div>
 
-        <div class="form-group">
-          <label><span>Expiration (MM/YYYY)</span>
-            <input class="form-control" type="text" size="2" data-stripe="exp-month"/>
-          </label>
-          <span> / </span>
-          <label>
-          <input class="form-control" type="text" size="4" data-stripe="exp-year"/>
-        </label>
+            <div class="form-group">
+              <div class="col-md-3 col-sm-3">
+                <label><span>Expiration</span>
+                  <input class="form-control" type="text" size="2" data-stripe="exp-month"/>
+                  <span>MM</span>
+                </label>
+              </div>
+              <div class="col-md-3 col-sm-3">
+                <label><br/>
+                  <input class="form-control" type="text" size="4" data-stripe="exp-year"/>
+                  <span>YYYY</span>
+                </label>
+              </div>
+              <div class="col-md-5 col-sm-5">
+                <img style="padding-top:20%;" src="images/stripe.png" title="Your payment is secure with Stripe"/>
+              </div>
+            </div>
+          </div>
         </div>
 
         <br/>
