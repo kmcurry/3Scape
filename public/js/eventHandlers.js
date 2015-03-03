@@ -57,38 +57,7 @@ function handleMouse(e)
         case "click":
             {
               console.log(bridgeworks.selector.selections.models.length)
-              if (g_selectedModel)
-              {
-                  g_selectedModel.getAttribute("highlight").setValueDirect(false);
-                  g_selectedModel = null;
-              }
-
-              if (bridgeworks.selector.selections.models.length > 0)
-              {
-                  g_selectedModel = bridgeworks.selector.selections.models[0];
-              }
-
-              if (g_selectedModel) {
-
-                  g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
-                  console.log(g_selectedModelName);
-
-                  if (g_selectedModelName != 'Grid') {
-
-                      if (g_selectedModel.moveable.getValueDirect()) {
-                        g_selectedModel.getAttribute("highlight").setValueDirect(true);
-                      }
-
-                  } else {
-                    g_selectedModel = null;
-                    $("#model-menu").toggleClass('active',false);
-                  }
-              }
-              else {
-
-                g_selectedModel = null;
-                $("#model-menu").toggleClass('active',false);
-              }
+              selectObject();
 
               // if the selected model is not moveable switch modes between camera and objects
               if (!g_selectedModel || g_selectedModel.moveable.getValueDirect() == false) {
@@ -140,6 +109,41 @@ function handleMouse(e)
     }
 
 
+}
+
+
+function selectObject(){
+  if (g_selectedModel)
+  {
+      g_selectedModel.getAttribute("highlight").setValueDirect(false);
+      g_selectedModel = null;
+  }
+  if (bridgeworks.selector.selections.models.length > 0)
+  {
+      g_selectedModel = bridgeworks.selector.selections.models[0];
+  }
+
+  if (g_selectedModel) {
+
+      g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
+      console.log(g_selectedModelName);
+
+      if (g_selectedModelName != 'Grid') {
+
+          if (g_selectedModel.moveable.getValueDirect()) {
+            g_selectedModel.getAttribute("highlight").setValueDirect(true);
+          }
+
+      } else {
+        g_selectedModel = null;
+        $("#model-menu").toggleClass('active',false);}//turn off context menu on deselect
+  }
+  else {
+
+    g_selectedModel = null;
+    $("#model-menu").toggleClass('active',false);
+
+  }
 }
 
 function handleKey(e)
