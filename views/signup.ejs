@@ -26,7 +26,7 @@
                     <form action="/signup" method="POST" id="payment-form">
                       <span class="payment-errors"></span>
 
-                      <div class="form-group" align="left">
+                      <div class="form-group" align="left" data-stripe="key">
                         <label>Email</label>
                           <input type="text" class="form-control" name="email">
                       </div>
@@ -54,7 +54,7 @@
                         <input type="text" size="4" data-stripe="exp-year"/>
                       </div>
 
-                      <button type="submit">Submit Payment</button>
+                      <button type="submit">Try Now</button>
                     </form>
                     <!--<button id="customButton" class="btn btn-default btn-success" style="font-size:36px;">Try Now!</button>-->
         </center>
