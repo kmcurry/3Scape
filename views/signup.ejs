@@ -3,6 +3,7 @@
 <head>
     <title>3Scape Signup</title>
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/snappy.css">
     <meta name="description" content="a place to make and share interactive 3D on the web">
     <meta name=viewport content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
@@ -14,79 +15,78 @@
 
 </head>
 <body>
-
-<div class="row">
+  <div class="row" style="padding-top:20px;">
     <div class="col-sm-4"></div>
-    <div class="col-sm-4" style="padding-top:2%;">
+    <div class="col-sm-4">
+      <center>
+        <img src="images/logo.png" width="200px" height="160px">
+      </center>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
 
-        <center>
-            <img src="images/logo.png" width="250px" height="200px">
-            <br/>
-            <h3>make and share <br/>interactive 3D</h3>
-                    <form action="/signup" method="POST" id="payment-form">
-                      <span class="payment-errors"></span>
+  <center>
+    <h2>Start a-14 day free trial</h2>
+    <h3>Then pay just $15</h3>
+  </center>
 
-                      <div class="form-group" align="left">
-                        <label>Email</label>
-                          <input type="text" class="form-control" name="email">
-                      </div>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
 
-                      <div class="form-group" align="left">
-                          <label>Password</label>
-                          <input type="password" class="form-control" name="password">
-                      </div>
-
-                      <div class="form-group" align="left">
-                        <label><span>Card Number</span>
-                          <input type="text" size="20" data-stripe="number"/>
-                        </label>
-                        <label><span>CVC</span>
-                          <input type="text" size="4" data-stripe="cvc"/>
-                        </label>
-                      </div>
-
-                      <div class="form-row" align="left">
-                        <label>
-                          <span>Expiration (MM/YYYY)</span>
-                          <input type="text" size="2" data-stripe="exp-month"/>
-                        </label>
-                        <span> / </span>
-                        <input type="text" size="4" data-stripe="exp-year"/>
-                      </div>
-
-                      <button type="submit">Submit Payment</button>
-                    </form>
-                    <!--<button id="customButton" class="btn btn-default btn-success" style="font-size:36px;">Try Now!</button>-->
-        </center>
+      <form action="/signup" method="POST" id="payment-form">
 
         <!-- show any messages that come back with authentication -->
         <% if (message.length > 0) { %>
             <div class="alert alert-danger"><%= message %></div>
         <% } %>
 
+        <span class="payment-errors"></span>
+
+        <div class="form-group">
+          <label>Email</label>
+            <input class="form-control" type="text" name="email">
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input class="form-control" type="password" name="password">
+        </div>
+
+        <div class="form-group">
+          <label><span>Card Number</span>
+            <input class="form-control" type="text" size="20" data-stripe="number"/>
+          </label>
+          <label><span>CVC</span>
+            <input class="form-control" type="text" size="4" data-stripe="cvc"/>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label><span>Expiration (MM/YYYY)</span>
+            <input class="form-control" type="text" size="2" data-stripe="exp-month"/>
+          </label>
+          <span> / </span>
+          <label>
+          <input class="form-control" type="text" size="4" data-stripe="exp-year"/>
+        </label>
+        </div>
+
+        <br/>
+        <center><button type="submit" class="btn btn-xlarge btn-primary">Sign Up for Free!</button></center>
+      </form>
+
         <hr>
 
-        <p>Already have an account? <a href="/login">Login</a> | <a href="/privacy">Privacy Policy</a></p>
+        <center><a href="/login">Login</a> | <a href="/privacy">Privacy Policy</a></center>
 
     </div>
     <div class="col-sm-4"></div>
-</div>
+  </div>
 
 <a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
 
 <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-
-<!--<form action="/signup" method="POST" id="payment-form">
-    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="pk_test_3MnIIPctq6FSKqodwe6iXm5U"
-            data-image="/images/logo-3S.png"
-            data-name="1 Year Subscription: $8.00"
-            data-description="Free Trial Expires After 14 Days"
-            data-amount="50000"
-            data-label="Sign Up"
-    >
-    </script>
-</form>-->
 
 
 <script>
@@ -122,48 +122,5 @@ function stripeResponseHandler(status, response) {
 };
 </script>
 
-<!--
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="https://checkout.stripe.com/checkout.js"></script>
-<script>
-    // Define handler to be called when Stripe returns a card token
-    function onReceiveToken(token, args) {
-        // Submit token to server so it can charge the card
-        $.ajax({
-            url: '/charge',
-            type: 'POST',
-            data: {
-                   stripeToken: token.id
-            }
-           });
-    }
-
-    var handler = StripeCheckout.configure({
-        key: 'pk_test_3MnIIPctq6FSKqodwe6iXm5U',
-        token: onReceiveToken,
-
-        image: '/images/logo-3S.png',
-        name: '1 Year Subscription: $8.00',
-        description: 'Free Trail Expires After 14 Days',
-        amount: 50000,
-        panelLabel: 'Sign Up',
-        token: function(token) {
-            // Use the token to create the charge with a server-side script.
-            // You can access the token ID with `token.id`
-        }
-    });
-
-    $('#customButton').on('click', function() {
-        // Open Checkout with further options
-        handler.open();
-        return false;
-        //e.preventDefault();
-    });
-
-    // Close Checkout on page navigation
-    //$(window).on('popstate', function() {
-    //    handler.close();
-    //});
-</script>-->
 </body>
 </html>
