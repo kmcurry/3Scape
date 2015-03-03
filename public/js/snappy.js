@@ -132,6 +132,11 @@ function processModelXML(name, copy) {
     var s = g_copyModel.scale.getValueDirect();
     var r = g_copyModel.rotation.getValueDirect();
     var c = g_copyModel.color.getValueDirect();
+    
+    if (g_copyModel.surfacesNode.getChildCount() > 0)
+    {
+        c = g_copyModel.surfacesNode.getChild(g_copyModel.surfacesNode.getChildCount()-1).color.getValueDirect();
+    }
 
     g_selectedModel.scale.setValueDirect(s.x, s.y, s.z);
     g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a);
