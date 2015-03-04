@@ -151,7 +151,6 @@ function init(scene, container, recreateCanvas)
 
     window.onkeydown = handleKey;
 	  addKeyEvents();
-	  //addTouchEvents();
 
     // disable selection
     document.onselectstart = function() { return true; }
@@ -190,7 +189,6 @@ function addKeyEvents()
         window.addEventListener("keyup",
             function(event)
             {
-                console.debug("keyup");
                 bridgeworks.handleEvent(event);
             }
         );
@@ -200,7 +198,6 @@ function addKeyEvents()
         window.attachEvent("keyup",
             function(event)
             {
-                console.debug("keyup");
                 bridgeworks.handleEvent(event);
             }
         );
@@ -211,7 +208,6 @@ function addKeyEvents()
         window.addEventListener("keydown",
             function(event)
             {
-                console.debug("keydown");
                 bridgeworks.handleEvent(event);
             }
         );
@@ -221,7 +217,6 @@ function addKeyEvents()
         window.attachEvent("keydown",
             function(event)
             {
-                console.debug("keydown");
                 bridgeworks.handleEvent(event);
             }
         );

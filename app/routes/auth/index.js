@@ -1,7 +1,12 @@
 module.exports = function(app, async, crypto, passport, utilities) {
 
   var User = require('../../../app/models/user');
-  var config = require('../../../configLoader')(process.env.NODE_ENV || "local")
+  var config = require('../../../configLoader')(process.env.NODE_ENV || "local");
+  var express = require('express');
+  var bodyParser = require('body-parser');
+
+  //var app = express();
+  app.use(bodyParser());
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -156,9 +161,28 @@ module.exports = function(app, async, crypto, passport, utilities) {
 
   //process the signup form
   app.post('/signup', function (req, res, next) {
+    var stripe = require('stripe')('sk_test_gilKHGlFzeRA0lFhoXdY8oIk');
+
+    stripe.customers.create({
+      source: req.body.stripeToken, // obtained with Stripe.js
+      plan: "Subscriber-Annual-15",
+      email: req.body.email
+    }, function(err, customer) {
+      console.log("Stripe customer error: " + err);
+    });
+
     passport.authenticate('local-signup', function (err, user, info) {
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/signup'); }
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+
+      if (!user) {
+        console.log("!user failure");
+        return res.redirect('/signup');
+      }
+
+
       req.logIn(user, function(err) {
         if (err) {
           return next(err);
@@ -175,4 +199,6 @@ module.exports = function(app, async, crypto, passport, utilities) {
     })(req, res, next);
 
   });
+  app.use(express.static(__dirname));
+  app.listen(process.env.PORT || 3000);
 };

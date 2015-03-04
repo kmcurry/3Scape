@@ -1,50 +1,138 @@
 <!doctype html>
 <html>
 <head>
-	<title>3Scape Signup</title>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<meta name="description" content="a place to make and share interactive 3D on the web">
-	<meta name=viewport content="width=device-width, initial-scale=1">
+    <title>3Scape Signup</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/snappy.css">
+    <meta name="description" content="a place to make and share interactive 3D on the web">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 </head>
 <body>
+  <div class="row" style="padding-top:20px;">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <center>
+        <img src="images/logo.png" width="200px" height="160px">
+      </center>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
 
-<div class="row">
-	<div class="col-sm-4"></div>
-	<div class="col-sm-4" style="padding-top:5%;">
+  <center>
+    <h2>Start a-14 day free trial</h2>
+    <h3>Then pay just $15</h3>
+  </center>
 
-	    <center>
-	        <img src="images/logo.png" width="250px" height="200px">
-	        <br/>
-	        <h3>make and share <br/>interactive 3D</h3>
-	    </center>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
 
-		<!-- show any messages that come back with authentication -->
-		<% if (message.length > 0) { %>
-			<div class="alert alert-danger"><%= message %></div>
-		<% } %>
+      <form action="/signup" method="POST" id="payment-form">
 
-		<!-- LOGIN FORM -->
-		<form action="/signup" method="post">
-			<div class="form-group">
-				<label>Email</label>
-				<input type="text" class="form-control" name="email">
-			</div>
-			<div class="form-group">
-				<label>Password</label>
-				<input type="password" class="form-control" name="password">
-			</div>
-			<button type="submit" class="btn btn-warning btn-lg">Signup</button>
-		</form>
+        <!-- show any messages that come back with authentication -->
+        <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
 
-		<hr>
+        <span class="payment-errors"></span>
 
-		<p>Already have an account? <a href="/login">Login</a> | <a href="/privacy">Privacy Policy</a></p>
+        <div class="form-group">
+          <label>Email</label>
+            <input class="form-control" type="text" name="email">
+        </div>
 
-	</div>
-	<div class="col-sm-4"></div>
-</div>
+        <div class="form-group">
+            <label>Password</label>
+            <input class="form-control" type="password" name="password">
+        </div>
+
+        <div class="panel panel-default row">
+          <div class="panel-body">
+            <div class="form-group">
+              <div class="col-md-7 col-sm-7">
+                <label><span>Card Number</span>
+                  <input class="form-control" type="text" size="20" data-stripe="number"/>
+                </label>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <label><span>CVC</span>
+                  <input class="form-control" type="text" size="4" data-stripe="cvc"/>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-3 col-sm-3">
+                <label><span>Expiration</span>
+                  <input class="form-control" type="text" size="2" data-stripe="exp-month"/>
+                  <span>MM</span>
+                </label>
+              </div>
+              <div class="col-md-3 col-sm-3">
+                <label><br/>
+                  <input class="form-control" type="text" size="4" data-stripe="exp-year"/>
+                  <span>YYYY</span>
+                </label>
+              </div>
+              <div class="col-md-5 col-sm-5">
+                <img style="padding-top:20%;" src="images/stripe.png" title="Your payment is secure with Stripe"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br/>
+        <center><button type="submit" class="btn btn-xlarge btn-primary">Sign Up for Free!</button></center>
+      </form>
+
+        <hr>
+
+        <center><a href="/login">Login</a> | <a href="/privacy">Privacy Policy</a></center>
+
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
 
 <a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
+
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+
+
+<script>
+  // TODO: move key to server var set by config - KMC
+  Stripe.setPublishableKey('pk_test_3MnIIPctq6FSKqodwe6iXm5U');
+
+  $('#payment-form').submit(function(event) {
+    var $form = $(this);
+
+    // Disable the submit button to prevent repeated clicks
+    $form.find('button').prop('disabled', true);
+
+    Stripe.card.createToken($form, stripeResponseHandler);
+
+    // Prevent the form from submitting with the default action
+    return false;
+  });
+
+function stripeResponseHandler(status, response) {
+  var $form = $('#payment-form');
+
+  if (response.error) {
+    // Show the errors on the form
+    $form.find('.payment-errors').text(response.error.message);
+    $form.find('button').prop('disabled', false);
+  } else {
+    // response contains id and card, which contains additional card details
+    var token = response.id;
+    // Insert the token into the form so it gets submitted to the server
+    $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+    // and submit
+    $form.get(0).submit();
+  }
+};
+</script>
+
 </body>
 </html>

@@ -269,6 +269,18 @@ ul.dropdown-menu { background-color: red;
   left:1%;
 }
 
+/**
+ * Extra large button extensions. Extends `.btn`.
+ */
+.btn-xlarge {
+    padding: 12px 22px;
+    font-size: 22px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+}
+
 .h-button {
   position: absolute;
   z-index: 2000;
