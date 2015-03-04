@@ -4,7 +4,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
   var config = require('../../../configLoader')(process.env.NODE_ENV || "local");
   var express = require('express');
   var bodyParser = require('body-parser');
-  var stripe = require('stripe')('sk_test_gilKHGlFzeRA0lFhoXdY8oIk');
+  
   //var app = express();
   app.use(bodyParser());
 

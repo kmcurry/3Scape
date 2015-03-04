@@ -21,8 +21,7 @@
     "moment": "latest",
     "lodash": "latest",
     "q": "latest",
-    "handlebars": "latest",
-    "stripe": "latest"
+    "handlebars": "latest"
   },
   "scripts": {
     "start": "node server.js"
