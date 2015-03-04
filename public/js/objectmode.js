@@ -1,69 +1,64 @@
 function objectLeft(magnitude)
 {
-  var cmd;
-  if(g_selectedModelName != "Grid") {
-      cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
-      cmd += "\<position x='" + (g_selectedModel.position.values[0] -= magnitude) + "' y='" + g_selectedModel.position.values[1] + "' z='" + g_selectedModel.position.values[2] + "'/>"
-      cmd += "\</Set>";
-      console.log(g_selectedModel.position.getValueDirect());
-      bridgeworks.updateScene(cmd);
+  if(g_selectedModelName) {
+    g_selectedModel.position.setValueDirect(
+      g_selectedModel.position.values[0] - magnitude,
+      g_selectedModel.position.values[1],
+      g_selectedModel.position.values[2]
+    );
   }
 }
 
 function objectRight(magnitude)
 {
-  var cmd;
-    console.log(g_selectedModelName);
-  if(g_selectedModelName != "Grid") {
-      cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
-      cmd += "\<position x='" + (g_selectedModel.position.values[0] += magnitude) + "' y='" + g_selectedModel.position.values[1] + "' z='" + g_selectedModel.position.values[2] + "'/>"
-      cmd += "\</Set>";
-      console.log(g_selectedModel.position.getValueDirect());
-      bridgeworks.updateScene(cmd);
+  if(g_selectedModelName) {
+    g_selectedModel.position.setValueDirect(
+      g_selectedModel.position.values[0] + magnitude,
+      g_selectedModel.position.values[1],
+      g_selectedModel.position.values[2]
+    );
   }
-
 }
 
 function objectDown(magnitude)
 {
-  var cmd;
-  if(g_selectedModelName != "Grid") {
-      cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
-      cmd += "\<position x='" + (g_selectedModel.position.values[0]) + "' y='" + (g_selectedModel.position.values[1] -= magnitude) + "' z='" + g_selectedModel.position.values[2] + "'/>"
-      cmd += "\</Set>";
-      console.log(g_selectedModel.position.getValueDirect());
-      bridgeworks.updateScene(cmd);
+  if(g_selectedModelName) {
+    g_selectedModel.position.setValueDirect(
+      g_selectedModel.position.values[0],
+      g_selectedModel.position.values[1] - magnitude,
+      g_selectedModel.position.values[2]
+    );
   }
 }
 
 function objectBackward(magnitude)
 {
-  var cmd;
-  if(g_selectedModelName != "Grid") {
-      cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
-      cmd += "\<position x='" + (g_selectedModel.position.values[0]) + "' y='" + g_selectedModel.position.values[1] + "' z='" + (g_selectedModel.position.values[2] -= magnitude) + "'/>"
-      cmd += "\</Set>";
-      bridgeworks.updateScene(cmd);
+  if(g_selectedModelName) {
+    g_selectedModel.position.setValueDirect(
+      g_selectedModel.position.values[0],
+      g_selectedModel.position.values[1],
+      g_selectedModel.position.values[2] - magnitude
+    );
   }
 }
 
 function objectUp(magnitude)
 {
-  var cmd;
-  if(g_selectedModelName != "Grid") {
-      cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
-      cmd += "\<position x='" + (g_selectedModel.position.values[0]) + "' y='" + (g_selectedModel.position.values[1] += magnitude) + "' z='" + g_selectedModel.position.values[2] + "'/>"
-      cmd += "\</Set>";
-      bridgeworks.updateScene(cmd);
+  if(g_selectedModelName) {
+    g_selectedModel.position.setValueDirect(
+      g_selectedModel.position.values[0],
+      g_selectedModel.position.values[1] + magnitude,
+      g_selectedModel.position.values[2]
+    );
   }
 }
 
 function objectForward(magnitude){
-  var cmd;
-  if(g_selectedModelName !="Grid") {
-      cmd = "\<Set target='" + g_selectedModel.name.getValueDirect().join("") + "'>";
-      cmd += "\<position x='" + (g_selectedModel.position.values[0]) + "' y='" + g_selectedModel.position.values[1] + "' z='" + (g_selectedModel.position.values[2] += magnitude) + "'/>"
-      cmd += "\</Set>";
-      bridgeworks.updateScene(cmd);
+  if(g_selectedModelName) {
+    g_selectedModel.position.setValueDirect(
+      g_selectedModel.position.values[0],
+      g_selectedModel.position.values[1],
+      g_selectedModel.position.values[2] + magnitude
+    );
   }
 }
