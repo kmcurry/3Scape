@@ -233,6 +233,10 @@ body {
   margin: 4px;
 }
 
+ul.dropdown-menu { background-color: red;
+
+}
+
 #ZoomControls {
   text-align: center;
   position:fixed;
@@ -303,69 +307,69 @@ body {
   resize:auto;
 }
 .icon-cube {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/cube-color.png');
   background-repeat: no-repeat;
-  background-position: 55px 6px;
+  background-position: center;
 }
 
 .icon-pyramid {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/pyramid-color.png');
   background-repeat: no-repeat;
-  background-position: -45px 6px;
+  background-position: center;
 }
 
 .icon-sphere {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/sphere-color.png');
   background-repeat: no-repeat;
-  background-position: -140px 6px;
+  background-position: center;
 }
 
 .icon-tube {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/tube-color.png');
   background-repeat: no-repeat;
-  background-position: -242px 6px;
+  background-position: center;
 }
 
 .icon-gear {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/gear-color.png');
   background-repeat: no-repeat;
-  background-position: -342px 6px;
+  background-position: center;
 }
 
 .icon-beam {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/beam-color.png');
   background-repeat: no-repeat;
-  background-position: -436px 6px;
+  background-position: center;
 }
 
 .icon-wall {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/wall-color.png');
   background-repeat: no-repeat;
-  background-position: -545px 6px;
+  background-position: center;
 }
 
 .icon-ring {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/ring-color.png');
   background-repeat: no-repeat;
-  background-position: -646px 6px;
+  background-position: center;
 }
 
 .icon-elbow {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/elbow-color.png');
   background-repeat: no-repeat;
-  background-position: -746px 6px;
+  background-position: center;
 }
 
 .icon-wedge {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/wedge-color.png');
   background-repeat: no-repeat;
-  background-position: -846px 6px;
+  background-position: center;
 }
 
 .icon-plank {
-  background-image: url('../images/icon-sprite-sheet.png');
+  background-image: url('../images/plank-color.png');
   background-repeat: no-repeat;
-  background-position: -946px 6px;
+  background-position: center;
 }
 
 /* END ICONS */
