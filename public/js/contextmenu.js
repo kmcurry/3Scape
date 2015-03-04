@@ -1,5 +1,7 @@
+// override context menu for the document
+// should this be on gcanvas instead? - KMC
 document.addEventListener('contextmenu', function(e) {
-  if (e.button === 2) {
+
     selectObject();
     if (g_selectedModel) {
       positionMenu(e, modelMenu);
@@ -8,7 +10,7 @@ document.addEventListener('contextmenu', function(e) {
 
     e.preventDefault();
     return false;
-  }
+
 }, false);
 
 function positionMenu(e, menu) {
@@ -53,4 +55,11 @@ function addContextMenu() {
         setModelScale(ev.value / 100)
   });
 
+  // makes sure the menu isn't in the way when it's not visible
+  $("#model-menu").hover( function() {
+    if (this.style.opacity == 0) {
+      this.style.top = 0;
+      this.style.left = 0;
+    }
+  });
 }

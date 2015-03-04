@@ -1,23 +1,3 @@
-// temporary, transitional re-factor
-function addTouchEvents()
-{
-  var el = document.getElementsByTagName("canvas")[0];
-
-	// touch
-	el.addEventListener("touchstart", function(e) {
-		e.preventDefault();
-		console.log('touchstart');
-	}, false);
-	el.addEventListener("touchmove", function(e) {
-		e.preventDefault();
-		console.log('touchmove');
-	}, false);
-	el.addEventListener("touchend", function(e) {
-		e.preventDefault();
-		// reset last touchmove record
-		console.log('touchend');
-	}, false);
-}
 
 // This function makes it so that mouse interaction with the scene
 // continues when the cursor moves out of the Bridgeworks frame.
@@ -107,43 +87,35 @@ function handleMouse(e)
           }
         break;
     }
-
-
 }
 
 
 function selectObject(){
+  // if there is already a selected model...
   if (g_selectedModel)
   {
       g_selectedModel.getAttribute("highlight").setValueDirect(false);
       g_selectedModel = null;
   }
+  // verify selector has models
   if (bridgeworks.selector.selections.models.length > 0)
   {
       g_selectedModel = bridgeworks.selector.selections.models[0];
   }
 
-  if (g_selectedModel) {
+  g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
 
-      g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
-      console.log(g_selectedModelName);
+  if (g_selectedModelName != 'Grid') {
 
-      if (g_selectedModelName != 'Grid') {
+      if (g_selectedModel.moveable.getValueDirect()) {
+        g_selectedModel.getAttribute("highlight").setValueDirect(true);
+      }
 
-          if (g_selectedModel.moveable.getValueDirect()) {
-            g_selectedModel.getAttribute("highlight").setValueDirect(true);
-          }
-
-      } else {
-        g_selectedModel = null;
-        $("#model-menu").toggleClass('active',false);}//turn off context menu on deselect
-  }
-  else {
-
+  } else {
     g_selectedModel = null;
     $("#model-menu").toggleClass('active',false);
+  }//turn off context menu on deselect
 
-  }
 }
 
 function handleKey(e)
