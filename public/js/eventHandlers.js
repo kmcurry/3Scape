@@ -154,6 +154,12 @@ function handleKey(e)
                 }
             }
             break;
+        case 8:
+          {
+            cut();
+            e.preventDefault();
+          }
+          break;
         case 39: //right
             objectRight(1);
             break;
@@ -187,4 +193,6 @@ function handleKey(e)
             }
             break;
     }
+
+    return false;
 }
