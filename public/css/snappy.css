@@ -205,7 +205,8 @@
 }
 
 body {
-  overflow: hidden;
+  font-family: "robotolight";
+  overflow: scroll;
 }
 
 #BwContainer {
@@ -213,7 +214,7 @@ body {
   resize: auto;
   border: 1px solid;
   width: 100%;
-  height: 100%;
+  height: 88%;
 }
 
 #Canvas {
