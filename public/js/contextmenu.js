@@ -51,8 +51,7 @@ function addContextMenu() {
     value: 100
   })
   .on('slide', function(ev){
-    if(g_selectedModelName != "Grid") // TODO
-        setModelScale(ev.value / 100)
+    setModelScale(ev.value / 100)
   });
 
   // makes sure the menu isn't in the way when it's not visible
