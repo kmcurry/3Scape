@@ -235,9 +235,44 @@ body {
   margin: 4px;
 }
 
-ul.dropdown-menu { background-color: red;
+/* BEGIN DROPDOWN MENU */
+
+ul.dropdown-menu { background-color: #46A8D2;
+color: white;
+font-family: 'robotobold';
+}
+
+ul.dropdown-menu li p{ text-indent: 19px;
 
 }
+
+.menu .btn:hover .fa {
+ color: rgba(28, 117, 187, 0.7);
+}
+
+span.shape.fa {margin-left: 8%;}
+
+a.shape.fa.fa-user { color: white;
+  text-indent: 10px;
+}
+
+a.shape.fa.fa-laptop { color: white;
+  text-indent: 10px;
+}
+
+a.shape.fa.fa-arrows-alt { color: white;
+  text-indent: 10px;
+}
+
+a.shape.fa.fa-plus { color: white;
+  text-indent: 10px;
+}
+
+a#loadScene { color: white;
+  text-indent: 10px;
+}
+
+/* END DROPDOWN MENU */
 
 #ZoomControls {
   text-align: center;
