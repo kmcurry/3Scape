@@ -81,7 +81,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
         if (req.session.returnTo)
           return res.redirect(req.session.returnTo);
         else
-          return res.render('index');
+          return res.redirect('/');
       });
     })(req, res, next);
   });
@@ -161,6 +161,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
 
   //process the signup form
   app.post('/signup', function (req, res, next) {
+    /*
     var stripe = require('stripe')('sk_test_gilKHGlFzeRA0lFhoXdY8oIk');
 
     stripe.customers.create({
@@ -170,6 +171,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
     }, function(err, customer) {
       console.log("Stripe customer error: " + err);
     });
+    */
 
     passport.authenticate('local-signup', function (err, user, info) {
       if (err) {
