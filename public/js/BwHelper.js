@@ -153,7 +153,7 @@ function init(scene, container, recreateCanvas)
 	  addKeyEvents();
 
     // disable selection
-    document.onselectstart = function() { return true; }
+    document.onselectstart = function() { return false; }
 
     var interval = 1000/60;
     setInterval(draw, interval);
