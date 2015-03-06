@@ -169,6 +169,8 @@ function reset() {
 
   g_selectedModel = null;
 
+  $("#model-menu").toggleClass('active',false);
+
 }
 
 function roam(name) {
