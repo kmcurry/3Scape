@@ -165,7 +165,7 @@ function handleKey(e)
             break;
 
         case 37: //left
-            objectLeft(1);
+            objectLeft();
             break;
 
         case 40: //down
@@ -195,4 +195,11 @@ function handleKey(e)
     }
 
     return false;
+}
+
+function handleScroll (e) {
+  console.log("scrolling");
+  e.preventDefault();
+  e.stopPropagation();
+  return false;
 }

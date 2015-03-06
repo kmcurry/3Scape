@@ -1,64 +1,76 @@
-function objectLeft(magnitude)
+function objectLeft()
 {
-  if(g_selectedModelName) {
-    g_selectedModel.position.setValueDirect(
-      g_selectedModel.position.values[0] - magnitude,
-      g_selectedModel.position.values[1],
-      g_selectedModel.position.values[2]
-    );
+  if(g_objectInspector && g_selectedModel) {
+    g_objectInspector.runSelectionOccurred();
+
+    g_objectInspector.enabled.setValueDirect(true);
+
+    g_objectInspector.translationDelta.setValueDirect(10,0,0);
+
+    g_objectInspector.enabled.setValueDirect(false);
   }
 }
 
 function objectRight(magnitude)
 {
-  if(g_selectedModelName) {
-    g_selectedModel.position.setValueDirect(
-      g_selectedModel.position.values[0] + magnitude,
-      g_selectedModel.position.values[1],
-      g_selectedModel.position.values[2]
-    );
+  if(g_objectInspector && g_selectedModel) {
+    g_objectInspector.runSelectionOccurred();
+
+    g_objectInspector.enabled.setValueDirect(true);
+
+    g_objectInspector.translationDelta.setValueDirect(-10,0,0);
+
+    g_objectInspector.enabled.setValueDirect(false);
   }
 }
 
 function objectDown(magnitude)
 {
-  if(g_selectedModelName) {
-    g_selectedModel.position.setValueDirect(
-      g_selectedModel.position.values[0],
-      g_selectedModel.position.values[1] - magnitude,
-      g_selectedModel.position.values[2]
-    );
+  if(g_objectInspector && g_selectedModel) {
+    g_objectInspector.runSelectionOccurred();
+
+    g_objectInspector.enabled.setValueDirect(true);
+
+    g_objectInspector.translationDelta.setValueDirect(0,-10,0);
+
+    g_objectInspector.enabled.setValueDirect(false);
   }
 }
 
 function objectBackward(magnitude)
 {
-  if(g_selectedModelName) {
-    g_selectedModel.position.setValueDirect(
-      g_selectedModel.position.values[0],
-      g_selectedModel.position.values[1],
-      g_selectedModel.position.values[2] - magnitude
-    );
+  if(g_objectInspector && g_selectedModel) {
+    g_objectInspector.runSelectionOccurred();
+
+    g_objectInspector.enabled.setValueDirect(true);
+
+    g_objectInspector.translationDelta.setValueDirect(0,0,-10);
+
+    g_objectInspector.enabled.setValueDirect(false);
   }
 }
 
 function objectUp(magnitude)
 {
-  if(g_selectedModelName) {
-    g_selectedModel.position.setValueDirect(
-      g_selectedModel.position.values[0],
-      g_selectedModel.position.values[1] + magnitude,
-      g_selectedModel.position.values[2]
-    );
+  if(g_objectInspector && g_selectedModel) {
+    g_objectInspector.runSelectionOccurred();
+
+    g_objectInspector.enabled.setValueDirect(true);
+
+    g_objectInspector.translationDelta.setValueDirect(0,10,0);
+
+    g_objectInspector.enabled.setValueDirect(false);
   }
 }
 
 function objectForward(magnitude){
-  if(g_selectedModelName) {
-    g_selectedModel.position.setValueDirect(
-      g_selectedModel.position.values[0],
-      g_selectedModel.position.values[1],
-      g_selectedModel.position.values[2] + magnitude
-    );
+  if(g_objectInspector && g_selectedModel) {
+    g_objectInspector.runSelectionOccurred();
+
+    g_objectInspector.enabled.setValueDirect(true);
+
+    g_objectInspector.translationDelta.setValueDirect(0,0,10);
+
+    g_objectInspector.enabled.setValueDirect(false);
   }
 }

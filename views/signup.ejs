@@ -9,7 +9,7 @@
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 </head>
-<body>
+<body background="images/login-signup-background.png">
   <div class="row" style="padding-top:20px;">
     <div class="col-sm-4"></div>
     <div class="col-sm-4">
@@ -21,8 +21,9 @@
   </div>
 
   <center>
-    <h2>Start a-14 day free trial</h2>
-    <h3>Then pay just $15</h3>
+    <h2>Limited Time Offer!</h2>
+    <h3>Register NOW for FREE</h3>
+    <h4>$15 if you register after May 1</h4>
   </center>
 
   <div class="row">
@@ -47,7 +48,7 @@
             <label>Password</label>
             <input class="form-control" type="password" name="password">
         </div>
-
+<!--
         <div class="panel panel-default row">
           <div class="panel-body">
             <div class="form-group">
@@ -82,7 +83,7 @@
             </div>
           </div>
         </div>
-
+-->
         <br/>
         <center><button type="submit" class="btn btn-xlarge btn-primary">Sign Up for Free!</button></center>
       </form>
@@ -102,6 +103,7 @@
 
 <script>
   // TODO: move key to server var set by config - KMC
+/*
   Stripe.setPublishableKey('pk_test_3MnIIPctq6FSKqodwe6iXm5U');
 
   $('#payment-form').submit(function(event) {
@@ -116,22 +118,23 @@
     return false;
   });
 
-function stripeResponseHandler(status, response) {
-  var $form = $('#payment-form');
+  function stripeResponseHandler(status, response) {
+    var $form = $('#payment-form');
 
-  if (response.error) {
-    // Show the errors on the form
-    $form.find('.payment-errors').text(response.error.message);
-    $form.find('button').prop('disabled', false);
-  } else {
-    // response contains id and card, which contains additional card details
-    var token = response.id;
-    // Insert the token into the form so it gets submitted to the server
-    $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-    // and submit
-    $form.get(0).submit();
-  }
-};
+    if (response.error) {
+      // Show the errors on the form
+      $form.find('.payment-errors').text(response.error.message);
+      $form.find('button').prop('disabled', false);
+    } else {
+      // response contains id and card, which contains additional card details
+      var token = response.id;
+      // Insert the token into the form so it gets submitted to the server
+      $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+      // and submit
+      $form.get(0).submit();
+    }
+  };
+*/
 </script>
 
 </body>

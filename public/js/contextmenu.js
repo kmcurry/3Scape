@@ -51,15 +51,14 @@ function addContextMenu() {
     value: 100
   })
   .on('slide', function(ev){
-    if(g_selectedModelName != "Grid") // TODO
-        setModelScale(ev.value / 100)
+    setModelScale(ev.value / 100)
   });
 
   // makes sure the menu isn't in the way when it's not visible
   $("#model-menu").hover( function() {
-    if (this.style.opacity == 0) {
-      this.style.top = 0;
-      this.style.left = 0;
+    if ($("#model-menu").hasClass('active') == false) {
+      modelMenu.style.top = 0;
+      modelMenu.style.left = 0;
     }
   });
 }

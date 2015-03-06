@@ -44,9 +44,14 @@
 
 					onHoldFunction('#zoom-in', zoomIn, 20);
 					onHoldFunction('#zoom-out', zoomOut, 20);
+					onHoldFunction('#model-rotate-left', rotateLeft, 20);
+					onHoldFunction('#model-rotate-right', rotateRight, 20);
+					onHoldFunction('#model-rotate-up', rotateUp, 20);
+					onHoldFunction('#model-rotate-down', rotateDown, 20);
 
 					addContextMenu();
 
+					$(document).scroll(handleScroll);
 				}
 			}
 		</script>

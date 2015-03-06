@@ -205,32 +205,8 @@
 }
 
 body {
-}
-
-#BwContainer {
-  position: relative;
-  resize: auto;
-  border: 1px solid;
-  width: 100%;
-  height: 100%;
-}
-
-#Canvas {
-  position: relative;
-  z-index: 2;
-}
-
-#ToolbarContainer {
-  border-bottom: 2px solid gray;
-}
-
-#Toolbar {
-  top: 0px;
-  height: 70px;
-}
-
-#Toolbar .row {
-  margin: 4px;
+  font-family: "robotolight";
+  overflow: scroll;
 }
 
 /* BEGIN DROPDOWN MENU */
@@ -275,6 +251,34 @@ a#loadScene { color: white;
 }
 
 /* END DROPDOWN MENU */
+
+#BwContainer {
+  position: relative;
+  resize: auto;
+  border: 1px solid;
+  width: 100%;
+  height: 98%;
+}
+
+#Canvas {
+  position: relative;
+  z-index: 2;
+}
+
+#ToolbarContainer {
+  width: 100%;
+  position:fixed;
+  z-index: 2000;
+}
+
+#Toolbar {
+  top: 0px;
+  height: 70px;
+}
+
+#Toolbar .row {
+  margin: 4px;
+}
 
 #ZoomControls {
   text-align: center;
@@ -338,85 +342,52 @@ a#loadScene { color: white;
 
 
 /* BEGIN ICONS */
-.icon {
-  padding: 0 0 0 0px;
-  display: block;
-  height: 376px;
-  width: 751px;
-  resize:auto;
-}
+
 .icon-cube {
-  background-image: url('../images/cube-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+ background-image: url('../images/CubeButton.png');
 }
 
 .icon-pyramid {
-  background-image: url('../images/pyramid-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/PyramidButton.png');
 }
 
 .icon-sphere {
-  background-image: url('../images/sphere-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/SphereButton.png');
 }
 
 .icon-tube {
-  background-image: url('../images/tube-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/TubeButton.png');
 }
 
 .icon-gear {
-  background-image: url('../images/gear-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/GearButton.png');
 }
 
 .icon-beam {
-  background-image: url('../images/beam-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/BeamButton.png');
 }
 
 .icon-wall {
-  background-image: url('../images/wall-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/WallButton.png');
 }
 
 .icon-ring {
-  background-image: url('../images/ring-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/RingButton.png');
 }
 
 .icon-elbow {
-  background-image: url('../images/elbow-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/ElbowButton.png');
 }
 
 .icon-wedge {
-  background-image: url('../images/wedge-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/WedgeButton.png');
 }
 
 .icon-plank {
-  background-image: url('../images/plank-color.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../images/PlankButton.png');
 }
 
 /* END ICONS */
-
-.tool-button {
-  margin-top: 4px;
-  height: 60px;
-}
 
 .shape {
   cursor: pointer;
@@ -430,4 +401,17 @@ a#loadScene { color: white;
 
 .shape:hover{
   color: #07c;
+}
+
+.tool-button {
+  cursor: pointer;
+  cursor: hand;
+  padding: 0 0 0 0px;
+  display: block;
+  height: 68px;
+  width: 68px;
+  resize:auto;
+  background-size: 68px;
+  background-repeat: no-repeat;
+  background-position: center;
 }

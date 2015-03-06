@@ -9,13 +9,7 @@ function zoomOut()
 
   g_sceneInspector.enabled.setValueDirect(true);
 
-  g_sceneInspector.panDelta.values[2]-=10;
-  g_sceneInspector.evaluate();
-  bridgeworks.updateScene();
-
-  g_sceneInspector.panDelta.values[0] = 0;
-  g_sceneInspector.panDelta.values[1] = 0;
-  g_sceneInspector.panDelta.values[2] = 0;
+  g_sceneInspector.panDelta.setValueDirect(0,0,-20);
 
   g_sceneInspector.enabled.setValueDirect(false);
 
@@ -29,14 +23,7 @@ function zoomIn()
 
   g_sceneInspector.enabled.setValueDirect(true);
 
-  g_sceneInspector.panDelta.values[2]+=10;
-  g_sceneInspector.evaluate();
-  bridgeworks.updateScene();
-
-
-  g_sceneInspector.panDelta.values[0] = 0;
-  g_sceneInspector.panDelta.values[1] = 0;
-  g_sceneInspector.panDelta.values[2] = 0;
+  g_sceneInspector.panDelta.setValueDirect(0,0,20);
 
   g_sceneInspector.enabled.setValueDirect(false);
 
@@ -51,9 +38,7 @@ function rotatePosY()
     console.log("Current Y delta: " + sceneInspec.panDelta.values[1]);
     sceneInspec.evaluate();
     bridgeworks.updateScene();
-    sceneInspec.rotationDelta.values[0] = 0;
-    sceneInspec.rotationDelta.values[1] = 0;
-    sceneInspec.rotationDelta.values[2] = 0;
+    sceneInspec.rotationDelta.setValueDirect(0,0,0);
 }
 
 function rotateNegY()
@@ -64,9 +49,7 @@ function rotateNegY()
     console.log("Current Z delta: " + sceneInspec.panDelta.values[1]);
     sceneInspec.evaluate();
     bridgeworks.updateScene();
-    sceneInspec.rotationDelta.values[0] = 0;
-    sceneInspec.rotationDelta.values[1] = 0;
-    sceneInspec.rotationDelta.values[2] = 0;
+    sceneInspec.rotationDelta.setValueDirect(0,0,0);
 }
 
 function tiltDown()
@@ -75,9 +58,7 @@ function tiltDown()
     sceneInspec.rotationDelta.values[0]= 2;
     sceneInspec.evaluate();
     bridgeworks.updateScene();
-    sceneInspec.rotationDelta.values[0] = 0;
-    sceneInspec.rotationDelta.values[1] = 0;
-    sceneInspec.rotationDelta.values[2] = 0;
+    sceneInspec.rotationDelta.setValueDirect(0,0,0);
 }
 
 function tiltUp()
@@ -86,7 +67,5 @@ function tiltUp()
     sceneInspec.rotationDelta.values[0]= -2;
     sceneInspec.evaluate();
     bridgeworks.updateScene();
-    sceneInspec.rotationDelta.values[0] = 0;
-    sceneInspec.rotationDelta.values[1] = 0;
-    sceneInspec.rotationDelta.values[2] = 0;
+    sceneInspec.rotationDelta.setValueDirect(0,0,0);
 }

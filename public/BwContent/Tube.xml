@@ -6,7 +6,7 @@
         <rotation x="0" y="0" z="0"/>
         <scale x="1" y="1" z="1" />
         <physicalProperties>
-          <mass>5</mass>
+          <mass>10</mass>
         </physicalProperties>
         <socketConnectors>
             <socketConnector type="default">
@@ -20,6 +20,17 @@
                     <radius>0.25</radius>
                 </slot2>
             </socketConnector>
+            <socketConnector type="default">
+                <normal x="0" y="1" z="0"/>
+                <slot1>
+                    <center x="0" y="-1" z="0"/>
+                    <radius>0.25</radius>
+                </slot1>
+                <slot2>
+                    <center x="0" y="-1" z="0"/>
+                    <radius>0.25</radius>
+                </slot2>
+            </socketConnector>
         </socketConnectors>
         <plugConnectors>
             <plugConnector type="default">
@@ -30,6 +41,17 @@
                 </pin1>
                 <pin2>
                     <center x="0" y="-1" z="0"/>
+                    <radius>0.25</radius>
+                </pin2>
+            </plugConnector>
+            <plugConnector type="default">
+                <normal x="0" y="-1" z="0"/>
+                <pin1>
+                    <center x="0" y="1" z="0"/>
+                    <radius>0.25</radius>
+                </pin1>
+                <pin2>
+                    <center x="0" y="1" z="0"/>
                     <radius>0.25</radius>
                 </pin2>
             </plugConnector>
