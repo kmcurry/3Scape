@@ -344,7 +344,7 @@ a#loadScene { color: white;
 }
 
 .icon-pyramid {
-  background-image: url('../images/Pyramid.png');
+  background-image: url('../images/pyramid-color.png');
 }
 
 .icon-sphere {
@@ -368,7 +368,7 @@ a#loadScene { color: white;
 }
 
 .icon-ring {
-  background-image: url('../images/Ring.png');
+  background-image: url('../images/ring-color.png');
 }
 
 .icon-elbow {
