@@ -9,7 +9,7 @@ function zoomOut()
 
   g_sceneInspector.enabled.setValueDirect(true);
 
-  g_sceneInspector.panDelta.setValueDirect(0,0,-10);
+  g_sceneInspector.panDelta.setValueDirect(0,0,-20);
 
   g_sceneInspector.enabled.setValueDirect(false);
 
@@ -23,7 +23,7 @@ function zoomIn()
 
   g_sceneInspector.enabled.setValueDirect(true);
 
-  g_sceneInspector.panDelta.setValueDirect(0,0,10);
+  g_sceneInspector.panDelta.setValueDirect(0,0,20);
 
   g_sceneInspector.enabled.setValueDirect(false);
 
