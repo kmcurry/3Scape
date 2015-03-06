@@ -244,8 +244,12 @@ ul.dropdown-menu li p{ text-indent: 19px;
 
 }
 
-.menu .btn:hover .fa {
- color: rgba(28, 117, 187, 0.7);
+ul.dropdown-menu li a:hover {
+ color: rgba(28, 117, 187, 0.1);
+}
+
+ul.dropdown-menu li a:active {
+  color: rgba(39, 63, 132, 0.1);
 }
 
 span.shape.fa {margin-left: 8%;}
