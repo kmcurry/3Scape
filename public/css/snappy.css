@@ -340,47 +340,47 @@ a#loadScene { color: white;
 /* BEGIN ICONS */
 
 .icon-cube {
- background-image: url('../images/CubeSnaps.png');
+ background-image: url('../images/CubeButton.png');
 }
 
 .icon-pyramid {
-  background-image: url('../images/pyramid-color.png');
+  background-image: url('../images/PyramidButton.png');
 }
 
 .icon-sphere {
-  background-image: url('../images/SphereSnaps.png');
+  background-image: url('../images/SphereButton.png');
 }
 
 .icon-tube {
-  background-image: url('../images/tube-color.png');
+  background-image: url('../images/TubeButton.png');
 }
 
 .icon-gear {
-  background-image: url('../images/GearSnaps.png');
+  background-image: url('../images/BearButton.png');
 }
 
 .icon-beam {
-  background-image: url('../images/BeamSnaps.png');
+  background-image: url('../images/BeamButton.png');
 }
 
 .icon-wall {
-  background-image: url('../images/WallSnaps.png');
+  background-image: url('../images/WallButton.png');
 }
 
 .icon-ring {
-  background-image: url('../images/ring-color.png');
+  background-image: url('../images/RingButton.png');
 }
 
 .icon-elbow {
-  background-image: url('../images/elbow-color.png');
+  background-image: url('../images/ElbowButton.png');
 }
 
 .icon-wedge {
-  background-image: url('../images/WedgeSnaps.png');
+  background-image: url('../images/WedgeButton.png');
 }
 
 .icon-plank {
-  background-image: url('../images/PlankSnaps.png');
+  background-image: url('../images/PlankButton.png');
 }
 
 /* END ICONS */
