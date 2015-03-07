@@ -183,7 +183,11 @@ module.exports = function(app, async, crypto, passport, utilities) {
         console.log("!user failure");
         return res.redirect('/signup');
       }
-
+      //NEWWWWWWWWWW
+      if (req.body.password !== req.body.password2) {
+        console.log("Passwords do not Match!")
+        return res.redirect('/signup');
+      }
 
       req.logIn(user, function(err) {
         if (err) {
