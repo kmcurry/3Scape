@@ -1,34 +1,8 @@
+// override context menu for the document
+// should this be on gcanvas instead? - KMC
 document.addEventListener('contextmenu', function(e) {
-  if (e.button === 2) {
-    if (g_selectedModel)
-    {
-        g_selectedModel.getAttribute("highlight").setValueDirect(false);
-        g_selectedModel = null;
-    }
-    if (bridgeworks.selector.selections.models.length > 0)
-    {
-        g_selectedModel = bridgeworks.selector.selections.models[0];
-    }
 
-    if (g_selectedModel) {
-
-        g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
-        console.log(g_selectedModelName);
-
-        if (g_selectedModelName != 'Grid') {
-
-            if (g_selectedModel.moveable.getValueDirect()) {
-              g_selectedModel.getAttribute("highlight").setValueDirect(true);
-            }
-
-        } else { g_selectedModel = null; $("#model-menu").prop('disabled',true);} //turn off context menu on deselect
-    }
-    else {
-
-        console.log("NO MODEL SELECTED");
-        g_selectedModel = null;
-
-    }
+    selectObject();
     if (g_selectedModel) {
       positionMenu(e, modelMenu);
       $("#model-menu").toggleClass("active");
@@ -36,7 +10,7 @@ document.addEventListener('contextmenu', function(e) {
 
     e.preventDefault();
     return false;
-  }
+
 }, false);
 
 function positionMenu(e, menu) {
@@ -77,8 +51,14 @@ function addContextMenu() {
     value: 100
   })
   .on('slide', function(ev){
-    if(g_selectedModelName != "Grid") // TODO
-        setModelScale(ev.value / 100)
+    setModelScale(ev.value / 100)
   });
 
+  // makes sure the menu isn't in the way when it's not visible
+  $("#model-menu").hover( function() {
+    if ($("#model-menu").hasClass('active') == false) {
+      modelMenu.style.top = 0;
+      modelMenu.style.left = 0;
+    }
+  });
 }

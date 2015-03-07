@@ -4,7 +4,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
   var config = require('../../../configLoader')(process.env.NODE_ENV || "local");
   var express = require('express');
   var bodyParser = require('body-parser');
-  var stripe = require('stripe')('sk_test_gilKHGlFzeRA0lFhoXdY8oIk');
+
   //var app = express();
   app.use(bodyParser());
 
@@ -81,7 +81,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
         if (req.session.returnTo)
           return res.redirect(req.session.returnTo);
         else
-          return res.render('index');
+          return res.redirect('/');
       });
     })(req, res, next);
   });
@@ -161,6 +161,18 @@ module.exports = function(app, async, crypto, passport, utilities) {
 
   //process the signup form
   app.post('/signup', function (req, res, next) {
+    /*
+    var stripe = require('stripe')('sk_test_gilKHGlFzeRA0lFhoXdY8oIk');
+
+    stripe.customers.create({
+      source: req.body.stripeToken, // obtained with Stripe.js
+      plan: "Subscriber-Annual-15",
+      email: req.body.email
+    }, function(err, customer) {
+      console.log("Stripe customer error: " + err);
+    });
+    */
+
     passport.authenticate('local-signup', function (err, user, info) {
       if (err) {
         console.log(err);
@@ -190,5 +202,5 @@ module.exports = function(app, async, crypto, passport, utilities) {
 
   });
   app.use(express.static(__dirname));
-  app.listen(process.env.PORT || 3000);
+
 };

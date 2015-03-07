@@ -50,6 +50,12 @@ function loadFish() {
   bridgeworks.updateScene('scene.xml');
 }
 
+function loadTerrain() {
+  reset();
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('Terrain.xml');
+}
+
 function loadModel(url, copy)
 {
   copy = copy || false;
@@ -133,6 +139,11 @@ function processModelXML(name, copy) {
     var r = g_copyModel.rotation.getValueDirect();
     var c = g_copyModel.color.getValueDirect();
 
+    if (g_copyModel.surfacesNode.getChildCount() > 0)
+    {
+        c = g_copyModel.surfacesNode.getChild(g_copyModel.surfacesNode.getChildCount()-1).color.getValueDirect();
+    }
+
     g_selectedModel.scale.setValueDirect(s.x, s.y, s.z);
     g_selectedModel.color.setValueDirect(c.r, c.g, c.b, c.a);
     g_selectedModel.rotation.setValueDirect(r.x, r.y, r.z);
@@ -158,17 +169,21 @@ function reset() {
 
   g_selectedModel = null;
 
+  $("#model-menu").toggleClass('active',false);
+
 }
 
 function roam(name) {
     if (!name) {
       name = g_selectedModel.name.getValueDirect().join("");
     }
-    if (name === "Grid") return;
 
-    var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='1' angularSpeed='20'/>";
-    console.log(cmd);
-    bridgeworks.updateScene(cmd);
+    if (g_selectedModel.moveable.getValueDirect()) {
+
+      var cmd = "\<AnimalMover name='"+ name + "_roam' target='" + name + "' linearSpeed='1' angularSpeed='20'/>";
+      console.log(cmd);
+      bridgeworks.updateScene(cmd);
+    }
 }
 
 function rotateDown() {

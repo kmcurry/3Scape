@@ -3,9 +3,9 @@
 <?bwinclude url="DefaultPreferences.xml"?>
 <Scene>
     <Isolator name="Root">
-        <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="10000">
-            <position x="0" y="10" z="-30"/>
-            <rotation x="20" y="0" z="0"/>
+        <PerspectiveCamera name="Camera" zoom="3.2" nearDistance=".1" farDistance="100000">
+            <position x="0" y="2200" z="-8000"/>
+            <rotation x="0" y="0" z="0"/>
         </PerspectiveCamera>
         <Group name="Lights">
             <GlobalIllumination name="GlobalLight">
@@ -19,8 +19,7 @@
             </PointLight>
         </Group>
         <Group name="Models">
-            <Model name="Grid" url="objects/Grid.lwo" moveable="false" detectCollision="true">
-                <scale x="50" y="1" z="50"/>
+            <Model name="Terrain" url="objects/Terrain.lwo" moveable="false" detectCollision="true">
                 <physicalProperties>
                   <mass>0</mass>
                 </physicalProperties>
@@ -35,7 +34,7 @@
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
     <PhysicsSimulator name="PhysicsSimulator" evaluate="true">
       <bodies>
-        <body>Grid</body>
+        <body>Terrain</body>
       </bodies>
     </PhysicsSimulator>
     <Set target="ShadowDirective">

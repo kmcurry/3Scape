@@ -1,23 +1,3 @@
-// temporary, transitional re-factor
-function addTouchEvents()
-{
-  var el = document.getElementsByTagName("canvas")[0];
-
-	// touch
-	el.addEventListener("touchstart", function(e) {
-		e.preventDefault();
-		console.log('touchstart');
-	}, false);
-	el.addEventListener("touchmove", function(e) {
-		e.preventDefault();
-		console.log('touchmove');
-	}, false);
-	el.addEventListener("touchend", function(e) {
-		e.preventDefault();
-		// reset last touchmove record
-		console.log('touchend');
-	}, false);
-}
 
 // This function makes it so that mouse interaction with the scene
 // continues when the cursor moves out of the Bridgeworks frame.
@@ -57,38 +37,7 @@ function handleMouse(e)
         case "click":
             {
               console.log(bridgeworks.selector.selections.models.length)
-              if (g_selectedModel)
-              {
-                  g_selectedModel.getAttribute("highlight").setValueDirect(false);
-                  g_selectedModel = null;
-              }
-
-              if (bridgeworks.selector.selections.models.length > 0)
-              {
-                  g_selectedModel = bridgeworks.selector.selections.models[0];
-              }
-
-              if (g_selectedModel) {
-
-                  g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
-                  console.log(g_selectedModelName);
-
-                  if (g_selectedModelName != 'Grid') {
-
-                      if (g_selectedModel.moveable.getValueDirect()) {
-                        g_selectedModel.getAttribute("highlight").setValueDirect(true);
-                      }
-
-                  } else {
-                    g_selectedModel = null;
-                    $("#model-menu").toggleClass('active',false);
-                  }
-              }
-              else {
-
-                g_selectedModel = null;
-                $("#model-menu").toggleClass('active',false);
-              }
+              selectObject();
 
               // if the selected model is not moveable switch modes between camera and objects
               if (!g_selectedModel || g_selectedModel.moveable.getValueDirect() == false) {
@@ -138,7 +87,34 @@ function handleMouse(e)
           }
         break;
     }
+}
 
+
+function selectObject(){
+  // if there is already a selected model...
+  if (g_selectedModel)
+  {
+      g_selectedModel.getAttribute("highlight").setValueDirect(false);
+      g_selectedModel = null;
+  }
+  // verify selector has models
+  if (bridgeworks.selector.selections.models.length > 0)
+  {
+      g_selectedModel = bridgeworks.selector.selections.models[0];
+  }
+
+  g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
+
+  if (g_selectedModelName != 'Grid') {
+
+      if (g_selectedModel.moveable.getValueDirect()) {
+        g_selectedModel.getAttribute("highlight").setValueDirect(true);
+      }
+
+  } else {
+    g_selectedModel = null;
+    $("#model-menu").toggleClass('active',false);
+  }//turn off context menu on deselect
 
 }
 
@@ -178,12 +154,18 @@ function handleKey(e)
                 }
             }
             break;
+        case 8:
+          {
+            cut();
+            e.preventDefault();
+          }
+          break;
         case 39: //right
             objectRight(1);
             break;
 
         case 37: //left
-            objectLeft(1);
+            objectLeft();
             break;
 
         case 40: //down
@@ -211,4 +193,13 @@ function handleKey(e)
             }
             break;
     }
+
+    return false;
+}
+
+function handleScroll (e) {
+  console.log("scrolling");
+  e.preventDefault();
+  e.stopPropagation();
+  return false;
 }

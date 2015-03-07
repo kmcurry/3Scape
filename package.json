@@ -8,27 +8,31 @@
     "connect-flash": "latest",
     "connect-mongodb": "latest",
     "cookie-parser": "latest",
+    "grunt": "latest",
+    "grunt-svgstore" : "latest",
     "ejs": "latest",
     "express": "latest",
     "express-session": "^1.10.1",
-    "jade": "^1.9.2",
+    "handlebars": "latest",
     "method-override": "latest",
-    "mongoose": "^3.9.7",
+    "mongoose": "latest",
     "morgan": "latest",
     "passport": "^0.2.1",
     "passport-local": "^0.1.6",
     "sendgrid": "^1.5.0",
     "moment": "latest",
     "lodash": "latest",
-    "q": "latest",
-    "handlebars": "latest"
+    "q": "latest"
   },
   "scripts": {
     "start": "node server.js"
   },
   "description": "3Scape is a way to unlock your imagination by making and sharing interactive, 3D stories over the web.",
   "version": "0.0.0",
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-svgstore": "^0.5.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/kmcurry/3Scape.git"

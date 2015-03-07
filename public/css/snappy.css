@@ -205,14 +205,55 @@
 }
 
 body {
+  font-family: "robotolight";
+  overflow: scroll;
 }
+
+/* BEGIN DROPDOWN MENU */
+
+ul.dropdown-menu { background-color: #46A8D2;
+color: white;
+font-family: 'robotobold';
+}
+
+ul.dropdown-menu li p{ text-indent: 19px;
+
+}
+
+.menu .btn:hover .fa {
+ color: rgba(28, 117, 187, 0.7);
+}
+
+span.shape.fa {margin-left: 8%;}
+
+a.shape.fa.fa-user { color: white;
+  text-indent: 10px;
+}
+
+a.shape.fa.fa-laptop { color: white;
+  text-indent: 10px;
+}
+
+a.shape.fa.fa-arrows-alt { color: white;
+  text-indent: 10px;
+}
+
+a.shape.fa.fa-plus { color: white;
+  text-indent: 10px;
+}
+
+a#loadScene { color: white;
+  text-indent: 10px;
+}
+
+/* END DROPDOWN MENU */
 
 #BwContainer {
   position: relative;
   resize: auto;
   border: 1px solid;
   width: 100%;
-  height: 100%;
+  height: 98%;
 }
 
 #Canvas {
@@ -221,7 +262,9 @@ body {
 }
 
 #ToolbarContainer {
-  border-bottom: 2px solid gray;
+  width: 100%;
+  position:fixed;
+  z-index: 2000;
 }
 
 #Toolbar {
@@ -265,6 +308,18 @@ body {
   left:1%;
 }
 
+/**
+ * Extra large button extensions. Extends `.btn`.
+ */
+.btn-xlarge {
+    padding: 12px 22px;
+    font-size: 22px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+}
+
 .h-button {
   position: absolute;
   z-index: 2000;
@@ -283,85 +338,52 @@ body {
 
 
 /* BEGIN ICONS */
-.icon {
-  padding: 0 0 0 0px;
-  display: block;
-  height: 376px;
-  width: 751px;
-  resize:auto;
-}
+
 .icon-cube {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: 55px 6px;
+ background-image: url('../images/CubeButton.png');
 }
 
 .icon-pyramid {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -45px 6px;
+  background-image: url('../images/PyramidButton.png');
 }
 
 .icon-sphere {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -140px 6px;
+  background-image: url('../images/SphereButton.png');
 }
 
 .icon-tube {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -242px 6px;
+  background-image: url('../images/TubeButton.png');
 }
 
 .icon-gear {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -342px 6px;
+  background-image: url('../images/GearButton.png');
 }
 
 .icon-beam {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -436px 6px;
+  background-image: url('../images/BeamButton.png');
 }
 
 .icon-wall {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -545px 6px;
+  background-image: url('../images/WallButton.png');
 }
 
 .icon-ring {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -646px 6px;
+  background-image: url('../images/RingButton.png');
 }
 
 .icon-elbow {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -746px 6px;
+  background-image: url('../images/ElbowButton.png');
 }
 
 .icon-wedge {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -846px 6px;
+  background-image: url('../images/WedgeButton.png');
 }
 
 .icon-plank {
-  background-image: url('../images/icon-sprite-sheet.png');
-  background-repeat: no-repeat;
-  background-position: -946px 6px;
+  background-image: url('../images/PlankButton.png');
 }
 
 /* END ICONS */
-
-.tool-button {
-  margin-top: 4px;
-  height: 60px;
-}
 
 .shape {
   cursor: pointer;
@@ -375,4 +397,17 @@ body {
 
 .shape:hover{
   color: #07c;
+}
+
+.tool-button {
+  cursor: pointer;
+  cursor: hand;
+  padding: 0 0 0 0px;
+  display: block;
+  height: 68px;
+  width: 68px;
+  resize:auto;
+  background-size: 68px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
