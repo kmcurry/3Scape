@@ -158,12 +158,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
   //SignUp============================
   app.get('/signup', function (req, res) {
     //render the page and pass any flash data if it exists
-    res.render('signup', {
-      message: req.flash('signupMessage'),
-      info_message: req.flash('info'),
-      error_message: req.flash('err'),
-      success_message: req.flash('success')
-    });
+    res.render('signup', {message: req.flash('signupMessage')});
   });
 
   //process the signup form
@@ -181,9 +176,8 @@ module.exports = function(app, async, crypto, passport, utilities) {
     var err = req.validationErrors();
     if (err){
       console.log(err);
-      req.flash('signupMessage', err.msg);
+      req.flash('signupMessage', err);
       return res.redirect('/signup');
-      //return res.send('There have been validation errors: ' + util.inspect(err), 400);
     }
 
     /*
