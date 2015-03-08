@@ -1,12 +1,14 @@
 module.exports = function(app, async, crypto, passport, utilities) {
 
-  var User = require('../../../app/models/user');
-  var config = require('../../../configLoader')(process.env.NODE_ENV || "local");
-  var express = require('express');
-  var bodyParser = require('body-parser');
+  var User = require('../../../app/models/user'),
+      config = require('../../../configLoader')(process.env.NODE_ENV || "local"),
+      express = require('express'),
+      bodyParser = require('body-parser'),
+      expressValidator = require('express-validator');
 
-  //var app = express();
+
   app.use(bodyParser());
+  app.use(expressValidator());
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -156,11 +158,34 @@ module.exports = function(app, async, crypto, passport, utilities) {
   //SignUp============================
   app.get('/signup', function (req, res) {
     //render the page and pass any flash data if it exists
-    res.render('signup', {message: req.flash('signupMessage')});
+    res.render('signup', {
+      message: req.flash('signupMessage'),
+      info_message: req.flash('info'),
+      error_message: req.flash('err'),
+      success_message: req.flash('success')
+    });
   });
 
   //process the signup form
   app.post('/signup', function (req, res, next) {
+  //Check if fields are filled out correcly
+    //req.checkBody('username', 'Username can only contain letters and numbers').optional().isAlphanumeric(req.body.username);
+    req.assert('email', 'Email is required').notEmpty();
+    req.assert('email', 'Email does not appear to be valid').isEmail();
+    req.assert('password', 'Password is required').notEmpty();
+    //req.assert('password', 'Password cannot contain spaces').notContains(' ');
+    req.assert('password', 'Password must be 8-20 characters long').len(8, 20);
+    req.assert('password-confirm', 'Password confirmation is required').notEmpty();
+    req.assert('password-confirm', 'Passwords do not match').equals(req.body.password);
+
+    var err = req.validationErrors();
+    if (err){
+      console.log(err);
+      req.flash('signupMessage', err.msg);
+      return res.redirect('/signup');
+      //return res.send('There have been validation errors: ' + util.inspect(err), 400);
+    }
+
     /*
     var stripe = require('stripe')('sk_test_gilKHGlFzeRA0lFhoXdY8oIk');
 
@@ -181,11 +206,6 @@ module.exports = function(app, async, crypto, passport, utilities) {
 
       if (!user) {
         console.log("!user failure");
-        return res.redirect('/signup');
-      }
-      //NEWWWWWWWWWW
-      if (req.body.password !== req.body.password2) {
-        console.log("Passwords do not Match!")
         return res.redirect('/signup');
       }
 
