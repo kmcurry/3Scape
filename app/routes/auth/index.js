@@ -1,7 +1,6 @@
-module.exports = function(app, async, crypto, passport, utilities) {
+module.exports = function(app, async, config, crypto, passport, utilities) {
 
   var User = require('../../../app/models/user');
-  var config = require('../../../configLoader')(process.env.NODE_ENV || "local");
   var express = require('express');
   var bodyParser = require('body-parser');
 
@@ -156,20 +155,26 @@ module.exports = function(app, async, crypto, passport, utilities) {
   //SignUp============================
   app.get('/signup', function (req, res) {
     //render the page and pass any flash data if it exists
-    res.render('signup', {message: req.flash('signupMessage')});
+    res.render('signup', {
+      message: req.flash('signupMessage'),
+      paymentKey: config.payment.pubKey
+      });
   });
 
   //process the signup form
   app.post('/signup', function (req, res, next) {
+
     /*
-    var stripe = require('stripe')('sk_test_gilKHGlFzeRA0lFhoXdY8oIk');
+
+    var stripe = require('stripe')(config.payment.secKey);
 
     stripe.customers.create({
       source: req.body.stripeToken, // obtained with Stripe.js
       plan: "Subscriber-Annual-15",
       email: req.body.email
     }, function(err, customer) {
-      console.log("Stripe customer error: " + err);
+      console.log("Stripe customer error.");
+      return;
     });
     */
 
