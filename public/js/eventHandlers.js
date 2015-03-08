@@ -1,10 +1,11 @@
+window.onkeydown = handleKey;
 
 // This function makes it so that mouse interaction with the scene
 // continues when the cursor moves out of the Bridgeworks frame.
-function handleDocMove(event)
+function handleDocMove(e)
 {
     if (capture)
-        bridgeworks.handleEvent(event);
+        bridgeworks.handleEvent(e);
 }
 
 function handleMouse(e)
@@ -103,18 +104,20 @@ function selectObject(){
       g_selectedModel = bridgeworks.selector.selections.models[0];
   }
 
+  if (!g_selectedModel) return false;
+
   g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
 
-  if (g_selectedModelName != 'Grid') {
 
-      if (g_selectedModel.moveable.getValueDirect()) {
-        g_selectedModel.getAttribute("highlight").setValueDirect(true);
-      }
-
-  } else {
+  if (g_selectedModel.moveable.getValueDirect()) {
+    g_selectedModel.getAttribute("highlight").setValueDirect(true);
+  }
+  else {
     g_selectedModel = null;
     $("#model-menu").toggleClass('active',false);
   }//turn off context menu on deselect
+
+  return true;
 
 }
 

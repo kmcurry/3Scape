@@ -807,12 +807,6 @@
     </video>-->
 
       <script>
-          //Progress Bar ===========================================================
-          var bar = new progress_bar(document.getElementById('click'));
-
-          //=======================================================================
-
-
 
           function closeFullScreen() {
             if (document.exitFullscreen) {
@@ -839,26 +833,7 @@
                   $('#motionsModal').modal('hide');
                   $('#helpModal').modal('hide');
           }
-          //Progress Bar ========================
-          function progress_bar(container){
-              var bar = document.createElement('div');
-              bar.setAttribute("class",".progress");
-              bar.setAttribute("id","progress_bar");
-
-              bar.style.width = '0%';
-              bar.style.height = '100%';
-              bar.style.background = '#696969';
-              container.appendChild(bar);
-
-              this.set_percentage = function(percentage){
-                  for(var i = 0; i <= percentage; i++) {
-                      bar.style.width = i + "%";
-                  }
-              }
-
-          }
-          //=========================================
-
+      
 
           function preHide(){
               // $('#container').hide();
