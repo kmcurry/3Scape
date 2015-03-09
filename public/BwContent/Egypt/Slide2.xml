@@ -9,7 +9,23 @@
     <Set target="MenakaurePyramid_Label" show="false"></Set>
     <Set target="GreatSphink_Label_2" show="false"></Set>
     <Set target="CameraMotion" time="5"></Set>
+    <BalloonTipLabel name="Architecture" parent="GreatPyramid" show="false">
+        <balloonTipLabelStyle>
+            <htmlLabelStyle>
+                <html><![CDATA[
+                <p>
+                  Egypt contributed amazing <em><b>architecture</b></em>.
+                </p>
+                <p>
+                  This is the Great Pyramid of Giza, also known as Pyramid of Khufu.
+                  Built as a tomb, it is the oldest  and largest of the 3 pyramids.
+                </p>]]></html>
+            </htmlLabelStyle>
+        </balloonTipLabelStyle>
+    </BalloonTipLabel>
     <Play></Play>
     <Pause trigger="CameraMotion/time=15"/>
     <Set trigger="CameraMotion/time=14" target="GreatPyramid_Label" show="true"></Set>
+    <Set trigger="CameraMotion/time=14" target="Architecture" show="true"></Set>
+
 </Update>

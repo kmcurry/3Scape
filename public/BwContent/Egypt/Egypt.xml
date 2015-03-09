@@ -56,11 +56,11 @@
 			</Model>
 		</Group>
 		<Group name="Labels">
-			<Label name="GreatPyramid_Label" parent="GreatPyramidNull" text="The Great Pyramid" show="false"></Label>
-			<Label name="Sarcophagus_Label" parent="SarcophagusNull" text="A pharaoh's sarcophagus" show="false"></Label>
+			<Label name="GreatPyramid_Label" parent="GreatPyramid" text="The Great Pyramid" show="false"></Label>
 			<Label name="KhafrePyramid_Label" parent="KhafrePyramid" text="Pyramid of Khafre" show="false"></Label>
-			<Label name="Urn_Label" parent="Urn" text="an urn" show="false"></Label>
 			<Label name="MenakaurePyramid_Label" parent="MenkaurePyramid" text="Pyramid of Menkaure" show="false"></Label>
+			<Label name="Sarcophagus_Label" parent="SarcophagusNull" text="A pharaoh's sarcophagus" show="false"></Label>
+			<Label name="Urn_Label" parent="Urn" text="an urn" show="false"></Label>
 			<Label name="Ankh_Label" parent="Ankh" text="The written language of the ancient Egyptians was called Hieroglyphics" show="false"></Label>
 			<Label name="GreatSphinx_Label_1" parent="GreatSphinx" text="The Great Sphinx" show="false"></Label>
 			<Label name="GreatSphink_Label_2" parent="GreatSphinx" text="'Sphinx' means 'Father of Dread'" show="false"></Label>
@@ -78,4 +78,12 @@
 	</Animations>
 	<ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 	<Pause name="foo" trigger="CameraMotion/time=5" />
+	<BalloonTipLabel name="Intro" show="true" origin="topLeft">
+			<rasterPosition x="-100" y="-100" z="0"/>
+			<balloonTipLabelStyle>
+					<htmlLabelStyle>
+							<html><![CDATA[Ancient Egyptians made contributions that affect the present world. ]]></html>
+					</htmlLabelStyle>
+			</balloonTipLabelStyle>
+	</BalloonTipLabel>
 </Scene>
