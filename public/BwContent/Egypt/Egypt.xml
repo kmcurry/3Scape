@@ -56,7 +56,7 @@
 			</Model>
 		</Group>
 		<Group name="Labels">
-			<Label name="GreatPyramid_Label" parent="GreatPyramid" text="The Great Pyramid" show="false"></Label>
+			<Label name="GreatPyramid_Label" parent="GreatPyramidNull" text="The Great Pyramid" show="false"></Label>
 			<Label name="KhafrePyramid_Label" parent="KhafrePyramid" text="Pyramid of Khafre" show="false"></Label>
 			<Label name="MenakaurePyramid_Label" parent="MenkaurePyramid" text="Pyramid of Menkaure" show="false"></Label>
 			<Label name="Sarcophagus_Label" parent="SarcophagusNull" text="A pharaoh's sarcophagus" show="false"></Label>
@@ -79,10 +79,13 @@
 	<ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 	<Pause name="foo" trigger="CameraMotion/time=5" />
 	<BalloonTipLabel name="Intro" show="true" origin="topLeft">
-			<rasterPosition x="-100" y="-100" z="0"/>
+			<position x="-200" y="-200" z="0"/>
 			<balloonTipLabelStyle>
 					<htmlLabelStyle>
-							<html><![CDATA[Ancient Egyptians made contributions that affect the present world. ]]></html>
+							<html><![CDATA[<h4>Ancient Egyptians made contributions that affect the present world.</h4>
+							<p>
+								<a href="javascript:playSlide(1);">Click to continue</a>
+							</p> ]]></html>
 					</htmlLabelStyle>
 			</balloonTipLabelStyle>
 	</BalloonTipLabel>

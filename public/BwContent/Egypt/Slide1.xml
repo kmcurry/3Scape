@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <Update>
+    <Set target="Intro" show="false"></Set>
     <Set target="GreatSphinx_Label_1" show="true"></Set>
     <Set target="GreatPyramid_Label" show="true"></Set>
     <Set target="KhafrePyramid_Label" show="true"></Set>
@@ -8,7 +9,4 @@
     <Set target="Urn_Label" show="false"></Set>
     <Set target="Ankh_Label" show="false"></Set>
     <Set target="GreatSphink_Label_2" show="false"></Set>
-    <Set target="CameraMotion" time="4.9"></Set>
-    <Play/>
-    <Pause trigger="CameraMotion/time=5"/>
 </Update>

@@ -12,10 +12,7 @@
     <BalloonTipLabel name="Architecture" parent="GreatPyramid" show="false">
         <balloonTipLabelStyle>
             <htmlLabelStyle>
-                <html><![CDATA[
-                <p>
-                  Egypt contributed amazing <em><b>architecture</b></em>.
-                </p>
+                <html><![CDATA[<p>Egypt contributed amazing <em><b>architecture</b></em>.</p>
                 <p>
                   This is the Great Pyramid of Giza, also known as Pyramid of Khufu.
                   Built as a tomb, it is the oldest  and largest of the 3 pyramids.
