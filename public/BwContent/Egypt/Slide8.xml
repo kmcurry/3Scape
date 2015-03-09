@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Update>
 
-    <Set target="GreatSphink_Label_1" show="false"></Set>
+    <Set target="GreatSphinx_Label_1" show="false"></Set>
     <Set target="KhafrePyramid_Label" show="false"></Set>
     <Set target="Sarcophagus_Label" show="false"></Set>
     <Set target="GreatPyramid_Label" show="false"></Set>
@@ -12,7 +12,7 @@
     <Set target="CameraMotion" time="61"></Set>
     <Play></Play>
     <Pause trigger="CameraMotion/time=80"/>
-    <Set trigger="CameraMotion/time=79" target="GreatSphink_Label_1" show="true"></Set>
+    <Set trigger="CameraMotion/time=79" target="GreatSphinx_Label_1" show="true"></Set>
 
 
 </Update>

@@ -23,6 +23,8 @@ module.exports = function(app, config) {
         case "egypt" :
         case "Entymology" :
         case "entymology" :
+        case "hi5":
+        case "Hi5":
         case "Physics" :
         case "physics" :
         case "Two-stroke" :
@@ -51,11 +53,6 @@ module.exports = function(app, config) {
   app.get('/classroom', function (req, res) {
     res.render('classroom')
   });
-
-  app.get('/hi5', function (req, res) {
-    res.render('hi5')
-  });
-
 
   app.get('/privacy', function (req, res) {
       res.render('privacy')

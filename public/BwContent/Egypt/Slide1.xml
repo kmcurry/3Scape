@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Update>
-    <Set target="GreatSphink_Label_1" show="false"></Set>
+    <Set target="GreatSphinx_Label_1" show="false"></Set>
     <Set target="GreatPyramid_Label" show="false"></Set>
     <Set target="KhafrePyramid_Label" show="false"></Set>
     <Set target="Sarcophagus_Label" show="false"></Set>
@@ -12,5 +12,11 @@
     <Set target="CameraMotion" time="4.9"></Set>
     <Play/>
     <Pause trigger="CameraMotion/time=5"/>
-
+    <BalloonTipLabel name="Intro" parent="GreatPyramid">
+        <balloonTipLabelStyle>
+            <htmlLabelStyle>
+                <html><![CDATA[<em><strong><font color="red">This is some text!</font></strong></em>]]></html>
+            </htmlLabelStyle>
+        </balloonTipLabelStyle>
+    </BalloonTipLabel>
 </Update>

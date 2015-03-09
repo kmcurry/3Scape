@@ -140,6 +140,13 @@ function loadEntymology() {
   bridgeworks.updateScene('formica_rufa.xml');
 }
 
+function loadHi5() {
+  reset();
+  bridgeworks.contentDir='BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('HighFive.xml');
+}
+
 function loadLights() {
   reset();
   bridgeworks.contentDir='BwContent';
@@ -577,6 +584,10 @@ function loadScape(scape) {
     case "Entymology" :
     case "entymology" :
       loadEntymology();
+      break;
+    case "hi5" :
+    case "Hi5" :
+      loadHi5();
       break;
     case "Physics" :
     case "physics" :
