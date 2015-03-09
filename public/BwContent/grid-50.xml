@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<Scene>
+    <Isolator name="Root">
+        <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="10000">
+            <position x="0" y="10" z="-30"/>
+            <rotation x="20" y="0" z="0"/>
+        </PerspectiveCamera>
+        <Group name="Lights">
+            <GlobalIllumination name="GlobalLight">
+                <ambient r=".25" g=".25" b=".25"/>
+            </GlobalIllumination>
+            <PointLight name="PointLight1" parent="Camera">
+                <ambient r="0.25" g="0.25" b="0.25"/>
+                <diffuse r=".6" g=".6" b=".6"/>
+                <specular r=".5" g=".5" b=".5"/>
+                <position x="0" y="25" z="0"/>
+            </PointLight>
+        </Group>
+        <Group name="Models">
+            <Model name="Grid" url="objects/Grid.lwo" moveable="false" detectCollision="true">
+                <scale x="50" y="1" z="50"/>
+                <physicalProperties>
+                  <mass>0</mass>
+                </physicalProperties>
+            </Model>
+            <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
+              <MediaTexture name="ScreenCaptureTexture"/>
+              <ScreenRect name="ScreenCaptureRect" enabled="false"/>
+            </Isolator>
+        </Group>
+    </Isolator>
+    <RenderDirective name="RenderDirective" highlightType="2" backgroundImageFilename="images/Sky2.jpg" shadowsEnabled="false"/>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+    <PhysicsSimulator name="PhysicsSimulator" evaluate="true">
+      <bodies>
+        <body>Grid</body>
+      </bodies>
+    </PhysicsSimulator>
+    <Set target="ShadowDirective">
+      <casterWorldPosition x="0" y="10" z="0"/>
+    </Set>
+</Scene>

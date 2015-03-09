@@ -21,7 +21,7 @@ var crypto = require('crypto');
 
 // configuration ===============================================================
 var config = require('./configLoader')(process.env.NODE_ENV || "local") //Environment
-var port = process.env.PORT || 8080;
+var port = config.port;
 mongoose.connect(config.dbConnectionString); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
@@ -45,8 +45,8 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./app/routes/auth/index.js')(app, async, crypto, passport, utilities);
-require('./app/routes.js')(app);
+require('./app/routes/auth/index.js')(app, async, config, crypto, passport, utilities);
+require('./app/routes.js')(app, config);
 
 
 

@@ -73,7 +73,7 @@ function CreateXMLDocumentObject(rootName) {
 
 function ParseHTTPResponse(httpRequest, type) {
     var xmlDoc = httpRequest.responseXML;
-    
+
     if (type == null) type = "text/xml";
 
     // if responseXML is not valid, try to create the XML document from the responseText property
@@ -130,6 +130,17 @@ function IsRequestSuccessful(httpRequest) {
     return success;
 }
 
+function loadFile (sURL, fCallback) {
+  var oReq = new XMLHttpRequest();
+  oReq.callback = fCallback;
+  oReq.arguments = Array.prototype.slice.call(arguments, 2);
+  oReq.onload = xhrSuccess;
+  oReq.onerror = xhrError;
+  oReq.open("get", sURL, true);
+  oReq.send(null);
+}
+
+// DEPRECATED. DO  NOT USE. USE loadFile
 function loadXMLFile(filename)
 {
     // TODO: try / catch
@@ -157,3 +168,7 @@ function whichBrowser()
     }
     return code;
 }
+
+function xhrSuccess () { this.callback.apply(this, this.arguments); }
+
+function xhrError () { console.error(this.statusText); }

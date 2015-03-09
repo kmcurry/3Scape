@@ -1,65 +1,176 @@
 <!doctype html>
 <html>
 <head>
-	<title>3Scape</title>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<meta name="description" content="a place to make and share interactive 3D on the web">
-	<script type="text/javascript" src="./js/facebook.js"></script>
-	<meta name=viewport content="width=device-width, initial-scale=1">
-	<style>
-		body {
-		    padding-top:80px;
-		}
-		body::after {
-          content: "";
-          background-image: url("images/background.png");
-          opacity: 0.2;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          position: absolute;
-          z-index: -1;
-        }
-	</style>
+    <title>3Scape Signup</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/snappy.css">
+    <meta name="description" content="a place to make and share interactive 3D on the web">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
 </head>
-<body>
-<div class="container">
+<body background="images/login-signup-background.png">
+  <div class="row" style="padding-top:20px;">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <center>
+        <img src="images/logo.png" width="200px" height="160px">
+      </center>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
 
-<div class="col-sm-6 col-sm-offset-3">
+  <center>
+    <h2>Limited Time Offer!</h2>
+    <h3>Register NOW for FREE</h3>
+    <h4>$15 if you register after May 1</h4>
+  </center>
 
-    <center>
-        <img src="images/logo.png" width="250px" height="200px">
+  <div class="row">
+    <div class="col-sm-4"></div>
+
+    <div class="col-sm-4">
+
+      <form action="/signup" method="POST" id="payment-form">
+
+        <!-- show any messages that come back with authentication -->
+        <% if (message.length > 0) { %>
+  					<div class="alert alert-info"><%= info_message %></div>
+  				<% } %>
+  			<% if (info_message.length > 0) { %>
+  					<div class="alert alert-info"><%= info_message %></div>
+  				<% } %>
+  				<% if (error_message.length > 0) { %>
+  					<div class="alert alert-danger"><%= error_message %></div>
+  				<% } %>
+  				<% if (success_message.length > 0) { %>
+  					<div class="alert alert-success"><%= success_message %></div>
+  				<% } %>
+
+        <span class="payment-errors"></span>
+<!-- NEEEEWWWWWWWWW -->
+        <div class="form-group">
+          <label>Username *</label>
+            <input class="form-control" type="text" name="username" placeholder='Default username is "3Scaper"' >
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+            <input class="form-control" type="text" name="email" placeholder="Your email">
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input class="form-control" type="password" name="password" placeholder="Your alphanumeric password (8-20 characters)">
+        </div>
+<!-- NEEEWWWWW -->
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input class="form-control" type="password" name="password-confirm" placeholder="Must match your password">
+        </div>
+        <label>* Indicates optional input</label>
+
+        <!--
+        <center><h4>Your card won't be charged <br/>unless you stay after May 1.</h4></center>
+        <div class="panel panel-default row">
+          <div class="panel-body">
+            <div class="form-group">
+              <div class="col-md-7 col-sm-7">
+                <label><span>Card Number</span>
+                  <input class="form-control" type="text" size="20" data-stripe="number"/>
+                </label>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <label><span>CVC</span>
+                  <input class="form-control" type="text" size="4" data-stripe="cvc"/>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-3 col-sm-3">
+                <label><span>Expiration</span>
+                  <input class="form-control" type="text" size="2" data-stripe="exp-month"/>
+                  <span>MM</span>
+                </label>
+              </div>
+              <div class="col-md-3 col-sm-3">
+                <label><br/>
+                  <input class="form-control" type="text" size="4" data-stripe="exp-year"/>
+                  <span>YYYY</span>
+                </label>
+              </div>
+              <div class="col-md-5 col-sm-5">
+                <img style="padding-top:20%;" src="images/stripe.png" title="Your payment is secure with Stripe"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      -->
+
         <br/>
-        <h3>make and share interactive 3D</h3>
-    </center>
+        <center><button type="submit" class="btn btn-xlarge btn-primary">Sign Up for Free!</button></center>
+      </form>
 
-	<!-- show any messages that come back with authentication -->
-	<% if (message.length > 0) { %>
-		<div class="alert alert-danger"><%= message %></div>
-	<% } %>
+        <hr>
 
-	<!-- LOGIN FORM -->
-	<form action="/signup" method="post">
-		<div class="form-group">
-			<label>Email</label>
-			<input type="text" class="form-control" name="email">
-		</div>
-		<div class="form-group">
-			<label>Password</label>
-			<input type="password" class="form-control" name="password">
-		</div>
-		<button type="submit" class="btn btn-warning btn-lg">Signup</button>
-	</form>
+        <center><a href="/login">Login</a> | <a href="/privacy">Privacy Policy</a></center>
 
-	<hr>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
 
-	<p>Already have an account? <a href="/login">Login</a></p>
-	<p><a href="/privacy">Privacy Policy</a>.</p>
-
-</div>
-
-</div>
 <a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
+
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+
+<!--
+<script>
+  // TODO: move key to server var set by config - KMC
+
+  Stripe.setPublishableKey(<%- paymentKey %>);
+
+  $('#payment-form').submit(function(event) {
+    var $form = $(this);
+
+    // Disable the submit button to prevent repeated clicks
+    $form.find('button').prop('disabled', true);
+
+    Stripe.card.createToken($form, stripeResponseHandler);
+
+    // Prevent the form from submitting with the default action
+    return false;
+  });
+
+  function stripeResponseHandler(status, response) {
+    var $form = $('#payment-form');
+
+    if (response.error) {
+      console.log("stripe response error: " + response.error)
+      // Show the errors on the form
+      $form.find('.payment-errors').text(response.error.message);
+      $form.find('button').prop('disabled', false);
+    } else {
+      // response contains id and card, which contains additional card details
+      var token = response.id;
+      // Insert the token into the form so it gets submitted to the server
+      $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+      // and submit
+      $form.get(0).submit();
+    }
+  };
+</script>
+-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-26989160-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
 </body>
 </html>

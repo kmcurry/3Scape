@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<?bwinclude url="scenes/HighFive.lws"?>
+<Update>
+    <Set target="RenderDirective" highlightType="2"/>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+</Update>

@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<title>3Scape Snappy</title>
+		<meta http-equiv="x-ua-compatible" content="IE=10">
+		<meta name="robots" content="noindex">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/contextmenu.css"/>
+		<link rel="stylesheet" type="text/css" href="css/snappy.css"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
+		<link rel="stylesheet" type="text/css" href="css/slider.css">
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
+		<script type="text/javascript" src="js/eventHandlers.js"></script>
+
+
+	</head>
+	<body onresize="resize();">
+
+		<% if (typeof needsViewControls != 'undefined') { %>
+
+		<%- include('viewcontrols/zoom') -%>
+
+		<div style="position:fixed;top:0;left:0;padding:0; border:0;z-index:1029;width:12%;height:100%;">
+				<span class="glyphicon glyphicon-arrow-left dvd" title="Previous Slide" onclick="previousSlide();"></span>
+				<span class="glyphicon glyphicon-arrow-right dvd" title="Next Slide" onclick="nextSlide();"></span>
+				<ul id="slide-list">
+					<!--This is where the slides get loaded into the list-->
+				</ul>
+		</div>
+		<% } %>
+
+		<div id="BwContainer" onclick="handleMouse(event);"
+				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
+				 onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
+			<canvas id="Canvas">
+			</canvas>
+		</div>
+
+
+		<script type="text/javascript">
+			var bridgeworks = null;
+
+
+
+			document.onreadystatechange = function () {
+				if (document.readyState == "complete") {
+					bridgeworks = init("", document.getElementById("BwContainer"));
+
+					onHoldFunction('#zoom-in', zoomIn, 20);
+					onHoldFunction('#zoom-out', zoomOut, 20);
+
+
+					$(document).scroll(handleScroll);
+
+					// this loads a named 3Scape passed in with the URL
+					// ex., http://3Scape.me/egypt
+					<% if (typeof scape != 'undefined') { %>
+						loadScape(<%- scape %>);
+					<% } %>
+
+				}
+			}
+		</script>
+
+		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
+		<script type="text/javascript" src="js/BwHelper.js"></script>
+		<script type="text/javascript" src="js/snappy.js"></script>
+		<script type="text/javascript" src="js/MapControls.js"></script>
+		<script type="text/javascript" src="js/objectmode.js"></script>
+		<script type="text/javascript" src="js/editor.js"></script>
+		<script type="text/javascript" src="js/crossbrowser.js"></script>
+		<script type="text/javascript" src="js/slidemode.js"></script>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
+		<link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/base/jquery-ui.css"/>
+		<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+
+		<script type="text/javascript" src="js/contextmenu.js"></script>
+		<script src="bower_components/pick-a-color/build/dependencies/tinycolor-0.9.15.min.js"></script>
+		<script src="bower_components/pick-a-color/build/1.2.3/js/pick-a-color-1.2.3.min.js"></script>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-26989160-4', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
+	</body>
+</html>

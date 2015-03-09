@@ -1,7 +1,29 @@
-module.exports = function(app, async, crypto, passport, utilities) {
+module.exports = function(app, async, config, crypto, passport, utilities) {
 
-  var User = require('../../../app/models/user');
-  var config = require('../../../configLoader')(process.env.NODE_ENV || "local")
+  var User = require('../../../app/models/user'),
+      config = require('../../../configLoader')(process.env.NODE_ENV || "local"),
+      util = require('util'),
+      express = require('express'),
+      bodyParser = require('body-parser'),
+      expressValidator = require('express-validator');
+
+  app.use(bodyParser());
+  app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        //var namespace = param.split('.')
+        //, root    = namespace.shift()
+        //, formParam = root;
+
+        //while(namespace.length) {
+        //  formParam += '[' + namespace.shift() + ']';
+        //}
+        return msg;//{
+          //param : formParam,
+          //msg   : msg,
+          //value : value
+        //};
+    }
+  }));
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -76,13 +98,14 @@ module.exports = function(app, async, crypto, passport, utilities) {
         if (req.session.returnTo)
           return res.redirect(req.session.returnTo);
         else
-          return res.render('index');
+          return res.redirect('/');
       });
     })(req, res, next);
   });
 
   app.get('/logout', function (req, res) {
     req.logout();
+    req.flash('success', 'You have successfully logged out!');
     res.redirect('login');
   });
 
@@ -151,14 +174,68 @@ module.exports = function(app, async, crypto, passport, utilities) {
   //SignUp============================
   app.get('/signup', function (req, res) {
     //render the page and pass any flash data if it exists
-    res.render('signup', {message: req.flash('signupMessage')});
+    res.render('signup', {
+      message: req.flash('signupMessage'),
+      info_message: req.flash('info'),
+      error_message: req.flash('error'),
+      success_message: req.flash('success'),
+      paymentKey: config.payment.pubKey
+    });
   });
 
   //process the signup form
   app.post('/signup', function (req, res, next) {
+  //Check if fields are filled out correctly
+    //req.assert('username', 'If supplied, Username must be 5-15 characters long and remain alphanumeric').optional().isAlphanumeric().len(5,15);
+    req.assert('email', 'Email is required').notEmpty();
+    req.assert('email', 'Email does not appear to be valid').isEmail();
+    req.assert('password', 'Password is required').notEmpty();
+    req.assert('password', 'Password must be alphanumeric').isAlphanumeric();
+    req.assert('password', 'Password must be 8-20 characters long').len(8, 20);
+    req.assert('password-confirm', 'Password confirmation is required').notEmpty();
+    req.assert('password-confirm', 'Passwords do not match').equals(req.body.password);
+
+    var err = req.validationErrors();
+    //if (err){
+      //console.log(err);
+      //req.flash('error', err);
+      //return res.redirect('/signup');
+    //}
+    if (err) {
+      req.flash('error', 'There have been validation errors: ' + util.inspect(err));
+      return res.redirect('/signup');
+    }
+    //res.json({
+    //  email: req.param('email')//,
+      //password: req.param('password'),
+      //password-confirm: req.param('password-confirm')
+    //});
+
+    /*
+
+    var stripe = require('stripe')(config.payment.secKey);
+
+    stripe.customers.create({
+      source: req.body.stripeToken, // obtained with Stripe.js
+      plan: "Subscriber-Annual-15",
+      email: req.body.email
+    }, function(err, customer) {
+      console.log("Stripe customer error.");
+      return;
+    });
+    */
+
     passport.authenticate('local-signup', function (err, user, info) {
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/signup'); }
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+
+      if (!user) {
+        console.log("!user failure");
+        return res.redirect('/signup');
+      }
+
       req.logIn(user, function(err) {
         if (err) {
           return next(err);
@@ -175,4 +252,6 @@ module.exports = function(app, async, crypto, passport, utilities) {
     })(req, res, next);
 
   });
+  app.use(express.static(__dirname));
+
 };

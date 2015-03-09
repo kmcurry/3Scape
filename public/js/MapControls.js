@@ -3,66 +3,29 @@
  */
 function zoomOut()
 {
-    //Should be moved to a config file
-    var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
-    var totalDelta = sceneInspec.panDelta.values[2];
-    var distance = sceneInspec.pivotDistance.getValueDirect();
-    if(totalDelta > 0)
-    {
-        if((distance >= 0) && distance < 4000)
-            if(distance * 0.3 != sceneInspec.pivotDistance.getValueDirect())
-            {
-                sceneInspec.panDelta.values[2]=-15 * 0.3;
-            }
-        sceneInspec.evaluate();
-        bridgeworks.updateScene();
-        console.log("Current delta: " + sceneInspec.panDelta.values[2]);
-        sceneInspec.panDelta.values[0] = 0;
-        sceneInspec.panDelta.values[1] = 0;
-        sceneInspec.panDelta.values[2] = 0;
-    }
-    else
-    {
-        sceneInspec.panDelta.values[2]-=10;
-        sceneInspec.evaluate();
-        bridgeworks.updateScene();
-        console.log("Current Z delta: " + sceneInspec.panDelta.values[2]);
-    }
-    sceneInspec.panDelta.values[0] = 0;
-    sceneInspec.panDelta.values[1] = 0;
-    sceneInspec.panDelta.values[2] = 0;
+  if (!g_sceneInspector) {
+    g_sceneInspector = bridgeworks.getRegistry().find("SceneInspector");
+  }
+
+  g_sceneInspector.enabled.setValueDirect(true);
+
+  g_sceneInspector.panDelta.setValueDirect(0,0,-20);
+
+  g_sceneInspector.enabled.setValueDirect(false);
 
 }
 
 function zoomIn()
 {
-    //Should be moved to a config file
-    var sceneInspec = bridgeworks.getRegistry().find("SceneInspector");
-    var totalDelta = sceneInspec.panDelta.values[2];
-    if(totalDelta < 0)
-    {
-        if((distance >= 0) && (distance < 4000))
-            if(distance * 0.3 != sceneInspec.pivotDistance.getValueDirect())
-            {
-                sceneInspec.panDelta.values[2]=15 * 0.3;
-            }
+  if (!g_sceneInspector) {
+    g_sceneInspector = bridgeworks.getRegistry().find("SceneInspector");
+  }
 
-        sceneInspec.evaluate();
-        bridgeworks.updateScene();
-        sceneInspec.panDelta.values[0] = 0;
-        sceneInspec.panDelta.values[1] = 0;
-        sceneInspec.panDelta.values[2] = 0;
-    }
-    else
-    {
-        sceneInspec.panDelta.values[2]+=10;
-        sceneInspec.evaluate();
-        bridgeworks.updateScene();
+  g_sceneInspector.enabled.setValueDirect(true);
 
-    }
-    sceneInspec.panDelta.values[0] = 0;
-    sceneInspec.panDelta.values[1] = 0;
-    sceneInspec.panDelta.values[2] = 0;
+  g_sceneInspector.panDelta.setValueDirect(0,0,20);
+
+  g_sceneInspector.enabled.setValueDirect(false);
 
 }
 
@@ -75,9 +38,7 @@ function rotatePosY()
     console.log("Current Y delta: " + sceneInspec.panDelta.values[1]);
     sceneInspec.evaluate();
     bridgeworks.updateScene();
-    sceneInspec.rotationDelta.values[0] = 0;
-    sceneInspec.rotationDelta.values[1] = 0;
-    sceneInspec.rotationDelta.values[2] = 0;
+    sceneInspec.rotationDelta.setValueDirect(0,0,0);
 }
 
 function rotateNegY()
@@ -88,9 +49,7 @@ function rotateNegY()
     console.log("Current Z delta: " + sceneInspec.panDelta.values[1]);
     sceneInspec.evaluate();
     bridgeworks.updateScene();
-    sceneInspec.rotationDelta.values[0] = 0;
-    sceneInspec.rotationDelta.values[1] = 0;
-    sceneInspec.rotationDelta.values[2] = 0;
+    sceneInspec.rotationDelta.setValueDirect(0,0,0);
 }
 
 function tiltDown()
@@ -99,9 +58,7 @@ function tiltDown()
     sceneInspec.rotationDelta.values[0]= 2;
     sceneInspec.evaluate();
     bridgeworks.updateScene();
-    sceneInspec.rotationDelta.values[0] = 0;
-    sceneInspec.rotationDelta.values[1] = 0;
-    sceneInspec.rotationDelta.values[2] = 0;
+    sceneInspec.rotationDelta.setValueDirect(0,0,0);
 }
 
 function tiltUp()
@@ -110,7 +67,5 @@ function tiltUp()
     sceneInspec.rotationDelta.values[0]= -2;
     sceneInspec.evaluate();
     bridgeworks.updateScene();
-    sceneInspec.rotationDelta.values[0] = 0;
-    sceneInspec.rotationDelta.values[1] = 0;
-    sceneInspec.rotationDelta.values[2] = 0;
+    sceneInspec.rotationDelta.setValueDirect(0,0,0);
 }

@@ -51,9 +51,7 @@ function autoSaveScene(){
 
   var command = "\<Serialize target='Root'/>";
   bridgeworks.updateScene(command);
-  $("#slide-list").children().each( function (index) {
-    // this.innerHTML;
-  });
+
   var serArray = serializedScene.match(/.{1,1000}/g);
 
   //Clear old scene cookies
@@ -77,7 +75,7 @@ function autoSaveScene(){
   }
 }
 
-var saveInterval = setInterval(function() {autoSaveScene()}, 5000);//300000);
+//var saveInterval = setInterval(function() {autoSaveScene()}, 5000);//300000);
 
 function keepWorkInProgress(){
   var serial = "";
@@ -145,24 +143,17 @@ function init(scene, container, recreateCanvas)
     if (savedScene != "" && (savedScene.indexOf("autoSaved") > -1)){
       bridgeworks.updateScene(properScene);
     }
-    else
+    else {
       bridgeworks.updateScene(scene);
+    }
 
-	addKeyEvents();
-	addTouchEvents();
+    addKeyEvents();
 
-	// gesture
-	/*document.addEventListener("gesturestart", function(event) {
-		event.preventDefault();
-		alert("gesturestart");
-	}, false);*/
-    // disable right-click context menu
-    // KMC: why?
-    document.oncontextmenu = function() { return false; }
     // disable selection
-    document.onselectstart = function() { return true; }
+    document.onselectstart = function() { return false; }
 
-    setInterval(draw, 1000/60);
+    var interval = 1000/60;
+    setInterval(draw, interval);
     resize();
 
     return bridgeworks;
@@ -195,7 +186,6 @@ function addKeyEvents()
         window.addEventListener("keyup",
             function(event)
             {
-                console.debug("keyup");
                 bridgeworks.handleEvent(event);
             }
         );
@@ -205,7 +195,6 @@ function addKeyEvents()
         window.attachEvent("keyup",
             function(event)
             {
-                console.debug("keyup");
                 bridgeworks.handleEvent(event);
             }
         );
@@ -213,78 +202,21 @@ function addKeyEvents()
 
     if (window.addEventListener)
     {
-        window.addEventListener("keypress",
+        window.addEventListener("keydown",
             function(event)
             {
-                console.debug("keydown");
                 bridgeworks.handleEvent(event);
             }
         );
     }
     else
     {
-        window.attachEvent("keypress",
+        window.attachEvent("keydown",
             function(event)
             {
-                console.debug("keydown");
                 bridgeworks.handleEvent(event);
             }
         );
     }
 
-}
-
-// temporary, transitional re-factor
-function addTouchEvents()
-{
-	// touch
-	document.addEventListener("touchstart", function(event) {
-		event.preventDefault();
-		var button = event.touches.length;
-		switch (button)
-		{
-			case 1: break;
-			case 2: return;
-			case 3: return;
-			case 4: return;
-		}
-		var mouseEvent = new MouseEvent("mousedown", 0, 0, 0, 0, 0, null);
-		mouseEvent.button = button-1;
-		mouseEvent.clientX = event.touches[0].clientX;
-		mouseEvent.clientY = event.touches[0].clientY;
-		bridgeworks.handleEvent(mouseEvent);
-	}, false);
-	document.addEventListener("touchmove", function(event) {
-		event.preventDefault();
-		var button = event.touches.length;
-		switch (button)
-		{
-			case 1: break;
-			case 2: //break;
-			case 3: return; // unsupported
-			case 4: return; // unsupported
-		}
-		var mouseEvent = new MouseEvent("mousemove", 0, 0, 0, 0, 0, null);
-		mouseEvent.button = button-1;
-		mouseEvent.clientX = event.touches[0].clientX
-		mouseEvent.clientY = event.touches[0].clientY;
-		bridgeworks.handleEvent(mouseEvent);
-	}, false);
-	document.addEventListener("touchend", function(event) {
-		event.preventDefault();
-		// reset last touchmove record
-		var button = event.touches.length;
-		switch (button)
-		{
-			case 1: break;
-			case 2: //break;
-			case 3: //break;
-			case 4: return;//break;
-		}
-		var mouseEvent = new MouseEvent("mouseup", 0, 0, 0, 0, 0, null);
-		mouseEvent.button = button-1;
-		mouseEvent.clientX = event.touches[0].clientX;
-		mouseEvent.clientY = event.touches[0].clientY;
-		bridgeworks.handleEvent(mouseEvent);
-	}, false);
 }
