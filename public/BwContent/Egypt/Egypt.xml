@@ -74,7 +74,7 @@
 		<KeyframeInterpolator name="Site_SkyDomeMotion" url="motions/Site_SkyDome.mot" target="Site_SkyDome" />
 		<KeyframeInterpolator name="SarcophagusDissolve" url="envelopes/Artifact_01.env" target="Sarcophagus" targetConnectionType="dissolve" />
 		<KeyframeInterpolator name="UrnDissolve" url="envelopes/Artifact_02.env" target="Urn" targetConnectionType="dissolve" />
-		<KeyframeInterpolator name="AnkhDissolve" url="envelopes/Artifact_03.env" target="Artifact_03" targetConnectionType="dissolve" />
+		<KeyframeInterpolator name="AnkhDissolve" url="envelopes/Artifact_03.env" target="Ankh" targetConnectionType="dissolve" />
 	</Animations>
 	<ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 	<Pause name="foo" trigger="CameraMotion/time=5" />
