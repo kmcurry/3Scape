@@ -33,21 +33,21 @@
 				<position x="-521.325" y="0" z="-1328.76"/>
 			</Model>
 			<Model name="Site_SkyDome" url="objects/Site_SkyDome.lwo" moveable="false" />
-			<Model name="Artifact_01" url="objects/Artifact_01.lwo" dissolve="1">
+			<Model name="Sarcophagus" url="objects/Artifact_01.lwo" dissolve="0">
 				<position x="244.377" y="20" z="-299.878"/>
 				<rotation x="-14.6" y="146" z="6.1"/>
 			</Model>
-			<NullObject name="Pyramid1_Label_1">
+			<NullObject name="GreatPyramidNull">
 				<position x="100" y="150" z="-492" />
 			</NullObject>
-			<NullObject name="Artifact1_Label_1">
+			<NullObject name="SarcophagusNull">
 				<position x="200" y="10" z="-299" />
 			</NullObject>
-			<Model name="Artifact_02" url="objects/Artifact_02.lwo" dissolve="1">
+			<Model name="Urn" url="objects/Artifact_02.lwo" dissolve="1">
 				<position x="-130.198" y="34.8224" z="-724.492"/>
 				<rotation x="0" y="-47.6" z="0"/>
 			</Model>
-			<Model name="Artifact_03" url="objects/Artifact_03.lwo" dissolve="1">
+			<Model name="Ankh" url="objects/Artifact_03.lwo" dissolve="1">
 				<position x="-435.347" y="9" z="-1249.14"/>
 				<rotation x="0" y="142.3" z="0"/>
 			</Model>
@@ -56,31 +56,25 @@
 			</Model>
 		</Group>
 		<Group name="Labels">
-			<Label name="Pyramid1" parent="GreatPyramid" text="The Great Pyramid" show="false">
-			</Label>
-			<Label name="Pyramid2" parent="KhafrePyramid" text="The Khafre Pyramid" show="false">
-			</Label>
-			<Label name="Pyramid3" parent="MenkaurePyramid" text="The Menkaure Pyramid" show="false">
-			</Label>
-			<Label name="P1_Description" parent="Pyramid1_Label_1" text="The Great Pyramid" show="false"></Label>
-			<Label name="A1_Description" parent="Artifact1_Label_1" text="A pharaoh's sarcophagus" show="false"></Label>
-			<Label name="P2_Description" parent="KhafrePyramid" text="Pyramid of Khafre" show="false"></Label>
-			<Label name="A2_Description" parent="Artifact_02" text="an urn" show="false"></Label>
-			<Label name="P3_Description" parent="MenkaurePyramid" text="Pyramid of Menkaure" show="false"></Label>
-			<Label name="A3_Description" parent="Artifact_03" text="an Ankh, key of life" show="false"></Label>
-			<Label name="S_Description" parent="GreatSphinx" text="The Great Sphinx" show="false"></Label>
-			<Label name="A4_Description" parent="GreatSphinx" text="'Sphinx' means 'Father of Dread'" show="false"></Label>
+			<Label name="GreatPyramid_Label" parent="GreatPyramidNull" text="The Great Pyramid" show="false"></Label>
+			<Label name="Sarcophagus_Label" parent="SarcophagusNull" text="A pharaoh's sarcophagus" show="false"></Label>
+			<Label name="KhafrePyramid_Label" parent="KhafrePyramid" text="Pyramid of Khafre" show="false"></Label>
+			<Label name="Urn_Label" parent="Urn" text="an urn" show="false"></Label>
+			<Label name="MenakaurePyramid_Label" parent="MenkaurePyramid" text="Pyramid of Menkaure" show="false"></Label>
+			<Label name="Ankh_Label" parent="Ankh" text="an Ankh, key of life" show="false"></Label>
+			<Label name="GreatSphink_Label_1" parent="GreatSphinx" text="The Great Sphinx" show="false"></Label>
+			<Label name="GreatSphink_Label_2" parent="GreatSphinx" text="'Sphinx' means 'Father of Dread'" show="false"></Label>
 		</Group>
 	</Isolator>
-	<RenderDirective name="RenderDirective"/>
+	<RenderDirective name="RenderDirective" highlightType="2" />
 	<Animations>
 		<KeyframeInterpolator name="LightMotion" url="motions/Light.mot" target="Light" />
 		<KeyframeInterpolator name="CameraMotion" url="motions/Camera.mot" target="Camera" />
 		<KeyframeInterpolator name="EGYPTMotion" url="motions/EGYPT.mot" target="EGYPT" />
 		<KeyframeInterpolator name="Site_SkyDomeMotion" url="motions/Site_SkyDome.mot" target="Site_SkyDome" />
-		<KeyframeInterpolator name="Artifact_01Dissolve" url="envelopes/Artifact_01.env" target="Artifact_01" targetConnectionType="dissolve" />
-		<KeyframeInterpolator name="Artifact_02Dissolve" url="envelopes/Artifact_02.env" target="Artifact_02" targetConnectionType="dissolve" />
-		<KeyframeInterpolator name="Artifact_03Dissolve" url="envelopes/Artifact_03.env" target="Artifact_03" targetConnectionType="dissolve" />
+		<KeyframeInterpolator name="SarcophagusDissolve" url="envelopes/Artifact_01.env" target="Sarcophagus" targetConnectionType="dissolve" />
+		<KeyframeInterpolator name="UrnDissolve" url="envelopes/Artifact_02.env" target="Urn" targetConnectionType="dissolve" />
+		<KeyframeInterpolator name="AnkhDissolve" url="envelopes/Artifact_03.env" target="Artifact_03" targetConnectionType="dissolve" />
 	</Animations>
 	<ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 	<Pause name="foo" trigger="CameraMotion/time=5" />
