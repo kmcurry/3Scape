@@ -69,7 +69,9 @@
             <input class="form-control" type="password" name="password-confirm" placeholder="Must match your password">
         </div>
         <label>* Indicates optional input</label>
-<!--
+
+        <!--
+        <center><h4>Your card won't be charged <br/>unless you stay after May 1.</h4></center>
         <div class="panel panel-default row">
           <div class="panel-body">
             <div class="form-group">
@@ -104,7 +106,8 @@
             </div>
           </div>
         </div>
--->
+      -->
+
         <br/>
         <center><button type="submit" class="btn btn-xlarge btn-primary">Sign Up for Free!</button></center>
       </form>
@@ -121,11 +124,11 @@
 
 <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 
-
+<!--
 <script>
   // TODO: move key to server var set by config - KMC
-/*
-  Stripe.setPublishableKey('pk_test_3MnIIPctq6FSKqodwe6iXm5U');
+
+  Stripe.setPublishableKey(<%- paymentKey %>);
 
   $('#payment-form').submit(function(event) {
     var $form = $(this);
@@ -143,6 +146,7 @@
     var $form = $('#payment-form');
 
     if (response.error) {
+      console.log("stripe response error: " + response.error)
       // Show the errors on the form
       $form.find('.payment-errors').text(response.error.message);
       $form.find('button').prop('disabled', false);
@@ -155,7 +159,17 @@
       $form.get(0).submit();
     }
   };
-*/
+</script>
+-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-26989160-4', 'auto');
+  ga('send', 'pageview');
+
 </script>
 
 </body>

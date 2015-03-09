@@ -1,4 +1,4 @@
-module.exports = function(app, async, crypto, passport, utilities) {
+module.exports = function(app, async, config, crypto, passport, utilities) {
 
   var User = require('../../../app/models/user'),
       config = require('../../../configLoader')(process.env.NODE_ENV || "local"),
@@ -6,7 +6,6 @@ module.exports = function(app, async, crypto, passport, utilities) {
       express = require('express'),
       bodyParser = require('body-parser'),
       expressValidator = require('express-validator');
-
 
   app.use(bodyParser());
   app.use(expressValidator({
@@ -179,7 +178,8 @@ module.exports = function(app, async, crypto, passport, utilities) {
       message: req.flash('signupMessage'),
       info_message: req.flash('info'),
       error_message: req.flash('error'),
-      success_message: req.flash('success')
+      success_message: req.flash('success'),
+      paymentKey: config.payment.pubKey
     });
   });
 
@@ -212,14 +212,16 @@ module.exports = function(app, async, crypto, passport, utilities) {
     //});
 
     /*
-    var stripe = require('stripe')('sk_test_gilKHGlFzeRA0lFhoXdY8oIk');
+
+    var stripe = require('stripe')(config.payment.secKey);
 
     stripe.customers.create({
       source: req.body.stripeToken, // obtained with Stripe.js
       plan: "Subscriber-Annual-15",
       email: req.body.email
     }, function(err, customer) {
-      console.log("Stripe customer error: " + err);
+      console.log("Stripe customer error.");
+      return;
     });
     */
 

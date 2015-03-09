@@ -45,8 +45,8 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./app/routes/auth/index.js')(app, async, crypto, passport, utilities);
-require('./app/routes.js')(app);
+require('./app/routes/auth/index.js')(app, async, config, crypto, passport, utilities);
+require('./app/routes.js')(app, config);
 
 
 
