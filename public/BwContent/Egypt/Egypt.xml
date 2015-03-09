@@ -61,7 +61,7 @@
 			<Label name="KhafrePyramid_Label" parent="KhafrePyramid" text="Pyramid of Khafre" show="false"></Label>
 			<Label name="Urn_Label" parent="Urn" text="an urn" show="false"></Label>
 			<Label name="MenakaurePyramid_Label" parent="MenkaurePyramid" text="Pyramid of Menkaure" show="false"></Label>
-			<Label name="Ankh_Label" parent="Ankh" text="an Ankh, key of life" show="false"></Label>
+			<Label name="Ankh_Label" parent="Ankh" text="The written language of the ancient Egyptians was called Hieroglyphics" show="false"></Label>
 			<Label name="GreatSphinx_Label_1" parent="GreatSphinx" text="The Great Sphinx" show="false"></Label>
 			<Label name="GreatSphink_Label_2" parent="GreatSphinx" text="'Sphinx' means 'Father of Dread'" show="false"></Label>
 		</Group>
