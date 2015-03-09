@@ -51,9 +51,7 @@ function autoSaveScene(){
 
   var command = "\<Serialize target='Root'/>";
   bridgeworks.updateScene(command);
-  $("#slide-list").children().each( function (index) {
-    // this.innerHTML;
-  });
+
   var serArray = serializedScene.match(/.{1,1000}/g);
 
   //Clear old scene cookies
@@ -149,8 +147,7 @@ function init(scene, container, recreateCanvas)
       bridgeworks.updateScene(scene);
     }
 
-    window.onkeydown = handleKey;
-	  addKeyEvents();
+    addKeyEvents();
 
     // disable selection
     document.onselectstart = function() { return false; }

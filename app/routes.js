@@ -1,15 +1,14 @@
 
-module.exports = function(app) {
+module.exports = function(app, config) {
 //HOME PAGE(with login links) ======
 
   var User = require('../app/models/user');
-  var config = require('../configLoader')(process.env.NODE_ENV || "local")
 
   app.get('/', isLoggedIn, function (req, res) {
     res.render('snappy');
   });
 
-  app.get('/:scape?', isLoggedIn, function (req, res, next) {
+  app.get('/:scape?', function (req, res, next) {
 
     var s = "";
     var err = null;
@@ -24,12 +23,14 @@ module.exports = function(app) {
         case "egypt" :
         case "Entymology" :
         case "entymology" :
+        case "hi5":
+        case "Hi5":
         case "Physics" :
         case "physics" :
         case "Two-stroke" :
         case "two-stroke" :
           {
-            res.status(200).render('index', {
+            res.status(200).render('demo', {
               scape: s
             });
           }
@@ -52,7 +53,6 @@ module.exports = function(app) {
   app.get('/classroom', function (req, res) {
     res.render('classroom')
   });
-
 
   app.get('/privacy', function (req, res) {
       res.render('privacy')

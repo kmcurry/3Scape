@@ -10,14 +10,14 @@
     </Label>
     <Label name="Pyramid3" parent="MenkaurePyramid" text="The Menkaure Pyramid" show="false">
     </Label>
-    <Label name="P1_Description" parent="Pyramid1_Label_1" text="The Great Pyramid" show="false"></Label>
-    <Label name="A1_Description" parent="Artifact1_label_1" text="A pharaoh's sarcophagus" show="false"></Label>
-    <Label name="P2_Description" parent="KhafrePyramid" text="Pyramid of Khafre" show="false"></Label>
-    <Label name="A2_Description" parent="Artifact_02" text="an urn" show="false"></Label>
-    <Label name="P3_Description" parent="MenkaurePyramid" text="Pyramid of Menkaure" show="false"></Label>
-    <Label name="A3_Description" parent="Artifact_03" text="an Ankh, key of life" show="false"></Label>
-    <Label name="S_Description" parent="GreatSphinx" text="The Great Sphinx" show="false"></Label>
-    <Label name="A4_Description" parent="GreatSphinx" text="'Sphinx' means 'Father of Dread'" show="false"></Label>
+    <Label name="GreatPyramid_Label" parent="GreatPyramidNull" text="The Great Pyramid" show="false"></Label>
+    <Label name="Sarcophagus_Label" parent="SarcophagusNull" text="A pharaoh's sarcophagus" show="false"></Label>
+    <Label name="KhafrePyramid_Label" parent="KhafrePyramid" text="Pyramid of Khafre" show="false"></Label>
+    <Label name="Urn_Label" parent="Artifact_02" text="an urn" show="false"></Label>
+    <Label name="MenakaurePyramid_Label" parent="MenkaurePyramid" text="Pyramid of Menkaure" show="false"></Label>
+    <Label name="Ankh_Label" parent="Artifact_03" text="an Ankh, key of life" show="false"></Label>
+    <Label name="GreatSphinx_Label_1" parent="GreatSphinx" text="The Great Sphinx" show="false"></Label>
+    <Label name="GreatSphink_Label_2" parent="GreatSphinx" text="'Sphinx' means 'Father of Dread'" show="false"></Label>
   </Group>
   <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
   <Set target="Selector" computePivotDistance="true"/>

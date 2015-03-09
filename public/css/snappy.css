@@ -246,6 +246,10 @@ a.shape.fa.fa-plus { color: white;
   text-indent: 10px;
 }
 
+a.shape.fa.fa-sign-out { color: white;
+  text-indent: 10px;
+}
+
 a#loadScene { color: white;
   text-indent: 10px;
 }
