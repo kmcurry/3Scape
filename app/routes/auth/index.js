@@ -10,18 +10,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   app.use(bodyParser());
   app.use(expressValidator({
     errorFormatter: function(param, msg, value) {
-        //var namespace = param.split('.')
-        //, root    = namespace.shift()
-        //, formParam = root;
-
-        //while(namespace.length) {
-        //  formParam += '[' + namespace.shift() + ']';
-        //}
-        return msg;//{
-          //param : formParam,
-          //msg   : msg,
-          //value : value
-        //};
+        return msg;
     }
   }));
 
@@ -187,7 +176,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   app.post('/signup', function (req, res, next) {
   //Check if fields are filled out correctly
     //req.assert('username', 'If supplied, Username must be 5-15 characters long and remain alphanumeric').optional().isAlphanumeric().len(5,15);
-    req.assert('email', 'Email is required').notEmpty();
+    req.check('email', 'Email is required').notEmpty();
     req.assert('email', 'Email does not appear to be valid').isEmail();
     req.assert('password', 'Password is required').notEmpty();
     req.assert('password', 'Password must be alphanumeric').isAlphanumeric();
@@ -196,20 +185,12 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     req.assert('password-confirm', 'Passwords do not match').equals(req.body.password);
 
     var err = req.validationErrors();
-    //if (err){
-      //console.log(err);
-      //req.flash('error', err);
-      //return res.redirect('/signup');
-    //}
     if (err) {
-      req.flash('error', 'There have been validation errors: ' + util.inspect(err));
+      console.log(err);
+      req.flash('error', err);
+      //req.flash('error', 'There have been validation errors: ' + util.inspect(err));
       return res.redirect('/signup');
     }
-    //res.json({
-    //  email: req.param('email')//,
-      //password: req.param('password'),
-      //password-confirm: req.param('password-confirm')
-    //});
 
     /*
 
