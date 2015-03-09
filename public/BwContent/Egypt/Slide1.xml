@@ -12,10 +12,10 @@
     <Set target="CameraMotion" time="4.9"></Set>
     <Play/>
     <Pause trigger="CameraMotion/time=5"/>
-    <BalloonTipLabel name="Intro" parent="GreatPyramid">
+    <BalloonTipLabel name="Intro" parent="GreatPyramid" show="true">
         <balloonTipLabelStyle>
             <htmlLabelStyle>
-                <html><![CDATA[<em><strong><font color="red">This is some text!</font></strong></em>]]></html>
+                <html><![CDATA[Egypt was a center for <em>architecture</em>]]></html>
             </htmlLabelStyle>
         </balloonTipLabelStyle>
     </BalloonTipLabel>
