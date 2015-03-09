@@ -130,9 +130,16 @@ function handleKey(e)
         g_sceneInspector = bridgeworks.registry.find("SceneInspector");
     }
 
+    var code = -1;
+    if (e.key !== undefined) code = e.key;
+    else if (e.keyIdentifier !== undefined) code = e.keyIdentifier;
 
-    switch (e.keyCode) {
+    console.log("key code = " + code);
+
+    switch (code) {
         case 'C'.charCodeAt(0):
+        case 'c':
+        case "U+0043":
             {
                 if (e.metaKey || e.ctrlKey) {
                     e.preventDefault();
@@ -141,6 +148,7 @@ function handleKey(e)
             }
             break;
         case 'P'.charCodeAt(0):
+        case 'p':
             {
                 exportSelected();
             }
@@ -148,6 +156,9 @@ function handleKey(e)
 
 
         case 'V'.charCodeAt(0):
+        case 'v':
+        case "U+0056":
+
             {      // v
                 if (e.metaKey || e.ctrlKey) {
                     if (document.activeElement.id != 'url') {
@@ -158,20 +169,23 @@ function handleKey(e)
             }
             break;
         case 8:
+        case "U+0008":
+        case "Backspace":
           {
             cut();
             e.preventDefault();
+            e.stopPropogation();
           }
           break;
-        case 39: //right
+        case "Right": //right
             objectRight(1);
             break;
 
-        case 37: //left
+        case "Left": //left
             objectLeft();
             break;
 
-        case 40: //down
+        case "Down": //down
             if (e.shiftKey || e.ctrlKey) {
                 objectDown(1);
             }
@@ -179,7 +193,7 @@ function handleKey(e)
                 objectBackward(1);
             }
             break;
-        case 38: //up
+        case "Up": //up
             if (e.shiftKey || e.ctrlKey) {
                 objectUp(1);
             }
@@ -188,6 +202,9 @@ function handleKey(e)
             }
             break;
         case 'X'.charCodeAt(0):
+        case 'x':
+        case "U+0058":
+
             {      // x
                 if (e.metaKey || e.ctrlKey) {
                     e.preventDefault();
