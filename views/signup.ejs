@@ -35,8 +35,17 @@
 
         <!-- show any messages that come back with authentication -->
         <% if (message.length > 0) { %>
-            <div class="alert alert-danger"><%= message %></div>
-        <% } %>
+  					<div class="alert alert-info"><%= info_message %></div>
+  				<% } %>
+  			<% if (info_message.length > 0) { %>
+  					<div class="alert alert-info"><%= info_message %></div>
+  				<% } %>
+  				<% if (error_message.length > 0) { %>
+  					<div class="alert alert-danger"><%= error_message %></div>
+  				<% } %>
+  				<% if (success_message.length > 0) { %>
+  					<div class="alert alert-success"><%= success_message %></div>
+  				<% } %>
 
         <span class="payment-errors"></span>
 <!-- NEEEEWWWWWWWWW -->
@@ -52,7 +61,7 @@
 
         <div class="form-group">
             <label>Password</label>
-            <input class="form-control" type="password" name="password" placeholder="Your password (8-20 characters)">
+            <input class="form-control" type="password" name="password" placeholder="Your alphanumeric password (8-20 characters)">
         </div>
 <!-- NEEEWWWWW -->
         <div class="form-group">
