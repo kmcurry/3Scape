@@ -128,7 +128,7 @@ function loadEgypt() {
   reset();
   bridgeworks.contentDir='BwContent/Egypt';
   // don't call onloadModified b/c XML doesn't reset Bw
-  //bridgeworks.onLoadModified();
+  bridgeworks.onLoadModified();
   bridgeworks.updateScene('Egypt.xml');
   loadSlides(10);
 }
@@ -150,7 +150,7 @@ function loadLights() {
 function loadPhysics() {
   reset();
   bridgeworks.contentDir='BwContent';
-  //bridgeworks.onLoadModified();
+  bridgeworks.onLoadModified();
   bridgeworks.updateScene('Physics.xml');
 }
 
