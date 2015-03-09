@@ -18,7 +18,7 @@
 	</head>
 	<body onresize="resize();">
 
-		<div id="fb-root"></div><!-- FB Javascript SDK -->
+		<% if (typeof needsViewControls != 'undefined') { %>
 
 		<%- include('viewcontrols/zoom') -%>
 
@@ -29,6 +29,7 @@
 					<!--This is where the slides get loaded into the list-->
 				</ul>
 		</div>
+		<% } %>
 
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"

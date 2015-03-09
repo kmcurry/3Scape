@@ -23,18 +23,26 @@ module.exports = function(app, config) {
         case "egypt" :
         case "Entymology" :
         case "entymology" :
-        case "hi5":
-        case "Hi5":
         case "Physics" :
         case "physics" :
         case "Two-stroke" :
         case "two-stroke" :
           {
             res.status(200).render('demo', {
-              scape: s
+              scape: s,
+              needsViewControls: true
             });
           }
           break;
+        case "hi5":
+        case "Hi5":
+          {
+            {
+              res.status(200).render('demo', {
+                scape: s
+              });
+            }
+          }
         default:
           {
             return next('route');
