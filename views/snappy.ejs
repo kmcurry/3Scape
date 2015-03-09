@@ -19,9 +19,9 @@
 
 		<div id="fb-root"></div><!-- FB Javascript SDK -->
 
-		<%- include('menus/objectbar'); -%>
+		<%- include('viewcontrols/objectbar'); -%>
 
-		<%- include('layers/zoom') -%>
+		<%- include('viewcontrols/zoom') -%>
 
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
@@ -30,7 +30,7 @@
 			</canvas>
 		</div>
 
-		<%- include('menus/modelcontext.ejs'); -%>
+		<%- include('viewcontrols/modelcontext.ejs'); -%>
 
 
 		<script type="text/javascript">
