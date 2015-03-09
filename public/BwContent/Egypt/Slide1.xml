@@ -15,7 +15,7 @@
     <BalloonTipLabel name="Intro" parent="GreatPyramid" show="true">
         <balloonTipLabelStyle>
             <htmlLabelStyle>
-                <html><![CDATA[Egypt contributed amazing <em>architecture</em> to civilization]]></html>
+                <html><![CDATA[Egypt contributed amazing <em>architecture</em> to civilization.]]></html>
             </htmlLabelStyle>
         </balloonTipLabelStyle>
     </BalloonTipLabel>
