@@ -134,8 +134,6 @@ function handleKey(e)
     if (e.key !== undefined) code = e.key;
     else if (e.keyIdentifier !== undefined) code = e.keyIdentifier;
 
-    console.log("key code = " + code);
-
     switch (code) {
         case 'C'.charCodeAt(0):
         case 'c':
