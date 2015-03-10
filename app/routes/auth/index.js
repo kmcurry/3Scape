@@ -179,12 +179,12 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
       } else {
         passport.authenticate('local-signup', function (err, user, info) {
           if (err) {
-            console.log(err);
+            req.flash('signupMessage', 'There was a problem logging you in. ' + err);
             return next(err);
           }
 
           if (!user) {
-            console.log(">>>>>>>> !user failure");
+            req.flash('signupMessage', 'There was a problem creating your 3Scape profile.');
             return res.redirect('/signup'); // redirect fails in other callbacks
                                             // with 'cannot set headers after they're sent' - KMC
           }
