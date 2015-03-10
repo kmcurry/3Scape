@@ -196,12 +196,10 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
             }
             // email
             if (config.email.smtpUser) {
-              /*
               utilities.emailer.send({
                 to: user.email,
                 templateId: config.email.welcome
               });
-              */
             }
             return res.redirect('/');
           });

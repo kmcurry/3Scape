@@ -22,7 +22,8 @@
     "sendgrid": "^1.5.0",
     "moment": "latest",
     "lodash": "latest",
-    "q": "latest"
+    "q": "latest",
+    "stripe": "latest"
   },
   "scripts": {
     "start": "node server.js"
