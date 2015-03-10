@@ -128,7 +128,7 @@
 					</htmlLabelStyle>
 			</balloonTipLabelStyle>
 	</BalloonTipLabel>
-	<BalloonTipLabel name="Explore" parent="GreatPyramid" show="false">
+	<BalloonTipLabel name="GoTo4" parent="GreatPyramid" show="false">
 		<anchor x="0" y="200"/>
 			<balloonTipLabelStyle>
 					<htmlLabelStyle>

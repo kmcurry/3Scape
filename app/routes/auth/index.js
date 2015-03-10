@@ -170,7 +170,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
     stripe.customers.create({
       source: req.body.stripeToken, // obtained with Stripe.js
-      plan: "Subscriber-Annual-15",
+      plan: config.payment.plan,
       email: req.body.email
     }, function(err, customer) {
       if (err || !customer) {
