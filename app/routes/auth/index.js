@@ -1,11 +1,18 @@
 module.exports = function(app, async, config, crypto, passport, utilities) {
 
-  var User = require('../../../app/models/user');
-  var express = require('express');
-  var bodyParser = require('body-parser');
+  var User = require('../../../app/models/user'),
+      config = require('../../../configLoader')(process.env.NODE_ENV || "local"),
+      util = require('util'),
+      express = require('express'),
+      bodyParser = require('body-parser'),
+      expressValidator = require('express-validator');
 
-  //var app = express();
   app.use(bodyParser());
+  app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        return msg;
+    }
+  }));
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -87,6 +94,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   app.get('/logout', function (req, res) {
     req.logout();
+    req.flash('success', 'You have successfully logged out!');
     res.redirect('login');
   });
 
@@ -157,12 +165,32 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     //render the page and pass any flash data if it exists
     res.render('signup', {
       message: req.flash('signupMessage'),
+      info_message: req.flash('info'),
+      error_message: req.flash('error'),
+      success_message: req.flash('success'),
       paymentKey: config.payment.pubKey
-      });
+    });
   });
 
   //process the signup form
   app.post('/signup', function (req, res, next) {
+  //Check if fields are filled out correctly
+    //req.assert('username', 'If supplied, Username must be 5-15 characters long and remain alphanumeric').optional().isAlphanumeric().len(5,15);
+    req.check('email', 'Email is required').notEmpty();
+    req.assert('email', 'Email does not appear to be valid').isEmail();
+    req.assert('password', 'Password is required').notEmpty();
+    req.assert('password', 'Password must be alphanumeric').isAlphanumeric();
+    req.assert('password', 'Password must be 8-20 characters long').len(8, 20);
+    req.assert('password-confirm', 'Password confirmation is required').notEmpty();
+    req.assert('password-confirm', 'Passwords do not match').equals(req.body.password);
+
+    var err = req.validationErrors();
+    if (err) {
+      console.log(err);
+      req.flash('error', err);
+      //req.flash('error', 'There have been validation errors: ' + util.inspect(err));
+      return res.redirect('/signup');
+    }
 
     /*
 
@@ -188,7 +216,6 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
         console.log("!user failure");
         return res.redirect('/signup');
       }
-
 
       req.logIn(user, function(err) {
         if (err) {
