@@ -57,10 +57,10 @@
 		</Group>
 		<Group name="Labels">
 			<Label name="GreatPyramid_Label" parent="GreatPyramidNull" text="The Great Pyramid" show="false"></Label>
-			<Label name="Sarcophagus_Label" parent="SarcophagusNull" text="A pharaoh's sarcophagus" show="false"></Label>
 			<Label name="KhafrePyramid_Label" parent="KhafrePyramid" text="Pyramid of Khafre" show="false"></Label>
-			<Label name="Urn_Label" parent="Urn" text="an urn" show="false"></Label>
 			<Label name="MenakaurePyramid_Label" parent="MenkaurePyramid" text="Pyramid of Menkaure" show="false"></Label>
+			<Label name="Sarcophagus_Label" parent="SarcophagusNull" text="A pharaoh's sarcophagus" show="false"></Label>
+			<Label name="Urn_Label" parent="Urn" text="an urn" show="false"></Label>
 			<Label name="Ankh_Label" parent="Ankh" text="The written language of the ancient Egyptians was called Hieroglyphics" show="false"></Label>
 			<Label name="GreatSphinx_Label_1" parent="GreatSphinx" text="The Great Sphinx" show="false"></Label>
 			<Label name="GreatSphink_Label_2" parent="GreatSphinx" text="'Sphinx' means 'Father of Dread'" show="false"></Label>
@@ -78,4 +78,62 @@
 	</Animations>
 	<ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 	<Pause name="foo" trigger="CameraMotion/time=5" />
+	<BalloonTipLabel name="Intro" show="true">
+			 <position x="-200" y="-200" z="0"/>
+			<balloonTipLabelStyle>
+					<htmlLabelStyle>
+							<html><![CDATA[<h4>Ancient Egyptians made contributions that affect the present world.</h4>
+							<p><h4>Key Terms</h4></p>
+							<p>
+								<ul style="margin-left:8px;font-size:18px;">
+									<li><em><b>ancient</b></em>: Long, long ago</li>
+									<li><em><b>architecture</b></em>: The design of buildings</li>
+									<li><em><b>contribution</b></em>: The act of giving or doing something</li>
+								</ul>
+							</p>
+							<p>
+								<a href="javascript:playSlide(1);">Click to continue</a>
+							</p>
+							]]></html>
+					</htmlLabelStyle>
+			</balloonTipLabelStyle>
+	</BalloonTipLabel>
+	<BalloonTipLabel name="Ancient" show="false">
+		<anchor x="-200" y="200"/>
+			<balloonTipLabelStyle>
+					<htmlLabelStyle>
+							<html><![CDATA[<div style="font-size:16px;"><p>The word <em><b>'ancient'</b></em> means "long, long ago".</p>
+							<p>
+								The Pyramids of Giza and Great Sphinx were built almost 5000 years ago.
+							</p>
+							<p>
+								<a href="javascript:playSlide(2);">Click to continue</a>
+							</p>
+							</div>]]></html>
+					</htmlLabelStyle>
+			</balloonTipLabelStyle>
+	</BalloonTipLabel>
+	<BalloonTipLabel name="Architecture" parent="GreatPyramid" show="false">
+		<anchor x="200" y="200"/>
+			<balloonTipLabelStyle>
+					<htmlLabelStyle>
+							<html><![CDATA[<p>Egypt contributed amazing <em><b>architecture</b></em>.</p>
+							<p>
+								This is the Great Pyramid of Giza, also known as Pyramid of Khufu.
+								Built as a tomb, it is the oldest  and largest of the 3 pyramids.
+							</p>
+							<p>
+								<a href="javascript:playSlide(3);">Click to continue</a>
+							</p>]]></html>
+					</htmlLabelStyle>
+			</balloonTipLabelStyle>
+	</BalloonTipLabel>
+	<BalloonTipLabel name="GoTo4" parent="GreatPyramid" show="false">
+		<anchor x="0" y="200"/>
+			<balloonTipLabelStyle>
+					<htmlLabelStyle>
+							<html><![CDATA[<p><a href="javascript:playSlide(4);">Click to continue</a></p>]]></html>
+					</htmlLabelStyle>
+			</balloonTipLabelStyle>
+	</BalloonTipLabel>
 </Scene>

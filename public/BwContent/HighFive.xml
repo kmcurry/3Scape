@@ -3,5 +3,6 @@
 <?bwinclude url="DefaultPreferences.xml"?>
 <?bwinclude url="scenes/HighFive.lws"?>
 <Update>
+    <Set target="RenderDirective" highlightType="2"/>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 </Update>

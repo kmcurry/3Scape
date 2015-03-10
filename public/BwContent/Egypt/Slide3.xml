@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <Update>
+  <Set target="Intro" show="false"></Set>
+  <Set target="Ancient" show="false"></Set>
+  <Set target="Architecture" show="false"></Set>
+  <Set target="GoTo4" show="false"></Set>
   <Set target="GreatSphinx_Label_1" show="false"></Set>
   <Set target="KhafrePyramid_Label" show="false"></Set>
   <Set target="Sarcophagus_Label" show="false"></Set>
@@ -12,6 +16,6 @@
   <!--<Pause trigger="CameraMotion/time=22"/>-->
   <Set trigger="CameraMotion/time=19" target="Sarcophagus_Label" show="true"></Set>
   <Set target="SarcophagusDissolve" time="17.5"></Set>
+  <Set trigger="CameraMotion/time=19" target="GoTo4" show="true"></Set>
   <Pause trigger="SarcophagusDissolve/time=23"/>
-
 </Update>
