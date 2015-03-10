@@ -214,39 +214,48 @@ body {
 ul.dropdown-menu { background-color: #46A8D2;
 color: white;
 font-family: 'robotobold';
+margin-left: 10%;
 }
 
-ul.dropdown-menu li p{ text-indent: 19px;
+ul.dropdown-menu li p{ text-indent: 15px;
 
+}
+
+ul.dropdown-menu li span a {
+  font-family: 'robotolight';
 }
 
 ul.dropdown-menu li a:hover {
- color: rgba(28, 117, 187, 0.1);
+ color: rgba(87, 185, 85, 0.1);
 }
 
 ul.dropdown-menu li a:active {
   color: rgba(39, 63, 132, 0.1);
 }
 
-span.shape.fa {margin-left: 8%;}
+span.shape.fa {margin-left: 6%;}
 
-a.shape.fa.fa-user { color: white;
+li span a {
+  color: white;
+}
+
+li span.shape.fa.fa-user { color: white;
   text-indent: 10px;
 }
 
-a.shape.fa.fa-laptop { color: white;
+li span.shape.fa.fa-laptop { color: white;
   text-indent: 10px;
 }
 
-a.shape.fa.fa-arrows-alt { color: white;
+li span.shape.fa.fa-arrows-alt { color: white;
   text-indent: 10px;
 }
 
-a.shape.fa.fa-plus { color: white;
+li span.shape.fa.fa-plus { color: white;
   text-indent: 10px;
 }
 
-a.shape.fa.fa-sign-out { color: white;
+li span.shape.fa.fa-sign-out { color: white;
   text-indent: 10px;
 }
 
