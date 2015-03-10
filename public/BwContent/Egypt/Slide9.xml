@@ -1,17 +1,19 @@
 <?xml version="1.0"?>
 <Update>
-
-    <Set target="GreatSphinx_Label_1" show="false"></Set>
-    <Set target="KhafrePyramid_Label" show="false"></Set>
-    <Set target="Sarcophagus_Label" show="false"></Set>
-    <Set target="GreatPyramid_Label" show="false"></Set>
-    <Set target="Urn_Label" show="false"></Set>
-    <Set target="Ankh_Label" show="false"></Set>
-    <Set target="MenakaurePyramid_Label" show="false"></Set>
-    <Set target="GreatSphink_Label_2" show="false"></Set>
-    <Set target="CameraMotion" time="80"></Set>
-    <Play></Play>
-    <Pause trigger="CameraMotion/time=86"/>
-    <Set trigger="CameraMotion/time=85" target="GreatSphink_Label_2" show="true"></Set>
-
+  <Set target="Intro" show="false"></Set>
+  <Set target="Architecture" show="false"></Set>
+  <Set target="Ancient" show="false"></Set>
+  <Set target="Explore" show="false"></Set>
+  <Set target="GreatSphinx_Label_1" show="false"></Set>
+  <Set target="KhafrePyramid_Label" show="false"></Set>
+  <Set target="Sarcophagus_Label" show="false"></Set>
+  <Set target="GreatPyramid_Label" show="false"></Set>
+  <Set target="Urn_Label" show="false"></Set>
+  <Set target="Ankh_Label" show="false"></Set>
+  <Set target="MenakaurePyramid_Label" show="false"></Set>
+  <Set target="GreatSphink_Label_2" show="false"></Set>
+  <Set target="CameraMotion" time="80"></Set>
+  <Play></Play>
+  <Pause trigger="CameraMotion/time=86"/>
+  <Set trigger="CameraMotion/time=85" target="GreatSphink_Label_2" show="true"></Set>
 </Update>
