@@ -64,6 +64,14 @@
 			<Label name="Ankh_Label" parent="Ankh" text="Ankh means 'key of life'" show="false"></Label>
 			<Label name="GreatSphinx_Label_1" parent="GreatSphinx" text="The Great Sphinx" show="false"></Label>
 			<Label name="GreatSphinx_Label_2" parent="GreatSphinx" text="'Sphinx' means 'Father of Dread'" show="false"></Label>
+			<Label name="3Scape_Label" text="https://go.3scape.me/classroom" show="false">
+				<position x="-900" y="-500" z="0"/>
+				<labelStyle>
+					<fontStyle>
+						<size>42</size>
+					</fontStyle>
+				</labelStyle>
+			</Label>
 		</Group>
 	</Isolator>
 	<RenderDirective name="RenderDirective" highlightType="2" />

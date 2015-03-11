@@ -16,4 +16,5 @@
   <Set target="GreatSphinx_Label_2" show="false"></Set>
   <Set target="CameraMotion" time="86"></Set>
   <Play></Play>
+  <Set trigger="CameraMotion/time=93" target="3Scape_Label" show="true"></Set>
 </Update>
