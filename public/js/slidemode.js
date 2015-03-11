@@ -123,11 +123,12 @@ function loadSlides(num) {
 
 function nextSlide(){
 
-    console.debug("Curr slide: "+g_currSlide);
+  console.debug("Curr slide: "+g_currSlide);
+  if (g_currSlide == g_numSlides) g_currSlide = -1;
   if (g_currSlide <= g_numSlides) {
 
-      bridgeworks.updateScene('Slide' + (g_currSlide) + '.xml');
       g_currSlide++;
+      bridgeworks.updateScene('Slide' + (g_currSlide) + '.xml');
       console.log("SLIDE NUMBER = "+g_currSlide);
   }
 };

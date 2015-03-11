@@ -3,7 +3,11 @@
   <Set target="Intro" show="false"></Set>
   <Set target="Architecture" show="false"></Set>
   <Set target="Ancient" show="false"></Set>
+  <Set target="Invention" show="false"></Set>
   <Set target="GoTo4" show="false"></Set>
+  <Set target="GoTo6" show="false"></Set>
+  <Set target="Environment" show="false"></Set>
+  <Set target="Writing" show="false"></Set>
   <Set target="GreatSphinx_Label_1" show="false"></Set>
   <Set target="KhafrePyramid_Label" show="false"></Set>
   <Set target="Sarcophagus_Label" show="false"></Set>
@@ -12,8 +16,8 @@
   <Set target="Ankh_Label" show="false"></Set>
   <Set target="MenakaurePyramid_Label" show="false"></Set>
   <Set target="GreatSphink_Label_2" show="false"></Set>
-  <Set target="CameraMotion" time="43"></Set>
+  <Set target="CameraMotion" time="45"></Set>
   <Play></Play>
-  <Pause trigger="CameraMotion/time=56"/>
-  <Set trigger="CameraMotion/time=54" target="MenakaurePyramid_Label" show="true"></Set>
+  <Set trigger="CameraMotion/time=50" target="Environment" show="true"/>
+  <Pause trigger="CameraMotion/time=50"/>
 </Update>

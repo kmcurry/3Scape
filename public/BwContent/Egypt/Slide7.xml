@@ -5,6 +5,7 @@
   <Set target="Ancient" show="false"></Set>
   <Set target="GoTo4" show="false"></Set>
   <Set target="GoTo6" show="false"></Set>
+  <Set target="Environment" show="false"></Set>
   <Set target="GreatSphinx_Label_1" show="false"></Set>
   <Set target="KhafrePyramid_Label" show="false"></Set>
   <Set target="Sarcophagus_Label" show="false"></Set>
@@ -13,11 +14,14 @@
   <Set target="Ankh_Label" show="false"></Set>
   <Set target="MenakaurePyramid_Label" show="false"></Set>
   <Set target="GreatSphink_Label_2" show="false"></Set>
-  <Set target="CameraMotion" time="56"></Set>
+  <Set target="AnkhDissolve" time="0"></Set>
+  <Set target="CameraMotion" time="50"></Set>
   <Play></Play>
   <!--<Pause trigger="CameraMotion/time=63"/>-->
+  <Set trigger="CameraMotion/time=60" target="Writing" show="true"></Set>
   <Set trigger="CameraMotion/time=60" target="Ankh_Label" show="true"></Set>
-  <Set target="AnkhDissolve" time="58"></Set>
-  <Pause trigger="AnkhDissolve/time=63"/>
+  <Set trigger="CameraMotion/time=60" target="AnkhDissolve" time="60"></Set>
+  <Set trigger="CameraMotion/time=54" target="MenakaurePyramid_Label" show="true"></Set>
+  <Pause trigger="CameraMotion/time=61"/>
 
 </Update>

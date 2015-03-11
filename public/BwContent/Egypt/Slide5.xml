@@ -3,8 +3,10 @@
   <Set target="Intro" show="false"></Set>
   <Set target="Architecture" show="false"></Set>
   <Set target="Ancient" show="false"></Set>
+  <Set target="Timekeeping" show="false"></Set>
   <Set target="GoTo4" show="false"></Set>
-  <Set target="Paper" show="false"></Set>
+  <Set target="GoTo6" show="false"></Set>
+  <Set target="Writing" show="false"></Set>
   <Set target="GreatSphinx_Label_1" show="false"></Set>
   <Set target="KhafrePyramid_Label" show="false"></Set>
   <Set target="Sarcophagus_Label" show="false"></Set>
@@ -13,10 +15,12 @@
   <Set target="Ankh_Label" show="false"></Set>
   <Set target="MenakaurePyramid_Label" show="false"></Set>
   <Set target="GreatSphink_Label_2" show="false"></Set>
-  <Set target="CameraMotion" time="38"></Set>
+  <Set target="UrnDissolve" time="0"></Set>
+  <Set target="CameraMotion" time="30"></Set>
   <Play></Play>
-  <Set trigger="CameraMotion/time=43" target="Urn_Label" show="true"></Set>
-  <Set trigger="CameraMotion/time=43" target="GoTo6" show="true"></Set>
-  <Set target="UrnDissolve" time="40"></Set>
-  <Pause trigger="UrnDissolve/time=45"/>
+  <Set trigger="CameraMotion/time=35" target="Urn_Label" show="true"></Set>
+  <Set trigger="CameraMotion/time=35" target="KhafrePyramid_Label" show="true"></Set>
+  <Set trigger="CameraMotion/time=40" target="GoTo6" show="true"></Set>
+  <Set trigger="CameraMotion/time=35" target="UrnDissolve" time="40"></Set>
+  <Pause trigger="CameraMotion/time=40"/>
 </Update>

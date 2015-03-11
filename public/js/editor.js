@@ -130,7 +130,9 @@ function loadEgypt() {
   // don't call onloadModified b/c XML doesn't reset Bw
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Egypt.xml');
-  loadSlides(10);
+  g_numSlides = 10;
+  g_currSlide = 1;
+  //loadSlides(10);
 }
 
 function loadEntymology() {
