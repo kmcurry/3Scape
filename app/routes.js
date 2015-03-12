@@ -15,18 +15,16 @@ module.exports = function(app, config) {
 
     if (req.params.scape) {
       s = JSON.stringify(req.params.scape);
-      var s1 = s.replace(/\"/g, "");
+      var s1 = s.replace(/\"/g, "").toLowerCase();
 
       switch(s1) {
-        case "2Dvs3D" :
-        case "Egypt" :
+        case "2dvs3d" :
         case "egypt" :
-        case "Entymology" :
         case "entymology" :
-        case "Physics" :
+        case "light":
         case "physics" :
-        case "Two-stroke" :
-        case "two-stroke" :
+        case "twostroke" :
+        case "undersea":
           {
             res.status(200).render('demo', {
               scape: s,
@@ -35,7 +33,7 @@ module.exports = function(app, config) {
           }
           break;
         case "hi5":
-        case "Hi5":
+        case "highfive":
           {
             {
               res.status(200).render('demo', {

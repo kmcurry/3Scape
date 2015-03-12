@@ -63,7 +63,14 @@
 			<Label name="Urn_Label" parent="Urn" text="an urn" show="false"></Label>
 			<Label name="Ankh_Label" parent="Ankh" text="Ankh means 'key of life'" show="false"></Label>
 			<Label name="GreatSphinx_Label_1" parent="GreatSphinx" text="The Great Sphinx" show="false"></Label>
-			<Label name="GreatSphinx_Label_2" parent="GreatSphinx" text="'Sphinx' means 'Father of Dread'" show="false"></Label>
+			<Label name="GreatSphinx_Label_2" text="'Sphinx' means 'Father of Dread'" show="false">
+				<position x="0" y="0" z="0"/>
+				<labelStyle>
+					<fontStyle>
+						<size>24</size>
+					</fontStyle>
+				</labelStyle>
+			</Label>
 			<Label name="3Scape_Label" text="https://go.3scape.me/classroom" show="false">
 				<position x="-900" y="-500" z="0"/>
 				<labelStyle>
@@ -91,7 +98,7 @@
 					<htmlLabelStyle>
 							<html><![CDATA[<h4>Ancient Egyptians made contributions that affect the present world.</h4>
 							<p><h4>Key Terms</h4></p>
-							<p>
+							<p style="font-size:18px;">
 								<ul style="margin-left:8px;font-size:18px;">
 									<li><em><b>ancient</b></em>: Long, long ago</li>
 									<li><em><b>architecture</b></em>: The design of buildings</li>
@@ -109,11 +116,11 @@
 		<anchor x="-200" y="200"/>
 			<balloonTipLabelStyle>
 					<htmlLabelStyle>
-							<html><![CDATA[<div style="font-size:16px;"><p>The word <em><b>'ancient'</b></em> means "long, long ago".</p>
-							<p>
+							<html><![CDATA[<div style="font-size:18px;"><p>The word <em><b>'ancient'</b></em> means "long, long ago".</p>
+							<p style="font-size:18px;">
 								The Pyramids of Giza and Great Sphinx were built almost 5000 years ago!
 							</p>
-							<p>
+							<p style="font-size:18px;">
 								<a href="javascript:playSlide(2);">Click to continue</a>
 							</p>
 							</div>]]></html>
@@ -124,14 +131,14 @@
 		<anchor x="240" y="0"/>
 			<balloonTipLabelStyle>
 					<htmlLabelStyle>
-							<html><![CDATA[<p>Ancient Egyptians contributed amazing <em><b>architecture</b></em>.</p>
-							<p>
+							<html><![CDATA[<div style="font-size:18px;"><p>Ancient Egyptians contributed amazing <em><b>architecture</b></em>.</p>
+							<p style="font-size:18px;">
 								This is the Great Pyramid of Giza, also known as Pyramid of Khufu.
 								Built as a tomb, it is the oldest  and largest of the 3 pyramids.
 							</p>
-							<p>
+							<p style="font-size:18px;">
 								<a href="javascript:playSlide(3);">Click to continue</a>
-							</p>]]></html>
+							</p></div>]]></html>
 					</htmlLabelStyle>
 			</balloonTipLabelStyle>
 	</BalloonTipLabel>
@@ -139,28 +146,30 @@
 		<anchor x="-400" y="300"/>
 			<balloonTipLabelStyle>
 					<htmlLabelStyle>
-							<html><![CDATA[<p>Speaking of <em><b>ancient</b></em>...</p>
-							<p>
+							<html><![CDATA[<div style="font-size:18px;"><p>Speaking of <em><b>ancient</b></em>...</p>
+							<p style="font-size:18px;">
 							Egyptians preserved their dead pharohs in elaborate tombs
 							that have lasted thousands of years and still stand today!</p>
-								<p><a href="javascript:playSlide(4);">Click to continue</a></p>]]></html>
+								<p><a href="javascript:playSlide(4);">Click to continue</a></p></div>]]></html>
 					</htmlLabelStyle>
 			</balloonTipLabelStyle>
 	</BalloonTipLabel>
 	<BalloonTipLabel name="Timekeeping" parent="KhafrePyramid" show="false">
-		<anchor x="-460" y="380"/>
+		<anchor x="-460" y="300"/>
 			<balloonTipLabelStyle>
 					<htmlLabelStyle>
 							<html><![CDATA[<img alt="Click below to read about sundials and other Ancient Egyptian timekeeping devices" src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Ancient-egyptian-sundial.jpg/220px-Ancient-egyptian-sundial.jpg"></img>
-							<p>
+							<div style="font-size:18px;">
+							<p style="font-size:18px;">
 								Egyptians <b>invented clocks</b> and the <b>365 day calendar</b>!
 							</p>
-							<p><a href="http://en.wikipedia.org/wiki/History_of_timekeeping_devices_in_Egypt">Click to read about the History of Timekeeping in Egypt</a>
+							<p style="font-size:18px;"><a href="http://en.wikipedia.org/wiki/History_of_timekeeping_devices_in_Egypt">Click to read about the History of Timekeeping in Egypt</a>
 								on Wikipedia.
 							</p>
-							<p>
+							<p style="font-size:18px;">
 								<a href="javascript:playSlide(5);">Click to continue</a>
-							</p>]]></html>
+							</p>
+						</div>]]></html>
 					</htmlLabelStyle>
 			</balloonTipLabelStyle>
 	</BalloonTipLabel>
@@ -178,13 +187,14 @@
 		<anchor x="500" y="0"/>
 			<balloonTipLabelStyle>
 					<htmlLabelStyle>
-							<html><![CDATA[<p>Egypt is a land of both fertile soil and barren <em><b>desert</b></em>.
+							<html><![CDATA[<div style="font-size:18px;"><p>Egypt is a land of both fertile soil and barren <em><b>desert</b></em>.
 							</p>
-							<p>These pyramids are about 5 miles east of the <em><b>Nile River</b></em></p>
-							<p>The Nile River is very important for Egypt. The Nile River provides water, food and transportation.</p>
+							<p style="font-size:18px;">These pyramids are about 5 miles east of the <em><b>Nile River</b></em></p>
+							<p style="font-size:18px;">The Nile River is very important for Egypt.</p>
+							<p style="font-size:18px;">The Nile River provides water, food and transportation.</p>
 							<p>
 								<a href="javascript:playSlide(7);">Click to continue</a>
-							</p>]]></html>
+							</p></div>]]></html>
 					</htmlLabelStyle>
 			</balloonTipLabelStyle>
 	</BalloonTipLabel>
@@ -192,13 +202,13 @@
 		<anchor x="-400" y="400"/>
 			<balloonTipLabelStyle>
 					<htmlLabelStyle>
-							<html><![CDATA[<p>Egyptians had their own form of writing called <em><b>Heiroglyphics</b></em>.
+							<html><![CDATA[<div style="font-size:18px;"><p>Egyptians had their own form of writing called <em><b>Heiroglyphics</b></em>.
 							</p>
-							<p>Heiroglyphics combined both symbols and letters to make words and sentences</p>
-							<p>This Ankh is an example of a heiroglyph.</p>
-							<p>
+							<p style="font-size:18px;">Heiroglyphics combined both symbols and letters to make words and sentences</p>
+							<p style="font-size:18px;">This Ankh is an example of a heiroglyph.</p>
+							<p style="font-size:18px;">
 								<a href="javascript:playSlide(8);">Click to continue</a>
-							</p>]]></html>
+							</p></div>]]></html>
 					</htmlLabelStyle>
 			</balloonTipLabelStyle>
 	</BalloonTipLabel>

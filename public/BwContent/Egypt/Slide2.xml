@@ -15,6 +15,6 @@
   <Set target="CameraMotion" time="8"></Set>
   <Play></Play>
   <Set trigger="CameraMotion/time=15" target="GreatPyramid_Label" show="true"></Set>
-  <Set trigger="CameraMotion/time=15" target="Architecture" show="true"></Set>
+  <Set trigger="CameraMotion/time=14" target="Architecture" show="true"></Set>
   <Pause trigger="CameraMotion/time=15"/>
 </Update>

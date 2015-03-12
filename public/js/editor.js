@@ -28,55 +28,9 @@ var g_motionCount = 1;
 
 // functions are organized by alpha until refactored
 
-function applyColor()
-{
-    var name = g_selectedModel.name.getValueDirect().join("");
-    var b = $('#info-b').val();
-    var g = $('#info-g').val();
-    var r = $('#info-r').val();
-    var cmd = "\<Set target='"+name+"'>" + "\<color r= '" +r+ "' " + "g= '"+g+"' " + "b= '"+b+"'/>" +"\</Set>";
-    bridgeworks.updateScene(cmd);
-}
 
-function copy()
-{
-    if (g_selectedModel) {
 
-        copiedUrl = g_selectedModel.url.getValueDirect().join("");
-        R = g_selectedModel.color.values[0];
-        G = g_selectedModel.color.values[1];
-        B = g_selectedModel.color.values[2];
-        Size = g_selectedModel.scale.getValueDirect().x;
-        rotX = g_selectedModel.rotation.getValueDirect().x;
-        rotY = g_selectedModel.rotation.getValueDirect().y;
-        rotZ = g_selectedModel.rotation.getValueDirect().z;
-        copiedElement = 1;
-    }
-    else if (selectedThing)
-    {
-        copiedSelectedText = selectedText;
-        console.log(copiedSelectedText);
-        copiedElement = 2;
-    }
-}
-function cut()
-{
-    if (g_selectedModel) {
-        copy();
-        var name = g_selectedModel.name.getValueDirect().join("");
-        var c = "\<Remove target='" + name + "'/>"
-        bridgeworks.updateScene(c);
-        console.log(name);
 
-        var panel = document.getElementById("object-panel");
-        var link = document.getElementById("row" + name);
-        panel.removeChild(link);
-    }
-    else {
-      var c = "\<Remove target='" + selectedThing + "'/>"
-      bridgeworks.updateScene(c);
-    }
-}
 
 function exportSelected() {
 
@@ -110,21 +64,21 @@ function handleFileSelect(evt) {
     }
 }
 
-function load2D3D() {
+function load2dvs3d() {
   reset();
   bridgeworks.contentDir='/BwContent/2Dvs3D/';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Pyramid.xml');
 }
 
-function loadBrakes() {
+function loadbrakes() {
   reset();
   bridgeworks.contentDir='BwContent/Motorcycle';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('BrakeAssemblyLWS.xml');
 }
 
-function loadEgypt() {
+function loadegypt() {
   reset();
   bridgeworks.contentDir='BwContent/Egypt';
   // don't call onloadModified b/c XML doesn't reset Bw
@@ -135,40 +89,51 @@ function loadEgypt() {
   //loadSlides(10);
 }
 
-function loadEntymology() {
+function loadentymology() {
   reset();
   bridgeworks.contentDir='/BwContent/Entymology/BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('formica_rufa.xml');
 }
 
-function loadHi5() {
+function loadhi5() {
   reset();
   bridgeworks.contentDir='BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('HighFive.xml');
 }
 
-function loadLights() {
+function loadhighfive() {
+  loadhi5();
+}
+
+function loadlight() {
   reset();
   bridgeworks.contentDir='BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Lights.xml');
 }
 
-function loadPhysics() {
+function loadphysics() {
   reset();
   bridgeworks.contentDir='BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Physics.xml');
 }
 
-function loadTwoStroke() {
+function loadtwostroke() {
   reset();
   bridgeworks.contentDir='/BwContent/Engine/BwContent';
-  //bridgeworks.onLoadModified();
+  bridgeworks.onLoadModified();
   bridgeworks.updateScene('Stihl.xml');
   loadSlides(1);
+}
+
+function loadundersea() {
+  reset();
+  bridgeworks.contentDir='/BwContent/Underwater/';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('Underwater.xml');
 }
 
 var loaded = 0;
@@ -349,14 +314,6 @@ function load(u)
     }
 }
 
-//Issues an alert message saying the desired 3Scape doesnt exist
-//Also redirects the user to the landing page.
-function loadLandingPage() {
-  var errorMsg = '"These aren\'t the Scapes you\'re looking for." \n -Kevin Curry \n\n This 3Scape does not exist.';
-  alert(errorMsg);
-  window.onbeforeunload = null;
-  document.location.href = "/";
-}
 
 function loadModel(url)
 {
@@ -572,37 +529,6 @@ function loadMotion(url)
     var xstr = (new XMLSerializer()).serializeToString(xml);
     console.debug(xstr);
     bridgeworks.updateScene(xstr);
-}
-
-function loadScape(scape) {
-  switch (scape) {
-    case "2Dvs3D" :
-      load2D3D();
-      break;
-    case "Egypt" :
-    case "egypt" :
-      loadEgypt();
-      break;
-    case "Entymology" :
-    case "entymology" :
-      loadEntymology();
-      break;
-    case "hi5" :
-    case "Hi5" :
-      loadHi5();
-      break;
-    case "Physics" :
-    case "physics" :
-      loadPhysics();
-      break;
-    case "Two-stroke" :
-    case "two-stroke" :
-      loadTwoStroke();
-      break;
-    default:
-    //  loadLandingPage();
-      break;
-  }
 }
 
 

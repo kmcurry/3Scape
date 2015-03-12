@@ -57,7 +57,10 @@
 					// this loads a named 3Scape passed in with the URL
 					// ex., http://3Scape.me/egypt
 					<% if (typeof scape != 'undefined') { %>
-						loadScape(<%- scape %>);
+						var s = <%- scape %>.toLowerCase();
+						var f = "load" + s + "()";
+						console.log(f);
+						eval(f);
 					<% } %>
 
 				}
