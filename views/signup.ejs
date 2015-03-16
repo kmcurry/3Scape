@@ -37,18 +37,21 @@
         <% if (message.length > 0) { %>
   					<div class="alert alert-info"><%= info_message %></div>
   				<% } %>
+
   			<% if (info_message.length > 0) { %>
   					<div class="alert alert-info"><%= info_message %></div>
-  				<% } %>
-  				<% if (error_message.length > 0) { %>
+  			<% } %>
+
+  			<% if (error_message.length > 0) { %>
   					<div class="alert alert-danger"><%= error_message %></div>
-  				<% } %>
-  				<% if (success_message.length > 0) { %>
+  			<% } %>
+
+  			<% if (success_message.length > 0) { %>
   					<div class="alert alert-success"><%= success_message %></div>
-  				<% } %>
+  			<% } %>
 
         <span class="payment-errors"></span>
-<!-- NEEEEWWWWWWWWW -->
+
         <div class="form-group">
           <label>Username *</label>
             <input class="form-control" type="text" name="username" placeholder='Default username is "3Scaper"' >
@@ -63,7 +66,7 @@
             <label>Password</label>
             <input class="form-control" type="password" name="password" placeholder="Your alphanumeric password (8-20 characters)">
         </div>
-<!-- NEEEWWWWW -->
+
         <div class="form-group">
             <label>Confirm Password</label>
             <input class="form-control" type="password" name="password-confirm" placeholder="Must match your password">

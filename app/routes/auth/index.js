@@ -176,10 +176,10 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   app.post('/signup', function (req, res, next) {
   //Check if fields are filled out correctly
     //req.assert('username', 'If supplied, Username must be 5-15 characters long and remain alphanumeric').optional().isAlphanumeric().len(5,15);
-    req.check('email', 'Email is required').notEmpty();
+    req.assert('email', 'Email is required').notEmpty();
     req.assert('email', 'Email does not appear to be valid').isEmail();
     req.assert('password', 'Password is required').notEmpty();
-    req.assert('password', 'Password must be alphanumeric').isAlphanumeric();
+    //req.assert('password', 'Password must be alphanumeric').isAlphanumeric();
     req.assert('password', 'Password must be 8-20 characters long').len(8, 20);
     req.assert('password-confirm', 'Password confirmation is required').notEmpty();
     req.assert('password-confirm', 'Passwords do not match').equals(req.body.password);
