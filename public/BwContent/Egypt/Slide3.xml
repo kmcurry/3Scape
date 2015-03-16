@@ -1,20 +1,21 @@
 <?xml version="1.0"?>
 <Update>
-  <Set target="Pyramid1" show="false"></Set>
-  <Set target="Pyramid2" show="false"></Set>
-  <Set target="Pyramid3" show="false"></Set>
-  <Set target="S_Description" show="false"></Set>
-  <Set target="P2_Description" show="false"></Set>
-  <Set target="A1_Description" show="false"></Set>
-  <Set target="P1_Description" show="false"></Set>
-  <Set target="A2_Description" show="false"></Set>
-  <Set target="A3_Description" show="false"></Set>
-  <Set target="P3_Description" show="false"></Set>
+  <Set target="Intro" show="false"></Set>
+  <Set target="Ancient" show="false"></Set>
+  <Set target="Architecture" show="false"></Set>
+  <Set target="Timekeeping" show="false"></Set>
+  <Set target="GreatSphinx_Label_1" show="false"></Set>
+  <Set target="KhafrePyramid_Label" show="false"></Set>
+  <Set target="Sarcophagus_Label" show="false"></Set>
+  <Set target="GreatPyramid_Label" show="false"></Set>
+  <Set target="Urn_Label" show="false"></Set>
+  <Set target="Ankh_Label" show="false"></Set>
+  <Set target="MenakaurePyramid_Label" show="false"></Set>
   <Set target="CameraMotion" time="15"></Set>
   <Play></Play>
   <!--<Pause trigger="CameraMotion/time=22"/>-->
-  <Set trigger="CameraMotion/time=19" target="A1_Description" show="true"></Set>
-  <Set target="Artifact_01Dissolve" time="17.5"></Set>
-  <Pause trigger="Artifact_01Dissolve/time=23"/>
-
+  <Set trigger="CameraMotion/time=19" target="Sarcophagus_Label" show="true"></Set>
+  <Set target="SarcophagusDissolve" time="17.5"></Set>
+  <Set trigger="CameraMotion/time=19" target="GoTo4" show="true"></Set>
+  <Pause trigger="SarcophagusDissolve/time=23"/>
 </Update>

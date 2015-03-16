@@ -42,7 +42,7 @@
   transition: color 0.3s;
 }
 .menu .btn:hover .fa {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 255, 0.7);
 }
 .menu .btn.trigger {
   opacity: 1;

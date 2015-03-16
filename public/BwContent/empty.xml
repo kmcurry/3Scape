@@ -5,7 +5,7 @@
     <Isolator name="Root">
         <Selector name="Cameras">
             <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="0.1" farDistance="10000">
-                <position x="0" y=".5" z="-1"/>
+                <position x="0" y=".5" z="-5"/>
             </PerspectiveCamera>
         </Selector>
         <Group name="Lights">
@@ -21,8 +21,13 @@
             </PointLight>
         </Group>
         <Group name="Models">
+          <Model name="LightModel" url="objects/Sphere.lwo">
+              <color r="1" g="1" b=".4"/>
+          </Model>
         </Group>
     </Isolator>
-    <RenderDirective name="RenderDirective" backgroundImageFilename="images/white.png"/>
+    <RenderDirective name="RenderDirective">
+      <backgroundColor r="0" g="0" b="0" a="1"/>
+    </RenderDirective>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 </Scene>

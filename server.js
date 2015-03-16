@@ -4,24 +4,29 @@
 // get all the tools we need
 var express  = require('express');
 var app      = express();
-var mongoose = require('mongoose');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var flash = require('connect-flash');
-var session = require('express-session');
-var methodOverride = require('method-override');
-var mongoStore = require('connect-mongodb');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt-nodejs');
-var async = require('async');
-var crypto = require('crypto');
+
+var compression = require('compression');
+// compress all requests
+app.use(compression());
+
+var mongoose = require('mongoose'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    passport = require('passport'),
+    flash = require('connect-flash'),
+    session = require('express-session'),
+    methodOverride = require('method-override'),
+    mongoStore = require('connect-mongodb'),
+    LocalStrategy = require('passport-local').Strategy,
+    bcrypt = require('bcrypt-nodejs'),
+    async = require('async'),
+    crypto = require('crypto');
 
 
 // configuration ===============================================================
 var config = require('./configLoader')(process.env.NODE_ENV || "local") //Environment
-var port = process.env.PORT || 8080;
+var port = config.port;
 mongoose.connect(config.dbConnectionString); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
@@ -45,8 +50,8 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./app/routes/auth/index.js')(app, async, crypto, passport, utilities);
-require('./app/routes.js')(app);
+require('./app/routes/auth/index.js')(app, async, config, crypto, passport, utilities);
+require('./app/routes.js')(app, config);
 
 
 

@@ -2,68 +2,35 @@
 	<head>
 		<title>3Scape Snappy</title>
 		<meta http-equiv="x-ua-compatible" content="IE=10">
+		<meta name="robots" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script type="text/javascript" src="js/BwHelper.js"></script>
-		<script type="text/javascript" src="js/crossbrowser.js"></script>
-		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
-		<script type="text/javascript" src="js/eventHandlers.js"></script>
-		<script type="text/javascript" src="js/snappy.js"></script>
-		<script type="text/javascript" src="js/MapControls.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
 		<link rel="stylesheet" type="text/css" href="css/contextmenu.css"/>
 		<link rel="stylesheet" type="text/css" href="css/snappy.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
+		<link rel="stylesheet" type="text/css" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
+		<link rel="stylesheet" type="text/css" href="css/slider.css">
+		<script type="text/javascript" src="js/eventHandlers.js"></script>
+		<script type="text/javascript" src="js/objectmode.js"></script>
+
+
 	</head>
 	<body onresize="resize();">
 
-		<div>
-			<a for="Toolbar" class="h-button btn btn-info" data-toggle="collapse" href="#Toolbar" aria-expanded="true" aria-controls="Toolbar">
-				<span class="glyphicon glyphicon-chevron-down"></span>
-			</a>
-			<div id="Toolbar" class="collapse in">
-				<div class="row">
-					<div class="tool-button col-xs-1 col-sm-offset-1" onclick="loadModel('Cube.xml');">Cube</div>
-					<div class="tool-button col-xs-1" onclick="loadModel('Pyramid.xml');">Pyramid</div>
-					<div class="tool-button col-xs-1" onclick="loadModel('Sphere.xml');">Sphere</div>
-					<div class="tool-button col-xs-1" onclick="loadModel('Tube.xml');">Tube</div>
-					<div class="tool-button col-xs-1" onclick="loadModel('Gear.xml');">Gear</div>
-					<div class="tool-button col-xs-1" onclick="loadModel('Beam.xml');">Beam</div>
-					<div class="tool-button col-xs-1" onclick="loadModel('Wall.xml');">Wall</div>
-					<div class="tool-button col-xs-1" onclick="loadModel('Ring.xml');">Ring</div>
-				</div>
-			</div>
-		</div>
+		<div id="fb-root"></div><!-- FB Javascript SDK -->
 
-		<div id="ZoomControls">
-			<div id="Zoom">
-				<span id="zoom-in" class="shape glyphicon glyphicon-zoom-in" style="font-size:2em" title="Zoom In"></span>
-				<span id="zoom-out" class="shape glyphicon glyphicon-zoom-out" style="font-size:2em" title="Zoom Out"></span>
-			</div>
-		</div>
+		<%- include('viewcontrols/objectbar'); -%>
 
-		<div id="BwContainer" onclick="handleMouse(event);" onmousedown="handleMouse(event);" onmouseup="handleMouse(event);" onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
+		<%- include('viewcontrols/zoom') -%>
+
+		<div id="BwContainer" onclick="handleMouse(event);"
+				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
+				 onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
 			<canvas id="Canvas">
 			</canvas>
 		</div>
 
-
-		<div id="model-menu" class="menu">
-			<div class="rotater">
-				<div class="btn btn-icon" onclick="cut();$('#model-menu').toggleClass('active');">
-					<i class="fa fa-cut"></i>
-				</div>
-			</div>
-			<div class="rotater">
-				<div class="btn btn-icon" name="model-color-item">
-					<i class="fa fa-paint-brush"></i>
-					<input type="text" value="CCC" name="model-color" class="pick-a-color form-control">
-				</div>
-			</div>
-		</div>
+		<%- include('viewcontrols/modelcontext.ejs'); -%>
 
 
 		<script type="text/javascript">
@@ -77,27 +44,39 @@
 
 					onHoldFunction('#zoom-in', zoomIn, 20);
 					onHoldFunction('#zoom-out', zoomOut, 20);
+					onHoldFunction('#model-rotate-left', rotateLeft, 20);
+					onHoldFunction('#model-rotate-right', rotateRight, 20);
+					onHoldFunction('#model-rotate-up', rotateUp, 20);
+					onHoldFunction('#model-rotate-down', rotateDown, 20);
 
-					$(".pick-a-color").pickAColor({
-						showAdvanced						: false,
-						showSpectrum            : false,
-						showSavedColors         : false,
-						saveColorsPerElement    : false,
-						fadeMenuToggle          : true,
-						showHexInput            : false,
-						showBasicColors         : true,
-						allowBlank              : false,
-						inlineDropdown          : false
-					});
+					addContextMenu();
 
-					$("#model-color input").on("change", function () {
-						gapplyColor($(this).val());
-					});
+					$(document).scroll(handleScroll);
 				}
 			}
 		</script>
+
+		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
+		<script type="text/javascript" src="js/BwHelper.js"></script>
+		<script type="text/javascript" src="js/crossbrowser.js"></script>
+		<script type="text/javascript" src="js/snappy.js"></script>
+		<script type="text/javascript" src="js/MapControls.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
+
 		<script type="text/javascript" src="js/contextmenu.js"></script>
 		<script src="bower_components/pick-a-color/build/dependencies/tinycolor-0.9.15.min.js"></script>
 		<script src="bower_components/pick-a-color/build/1.2.3/js/pick-a-color-1.2.3.min.js"></script>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-26989160-5', 'auto');
+			ga('send', 'pageview');
+
+		</script>
 	</body>
 </html>

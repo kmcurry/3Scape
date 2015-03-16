@@ -1,7 +1,11 @@
-module.exports = function(app, async, crypto, passport, utilities) {
+module.exports = function(app, async, config, crypto, passport, utilities) {
 
   var User = require('../../../app/models/user');
-  var config = require('../../../configLoader')(process.env.NODE_ENV || "local")
+  var express = require('express');
+  var bodyParser = require('body-parser');
+
+  //var app = express();
+  app.use(bodyParser());
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -76,7 +80,7 @@ module.exports = function(app, async, crypto, passport, utilities) {
         if (req.session.returnTo)
           return res.redirect(req.session.returnTo);
         else
-          return res.render('index');
+          return res.redirect('/');
       });
     })(req, res, next);
   });
@@ -151,28 +155,60 @@ module.exports = function(app, async, crypto, passport, utilities) {
   //SignUp============================
   app.get('/signup', function (req, res) {
     //render the page and pass any flash data if it exists
-    res.render('signup', {message: req.flash('signupMessage')});
+    res.render('signup', {
+      message: req.flash('signupMessage'),
+      paymentKey: config.payment.pubKey
+      });
   });
 
   //process the signup form
   app.post('/signup', function (req, res, next) {
-    passport.authenticate('local-signup', function (err, user, info) {
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/signup'); }
-      req.logIn(user, function(err) {
-        if (err) {
-          return next(err);
-        }
-        // email
-        if (config.email.smtpUser) {
-          utilities.emailer.send({
-            to: user.email,
-            templateId: config.email.welcome
+
+
+
+    var stripe = require('stripe')(config.payment.secKey);
+
+    stripe.customers.create({
+      source: req.body.stripeToken, // obtained with Stripe.js
+      plan: config.payment.plan,
+      email: req.body.email
+    }, function(err, customer) {
+      if (err || !customer) {
+        req.flash('signupMessage', 'There was a problem with your payment. ' + err);
+        return res.redirect('/signup');
+      } else {
+        passport.authenticate('local-signup', function (err, user, info) {
+          if (err) {
+            req.flash('signupMessage', 'There was a problem logging you in. ' + err);
+            return next(err);
+          }
+
+          if (!user) {
+            req.flash('signupMessage', 'There was a problem creating your 3Scape profile.');
+            return res.redirect('/signup'); // redirect fails in other callbacks
+                                            // with 'cannot set headers after they're sent' - KMC
+          }
+
+
+          req.logIn(user, function(err) {
+            if (err) {
+              return next(err);
+            }
+            // email
+            if (config.email.smtpUser) {
+              utilities.emailer.send({
+                to: user.email,
+                templateId: config.email.welcome
+              });
+            }
+            return res.redirect('/');
           });
-        }
-        return res.redirect('/');
-      });
-    })(req, res, next);
+        })(req, res, next);
+      }
+    });
 
   });
+
+  app.use(express.static(__dirname));
+
 };

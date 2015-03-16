@@ -1,35 +1,43 @@
 
-module.exports = function(app) {
+module.exports = function(app, config) {
 //HOME PAGE(with login links) ======
 
   var User = require('../app/models/user');
-  var config = require('../configLoader')(process.env.NODE_ENV || "local")
 
   app.get('/', isLoggedIn, function (req, res) {
     res.render('snappy');
   });
 
-  app.get('/:scape?', isLoggedIn, function (req, res, next) {
+  app.get('/:scape?', function (req, res, next) {
 
     var s = "";
     var err = null;
 
     if (req.params.scape) {
-      s = JSON.stringify(req.params.scape);
-      var s1 = s.replace(/\"/g, "");
+      s = JSON.stringify(req.params.scape).toLowerCase();
+      var s1 = s.replace(/\"/g, "");  // strip quotes for switch
+
+      console.log("rendering scape: " + s1);
 
       switch(s1) {
-        case "2Dvs3D" :
-        case "Egypt" :
-        case "egypt" :
-        case "Entymology" :
-        case "entymology" :
-        case "Physics" :
-        case "physics" :
-        case "Two-stroke" :
-        case "two-stroke" :
+        case '2dvs3d' :
+        case 'egypt' :
+        case 'entymology' :
+        case 'light':
+        case 'physics' :
+        case 'twostroke' :
+        case 'undersea':
           {
-            res.status(200).render('index', {
+            res.status(200).render('demo', {
+              scape: s,
+              needsViewControls: true
+            });
+          }
+          break;
+        case 'hi5':
+        case 'highfive':
+          {
+            res.status(200).render('demo', {
               scape: s
             });
           }
@@ -52,7 +60,6 @@ module.exports = function(app) {
   app.get('/classroom', function (req, res) {
     res.render('classroom')
   });
-
 
   app.get('/privacy', function (req, res) {
       res.render('privacy')
@@ -78,7 +85,7 @@ module.exports = function(app) {
   });
 
   app.use(function(req, res, next){
-    //res.send(404, 'Sorry cant find that!');
+    console.log("rendering 404");
     res.status(404).render('404');
   });
 
