@@ -77,7 +77,7 @@ function autoSaveScene(){
   }
 }
 
-var saveInterval = setInterval(function() {autoSaveScene()}, 5000);//300000);
+//var saveInterval = setInterval(function() {autoSaveScene()}, 5000);//300000);
 
 function keepWorkInProgress(){
   var serial = "";
@@ -145,20 +145,14 @@ function init(scene, container, recreateCanvas)
     if (savedScene != "" && (savedScene.indexOf("autoSaved") > -1)){
       bridgeworks.updateScene(properScene);
     }
-    else
+    else {
       bridgeworks.updateScene(scene);
+    }
 
-	addKeyEvents();
-	addTouchEvents();
+    window.onkeydown = handleKey;
+	  addKeyEvents();
+	  //addTouchEvents();
 
-	// gesture
-	/*document.addEventListener("gesturestart", function(event) {
-		event.preventDefault();
-		alert("gesturestart");
-	}, false);*/
-    // disable right-click context menu
-    // KMC: why?
-    document.oncontextmenu = function() { return false; }
     // disable selection
     document.onselectstart = function() { return true; }
 
@@ -213,7 +207,7 @@ function addKeyEvents()
 
     if (window.addEventListener)
     {
-        window.addEventListener("keypress",
+        window.addEventListener("keydown",
             function(event)
             {
                 console.debug("keydown");
@@ -223,7 +217,7 @@ function addKeyEvents()
     }
     else
     {
-        window.attachEvent("keypress",
+        window.attachEvent("keydown",
             function(event)
             {
                 console.debug("keydown");

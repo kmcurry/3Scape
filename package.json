@@ -17,7 +17,11 @@
     "morgan": "latest",
     "passport": "^0.2.1",
     "passport-local": "^0.1.6",
-    "sendgrid": "^1.5.0"
+    "sendgrid": "^1.5.0",
+    "moment": "latest",
+    "lodash": "latest",
+    "q": "latest",
+    "handlebars": "latest"
   },
   "scripts": {
     "start": "node server.js"
