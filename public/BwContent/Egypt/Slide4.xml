@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <Update>
+  <Set target="Intro" show="false"></Set>
+  <Set target="Architecture" show="false"></Set>
+  <Set target="Ancient" show="false"></Set>
+  <Set target="GoTo4" show="false"></Set>
+  <Set target="Timekeeping" show="false"></Set>
   <Set target="GreatSphinx_Label_1" show="false"></Set>
   <Set target="KhafrePyramid_Label" show="false"></Set>
   <Set target="Sarcophagus_Label" show="false"></Set>
@@ -8,9 +13,8 @@
   <Set target="Ankh_Label" show="false"></Set>
   <Set target="MenakaurePyramid_Label" show="false"></Set>
   <Set target="GreatSphink_Label_2" show="false"></Set>
-  <Set target="CameraMotion" time="20"></Set>
+  <Set target="CameraMotion" time="22"></Set>
+  <Set trigger="CameraMotion/time=30" target="Timekeeping" show="true"></Set>
+  <Pause trigger="CameraMotion/time=30"/>
   <Play></Play>
-  <Pause trigger="CameraMotion/time=38"/>
-  <Set trigger="CameraMotion/time=37" target="KhafrePyramid_Label" show="true"></Set>
-
 </Update>

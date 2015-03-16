@@ -4,19 +4,24 @@
 // get all the tools we need
 var express  = require('express');
 var app      = express();
-var mongoose = require('mongoose');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var flash = require('connect-flash');
-var session = require('express-session');
-var methodOverride = require('method-override');
-var mongoStore = require('connect-mongodb');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt-nodejs');
-var async = require('async');
-var crypto = require('crypto');
+
+var compression = require('compression');
+// compress all requests
+app.use(compression());
+
+var mongoose = require('mongoose'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    passport = require('passport'),
+    flash = require('connect-flash'),
+    session = require('express-session'),
+    methodOverride = require('method-override'),
+    mongoStore = require('connect-mongodb'),
+    LocalStrategy = require('passport-local').Strategy,
+    bcrypt = require('bcrypt-nodejs'),
+    async = require('async'),
+    crypto = require('crypto');
 
 
 // configuration ===============================================================

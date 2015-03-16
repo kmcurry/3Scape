@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>3Scape Signup</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/snappy.css">
     <meta name="description" content="a place to make and share interactive 3D on the web">
     <meta name=viewport content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery.validate.js"></script>
 
 </head>
 <body background="images/login-signup-background.png">
@@ -31,7 +31,7 @@
 
     <div class="col-sm-4">
 
-      <form action="/signup" method="POST" id="payment-form">
+      <form action="" method="POST" id="payment-form">
 
         <!-- show any messages that come back with authentication -->
         <% if (message.length > 0) { %>
@@ -50,8 +50,6 @@
   					<div class="alert alert-success"><%= success_message %></div>
   			<% } %>
 
-        <span class="payment-errors"></span>
-
         <div class="form-group">
           <label>Username *</label>
             <input class="form-control" type="text" name="username" placeholder='Default username is "3Scaper"' >
@@ -59,33 +57,33 @@
 
         <div class="form-group">
           <label>Email</label>
-            <input class="form-control" type="text" name="email" placeholder="Your email">
+            <input class="form-control" type="email" name="email" placeholder="Your email" required>
         </div>
 
         <div class="form-group">
             <label>Password</label>
-            <input class="form-control" type="password" name="password" placeholder="Your alphanumeric password (8-20 characters)">
+            <input class="form-control" type="password" name="password" minlength="8" placeholder="Must be 8-20 characters long" required>
         </div>
 
         <div class="form-group">
             <label>Confirm Password</label>
-            <input class="form-control" type="password" name="password-confirm" placeholder="Must match your password">
+            <input class="form-control" type="password" name="password-confirm" placeholder="Must match your password" required>
         </div>
         <label>* Indicates optional input</label>
 
         <!--
-        <center><h4>Your card won't be charged <br/>unless you stay after May 1.</h4></center>
+        <center><h3>Your card won't be charged <br/>unless you stay after May 1.</h3></center>
         <div class="panel panel-default row">
           <div class="panel-body">
             <div class="form-group">
               <div class="col-md-7 col-sm-7">
                 <label><span>Card Number</span>
-                  <input class="form-control" type="text" size="20" data-stripe="number"/>
+                  <input class="form-control cc-number" data-stripe="number" type="text" size="20" placeholder="•••• •••• •••• ••••" required/>
                 </label>
               </div>
               <div class="col-md-4 col-sm-4">
                 <label><span>CVC</span>
-                  <input class="form-control" type="text" size="4" data-stripe="cvc"/>
+                  <input class="form-control cc-cvc" data-stripe="cvc" type="text" size="3" placeholder="•••" required/>
                 </label>
               </div>
             </div>
@@ -93,15 +91,15 @@
             <div class="form-group">
               <div class="col-md-3 col-sm-3">
                 <label><span>Expiration</span>
-                  <input class="form-control" type="text" size="2" data-stripe="exp-month"/>
-                  <span>MM</span>
+                  <input class="form-control" data-stripe="exp-month" type="text" size="5" placeholder="MM"required/>
                 </label>
+                MM
               </div>
-              <div class="col-md-3 col-sm-3">
-                <label><br/>
-                  <input class="form-control" type="text" size="4" data-stripe="exp-year"/>
-                  <span>YYYY</span>
+              <div class="col-md-4 col-sm-4">
+                <label><span><br/></span>
+                  <input class="form-control" data-stripe="exp-year" type="text" size="5" placeholder="YYYY"required/>
                 </label>
+                YYYY
               </div>
               <div class="col-md-5 col-sm-5">
                 <img style="padding-top:20%;" src="images/stripe.png" title="Your payment is secure with Stripe"/>
@@ -109,8 +107,7 @@
             </div>
           </div>
         </div>
-      -->
-
+        <center><div class="payment-errors"></div></center>
         <br/>
         <center><button type="submit" class="btn btn-xlarge btn-primary">Sign Up for Free!</button></center>
       </form>
@@ -125,13 +122,12 @@
 
 <a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
 
-<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 
-<!--
 <script>
-  // TODO: move key to server var set by config - KMC
 
-  Stripe.setPublishableKey(<%- paymentKey %>);
+  <% if (typeof paymentKey != 'undefined') { %>
+    Stripe.setPublishableKey('<%- paymentKey %>');
+  <% } %>
 
   $('#payment-form').submit(function(event) {
     var $form = $(this);
@@ -139,7 +135,37 @@
     // Disable the submit button to prevent repeated clicks
     $form.find('button').prop('disabled', true);
 
-    Stripe.card.createToken($form, stripeResponseHandler);
+    var err = false;
+    var errText = "";
+
+    $('.cc-number').removeClass("alert-danger");
+    $('.cc-cvc').removeClass("alert-danger");
+
+    if (!Stripe.card.validateCardNumber($('.cc-number').val())) {
+      err = true;
+
+      $('.cc-number').addClass("alert-danger");
+
+      errText += 'The Card number field must contain a valid card number.\n';
+      $form.find('.btn').prop('disabled', false);
+
+    }
+
+    if (!Stripe.card.validateCVC($('.cc-cvc').val())) {
+      err = true;
+
+      $('.cc-cvc').addClass("alert-danger");
+
+      errText += 'The CVC number is invalid.';
+      $form.find('.btn').prop('disabled', false);
+    }
+
+    if (!err) {
+      Stripe.card.createToken($form, stripeResponseHandler);
+    } else {
+      $('.payment-errors').addClass("alert-danger");
+      $('.payment-errors').text(errText);
+    }
 
     // Prevent the form from submitting with the default action
     return false;
@@ -170,10 +196,12 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-26989160-4', 'auto');
+  ga('create', 'UA-26989160-5', 'auto');
   ga('send', 'pageview');
 
 </script>
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/snappy.css">
 
 </body>
 </html>

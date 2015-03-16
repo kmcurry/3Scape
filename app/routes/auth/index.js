@@ -192,47 +192,51 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
       return res.redirect('/signup');
     }
 
-    /*
+
 
     var stripe = require('stripe')(config.payment.secKey);
 
     stripe.customers.create({
       source: req.body.stripeToken, // obtained with Stripe.js
-      plan: "Subscriber-Annual-15",
+      plan: config.payment.plan,
       email: req.body.email
     }, function(err, customer) {
-      console.log("Stripe customer error.");
-      return;
-    });
-    */
-
-    passport.authenticate('local-signup', function (err, user, info) {
-      if (err) {
-        console.log(err);
-        return next(err);
-      }
-
-      if (!user) {
-        console.log("!user failure");
+      if (err || !customer) {
+        req.flash('signupMessage', 'There was a problem with your payment. ' + err);
         return res.redirect('/signup');
-      }
+      } else {
+        passport.authenticate('local-signup', function (err, user, info) {
+          if (err) {
+            req.flash('signupMessage', 'There was a problem logging you in. ' + err);
+            return next(err);
+          }
 
-      req.logIn(user, function(err) {
-        if (err) {
-          return next(err);
-        }
-        // email
-        if (config.email.smtpUser) {
-          utilities.emailer.send({
-            to: user.email,
-            templateId: config.email.welcome
+          if (!user) {
+            req.flash('signupMessage', 'There was a problem creating your 3Scape profile.');
+            return res.redirect('/signup'); // redirect fails in other callbacks
+                                            // with 'cannot set headers after they're sent' - KMC
+          }
+
+
+          req.logIn(user, function(err) {
+            if (err) {
+              return next(err);
+            }
+            // email
+            if (config.email.smtpUser) {
+              utilities.emailer.send({
+                to: user.email,
+                templateId: config.email.welcome
+              });
+            }
+            return res.redirect('/');
           });
-        }
-        return res.redirect('/');
-      });
-    })(req, res, next);
+        })(req, res, next);
+      }
+    });
 
   });
+
   app.use(express.static(__dirname));
 
 };

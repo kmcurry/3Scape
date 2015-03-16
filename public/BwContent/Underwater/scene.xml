@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?bw onLoad="initialize"?>
-<?bwinclude url="DefaultPreferences.xml"?>
-<?bwinclude url="scenes/UnderWater.lws"?>
-<Update>
-    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
-</Update>
