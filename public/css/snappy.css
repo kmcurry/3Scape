@@ -207,6 +207,7 @@
 body {
   font-family: "robotolight";
   overflow: scroll;
+  background-repeat: no-repeat;
 }
 
 /* BEGIN DROPDOWN MENU */
