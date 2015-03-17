@@ -39,12 +39,17 @@
 
         <div class="form-group">
           <label>Email</label>
-            <input class="form-control" type="email" name="email" required>
+            <input class="form-control" type="email" name="email" placeholder="Your valid email address" required>
         </div>
 
         <div class="form-group">
             <label>Password</label>
-            <input class="form-control" type="password" name="password" required>
+            <input class="form-control" type="password" name="password" placeholder="Must be 8-20 characters long" required>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input class="form-control" type="password" name="password_confirm" placeholder="Must match your password" required>
         </div>
 
         <center><h3>Your card won't be charged <br/>unless you stay after May 1.</h3></center>
@@ -53,12 +58,12 @@
             <div class="form-group">
               <div class="col-md-7 col-sm-7">
                 <label><span>Card Number</span>
-                  <input class="form-control cc-number" data-stripe="number" type="text" size="20" placeholder="•••• •••• •••• ••••" required/>
+                  <input class="form-control cc-number" data-stripe="number" type="text" maxlength="19" placeholder="•••• •••• •••• ••••" required/>
                 </label>
               </div>
               <div class="col-md-4 col-sm-4">
                 <label><span>CVC</span>
-                  <input class="form-control cc-cvc" data-stripe="cvc" type="text" size="3" placeholder="•••" required/>
+                  <input class="form-control cc-cvc" data-stripe="cvc" type="text" maxlength="3" placeholder="•••" required/>
                 </label>
               </div>
             </div>
@@ -66,15 +71,13 @@
             <div class="form-group">
               <div class="col-md-3 col-sm-3">
                 <label><span>Expiration</span>
-                  <input class="form-control" data-stripe="exp-month" type="text" size="5" placeholder="MM"required/>
+                  <input class="form-control" data-stripe="exp-month" type="text" maxlength="2" placeholder="MM"required/>
                 </label>
-                MM
               </div>
               <div class="col-md-4 col-sm-4">
                 <label><span><br/></span>
-                  <input class="form-control" data-stripe="exp-year" type="text" size="5" placeholder="YYYY"required/>
+                  <input class="form-control" data-stripe="exp-year" type="text" maxlength="4" placeholder="YYYY"required/>
                 </label>
-                YYYY
               </div>
               <div class="col-md-5 col-sm-5">
                 <img style="padding-top:20%;" src="images/stripe.png" title="Your payment is secure with Stripe"/>
