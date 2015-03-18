@@ -172,7 +172,7 @@ function processModelXML(name, copy) {
         var intersection = lineIntersectsPlane(bbox_center_to_edge, bbox_planes[i]);
         if (intersection.result)
         {
-            distance = Math.min(distance, distanceBetween(bbox_mid, bbox_planes[i].point));
+            distance = Math.min(distance, distanceBetween(bbox_mid, bbox_planes[i].point)) / 2;
         }
     }
     // formulate position
