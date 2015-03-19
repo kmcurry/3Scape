@@ -38,7 +38,6 @@ function handleMouse(e)
             break;
         case "click":
             {
-              console.log(bridgeworks.selector.selections.models.length)
               selectPoint();
               selectObject();
 
@@ -53,17 +52,14 @@ function handleMouse(e)
                   // if the shift key is down switch from move to rotate object
                   if (e.shiftKey) {
                     document.body.style.cursor = "alias";
-                    console.log("shifty");
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
                     bridgeworks.get("Object.Zoom").listen.setValueDirect(false);
                     bridgeworks.get("Object.Rotate").listen.setValueDirect(true);
                   } else if (e.ctrlKey || e.metaKey) {
-                    console.log("zoomy");
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
                     bridgeworks.get("Object.Rotate").listen.setValueDirect(false);
                     bridgeworks.get("Object.Zoom").listen.setValueDirect(true);
                   } else {
-                    console.log("movey");
                     bridgeworks.get("Object.Rotate").listen.setValueDirect(false);
                     bridgeworks.get("Object.Zoom").listen.setValueDirect(false);
                     bridgeworks.get("Object.Move").listen.setValueDirect(true);
