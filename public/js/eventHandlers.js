@@ -39,6 +39,7 @@ function handleMouse(e)
         case "click":
             {
               console.log(bridgeworks.selector.selections.models.length)
+              selectPoint();
               selectObject();
 
               // if the selected model is not moveable switch modes between camera and objects
@@ -124,6 +125,13 @@ function selectObject(){
 
   return true;
 
+}
+
+var g_selectPointModel = null;
+function selectPoint() {
+  var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
+  if (g_selectPointModel == null) g_selectPointModel = bridgeworks.get("SelectPoint");
+  g_selectPointModel.position.setValueDirect(pointWorld.x, pointWorld.y, pointWorld.z);
 }
 
 function handleKey(e)

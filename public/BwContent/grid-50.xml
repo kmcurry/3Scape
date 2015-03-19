@@ -25,6 +25,12 @@
                   <mass>0</mass>
                 </physicalProperties>
             </Model>
+            <Model name="SelectPoint" url="objects/Sphere.lwo" moveable="false" detectCollision="false">
+                <scale x=".1" y=".1" z=".1"/>
+                <color r="1" g="0" b="0"/>
+                <specular r="1" g="1" b="1" a="1"/>
+                <emissive r="1" g="1" b="1" a="1"/>
+            </Model>
             <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
               <MediaTexture name="ScreenCaptureTexture"/>
               <ScreenRect name="ScreenCaptureRect" enabled="false"/>
