@@ -40,9 +40,9 @@
 	</ConnectAttributes>
 
 	<!--MOUSE PAN Z-->
-	<ConnectAttributes name="Object.Zoom" event="MButton1.Down" numResponses="-1" sourceContainer="MouseHandler" targetContainer="SceneInspector">
+	<ConnectAttributes name="Object.Zoom" event="MButton1.Down" numResponses="-1" sourceContainer="MouseHandler" targetContainer="ObjectInspector">
 		<sourceAttribute>deltaY</sourceAttribute>
-		<targetAttribute>panDelta:2</targetAttribute>
+		<targetAttribute>translationDelta:2</targetAttribute>
 	</ConnectAttributes>
 	<!-- OBJECT INSPECTION -->
 	<ConnectAttributes name="Object.Rotate" event="MButton1.Down" numResponses="-1" sourceContainer="MouseHandler" targetContainer="ObjectInspector">

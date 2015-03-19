@@ -71,6 +71,7 @@ function handleMouse(e)
 
         case "dblclick":
           {
+            /*
             if (g_selectedModel) {
               var name = g_selectedModel.name.getValueDirect().join("");
               var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
@@ -85,6 +86,7 @@ function handleMouse(e)
               }
               bridgeworks.updateScene(cmd);
             }
+            */
           }
         break;
     }
