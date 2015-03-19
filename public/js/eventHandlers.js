@@ -127,7 +127,11 @@ var g_selectPointModel = null;
 function selectPoint() {
   var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
   if (g_selectPointModel == null) g_selectPointModel = bridgeworks.get("SelectPoint");
+
+  g_selectPointModel.opacity.setValueDirect(1);
   g_selectPointModel.position.setValueDirect(pointWorld.x, pointWorld.y, pointWorld.z);
+  // make it fade out over time
+  bridgeworks.updateScene("<AutoInterpolate duration='6' target='SelectPoint' opacity='0'/>")
 }
 
 function handleKey(e)
