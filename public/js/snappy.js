@@ -149,37 +149,21 @@ function processModelXML(name, copy) {
         g_selectedModel.rotation.setValueDirect(r.x, r.y, r.z);
     }
 
-    // position model according to click point, click normal, and model's bbox
+    // position model according to click point, click normal, and model's scaled bbox
     var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
     var normalWorld = bridgeworks.selector.normalWorld.getValueDirect();
+    var scale = g_selectedModel.getAttribute("scale").getValueDirect();
     var bbox_min = g_selectedModel.getAttribute("bbox").getAttribute("min").getValueDirect();
-    var bbox_max = g_selectedModel.getAttribute("bbox").getAttribute("max").getValueDirect();
-    var bbox_mid = new Vector3D((bbox_min.x + bbox_max.x) / 2,
-                                (bbox_min.y + bbox_max.y) / 2,
-                                (bbox_min.z + bbox_max.z) / 2);
-    // find distance from center of bbox to edge of bbox along negative click normal
-    var distance = FLT_MAX;
-    var bbox_center_to_edge = new Line(bbox_mid, new Vector3D(normalWorld.x * -1, normalWorld.y * -1, normalWorld.z * -1));
-    var bbox_planes = [];
-    bbox_planes.push(new Plane(new Vector3D(bbox_max.x, bbox_mid.y, bbox_mid.z), new Vector3D( 1,  0,  0)));
-    bbox_planes.push(new Plane(new Vector3D(bbox_min.x, bbox_mid.y, bbox_mid.z), new Vector3D(-1,  0,  0)));
-    bbox_planes.push(new Plane(new Vector3D(bbox_mid.x, bbox_max.y, bbox_mid.z), new Vector3D( 0,  1,  0)));
-    bbox_planes.push(new Plane(new Vector3D(bbox_mid.x, bbox_min.y, bbox_mid.z), new Vector3D( 0, -1,  0)));
-    bbox_planes.push(new Plane(new Vector3D(bbox_mid.x, bbox_mid.y, bbox_max.z), new Vector3D( 0,  0,  1)));
-    bbox_planes.push(new Plane(new Vector3D(bbox_mid.x, bbox_mid.y, bbox_min.z), new Vector3D( 0,  0, -1)));
-    for (var i = 0; i < bbox_planes.length; i++)
-    {
-        var intersection = lineIntersectsPlane(bbox_center_to_edge, bbox_planes[i]);
-        if (intersection.result)
-        {
-            distance = Math.min(distance, distanceBetween(bbox_mid, bbox_planes[i].point)) / 2;
-        }
-    }
-    // formulate position
-    // scale click normal by distance from center of bbox to edge of bbox along negative click normal
-    var position = new Vector3D(pointWorld.x - bbox_mid.x + (normalWorld.x * distance),
-                                pointWorld.y - bbox_mid.y + (normalWorld.y * distance),
-                                pointWorld.z - bbox_mid.z + (normalWorld.z * distance));
+    bbox_min.x *= scale.x;
+    bbox_min.y *= scale.y;
+    bbox_min.z *= scale.z;
+    // formulate offset vector
+    normalWorld = new Vector3D(normalWorld.x, normalWorld.y, normalWorld.z);
+    normalWorld.multiplyVector(bbox_min);
+    // formulate position (always shift by bbox_min.y in Y-axis)
+    var position = new Vector3D(pointWorld.x - normalWorld.x,
+                                pointWorld.y - bbox_min.y,//normalWorld.y,
+                                pointWorld.z - normalWorld.z);
     g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);                            
 
     var physics = bridgeworks.get("PhysicsSimulator");
