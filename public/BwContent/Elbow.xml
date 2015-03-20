@@ -8,31 +8,21 @@
         <physicalProperties>
           <mass>5</mass>
         </physicalProperties>
-        <socketConnectors>
-          <socketConnector type="default">
+        <genericConnectors>
+          <genericConnector type="default">
               <normal x="0" y="0" z="-1"/>
-              <slot1>
+              <point>
                   <center x="0" y="0.42" z="-1.3"/>
                   <radius>0.25</radius>
-              </slot1>
-              <slot2>
-                  <center x="0" y="0.42" z="-1.3"/>
-                  <radius>0.25</radius>
-              </slot2>
-          </socketConnector>
-      </socketConnectors>
-      <plugConnectors>
-          <plugConnector type="default">
+              </point>
+          </genericConnector>
+          <genericConnector type="default">
               <normal x="0" y="-1" z="0"/>
-              <pin1>
+              <point>
                   <center x="0" y="-1.42" z="0.3"/>
                   <radius>0.25</radius>
-              </pin1>
-              <pin2>
-                  <center x="0" y="-1.42" z="0.3"/>
-                  <radius>0.25</radius>
-              </pin2>
-          </plugConnector>
-      </plugConnectors>
+              </point>
+          </genericConnector>
+      </genericConnectors>
     </Model>
 </Update>

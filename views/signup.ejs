@@ -69,12 +69,14 @@
             <div class="form-group">
               <div class="col-md-7 col-sm-7">
                 <label><span>Card Number</span>
-                  <input class="form-control cc-number" data-stripe="number" type="text" size="20" placeholder="•••• •••• •••• ••••"/>
+
+                  <input class="form-control cc-number" data-stripe="number" type="text" maxlength="19" placeholder="•••• •••• •••• ••••"/>
                 </label>
               </div>
               <div class="col-md-4 col-sm-4">
                 <label><span>CVC</span>
-                  <input class="form-control cc-cvc" data-stripe="cvc" type="text" size="3" placeholder="•••"/>
+
+                  <input class="form-control cc-cvc" data-stripe="cvc" type="text" maxlength="3" placeholder="•••"/>
                 </label>
               </div>
             </div>
@@ -82,6 +84,7 @@
             <div class="form-group">
               <div class="col-md-3 col-sm-3">
                 <label><span>Expiration</span>
+
                   <input class="form-control" data-stripe="exp-month" type="text" size="5" placeholder="MM"/>
                 </label>
 

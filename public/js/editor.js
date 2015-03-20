@@ -556,6 +556,7 @@ function locate(name){
 }
 
 function new3Scape() {
+  localStorage.removeItem("autoSave");
   reset();
   bridgeworks.contentDir='/BwContent';
   bridgeworks.onLoadModified();

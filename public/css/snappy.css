@@ -207,6 +207,7 @@
 body {
   font-family: "robotolight";
   overflow: scroll;
+  background-repeat: no-repeat;
 }
 
 /* BEGIN DROPDOWN MENU */
@@ -225,13 +226,22 @@ ul.dropdown-menu li span a {
   font-family: 'robotolight';
 }
 
+ul.dropdown-menu li a {
+  margin-left: 5px;
+}
+
 ul.dropdown-menu li a:hover {
- color: rgba(87, 185, 85, 0.1);
+ color: #1C75BB;
 }
 
 ul.dropdown-menu li a:active {
-  color: rgba(39, 63, 132, 0.1);
+  color: rgba(39, 63, 132, 0.7);
 }
+
+ul.dropdown-menu li a#loadScene:hover{
+  color: #1C75BB;
+}
+
 
 span.shape.fa {margin-left: 6%;}
 
@@ -299,6 +309,7 @@ a#loadScene { color: white;
   right: 2%;
   top: 80%;
   padding: 13px;
+  color: rgba(50, 50, 50, .7);
   z-index: 2000;
 }
 
@@ -426,4 +437,17 @@ a#loadScene { color: white;
   background-size: 68px;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+button.btn-lg {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  background-color: #57B955;
+  color: white;
+  border-style: none;
+}
+
+p.link-list{
+  text-align: center;
 }

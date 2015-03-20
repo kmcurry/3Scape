@@ -146,10 +146,13 @@
 		<anchor x="-400" y="300"/>
 			<balloonTipLabelStyle>
 					<htmlLabelStyle>
-							<html><![CDATA[<div style="font-size:18px;"><p>Speaking of <em><b>ancient</b></em>...</p>
-							<p style="font-size:18px;">
-							Egyptians preserved their dead pharohs in elaborate tombs
-							that have lasted thousands of years and still stand today!</p>
+							<html><![CDATA[<iframe style="padding-right:8px;" width="320" height="240" src="https://sketchfab.com/models/64d0b7662b59417986e9d693624de97a/embed" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" onmousewheel=""></iframe>
+
+<p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">
+    <a href="https://sketchfab.com/models/64d0b7662b59417986e9d693624de97a?utm_source=oembed&utm_medium=embed&utm_campaign=64d0b7662b59417986e9d693624de97a" target="_blank" style="font-weight: bold; color: #1CAAD9;">Granite head of Amenemhat III</a>
+    by <a href="https://sketchfab.com/britishmuseum?utm_source=oembed&utm_medium=embed&utm_campaign=64d0b7662b59417986e9d693624de97a" target="_blank" style="font-weight: bold; color: #1CAAD9;">britishmuseum</a>
+    on <a href="https://sketchfab.com?utm_source=oembed&utm_medium=embed&utm_campaign=64d0b7662b59417986e9d693624de97a" target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
+</p></p>
 								<p><a href="javascript:playSlide(4);">Click to continue</a></p></div>]]></html>
 					</htmlLabelStyle>
 			</balloonTipLabelStyle>
