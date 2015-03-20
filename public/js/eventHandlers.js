@@ -37,7 +37,7 @@ function handleMouse(e)
             break;
         case "click":
             {
-              console.log(bridgeworks.selector.selections.models.length)
+              selectPoint();
               selectObject();
 
               // if the selected model is not moveable switch modes between camera and objects
@@ -50,12 +50,10 @@ function handleMouse(e)
 
                   // if the shift key is down switch from move to rotate object
                   if (e.shiftKey) {
-                    console.log("shifty");
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
                     bridgeworks.get("Object.Zoom").listen.setValueDirect(false);
                     bridgeworks.get("Object.Rotate").listen.setValueDirect(true);
                   } else if (e.ctrlKey || e.metaKey) {
-                    console.log("zoomy");
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
                     bridgeworks.get("Object.Rotate").listen.setValueDirect(false);
                     bridgeworks.get("Object.Zoom").listen.setValueDirect(true);
@@ -71,6 +69,7 @@ function handleMouse(e)
 
         case "dblclick":
           {
+            /*
             if (g_selectedModel) {
               var name = g_selectedModel.name.getValueDirect().join("");
               var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
@@ -85,6 +84,7 @@ function handleMouse(e)
               }
               bridgeworks.updateScene(cmd);
             }
+            */
           }
         break;
     }
@@ -119,6 +119,16 @@ function selectObject(){
 
   return true;
 
+}
+
+var g_selectPointModel = null;
+function selectPoint() {
+  if (!g_selectPointModel) g_selectPointModel = bridgeworks.get("SelectPoint");
+
+  g_selectPointModel.opacity.setValueDirect(1);
+  var pw = bridgeworks.selector.pointWorld.getValueDirect();
+  g_selectPointModel.position.setValueDirect(pw.x, pw.y, pw.z);
+  bridgeworks.updateScene("<AutoInterpolate duration='5' target='SelectPoint' opacity='0'/>");
 }
 
 function handleKey(e)

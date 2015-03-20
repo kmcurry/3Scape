@@ -69,3 +69,17 @@ function loadundersea() {
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Underwater.xml');
 }
+
+
+function loadFish() {
+    reset();
+    bridgeworks.contentDir = '/BwContent/Fish/';
+    bridgeworks.onLoadModified();
+    bridgeworks.updateScene('scene.xml');
+}
+
+function loadTerrain() {
+    reset();
+    bridgeworks.onLoadModified();
+    bridgeworks.updateScene('Terrain.xml');
+}

@@ -8,7 +8,7 @@ var g_selectedModel = null;
 var g_selectedModelName = "";
 
 var g_modelCount = 1;
-var g_interval = null;
+
 
 
 // functions are organized by alpha until refactored
@@ -43,19 +43,6 @@ function cut()
     }
 }
 
-function loadFish() {
-    reset();
-    bridgeworks.contentDir = '/BwContent/Fish/';
-    bridgeworks.onLoadModified();
-    bridgeworks.updateScene('scene.xml');
-}
-
-function loadTerrain() {
-    reset();
-    bridgeworks.onLoadModified();
-    bridgeworks.updateScene('Terrain.xml');
-}
-
 function loadModel(url, copy)
 {
     copy = copy || false;
@@ -72,16 +59,17 @@ function loadModel(url, copy)
     loadFile("BwContent/" + url, processModelXML, name, copy);
 }
 
+var onHoldInterval = null;
 var onHoldFunction = function(id, method, time) {
     $(id).on({
         mousedown: function() {
             method(); // Still works on a single click
-            g_interval = window.setInterval(function() {
+            onHoldInterval = window.setInterval(function() {
                 method();
             }, time); //Repeats every (time) miliseconds
         },
         mouseup: function() {
-            window.clearInterval(g_interval);
+            window.clearInterval(onHoldInterval);
         }
     });
 }
@@ -164,7 +152,7 @@ function processModelXML(name, copy) {
     var position = new Vector3D(pointWorld.x - normalWorld.x,
                                 pointWorld.y - bbox_min.y,//normalWorld.y,
                                 pointWorld.z - normalWorld.z);
-    g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);                            
+    g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);
 
     var physics = bridgeworks.get("PhysicsSimulator");
     if (physics && g_selectedModel) {
