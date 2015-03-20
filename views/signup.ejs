@@ -6,8 +6,9 @@
     <meta name=viewport content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-
+    <script src="bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
 </head>
+
 <body background="images/login-signup-background.png">
   <div class="row" style="padding-top:20px;">
     <div class="col-sm-4"></div>
@@ -39,12 +40,17 @@
 
         <div class="form-group">
           <label>Email</label>
-            <input class="form-control" type="email" name="email" required>
+            <input class="form-control" id="email" type="email" name="email" placeholder="Your valid email address" autofocus>
         </div>
 
         <div class="form-group">
             <label>Password</label>
-            <input class="form-control" type="password" name="password" required>
+            <input class="form-control" id="password" type="password" name="password" maxlength="20" placeholder="Must be 8-20 characters long">
+        </div>
+
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input class="form-control" id="confirm_password" type="password" name="password_confirm" maxlength="20" placeholder="Must match your password">
         </div>
 
         <center><h3>Your card won't be charged <br/>unless you stay after May 1.</h3></center>
@@ -53,12 +59,14 @@
             <div class="form-group">
               <div class="col-md-7 col-sm-7">
                 <label><span>Card Number</span>
-                  <input class="form-control cc-number" data-stripe="number" type="text" maxlength="19" placeholder="•••• •••• •••• ••••" required/>
+
+                  <input class="form-control cc-number" data-stripe="number" type="text" maxlength="19" placeholder="•••• •••• •••• ••••"/>
                 </label>
               </div>
               <div class="col-md-4 col-sm-4">
                 <label><span>CVC</span>
-                  <input class="form-control cc-cvc" data-stripe="cvc" type="text" maxlength="3" placeholder="•••" required/>
+
+                  <input class="form-control cc-cvc" data-stripe="cvc" type="text" maxlength="3" placeholder="•••"/>
                 </label>
               </div>
             </div>
@@ -66,13 +74,16 @@
             <div class="form-group">
               <div class="col-md-3 col-sm-3">
                 <label><span>Expiration</span>
-                  <input class="form-control" data-stripe="exp-month" type="text" maxlength="2" placeholder="MM"required/>
+
+                  <input class="form-control" data-stripe="exp-month" type="text" size="5" placeholder="MM"/>
                 </label>
+
               </div>
               <div class="col-md-4 col-sm-4">
                 <label><span><br/></span>
-                  <input class="form-control" data-stripe="exp-year" type="text" maxlength="4" placeholder="YYYY"required/>
+                  <input class="form-control" data-stripe="exp-year" type="text" size="5" placeholder="YYYY"/>
                 </label>
+
               </div>
               <div class="col-md-5 col-sm-5">
                 <img style="padding-top:20%;" src="images/stripe.png" title="Your payment is secure with Stripe"/>
@@ -95,7 +106,40 @@
 
 <a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
 
+<!--Signup Validation-->
+<script>
+  $("#payment-form").validate({
+    rules: {
+        email: {
+            required: true,
+            email: true
+        },
+        password: {
+            required: true,
+            minlength: 8
+        },
+        password_confirm: {
+            required: true,
+            minlength: 8,
+            equalTo: "#password"
+      }
+    },
+    messages: {
+        email: "Please enter a valid email address",
+        password: {
+          required: "Please provide a password",
+          minlength: "Your password must be at least 8 characters long",
+        },
+        password_confirm: {
+          required: "Please provide a password",
+          minlength: "Your password must be at least 8 characters long",
+          equalTo: "Please enter the same password as above"
+        }
+    }
+  });
+</script>
 
+<!-- Stripe Validation -->
 <script>
 
   <% if (typeof paymentKey != 'undefined') { %>
