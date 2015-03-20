@@ -46,56 +46,18 @@ function getBrowserZoom()
     return zoom;
 }
 
+//var saveInterval = setInterval(function() {autoSaveScene();}, 30000);
+
 function autoSaveScene(){
   serializedScene = "";
 
   var command = "\<Serialize target='Root'/>";
   bridgeworks.updateScene(command);
-
-  var serArray = serializedScene.match(/.{1,1000}/g);
-
-  //Clear old scene cookies
-  var cookies = document.cookie.split(';');
-  for (var i=0;i < cookies.length;i++){
-    var cookie = cookies[i];
-    var eqPos = cookie.indexOf("=");
-    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-    if (name.indexOf("serAutoSave") > -1)
-    document.cookie = name + "=;expires=Sat, 24 Jan 2015 00:00:00 GMT";
-  }
-
-  //Save the current scene to cookies
-  for (var i=0;i < serArray.length;i++){
-    var date = new Date();
-    date.setTime(date.getTime()+(24*60*60*1000));
-    var expires = "; expires="+date.toGMTString();
-
-    var cookie = "serAutoSave"+i+"="+serArray[i]+expires+"; path=/";
-    document.cookie = cookie;
-  }
+  localStorage.setItem("autoSave",serializedScene);
 }
 
-//var saveInterval = setInterval(function() {autoSaveScene()}, 5000);//300000);
-
-function keepWorkInProgress(){
-  var serial = "";
-
-  var cookies = document.cookie.split(';');
-
-  for (var i=0;i < cookies.length;i++){
-    var cookie = cookies[i];
-    var eqPos = cookie.indexOf("=");
-    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-    if (name.indexOf("serAutoSave") > -1){
-      var val = cookie.substr(name.length+1, cookie.length);
-      if (val != "")
-      serial += val;
-    }
-  }
-
-  if (serial != "")
-    return serial+"autoSaved";
-  return serial;
+function getWorkInProgress(){
+  return localStorage.getItem("autoSave");
 }
 
 function init(scene, container, recreateCanvas)
@@ -138,10 +100,10 @@ function init(scene, container, recreateCanvas)
     bridgeworks.rasterComponents    = rcs;
     bridgeworks.bgImage             = bg;
 
-    var savedScene = keepWorkInProgress();
-    var properScene = savedScene.substr(0, savedScene.length-"autoSaved".length);
-    if (savedScene != "" && (savedScene.indexOf("autoSaved") > -1)){
-      bridgeworks.updateScene(properScene);
+    var savedScene = getWorkInProgress();
+    if (savedScene != ""){
+      //console.log(savedScene);
+      bridgeworks.updateScene(savedScene);
     }
     else {
       bridgeworks.updateScene(scene);
