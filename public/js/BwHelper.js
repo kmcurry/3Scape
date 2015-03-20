@@ -46,7 +46,7 @@ function getBrowserZoom()
     return zoom;
 }
 
-//var saveInterval = setInterval(function() {autoSaveScene();}, 1000);
+//var saveInterval = setInterval(function() {autoSaveScene();}, 30000);
 
 function autoSaveScene(){
   serializedScene = "";
