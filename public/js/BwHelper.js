@@ -51,12 +51,12 @@ function getBrowserZoom()
 function autoSaveScene(){
   serializedScene = "";
 
-  var command = "\<Serialize target='Root'/>";
+  var command = "<Serialize target='Root'/>";
   bridgeworks.updateScene(command);
   localStorage.setItem("autoSave",serializedScene);
 }
 
-function getWorkInProgress(){
+function getWorkInProgress() {
   return localStorage.getItem("autoSave");
 }
 
@@ -100,14 +100,14 @@ function init(scene, container, recreateCanvas)
     bridgeworks.rasterComponents    = rcs;
     bridgeworks.bgImage             = bg;
 
-    var savedScene = getWorkInProgress();
-    if (savedScene != ""){
+    //var savedScene = getWorkInProgress();
+    //if (savedScene != ""){
       //console.log(savedScene);
-      bridgeworks.updateScene(savedScene);
-    }
-    else {
+      //bridgeworks.updateScene(savedScene);
+    //}
+    //else {
       bridgeworks.updateScene(scene);
-    }
+    //}
 
     addKeyEvents();
 
