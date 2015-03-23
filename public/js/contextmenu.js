@@ -3,9 +3,12 @@
 document.addEventListener('contextmenu', function(e) {
 
     selectObject();
+    var isActive = $("#model-menu").hasClass("active");
     if (g_selectedModel) {
       positionMenu(e, modelMenu);
-      $("#model-menu").toggleClass("active");
+      if (!isActive){
+        $("#model-menu").toggleClass("active");
+      }
     }
 
     e.preventDefault();
