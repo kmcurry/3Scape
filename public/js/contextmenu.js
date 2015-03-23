@@ -5,6 +5,12 @@ document.addEventListener('contextmenu', function(e) {
     selectObject();
     if (g_selectedModel) {
       positionMenu(e, modelMenu);
+
+      //set the scale slider to correct val for selected object
+      var scaleVals = (g_selectedModel.scale.getValueDirect());
+      var modelScale = scaleVals['x']*100;
+      $('#model-scale-slider').slider('setValue', modelScale);
+
       $("#model-menu").toggleClass("active");
     }
 
