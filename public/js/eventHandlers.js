@@ -97,6 +97,7 @@ function selectObject(){
   {
       g_selectedModel.getAttribute("highlight").setValueDirect(false);
       g_selectedModel = null;
+      $("#model-menu").toggleClass('active', false);
   }
   // verify selector has models
   if (bridgeworks.selector.selections.models.length > 0)
