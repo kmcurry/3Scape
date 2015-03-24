@@ -232,12 +232,18 @@ else if (document.addEventListener) //WC3 browsers
     document.addEventListener(mousewheelevt, handleWheel, false)
 
 function handleWheel(e) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
 
     var evt=window.event || e //equalize event object
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+
     var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta //check for detail first so Opera uses that instead of wheelDelta
 
-    if (delta > 0) zoomIn();
-    else zoomOut();
+    if (evt.shiftKey) {
+      if (delta < 0) objectForward();
+      else objectBackward();
+    } else {
+      if (delta > 0) zoomIn();
+      else zoomOut();
+    }
 }
