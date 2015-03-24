@@ -4,6 +4,7 @@ window.onkeydown = handleKey;
 // continues when the cursor moves out of the Bridgeworks frame.
 function handleDocMove(e)
 {
+  console.log("movin'");
     if (capture)
         bridgeworks.handleEvent(e);
 }
@@ -106,9 +107,6 @@ function selectObject(){
   }
 
   if (!g_selectedModel) return false;
-
-  g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
-
 
   if (g_selectedModel.moveable.getValueDirect()) {
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
@@ -226,9 +224,20 @@ function handleKey(e)
     return false;
 }
 
-function handleScroll (e) {
-  console.log("scrolling");
-  e.preventDefault();
-  e.stopPropagation();
-  return false;
+var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel" //FF doesn't recognize mousewheel as of FF3.x
+
+if (document.attachEvent) //if IE (and Opera depending on user setting)
+    document.attachEvent("on"+mousewheelevt, handleWheel)
+else if (document.addEventListener) //WC3 browsers
+    document.addEventListener(mousewheelevt, handleWheel, false)
+
+function handleWheel(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var evt=window.event || e //equalize event object
+    var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta //check for detail first so Opera uses that instead of wheelDelta
+
+    if (delta > 0) zoomIn();
+    else zoomOut();
 }
