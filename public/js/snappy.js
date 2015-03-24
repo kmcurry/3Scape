@@ -5,7 +5,6 @@ var g_copyModel = null;
 var g_sceneInspector = null;
 var g_objectInspector = null;
 var g_selectedModel = null;
-var g_selectedModelName = "";
 
 var g_modelCount = 1;
 
@@ -115,7 +114,6 @@ function processModelXML(name, copy) {
 
     // set this here now so that controllers work on the loaded model
     g_selectedModel = bridgeworks.registry.find(name);
-    g_selectedModelName = name;
 
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
 
