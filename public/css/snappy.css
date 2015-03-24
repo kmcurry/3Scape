@@ -324,11 +324,6 @@ a#loadScene { color: white;
   z-index: 2000;
 }
 
-#model-menu {
-  top:0;
-  left:0;
-}
-
 #model-scale-slider {
   position:relative;
   top:1%;
