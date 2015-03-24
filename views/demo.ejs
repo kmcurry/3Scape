@@ -13,14 +13,13 @@
 		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 		<link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
+		<script type="text/javascript" src="js/scenes.js"></script>
 
 
 	</head>
 	<body onresize="resize();">
 
 		<% if (typeof needsViewControls != 'undefined') { %>
-
-		<%- include('viewcontrols/zoom') -%>
 
 		<div style="position:fixed;right: 3%;top: 74%; border:0;z-index:1029;height:100%;font-size:4em;text-align: center;">
 				<span class="shape glyphicon glyphicon-arrow-left" title="Previous Slide" onclick="previousSlide();"></span>
@@ -47,12 +46,6 @@
 			document.onreadystatechange = function () {
 				if (document.readyState == "complete") {
 					bridgeworks = init("", document.getElementById("BwContainer"));
-
-					onHoldFunction('#zoom-in', zoomIn, 20);
-					onHoldFunction('#zoom-out', zoomOut, 20);
-
-
-					$(document).scroll(handleScroll);
 
 					// this loads a named 3Scape passed in with the URL
 					// ex., http://3Scape.me/egypt
