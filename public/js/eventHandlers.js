@@ -124,11 +124,12 @@ var g_selectPointModel = null;
 function selectPoint() {
   if (!g_selectPointModel) g_selectPointModel = bridgeworks.get("SelectPoint");
 
-  if (!g_selectPointModel) return;
-  
-  var pw = bridgeworks.selector.pointWorld.getValueDirect();
-  g_selectPointModel.position.setValueDirect(pw.x, pw.y, pw.z);
-  bridgeworks.updateScene("<AutoInterpolate duration='5' target='SelectPoint' opacity='0'/>");
+  if (g_selectPointModel) {
+    g_selectPointModel.opacity.setValueDirect(1);
+    var pw = bridgeworks.selector.pointWorld.getValueDirect();
+    g_selectPointModel.position.setValueDirect(pw.x, pw.y, pw.z);
+    bridgeworks.updateScene("<AutoInterpolate duration='5' target='SelectPoint' opacity='0'/>");
+  }
 }
 
 function handleKey(e)
@@ -243,6 +244,7 @@ function handleWheel(e) {
     if (evt.shiftKey) {
       if (delta < 0) objectForward();
       else objectBackward();
+
     } else {
       if (delta > 0) zoomIn();
       else zoomOut();
