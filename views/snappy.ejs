@@ -17,8 +17,6 @@
 	</head>
 	<body onresize="resize();">
 
-		<div id="fb-root"></div><!-- FB Javascript SDK -->
-
 		<%- include('viewcontrols/objectbar'); -%>
 
 		<%- include('viewcontrols/zoom') -%>
@@ -32,6 +30,7 @@
 
 		<%- include('viewcontrols/modelcontext.ejs'); -%>
 
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 
 		<script type="text/javascript">
 			var bridgeworks = null;
@@ -44,14 +43,9 @@
 
 					onHoldFunction('#zoom-in', zoomIn, 20);
 					onHoldFunction('#zoom-out', zoomOut, 20);
-					onHoldFunction('#model-rotate-left', rotateLeft, 20);
-					onHoldFunction('#model-rotate-right', rotateRight, 20);
-					onHoldFunction('#model-rotate-up', rotateUp, 20);
-					onHoldFunction('#model-rotate-down', rotateDown, 20);
 
 					addContextMenu();
 
-					$(document).scroll(handleScroll);
 				}
 			}
 		</script>
@@ -61,7 +55,6 @@
 		<script type="text/javascript" src="js/crossbrowser.js"></script>
 		<script type="text/javascript" src="js/snappy.js"></script>
 		<script type="text/javascript" src="js/MapControls.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
 
