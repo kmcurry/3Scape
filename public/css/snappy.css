@@ -280,7 +280,7 @@ a#loadScene { color: white;
   resize: auto;
   border: 1px solid;
   width: 100%;
-  height: 98%;
+  height: 100%;
 }
 
 #Canvas {
