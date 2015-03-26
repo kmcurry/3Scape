@@ -46,8 +46,6 @@ function getBrowserZoom()
     return zoom;
 }
 
-//var saveInterval = setInterval(function() {autoSaveScene();}, 30000);
-
 function autoSaveScene(){
   serializedScene = "";
 
@@ -100,22 +98,26 @@ function init(scene, container, recreateCanvas)
     bridgeworks.rasterComponents    = rcs;
     bridgeworks.bgImage             = bg;
 
-    //var savedScene = getWorkInProgress();
-    //if (savedScene != ""){
-      //console.log(savedScene);
-      //bridgeworks.updateScene(savedScene);
-    //}
-    //else {
+
+    var savedScene = getWorkInProgress();
+    if (savedScene && savedScene != ""){
+      console.log("Saved Scene" + savedScene);
+      bridgeworks.updateScene(savedScene);
+    }
+    else {
+
       bridgeworks.updateScene(scene);
-    //}
+    }
 
     addKeyEvents();
 
     // disable selection
     document.onselectstart = function() { return false; }
 
-    var interval = 1000/60;
-    setInterval(draw, interval);
+    var saveInterval = setInterval(autoSaveScene, 3000);
+
+    var drawInterval = setInterval(draw, 1000/60);
+
     resize();
 
     return bridgeworks;
