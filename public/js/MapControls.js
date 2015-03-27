@@ -1,15 +1,20 @@
 /**
  * Created by tyler_000 on 7/15/2014.
  */
+
+var MAGIC_SENSITIVITY = 3;
+
 function zoomOut()
 {
   if (!g_sceneInspector) {
     g_sceneInspector = bridgeworks.getRegistry().find("SceneInspector");
   }
 
+  var distance = -1 * g_sceneInspector.pivotDistance.getValueDirect() / MAGIC_SENSITIVITY;
+
   g_sceneInspector.enabled.setValueDirect(true);
 
-  g_sceneInspector.panDelta.setValueDirect(0,0,-20);
+  g_sceneInspector.panDelta.setValueDirect(0,0,distance);
 
   g_sceneInspector.enabled.setValueDirect(false);
 
@@ -21,9 +26,11 @@ function zoomIn()
     g_sceneInspector = bridgeworks.getRegistry().find("SceneInspector");
   }
 
+  var distance = g_sceneInspector.pivotDistance.getValueDirect() / MAGIC_SENSITIVITY;
+
   g_sceneInspector.enabled.setValueDirect(true);
 
-  g_sceneInspector.panDelta.setValueDirect(0,0,20);
+  g_sceneInspector.panDelta.setValueDirect(0,0,distance);
 
   g_sceneInspector.enabled.setValueDirect(false);
 
