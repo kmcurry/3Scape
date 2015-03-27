@@ -41,6 +41,10 @@ function loadhighfive() {
   loadhi5();
 }
 
+function loadfacepalm() {
+  loadhi5();
+}
+
 function loadlight() {
   reset();
   bridgeworks.contentDir='BwContent';
