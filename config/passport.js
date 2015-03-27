@@ -4,7 +4,7 @@
 var LocalStrategy   = require('passport-local').Strategy;
 
 // load up the user model
-var User            = require('../app/models/user');
+var User            = require('../app/models/creator');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -102,7 +102,7 @@ module.exports = function(passport) {
 
             // if no user is found, return the message
             if (!user)
-                return done(null, false, req.flash('error', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                return done(null, false, req.flash('error', 'No Creator found.')); // req.flash is the way to set flashdata using connect-flash
 
             // if the user is found but the password is wrong
             if (!user.validPassword(password))

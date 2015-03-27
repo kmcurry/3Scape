@@ -2,7 +2,7 @@
 module.exports = function(app, config) {
 //HOME PAGE(with login links) ======
 
-  var User = require('../app/models/user');
+  var Creator = require('../app/models/creator');
 
   app.get('/', isLoggedIn, function (req, res) {
     res.render('snappy');
@@ -73,7 +73,7 @@ module.exports = function(app, config) {
 
   app.get('/profile', isLoggedIn, function (req, res) {
       res.render('profile', {
-          user: req.user //get the user out of session and pass to template
+          creator: req.creator //get the creator out of session and pass to template
       });
   });
 
@@ -90,13 +90,13 @@ module.exports = function(app, config) {
     res.status(404).render('404');
   });
 
-  // route middleware to make sure a user is logged in
+  // route middleware to make sure a creator is logged in
   function isLoggedIn(req, res, next) {
 
     if (req.path !== undefined)
       req.session.returnTo = req.path;
 
-    // if user is authenticated in the session, carry on
+    // if creator is authenticated in the session, carry on
     if (req.isAuthenticated()) {
       return next();
     }

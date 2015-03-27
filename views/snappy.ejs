@@ -41,6 +41,17 @@
 
 					addContextMenu();
 
+
+					window.addEventListener("beforeunload", function(e) {
+						$.ajax({
+							url: 'save',
+							type: 'POST',
+							contentType: 'application/json',
+							data: JSON.stringify({scene:localStorage.getItem('autoSave')})
+						});
+					});
+
+
 				}
 			}
 		</script>

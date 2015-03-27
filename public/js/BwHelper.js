@@ -1,31 +1,59 @@
 // THIS FILE IS USED TO CENTRALIZE SCRIPT THAT IS PRESENTLY REPLICATED IN EACH DEMO'S HTML
 // THIS CODE SHOULD BE MIGRATED OVER TIME TO APPROPRIATE PLACES
+function addKeyEvents()
+{
+    if (window.addEventListener)
+    {
+        window.addEventListener("keyup",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+    else
+    {
+        window.attachEvent("keyup",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+
+    if (window.addEventListener)
+    {
+        window.addEventListener("keydown",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+    else
+    {
+        window.attachEvent("keydown",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+
+}
+
+function autoSaveScene(){
+  serializedScene = "";
+
+  var command = "<Serialize target='Root'/>";
+  bridgeworks.updateScene(command);
+  localStorage.setItem("autoSave",serializedScene);
+}
 
 function draw()
 {
     showBG();
     bridgeworks.render();
-}
-
-function resize()
-{
-    if (!bridgeworks) return;
-
-    var WIDTH = bridgeworks.container.offsetWidth;
-    var HEIGHT = bridgeworks.container.offsetHeight;
-    //console.debug("W = " + WIDTH + ", H = " + HEIGHT);
-    if (WIDTH > 0 && HEIGHT > 0)
-    {
-        var zoom = getBrowserZoom();
-        // getBrowserZoom can return NaN.
-        if (zoom > 0)
-        {
-            WIDTH *= zoom;
-            HEIGHT *= zoom;
-        }
-
-        bridgeworks.resize(WIDTH, HEIGHT);
-    }
 }
 
 function getBrowserZoom()
@@ -44,14 +72,6 @@ function getBrowserZoom()
     }
 
     return zoom;
-}
-
-function autoSaveScene(){
-  serializedScene = "";
-
-  var command = "<Serialize target='Root'/>";
-  bridgeworks.updateScene(command);
-  localStorage.setItem("autoSave",serializedScene);
 }
 
 function getWorkInProgress() {
@@ -123,6 +143,28 @@ function init(scene, container, recreateCanvas)
     return bridgeworks;
 }
 
+function resize()
+{
+    if (!bridgeworks) return;
+
+    var WIDTH = bridgeworks.container.offsetWidth;
+    var HEIGHT = bridgeworks.container.offsetHeight;
+    //console.debug("W = " + WIDTH + ", H = " + HEIGHT);
+    if (WIDTH > 0 && HEIGHT > 0)
+    {
+        var zoom = getBrowserZoom();
+        // getBrowserZoom can return NaN.
+        if (zoom > 0)
+        {
+            WIDTH *= zoom;
+            HEIGHT *= zoom;
+        }
+
+        bridgeworks.resize(WIDTH, HEIGHT);
+    }
+}
+
+
 // temporary
 function showBG()
 {
@@ -139,48 +181,6 @@ function showBG()
             ebg.style.top = pageY;
             ebg.style.visibility = 'visible';
         }
-    }
-
-}
-
-function addKeyEvents()
-{
-    if (window.addEventListener)
-    {
-        window.addEventListener("keyup",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-    else
-    {
-        window.attachEvent("keyup",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-
-    if (window.addEventListener)
-    {
-        window.addEventListener("keydown",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-    else
-    {
-        window.attachEvent("keydown",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
     }
 
 }
