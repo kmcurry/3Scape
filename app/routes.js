@@ -36,6 +36,7 @@ module.exports = function(app, config) {
           break;
         case 'hi5':
         case 'highfive':
+        case 'facepalm':
           {
             res.status(200).render('demo', {
               scape: s
