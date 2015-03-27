@@ -156,12 +156,48 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
       });
     });
 
+  app.post("/new", function (req, res) {
+
+    if (req.user) {
+      var creator = req.user;
+
+      console.log("Saving a new 3Scape");
+
+      var scape = new Scape();
+      scape.save(function(err) {
+        if (err) console.log("error saving scape: " + err);
+      });
+
+      creator.scapes.push(scape);
+      
+      creator.save(function(err) {
+        if (err) console.log("error saving creator: " + err);
+      });
+
+      res.json({scapeId: scape._id});
+    }
+
+  });
 
   app.post("/save", function(req, res) {
     if (req.user) {
       console.log("saving...");
-      
+
       var creator = req.user;
+
+
+      Scape.findOne({ title: req.body.email }, function(err, scape) {
+        if (!scape) {
+          // make one
+        }
+        /*
+        scape.save(function(err) {
+          done(err, scape);
+        });
+        */
+      });
+
+
       creator.scapes.push({
         "title": "Foo",
         "scene": req.body.scene

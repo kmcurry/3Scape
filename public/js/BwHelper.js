@@ -121,7 +121,6 @@ function init(scene, container, recreateCanvas)
 
     var savedScene = getWorkInProgress();
     if (savedScene && savedScene != ""){
-      console.log("Saved Scene" + savedScene);
       bridgeworks.updateScene(savedScene);
     }
     else {
