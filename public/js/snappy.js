@@ -74,9 +74,6 @@ var onHoldFunction = function(id, method, time) {
 }
 
 function new3Scape() {
-    if (!bridgeworks) {
-      bridgeworks = init("grid-50.xml", document.getElementById("BwContainer"));
-    }
     reset();
     bridgeworks.contentDir = '/BwContent';
     bridgeworks.onLoadModified();
