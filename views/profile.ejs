@@ -31,25 +31,21 @@
 
 		<div id="info" class="row">
 			<div class="col-md-12"><strong>email</strong>: <%= creator.email %><br></div>
+			<div class="col-md-12"><strong>scapes</strong>: <%= scapes.length %><br></div>
 		</div>
 
 		<div id="category" class="row">
 		</div>
 
 		<div id="scapes">
-				<div class="row">
-					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
-					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
-					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
 
-					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
-					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
-					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
+				<% for (i = 0; i < scapes.length; i++) { %>
 
-					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
-					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
-					<div class="scape col-md-4 col-sm-6"><img src="images/puppy.jpg" class="img-thumbnail"/></div>
-				</div>
+						<div class="scape col-md-4 col-sm-6">
+							<a href="/<%- scapes[i]._id %>"><img src="images/puppy.jpg" class="img-thumbnail"/></a>
+						</div>
+
+				<% } %>
 		</div>
 
 </div>

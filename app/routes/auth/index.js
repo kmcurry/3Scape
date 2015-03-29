@@ -157,6 +157,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     });
 
   app.post("/new", function (req, res) {
+    var scapeId = "";
 
     if (req.user) {
       var creator = req.user;
@@ -164,47 +165,52 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
       console.log("Saving a new 3Scape");
 
       var scape = new Scape();
+      scape.creator = creator.name;
+
       scape.save(function(err) {
         if (err) console.log("error saving scape: " + err);
       });
 
-      creator.scapes.push(scape);
-      
+
+      creator.scapes.push(scape._id);
+
       creator.save(function(err) {
         if (err) console.log("error saving creator: " + err);
       });
 
-      res.json({scapeId: scape._id});
+      scapeId = scape._id;
+
     }
+
+    res.json(scapeId);
 
   });
 
+
+  var mongoose = require('mongoose');
+
   app.post("/save", function(req, res) {
     if (req.user) {
-      console.log("saving...");
+      console.log("saving scape: " + req.body.scapeId);
 
       var creator = req.user;
 
+      if (req.body.scapeId) {
+        
+        Scape.findOne( { _id: mongoose.Types.ObjectId(req.body.scapeId) }, function(err, scape) {
+          if (scape) {
+            scape.content = req.body.scape;
 
-      Scape.findOne({ title: req.body.email }, function(err, scape) {
-        if (!scape) {
-          // make one
-        }
-        /*
-        scape.save(function(err) {
-          done(err, scape);
+            scape.save(function(err) {
+              if (err) console.log("Save scape error: " + err);
+            });
+          } else {
+            console.log("no scape: " + err);
+          }
+
         });
-        */
-      });
+      }
 
-
-      creator.scapes.push({
-        "title": "Foo",
-        "scene": req.body.scene
-      });
-      creator.save(function(err) {
-        if (err) console.log("error saving creator: " + err);
-      });
     }
   });
 
@@ -248,10 +254,12 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
           req.logIn(creator, function(err) {
             if (err) {
+              console.log("There was a problem logging you in");
               return next(err);
             }
             // email
-            if (config.email.smtpCreator) {
+            if (config.email.smtpUser) {
+              console.log("Sending welcome mailer.");
               utilities.emailer.send({
                 to: creator.email,
                 templateId: config.email.welcome

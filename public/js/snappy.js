@@ -8,6 +8,8 @@ var g_selectedModel = null;
 
 var g_modelCount = 1;
 
+var bridgeworks = null;
+
 
 
 // functions are organized by alpha until refactored
@@ -21,6 +23,14 @@ function applyColor(hex)
         var color = g_selectedModel.color.getValueDirect();
         g_selectedModel.color.setValueDirect(r, g, b, color.a);
     }
+}
+
+function autoSaveScene(){
+  serializedScene = "";
+
+  var command = "<Serialize target='Root'/>";
+  bridgeworks.updateScene(command);
+  localStorage.setItem("autoSave",serializedScene);
 }
 
 function copy()
@@ -42,6 +52,10 @@ function cut()
     }
 }
 
+function getWorkInProgress() {
+  return localStorage.getItem("autoSave");
+}
+
 function loadModel(url, copy)
 {
     copy = copy || false;
@@ -56,6 +70,28 @@ function loadModel(url, copy)
 
 
     loadFile("BwContent/" + url, processModelXML, name, copy);
+}
+
+
+function new3Scape() {
+    save3Scape();
+    reset();
+    bridgeworks.contentDir = '/BwContent';
+    bridgeworks.onLoadModified();
+    bridgeworks.updateScene('grid-50.xml');
+    autoSaveScene();
+    $.ajax({
+      url: 'new',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({scape:localStorage.getItem('autoSave')}),
+      success: updateLocalStorage
+    });
+}
+
+function updateLocalStorage(scapeId) {
+  console.log("Updating local storage for scape: " + scapeId);
+  localStorage.setItem("scapeId", scapeId);
 }
 
 var onHoldInterval = null;
@@ -73,17 +109,45 @@ var onHoldFunction = function(id, method, time) {
     });
 }
 
-function new3Scape() {
-    reset();
-    bridgeworks.contentDir = '/BwContent';
-    bridgeworks.onLoadModified();
-    bridgeworks.updateScene('grid-50.xml');
-    $.ajax({
-      url: 'new',
-      type: 'POST',
-      contentType: 'application/json'
-    });
+function save3Scape() {
+  $.ajax({
+    url: 'save',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      scapeId: localStorage.getItem('scapeId'),
+      scape: localStorage.getItem('autoSave')
+      })
+  });
 }
+
+function start3Scape(scape, scapeId) {
+  bridgeworks = init(document.getElementById("BwContainer"));
+
+  if (scape && scape != "") {
+    console.log("setting storage for: " + scapeId);
+    localStorage.setItem('scapeId', scapeId);
+    bridgeworks.updateScene(scape);
+  } else {
+    var localScape = getWorkInProgress();
+    if (localScape && localScape != ""){
+      console.log("Loading from local storage. Scape id is: " + localStorage.getItem("scapeId"));
+      bridgeworks.updateScene(localScape);
+    }
+    else {
+      new3Scape();
+    }
+  }
+
+  addContextMenu();
+  addEventHandlers();
+
+  var saveInterval = setInterval(autoSaveScene, 10000);
+
+  window.addEventListener("beforeunload", save3Scape);
+
+}
+
 
 function paste()
 {
@@ -104,14 +168,6 @@ function processModelXML(name, copy) {
 
     var n = model.attributes["name"];
     n.value = name;
-
-
-    //var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-
-    //var pos = model.getElementsByTagName("position")[0];
-    //pos.attributes["x"].value = pointWorld.x.toString();
-    //pos.attributes["y"].value = pointWorld.y.toString();
-    //pos.attributes["z"].value = pointWorld.z.toString();
 
 
     var xstr = (new XMLSerializer()).serializeToString(model);

@@ -29,28 +29,24 @@
 		<%- include('viewcontrols/modelcontext.ejs'); -%>
 
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/snappy.js"></script>
+
 
 		<script type="text/javascript">
-			var bridgeworks = null;
-
-			var modelMenu = document.querySelector("#model-menu");
 
 			document.onreadystatechange = function () {
 				if (document.readyState == "complete") {
-					bridgeworks = init("grid-50.xml", document.getElementById("BwContainer"));
 
-					addContextMenu();
+					var s = "";
+					var i = "";
 
+					<% if (typeof scape != 'undefined') { %>
+						s = '<%- scape %>';
+						s = s.replace('\\', '');
+						v = '<%- scapeId %>';
+					<% } %>
 
-					window.addEventListener("beforeunload", function(e) {
-						$.ajax({
-							url: 'save',
-							type: 'POST',
-							contentType: 'application/json',
-							data: JSON.stringify({scene:localStorage.getItem('autoSave')})
-						});
-					});
-
+					start3Scape(s, i);
 
 				}
 			}
@@ -59,7 +55,6 @@
 		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
 		<script type="text/javascript" src="js/BwHelper.js"></script>
 		<script type="text/javascript" src="js/crossbrowser.js"></script>
-		<script type="text/javascript" src="js/snappy.js"></script>
 		<script type="text/javascript" src="js/scenes.js"></script>
 		<script type="text/javascript" src="js/MapControls.js"></script>
 		<script type="text/javascript" src="js/objectmode.js"></script>

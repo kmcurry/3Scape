@@ -3,6 +3,7 @@ module.exports = function(app, config) {
 //HOME PAGE(with login links) ======
 
   var Creator = require('../app/models/creator');
+  var Scape = require('../app/models/scape');
 
   app.get('/', isLoggedIn, function (req, res) {
     res.render('snappy');
@@ -14,41 +15,55 @@ module.exports = function(app, config) {
     var err = null;
 
     if (req.params.scape) {
-      s = JSON.stringify(req.params.scape).toLowerCase();
-      var s1 = s.replace(/\"/g, "");  // strip quotes for switch
 
-      console.log("rendering scape: " + s1);
+      // check the database
+      Scape.findOne({ _id: req.params.scape }, function(err, scape) {
+        if (scape) {
+          if (req.isAuthenticated()) {
+            res.status(200).render('snappy', {
+              scape: scape.content,
+              scapeId: req.params.scape
+            });
+          } else (console.log("You must be logged in"));
 
-      switch(s1) {
-        case '2dvs3d' :
-        case 'egypt' :
-        case 'entymology' :
-        case 'light':
-        case 'physics' :
-        case 'twostroke' :
-        case 'undersea':
-          {
-            res.status(200).render('demo', {
-              scape: s,
-              needsViewControls: true
-            });
+        } else {
+          s = JSON.stringify(req.params.scape).toLowerCase();
+          var s1 = s.replace(/\"/g, "");  // strip quotes for switch
+
+          switch(s1) {
+            case '2dvs3d' :
+            case 'egypt' :
+            case 'entymology' :
+            case 'light':
+            case 'physics' :
+            case 'twostroke' :
+            case 'undersea':
+              {
+                res.status(200).render('demo', {
+                  scape: s,
+                  needsViewControls: true
+                });
+              }
+              break;
+            case 'hi5':
+            case 'highfive':
+            case 'facepalm':
+              {
+                res.status(200).render('demo', {
+                  scape: s
+                });
+              }
+              break;
+            default:
+              {
+                return next('route');
+              }
+              break;
           }
-          break;
-        case 'hi5':
-        case 'highfive':
-        case 'facepalm':
-          {
-            res.status(200).render('demo', {
-              scape: s
-            });
-          }
-          break;
-        default:
-          {
-            return next('route');
-          }
-          break;
-      }
+        }
+
+      });
+
     } else {
       err = new Error();
       err.status = 404;
@@ -72,9 +87,24 @@ module.exports = function(app, config) {
   });
 
   app.get('/profile', isLoggedIn, function (req, res) {
-      res.render('profile', {
-          creator: req.creator //get the creator out of session and pass to template
-      });
+
+      if (req.user) {
+
+        Scape.find({ creator : req.user.email }, {_id : 1}, function(err, scapes) {
+          if (err) {
+            return err;
+          }
+
+          if (scapes) {
+            res.render('profile', {
+                creator: req.user,
+                scapes: scapes
+            });
+          }
+
+        });
+
+      } else res.render('login');
   });
 
   app.get('/sitemap', function (req, res) {
