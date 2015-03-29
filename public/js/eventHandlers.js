@@ -1,5 +1,67 @@
 window.onkeydown = handleKey;
 
+function addEventHandlers() {
+  var bwcontainer = document.getElementById("BwContainer");
+  if (bwcontainer.addEventListener) {
+    console.log("adding mouse handlers");
+    bwcontainer.addEventListener("onclick", handleMouse);
+    bwcontainer.addEventListener("onmousedown", handleMouse);
+    bwcontainer.addEventListener("ondblclick", handleMouse);
+    bwcontainer.addEventListener("onclick", handleMouse);
+    bwcontainer.addEventListener("onmousemove", handleMouse);
+
+  } else {
+    bwcontainer.attachEvent("onclick", handleMouse);
+    bwcontainer.attachEvent("onmousedown", handleMouse);
+    bwcontainer.attachEvent("ondblclick", handleMouse);
+    bwcontainer.attachEvent("onclick", handleMouse);
+    bwcontainer.attachEvent("onmousemove", handleMouse);
+  }
+
+}
+
+function addKeyEvents()
+{
+    if (window.addEventListener)
+    {
+        window.addEventListener("keyup",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+    else
+    {
+        window.attachEvent("keyup",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+
+    if (window.addEventListener)
+    {
+        window.addEventListener("keydown",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+    else
+    {
+        window.attachEvent("keydown",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+
+}
+
 // This function makes it so that mouse interaction with the scene
 // continues when the cursor moves out of the Bridgeworks frame.
 function handleDocMove(e)
@@ -11,7 +73,7 @@ function handleDocMove(e)
 
 function handleMouse(e)
 {
-    if (!bridgeworks)
+  if (!bridgeworks)
         return;
 
     if (!g_sceneInspector) {

@@ -1,54 +1,5 @@
 // THIS FILE IS USED TO CENTRALIZE SCRIPT THAT IS PRESENTLY REPLICATED IN EACH DEMO'S HTML
 // THIS CODE SHOULD BE MIGRATED OVER TIME TO APPROPRIATE PLACES
-function addKeyEvents()
-{
-    if (window.addEventListener)
-    {
-        window.addEventListener("keyup",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-    else
-    {
-        window.attachEvent("keyup",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-
-    if (window.addEventListener)
-    {
-        window.addEventListener("keydown",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-    else
-    {
-        window.attachEvent("keydown",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-
-}
-
-function autoSaveScene(){
-  serializedScene = "";
-
-  var command = "<Serialize target='Root'/>";
-  bridgeworks.updateScene(command);
-  localStorage.setItem("autoSave",serializedScene);
-}
 
 function draw()
 {
@@ -74,11 +25,7 @@ function getBrowserZoom()
     return zoom;
 }
 
-function getWorkInProgress() {
-  return localStorage.getItem("autoSave");
-}
-
-function init(scene, container, recreateCanvas)
+function init(container, recreateCanvas)
 {
     // create render context for BW if one does not exist, or if recreateCanvas is set
     var canvas = document.getElementById("Canvas");
@@ -119,21 +66,8 @@ function init(scene, container, recreateCanvas)
     bridgeworks.bgImage             = bg;
 
 
-    var savedScene = getWorkInProgress();
-    if (savedScene && savedScene != ""){
-      bridgeworks.updateScene(savedScene);
-    }
-    else {
-
-      bridgeworks.updateScene(scene);
-    }
-
-    addKeyEvents();
-
     // disable selection
     document.onselectstart = function() { return false; }
-
-    var saveInterval = setInterval(autoSaveScene, 3000);
 
     var drawInterval = setInterval(draw, 1000/60);
 
