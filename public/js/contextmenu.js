@@ -1,11 +1,7 @@
 // override context menu for the document
 // should this be on gcanvas instead? - KMC
-var modelMenu = null;
-document.addEventListener('contextmenu', function(e) {
 
-    if (!modelMenu) {
-      modelMenu = document.querySelector("#model-menu");
-    }
+document.addEventListener('contextmenu', function(e) {
 
     selectObject();
     if (g_selectedModel) {
@@ -68,8 +64,10 @@ function addContextMenu() {
   // makes sure the menu isn't in the way when it's not visible
   $("#model-menu").hover( function() {
     if ($("#model-menu").hasClass('active') == false) {
-      $("#model-menu").style.top = 0;
-      $("#model-menu").style.left = 0;
+      if(modelMenu) {
+        modelMenu.style.top = window.innerHeight;
+        modelMenu.style.left = 0;
+      }
     }
   });
 }

@@ -12,7 +12,9 @@
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
 
-
+		<script type="text/javascript">
+			var modelMenu = null;
+		</script>
 
 	</head>
 	<body onresize="resize();">
@@ -36,6 +38,10 @@
 
 			document.onreadystatechange = function () {
 				if (document.readyState == "complete") {
+
+					if (!modelMenu) {
+			      modelMenu = document.querySelector("#model-menu");
+			    }
 
 					var s = "";
 					var i = "";
