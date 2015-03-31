@@ -7,27 +7,6 @@ function draw()
     bridgeworks.render();
 }
 
-function resize()
-{
-    if (!bridgeworks) return;
-
-    var WIDTH = bridgeworks.container.offsetWidth;
-    var HEIGHT = bridgeworks.container.offsetHeight;
-    //console.debug("W = " + WIDTH + ", H = " + HEIGHT);
-    if (WIDTH > 0 && HEIGHT > 0)
-    {
-        var zoom = getBrowserZoom();
-        // getBrowserZoom can return NaN.
-        if (zoom > 0)
-        {
-            WIDTH *= zoom;
-            HEIGHT *= zoom;
-        }
-
-        bridgeworks.resize(WIDTH, HEIGHT);
-    }
-}
-
 function getBrowserZoom()
 {
     var zoom = 1;
@@ -46,59 +25,7 @@ function getBrowserZoom()
     return zoom;
 }
 
-function autoSaveScene(){
-  serializedScene = "";
-
-  var command = "\<Serialize target='Root'/>";
-  bridgeworks.updateScene(command);
-
-  var serArray = serializedScene.match(/.{1,1000}/g);
-
-  //Clear old scene cookies
-  var cookies = document.cookie.split(';');
-  for (var i=0;i < cookies.length;i++){
-    var cookie = cookies[i];
-    var eqPos = cookie.indexOf("=");
-    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-    if (name.indexOf("serAutoSave") > -1)
-    document.cookie = name + "=;expires=Sat, 24 Jan 2015 00:00:00 GMT";
-  }
-
-  //Save the current scene to cookies
-  for (var i=0;i < serArray.length;i++){
-    var date = new Date();
-    date.setTime(date.getTime()+(24*60*60*1000));
-    var expires = "; expires="+date.toGMTString();
-
-    var cookie = "serAutoSave"+i+"="+serArray[i]+expires+"; path=/";
-    document.cookie = cookie;
-  }
-}
-
-//var saveInterval = setInterval(function() {autoSaveScene()}, 5000);//300000);
-
-function keepWorkInProgress(){
-  var serial = "";
-
-  var cookies = document.cookie.split(';');
-
-  for (var i=0;i < cookies.length;i++){
-    var cookie = cookies[i];
-    var eqPos = cookie.indexOf("=");
-    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-    if (name.indexOf("serAutoSave") > -1){
-      var val = cookie.substr(name.length+1, cookie.length);
-      if (val != "")
-      serial += val;
-    }
-  }
-
-  if (serial != "")
-    return serial+"autoSaved";
-  return serial;
-}
-
-function init(scene, container, recreateCanvas)
+function init(container, recreateCanvas)
 {
     // create render context for BW if one does not exist, or if recreateCanvas is set
     var canvas = document.getElementById("Canvas");
@@ -138,26 +65,38 @@ function init(scene, container, recreateCanvas)
     bridgeworks.rasterComponents    = rcs;
     bridgeworks.bgImage             = bg;
 
-    var savedScene = keepWorkInProgress();
-    var properScene = savedScene.substr(0, savedScene.length-"autoSaved".length);
-    if (savedScene != "" && (savedScene.indexOf("autoSaved") > -1)){
-      bridgeworks.updateScene(properScene);
-    }
-    else {
-      bridgeworks.updateScene(scene);
-    }
-
-    addKeyEvents();
 
     // disable selection
     document.onselectstart = function() { return false; }
 
-    var interval = 1000/60;
-    setInterval(draw, interval);
+    var drawInterval = setInterval(draw, 1000/60);
+
     resize();
 
     return bridgeworks;
 }
+
+function resize()
+{
+    if (!bridgeworks) return;
+
+    var WIDTH = bridgeworks.container.offsetWidth;
+    var HEIGHT = bridgeworks.container.offsetHeight;
+    //console.debug("W = " + WIDTH + ", H = " + HEIGHT);
+    if (WIDTH > 0 && HEIGHT > 0)
+    {
+        var zoom = getBrowserZoom();
+        // getBrowserZoom can return NaN.
+        if (zoom > 0)
+        {
+            WIDTH *= zoom;
+            HEIGHT *= zoom;
+        }
+
+        bridgeworks.resize(WIDTH, HEIGHT);
+    }
+}
+
 
 // temporary
 function showBG()
@@ -175,48 +114,6 @@ function showBG()
             ebg.style.top = pageY;
             ebg.style.visibility = 'visible';
         }
-    }
-
-}
-
-function addKeyEvents()
-{
-    if (window.addEventListener)
-    {
-        window.addEventListener("keyup",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-    else
-    {
-        window.attachEvent("keyup",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-
-    if (window.addEventListener)
-    {
-        window.addEventListener("keydown",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-    else
-    {
-        window.attachEvent("keydown",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
     }
 
 }

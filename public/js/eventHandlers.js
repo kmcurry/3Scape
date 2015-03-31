@@ -1,16 +1,79 @@
 window.onkeydown = handleKey;
 
+function addEventHandlers() {
+  var bwcontainer = document.getElementById("BwContainer");
+  if (bwcontainer.addEventListener) {
+    console.log("adding mouse handlers");
+    bwcontainer.addEventListener("onclick", handleMouse);
+    bwcontainer.addEventListener("onmousedown", handleMouse);
+    bwcontainer.addEventListener("ondblclick", handleMouse);
+    bwcontainer.addEventListener("onclick", handleMouse);
+    bwcontainer.addEventListener("onmousemove", handleMouse);
+
+  } else {
+    bwcontainer.attachEvent("onclick", handleMouse);
+    bwcontainer.attachEvent("onmousedown", handleMouse);
+    bwcontainer.attachEvent("ondblclick", handleMouse);
+    bwcontainer.attachEvent("onclick", handleMouse);
+    bwcontainer.attachEvent("onmousemove", handleMouse);
+  }
+
+}
+
+function addKeyEvents()
+{
+    if (window.addEventListener)
+    {
+        window.addEventListener("keyup",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+    else
+    {
+        window.attachEvent("keyup",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+
+    if (window.addEventListener)
+    {
+        window.addEventListener("keydown",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+    else
+    {
+        window.attachEvent("keydown",
+            function(event)
+            {
+                bridgeworks.handleEvent(event);
+            }
+        );
+    }
+
+}
+
 // This function makes it so that mouse interaction with the scene
 // continues when the cursor moves out of the Bridgeworks frame.
 function handleDocMove(e)
 {
+  console.log("movin'");
     if (capture)
         bridgeworks.handleEvent(e);
 }
 
 function handleMouse(e)
 {
-    if (!bridgeworks)
+  if (!bridgeworks)
         return;
 
     if (!g_sceneInspector) {
@@ -37,7 +100,7 @@ function handleMouse(e)
             break;
         case "click":
             {
-              console.log(bridgeworks.selector.selections.models.length)
+              selectPoint();
               selectObject();
 
               // if the selected model is not moveable switch modes between camera and objects
@@ -50,12 +113,10 @@ function handleMouse(e)
 
                   // if the shift key is down switch from move to rotate object
                   if (e.shiftKey) {
-                    console.log("shifty");
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
                     bridgeworks.get("Object.Zoom").listen.setValueDirect(false);
                     bridgeworks.get("Object.Rotate").listen.setValueDirect(true);
                   } else if (e.ctrlKey || e.metaKey) {
-                    console.log("zoomy");
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
                     bridgeworks.get("Object.Rotate").listen.setValueDirect(false);
                     bridgeworks.get("Object.Zoom").listen.setValueDirect(true);
@@ -71,6 +132,7 @@ function handleMouse(e)
 
         case "dblclick":
           {
+            /*
             if (g_selectedModel) {
               var name = g_selectedModel.name.getValueDirect().join("");
               var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
@@ -85,6 +147,7 @@ function handleMouse(e)
               }
               bridgeworks.updateScene(cmd);
             }
+            */
           }
         break;
     }
@@ -97,6 +160,7 @@ function selectObject(){
   {
       g_selectedModel.getAttribute("highlight").setValueDirect(false);
       g_selectedModel = null;
+      $("#model-menu").toggleClass('active', false);
   }
   // verify selector has models
   if (bridgeworks.selector.selections.models.length > 0)
@@ -105,9 +169,6 @@ function selectObject(){
   }
 
   if (!g_selectedModel) return false;
-
-  g_selectedModelName = g_selectedModel.name.getValueDirect().join("");
-
 
   if (g_selectedModel.moveable.getValueDirect()) {
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
@@ -119,6 +180,18 @@ function selectObject(){
 
   return true;
 
+}
+
+var g_selectPointModel = null;
+function selectPoint() {
+  if (!g_selectPointModel) g_selectPointModel = bridgeworks.get("SelectPoint");
+
+  if (g_selectPointModel) {
+    g_selectPointModel.opacity.setValueDirect(1);
+    var pw = bridgeworks.selector.pointWorld.getValueDirect();
+    g_selectPointModel.position.setValueDirect(pw.x, pw.y, pw.z);
+    bridgeworks.updateScene("<AutoInterpolate duration='5' target='SelectPoint' opacity='0'/>");
+  }
 }
 
 function handleKey(e)
@@ -215,9 +288,27 @@ function handleKey(e)
     return false;
 }
 
-function handleScroll (e) {
-  console.log("scrolling");
-  e.preventDefault();
-  e.stopPropagation();
-  return false;
+var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel" //FF doesn't recognize mousewheel as of FF3.x
+
+if (document.attachEvent) //if IE (and Opera depending on user setting)
+    document.attachEvent("on"+mousewheelevt, handleWheel)
+else if (document.addEventListener) //WC3 browsers
+    document.addEventListener(mousewheelevt, handleWheel, false)
+
+function handleWheel(e) {
+
+    var evt=window.event || e //equalize event object
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+
+    var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta //check for detail first so Opera uses that instead of wheelDelta
+
+    if (evt.shiftKey) {
+      if (delta < 0) objectForward();
+      else objectBackward();
+
+    } else {
+      if (delta > 0) zoomIn();
+      else zoomOut();
+    }
 }

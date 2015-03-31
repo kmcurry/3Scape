@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>3Scape Snappy</title>
+		<title>3Scape - an open world of virtual contraptions and physics.</title>
 		<meta http-equiv="x-ua-compatible" content="IE=10">
 		<meta name="robots" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +11,13 @@
 		<link rel="stylesheet" type="text/css" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
-		<script type="text/javascript" src="js/objectmode.js"></script>
+
 
 
 	</head>
 	<body onresize="resize();">
 
-		<div id="fb-root"></div><!-- FB Javascript SDK -->
-
 		<%- include('viewcontrols/objectbar'); -%>
-
-		<%- include('viewcontrols/zoom') -%>
 
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
@@ -32,26 +28,26 @@
 
 		<%- include('viewcontrols/modelcontext.ejs'); -%>
 
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/snappy.js"></script>
+
 
 		<script type="text/javascript">
-			var bridgeworks = null;
-
-			var modelMenu = document.querySelector("#model-menu");
 
 			document.onreadystatechange = function () {
 				if (document.readyState == "complete") {
-					bridgeworks = init("grid-50.xml", document.getElementById("BwContainer"));
 
-					onHoldFunction('#zoom-in', zoomIn, 20);
-					onHoldFunction('#zoom-out', zoomOut, 20);
-					onHoldFunction('#model-rotate-left', rotateLeft, 20);
-					onHoldFunction('#model-rotate-right', rotateRight, 20);
-					onHoldFunction('#model-rotate-up', rotateUp, 20);
-					onHoldFunction('#model-rotate-down', rotateDown, 20);
+					var s = "";
+					var i = "";
 
-					addContextMenu();
+					<% if (typeof scape != 'undefined') { %>
+						s = '<%- scape %>';
+						s = s.replace('\\', '');
+						v = '<%- scapeId %>';
+					<% } %>
 
-					$(document).scroll(handleScroll);
+					start3Scape(s, i);
+
 				}
 			}
 		</script>
@@ -59,9 +55,9 @@
 		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
 		<script type="text/javascript" src="js/BwHelper.js"></script>
 		<script type="text/javascript" src="js/crossbrowser.js"></script>
-		<script type="text/javascript" src="js/snappy.js"></script>
+		<script type="text/javascript" src="js/scenes.js"></script>
 		<script type="text/javascript" src="js/MapControls.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/objectmode.js"></script>
 		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
 
