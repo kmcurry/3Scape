@@ -68,8 +68,8 @@ function addContextMenu() {
   // makes sure the menu isn't in the way when it's not visible
   $("#model-menu").hover( function() {
     if ($("#model-menu").hasClass('active') == false) {
-      this.style.top = 0;
-      this.style.left = 0;
+      $("#model-menu").style.top = 0;
+      $("#model-menu").style.left = 0;
     }
   });
 }
