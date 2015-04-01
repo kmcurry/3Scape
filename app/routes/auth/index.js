@@ -6,7 +6,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   var bodyParser = require('body-parser');
 
   //var app = express();
-  app.use(bodyParser());
+  app.use(bodyParser.urlencoded({extended: true}));
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -196,7 +196,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
       var creator = req.user;
 
       if (req.body.scapeId) {
-        
+
         Scape.findOne( { _id: mongoose.Types.ObjectId(req.body.scapeId) }, function(err, scape) {
           if (scape) {
             scape.content = req.body.scape;
