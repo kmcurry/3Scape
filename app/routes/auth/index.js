@@ -1,6 +1,7 @@
 module.exports = function(app, async, config, crypto, passport, utilities) {
 
-  var User = require('../../../app/models/user');
+  var Creator = require('../../../app/models/creator');
+  var Scape = require('../../../app/models/scape');
   var express = require('express');
   var bodyParser = require('body-parser');
 
@@ -9,7 +10,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
-      user: req.user,
+      creator: req.creator,
       info_message: req.flash('info'),
       error_message: req.flash('error'),
       success_message: req.flash('success')
@@ -25,30 +26,30 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
         });
       },
       function(token, done) {
-        User.findOne({ email: req.body.email }, function(err, user) {
-          if (!user) {
+        Creator.findOne({ email: req.body.email }, function(err, creator) {
+          if (!creator) {
             req.flash('error', 'No account with that email address exists.');
             return res.redirect('/forgot');
           }
 
-          user.resetPasswordToken = token;
-          user.resetPasswordExpires = Date.now() + 3600000; //1 hour
+          creator.resetPasswordToken = token;
+          creator.resetPasswordExpires = Date.now() + 3600000; //1 hour
 
-          user.save(function(err) {
-            done(err, token, user);
+          creator.save(function(err) {
+            done(err, token, creator);
           });
         });
       },
-      function(token, user, done) {
+      function(token, creator, done) {
 
-        if (config.email.smtpUser) {
+        if (config.email.smtpCreator) {
           utilities.emailer.send({
-            to: user.email,
+            to: creator.email,
             tokenUrl: 'http://' + req.headers.host + '/reset/' + token,
             templateId: config.email.forgot
           });
 
-          req.flash('info', 'An email has been sent to ' + user.email + ' with further instructions.');
+          req.flash('info', 'An email has been sent to ' + creator.email + ' with further instructions.');
           done(null, 'done');
         }
 
@@ -72,11 +73,15 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   });
 
   app.post('/login', function(req, res, next) {
-    passport.authenticate('local-login', function(err, user, info) {
+    passport.authenticate('local-login', function(err, creator, info) {
       if (err) { return next(err); }
-      if (!user) { return res.redirect('/login'); }
-      req.logIn(user, function(err) {
-        if (err) { return next(err); }
+      if (!creator) {
+        return res.redirect('/login');
+      }
+      req.logIn(creator, function(err) {
+        if (err) {
+          return next(err);
+        }
         if (req.session.returnTo)
           return res.redirect(req.session.returnTo);
         else
@@ -93,16 +98,15 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   // RESET
 
   app.get('/reset/:token', function(req, res) {
-    User.findOne({ resetPasswordToken: req.params.token,
-      resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
-      if (!user) {
+    Creator.findOne({ resetPasswordToken: req.params.token,
+      resetPasswordExpires: { $gt: Date.now() } }, function(err, creator) {
+      if (!creator) {
         req.flash('error', 'Password reset token is invalid or has expired.');
         return res.redirect('/forgot');
       }
-      console.log("Date now at post 1: " + Date.now());
 
       res.render('reset', {
-        token: user.resetPasswordToken,
+        token: creator.resetPasswordToken,
         info_message: req.flash('info'),
       	error_message: req.flash('error'),
       	success_message: req.flash('success')
@@ -115,29 +119,29 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     async.waterfall([
       function(done) {
 
-        User.findOne({ resetPasswordToken: req.body.token,
-          resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
-          if (!user) {
+        Creator.findOne({ resetPasswordToken: req.body.token,
+          resetPasswordExpires: { $gt: Date.now() } }, function(err, creator) {
+          if (!creator) {
             req.flash('error', 'Password reset token is invalid or has expired.');
             return res.redirect('back');
           }
 
-          user.password = user.generateHash(req.body.password);
-          user.resetPasswordToken = undefined;
-          user.resetPasswordExpires = undefined;
+          creator.password = creator.generateHash(req.body.password);
+          creator.resetPasswordToken = undefined;
+          creator.resetPasswordExpires = undefined;
 
-          user.save(function(err) {
-            req.logIn(user, function(err) {
-              done(err, user);
+          creator.save(function(err) {
+            req.logIn(creator, function(err) {
+              done(err, creator);
             });
           });
         });
       },
-      function(user, done) {
+      function(creator, done) {
 
-        if (config.email.smtpUser) {
+        if (config.email.smtpCreator) {
           utilities.emailer.send({
-            to: user.email,
+            to: creator.email,
             templateId: config.email.reset
           });
 
@@ -151,6 +155,64 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
         res.redirect('/login');
       });
     });
+
+  app.post("/new", function (req, res) {
+    var scapeId = "";
+
+    if (req.user) {
+      var creator = req.user;
+
+      console.log("Saving a new 3Scape");
+
+      var scape = new Scape();
+      scape.creator = creator.name;
+
+      scape.save(function(err) {
+        if (err) console.log("error saving scape: " + err);
+      });
+
+
+      creator.scapes.push(scape._id);
+
+      creator.save(function(err) {
+        if (err) console.log("error saving creator: " + err);
+      });
+
+      scapeId = scape._id;
+
+    }
+
+    res.json(scapeId);
+
+  });
+
+
+  var mongoose = require('mongoose');
+
+  app.post("/save", function(req, res) {
+    if (req.user) {
+      console.log("saving scape: " + req.body.scapeId);
+
+      var creator = req.user;
+
+      if (req.body.scapeId) {
+        
+        Scape.findOne( { _id: mongoose.Types.ObjectId(req.body.scapeId) }, function(err, scape) {
+          if (scape) {
+            scape.content = req.body.scape;
+
+            scape.save(function(err) {
+              if (err) console.log("Save scape error: " + err);
+            });
+          } else {
+            console.log("no scape: " + err);
+          }
+
+        });
+      }
+
+    }
+  });
 
   //SignUp============================
   app.get('/signup', function (req, res) {
@@ -177,27 +239,29 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
         req.flash('signupMessage', 'There was a problem with your payment. ' + err);
         return res.redirect('/signup');
       } else {
-        passport.authenticate('local-signup', function (err, user, info) {
+        passport.authenticate('local-signup', function (err, creator, info) {
           if (err) {
             req.flash('signupMessage', 'There was a problem logging you in. ' + err);
             return next(err);
           }
 
-          if (!user) {
+          if (!creator) {
             req.flash('signupMessage', 'There was a problem creating your 3Scape profile.');
             return res.redirect('/signup'); // redirect fails in other callbacks
                                             // with 'cannot set headers after they're sent' - KMC
           }
 
 
-          req.logIn(user, function(err) {
+          req.logIn(creator, function(err) {
             if (err) {
+              console.log("There was a problem logging you in");
               return next(err);
             }
             // email
             if (config.email.smtpUser) {
+              console.log("Sending welcome mailer.");
               utilities.emailer.send({
-                to: user.email,
+                to: creator.email,
                 templateId: config.email.welcome
               });
             }

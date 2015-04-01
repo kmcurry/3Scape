@@ -7,27 +7,6 @@ function draw()
     bridgeworks.render();
 }
 
-function resize()
-{
-    if (!bridgeworks) return;
-
-    var WIDTH = bridgeworks.container.offsetWidth;
-    var HEIGHT = bridgeworks.container.offsetHeight;
-    //console.debug("W = " + WIDTH + ", H = " + HEIGHT);
-    if (WIDTH > 0 && HEIGHT > 0)
-    {
-        var zoom = getBrowserZoom();
-        // getBrowserZoom can return NaN.
-        if (zoom > 0)
-        {
-            WIDTH *= zoom;
-            HEIGHT *= zoom;
-        }
-
-        bridgeworks.resize(WIDTH, HEIGHT);
-    }
-}
-
 function getBrowserZoom()
 {
     var zoom = 1;
@@ -46,19 +25,7 @@ function getBrowserZoom()
     return zoom;
 }
 
-function autoSaveScene(){
-  serializedScene = "";
-
-  var command = "<Serialize target='Root'/>";
-  bridgeworks.updateScene(command);
-  localStorage.setItem("autoSave",serializedScene);
-}
-
-function getWorkInProgress() {
-  return localStorage.getItem("autoSave");
-}
-
-function init(scene, container, recreateCanvas)
+function init(container, recreateCanvas)
 {
     // create render context for BW if one does not exist, or if recreateCanvas is set
     var canvas = document.getElementById("Canvas");
@@ -99,22 +66,8 @@ function init(scene, container, recreateCanvas)
     bridgeworks.bgImage             = bg;
 
 
-    var savedScene = getWorkInProgress();
-    if (savedScene && savedScene != ""){
-      console.log("Saved Scene" + savedScene);
-      bridgeworks.updateScene(savedScene);
-    }
-    else {
-
-      bridgeworks.updateScene(scene);
-    }
-
-    addKeyEvents();
-
     // disable selection
     document.onselectstart = function() { return false; }
-
-    var saveInterval = setInterval(autoSaveScene, 3000);
 
     var drawInterval = setInterval(draw, 1000/60);
 
@@ -122,6 +75,28 @@ function init(scene, container, recreateCanvas)
 
     return bridgeworks;
 }
+
+function resize()
+{
+    if (!bridgeworks) return;
+
+    var WIDTH = bridgeworks.container.offsetWidth;
+    var HEIGHT = bridgeworks.container.offsetHeight;
+    //console.debug("W = " + WIDTH + ", H = " + HEIGHT);
+    if (WIDTH > 0 && HEIGHT > 0)
+    {
+        var zoom = getBrowserZoom();
+        // getBrowserZoom can return NaN.
+        if (zoom > 0)
+        {
+            WIDTH *= zoom;
+            HEIGHT *= zoom;
+        }
+
+        bridgeworks.resize(WIDTH, HEIGHT);
+    }
+}
+
 
 // temporary
 function showBG()
@@ -139,48 +114,6 @@ function showBG()
             ebg.style.top = pageY;
             ebg.style.visibility = 'visible';
         }
-    }
-
-}
-
-function addKeyEvents()
-{
-    if (window.addEventListener)
-    {
-        window.addEventListener("keyup",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-    else
-    {
-        window.attachEvent("keyup",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-
-    if (window.addEventListener)
-    {
-        window.addEventListener("keydown",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
-    }
-    else
-    {
-        window.attachEvent("keydown",
-            function(event)
-            {
-                bridgeworks.handleEvent(event);
-            }
-        );
     }
 
 }
