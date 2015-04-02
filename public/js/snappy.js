@@ -215,8 +215,7 @@ function processModelXML(name, copy) {
 
     var physics = bridgeworks.get("PhysicsSimulator");
     if (physics && g_selectedModel) {
-        //physics.bodies.push_back(g_selectedModel.getAttribute("name"));
-        physics.createPhysicsBody(g_selectedModel);
+        physics.bodies.push_back(g_selectedModel.getAttribute("name"));
     }
 
     $(".menu").removeClass("active");
