@@ -59,7 +59,7 @@ li.pan{
     max-width:120px;
 }
 
-.innerdial_knob {
+.shadow-circle_knob {
     position:relative;
     background: rgba(255,255,255,0.4);
     box-shadow: inset 0 0 3px rgba(0,0,0,0.4);

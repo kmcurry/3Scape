@@ -196,7 +196,7 @@
 
   JogDial.Instance = function (el ,opt) {    
     // Prevent duplication
-    if (el.getAttribute('innerdial')) {
+    if (el.getAttribute('shadow-circle')) {
       window.alert('Please Check your code:\njogDial can not be initialized twice in a same element.');
       return false;
     }
@@ -295,12 +295,12 @@
     WRad = W.clientWidth/2;
 
     //Set knob properties
-    K.setAttribute('class', BId + '_knob');
+    K.setAttribute('class', 'shadow-circle_knob');
     KS.margin = -KRad + 'px 0 0 ' + -KRad + 'px';
     KS.zIndex = opt.zIndex;
       
     //Set wheel properties
-    W.setAttribute('class', BId + '_wheel');
+    W.setAttribute('class', 'shadow-circle_wheel');
 
     WMargnLT = (BW-W.clientWidth)/2;
     WMargnTP = (BH-W.clientHeight)/2;
@@ -507,8 +507,9 @@
 
 
 window.onload = function(){
-    var dials = document.getElementsByClassName('innerdial');
-    for (var i = 0; i < dials.length; i++) {
+    var dials = document.getElementsByClassName('shadow-circle');
+    console.log("dials.length= " + dials.length);
+    for (var i=dials.length-1; i>=0; i--) {
                
         if ( dials[i] != dials[7] ){
             console.log([i]);
