@@ -307,7 +307,7 @@
 
     WS.left = WS.top = 0;
     WS.margin = WMargnTP + 'px 0 0 ' + WMargnLT + 'px';
-    WS.zIndex = 9980;
+    WS.zIndex = opt.zIndex;
 
     //set radius and center point value
     self.radius = WRad - KRad;
