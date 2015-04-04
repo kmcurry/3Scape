@@ -2,7 +2,7 @@
  * Created by tyler_000 on 7/15/2014.
  */
 
-var MAGIC_SENSITIVITY = 1;
+var MAGIC_SENSITIVITY = 1.25;
 var MIN_PIVOT = 20;
 
 function zoomOut()
