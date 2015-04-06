@@ -36,7 +36,7 @@ var utilities = require('./utilities')(config);
 // set up our express application
 app.use(logger('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser()); // get information from html forms
+app.use(bodyParser.urlencoded({extended: true})); // get information from html forms
 //app.use(methodOverride()); // simulate DELETE and PUT
 
 app.use(express.static(config.publicPath)); 	// set the static files location /public/img will be /img for users
@@ -44,7 +44,7 @@ app.use(express.static(config.publicPath)); 	// set the static files location /p
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
-app.use(session({ secret:"3Scapeisthebest"})); //session secret
+app.use(session({ secret:"3Scapeisthebest", resave: true, saveUninitialized: true})); //session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session

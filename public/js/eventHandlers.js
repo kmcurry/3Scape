@@ -308,7 +308,7 @@ function handleWheel(e) {
       else objectBackward();
 
     } else {
-      if (delta > 0) zoomIn();
-      else zoomOut();
+      if (delta > 0) zoomOut();
+      else zoomIn();
     }
 }
