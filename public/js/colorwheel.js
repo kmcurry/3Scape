@@ -361,11 +361,12 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     
     cw.onchange(function(color){
         var rawColor = cw.color(),
-            rColor = Math.round(rawColor.r),
-            gColor = Math.round(rawColor.g),
-            bColor = Math.round(rawColor.b),
+            rColor = Math.round(rawColor.r)/255,
+            gColor = Math.round(rawColor.g)/255,
+            bColor = Math.round(rawColor.b)/255,
             thisColor = rColor + ", " + gColor + ", " + bColor; 
         console.log("rgb(" + thisColor + ")");
+        g_selectedModel.color.setValueDirect(rColor, gColor, bColor, 1);
     });
 
 }); 
