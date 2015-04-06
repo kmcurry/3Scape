@@ -23,6 +23,7 @@ ul.pans{
 .list-inline > li.pan{
     padding:0;
 }
+
 li.pan{
     width:11.11%;
     max-width: 120px;
@@ -53,11 +54,7 @@ li.pan{
           border-radius:50%;
 } 
 
-.colorwheel{
-    position: relative;
-    width:100%;
-    max-width:120px;
-}
+
 
 .shadow-circle_knob {
     position:relative;
@@ -68,23 +65,9 @@ li.pan{
        -moz-border-radius: 50%;
         -ms-border-radius: 50%;
          -o-border-radius: 50%;
-            border-radius: 50%;
-    
+            border-radius: 50%;   
 }
 
-span.fa{
-    position:absolute;
-    width:100%;
-    text-align: center;
-    color:#2c6ba4;
-    left:1%;
-}
-
-/*
-.innerdial:active{
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
-}
-*/
 
 .shadow{
     position:relative;
@@ -96,27 +79,25 @@ span.fa{
     box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
+
 .shadow:active{
     box-shadow: none;
 }
 
-.colorwheel svg{
-    vertical-align: -40%;
+.meter-outer {
+    width: 100%;
+    max-width: 100px;
+    position:absolute;
+    bottom:0;
+    overflow: hidden;
+    border-radius: 50%;
+    background: #fff;
+    -webkit-border-radius: 50%;
+       -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+         -o-border-radius: 50%;
 }
 
-.meter-outer {
-  width: 100%;
-    max-width: 100px;
-  position:absolute;
-    bottom:0;
-  overflow: hidden;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
-  border-radius: 50%;
-    background: #fff;
-}
 
 #meter-inner {
     position: absolute;
@@ -131,25 +112,23 @@ span.fa{
     opacity:0;
 }
 
+
 .shadow-circle { 
-position: relative;
- border-radius: 50%;
- top: 7.5%;
- left: 7.5%;
- width: 85%;
- height: 85%;
- -webkit-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.75);
- -moz-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.75);
- box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.75);
- background-repeat: no-repeat;
- background-position: center;
+    position: relative;
+    border-radius: 50%;
+    top: 7.5%;
+    left: 7.5%;
+    width: 85%;
+    height: 85%;
+    box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.75);
+    background-repeat: no-repeat;
+    background-position: center;
     z-index:9985;
 }
 
+
 .shadow-circle:active {
--webkit-box-shadow: none;
--moz-box-shadow: none;
-box-shadow: none;
+    box-shadow: none;
 }
 
 .spin {
@@ -157,10 +136,12 @@ box-shadow: none;
  background-size: 80%;
 }
 
+
 .orbit {
  background-image: url("../images/orbit.png");
  background-size: 85%;
 }
+
 
 .bounce {
  background-image: url("../images/bounce.png");
@@ -172,6 +153,13 @@ box-shadow: none;
  background-size: 88%;
 }
 
+
+.roam{
+ background-image: url("../images/cow.svg");
+ background-size: 88%;
+}
+
+
 .dive-surface {
  background-image: url("../images/dive-surface.png");
  background-size: 88%;
@@ -180,6 +168,23 @@ box-shadow: none;
 .define-a-path {
  background-image: url("../images/define-a-path.png");
  background-size: 85%;
+}
+
+.opacity{
+    background-image: url("../images/eye.svg");
+    background-size: 85%;
+}
+
+/* -- Colorwheel --- */
+
+.colorwheel{
+    position: relative;
+    width:100%;
+    max-width:120px;
+}
+
+.colorwheel svg{
+    vertical-align: -40%;
 }
 
 
