@@ -510,26 +510,28 @@ window.onload = function(){
     var dials = document.getElementsByClassName('shadow-circle');
     console.log("dials.length= " + dials.length);
     for (var i=dials.length-1; i>=0; i--) {
-               
+
         if ( dials[i] != dials[7] ){
-            console.log([i]);
             var dialOne = JogDial(dials[i],
             {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:1080, degreeStartAt: 540})
             .on('mousemove', function(evt){
-            console.log("I'm not the opacity dial!");
-        });
-            
+                console.log("I'm not the opacity dial!");
+            });
         }
+        
         else{
-            console.log(7);
-             var bar = document.getElementById('meter-inner');
+            var bar = document.getElementById('meter-inner');
             var dialOne = JogDial(dials[i],
-            {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:1080, degreeStartAt: 0})
+            {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0})
             .on('mousemove', function(evt){
-            bar.style.opacity = Math.abs((evt.target.rotation/1080));
-                console.log("opacity " + Math.abs((evt.target.rotation/1080)));
-        });
-        } 
+                var oValue = Math.abs((evt.target.degree/360));
+                var reverseO = 1 - oValue;
+                console.log("oValue: " + oValue + ", reverseO: " + reverseO );
+                bar.style.opacity = Math.abs((evt.target.degree/360));
+                g_selectedModel.opacity.setValueDirect(reverseO);
+                console.log("opacity " + oValue);
+                console.log("target degree/360: " + oValue + " target degree: " + Math.abs((evt.target.degree)));
+            });
+        }
     }
 }
-
