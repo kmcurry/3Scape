@@ -517,6 +517,7 @@ window.onload = function(){
             var transparent = 1 - o;
             console.log(transparent);
             bar.style.opacity = transparent;
+            
         }                     
     });
 
@@ -544,13 +545,7 @@ window.onload = function(){
                 var reverseO = 1 - oValue;
                 g_selectedModel.opacity.setValueDirect(reverseO);
                 bar.style.opacity = oValue;
-                if (g_selectedModel) {
-                    var o = g_selectedModel.opacity.getValueDirect();
-                    console.log("inside dial function opactiy= " + o);
-                    var transparent = 1 - o;
-                    console.log(transparent);
-                    bar.style.opacity = transparent;
-                }                     
+             
             });
 }
 
