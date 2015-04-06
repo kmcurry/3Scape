@@ -508,7 +508,19 @@
 
 window.onload = function(){
     var dials = document.getElementsByClassName('shadow-circle');
-    console.log("dials.length= " + dials.length);
+    var bar = document.getElementById('meter-inner');
+
+    $(document).click(function(){
+        if (g_selectedModel) {
+            var o = g_selectedModel.opacity.getValueDirect();
+            console.log("opactiy= " + o);
+            var transparent = 1 - o;
+            console.log(transparent);
+            bar.style.opacity = transparent;
+        }                     
+    });
+
+    
     for (var i=dials.length-1; i>=0; i--) {
 
         if ( dials[i] != dials[7] ){
@@ -520,18 +532,25 @@ window.onload = function(){
         }
         
         else{
-            var bar = document.getElementById('meter-inner');
-            var dialOne = JogDial(dials[i],
+            
+            var dialOpacity = JogDial(dials[i],
             {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0})
-            .on('mousemove', function(evt){
-                var oValue = Math.abs((evt.target.degree/360));
-                var reverseO = 1 - oValue;
-                console.log("oValue: " + oValue + ", reverseO: " + reverseO );
-                bar.style.opacity = Math.abs((evt.target.degree/360));
-                g_selectedModel.opacity.setValueDirect(reverseO);
-                console.log("opacity " + oValue);
-                console.log("target degree/360: " + oValue + " target degree: " + Math.abs((evt.target.degree)));
-            });
+            
         }
     }
+    
+    dialOpacity.on('mousemove', function(evt){
+                var oValue = Math.abs((evt.target.degree/360));
+                var reverseO = 1 - oValue;
+                g_selectedModel.opacity.setValueDirect(reverseO);
+                bar.style.opacity = oValue;
+                if (g_selectedModel) {
+                    var o = g_selectedModel.opacity.getValueDirect();
+                    console.log("inside dial function opactiy= " + o);
+                    var transparent = 1 - o;
+                    console.log(transparent);
+                    bar.style.opacity = transparent;
+                }                     
+            });
 }
+

@@ -356,8 +356,11 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
 
   return create(target, color_wheel_size);
     
-};   
+};
+    
+
      var cw = Raphael.colorwheel($(".colorwheel")[0], color_wheel_size, 15);
+   
     
     cw.onchange(function(color){
         var rawColor = cw.color(),
@@ -368,7 +371,27 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
         console.log("rgb(" + thisColor + ")");
         g_selectedModel.color.setValueDirect(rColor, gColor, bColor, 1);
     });
+    
+  
+    
+    $(document).click(function(){
+    if (g_selectedModel) {
+        var c = g_selectedModel.color.getValueDirect();
+        var cR = c.r;
+        var cG = c.g;
+        var cB = c.b;
+      console.log(cR + " " + cG + " " + cB);  
+    }                     
+});
 
 }); 
 
+
+
+
+
+
+
+    
+     
 
