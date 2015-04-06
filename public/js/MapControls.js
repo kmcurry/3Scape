@@ -2,7 +2,8 @@
  * Created by tyler_000 on 7/15/2014.
  */
 
-var MAGIC_SENSITIVITY = 3;
+var MAGIC_SENSITIVITY = 1.25;
+var MIN_PIVOT = 20;
 
 function zoomOut()
 {
@@ -10,7 +11,11 @@ function zoomOut()
     g_sceneInspector = bridgeworks.getRegistry().find("SceneInspector");
   }
 
-  var distance = -1 * g_sceneInspector.pivotDistance.getValueDirect() / MAGIC_SENSITIVITY;
+  var pivot = g_sceneInspector.pivotDistance.getValueDirect();
+
+  pivot = pivot >= MIN_PIVOT ? pivot : MIN_PIVOT;
+
+  var distance = -1 * pivot / MAGIC_SENSITIVITY;
 
   g_sceneInspector.enabled.setValueDirect(true);
 
@@ -26,7 +31,11 @@ function zoomIn()
     g_sceneInspector = bridgeworks.getRegistry().find("SceneInspector");
   }
 
-  var distance = g_sceneInspector.pivotDistance.getValueDirect() / MAGIC_SENSITIVITY;
+  var pivot = g_sceneInspector.pivotDistance.getValueDirect();
+
+  pivot = pivot >= MIN_PIVOT ? pivot : MIN_PIVOT;
+
+  var distance = 1 * pivot / MAGIC_SENSITIVITY;
 
   g_sceneInspector.enabled.setValueDirect(true);
 
