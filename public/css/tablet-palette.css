@@ -85,35 +85,6 @@ li.pan{
     box-shadow: none;
 }
 
-.meter-outer {
-    width: 100%;
-    max-width: 100px;
-    position:absolute;
-    bottom:0;
-    overflow: hidden;
-    border-radius: 50%;
-    background: #fff;
-    -webkit-border-radius: 50%;
-       -moz-border-radius: 50%;
-        -ms-border-radius: 50%;
-         -o-border-radius: 50%;
-}
-
-
-#meter-inner {
-    position: absolute;
-    bottom:0;
-    width: 100%;
-    max-width: 100px;
-    background-color: #ccc;
-    background-image: linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 75%, gray),
-    linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 75%, gray);
-    background-size:10px 10px;
-    background-position:0 0, 5px 5px;
-    opacity:0;
-}
-
-
 .shadow-circle {
     position: relative;
     border-radius: 50%;
