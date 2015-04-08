@@ -9,23 +9,20 @@
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
-        <link rel="stylesheet" href="css/tablet-palette.css">
+    <link rel="stylesheet" href="css/tablet-palette.css">
+		<link rel="stylesheet" href="css/partsbar.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
-
-		<script type="text/javascript">
-			var modelMenu = null;
-		</script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-        <script src="js/jogDial.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
-        <script src="js/colorwheel.js"></script>
-        <script src="js/tablet-resize.js" ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script src="js/jogDial.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script src="js/colorwheel.js"></script>
+    <script src="js/tablet-resize.js" ></script>
 	</head>
 	<body onresize="resize();">
 
-		<%- include('viewcontrols/objectbar'); -%>
-        <%- include animationbar.ejs %>
+		<%- include('viewcontrols/partsbar'); %>
+    <%- include('viewcontrols/animationbar') %>
 
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
@@ -33,8 +30,6 @@
 			<canvas id="Canvas">
 			</canvas>
 		</div>
-
-		<%- include('viewcontrols/modelcontext.ejs'); -%>
 
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/snappy.js"></script>
@@ -44,10 +39,6 @@
 
 			document.onreadystatechange = function () {
 				if (document.readyState == "complete") {
-
-					if (!modelMenu) {
-			      modelMenu = document.querySelector("#model-menu");
-			    }
 
 					var s = "";
 					var i = "";
@@ -59,6 +50,8 @@
 					<% } %>
 
 					start3Scape(s, i);
+
+					addControls();
 
 				}
 			}

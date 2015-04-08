@@ -21,8 +21,8 @@ $(document).ready(function(){
         $(".colorwheel").empty().css({'height':color_wheel_size, 'width': color_wheel_size});
         cw = Raphael.colorwheel($(".colorwheel")[0], color_wheel_size, 15);
     });
-    
-            
+
+
 Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   var canvas,
       current_color,
@@ -42,8 +42,8 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
       offset,
       padding = 2,
       sdim; // holds the dimensions for the saturation square
-    
-      
+
+
 
 
   function point(x, y){ return {x:x, y:y};}
@@ -355,43 +355,19 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   }
 
   return create(target, color_wheel_size);
-    
-};
-    
 
+};
      var cw = Raphael.colorwheel($(".colorwheel")[0], color_wheel_size, 15);
-   
-    
+
     cw.onchange(function(color){
         var rawColor = cw.color(),
-            rColor = Math.round(rawColor.r)/255,
-            gColor = Math.round(rawColor.g)/255,
-            bColor = Math.round(rawColor.b)/255,
-            thisColor = rColor + ", " + gColor + ", " + bColor; 
+            rColor = Math.round(rawColor.r),
+            gColor = Math.round(rawColor.g),
+            bColor = Math.round(rawColor.b),
+            thisColor = rColor + ", " + gColor + ", " + bColor;
         console.log("rgb(" + thisColor + ")");
-        g_selectedModel.color.setValueDirect(rColor, gColor, bColor, 1);
+
+        if (g_selectedModel) g_selectedModel.color.setValueDirect(255/rColor, 255/gColor, 255/bColor, 1);
     });
-    
-  
-    
-    $(document).click(function(){
-    if (g_selectedModel) {
-        var c = g_selectedModel.color.getValueDirect();
-        var cR = c.r;
-        var cG = c.g;
-        var cB = c.b;
-      console.log(cR + " " + cG + " " + cB);  
-    }                     
+
 });
-
-}); 
-
-
-
-
-
-
-
-    
-     
-

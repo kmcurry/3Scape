@@ -12,12 +12,13 @@ body{
 }
 
 ul.pans{
-    padding:20px;
+    padding-bottom:8px;
     width:100%;
-    background: #2c6ba4;
+    background: rgba(0,0,0,0.6);
     text-align: center;
     margin:0;
     font-size:0;
+    box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
 }
 
 .list-inline > li.pan{
@@ -45,14 +46,14 @@ li.pan{
   position: relative;
   width: 95%;
   max-width:100px;
-  background: #fff;
+  background: #54BA56
     display:inline-block;
   -webkit-border-radius:50%;
      -moz-border-radius:50%;
       -ms-border-radius:50%;
        -o-border-radius:50%;
           border-radius:50%;
-} 
+}
 
 
 
@@ -60,12 +61,12 @@ li.pan{
     position:relative;
     background: rgba(255,255,255,0.4);
     box-shadow: inset 0 0 3px rgba(0,0,0,0.4);
-    border:1px solid #fff;  
+    border:1px solid #fff;
     -webkit-border-radius: 50%;
        -moz-border-radius: 50%;
         -ms-border-radius: 50%;
          -o-border-radius: 50%;
-            border-radius: 50%;   
+            border-radius: 50%;
 }
 
 
@@ -84,43 +85,14 @@ li.pan{
     box-shadow: none;
 }
 
-.meter-outer {
-    width: 100%;
-    max-width: 100px;
-    position:absolute;
-    bottom:0;
-    overflow: hidden;
-    border-radius: 50%;
-    background: #fff;
-    -webkit-border-radius: 50%;
-       -moz-border-radius: 50%;
-        -ms-border-radius: 50%;
-         -o-border-radius: 50%;
-}
-
-
-#meter-inner {
-    position: absolute;
-    bottom:0;
-    width: 100%;
-    max-width: 100px;
-    background-color: #ccc;
-    background-image: linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 75%, gray), 
-    linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 75%, gray);
-    background-size:10px 10px;
-    background-position:0 0, 5px 5px;
-    opacity:0;
-}
-
-
-.shadow-circle { 
+.shadow-circle {
     position: relative;
     border-radius: 50%;
     top: 7.5%;
     left: 7.5%;
     width: 85%;
     height: 85%;
-    box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
     background-repeat: no-repeat;
     background-position: center;
     z-index:9985;
@@ -139,40 +111,40 @@ li.pan{
 
 .orbit {
  background-image: url("../images/orbit.png");
- background-size: 85%;
+ background-size: 100%;
 }
 
 
 .bounce {
  background-image: url("../images/bounce.png");
- background-size: 75%;
+ background-size: 90%;
 }
 
 .collide {
  background-image: url("../images/collide.png");
- background-size: 88%;
+ background-size: 100%;
 }
 
 
 .roam{
- background-image: url("../images/cow.svg");
+ background-image: url("../images/roam.png");
  background-size: 88%;
 }
 
 
 .dive-surface {
  background-image: url("../images/dive-surface.png");
- background-size: 88%;
+ background-size: 100%;
 }
 
 .define-a-path {
  background-image: url("../images/define-a-path.png");
- background-size: 85%;
+ background-size: 90%;
 }
 
 .opacity{
-    background-image: url("../images/eye.svg");
-    background-size: 85%;
+    background-image: url("../images/eye.png");
+    background-size: 100%;
 }
 
 /* -- Colorwheel --- */
@@ -204,5 +176,3 @@ only screen and (min-resolution: 2dppx) and (max-device-width: 1024px) and (orie
         max-height:90px;
     }
 }
-
-
