@@ -122,19 +122,19 @@ li.pan{
 
 .collide {
  background-image: url("../images/collide.png");
- background-size: 88%;
+ background-size: 100%;
 }
 
 
 .roam{
- background-image: url("../images/cow.svg");
+ background-image: url("../images/roam.png");
  background-size: 88%;
 }
 
 
 .dive-surface {
  background-image: url("../images/dive-surface.png");
- background-size: 88%;
+ background-size: 100%;
 }
 
 .define-a-path {
