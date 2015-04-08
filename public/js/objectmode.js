@@ -118,6 +118,15 @@ function addRemoveRoam() {
   }
 }
 
+function setRoamSpeed(speed) {
+  if (g_selectedModel) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "<Set target='Roaming_" + name + "' linearSpeed='" + speed + "'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+  }
+}
+
 function setModelScale(value) {
 
     if (g_selectedModel) {

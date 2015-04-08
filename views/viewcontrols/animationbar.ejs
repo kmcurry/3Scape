@@ -122,7 +122,9 @@
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
 
     dial.on('mousemove', function(evt){
-      console.log("speeding..." + Math.round(evt.target.degree/10));
+      var speed = Math.round(evt.target.degree/10);
+      console.log("speeding..." + speed);
+      setRoamSpeed(speed);
     });
 
     dial.on('mouseup', function(e) {
