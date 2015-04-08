@@ -1,0 +1,96 @@
+.parts{
+    font-size: 0; /* need this to remove white space between inline block elements - can override on children*/
+}
+
+ul.parts-list{
+  padding-bottom:8px;
+  width:100%;
+  background: rgba(0,0,0,0.6);
+  text-align: center;
+  margin:0;
+  font-size:0;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  max-height:86px;
+}
+
+.list-inline > li.part{
+    padding:0;
+}
+
+.nav-logo {
+  background: rgba(0,0,0,0.6);
+  margin-right:-8px;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  height: 86px;
+  max-height: 86px;
+  background-size:contain;
+}
+
+.nav-menu {
+  font-size: 4em;
+  color: #BBBBBB;
+  background: rgba(0,0,0,0.6);
+  text-align: center;
+  margin-left:-8px;
+  padding-top: 10px;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  max-height: 86px;
+  background-size:contain;
+}
+
+li.part{
+    width:10%;
+    text-align: center;
+}
+
+button.parts-btn{
+    width:80%;
+    max-width:80px;
+    min-width:45px;
+    height:100%;
+    background-size:contain;
+    background-repeat: no-repeat;
+    border:none;
+    margin:0;
+    padding:0;
+}
+
+.cube{
+    background: url("../images/CubeButton.png")
+}
+
+.sphere{
+    background: url("../images/SphereButton.png")
+}
+
+.pyramid{
+    background: url("../images/PyramidButton.png")
+}
+
+.gear{
+    background: url("../images/GearButton.png")
+}
+
+.plank{
+    background: url("../images/PlankButton.png")
+}
+
+.wall{
+    background: url("../images/WallButton.png")
+}
+
+.beam{
+    background: url("../images/BeamButton.png")
+}
+
+.ring{
+     background: url("../images/RingButton.png")
+}
+
+.tube{
+    background: url("../images/TubeButton.png")
+}
+
+.elbow{
+    background: url("../images/ElbowButton.png")
+}

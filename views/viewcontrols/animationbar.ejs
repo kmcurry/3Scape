@@ -1,10 +1,144 @@
-<div id="AnimationBarContainer">
-  <a for="AnimationBar" class="v-button btn btn-info" data-toggle="collapse" href="#Toolbar" aria-expanded="true" aria-controls="AnimationBar">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-  </a>
-  <div id="AnimationBar" class="collapse in">
-    <div class="row">
-      <div class="tool-button icon-rotate col-xs-1" onclick="spinZ();" title="Spin Z"></div>
+<div class="row navbar-fixed-bottom">
+    <div class="col-xs-12">
+        <ul class="pans  list-inline">
+
+            <li class="pan">
+                <div class="dial">
+                    <div id="jog_dial_one" class="innerdial">
+                      <div class="shadow-circle spin">
+
+                      </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="pan">
+                <div class="dial">
+                    <div  class="innerdial">
+                      <div class="shadow-circle  orbit">
+
+                      </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="pan">
+                <div class="dial">
+                    <div  class="innerdial">
+                      <div class="shadow-circle bounce">
+
+                      </div>
+                    </div>
+                </div>
+            </li>
+
+          <li class="pan">
+              <div class="dial">
+                  <div  class="innerdial">
+                    <div class="shadow-circle collide">
+
+                    </div>
+                  </div>
+              </div>
+          </li>
+            <li class="pan">
+              <div class="dial">
+                  <div  class="innerdial">
+                    <div class="shadow-circle roam">
+                    </div>
+                  </div>
+              </div>
+          </li>
+
+            <li class="pan">
+                <div class="dial">
+                    <div  class="innerdial">
+                      <div class="shadow-circle dive-surface">
+
+                      </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="pan">
+                <div class="dial">
+                    <div  class="innerdial">
+                      <div class="shadow-circle define-a-path">
+
+                      </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="pan">
+                <div class="dial">
+                    <div class="innerdial">
+                        <div class="shadow-circle opacity"></div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="pan">
+                    <div class="colorwheel"></div>
+            </li>
+        </ul>
     </div>
-  </div>
 </div>
+<script type="text/javascript">
+
+  var g_foo = false;
+
+  function addControls() {
+    console.log("Adding controls...");
+
+    // OPACITY
+    var elem = document.getElementsByClassName('opacity')[0];
+    var dial = JogDial(elem,
+      {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    dial.on('mousemove', function(evt){
+        var oValue = (evt.target.degree/360);
+        var reverseO = 1 - oValue;
+        if (g_selectedModel) g_selectedModel.opacity.setValueDirect(reverseO);
+    });
+
+    dial.on('mouseup', function(e) {
+      g_foo = true;
+    });
+
+    var wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+
+    wheel.addEventListener('click', function(e) {
+      if (!g_foo) {
+        showHideSelected();
+      }
+      g_foo = false;
+    });
+
+
+    // ROAM
+    elem = document.getElementsByClassName('roam')[0];
+    dial = JogDial(elem,
+      {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    dial.on('mousemove', function(evt){
+      var speed = Math.round(evt.target.degree/10);
+      console.log("speeding..." + speed);
+      setRoamSpeed(speed);
+    });
+
+    dial.on('mouseup', function(e) {
+      g_foo = true;
+    });
+
+    wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+    wheel.addEventListener('click', function(e) {
+      if (!g_foo) {
+        addRemoveRoam();
+      }
+      g_foo = false;
+    });
+
+
+  }
+</script>
