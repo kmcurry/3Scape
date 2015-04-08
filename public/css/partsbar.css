@@ -39,7 +39,7 @@ ul.parts-list{
 }
 
 li.part{
-    width:10%;
+    width:9%;
     text-align: center;
 }
 
@@ -87,6 +87,10 @@ button.parts-btn{
      background: url("../images/RingButton.png")
 }
 
+.wedge{
+     background: url("../images/WedgeButton.png")
+}
+
 .tube{
     background: url("../images/TubeButton.png")
 }
@@ -94,3 +98,5 @@ button.parts-btn{
 .elbow{
     background: url("../images/ElbowButton.png")
 }
+
+

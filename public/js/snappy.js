@@ -22,6 +22,7 @@ function applyColor(hex)
         var b = parseInt(hex.substring(4, 6), 16) / 256;
         var color = g_selectedModel.color.getValueDirect();
         g_selectedModel.color.setValueDirect(r, g, b, color.a);
+
     }
 }
 
