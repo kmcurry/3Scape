@@ -235,25 +235,6 @@ function reset() {
 
 }
 
-function roam(name) {
-    if (!name) {
-        name = g_selectedModel.name.getValueDirect().join("");
-    }
-
-    if (g_selectedModel.moveable.getValueDirect()) {
-
-        var cmd = "\<AnimalMover name='" + name + "_roam' target='" + name + "' linearSpeed='1' angularSpeed='20'/>";
-        console.log(cmd);
-        bridgeworks.updateScene(cmd);
-    }
-}
-
-function setModelScale(value) {
-
-    if (g_selectedModel) {
-        g_selectedModel.scale.setValueDirect(value, value, value);
-    }
-}
 
 function spinZ() {
     if (!g_selectedModel)

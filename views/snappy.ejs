@@ -13,19 +13,15 @@
 		<link rel="stylesheet" href="css/partsbar.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
-
-		<script type="text/javascript">
-			var modelMenu = null;
-		</script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-        <script src="js/jogDial.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
-        <script src="js/colorwheel.js"></script>
-        <script src="js/tablet-resize.js" ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script src="js/jogDial.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script src="js/colorwheel.js"></script>
+    <script src="js/tablet-resize.js" ></script>
 	</head>
 	<body onresize="resize();">
 
-		<%- include('viewcontrols/partsbar'); -%>
+		<%- include('viewcontrols/partsbar'); %>
     <%- include('viewcontrols/animationbar') %>
 
 		<div id="BwContainer" onclick="handleMouse(event);"
@@ -44,10 +40,6 @@
 			document.onreadystatechange = function () {
 				if (document.readyState == "complete") {
 
-					if (!modelMenu) {
-			      modelMenu = document.querySelector("#model-menu");
-			    }
-
 					var s = "";
 					var i = "";
 
@@ -58,6 +50,8 @@
 					<% } %>
 
 					start3Scape(s, i);
+
+					addControls();
 
 				}
 			}

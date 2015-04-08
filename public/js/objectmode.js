@@ -103,3 +103,31 @@ function rotateUp() {
     g_selectedModel.rotation.setValueDirect(sRot.x+10, sRot.y, sRot.z);
   }
 }
+
+function addRemoveRoam() {
+  if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "";
+    if (bridgeworks.get('Roaming_' + name)) {
+      cmd = "<Remove target='Roaming_" + name + "'/>";
+    } else {
+      cmd = "<AnimalMover name='Roaming_" + name + "' target='" + name + "' linearSpeed='1' angularSpeed='10'/>";
+    }
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+  }
+}
+
+function setModelScale(value) {
+
+    if (g_selectedModel) {
+        g_selectedModel.scale.setValueDirect(value, value, value);
+    }
+}
+
+function showHideSelected() {
+  if (g_selectedModel) {
+    var show = g_selectedModel.show.getValueDirect();
+    g_selectedModel.show.setValueDirect(!show);
+  }
+}
