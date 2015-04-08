@@ -14,7 +14,7 @@ body{
 ul.pans{
     padding-bottom:8px;
     width:100%;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.6);
     text-align: center;
     margin:0;
     font-size:0;
@@ -92,7 +92,7 @@ li.pan{
     left: 7.5%;
     width: 85%;
     height: 85%;
-    box-shadow: 0px 0px 1px 3px rgba(100,100,100,1);
+    box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
     background-repeat: no-repeat;
     background-position: center;
     z-index:9985;
