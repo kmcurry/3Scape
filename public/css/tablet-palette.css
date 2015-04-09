@@ -69,26 +69,6 @@ li.pan{
             border-radius: 50%;
 }
 
-
-/*
-.shadow{
-    position:relative;
-    width:80%;
-    height:80%;
-    top:10%;
-    left:10%;
-    border-radius:50%;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
-}
-*/
-
-
-/*
-.shadow:active{
-    
-}
-*/
-
 .shadow-circle {
     position: relative;
     border-radius: 50%;
