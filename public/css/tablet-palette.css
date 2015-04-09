@@ -70,6 +70,7 @@ li.pan{
 }
 
 
+/*
 .shadow{
     position:relative;
     width:80%;
@@ -79,11 +80,14 @@ li.pan{
     border-radius:50%;
     box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
+*/
 
 
+/*
 .shadow:active{
-    box-shadow: none;
+    
 }
+*/
 
 .shadow-circle {
     position: relative;
@@ -95,56 +99,48 @@ li.pan{
     box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
     background-repeat: no-repeat;
     background-position: center;
-    z-index:9985;
-}
-
-
-.shadow-circle:active {
-    box-shadow: none;
+    background-size:95%;
+/*    z-index:9985;*/
 }
 
 .spin {
  background-image: url("../images/spin.png");
- background-size: 80%;
 }
 
 
 .orbit {
  background-image: url("../images/orbit.png");
- background-size: 100%;
 }
 
 
 .bounce {
  background-image: url("../images/bounce.png");
- background-size: 90%;
 }
 
 .collide {
  background-image: url("../images/collide.png");
- background-size: 100%;
 }
 
 
 .roam{
  background-image: url("../images/roam.png");
- background-size: 88%;
 }
 
 
 .dive-surface {
  background-image: url("../images/dive-surface.png");
- background-size: 100%;
 }
 
 .define-a-path {
  background-image: url("../images/define-a-path.png");
- background-size: 90%;
 }
 
 .opacity{
-    background-image: url("../images/eye.png");
-    background-size: 100%;
+  background-image: url("../images/eye.png");
+}
+
+.shadow-circle:active {
+  background-position:center bottom; 
 }
 
 /* -- Colorwheel --- */
