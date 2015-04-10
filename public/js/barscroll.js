@@ -15,7 +15,7 @@ $(document).ready(function(){
         if (scrolledLeft < listWidth){
             console.log("I'm not at the end!");
             $(this).addClass('scroll-active');
-            scrollContainer.animate({scrollLeft: scrolledLeft+300}, 500);
+            scrollContainer.animate({scrollLeft: scrolledLeft+300}, 300);
         };
 
     });
@@ -28,7 +28,7 @@ $(document).ready(function(){
         
         if (scrolledLeft > 0){
             $(this).addClass('scroll-active');
-            scrollContainer.animate({scrollLeft: scrolledLeft-300}, 500);
+            scrollContainer.animate({scrollLeft: scrolledLeft-300}, 300);
         };
      });
     
