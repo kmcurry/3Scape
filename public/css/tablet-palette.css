@@ -2,10 +2,14 @@ body{
     box-sizing: border-box;
 }
 
-.ipad-mini{
-}
-
 /* --- Palette --- */
+
+.palette{
+    overflow-y:hidden;
+    overflow-x: scroll;
+     box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+    background: rgba(0,0,0,0.6);
+}
 
 .navbar-fixed-bottom{
     z-index: 50000;
@@ -13,12 +17,14 @@ body{
 
 ul.pans{
     padding-bottom:8px;
-    width:100%;
-    background: rgba(0,0,0,0.6);
+    min-width:100%;
+    
     text-align: center;
     margin:0;
     font-size:0;
-    box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+   
+    white-space: nowrap;
+    float:left;
 }
 
 .list-inline > li.pan{
@@ -29,6 +35,7 @@ li.pan{
     width:11.11%;
     max-width: 120px;
     padding:0;
+    min-width:70px;
 }
 
 
@@ -68,26 +75,6 @@ li.pan{
          -o-border-radius: 50%;
             border-radius: 50%;
 }
-
-
-/*
-.shadow{
-    position:relative;
-    width:80%;
-    height:80%;
-    top:10%;
-    left:10%;
-    border-radius:50%;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
-}
-*/
-
-
-/*
-.shadow:active{
-    
-}
-*/
 
 .shadow-circle {
     position: relative;
@@ -135,6 +122,12 @@ li.pan{
  background-image: url("../images/define-a-path.png");
 }
 
+.fade-out{
+}
+
+.grow{
+}
+
 .opacity{
   background-image: url("../images/eye.png");
 }
@@ -154,6 +147,40 @@ li.pan{
 .colorwheel svg{
     vertical-align: -40%;
 }
+
+/*--Scroll --*/
+
+.scroll-right, .scroll-left{
+    font-size:40px;
+    position:fixed;
+    color:#ccc;
+    line-height:1;
+    background:#fff;
+    border:none;
+    bottom:10px;
+    z-index:10000000;
+}
+
+.scroll-active{
+    color:#9ed6ec;
+}
+
+.scroll-active:active{ /* on .active b/c I don't want grayed out ones to highlight */
+    margin-top:1px;
+}
+
+.scroll-active:hover{
+   color:#5fcaf5;
+}
+
+.scroll-right{
+    right:25px;
+}
+
+.scroll-left{
+    right:50px;
+}
+
 
 
 
