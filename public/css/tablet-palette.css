@@ -18,11 +18,11 @@ body{
 ul.pans{
     padding-bottom:8px;
     min-width:100%;
-    
+
     text-align: center;
     margin:0;
     font-size:0;
-   
+
     white-space: nowrap;
     float:left;
 }
@@ -122,10 +122,12 @@ li.pan{
  background-image: url("../images/define-a-path.png");
 }
 
-.fade-out{
+.fade-in-out{
+  background-image: url("../images/fade-in-out.png");
 }
 
-.grow{
+.grow-shrink{
+  background-image: url("../images/grow-shrink.png");
 }
 
 .opacity{
@@ -133,7 +135,7 @@ li.pan{
 }
 
 .shadow-circle:active {
-  background-position:center bottom; 
+  background-position:center bottom;
 }
 
 /* -- Colorwheel --- */
