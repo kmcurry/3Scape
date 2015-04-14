@@ -1,5 +1,5 @@
 <div class="row object-bar navbar-fixed-top">
-    <div class="col-xs-1 nav-logo"><img height="86px;" src="/images/logo-3S.png"/></div>
+    <div class="col-xs-1 nav-logo"></div>
     <div class="col-xs-10 parts">
         <ul class="parts-list list-inline">
             <li class="part">
@@ -38,9 +38,11 @@
         </ul>
     </div>
     <div>
-      <div class="col-xs-1 nav-menu fa fa-bars btn-default dropdown-toggle" data-toggle="dropdown" role="menu">
-      </div>
-      <ul class="dropdown-menu">
+      <div id ="dropdownMenu1" class="col-xs-1 nav-menu">
+      
+        <div class="dropdown-toggle fa fa-bars" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+        </div>
+      <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
         <li>
           <p>SHARE</p>
         </li>
@@ -94,5 +96,6 @@
           <span class="shape fa fa-sign-out"><a href="logout" title="Log out of 3Scape.">Sign Out</a></span>
         </li>
       </ul>
+    </div>
     </div>
 </div>

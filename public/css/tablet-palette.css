@@ -18,11 +18,9 @@ body{
 ul.pans{
     padding-bottom:8px;
     min-width:100%;
-
     text-align: center;
     margin:0;
     font-size:0;
-
     white-space: nowrap;
     float:left;
 }
@@ -33,7 +31,7 @@ ul.pans{
 
 li.pan{
     width:11.11%;
-    max-width: 120px;
+    max-width: 100px;
     padding:0;
     min-width:70px;
 }
