@@ -8,9 +8,9 @@
 		<link rel="stylesheet" type="text/css" href="css/snappy.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" type="text/css" href="bower_components/pick-a-color/build/1.2.3/css/pick-a-color-1.2.3.min.css">
-    <link rel="stylesheet" href="css/tablet-palette.css">
+		<link rel="stylesheet" href="css/tablet-palette.css">
 		<link rel="stylesheet" href="css/partsbar.css">
+		<link rel="stylesheet" href="css/actionsbar.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
     <script src="js/jquery-1.11.1.min.js"></script>
@@ -18,12 +18,17 @@
     <script src="bower_components/raphael/raphael-min.js"></script>
     <script src="js/colorwheel.js"></script>
     <script src="js/tablet-resize.js" ></script>
-        <script src="js/barscroll.js"></script>
+    <script src="js/barscroll.js"></script>
 	</head>
 	<body onresize="resize();">
 
-        <%- include('viewcontrols/partsbar'); %>
-    <%- include('viewcontrols/animationbar') %>
+		<div class="navbar-fixed-top" onmouseover="$('.parts-bar').toggle()" onmouseout="$('.parts-bar').toggle()">
+    	<%- include('viewcontrols/partsbar'); %>
+		</div>
+
+		<div class="navbar-fixed-bottom" onmouseover="$('.actions-bar').toggle()" onmouseout="$('.actions-bar').toggle()">
+    	<%- include('viewcontrols/animationbar') %>
+		</div>
 
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"

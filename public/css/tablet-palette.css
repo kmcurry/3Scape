@@ -2,38 +2,49 @@ body{
     box-sizing: border-box;
 }
 
-/* --- Palette --- */
-
-.palette{
-    overflow-y:hidden;
-    overflow-x: scroll;
-     box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
-    background: rgba(0,0,0,0.6);
+.nav-logo {
+  background: rgba(0,0,0,0.6);
+  margin-right:-8px;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  background-size:contain;
+  background-image: url('/images/logo-3S.png');
+  background-repeat: no-repeat;
 }
 
-.navbar-fixed-bottom{
-    z-index: 50000;
+.nav-menu {
+  font-size: 4em;
+  color: #BBBBBB;
+  background: rgba(0,0,0,0.6);
+  text-align: center;
+  margin-left:-8px;
+  padding-top: 10px;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+/*  max-height: 86px;*/
+  background-size:contain;
 }
 
-ul.pans{
-    padding-bottom:8px;
-    min-width:100%;
-    text-align: center;
-    margin:0;
-    font-size:0;
-    white-space: nowrap;
-    float:left;
+.navbar-fixed-bottom {
+  height:35px;
+  z-index: 50000;
 }
 
-.list-inline > li.pan{
-    padding:0;
+.navbar-fixed-top {
+  height:35px;
+  z-index: 50000;
 }
 
-li.pan{
-    width:11.11%;
-    max-width: 100px;
-    padding:0;
-    min-width:70px;
+
+.actions-bar {
+  display: none;
+  height:100px;
+  max-height:100px;
+  
+}
+
+.parts-bar {
+  display:none;
+  height:100px;
+  max-height:100px;
 }
 
 
@@ -88,65 +99,7 @@ li.pan{
 /*    z-index:9985;*/
 }
 
-.spin {
- background-image: url("../images/spin.png");
-}
 
-
-.orbit {
- background-image: url("../images/orbit.png");
-}
-
-
-.bounce {
- background-image: url("../images/bounce.png");
-}
-
-.collide {
- background-image: url("../images/collide.png");
-}
-
-
-.roam{
- background-image: url("../images/roam.png");
-}
-
-
-.dive-surface {
- background-image: url("../images/dive-surface.png");
-}
-
-.define-a-path {
- background-image: url("../images/define-a-path.png");
-}
-
-.fade-in-out{
-  background-image: url("../images/fade-in-out.png");
-}
-
-.grow-shrink{
-  background-image: url("../images/grow-shrink.png");
-}
-
-.opacity{
-  background-image: url("../images/eye.png");
-}
-
-.shadow-circle:active {
-  background-position:center bottom;
-}
-
-/* -- Colorwheel --- */
-
-.colorwheel{
-    position: relative;
-    width:100%;
-    max-width:120px;
-}
-
-.colorwheel svg{
-    vertical-align: -40%;
-}
 
 /*--Scroll --*/
 

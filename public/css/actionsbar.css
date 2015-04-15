@@ -1,0 +1,80 @@
+ul.actions{
+    padding-bottom:8px;
+    min-width:100%;
+    text-align: center;
+    margin:0;
+    font-size:0;
+    white-space: nowrap;
+    float:left;
+}
+
+.list-inline > li.action{
+    padding:0;
+}
+
+li.action{
+    width:11.11%;
+    max-width: 100px;
+    padding:0;
+    min-width:70px;
+}
+
+.spin {
+ background-image: url("../images/spin.png");
+}
+
+
+.orbit {
+ background-image: url("../images/orbit.png");
+}
+
+
+.bounce {
+ background-image: url("../images/bounce.png");
+}
+
+.collide {
+ background-image: url("../images/collide.png");
+}
+
+
+.roam{
+ background-image: url("../images/roam.png");
+}
+
+
+.dive-surface {
+ background-image: url("../images/dive-surface.png");
+}
+
+.define-a-path {
+ background-image: url("../images/define-a-path.png");
+}
+
+.fade-in-out{
+  background-image: url("../images/fade-in-out.png");
+}
+
+.grow-shrink{
+  background-image: url("../images/grow-shrink.png");
+}
+
+.opacity{
+  background-image: url("../images/eye.png");
+}
+
+.shadow-circle:active {
+  background-position:center bottom;
+}
+
+/* -- Colorwheel --- */
+
+.colorwheel{
+    position: relative;
+    width:100%;
+    max-width:120px;
+}
+
+.colorwheel svg{
+    vertical-align: -40%;
+}

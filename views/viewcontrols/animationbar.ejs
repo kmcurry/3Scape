@@ -1,11 +1,11 @@
-<div class="row navbar-fixed-bottom">
+<div class="row actions-bar">
     <div class="col-xs-12 palette">
 
-        <ul class="pans list-inline">
-            <li class="pan">
+        <ul class="actions list-inline">
+            <li class="action">
                     <div class="colorwheel"></div>
             </li>
-            <li class="pan">
+            <li class="action">
                 <div class="dial">
                     <div class="innerdial">
                         <div class="shadow-circle opacity"></div>
@@ -13,7 +13,7 @@
                 </div>
             </li>
 
-            <li class="pan">
+            <li class="action">
                 <div class="dial">
                     <div id="jog_dial_one" class="innerdial">
                       <div class="shadow-circle spin">
@@ -23,7 +23,7 @@
                 </div>
             </li>
 
-            <li class="pan">
+            <li class="action">
                 <div class="dial">
                     <div  class="innerdial">
                       <div class="shadow-circle orbit">
@@ -33,7 +33,7 @@
                 </div>
             </li>
 
-            <li class="pan">
+            <li class="action">
                 <div class="dial">
                     <div  class="innerdial">
                       <div class="shadow-circle bounce">
@@ -43,7 +43,7 @@
                 </div>
             </li>
 
-          <li class="pan">
+          <li class="action">
               <div class="dial">
                   <div  class="innerdial">
                     <div class="shadow-circle collide">
@@ -52,7 +52,7 @@
                   </div>
               </div>
           </li>
-            <li class="pan">
+            <li class="action">
               <div class="dial">
                   <div  class="innerdial">
                     <div class="shadow-circle roam">
@@ -61,7 +61,7 @@
               </div>
           </li>
 
-            <li class="pan">
+            <li class="action">
                 <div class="dial">
                     <div  class="innerdial">
                       <div class="shadow-circle dive-surface">
@@ -71,7 +71,7 @@
                 </div>
             </li>
 
-            <li class="pan">
+            <li class="action">
                 <div class="dial">
                     <div  class="innerdial">
                       <div class="shadow-circle define-a-path">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </li>
-            <li class="pan">
+            <li class="action">
                 <div class="dial">
                     <div  class="innerdial">
                       <div class="shadow-circle fade-in-out">
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             </li>
-            <li class="pan">
+            <li class="action">
                 <div class="dial">
                     <div  class="innerdial">
                       <div class="shadow-circle grow-shrink">
@@ -162,6 +162,51 @@
       g_foo = false;
     });
 
+    // FADER
+    elem = document.getElementsByClassName('fade-in-out')[0];
+    dial = JogDial(elem,
+      {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    dial.on('mousemove', function(evt){
+      var duration = Math.round(evt.target.degree/10);
+      console.log("fading..." + duration);
+      setFaderDuration(duration);
+    });
+
+    dial.on('mouseup', function(e) {
+      g_foo = true;
+    });
+
+    wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+    wheel.addEventListener('click', function(e) {
+      if (!g_foo) {
+        addRemoveFader();
+      }
+      g_foo = false;
+    });
+
+    // GROWER
+    elem = document.getElementsByClassName('grow-shrink')[0];
+    dial = JogDial(elem,
+      {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    dial.on('mousemove', function(evt){
+      var duration = Math.round(evt.target.degree/10);
+      console.log("growing..." + duration);
+      setGrowerDuration(duration);
+    });
+
+    dial.on('mouseup', function(e) {
+      g_foo = true;
+    });
+
+    wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+    wheel.addEventListener('click', function(e) {
+      if (!g_foo) {
+        addRemoveGrower();
+      }
+      g_foo = false;
+    });
 
   }
 </script>
