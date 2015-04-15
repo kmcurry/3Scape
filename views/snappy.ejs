@@ -26,15 +26,15 @@
     	<%- include('viewcontrols/partsbar'); %>
 		</div>
 
-		<div class="navbar-fixed-bottom" onmouseover="$('.actions-bar').toggle()" onmouseout="$('.actions-bar').toggle()">
-    	<%- include('viewcontrols/animationbar') %>
-		</div>
-
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
 				 onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
 			<canvas id="Canvas">
 			</canvas>
+		</div>
+
+		<div class="navbar-fixed-bottom" onmouseover="$('.actions-bar').toggle()" onmouseout="$('.actions-bar').toggle()">
+			<%- include('viewcontrols/actionsbar') %>
 		</div>
 
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
@@ -58,6 +58,14 @@
 					start3Scape(s, i);
 
 					addControls();
+
+					document.onmousemove = handleDocMove;
+
+					setTimeout(function() {
+						console.log("toggling bars");
+						$('.parts-bar').toggle(1000);
+						$('.actions-bar').toggle(1000);
+					}, 2000);
 
 				}
 			}
