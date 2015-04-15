@@ -1,4 +1,8 @@
-ul.actions{
+.actions{
+    font-size: 0; /* need this to remove white space between inline block elements - can override on children*/
+}
+
+ul.actions-list{
     padding-bottom:8px;
     min-width:100%;
     text-align: center;
