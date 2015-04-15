@@ -140,9 +140,6 @@ function start3Scape(scape, scapeId) {
     }
   }
 
-  addContextMenu();
-  addEventHandlers();
-
   var saveInterval = setInterval(autoSaveScene, 10000);
 
   window.addEventListener("beforeunload", save3Scape);
@@ -232,8 +229,8 @@ function reset() {
     g_objectInspector = null;
 
     g_selectedModel = null;
+    g_selectPointModel = null;
 
-    $("#model-menu").toggleClass('active', false);
 
 }
 
