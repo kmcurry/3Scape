@@ -178,6 +178,7 @@ function processModelXML(name, copy) {
     g_selectedModel = bridgeworks.registry.find(name);
 
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
+    g_selectedModel.getAttribute("detectObstruction").setValueDirect(true);
 
     if (copy) {
         // TODO: g_copyModel.copyModel();
