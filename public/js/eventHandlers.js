@@ -184,6 +184,20 @@ function handleKey(e)
                 }      // c
             }
             break;
+        case 'D'.charCodeAt(0):
+        case 'd':
+        case "U+0044":
+            {
+                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(0,0,10);
+            }
+            break;
+        case 'E'.charCodeAt(0):
+        case 'e':
+        case "U+0045":
+            {
+                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(0,0,-10);
+            }
+            break;
         case 'P'.charCodeAt(0):
         case 'p':
             {
@@ -211,7 +225,7 @@ function handleKey(e)
           {
             cut();
             e.preventDefault();
-            e.stopPropogation();
+            e.stopPropagation();
           }
           break;
         case "Right": //right
