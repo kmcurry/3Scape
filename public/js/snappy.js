@@ -88,6 +88,7 @@ function new3Scape() {
       data: JSON.stringify({scape:localStorage.getItem('autoSave')}),
       success: updateLocalStorage
     });
+    window.location.pathname = "/";
 }
 
 function updateLocalStorage(scapeId) {
