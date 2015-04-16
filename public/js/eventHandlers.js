@@ -1,24 +1,6 @@
 window.onkeydown = handleKey;
 
-function addEventHandlers() {
-  var bwcontainer = document.getElementById("BwContainer");
-  if (bwcontainer.addEventListener) {
-    console.log("adding mouse handlers");
-    bwcontainer.addEventListener("onclick", handleMouse);
-    bwcontainer.addEventListener("onmousedown", handleMouse);
-    bwcontainer.addEventListener("ondblclick", handleMouse);
-    bwcontainer.addEventListener("onclick", handleMouse);
-    bwcontainer.addEventListener("onmousemove", handleMouse);
-
-  } else {
-    bwcontainer.attachEvent("onclick", handleMouse);
-    bwcontainer.attachEvent("onmousedown", handleMouse);
-    bwcontainer.attachEvent("ondblclick", handleMouse);
-    bwcontainer.attachEvent("onclick", handleMouse);
-    bwcontainer.attachEvent("onmousemove", handleMouse);
-  }
-
-}
+var g_capture = false;
 
 function addKeyEvents()
 {
@@ -66,9 +48,13 @@ function addKeyEvents()
 // continues when the cursor moves out of the Bridgeworks frame.
 function handleDocMove(e)
 {
-  console.log("movin'");
-    if (capture)
-        bridgeworks.handleEvent(e);
+  if (g_capture) {
+    var evt=window.event || e //equalize event object
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+
+    bridgeworks.handleEvent(e);
+  }
 }
 
 function handleMouse(e)
@@ -90,12 +76,12 @@ function handleMouse(e)
 
         case "mousedown":
             {
-                capture = true;
+              g_capture = true;
             }
             break;
         case "mouseup":
             {
-                capture = false;
+              g_capture = false;
             }
             break;
         case "click":
@@ -130,26 +116,6 @@ function handleMouse(e)
             }
         break;
 
-        case "dblclick":
-          {
-            /*
-            if (g_selectedModel) {
-              var name = g_selectedModel.name.getValueDirect().join("");
-              var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-              var cmd = "";
-              if (e.metaKey || e.ctrlKey) {
-                  cmd = "\<AutoInterpolate target='" + name + "'>";
-                  cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
-                  cmd += "\</AutoInterpolate>";
-              }
-              else {
-                  cmd = "\<Locate target='" + name + "'/>";
-              }
-              bridgeworks.updateScene(cmd);
-            }
-            */
-          }
-        break;
     }
 }
 
@@ -297,9 +263,12 @@ else if (document.addEventListener) //WC3 browsers
 
 function handleWheel(e) {
 
+
     var evt=window.event || e //equalize event object
     evt.preventDefault();
     evt.stopImmediatePropagation();
+
+
 
     var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta //check for detail first so Opera uses that instead of wheelDelta
 

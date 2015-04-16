@@ -88,6 +88,7 @@ function new3Scape() {
       data: JSON.stringify({scape:localStorage.getItem('autoSave')}),
       success: updateLocalStorage
     });
+    window.location.pathname = "/";
 }
 
 function updateLocalStorage(scapeId) {
@@ -140,9 +141,6 @@ function start3Scape(scape, scapeId) {
     }
   }
 
-  addContextMenu();
-  addEventHandlers();
-
   var saveInterval = setInterval(autoSaveScene, 10000);
 
   window.addEventListener("beforeunload", save3Scape);
@@ -178,6 +176,7 @@ function processModelXML(name, copy) {
     g_selectedModel = bridgeworks.registry.find(name);
 
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
+    g_selectedModel.getAttribute("detectObstruction").setValueDirect(true);
 
     if (copy) {
         // TODO: g_copyModel.copyModel();
@@ -231,8 +230,8 @@ function reset() {
     g_objectInspector = null;
 
     g_selectedModel = null;
+    g_selectPointModel = null;
 
-    $("#model-menu").toggleClass('active', false);
 
 }
 

@@ -1,5 +1,5 @@
-<div class="row object-bar navbar-fixed-top">
-    <div class="col-xs-1 nav-logo"></div>
+<div class="row parts-bar">
+    <div class="col-xs-1 logo"></div>
     <div class="col-xs-10 parts">
         <ul class="parts-list list-inline">
             <li class="part">
@@ -15,7 +15,7 @@
                 <button class="parts-btn gear" onclick="loadModel('Gear.xml');" title="Gear"></button>
             </li>
             <li class="part">
-                <button class="parts-btn plank" onclick="loadModel('Plank.xml');" title="Plan"></button>
+                <button class="parts-btn plank" onclick="loadModel('Plank.xml');" title="Plane"></button>
             </li>
             <li class="part">
                 <button class="parts-btn wall" onclick="loadModel('Wall.xml');" title="Wall"></button>
@@ -24,10 +24,11 @@
                 <button class="parts-btn beam" onclick="loadModel('Beam.xml');" title="Beam"></button>
             </li>
             <li class="part">
-                <button class="parts-btn ring" onclick="loadModel('Ring.xml');" title="Ring"></button>
-            </li>
-            <li class="part">
                 <button class="parts-btn wedge" onclick="loadModel('Wedge.xml');" title="Wedge"></button>
+            </li>
+            <!-- CONCAVE PARTS ARE NOT SUPPORTED BY PHYSICS PACKAGE
+            <li class="part">
+                <button class="parts-btn ring" onclick="loadModel('Ring.xml');" title="Ring"></button>
             </li>
             <li class="part">
                 <button class="parts-btn tube" onclick="loadModel('Tube.xml');" title="Tube"></button>
@@ -35,11 +36,12 @@
             <li class="part">
                 <button class="parts-btn elbow" onclick="loadModel('Elbow.xml');" title="Elbow"></button>
             </li>
+            -->
         </ul>
     </div>
-    <div>
-      <div id ="dropdownMenu1" class="col-xs-1 nav-menu">
-      
+
+    <div id ="dropdownMenu1" class="col-xs-1 nav-menu">
+
         <div class="dropdown-toggle fa fa-bars" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
         </div>
       <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
@@ -87,15 +89,9 @@
         <li class="divider"></li>
 
         <li>
-          <span class="shape fa fa-plus"><a href="#" id="loadScene">Load a 3Scape</a></span>
-        </li>
-
-        <li class="divider"></li>
-
-        <li>
           <span class="shape fa fa-sign-out"><a href="logout" title="Log out of 3Scape.">Sign Out</a></span>
         </li>
       </ul>
     </div>
-    </div>
+
 </div>
