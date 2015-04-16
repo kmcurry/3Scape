@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var list = $('ul.actions'),
+    var list = $('ul.actions-list'),
         scrollContainer = $('.palette');
         listWidth = parseInt(list.css('width'));
     scrollContainer.scrollLeft(0);
