@@ -5,6 +5,8 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   var express = require('express');
   var bodyParser = require('body-parser');
 
+  var stripe = require('stripe')(config.payment.secKey);
+
   //var app = express();
   app.use(bodyParser.urlencoded({extended: true}));
 
@@ -95,9 +97,15 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     res.redirect('login');
   });
 
-  app.get('/auth/:new?', function (req, res) {
+  app.post('/auth/new', function (req, res) {
 
-    res.write("<h1>You've come to the right place " + req.params.new + "</h1>");
+    // Retrieve the request's body and parse it as JSON
+    var event_json = JSON.parse(req.body);
+
+    // Do something with event_json
+    console.log(event_json);
+
+    res.send(200);
 
     /**
     passport.authenticate('local-signup', function (err, creator, info) {
@@ -263,9 +271,6 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   //process the signup form
   app.post('/signup', function (req, res, next) {
 
-
-
-    var stripe = require('stripe')(config.payment.secKey);
 
     stripe.customers.create({
       source: req.body.stripeToken, // obtained with Stripe.js
