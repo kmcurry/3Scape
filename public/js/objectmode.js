@@ -127,6 +127,52 @@ function setRoamSpeed(speed) {
   }
 }
 
+function addRemoveFader() {
+  if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "";
+    if (bridgeworks.get('Fading_' + name)) {
+      cmd = "<Update><Remove target='Fading_" + name + "'/><Set target='" + name + "' opacity='1'/></Update>";
+    } else {
+      cmd = "<AutoInterpolate name='Fading_" + name + "' postBehavior='3' renderAndRelease='false' target='" + name + "' opacity='0'/>";
+    }
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+  }
+}
+
+function setFaderDuration(duration) {
+  if (g_selectedModel) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "<Set target='Fading_" + name + "' duration='" + duration + "'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+  }
+}
+
+function addRemoveGrower() {
+  if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "";
+    if (bridgeworks.get('Grower_' + name)) {
+      cmd = "<Update><Remove target='Grower_" + name + "'/><Set target='" + name + "' opacity='1'/></Update>";
+    } else {
+      cmd = "<AutoInterpolate name='Grower_" + name + "' postBehavior='3' target='" + name + "'><scale x='3' y='3' z='3'/></AutoInterpolate>";
+    }
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+  }
+}
+
+function setGrowerDuration(duration) {
+  if (g_selectedModel) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "<Set target='Grower_" + name + "' duration='" + duration + "'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+  }
+}
+
 function setModelScale(value) {
 
     if (g_selectedModel) {
