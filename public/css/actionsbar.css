@@ -2,6 +2,17 @@
     font-size: 0; /* need this to remove white space between inline block elements - can override on children*/
 }
 
+.row.actions-bar{
+    margin-left:0;
+    margin-right:0;
+}
+
+.actions-bar{
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
 ul.actions-list{
     padding-bottom:8px;
     min-width:100%;

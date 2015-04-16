@@ -19,13 +19,13 @@
     <script src="js/tablet-resize.js" ></script>
     <script src="js/barscroll.js"></script>
 	</head>
-	<body onresize="resize();">
+	<body class="container-fluid" onresize="resize();">
 
-		<div class="navbar-fixed-top" onmouseover="$('.parts-bar').toggle()" onmouseout="$('.parts-bar').toggle()">
+		<div class="navbar-fixed-top" onmouseenter="$('.parts-bar').slideDown(500)" onmouseleave="$('.parts-bar').slideUp(500)">
     	<%- include('viewcontrols/partsbar'); %>
 		</div>
 
-		<div class="navbar-fixed-bottom" onmouseover="$('.actions-bar').toggle()" onmouseout="$('.actions-bar').toggle()">
+		<div class="navbar-fixed-bottom" onmouseenter="$('.actions-bar').slideDown(500)" onmouseleave="$('.actions-bar').slideUp(500)">
 			<%- include('viewcontrols/actionsbar') %>
 		</div>
 
@@ -62,8 +62,8 @@
 
 					setTimeout(function() {
 						console.log("toggling bars");
-						$('.parts-bar').toggle(1000);
-						$('.actions-bar').toggle(1000);
+						$('.parts-bar').slideUp(500);
+						$('.actions-bar').slideUp(500);
 					}, 2000);
 
 				}
