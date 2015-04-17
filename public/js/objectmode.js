@@ -131,10 +131,10 @@ function addRemoveFader() {
   if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
-    if (bridgeworks.get('Fading_' + name)) {
-      cmd = "<Update><Remove target='Fading_" + name + "'/><Set target='" + name + "' opacity='1'/></Update>";
+    if (bridgeworks.get(name + '_AutoInterpolator')) {
+      cmd = "<Update><Remove target='" + name + "_AutoInterpolator'/><Set target='" + name + "' opacity='1'/></Update>";
     } else {
-      cmd = "<AutoInterpolate name='Fading_" + name + "' postBehavior='3' renderAndRelease='false' target='" + name + "' opacity='0'/>";
+      cmd = "<AutoInterpolate name='" + name + "' postBehavior='3' target='" + name + "' opacity='0'/>";
     }
     console.log(cmd);
     bridgeworks.updateScene(cmd);
@@ -144,7 +144,7 @@ function addRemoveFader() {
 function setFaderDuration(duration) {
   if (g_selectedModel) {
     var name = g_selectedModel.name.getValueDirect().join("");
-    var cmd = "<Set target='Fading_" + name + "' duration='" + duration + "'/>";
+    var cmd = "<Set target='" + name + "_AutoInterpolator' duration='" + duration + "'/>";
     console.log(cmd);
     bridgeworks.updateScene(cmd);
   }
