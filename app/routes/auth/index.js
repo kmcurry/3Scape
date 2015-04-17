@@ -99,11 +99,14 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   app.post('/auth/new', function (req, res) {
 
+
+    console.log(req.body);
+    
     // Retrieve the request's body and parse it as JSON
-    //var event_json = JSON.parse(req.body);
+    var event_json = JSON.parse(req.body);
 
     // Do something with event_json
-    console.log(req.body);
+    console.log(event_json);
 
     res.send(200);
 
