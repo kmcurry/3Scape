@@ -100,10 +100,10 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   app.post('/auth/new', function (req, res) {
 
     // Retrieve the request's body and parse it as JSON
-    var event_json = JSON.parse(req.body);
+    //var event_json = JSON.parse(req.body);
 
     // Do something with event_json
-    console.log(event_json);
+    console.log(req.body);
 
     res.send(200);
 
