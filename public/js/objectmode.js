@@ -131,10 +131,10 @@ function addRemoveFader() {
   if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
-    if (bridgeworks.get(name + '_AutoInterpolator')) {
-      cmd = "<Update><Remove target='" + name + "_AutoInterpolator'/><Set target='" + name + "' opacity='1'/></Update>";
+    if (bridgeworks.get('Fader_' + name + '_AutoInterpolator')) {
+      cmd = "<Update><Remove target='Fader_" + name + "_AutoInterpolator'/><Set target='" + name + "' opacity='1'/></Update>";
     } else {
-      cmd = "<AutoInterpolate name='" + name + "' postBehavior='3' target='" + name + "' opacity='0'/>";
+      cmd = "<AutoInterpolate name='Fader_" + name + "' postBehavior='3' target='" + name + "' opacity='0'/>";
     }
     console.log(cmd);
     bridgeworks.updateScene(cmd);
@@ -144,7 +144,7 @@ function addRemoveFader() {
 function setFaderDuration(duration) {
   if (g_selectedModel) {
     var name = g_selectedModel.name.getValueDirect().join("");
-    var cmd = "<Set target='" + name + "_AutoInterpolator' duration='" + duration + "'/>";
+    var cmd = "<Set target='Fader_" + name + "_AutoInterpolator' duration='" + duration + "'/>";
     console.log(cmd);
     bridgeworks.updateScene(cmd);
   }
@@ -154,8 +154,8 @@ function addRemoveGrower() {
   if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
-    if (bridgeworks.get('Grower_' + name)) {
-      cmd = "<Update><Remove target='Grower_" + name + "'/><Set target='" + name + "' opacity='1'/></Update>";
+    if (bridgeworks.get('Grower_' + name + '_AutoInterpolator')) {
+      cmd = "<Update><Remove target='Grower_" + name + "_AutoInterpolator'/><Set target='" + name + "' opacity='1'/></Update>";
     } else {
       cmd = "<AutoInterpolate name='Grower_" + name + "' postBehavior='3' target='" + name + "'><scale x='3' y='3' z='3'/></AutoInterpolate>";
     }
