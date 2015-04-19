@@ -103,20 +103,15 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     console.log("Welcome new 3Scaper!");
     console.log(req.body);
 
-
-    res.send(200);
-
-    /**
     passport.authenticate('local-signup', function (err, creator, info) {
       if (err) {
-        req.flash('signupMessage', 'There was a problem logging you in. ' + err);
+        console.log('There was a problem signing up. ' + err);
         return next(err);
       }
 
       if (!creator) {
-        req.flash('signupMessage', 'There was a problem creating your 3Scape profile.');
-        return res.redirect('/signup'); // redirect fails in other callbacks
-                                        // with 'cannot set headers after they're sent' - KMC
+        console.log('There was a problem creating a 3Scape profile for: ' + req.body.email);
+        return res.send(204);
       }
 
 
@@ -133,10 +128,9 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
             templateId: config.email.welcome
           });
         }
-        return res.redirect('/');
+        return res.send(201);
       });
-    })(req, res, next);
-    **/
+    })(req, res);
   });
 
   // RESET
