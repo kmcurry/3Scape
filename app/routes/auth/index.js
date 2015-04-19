@@ -7,8 +7,8 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   var stripe = require('stripe')(config.payment.secKey);
 
-  //var app = express();
   app.use(bodyParser.urlencoded({extended: true}));
+  app.use(bodyParser.json());
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -100,13 +100,9 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   app.post('/auth/new', function (req, res) {
 
 
+    console.log("Welcome new 3Scaper!");
     console.log(req.body);
-    
-    // Retrieve the request's body and parse it as JSON
-    var event_json = JSON.parse(req.body);
 
-    // Do something with event_json
-    console.log(event_json);
 
     res.send(200);
 
