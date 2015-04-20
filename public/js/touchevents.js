@@ -23,3 +23,4 @@ function handleTouchCancel(evt) {
 function handleTouchMove(evt) {
     console.log("touch move");
 }
+
