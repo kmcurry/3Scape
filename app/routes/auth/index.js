@@ -3,12 +3,8 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   var Creator = require('../../../app/models/creator');
   var Scape = require('../../../app/models/scape');
   var express = require('express');
-  var bodyParser = require('body-parser');
 
   var stripe = require('stripe')(config.payment.secKey);
-
-  app.use(bodyParser.urlencoded({extended: true}));
-  app.use(bodyParser.json());
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -98,39 +94,55 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   });
 
   app.post('/auth/new', function (req, res) {
-
-
     console.log("Welcome new 3Scaper!");
-    console.log(req.body);
 
-    passport.authenticate('local-signup', function (err, creator, info) {
-      if (err) {
-        console.log('There was a problem signing up. ' + err);
-        return next(err);
-      }
-
-      if (!creator) {
-        console.log('There was a problem creating a 3Scape profile for: ' + req.body.email);
-        return res.send(204);
-      }
+    var striper = req.body;
+    striper = striper.data.object;
+    console.log(striper.email);
 
 
-      req.logIn(creator, function(err) {
-        if (err) {
-          console.log("There was a problem logging you in");
-          return next(err);
+    // find a user whose email is the same as the forms email
+    // we are checking to see if the user trying to login already exists
+    Creator.findOne({ 'email' :  striper.email }, function(err, user) {
+        // if there are any errors, return the error
+        if (err)
+          res.status(200).send("Error");
+
+        // check to see if theres already a user with that email
+        if (user) {
+            console.log("3Scaper already exists");
+            res.status(200).send("3Scaper already exists");
+        } else {
+
+            // if there is no user with that email
+            // create the user
+            var newUser            = new Creator();
+
+            // set the user's local credentials
+            newUser.email    = striper.email;
+            newUser.name     = striper.email;
+            newUser.password = newUser.generateHash(striper.email);
+
+            // save the user
+            newUser.save(function(err) {
+                if (err)
+                    throw err;
+            });
+
+            // email
+            if (config.email.smtpUser) {
+              console.log("Sending welcome mailer.");
+              utilities.emailer.send({
+                to: newUser.email,
+                templateId: config.email.welcome
+              });
+            }
+
+            res.sendStatus(201);
         }
-        // email
-        if (config.email.smtpUser) {
-          console.log("Sending welcome mailer.");
-          utilities.emailer.send({
-            to: creator.email,
-            templateId: config.email.welcome
-          });
-        }
-        return res.send(201);
-      });
-    })(req, res);
+
+    });
+
   });
 
   // RESET

@@ -45,36 +45,36 @@ module.exports = function(passport) {
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
 
-        // find a user whose email is the same as the forms email
-        // we are checking to see if the user trying to login already exists
-        User.findOne({ 'email' :  email }, function(err, user) {
-            // if there are any errors, return the error
-            if (err)
-                return done(err);
+          // find a user whose email is the same as the forms email
+          // we are checking to see if the user trying to login already exists
+          User.findOne({ 'email' :  email }, function(err, user) {
+              // if there are any errors, return the error
+              if (err)
+                  return done(err);
 
-            // check to see if theres already a user with that email
-            if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else {
+              // check to see if theres already a user with that email
+              if (user) {
+                  return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+              } else {
 
-                // if there is no user with that email
-                // create the user
-                var newUser            = new User();
+                  // if there is no user with that email
+                  // create the user
+                  var newUser            = new User();
 
-                // set the user's local credentials
-                newUser.email    = email;
-                newUser.name     = email;
-                newUser.password = newUser.generateHash(password);
+                  // set the user's local credentials
+                  newUser.email    = email;
+                  newUser.name     = email;
+                  newUser.password = newUser.generateHash(password);
 
-                // save the user
-                newUser.save(function(err) {
-                    if (err)
-                        throw err;
-                    return done(null, newUser);
-                });
-            }
+                  // save the user
+                  newUser.save(function(err) {
+                      if (err)
+                          throw err;
+                      return done(null, newUser);
+                  });
+              }
 
-        });
+          });
 
         });
 
