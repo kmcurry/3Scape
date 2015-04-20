@@ -3,10 +3,8 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   var Creator = require('../../../app/models/creator');
   var Scape = require('../../../app/models/scape');
   var express = require('express');
-  var bodyParser = require('body-parser');
 
-  //var app = express();
-  app.use(bodyParser.urlencoded({extended: true}));
+  var stripe = require('stripe')(config.payment.secKey);
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -93,6 +91,61 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('login');
+  });
+
+  app.post('/auth/new', function (req, res) {
+    console.log("Welcome new 3Scaper!");
+
+    var striper = req.body;
+    striper = striper.data.object;
+    console.log(striper.email);
+
+
+    // find a user whose email is the same as the forms email
+    // we are checking to see if the user trying to login already exists
+    Creator.findOne({ 'email' :  striper.email }, function(err, user) {
+        // if there are any errors, return the error
+        if (err)
+          res.status(200).send("Error");
+
+        // check to see if theres already a user with that email
+        if (user) {
+            console.log("3Scaper already exists");
+            res.status(200).send("3Scaper already exists");
+        } else {
+
+            // if there is no user with that email
+            // create the user
+            var new3Scaper            = new Creator();
+
+            var tempPass = crypto.randomBytes(8).toString('hex');
+
+            // set the user's local credentials
+            new3Scaper.email    = striper.email;
+            new3Scaper.name     = striper.email;
+            new3Scaper.password = new3Scaper.generateHash(tempPass);
+
+            // save the user
+            new3Scaper.save(function(err) {
+                if (err)
+                    throw err;
+            });
+
+            // email
+            if (config.email.smtpUser) {
+              console.log("Sending welcome mailer.");
+              utilities.emailer.send({
+                to: new3Scaper.email,
+                tempPass: tempPass,
+                templateId: config.email.welcome
+              });
+            }
+
+            res.sendStatus(201);
+        }
+
+    });
+
   });
 
   // RESET
@@ -226,9 +279,6 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   //process the signup form
   app.post('/signup', function (req, res, next) {
 
-
-
-    var stripe = require('stripe')(config.payment.secKey);
 
     stripe.customers.create({
       source: req.body.stripeToken, // obtained with Stripe.js

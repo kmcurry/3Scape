@@ -173,6 +173,8 @@ function handleKey(e)
     if (e.key !== undefined) code = e.key;
     else if (e.keyIdentifier !== undefined) code = e.keyIdentifier;
 
+    console.log(code);
+
     switch (code) {
         case 'C'.charCodeAt(0):
         case 'c':
@@ -188,14 +190,28 @@ function handleKey(e)
         case 'd':
         case "U+0044":
             {
-                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(0,0,10);
+                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(-10,0,0);
             }
             break;
-        case 'E'.charCodeAt(0):
-        case 'e':
-        case "U+0045":
+        case 'A'.charCodeAt(0):
+        case 'a':
+        case "U+0041":
+            {
+                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(10,0,0);
+            }
+            break;
+        case 'S'.charCodeAt(0):
+        case 's':
+        case "U+0053":
             {
                 g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(0,0,-10);
+            }
+            break;
+        case 'W'.charCodeAt(0):
+        case 'w':
+        case "U+0057":
+            {
+                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(0,0,10);
             }
             break;
         case 'P'.charCodeAt(0):

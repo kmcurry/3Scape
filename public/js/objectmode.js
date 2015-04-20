@@ -6,6 +6,7 @@ function objectLeft()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(10,0,0);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -19,6 +20,7 @@ function objectRight()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(-10,0,0);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -32,6 +34,7 @@ function objectDown()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(0,-10,0);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -45,6 +48,7 @@ function objectBackward()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(0,0,-10);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -58,6 +62,7 @@ function objectUp()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(0,10,0);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -70,6 +75,7 @@ function objectForward(){
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(0,0,10);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -131,10 +137,10 @@ function addRemoveFader() {
   if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
-    if (bridgeworks.get('Fading_' + name)) {
-      cmd = "<Update><Remove target='Fading_" + name + "'/><Set target='" + name + "' opacity='1'/></Update>";
+    if (bridgeworks.get('Fader_' + name + '_AutoInterpolator')) {
+      cmd = "<Update><Remove target='Fader_" + name + "_AutoInterpolator'/><Set target='" + name + "' opacity='1'/></Update>";
     } else {
-      cmd = "<AutoInterpolate name='Fading_" + name + "' postBehavior='3' renderAndRelease='false' target='" + name + "' opacity='0'/>";
+      cmd = "<AutoInterpolate name='Fader_" + name + "' postBehavior='3' target='" + name + "' opacity='0'/>";
     }
     console.log(cmd);
     bridgeworks.updateScene(cmd);
@@ -144,7 +150,7 @@ function addRemoveFader() {
 function setFaderDuration(duration) {
   if (g_selectedModel) {
     var name = g_selectedModel.name.getValueDirect().join("");
-    var cmd = "<Set target='Fading_" + name + "' duration='" + duration + "'/>";
+    var cmd = "<Set target='Fader_" + name + "_AutoInterpolator' duration='" + duration + "'/>";
     console.log(cmd);
     bridgeworks.updateScene(cmd);
   }
@@ -154,8 +160,8 @@ function addRemoveGrower() {
   if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
-    if (bridgeworks.get('Grower_' + name)) {
-      cmd = "<Update><Remove target='Grower_" + name + "'/><Set target='" + name + "' opacity='1'/></Update>";
+    if (bridgeworks.get('Grower_' + name + '_AutoInterpolator')) {
+      cmd = "<Update><Remove target='Grower_" + name + "_AutoInterpolator'/><Set target='" + name + "' opacity='1'/></Update>";
     } else {
       cmd = "<AutoInterpolate name='Grower_" + name + "' postBehavior='3' target='" + name + "'><scale x='3' y='3' z='3'/></AutoInterpolate>";
     }

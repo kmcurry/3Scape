@@ -14,24 +14,15 @@ var bridgeworks = null;
 
 // functions are organized by alpha until refactored
 
-function applyColor(hex)
-{
-    if (g_selectedModel) {
-        var r = parseInt(hex.substring(0, 2), 16) / 256;
-        var g = parseInt(hex.substring(2, 4), 16) / 256;
-        var b = parseInt(hex.substring(4, 6), 16) / 256;
-        var color = g_selectedModel.color.getValueDirect();
-        g_selectedModel.color.setValueDirect(r, g, b, color.a);
+function autoSave(){
 
-    }
-}
+  if (true) {
+    serializedScene = "";
 
-function autoSaveScene(){
-  serializedScene = "";
-
-  var command = "<Serialize target='Root'/>";
-  bridgeworks.updateScene(command);
-  localStorage.setItem("autoSave",serializedScene);
+    var command = "<Serialize target='Root'/>";
+    bridgeworks.updateScene(command);
+    localStorage.setItem("autoSave",serializedScene);
+  }
 }
 
 function copy()
@@ -80,7 +71,8 @@ function new3Scape() {
     bridgeworks.contentDir = '/BwContent';
     bridgeworks.onLoadModified();
     bridgeworks.updateScene('grid-50.xml');
-    autoSaveScene();
+
+    // QTP: post to server right away or wait until an autosave event?
     $.ajax({
       url: 'new',
       type: 'POST',
@@ -112,6 +104,9 @@ var onHoldFunction = function(id, method, time) {
 }
 
 function save3Scape() {
+
+  autoSave();
+
   $.ajax({
     url: 'save',
     type: 'POST',
@@ -141,7 +136,7 @@ function start3Scape(scape, scapeId) {
     }
   }
 
-  var saveInterval = setInterval(autoSaveScene, 10000);
+  var saveInterval = setInterval(autoSave, 30000);
 
   window.addEventListener("beforeunload", save3Scape);
 
