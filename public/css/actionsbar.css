@@ -8,10 +8,40 @@
 }
 
 .actions-bar{
-    position:absolute;
+    position:fixed;
     bottom:0;
+    -webkit-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+       -moz-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+         -o-animation:Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+            animation:Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+/*    transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);*/
     width:100%;
 }
+
+
+
+.scroll-left, .scroll-right{
+    bottom:-100px;
+    transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+.navbar-fixed-bottom{
+    height:35px;
+}
+
+.palette{
+    position:relative;
+    bottom:0;
+    transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+.navbar-fixed-bottom:hover .palette{
+    bottom:110px;
+}
+
+ .navbar-fixed-bottom:hover .scroll-left, .navbar-fixed-bottom:hover .scroll-right{
+     bottom:0;
+ }
 
 ul.actions-list{
     padding-bottom:8px;
@@ -92,4 +122,24 @@ li.action{
 
 .colorwheel svg{
     vertical-align: -40%;
+}
+
+
+/* --------- Animate Out After Page Load ------------ */
+
+@-webkit-keyframes Close-Bottom-Drawer {
+  0%   { bottom: 0; }
+  100% { bottom: -110px; }
+}
+@-moz-keyframes Close-Bottom-Drawer {
+  0%   { bottom: 0; }
+  100% { bottom: -110px; }
+}
+@-o-keyframes Close-Bottom-Drawer {
+  0%   { bottom: 0; }
+  100% { bottom: -110px; }
+}
+@keyframes Close-Bottom-Drawer {
+  0%   { bottom: 0; }
+  100% { bottom: -110px; }
 }
