@@ -118,10 +118,12 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
             // create the user
             var new3Scaper            = new Creator();
 
+            var tempPass = crypto.randomBytes(8).toString('hex');
+
             // set the user's local credentials
             new3Scaper.email    = striper.email;
             new3Scaper.name     = striper.email;
-            new3Scaper.password = new3Scaper.generateHash(striper.email);
+            new3Scaper.password = new3Scaper.generateHash(tempPass);
 
             // save the user
             new3Scaper.save(function(err) {
@@ -134,6 +136,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
               console.log("Sending welcome mailer.");
               utilities.emailer.send({
                 to: new3Scaper.email,
+                tempPass: tempPass,
                 templateId: config.email.welcome
               });
             }
