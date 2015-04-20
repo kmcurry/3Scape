@@ -19,6 +19,8 @@
     <script src="js/tablet-resize.js" ></script>
     <script src="js/barscroll.js"></script>
 	</head>
+    <script src="js/hammer-min.js"></script>
+	</head>
 	<body class="container-fluid" onresize="resize();">
 
 		<div class="navbar-fixed-top" >
@@ -92,5 +94,23 @@
 			ga('send', 'pageview');
 
 		</script>
+        <script>
+            $(document).ready(function(){
+                console.log('swipe start');
+                var topbar = $('.navbar-fixed-top');
+                var hammertop = new Hammer(topbar.get(0));
+                hammertop.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+                hammertop.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+                hammertop.on('pandown', function(ev) {
+                    console.log('swipe down detected');
+                    $('.logo, .parts, .nav-menu').css({top:"100px"});
+                });
+                 hammertop.on('panup', function(ev) {
+                       console.log('swipe up detected');
+                    $('.logo, .parts, .nav-menu').css({top:"-100px"});
+                    console.log('animated');
+                });
+            });
+        </script>
 	</body>
 </html>
