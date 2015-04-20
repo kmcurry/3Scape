@@ -6,6 +6,7 @@ function objectLeft()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(10,0,0);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -19,6 +20,7 @@ function objectRight()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(-10,0,0);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -32,6 +34,7 @@ function objectDown()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(0,-10,0);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -45,6 +48,7 @@ function objectBackward()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(0,0,-10);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -58,6 +62,7 @@ function objectUp()
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(0,10,0);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
@@ -70,6 +75,7 @@ function objectForward(){
     g_objectInspector.enabled.setValueDirect(true);
 
     g_objectInspector.translationDelta.setValueDirect(0,0,10);
+    g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
   }
