@@ -14,7 +14,7 @@
        -moz-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
          -o-animation:Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
             animation:Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-    transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+/*    transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);*/
     width:100%;
 }
 
