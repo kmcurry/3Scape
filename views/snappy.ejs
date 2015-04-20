@@ -21,11 +21,13 @@
 	</head>
 	<body class="container-fluid" onresize="resize();">
 
-		<div class="navbar-fixed-top" onmouseenter="$('.parts-bar').slideDown(500)" onmouseleave="$('.parts-bar').slideUp(500)">
-    	<%- include('viewcontrols/partsbar'); %>
+		<div class="navbar-fixed-top" >
+    	   <%- include('viewcontrols/partsbar'); %> 
 		</div>
+        
+        
 
-		<div class="navbar-fixed-bottom" onmouseenter="$('.actions-bar').slideDown(500)" onmouseleave="$('.actions-bar').slideUp(500)">
+		<div class="navbar-fixed-bottom">
 			<%- include('viewcontrols/actionsbar') %>
 		</div>
 
@@ -60,11 +62,11 @@
 
 					document.onmousemove = handleDocMove;
 
-					setTimeout(function() {
-						console.log("toggling bars");
-						$('.parts-bar').slideUp(500);
-						$('.actions-bar').slideUp(500);
-					}, 2000);
+//					setTimeout(function() {
+//						console.log("toggling bars");
+//						$('.parts-bar').slideUp(500);
+//						$('.actions-bar').slideUp(500);
+//					}, 2000);
 
 				}
 			}
