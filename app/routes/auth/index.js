@@ -116,15 +116,15 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
             // if there is no user with that email
             // create the user
-            var newUser            = new Creator();
+            var new3Scaper            = new Creator();
 
             // set the user's local credentials
-            newUser.email    = striper.email;
-            newUser.name     = striper.email;
-            newUser.password = newUser.generateHash(striper.email);
+            new3Scaper.email    = striper.email;
+            new3Scaper.name     = striper.email;
+            new3Scaper.password = new3Scaper.generateHash(striper.email);
 
             // save the user
-            newUser.save(function(err) {
+            new3Scaper.save(function(err) {
                 if (err)
                     throw err;
             });
@@ -133,7 +133,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
             if (config.email.smtpUser) {
               console.log("Sending welcome mailer.");
               utilities.emailer.send({
-                to: newUser.email,
+                to: new3Scaper.email,
                 templateId: config.email.welcome
               });
             }
