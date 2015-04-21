@@ -95,6 +95,7 @@
 
 		</script>
         <script>
+            //add hammer.js swipe functions to actions and parts bars
             $(document).ready(function(){
                 var topbar = $('.navbar-fixed-top'),
                     bottombar = $('.navbar-fixed-bottom'),
@@ -121,6 +122,19 @@
                     console.log('animated');
                 });
             });
+        </script>
+        <script>
+            $(document).ready(function(){
+                //prevent hover animation until initial animation completes
+                var hoverable = $('.navbar-fixed-bottom, .navbar-fixed-top'),
+                    animated = $('.actions-bar, .parts-bar');
+                animated.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',   
+                function(e) {
+                // code to execute after animation ends
+                    hoverable.addClass('hover');
+                });
+            });
+
         </script>
 	</body>
 </html>

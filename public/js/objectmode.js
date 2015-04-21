@@ -110,14 +110,19 @@ function rotateUp() {
   }
 }
 
-function addRemoveRoam() {
+function addRemoveRoam(collides) {
   if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
     if (bridgeworks.get('Roaming_' + name)) {
       cmd = "<Remove target='Roaming_" + name + "'/>";
     } else {
-      cmd = "<AnimalMover name='Roaming_" + name + "' target='" + name + "' linearSpeed='1' angularSpeed='10'/>";
+      var detectCollisions = true;
+      if (collides != null && collides != 'undefined') {
+          detectCollisions = collides
+      }
+      cmd = "<AnimalMover name='Roaming_" + name + "' target='" + name
+      + "' linearSpeed='1' angularSpeed='10' detectCollisions='" + detectCollisions + "'/>";
     }
     console.log(cmd);
     bridgeworks.updateScene(cmd);

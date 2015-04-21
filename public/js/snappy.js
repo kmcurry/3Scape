@@ -229,21 +229,3 @@ function reset() {
 
 
 }
-
-
-function spinZ() {
-    if (!g_selectedModel)
-        return false;
-
-    var name = g_selectedModel.name.getValueDirect().join("");
-
-    var xml = "<AutoInterpolate target='" + name + "'>";
-    xml += "<rotation x='0' y='0' z='360'/>";
-    xml += "</AutoInterpolate>";
-
-    console.log(xml);
-
-    bridgeworks.updateScene(xml);
-
-    return true;
-}
