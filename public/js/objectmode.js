@@ -196,7 +196,7 @@ function scalePart(delta) {
   console.log(delta);
     if (g_selectedModel) {
       var scale = g_selectedModel.scale.getValueDirect();
-      if (scale.x > .1) {
+      if (delta > 0 || scale.x > .2) {
         scale.x += delta;
         scale.y += delta;
         scale.z += delta;
