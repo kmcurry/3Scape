@@ -5,7 +5,7 @@ function objectLeft()
 
     g_objectInspector.enabled.setValueDirect(true);
 
-    g_objectInspector.translationDelta.setValueDirect(10,0,0);
+    g_objectInspector.translationDelta.setValueDirect(30,0,0);
     g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
@@ -19,7 +19,7 @@ function objectRight()
 
     g_objectInspector.enabled.setValueDirect(true);
 
-    g_objectInspector.translationDelta.setValueDirect(-10,0,0);
+    g_objectInspector.translationDelta.setValueDirect(-30,0,0);
     g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
@@ -188,6 +188,20 @@ function setModelScale(value) {
 
     if (g_selectedModel) {
         g_selectedModel.scale.setValueDirect(value, value, value);
+    }
+}
+
+function scalePart(delta) {
+
+  console.log(delta);
+    if (g_selectedModel) {
+      var scale = g_selectedModel.scale.getValueDirect();
+      if (scale.x > .1) {
+        scale.x += delta;
+        scale.y += delta;
+        scale.z += delta;
+        g_selectedModel.scale.setValueDirect(scale.x, scale.y, scale.z);
+      }
     }
 }
 
