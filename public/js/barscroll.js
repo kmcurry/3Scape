@@ -35,11 +35,10 @@ $(document).ready(function(){
     if((element.offsetWidth < element.scrollWidth)){
         // your element have overflow
         $('.scroll-right, .scroll-left').show();
-//        element.css({'width','90%'});
         console.log('show scroll buttons');
     }
     else{
-        //your element don't have overflow
+        //your element doesn't have overflow
         
          $('.scroll-right, .scroll-left').hide();
         scrollContainer.css({'width': '100%'});
