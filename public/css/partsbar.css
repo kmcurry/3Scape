@@ -2,25 +2,6 @@
     font-size: 0; /* need this to remove white space between inline block elements - can override on children*/
 }
 
-.parts-bar{
-    position:relative;
-    -webkit-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-       -moz-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-         -o-animation:Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-            animation:Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-    transition: margin-top 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-}
-
-.logo, .parts, .nav-menu{
-    position:relative;
-    top:0;
-    transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-}
-
-
-.navbar-fixed-top:hover .logo, .navbar-fixed-top:hover .parts, .navbar-fixed-top:hover .nav-menu{
-    top:100px;
-}
 
 .navbar-fixed-top:focus .parts-bar{
     margin-top:0;
@@ -109,6 +90,7 @@ button.parts-btn{
 
 /*-- slide button ---*/
 
+/*
 button.view-parts{
     position:relative;
     width:100%;
@@ -117,6 +99,29 @@ button.view-parts{
     background:none;
     border:none;
 }
+*/
+
+
+.parts-bar{
+    position:relative;
+    -webkit-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+       -moz-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+         -o-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+            animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+    transition: margin-top 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+.logo, .parts, .nav-menu{
+    position:relative;
+    top:0;
+    transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+
+.navbar-fixed-top.hover:hover .logo, .navbar-fixed-top.hover:hover .parts, .navbar-fixed-top.hover:hover .nav-menu{
+    top:100px;
+}
+
 
 
 /* --------- Animate Out After Page Load ------------ */
