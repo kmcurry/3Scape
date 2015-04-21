@@ -2,7 +2,7 @@ $(document).ready(function(){
     var list = $('ul.actions-list'),
         scrollContainer = $('.palette');
         listWidth = parseInt(list.css('width'));
-    scrollContainer.scrollLeft(0);
+        scrollContainer.scrollLeft(0);
 
     $('.scroll-right').click(function(){
         var scrolledLeft = scrollContainer.scrollLeft();
@@ -30,5 +30,18 @@ $(document).ready(function(){
             scrollContainer.animate({scrollLeft: scrolledLeft-300}, 300);
         };
      });
+    
+    var element = document.querySelector('.palette');
+    if((element.offsetWidth < element.scrollWidth)){
+        // your element have overflow
+        $('.scroll-right, .scroll-left').show();
+        console.log('show scroll buttons');
+    }
+    else{
+        //your element don't have overflow
+        
+         $('.scroll-right, .scroll-left').hide();
+        console.log(scrollContainer.offsetWidth + " and " + scrollContainer.scrollWidth);
+    }
 
 });
