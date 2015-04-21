@@ -37,8 +37,12 @@ body{
 .palette{
     overflow-y:hidden;
     overflow-x: scroll;
-    box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
-    background: rgba(0,0,0,0.6);
+/*    box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);*/
+/*    background: rgba(0,0,0,0.6);*/
+/*
+    padding-left: 0;
+    padding-right:0;
+*/
 }
 
 
@@ -100,12 +104,18 @@ body{
 .scroll-right, .scroll-left{
     font-size:40px;
     position:fixed;
-    color:#ccc;
+    width:5%;
+    height:inherit;
+    color:#fff;
     line-height:1;
-    background:#fff;
+    background: #333;
     border:none;
-    bottom:10px;
     z-index:10000000;
+}
+.scroll-right:focus, .scroll-left:focus{
+    border:none;
+    box-shadow: none;
+    outline: none;
 }
 
 .scroll-active{
@@ -121,11 +131,11 @@ body{
 }
 
 .scroll-right{
-    right:25px;
+    right:0px;
 }
 
 .scroll-left{
-    right:50px;
+    left:0px;
 }
 
 
