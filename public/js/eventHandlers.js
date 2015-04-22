@@ -306,6 +306,8 @@ function handleWheel(e) {
       if (delta < 0) objectForward();
       else objectBackward();
 
+    } else if (e.metaKey || e.ctrlKey) {
+      scalePart(delta/1000);
     } else {
       if (delta > 0) zoomOut();
       else zoomIn();
