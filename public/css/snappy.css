@@ -1,280 +1,26 @@
-
 @font-face {
-    font-family: 'lane_-_narrowregular';
-    src: url('../fonts/lane.narrow-webfont.eot');
-    src: url('../fonts/lane.narrow-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/lane.narrow-webfont.woff2') format('woff2'),
-         url('../fonts/lane.narrow-webfont.woff') format('woff'),
-         url('../fonts/lane.narrow-webfont.ttf') format('truetype'),
-         url('../fonts/lane.narrow-webfont.svg#lane_-_narrowregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'robotoblack_italic';
-    src: url('../fonts/roboto-blackitalic-webfont.eot');
-    src: url('../fonts/roboto-blackitalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/roboto-blackitalic-webfont.woff2') format('woff2'),
-         url('../fonts/roboto-blackitalic-webfont.woff') format('woff'),
-         url('../fonts/roboto-blackitalic-webfont.ttf') format('truetype'),
-         url('../fonts/roboto-blackitalic-webfont.svg#robotoblack_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'robotoblack';
-    src: url('../fonts/roboto-black-webfont.eot');
-    src: url('../fonts/roboto-black-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/roboto-black-webfont.woff2') format('woff2'),
-         url('../fonts/roboto-black-webfont.woff') format('woff'),
-         url('../fonts/roboto-black-webfont.ttf') format('truetype'),
-         url('../fonts/roboto-black-webfont.svg#robotoblack') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'roboto_condensedregular';
-    src: url('../fonts/robotocondensed-regular-webfont.eot');
-    src: url('../fonts/robotocondensed-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/robotocondensed-regular-webfont.woff2') format('woff2'),
-         url('../fonts/robotocondensed-regular-webfont.woff') format('woff'),
-         url('../fonts/robotocondensed-regular-webfont.ttf') format('truetype'),
-         url('../fonts/robotocondensed-regular-webfont.svg#roboto_condensedregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'roboto_condensedlight_italic';
-    src: url('../fonts/robotocondensed-lightitalic-webfont.eot');
-    src: url('../fonts/robotocondensed-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/robotocondensed-lightitalic-webfont.woff2') format('woff2'),
-         url('../fonts/robotocondensed-lightitalic-webfont.woff') format('woff'),
-         url('../fonts/robotocondensed-lightitalic-webfont.ttf') format('truetype'),
-         url('../fonts/robotocondensed-lightitalic-webfont.svg#roboto_condensedlight_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'robotoitalic';
-    src: url('../fonts/roboto-italic-webfont.eot');
-    src: url('../fonts/roboto-italic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/roboto-italic-webfont.woff2') format('woff2'),
-         url('../fonts/roboto-italic-webfont.woff') format('woff'),
-         url('../fonts/roboto-italic-webfont.ttf') format('truetype'),
-         url('../fonts/roboto-italic-webfont.svg#robotoitalic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'robotolight';
-    src: url('../fonts/roboto-light-webfont.eot');
-    src: url('../fonts/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/roboto-light-webfont.woff2') format('woff2'),
-         url('../fonts/roboto-light-webfont.woff') format('woff'),
-         url('../fonts/roboto-light-webfont.ttf') format('truetype'),
-         url('../fonts/roboto-light-webfont.svg#robotolight') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'roboto_condensedlight';
-    src: url('../fonts/robotocondensed-light-webfont.eot');
-    src: url('../fonts/robotocondensed-light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/robotocondensed-light-webfont.woff2') format('woff2'),
-         url('../fonts/robotocondensed-light-webfont.woff') format('woff'),
-         url('../fonts/robotocondensed-light-webfont.ttf') format('truetype'),
-         url('../fonts/robotocondensed-light-webfont.svg#roboto_condensedlight') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'roboto_condenseditalic';
-    src: url('../fonts/robotocondensed-italic-webfont.eot');
-    src: url('../fonts/robotocondensed-italic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/robotocondensed-italic-webfont.woff2') format('woff2'),
-         url('../fonts/robotocondensed-italic-webfont.woff') format('woff'),
-         url('../fonts/robotocondensed-italic-webfont.ttf') format('truetype'),
-         url('../fonts/robotocondensed-italic-webfont.svg#roboto_condenseditalic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'roboto_condensedbold';
-    src: url('../fonts/robotocondensed-bold-webfont.eot');
-    src: url('../fonts/robotocondensed-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/robotocondensed-bold-webfont.woff2') format('woff2'),
-         url('../fonts/robotocondensed-bold-webfont.woff') format('woff'),
-         url('../fonts/robotocondensed-bold-webfont.ttf') format('truetype'),
-         url('../fonts/robotocondensed-bold-webfont.svg#roboto_condensedbold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'roboto_condensedbold_italic';
-    src: url('../fonts/robotocondensed-bolditalic-webfont.eot');
-    src: url('../fonts/robotocondensed-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/robotocondensed-bolditalic-webfont.woff2') format('woff2'),
-         url('../fonts/robotocondensed-bolditalic-webfont.woff') format('woff'),
-         url('../fonts/robotocondensed-bolditalic-webfont.ttf') format('truetype'),
-         url('../fonts/robotocondensed-bolditalic-webfont.svg#roboto_condensedbold_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'robotobold';
-    src: url('../fonts/roboto-bold-webfont.eot');
-    src: url('../fonts/roboto-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/roboto-bold-webfont.woff2') format('woff2'),
-         url('../fonts/roboto-bold-webfont.woff') format('woff'),
-         url('../fonts/roboto-bold-webfont.ttf') format('truetype'),
-         url('../fonts/roboto-bold-webfont.svg#robotobold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'robotobold_italic';
-    src: url('../fonts/roboto-bolditalic-webfont.eot');
-    src: url('../fonts/roboto-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/roboto-bolditalic-webfont.woff2') format('woff2'),
-         url('../fonts/roboto-bolditalic-webfont.woff') format('woff'),
-         url('../fonts/roboto-bolditalic-webfont.ttf') format('truetype'),
-         url('../fonts/roboto-bolditalic-webfont.svg#robotobold_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-body {
-  font-family: "robotolight";
-  overflow: scroll;
-  background-repeat: no-repeat;
-}
-
-/* BEGIN DROPDOWN MENU */
-
-ul.dropdown-menu {
-  background-color: #46A8D2;
-  color: white;
-  font-family: 'robotobold';
-/*  margin-left: 88%;*/
-}
-
-ul.dropdown-menu li p{
-  text-indent: 15px;
-}
-
-ul.dropdown-menu li span a {
   font-family: 'robotolight';
+  src: url('../fonts/roboto-light-webfont.eot');
+  src: url('../fonts/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/roboto-light-webfont.woff2') format('woff2'),
+       url('../fonts/roboto-light-webfont.woff') format('woff'),
+       url('../fonts/roboto-light-webfont.ttf') format('truetype'),
+       url('../fonts/roboto-light-webfont.svg#robotolight') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
-ul.dropdown-menu li a {
-  margin-left: 5px;
+@font-face {
+  font-family: 'robotobold';
+  src: url('../fonts/roboto-bold-webfont.eot');
+  src: url('../fonts/roboto-bold-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/roboto-bold-webfont.woff2') format('woff2'),
+       url('../fonts/roboto-bold-webfont.woff') format('woff'),
+       url('../fonts/roboto-bold-webfont.ttf') format('truetype'),
+       url('../fonts/roboto-bold-webfont.svg#robotobold') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
-
-ul.dropdown-menu li a:hover {
- color: #1C75BB;
-}
-
-ul.dropdown-menu li a:active {
-  color: rgba(39, 63, 132, 0.7);
-}
-
-ul.dropdown-menu li a#loadScene:hover{
-  color: #1C75BB;
-}
-
-
-span.shape.fa {margin-left: 6%;}
-
-li span a {
-  color: white;
-}
-
-li span.shape.fa.fa-user { color: white;
-  text-indent: 10px;
-}
-
-li span.shape.fa.fa-laptop { color: white;
-  text-indent: 10px;
-}
-
-li span.shape.fa.fa-arrows-alt { color: white;
-  text-indent: 10px;
-}
-
-li span.shape.fa.fa-plus { color: white;
-  text-indent: 10px;
-}
-
-li span.shape.fa.fa-sign-out { color: white;
-  text-indent: 10px;
-}
-
-a#loadScene { color: white;
-  text-indent: 10px;
-}
-
-/* END DROPDOWN MENU */
 
 #BwContainer {
   position: relative;
@@ -289,51 +35,6 @@ a#loadScene { color: white;
   z-index: 2;
 }
 
-#ToolbarContainer {
-  width: 100%;
-  position:fixed;
-  z-index: 2000;
-}
-
-#Toolbar {
-  top: 0px;
-  height: 70px;
-}
-
-#Toolbar .row {
-  margin: 4px;
-}
-
-#ZoomControls {
-  text-align: center;
-  position:fixed;
-  right: 2%;
-  top: 80%;
-  padding: 13px;
-  color: rgba(50, 50, 50, .7);
-  z-index: 2000;
-}
-
-#scale-slider .slider-handle:focus {
-  outline:none;
-}
-
-#scale-slider{
-  position:fixed;
-  width:120px;
-  right: 2%;
-  z-index: 2000;
-}
-
-#model-scale-slider {
-  position:relative;
-  top:1%;
-  left:1%;
-}
-
-/**
- * Extra large button extensions. Extends `.btn`.
- */
 .btn-xlarge {
     padding: 12px 22px;
     font-size: 22px;
@@ -358,8 +59,6 @@ a#loadScene { color: white;
   left: 0px;
   height: 60px;
 }
-
-/* END ICONS */
 
 .shape {
   cursor: pointer;

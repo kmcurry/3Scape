@@ -7,6 +7,7 @@
         - Part / li .part
           - Part Button / button .parts-bttn .[partname]
     - Hamburger Column / .xs-col-1 .nav-menu
+      - Dropdown Menu / ul .dropdown-menu .shape
 * Bottom Bar / .navbar-fixed-bottom
   + Actions Bar Row / .row .actions-bar
     - Actions Column / .col-xs-12 .palette
@@ -80,6 +81,44 @@
   box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
   background-size: contain;
 }
+
+/*-- Dropdown Menu --*/
+
+ul.dropdown-menu {
+  background-color: #46A8D2;
+  color: white;
+  font-family: 'robotobold';
+}
+
+ul.dropdown-menu h3 {
+  text-transform: uppercase;
+  font-weight:normal;
+  font-size:1em;
+  text-indent: 15px;
+}
+
+ul.dropdown-menu li a {
+  font-family: 'robotolight';
+  margin-left: 5px;
+  color: white;
+}
+
+ul.dropdown-menu li a:hover {
+ color: #1C75BB;
+}
+
+ul.dropdown-menu li a:active {
+  color: rgba(39, 63, 132, 0.7);
+}
+
+.shape.fa {
+  margin-left: 6%;
+}
+
+.shape.fa:not(.fa-2x){
+  text-indent:10px;
+}
+
 
 /*-- Parts Column --*/
 
