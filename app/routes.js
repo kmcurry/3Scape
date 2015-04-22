@@ -33,9 +33,6 @@ module.exports = function(app, config) {
           switch(s1) {
             case '2dvs3d' :
             case 'egypt' :
-            case 'entymology' :
-            case 'light':
-            case 'physics' :
             case 'twostroke' :
             case 'undersea':
               {
@@ -45,6 +42,7 @@ module.exports = function(app, config) {
                 });
               }
               break;
+            case 'entymology' :
             case 'hi5':
             case 'highfive':
             case 'facepalm':
