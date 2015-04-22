@@ -1,91 +1,13 @@
-.parts{
-    font-size: 0; /* need this to remove white space between inline block elements - can override on children*/
-}
 
 
-.navbar-fixed-top:focus .parts-bar{
-    margin-top:0;
-}
 
-.navbar-fixed-top{
-    position:absolute;
-    width:100%;
-}
 
-ul.parts-list{
-  width:100%;
-  background: rgba(0,0,0,0.6);
-  text-align: center;
-  margin:0;
-  font-size:0;
-  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
-}
 
-.list-inline > li.part{
-    padding:0;
-}
 
-li.part{
-    width:12%;
-    max-width: 110px;
-    text-align: center;
-}
 
-button.parts-btn{
-    width:80%;
-    max-width:100px;
-    min-width:45px;
-    height:100%;
-    background-size:contain;
-    background-repeat: no-repeat;
-    border:none;
-    margin:0;
-    padding:0;
-}
 
-.cube{
-    background: url("../images/CubeButton.png")
-}
 
-.sphere{
-    background: url("../images/SphereButton.png")
-}
 
-.pyramid{
-    background: url("../images/PyramidButton.png")
-}
-
-.gear{
-    background: url("../images/GearButton.png")
-}
-
-.plank{
-    background: url("../images/PlankButton.png")
-}
-
-.wall{
-    background: url("../images/WallButton.png")
-}
-
-.beam{
-    background: url("../images/BeamButton.png")
-}
-
-.ring{
-     background: url("../images/RingButton.png")
-}
-
-.wedge{
-     background: url("../images/WedgeButton.png")
-}
-
-.tube{
-    background: url("../images/TubeButton.png")
-}
-
-.elbow{
-    background: url("../images/ElbowButton.png")
-}
 
 
 /*-- slide button ---*/
@@ -102,49 +24,17 @@ button.view-parts{
 */
 
 
-.parts-bar{
-    position:relative;
-    -webkit-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-       -moz-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-         -o-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-            animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-    transition: margin-top 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-}
-
-.logo, .parts, .nav-menu{
-    position:relative;
-    top:0;
-    transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-}
 
 
-.navbar-fixed-top.hover:hover .logo, .navbar-fixed-top.hover:hover .parts, .navbar-fixed-top.hover:hover .nav-menu{
-    top:100px;
-}
 
 
 
 /* --------- Animate Out After Page Load ------------ */
 
-@-webkit-keyframes Close-Top-Drawer {
-  0%   { top: 0; }
-  100% { top: -100px; }
-}
-@-moz-keyframes Close-Top-Drawer {
-  0%   { top: 0; }
-  100% { top: -100px; }
-}
-@-o-keyframes Close-Top-Drawer {
-  0%   { top: 0; }
-  100% { top: -100px; }
-}
-@keyframes Close-Top-Drawer {
-  0%   { top: 0; }
-  100% { top: -100px; }
-}
 
 
 /** Retina iPad **/
+/*
 @media
 only screen and (-webkit-min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (orientation: landscape),
 only screen and (-moz-min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (orientation: landscape),
@@ -158,3 +48,5 @@ only screen and (min-resolution: 2dppx) and (max-device-width: 1024px) and (orie
         max-height:90px;
     }
 }
+*/
+
