@@ -1,22 +1,21 @@
 /*------------------------------- Layout --------------------------------------
-* body / .container-fluid
-	+ Top Bar / .navbar-fixed-top
-    - Parts Bar Row / .row .parts-bar
-      - Logo Column / .xs-col-1 .logo
-      - Parts Column / .xs-col-10 .parts
-        - Parts List / ul .parts-list .list-inline
-          - Part / li .part
-            - Part Button / button .parts-bttn .[partname]
-      - Hamburger Column / .xs-col-1 .nav-menu
-	+ Bottom Bar / .navbar-fixed-bottom
-    - Actions Bar Row / .row .actions-bar
-      - Actions Column / .col-xs-12 .palette
-        - Actions List / ul .actions-list .list-inline
-          - Action Element / li .action
-            - Action Dial Wrapper / .dial
-              - Action Dial / .inner-dial
-                - Action Button / .shadow-circle .[name of action]
-        - Scroll Buttons / button .scroll .scroll-[direction]
+* Top Bar / .navbar-fixed-top
+  + Parts Bar Row / .row .parts-bar
+    - Logo Column / .xs-col-1 .logo
+    - Parts Column / .xs-col-10 .parts
+      - Parts List / ul .parts-list .list-inline
+        - Part / li .part
+          - Part Button / button .parts-bttn .[partname]
+    - Hamburger Column / .xs-col-1 .nav-menu
+* Bottom Bar / .navbar-fixed-bottom
+  + Actions Bar Row / .row .actions-bar
+    - Actions Column / .col-xs-12 .palette
+      - Actions List / ul .actions-list .list-inline
+        - Action Element / li .action
+          - Action Dial Wrapper / .dial
+            - Action Dial / .inner-dial
+              - Action Button / .shadow-circle .[name of action]
+      - Scroll Buttons / button .scroll .scroll-[direction]
 -----------------------------------------------------------------------------*/
 
 
