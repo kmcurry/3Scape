@@ -1,14 +1,16 @@
 <html>
 	<head>
-		<title>3Scape - an open world of virtual contraptions and physics.</title>
+		<title>3Scape - Build. Play. Learn.</title>
+		<meta name="description" content="Kids learn by making
+amazing 3D worlds
+of fun contraptions
+powered by physics">
 		<meta http-equiv="x-ua-compatible" content="IE=10">
 		<meta name="robots" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="css/snappy.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" href="css/tablet-palette.css">
-		<link rel="stylesheet" href="css/partsbar.css">
 		<link rel="stylesheet" href="css/actionsbar.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
@@ -24,10 +26,10 @@
 	<body class="container-fluid" onresize="resize();">
 
 		<div class="navbar-fixed-top" >
-    	   <%- include('viewcontrols/partsbar'); %> 
+    	   <%- include('viewcontrols/partsbar'); %>
 		</div>
-        
-        
+
+
 
 		<div class="navbar-fixed-bottom">
 			<%- include('viewcontrols/actionsbar') %>
@@ -103,20 +105,20 @@
                     hammerbottom = new Hammer(bottombar.get(0));
                 hammertop.get('pan').set({ direction: Hammer.DIRECTION_ALL });
                 hammertop.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
-                hammertop.on('pandown', function(ev) {
+                hammertop.on('swipedown', function(ev) {
                     console.log('swipe down detected');
                     $('.logo, .parts, .nav-menu').css({top:"100px"});
                 });
-                 hammertop.on('panup', function(ev) {
+                 hammertop.on('swipeup', function(ev) {
                        console.log('swipe up detected');
                     $('.logo, .parts, .nav-menu').css({top:"-100px"});
                     console.log('animated');
                 });
-                hammerbottom.on('pandown', function(ev) {
+                hammerbottom.on('swipedown', function(ev) {
                     console.log('swipe down detected');
                     $('.palette').css({top:"110px"});
                 });
-                 hammerbottom.on('panup', function(ev) {
+                 hammerbottom.on('swipeup', function(ev) {
                        console.log('swipe up detected');
                     $('.palette').css({top:"-110px"});
                     console.log('animated');
@@ -128,7 +130,7 @@
                 //prevent hover animation until initial animation completes
                 var hoverable = $('.navbar-fixed-bottom, .navbar-fixed-top'),
                     animated = $('.actions-bar, .parts-bar');
-                animated.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',   
+                animated.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
                 function(e) {
                 // code to execute after animation ends
                     hoverable.addClass('hover');
