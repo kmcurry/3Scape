@@ -101,20 +101,20 @@
                     hammerbottom = new Hammer(bottombar.get(0));
                 hammertop.get('pan').set({ direction: Hammer.DIRECTION_ALL });
                 hammertop.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
-                hammertop.on('pandown', function(ev) {
+                hammertop.on('swipedown', function(ev) {
                     console.log('swipe down detected');
                     $('.logo, .parts, .nav-menu').css({top:"100px"});
                 });
-                 hammertop.on('panup', function(ev) {
+                 hammertop.on('swipeup', function(ev) {
                        console.log('swipe up detected');
                     $('.logo, .parts, .nav-menu').css({top:"-100px"});
                     console.log('animated');
                 });
-                hammerbottom.on('pandown', function(ev) {
+                hammerbottom.on('swipedown', function(ev) {
                     console.log('swipe down detected');
                     $('.palette').css({top:"110px"});
                 });
-                 hammerbottom.on('panup', function(ev) {
+                 hammerbottom.on('swipeup', function(ev) {
                        console.log('swipe up detected');
                     $('.palette').css({top:"-110px"});
                     console.log('animated');
