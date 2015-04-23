@@ -1,6 +1,10 @@
 <html>
 	<head>
-		<title>3Scape - an open world of virtual contraptions and physics.</title>
+		<title>3Scape - Build. Play. Learn.</title>
+		<meta name="description" content="Kids learn by making
+amazing 3D worlds
+of fun contraptions
+powered by physics">
 		<meta http-equiv="x-ua-compatible" content="IE=10">
 		<meta name="robots" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,10 +26,10 @@
 	<body class="container-fluid" onresize="resize();">
 
 		<div class="navbar-fixed-top" >
-    	   <%- include('viewcontrols/partsbar'); %> 
+    	   <%- include('viewcontrols/partsbar'); %>
 		</div>
-        
-        
+
+
 
 		<div class="navbar-fixed-bottom">
 			<%- include('viewcontrols/actionsbar') %>
@@ -126,7 +130,7 @@
                 //prevent hover animation until initial animation completes
                 var hoverable = $('.navbar-fixed-bottom, .navbar-fixed-top'),
                     animated = $('.actions-bar, .parts-bar');
-                animated.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',   
+                animated.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
                 function(e) {
                 // code to execute after animation ends
                     hoverable.addClass('hover');
