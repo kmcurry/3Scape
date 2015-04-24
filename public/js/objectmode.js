@@ -184,6 +184,43 @@ function setGrowerDuration(duration) {
   }
 }
 
+function addRemovePhysics() {
+  var physics = bridgeworks.get("PhysicsSimulator");
+  if (physics && g_selectedModel) {
+
+  }
+}
+
+function addRemoveSpinner() {
+  if (g_selectedModel && g_selectedModel.moveable.getValueDirect()) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "";
+    if (bridgeworks.get('Spinner_' + name)) {
+      cmd = "<Remove target='Spinner_" + name + "'/>";
+    } else {
+      var pw = bridgeworks.selector.pointWorld.getValueDirect();
+
+      cmd = "<Spinner name='Spinner_" + name + "' angularVelocity='10' target='" + name + "'>";
+      cmd += "<axisEndpoint ";
+      cmd += "x='" + pw.x + "' ";
+      cmd += "y='" + pw.y + "' ";
+      cmd += "z='" + pw.z + "'/>";
+      cmd += "</Spinner>";
+    }
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+  }
+}
+
+function setSpinnerVelocity(velocity) {
+  if (g_selectedModel) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "<Set target='Spinner" + name + "' angularVelocity='" + velocity + "'/>";
+    console.log(cmd);
+    bridgeworks.updateScene(cmd);
+  }
+}
+
 function setModelScale(value) {
 
     if (g_selectedModel) {
