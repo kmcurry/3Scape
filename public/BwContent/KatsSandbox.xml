@@ -44,7 +44,6 @@
                 <scale x="200" y="200" z="200"/>
                 <position x= "-1291.1602947181157" y= "1291.2288444828253" z= "-1668.1757379175763"/>
                 <rotation x="0" y="100" z="0"/>
-                
             </Model>
             <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
               <MediaTexture name="ScreenCaptureTexture"/>
