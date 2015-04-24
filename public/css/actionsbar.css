@@ -238,7 +238,7 @@ ul.actions-list {
 /*-- Actions Bar Elements --*/
 
 .action {
-  font-size: 0; 
+  font-size: 0;
   /* ^^ Removes white-space between inline block elements.*/
 }
 
@@ -454,4 +454,3 @@ only screen and (min-resolution: 2dppx) and (max-device-width: 1024px) and (orie
     max-height: 90px;
   }
 }
-
