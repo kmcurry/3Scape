@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwinclude url="DefaultPreferences.xml"?>
+<Scene>
+    <Isolator name="Root">
+        <PerspectiveCamera name="Camera" zoom="3.2" nearDistance=".1" farDistance="100000">
+            <position x="0" y="2200" z="-8000"/>
+            <rotation x="0" y="0" z="0"/>
+        </PerspectiveCamera>
+        <Group name="Lights">
+            <GlobalIllumination name="GlobalLight">
+                <ambient r=".7" g=".7" b=".7"/>
+            </GlobalIllumination>
+            <PointLight name="PointLight1" range="20000" >
+                <ambient r="0.3" g="0.3" b="0.3"/>
+                <diffuse r=".6" g=".6" b=".6"/>
+                <specular r=".3" g=".3" b=".3"/>
+                <position x="0" y="25" z="0"/>
+            </PointLight>
+          <PointLight name="PointLight1" range="5000" >
+                <ambient r="0.4" g="0.4" b="0.4"/>
+                <diffuse r=".2" g=".2" b=".2"/>
+                <specular r=".1" g=".1" b=".1"/>
+                <position x="0" y="100" z="0"/>
+            </PointLight>
+          
+        </Group>
+        <Group name="Models">
+           <Model name="Dragon" url="objects/dragon.lwo" moveable="true" detectCollision="true" >
+                <color r=".255" g="0.05" b="0.05" a="1"/> 
+                <scale x="300" y="300" z="300"/>
+                <position x="0" y="3600" z="-5000"/>
+            </Model>
+            <Model name="Terrain" url="objects/Terrain.lwo" moveable="false" detectCollision="true">
+                <physicalProperties>
+                  <mass>0</mass>
+                </physicalProperties>
+            </Model>
+           
+            <Model name="Robot" url="Robot/objects/Robot.lwo" moveable="true" detectCollision="true">
+                <scale x="300" y="300" z="300"/>
+                <position x="0" y="2000" z="1000"/>
+                
+            </Model>
+            <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
+              <MediaTexture name="ScreenCaptureTexture"/>
+              <ScreenRect name="ScreenCaptureRect" enabled="false"/>
+            </Isolator>
+        </Group>
+    </Isolator>
+    <RenderDirective name="RenderDirective" highlightType="2" backgroundImageFilename="images/Sky2.jpg" shadowsEnabled="false"/>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+    <PhysicsSimulator name="PhysicsSimulator" evaluate="true">
+      <bodies>
+        <body>Terrain</body>
+      </bodies>
+    </PhysicsSimulator>
+    <Set target="ShadowDirective">
+      <casterWorldPosition x="0" y="10" z="0"/>
+    </Set>
+</Scene>
