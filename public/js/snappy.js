@@ -172,6 +172,7 @@ function processModelXML(name, copy) {
 
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
     g_selectedModel.getAttribute("detectObstruction").setValueDirect(true);
+  
 
     if (copy) {
         // TODO: g_copyModel.copyModel();
@@ -229,3 +230,4 @@ function reset() {
 
 
 }
+

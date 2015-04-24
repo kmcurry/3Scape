@@ -9,6 +9,7 @@ function objectLeft()
     g_objectInspector.translationDelta.setValueDirect(0,0,0);
 
     g_objectInspector.enabled.setValueDirect(false);
+    console.log(g_selectedModel.position.getValueDirect());
   }
 }
 
