@@ -196,7 +196,7 @@ function addRemoveSpinner() {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
     if (bridgeworks.get('Spinner_' + name)) {
-      cmd = "<Remove target='Spinner_" + name + "/>";
+      cmd = "<Remove target='Spinner_" + name + "'/>";
     } else {
       var pw = bridgeworks.selector.pointWorld.getValueDirect();
 
