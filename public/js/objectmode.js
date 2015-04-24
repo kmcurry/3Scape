@@ -184,6 +184,13 @@ function setGrowerDuration(duration) {
   }
 }
 
+function addRemovePhysics() {
+  var physics = bridgeworks.get("PhysicsSimulator");
+  if (physics && g_selectedModel) {
+      
+  }
+}
+
 function setModelScale(value) {
 
     if (g_selectedModel) {
