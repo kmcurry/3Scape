@@ -323,6 +323,7 @@ li.action {
 .fade-in-out   { background-image: url("../images/fade-in-out.png");   }
 .grow-shrink   { background-image: url("../images/grow-shrink.png");   }
 .opacity       { background-image: url("../images/eye.png");           }
+.mass          { background-image: url("../images/mass.png"); }
 
 
 /*-- Scroll Buttons --*/
