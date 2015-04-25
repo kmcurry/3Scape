@@ -221,12 +221,6 @@ function setSpinnerVelocity(velocity) {
   }
 }
 
-function setModelScale(value) {
-
-    if (g_selectedModel) {
-        g_selectedModel.scale.setValueDirect(value, value, value);
-    }
-}
 
 function scalePart(delta) {
 
