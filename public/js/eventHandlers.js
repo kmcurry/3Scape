@@ -245,15 +245,26 @@ function handleKey(e)
           }
           break;
         case "Right": //right
+          if (e.shiftKey) {
+            rotateRight();
+          } else {
             objectRight(1);
+          }
             break;
 
         case "Left": //left
-            objectLeft();
+          if (e.shiftKey) {
+            rotateLeft();
+          } else {
+              objectLeft();
+            }
             break;
 
         case "Down": //down
-            if (e.shiftKey || e.ctrlKey) {
+          if (e.shiftKey) {
+            rotateDown();
+          }
+            else if (e.metaKey || e.ctrlKey) {
                 objectDown(1);
             }
             else {
@@ -261,7 +272,10 @@ function handleKey(e)
             }
             break;
         case "Up": //up
-            if (e.shiftKey || e.ctrlKey) {
+          if (e.shiftKey) {
+            rotateUp();
+          }
+          else if (e.metaKey || e.ctrlKey) {
                 objectUp(1);
             }
             else {

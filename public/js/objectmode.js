@@ -91,7 +91,7 @@ function rotateDown() {
 function rotateLeft() {
   if (g_selectedModel) {
     var sRot = g_selectedModel.rotation.getValueDirect();
-    g_selectedModel.rotation.setValueDirect(sRot.x, sRot.y-10, sRot.z);
+    g_selectedModel.rotation.setValueDirect(sRot.x, sRot.y+10, sRot.z);
   }
 }
 
@@ -99,7 +99,7 @@ function rotateLeft() {
 function rotateRight() {
   if (g_selectedModel) {
     var sRot = g_selectedModel.rotation.getValueDirect();
-    g_selectedModel.rotation.setValueDirect(sRot.x, sRot.y+10, sRot.z);
+    g_selectedModel.rotation.setValueDirect(sRot.x, sRot.y-10, sRot.z);
   }
 }
 
@@ -124,7 +124,7 @@ function addRemoveRoam(collides) {
       cmd = "<AnimalMover name='Roaming_" + name + "' target='" + name
       + "' linearSpeed='1' angularSpeed='10' detectCollisions='" + detectCollisions + "'/>";
     }
-    
+
     bridgeworks.updateScene(cmd);
   }
 }
