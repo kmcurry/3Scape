@@ -7,7 +7,9 @@
         <scale x="1" y="1" z="1" />
         <physicalProperties>
             <mass>5</mass>
-        </physicalProperties>
+            <restitution>0.3</restitution>
+            <friction>1.2</friction>
+        </physicalProperties>  
         <genericConnectors>
             <genericConnector name="PositiveX" type="default">
                 <normal x="1" y="0" z="0"/>
