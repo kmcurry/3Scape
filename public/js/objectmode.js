@@ -117,14 +117,17 @@ function addRemoveRoam(collides) {
     if (bridgeworks.get('Roaming_' + name)) {
       cmd = "<Remove target='Roaming_" + name + "'/>";
     } else {
-      var detectCollisions = true;
+      // handle optional param
+      var detectCollision = true;
       if (collides != null && collides != 'undefined') {
-          detectCollisions = collides
+          detectCollision = collides
       }
-      cmd = "<AnimalMover name='Roaming_" + name + "' target='" + name
-      + "' linearSpeed='1' angularSpeed='10' detectCollisions='" + detectCollisions + "'/>";
+      cmd = "<Update><AnimalMover name='Roaming_" + name + "' target='" + name
+      + "' linearSpeed='1' angularSpeed='10'/>";
+      cmd += "<Set target='" + name + "' detectCollision='" + detectCollision + "'/>"
+      cmd += "</Update>";
     }
-
+    console.log(cmd);
     bridgeworks.updateScene(cmd);
   }
 }
