@@ -210,11 +210,6 @@ function processModelXML(name, copy) {
                                 pointWorld.z - normalWorld.z);
     g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);
 
-    var physics = bridgeworks.get("PhysicsSimulator");
-    if (physics && g_selectedModel) {
-        physics.bodies.push_back(g_selectedModel.getAttribute("name"));
-    }
-
     $(".menu").removeClass("active");
 }
 
