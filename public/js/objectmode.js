@@ -124,7 +124,7 @@ function addRemoveRoam(collides) {
       cmd = "<AnimalMover name='Roaming_" + name + "' target='" + name
       + "' linearSpeed='1' angularSpeed='10' detectCollisions='" + detectCollisions + "'/>";
     }
-    console.log(cmd);
+    
     bridgeworks.updateScene(cmd);
   }
 }
@@ -133,7 +133,7 @@ function setRoamSpeed(speed) {
   if (g_selectedModel) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "<Set target='Roaming_" + name + "' linearSpeed='" + speed + "'/>";
-    console.log(cmd);
+
     bridgeworks.updateScene(cmd);
   }
 }
@@ -147,7 +147,7 @@ function addRemoveFader() {
     } else {
       cmd = "<AutoInterpolate name='Fader_" + name + "' postBehavior='3' target='" + name + "' opacity='0'/>";
     }
-    console.log(cmd);
+
     bridgeworks.updateScene(cmd);
   }
 }
@@ -156,7 +156,7 @@ function setFaderDuration(duration) {
   if (g_selectedModel) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "<Set target='Fader_" + name + "_AutoInterpolator' duration='" + duration + "'/>";
-    console.log(cmd);
+
     bridgeworks.updateScene(cmd);
   }
 }
@@ -170,7 +170,7 @@ function addRemoveGrower() {
     } else {
       cmd = "<AutoInterpolate name='Grower_" + name + "' postBehavior='3' target='" + name + "'><scale x='3' y='3' z='3'/></AutoInterpolate>";
     }
-    console.log(cmd);
+
     bridgeworks.updateScene(cmd);
   }
 }
@@ -179,7 +179,7 @@ function setGrowerDuration(duration) {
   if (g_selectedModel) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "<Set target='Grower_" + name + "' duration='" + duration + "'/>";
-    console.log(cmd);
+
     bridgeworks.updateScene(cmd);
   }
 }
@@ -187,7 +187,7 @@ function setGrowerDuration(duration) {
 function addRemovePhysics() {
   var physics = bridgeworks.get("PhysicsSimulator");
   if (physics && g_selectedModel) {
-
+    console.log("got physics?");
   }
 }
 
@@ -207,7 +207,7 @@ function addRemoveSpinner() {
       cmd += "z='" + pw.z + "'/>";
       cmd += "</Spinner>";
     }
-    console.log(cmd);
+
     bridgeworks.updateScene(cmd);
   }
 }
@@ -216,7 +216,7 @@ function setSpinnerVelocity(velocity) {
   if (g_selectedModel) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "<Set target='Spinner" + name + "' angularVelocity='" + velocity + "'/>";
-    console.log(cmd);
+
     bridgeworks.updateScene(cmd);
   }
 }
@@ -224,7 +224,7 @@ function setSpinnerVelocity(velocity) {
 
 function scalePart(delta) {
 
-  console.log(delta);
+
     if (g_selectedModel) {
       var scale = g_selectedModel.scale.getValueDirect();
       if (delta > 0 || scale.x > .2) {
@@ -234,6 +234,17 @@ function scalePart(delta) {
         g_selectedModel.scale.setValueDirect(scale.x, scale.y, scale.z);
       }
     }
+}
+
+function setMass(mass) {
+  if (g_selectedModel) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "<Set target='" + name + "'>";
+    cmd += "<physicalProperties><mass>" + mass + "</mass></physicalProperties>";
+    cmd += "</Set>";
+
+    bridgeworks.updateScene(cmd);
+  }
 }
 
 function showHideSelected() {

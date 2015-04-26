@@ -250,5 +250,28 @@
       g_foo = false;
     });
 
+    // MASS
+    elem = document.getElementsByClassName('mass')[0];
+    dial = JogDial(elem,
+      {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    dial.on('mousemove', function(evt){
+      var mass = Math.round(evt.target.degree/10);
+      console.log("massing..." + mass);
+      setMass(mass);
+    });
+
+    dial.on('mouseup', function(e) {
+      g_foo = true;
+    });
+
+    wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+    wheel.addEventListener('click', function(e) {
+      if (!g_foo) {
+        addRemovePhysics();
+      }
+      g_foo = false;
+    });
+
   }
 </script>
