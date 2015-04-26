@@ -73,6 +73,7 @@ function new3Scape() {
     bridgeworks.updateScene('grid-50.xml');
 
     // QTP: post to server right away or wait until an autosave event?
+    /*
     $.ajax({
       url: 'new',
       type: 'POST',
@@ -81,6 +82,7 @@ function new3Scape() {
       success: updateLocalStorage
     });
     window.location.pathname = "/";
+    */
 }
 
 function updateLocalStorage(scapeId) {
