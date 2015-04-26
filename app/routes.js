@@ -75,13 +75,12 @@ module.exports = function(app, config) {
     res.render('classroom')
   });
 
-  app.get('/privacy', function (req, res) {
-      res.render('privacy')
-  });
-
-
   app.get('/nowebgl', function (req, res) {
       res.render('NoWebGL')
+  });
+
+  app.get('/privacy', function (req, res) {
+      res.render('privacy')
   });
 
   app.get('/profile', isLoggedIn, function (req, res) {
@@ -111,6 +110,10 @@ module.exports = function(app, config) {
         root: __dirname + '/../'
       }
       res.sendFile('sitemap.xml', options);
+  });
+
+  app.get('/videos', function (req, res) {
+      res.render('videos')
   });
 
   app.use(function(req, res, next){
