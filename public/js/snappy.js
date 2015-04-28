@@ -138,7 +138,7 @@ function start3Scape(scape, scapeId) {
     }
   }
 
-  var saveInterval = setInterval(autoSave, 30000);
+  //var saveInterval = setInterval(autoSave, 30000);
 
   window.addEventListener("beforeunload", save3Scape);
 
