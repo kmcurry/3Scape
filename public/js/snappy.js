@@ -73,6 +73,7 @@ function new3Scape() {
     bridgeworks.updateScene('KatsSandbox.xml');
 
     // QTP: post to server right away or wait until an autosave event?
+    /*
     $.ajax({
       url: 'new',
       type: 'POST',
@@ -81,6 +82,7 @@ function new3Scape() {
       success: updateLocalStorage
     });
     window.location.pathname = "/";
+    */
 }
 
 function updateLocalStorage(scapeId) {
@@ -208,11 +210,6 @@ function processModelXML(name, copy) {
                                 pointWorld.y - bbox_min.y,//normalWorld.y,
                                 pointWorld.z - normalWorld.z);
     g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);
-
-    var physics = bridgeworks.get("PhysicsSimulator");
-    if (physics && g_selectedModel) {
-        physics.bodies.push_back(g_selectedModel.getAttribute("name"));
-    }
 
     $(".menu").removeClass("active");
 }

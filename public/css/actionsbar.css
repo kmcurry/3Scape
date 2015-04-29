@@ -201,8 +201,6 @@ button.parts-btn {
   box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
   background: rgba(0,0,0,0.6);
   width: 100%;
-  -webkit-transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-          transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
   -webkit-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
      -moz-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
        -o-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
@@ -212,7 +210,6 @@ button.parts-btn {
 /*-- Actions Bar Column --*/
 
 .palette {
-  position: relative;
   bottom: 0;
   width: 90%;
   margin: 0 auto;
@@ -238,7 +235,7 @@ ul.actions-list {
 /*-- Actions Bar Elements --*/
 
 .action {
-  font-size: 0; 
+  font-size: 0;
   /* ^^ Removes white-space between inline block elements.*/
 }
 
@@ -323,6 +320,7 @@ li.action {
 .fade-in-out   { background-image: url("../images/fade-in-out.png");   }
 .grow-shrink   { background-image: url("../images/grow-shrink.png");   }
 .opacity       { background-image: url("../images/eye.png");           }
+.mass          { background-image: url("../images/mass.png"); }
 
 
 /*-- Scroll Buttons --*/
@@ -454,4 +452,3 @@ only screen and (min-resolution: 2dppx) and (max-device-width: 1024px) and (orie
     max-height: 90px;
   }
 }
-

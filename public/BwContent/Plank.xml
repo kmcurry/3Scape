@@ -6,7 +6,9 @@
         <rotation x="0" y="0" z="0"/>
         <scale x="2" y="4" z="1" />
         <physicalProperties>
-          <mass>3</mass>
+            <mass>3</mass>
+            <restitution>0.3</restitution>
+            <friction>1.2</friction>
         </physicalProperties>
     </Model>
 </Update>

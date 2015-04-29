@@ -21,10 +21,12 @@
         <Group name="Models">
             <Model name="Terrain" url="objects/Terrain.lwo" moveable="false" detectCollision="true">
                 <physicalProperties>
-                  <mass>0</mass>
-                </physicalProperties>
+                    <mass>0</mass>
+                    <restitution>1.3</restitution>
+                    <friction>3.2</friction>
+                </physicalProperties>  
             </Model>
-            <Model name="SelectPoint" url="objects/Sphere.lwo" moveable="false" opacity="0" selectable="false">
+            <Model name="SelectPoint" url="objects/Sphere.lwo" moveable="false" opacity="0" selectable="false" physicsEnabled="false">
               <scale x=".1" y=".1" z=".1"/>
               <color r="1" g="0" b="0" a="1"/>
             </Model>
