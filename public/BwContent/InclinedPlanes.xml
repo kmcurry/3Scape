@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwinclude url="DefaultPreferences.min.xml"?>
+<Scene>
+    <Isolator name="Root">
+        <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="10000">
+            <position x="0" y="10" z="-30"/>
+            <rotation x="20" y="0" z="0"/>
+        </PerspectiveCamera>
+        <Group name="Lights">
+            <GlobalIllumination name="GlobalLight">
+                <ambient r=".25" g=".25" b=".25"/>
+            </GlobalIllumination>
+            <PointLight name="PointLight1" parent="Camera">
+                <ambient r="0.25" g="0.25" b="0.25"/>
+                <diffuse r=".6" g=".6" b=".6"/>
+                <specular r=".5" g=".5" b=".5"/>
+                <position x="0" y="25" z="0"/>
+            </PointLight>
+        </Group>
+        <Group name="Models">
+            <Model name="Grid" url="objects/Grid.lwo" moveable="false" detectCollision="true">
+                <scale x="50" y="1" z="50"/>
+                <physicalProperties>
+                    <mass>0</mass>
+                    <restitution>1.3</restitution>
+                    <friction>3.2</friction>
+                </physicalProperties>  
+            </Model>
+            <Model name="SelectPoint" url="objects/Sphere.lwo" moveable="false" opacity="0" selectable="false" physicsEnabled="false">
+              <scale x=".1" y=".1" z=".1"/>
+              <color r="1" g="0" b="0" a="1"/>
+            </Model>
+            <Model name="Wedge1" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="false">
+              <scale x="1" y=".5" z="3"/>
+              <color r=".1" g=".238" b=".455" a="1"/>
+              <position x="-10" y="0.5" z="10"/>
+            </Model>
+            <Model name="Wedge2" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="fase" physicsEnabled="false">
+              <scale x="1" y="1.5" z="3"/>
+              <color r="0" g="0" b="1" a="1"/>
+              <position x="0" y="1.45" z="10"/>
+            </Model>
+            <Model name="Wegde3" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="false">
+              <scale x="1" y="2.5" z="3"/>
+              <color r="0" g="1" b="0" a="1"/>
+              <position x="10" y="2.5" z="10"/>
+            </Model>
+          <Model name="Sphere1" url="objects/Sphere.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="false">
+              <scale x="1" y="1" z="1"/>
+              <color r="1" g="0" b="0" a="1"/>
+              <position x="-10" y="3" z="12"/>
+            </Model>
+          <Model name="Sphere2" url="objects/Sphere.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="false">
+              <scale x="1" y="1" z="1"/>
+              <color r="1" g="0" b="0" a="1"/>
+              <position x="0" y="5" z="12"/>
+            </Model>
+          <Model name="Sphere3" url="objects/Sphere.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="false">
+              <scale x="1" y="1" z="1"/>
+              <color r="1" g="0" b="0" a="1"/>
+              <position x="10" y="7" z="12"/>
+            </Model>
+            <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
+              <MediaTexture name="ScreenCaptureTexture"/>
+              <ScreenRect name="ScreenCaptureRect" enabled="false"/>
+            </Isolator>
+        </Group>
+    </Isolator>
+    <RenderDirective name="RenderDirective" highlightType="2" backgroundImageFilename="images/Sky2.jpg" shadowsEnabled="false"/>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+    <Set target="ShadowDirective">
+      <casterWorldPosition x="0" y="10" z="0"/>
+    </Set>
+</Scene>

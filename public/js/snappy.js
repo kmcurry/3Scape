@@ -70,7 +70,7 @@ function new3Scape() {
     reset();
     bridgeworks.contentDir = '/BwContent';
     bridgeworks.onLoadModified();
-    bridgeworks.updateScene('KatsSandbox.xml');
+    bridgeworks.updateScene('InclinedPlanes.xml');
 
     // QTP: post to server right away or wait until an autosave event?
     /*
