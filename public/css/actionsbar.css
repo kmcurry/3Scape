@@ -311,11 +311,11 @@ li.action {
 }
 
 .spin          { background-image: url("../images/spin.png");          }
-.orbit         { background-image: url("#");         }
-.bounce        { background-image: url("#");        }
+.orbit         { background-image: url("../images/orbit.png");         }
+.bounce        { background-image: url("../images/bounce.png");        }
 .collide       { background-image: url("../images/collide.png");       }
 .roam          { background-image: url("../images/roam.png");          }
-.dive-surface  { background-image: url("#");  }
+.dive-surface  { background-image: url("../images/dive-surface.png");  }
 .define-a-path { background-image: url("../images/define-a-path.png"); }
 .fade-in-out   { background-image: url("../images/fade-in-out.png");   }
 .grow-shrink   { background-image: url("../images/grow-shrink.png");   }
