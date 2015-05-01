@@ -119,12 +119,10 @@ function addRemoveRoam(collides) {
     } else {
       // handle optional param
       var detectCollision = true;
-      if (collides != null && collides != 'undefined') {
-          detectCollision = collides
-      }
+      var detectObstruction = collides ? false : true;
       cmd = "<Update><AnimalMover name='Roaming_" + name + "' target='" + name
       + "' linearSpeed='1' angularSpeed='10'/>";
-      cmd += "<Set target='" + name + "' detectCollision='" + detectCollision + "'/>"
+      cmd += "<Set target='" + name + "' detectCollision='" + true + "' detectObstruction='" + detectObstruction + "'/>";
       cmd += "</Update>";
     }
     console.log(cmd);
