@@ -55,7 +55,7 @@ background-position: center;
 
 .tagline {
   margin-top: 1%;
-  height: 260px;
+  height: 15%;
   background-color: white;
 }
 
@@ -84,4 +84,19 @@ background-position: center;
   margin-top: 35%;
   padding-top: 5%;
   background-color: white;
+}
+
+@media (max-width: 480px) {
+
+  .tagline {
+    height: 10%;
+
+  }
+
+  #entry-form {
+    margin-top: 90%;
+
+  }
+
+
 }
