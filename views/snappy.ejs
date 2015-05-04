@@ -35,7 +35,7 @@
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
 				 onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
-			<canvas id="Canvas">
+			<canvas id="Canvas" oncontextmenu="return false">
 			</canvas>
 		</div>
 
@@ -62,12 +62,6 @@
 					addControls();
 
 					document.onmousemove = handleDocMove;
-
-//					setTimeout(function() {
-//						console.log("toggling bars");
-//						$('.parts-bar').slideUp(500);
-//						$('.actions-bar').slideUp(500);
-//					}, 2000);
 
 				}
 			}
