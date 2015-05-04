@@ -4,18 +4,18 @@
 <Scene>
     <Isolator name="Root">
         <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="10000">
-            <position x="0" y="10" z="-30"/>
-            <rotation x="20" y="0" z="0"/>
+            <position x="0" y="150" z="-250"/>
+            <rotation x="35" y="0" z="0"/>
         </PerspectiveCamera>
         <Group name="Lights">
             <GlobalIllumination name="GlobalLight">
-                <ambient r=".25" g=".25" b=".25"/>
+                <ambient r=".38" g=".38" b=".38"/>
             </GlobalIllumination>
-            <PointLight name="PointLight1" parent="Camera">
-                <ambient r="0.25" g="0.25" b="0.25"/>
-                <diffuse r=".6" g=".6" b=".6"/>
-                <specular r=".5" g=".5" b=".5"/>
-                <position x="0" y="25" z="0"/>
+            <PointLight name="PointLight1" range="7000">
+                <ambient r="0.2" g="0.2" b="0.2"/>
+                <diffuse r=".85" g=".85" b=".85"/>
+                <specular r=".15" g=".15" b=".15"/>
+                <position x="200" y="200" z="-70"/>
             </PointLight>
         </Group>
         <Group name="Models">
@@ -23,8 +23,8 @@
                 <scale x="50" y="1" z="50"/>
                 <physicalProperties>
                     <mass>0</mass>
-                    <restitution>1.3</restitution>
-                    <friction>3.2</friction>
+                    <restitution>1</restitution>
+                    <friction>.75</friction>
                 </physicalProperties>  
             </Model>
             <Model name="SelectPoint" url="objects/Sphere.lwo" moveable="false" opacity="0" selectable="false" physicsEnabled="false">
@@ -32,42 +32,45 @@
               <color r="1" g="0" b="0" a="1"/>
             </Model>
             <Model name="Wedge1" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="true" detectCollision="true">
-              <scale x="1" y=".5" z="3"/>
-              <color r=".1" g=".238" b=".455" a="1"/>
-              <position x="-10" y="0.5" z="10"/>
+              <scale x="2" y=".25" z="3"/>
+              <color r=".75" g="0.3" b="0.73" a="1"/>
+              <position x="-10" y="0.5" z="100"/>
             </Model>
             <Model name="Wedge2" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="fase" physicsEnabled="true" detectCollision="true">
-              <scale x="1" y="1.5" z="3"/>
-              <color r="0" g="0" b="1" a="1"/>
-              <position x="0" y="1.45" z="10"/>
+              <scale x="2" y="1.25" z="3"/>
+              <color r=".1" g="0.5" b="0.5" a="1"/>
+              <position x="0" y="1.45" z="100"/>
             </Model>
             <Model name="Wegde3" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="true" detectCollision="true">
-              <scale x="1" y="2.5" z="3"/>
-              <color r="0" g="1" b="0" a="1"/>
-              <position x="10" y="2.5" z="10"/>
+              <scale x="2" y="2.5" z="3"/>
+              <color r=".75" g="0.35" b="0.05" a="1"/>
+              <position x="10" y="2.5" z="100"/>
             </Model>
-          <Model name="Sphere1" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="false" physicsEnabled="true">
-              <scale x="1" y="1" z="1"/>
-              <color r="1" g="0" b="0" a="1"/>
-              <position x="-10" y="3" z="12"/>
-              <physicalProperties>
-                <mass>0</mass>
-              </physicalProperties>
-            </Model>
-          <Model name="Sphere2" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="false" physicsEnabled="true">
-              <scale x="1" y="1" z="1"/>
-              <color r="1" g="0" b="0" a="1"/>
-              <position x="0" y="5" z="12"/>
+          <Model name="Sphere1" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="true" physicsEnabled="false">
+              <scale x="2" y="2" z="2"/>
+              <color r=".75" g="0.3" b="0.73" a="1"/>
+              <position x="-10" y="3" z="102"/>
               <physicalProperties>
                 <mass>1</mass>
+                <friction>0.025</friction>
               </physicalProperties>
             </Model>
-          <Model name="Sphere3" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="false" physicsEnabled="true">
-              <scale x="1" y="1" z="1"/>
-              <color r="1" g="0" b="0" a="1"/>
-              <position x="10" y="7" z="12"/>
+          <Model name="Sphere2" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="false" physicsEnabled="false">
+              <scale x="2" y="2" z="2"/>
+              <color r=".1" g="0.5" b="0.5" a="1"/>
+              <position x="0" y="5" z="102"/>
               <physicalProperties>
                 <mass>1</mass>
+                <friction>0.025</friction>
+              </physicalProperties>
+            </Model>
+          <Model name="Sphere3" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="false" physicsEnabled="false">
+              <scale x="2" y="2" z="2"/>
+              <color r=".75" g="0.35" b="0.05" a="1"/>
+              <position x="10" y="7" z="102"/>
+              <physicalProperties>
+                <mass>1</mass>
+                <friction>0.025</friction>
               </physicalProperties>
             </Model>
             <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
