@@ -1,6 +1,15 @@
 button.gravity{
   position:fixed;
-  top:20%;
-  right:0;
+  bottom:20%;
+  right:10px;
   z-index:1000000000;
+  font-family:'Helvetica', arial, sans-serif;
+  font-weight:200;
+  font-size:20px;
+  color:#fff;
+  background:#FFC125;
+  border-radius:20px;
+  border:none;
+  padding:10px;
+  box-shadow:0 0 3px rgba(0,0,0,0.4);
 }

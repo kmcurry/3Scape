@@ -24,7 +24,7 @@
                 <physicalProperties>
                     <mass>0</mass>
                     <restitution>1</restitution>
-                    <friction>.75</friction>
+                    <friction>1</friction>
                 </physicalProperties>  
             </Model>
             <Model name="SelectPoint" url="objects/Sphere.lwo" moveable="false" opacity="0" selectable="false" physicsEnabled="false">
