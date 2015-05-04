@@ -138,7 +138,7 @@ function start3Scape(scape, scapeId) {
     }
   }
 
-  var saveInterval = setInterval(autoSave, 30000);
+  //var saveInterval = setInterval(autoSave, 30000);
 
   window.addEventListener("beforeunload", save3Scape);
 
@@ -160,7 +160,12 @@ function paste()
 // callback for loadFile
 function processModelXML(name, copy) {
 
-    var model = this.responseXML.getElementsByTagName("Model")[0];
+    var model = this.responseXML.getElementsByTagName("Model")[0] ||
+                this.responseXML.getElementsByTagName("Box")[0] ||
+                this.responseXML.getElementsByTagName("Ball")[0] ||
+                this.responseXML.getElementsByTagName("Beam")[0] ||
+                this.responseXML.getElementsByTagName("Plank")[0] ||
+                this.responseXML.getElementsByTagName("Wall")[0];
 
     var n = model.attributes["name"];
     n.value = name;

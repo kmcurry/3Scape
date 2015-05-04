@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="css/snappy.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" href="css/actionsbar.css">
+		<link rel="stylesheet" type="text/css" href="css/actionsbar.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
     <link rel="stylesheet" type="text/css" href="css/inclinedplanes.css">
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
@@ -36,7 +36,7 @@
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
 				 onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
-			<canvas id="Canvas">
+			<canvas id="Canvas" oncontextmenu="return false">
 			</canvas>
 		</div>
 
@@ -64,12 +64,6 @@
 					addControls();
 
 					document.onmousemove = handleDocMove;
-
-//					setTimeout(function() {
-//						console.log("toggling bars");
-//						$('.parts-bar').slideUp(500);
-//						$('.actions-bar').slideUp(500);
-//					}, 2000);
 
 				}
 			}
