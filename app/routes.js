@@ -117,7 +117,6 @@ module.exports = function(app, config) {
   });
 
   app.use(function(req, res, next){
-    console.log("rendering 404");
     res.status(404).render('404');
   });
 
