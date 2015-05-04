@@ -1,0 +1,6 @@
+button.gravity{
+  position:fixed;
+  top:20%;
+  right:0;
+  z-index:1000000000;
+}

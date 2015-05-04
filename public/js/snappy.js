@@ -212,6 +212,7 @@ function processModelXML(name, copy) {
     g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);
 
     $(".menu").removeClass("active");
+  
 }
 
 
@@ -227,4 +228,5 @@ function reset() {
 
 
 }
+ 
 
