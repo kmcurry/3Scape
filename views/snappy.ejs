@@ -22,6 +22,8 @@
 	</head>
 	<body class="container-fluid" onresize="resize();">
 
+		<%- include('dialogs/registration') %>
+
 		<div class="navbar-fixed-top" >
     	   <%- include('viewcontrols/partsbar'); %>
 		</div>
@@ -30,7 +32,7 @@
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
 				 onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
-			<canvas id="Canvas">
+			<canvas id="Canvas" oncontextmenu="return false;">
 			</canvas>
 		</div>
 
@@ -38,9 +40,6 @@
 			<%- include('viewcontrols/actionsbar') %>
 		</div>
 
-		<%- include('dialogs/registration') %>
-
-		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="js/snappy.js"></script>
 
 
@@ -58,17 +57,21 @@
 						i = '<%- scapeId %>';
 					<% } %>
 
+
 					start3Scape(s, i);
 
 					addControls();
 
 					document.onmousemove = handleDocMove;
 
-//					setTimeout(function() {
-//						console.log("toggling bars");
-//						$('.parts-bar').slideUp(500);
-//						$('.actions-bar').slideUp(500);
-//					}, 2000);
+					document.onkeydown = handleKey;
+
+					<% if (typeof isAnonymous != 'undefined') { %>
+						setTimeout(function () {
+							document.onkeydown = "";
+							$(".registration").modal("show");
+						}, 600000);
+					<% } %>
 
 				}
 			}

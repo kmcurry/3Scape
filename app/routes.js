@@ -131,7 +131,10 @@ module.exports = function(app, config) {
       return next();
     }
 
-    // if they aren't redirect them to the login page
-    res.redirect('/login');
+    // if they aren't then set registration timer for anonymous
+    res.status(200).render('snappy', {
+      isAnonymous: true
+    });
+
   }
 };

@@ -1,67 +1,36 @@
-<form action="" method="POST" id="payment-form">
-
-  <!-- show any messages that come back with authentication -->
-  <% if (typeof message != 'undefined' && message.length > 0) { %>
-      <div class="alert alert-danger"><%= message %></div>
-  <% } %>
-
-  <div class="form-group">
-    <label>Email</label>
-      <input class="form-control" id="email" type="email" name="email" placeholder="Your valid email address" autofocus>
-  </div>
-
-  <div class="form-group">
-      <label>Password</label>
-      <input class="form-control" id="password" type="password" name="password" maxlength="20" placeholder="Must be 8-20 characters long">
-  </div>
-
-  <div class="form-group">
-      <label>Confirm Password</label>
-      <input class="form-control" id="confirm_password" type="password" name="password_confirm" maxlength="20" placeholder="Must match your password">
-  </div>
-
-  <center>
-    <h2>Try it FREE* for 30 days!</h2>
-    <h6>*$15 yearly charge applies at end of trial period. Cancel your trial at any time.</h6>
-  </center>
-  <div class="panel panel-default row">
-    <div class="panel-body">
-      <div class="form-group">
-        <div class="col-xs-7 col-sm-7 col-md-7">
-          <label><span>Card Number</span>
-
-            <input class="form-control cc-number" data-stripe="number" type="text" maxlength="19" placeholder="•••• •••• •••• ••••"/>
-          </label>
-        </div>
-        <div class="col-xs-5 col-sm-5 col-md-5">
-          <label><span>CVC</span>
-
-            <input class="form-control cc-cvc" data-stripe="cvc" type="text" maxlength="3" size="5" placeholder="•••"/>
-          </label>
-        </div>
+<div class="registration modal modal-dialog fade">
+  <div class="modal-content">
+    <form action="/signup" method="POST" id="payment-form">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Please Register 3Scape</h4>
       </div>
+      <div class="modal-body">
 
-      <div class="form-group">
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <label><span>Expiration</span>
+          <!-- show any messages that come back with authentication -->
+          <% if (typeof message != 'undefined' && message.length > 0) { %>
+              <div class="alert alert-danger"><%= message %></div>
+          <% } %>
 
-            <input class="form-control" data-stripe="exp-month" type="text" maxlength="2" size="5" placeholder="MM"/>
-          </label>
+          <div class="form-group">
+            <label>Email</label>
+              <input class="form-control" id="email" type="email" name="email" placeholder="Your valid email address" autofocus>
+          </div>
 
-        </div>
-        <div class="col-xs-4 col-sm-4 col-md-4">
-          <label><span><br/></span>
-            <input class="form-control" data-stripe="exp-year" type="text" maxlength="4" size="5" placeholder="YYYY"/>
-          </label>
+          <div class="form-group">
+              <label>Password</label>
+              <input class="form-control" id="password" type="password" name="password" maxlength="20" placeholder="Must be 8-20 characters long">
+          </div>
 
-        </div>
-        <div class="col-xs-5 col-sm-5 col-md-5">
-          <img style="padding-top:20%;" src="images/stripe.png" title="Your payment is secure with Stripe"/>
-        </div>
+          <div class="form-group">
+              <label>Confirm Password</label>
+              <input class="form-control" id="confirm_password" type="password" name="password_confirm" maxlength="20" placeholder="Must match your password">
+          </div>
+
       </div>
-    </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" onclick="document.onkeydown = handleKey;">Heck Yes!</button>
+      </div>
+    </form>
   </div>
-  <center><div class="payment-errors"></div></center>
-  <br/>
-  <center><button type="submit" class="btn btn-xlarge btn-primary">Sign Up for Free!</button></center>
-</form>
+</div>

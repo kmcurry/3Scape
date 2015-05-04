@@ -1,4 +1,3 @@
-window.onkeydown = handleKey;
 
 var g_capture = false;
 
@@ -162,7 +161,6 @@ function selectPoint() {
 
 function handleKey(e)
 {
-
     bridgeworks.handleEvent(e);
 
     if (!g_sceneInspector) {

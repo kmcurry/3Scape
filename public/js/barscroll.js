@@ -30,7 +30,7 @@ $(document).ready(function(){
             scrollContainer.animate({scrollLeft: scrolledLeft-300}, 300);
         };
      });
-    
+
     var element = document.querySelector('.palette');
     if((element.offsetWidth < element.scrollWidth)){
         // your element have overflow
@@ -39,10 +39,10 @@ $(document).ready(function(){
     }
     else{
         //your element doesn't have overflow
-        
+
          $('.scroll-right, .scroll-left').hide();
         scrollContainer.css({'width': '100%'});
-        console.log(scrollContainer.offsetWidth + " and " + scrollContainer.scrollWidth);
+
     }
 
 });
