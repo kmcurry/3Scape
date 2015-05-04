@@ -27,17 +27,18 @@
 		</div>
 
 
-
-		<div class="navbar-fixed-bottom">
-			<%- include('viewcontrols/actionsbar') %>
-		</div>
-
 		<div id="BwContainer" onclick="handleMouse(event);"
 				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
 				 onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
 			<canvas id="Canvas">
 			</canvas>
 		</div>
+
+		<div class="navbar-fixed-bottom">
+			<%- include('viewcontrols/actionsbar') %>
+		</div>
+
+		<%- include('dialogs/registration') %>
 
 		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="js/snappy.js"></script>

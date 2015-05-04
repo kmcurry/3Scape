@@ -139,6 +139,7 @@ function start3Scape(scape, scapeId) {
   }
 
   //var saveInterval = setInterval(autoSave, 30000);
+  setInterval(promptRegistration, 600000)
 
   window.addEventListener("beforeunload", save3Scape);
 
@@ -216,6 +217,10 @@ function processModelXML(name, copy) {
     g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);
 
     $(".menu").removeClass("active");
+}
+
+function promptRegistration() {
+  
 }
 
 
