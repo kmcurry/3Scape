@@ -51,7 +51,7 @@
               <color r=".75" g="0.3" b="0.73" a="1"/>
               <position x="-10" y="3" z="102"/>
               <physicalProperties>
-                <mass>1</mass>
+                <mass>2</mass>
                 <friction>0.025</friction>
               </physicalProperties>
             </Model>
@@ -60,7 +60,7 @@
               <color r=".1" g="0.5" b="0.5" a="1"/>
               <position x="0" y="5" z="102"/>
               <physicalProperties>
-                <mass>1</mass>
+                <mass>2</mass>
                 <friction>0.025</friction>
               </physicalProperties>
             </Model>
@@ -69,7 +69,7 @@
               <color r=".75" g="0.35" b="0.05" a="1"/>
               <position x="10" y="7" z="102"/>
               <physicalProperties>
-                <mass>1</mass>
+                <mass>2</mass>
                 <friction>0.025</friction>
               </physicalProperties>
             </Model>
@@ -79,7 +79,7 @@
             </Isolator>
         </Group>
     </Isolator>
-    <RenderDirective name="RenderDirective" highlightType="2" backgroundImageFilename="images/Sky2.jpg" shadowsEnabled="false"/>
+    <RenderDirective name="RenderDirective" highlightType="2" backgroundColor r="1" g="1" b="1" a="1" shadowsEnabled="false"/>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
     <Set target="ShadowDirective">
       <casterWorldPosition x="0" y="10" z="0"/>
