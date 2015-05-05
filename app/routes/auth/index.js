@@ -153,7 +153,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   });
 
   app.post("/register", function(req, res, next) {
-    
+
     passport.authenticate('local-signup', function (err, creator, info) {
       if (err) {
         console.log(err.message);
@@ -164,7 +164,8 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
       if (!creator) {
         console.log("NO CREATOR");
         req.flash('signupMessage', 'There was a problem creating your 3Scape profile.');
-        return next(err); // redirect fails in other callbacks
+        req.flash('error_message', 'There was a problem creating your 3Scape profile.');
+        return res.redirect('/login'); // redirect fails in other callbacks
                                         // with 'cannot set headers after they're sent' - KMC
       }
 
