@@ -58,7 +58,7 @@ function handleDocMove(e)
 
 function handleMouse(e)
 {
-  if (!bridgeworks)
+  if (bridgeworks == "undefined" || bridgeworks == null)
         return;
 
     if (!g_sceneInspector) {

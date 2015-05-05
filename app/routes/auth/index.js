@@ -148,6 +148,45 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   });
 
+  app.get("/register", function(req, res) {
+    res.render("dialogs/registration");
+  });
+
+  app.post("/register", function(req, res, next) {
+    
+    passport.authenticate('local-signup', function (err, creator, info) {
+      if (err) {
+        console.log(err.message);
+        req.flash('signupMessage', 'There was a problem logging you in. ' + err);
+        return next(err);
+      }
+
+      if (!creator) {
+        console.log("NO CREATOR");
+        req.flash('signupMessage', 'There was a problem creating your 3Scape profile.');
+        return next(err); // redirect fails in other callbacks
+                                        // with 'cannot set headers after they're sent' - KMC
+      }
+
+
+      req.logIn(creator, function(err) {
+        if (err) {
+          console.log("There was a problem logging you in");
+          return next(err);
+        }
+        // email
+        if (config.email.smtpUser) {
+          console.log("Sending welcome mailer.");
+          utilities.emailer.send({
+            to: creator.email,
+            templateId: config.email.welcome
+          });
+        }
+        return res.redirect('/');
+      });
+    })(req, res, next);
+  });
+
   // RESET
 
   app.get('/reset/:token', function(req, res) {

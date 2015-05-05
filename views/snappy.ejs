@@ -68,10 +68,11 @@
 					document.onkeydown = handleKey;
 
 					<% if (typeof isAnonymous != 'undefined') { %>
+						console.log("IS ANON");
 						setTimeout(function () {
 							document.onkeydown = "";
 							$(".registration").modal("show");
-						}, 6000);
+						}, 1000);
 					<% } %>
 
 				}

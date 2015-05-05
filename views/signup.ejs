@@ -4,28 +4,37 @@
     <title>3Scape Signup</title>
     <meta name="description" content="Kids learn by making 3D contraptions powered by physics.">
     <meta name=viewport content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/new-signup.css"/>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/snappy.css">
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
 </head>
+<body>
 
-<body background="images/login-signup-background.png">
-  <div class="row" style="padding-top:20px;">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4">
-      <center>
+<!--VIDEO BEGIN-->
+
+  <video autoplay loop poster="images/dashboard.png" id="bgvid">
+    <source src="video/super-cut-take-2.mp4" type="video/mp4">
+  </video>
+
+<!--VIDEO END-->
+
+<!--TAGLINE BEGIN-->
+
+  <div class="row tagline">
+      <div class="col-md-12">
         <img src="images/logo.png" width="200px" height="160px">
-      </center>
-    </div>
-    <div class="col-sm-4"></div>
+        <h2>Kids learn by making 3D contraptions powered by physics!</h2>
+      </div>
   </div>
 
-  <center>
-    <h1>Build. Play. Experiment. Code.</h1>
-    <h2>Kids learn <br/>by making 3D contraptions<br/> powered by physics.</h2>
-  </center>
+<!--TAGLINE END-->
 
-  <div class="row">
+<!--ENTRY FORM BEGIN-->
+
+  <div id="entry-form" class="row">
     <div class="col-xs-2 col-sm-4"></div>
 
     <div class="col-xs-8 col-sm-4">
@@ -53,8 +62,8 @@
         </div>
 
         <center>
-          <h3>Try it FREE for 30 days</h3>
-          <h3>$15 after that</h3>
+          <h2>Try it FREE* for 30 days!</h2>
+          <h6>*$15 yearly charge applies at end of trial period. Cancel your trial at any time.</h6>
         </center>
         <div class="panel panel-default row">
           <div class="panel-body">
@@ -217,10 +226,42 @@
 
   ga('create', 'UA-26989160-5', 'auto');
   ga('send', 'pageview');
-
 </script>
-<link rel="stylesheet" href="css/bootstrap.css">
-<link rel="stylesheet" href="css/snappy.css">
+
+<!--BPEC BEGIN-->
+
+<div class="row bpec">
+  <div class="col-md-3 col-sm-6">
+    <img src="images/build.png" class="add-top" height="100px"/>
+    <h2><b>BUILD</b></h2>
+    <p>Create structures, working machines, whole new worlds with 3Scape. Let us springboard your ideas into the 3D world!
+      The possibilites are endless! The only limit is your imagination...</p>
+  </div>
+  <div class="col-md-3 col-sm-6">
+    <img src="images/play.png" class="add-top" height="100px"/>
+    <h2><b>PLAY</b></h2>
+    <p>We strive to make 3Scape as fun as possible. This allows you to have the freedom to do anything you want.
+    If you want to make a catapult and knock down some walls do it! If you want to have a dragon fly around and fight robots do it!
+    This world is your playground, have some fun!</p>
+  </div>
+  <div class="col-md-3 col-sm-6">
+    <img src="images/experiment.png" class="add-top" height="100px"/>
+    <h2><b>EXPERIMENT</b></h2>
+    <p>Here at 3Scape, we encourage experimentation. If something seems even slightly possible, try it! Our engine has a great deal of flexibility
+    and can do some pretty amazing things. Pretty much every day we discover something new we didn't know we could do, and we built this!
+    Feel free to share with us your cool projects and experiments, we love learning new things!</p>
+  </div>
+  <div class="col-md-3 col-sm-6">
+    <img src="images/code.png" class="add-top" height="100px"/>
+    <h2><b>CODE</b></h2>
+    <p>Coding is slowly becoming a way of life these days and because of that, we encourage everyone to learn how to do basic coding.
+      3Scape is built in such a way that if you are comfortable building things through code, you can do so! 3Scape is flexible and fully
+      accesible to those who want to get their hands dirty, the coder's way!</p>
+  </div>
+</div>
+
+<!--BPEC END-->
+
 
 </body>
 </html>

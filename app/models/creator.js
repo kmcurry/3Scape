@@ -8,6 +8,7 @@ var Schema = mongoose.Schema
 // define the schema for our creator model
 var CreatorSchema = mongoose.Schema({
 
+    dateJoined: Date,
     email: String,
     name: String,
     password: String,

@@ -69,7 +69,7 @@ function loadtwostroke() {
 
 function loadundersea() {
   reset();
-  bridgeworks.contentDir='/BwContent/Underwater/';
+  bridgeworks.contentDir='/BwContent/Underwater/BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Underwater.xml');
 }
