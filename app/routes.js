@@ -5,7 +5,7 @@ module.exports = function(app, config) {
   var Creator = require('../app/models/creator');
   var Scape = require('../app/models/scape');
 
-  app.get('/', isLoggedIn, function (req, res) {
+  app.get('/', function (req, res) {
     res.render('snappy');
   });
 
