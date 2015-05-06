@@ -1,6 +1,5 @@
-button.gravity{
+.wedges-btn{
   position:fixed;
-  bottom:20%;
   right:10px;
   z-index:1000000000;
   font-family:'Helvetica', arial, sans-serif;
@@ -12,4 +11,29 @@ button.gravity{
   border:none;
   padding:10px;
   box-shadow:0 0 3px rgba(0,0,0,0.4);
+  min-width:200px;
+  text-align:center;
+  outline:none;
 }
+
+.wedges-btn:active{
+  outline:none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.wedges-btn:visited{
+  outline:none;
+}
+
+.wedges-btn:focus{
+  outline:none;
+}
+
+button.gravity{
+  bottom:20%;
+}
+
+button.reset{
+  bottom:30%;
+}
+
