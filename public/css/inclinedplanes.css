@@ -6,7 +6,7 @@
   font-weight:200;
   font-size:20px;
   color:#fff;
-  background:#FFC125;
+  background:#55af59;
   border-radius:20px;
   border:none;
   padding:10px;
@@ -14,6 +14,7 @@
   min-width:200px;
   text-align:center;
   outline:none;
+  text-transform: uppercase;
 }
 
 .wedges-btn:active{
@@ -29,11 +30,33 @@
   outline:none;
 }
 
-button.gravity{
+.gravity{
+  bottom:30%;
+}
+
+.reset{
+  background:#46A8D2;
   bottom:20%;
 }
 
-button.reset{
-  bottom:30%;
+.labelDiv{
+  position:fixed;
+  top:35%;
+  left:50%;
+  margin-left:-300px;
+  z-index:1000000000;
+  width:600px;
+  background:#46A8D2;
+  box-shadow: 0 0 3px rgba(0,0,0,0.4);
+  color:#fff;
+  text-align: center;
+  padding:10px 10px 30px 10px;
+  transition: all 500ms;
+  opacity:1;
 }
+
+.labelDiv.hideLabel{
+  opacity:0;
+}
+
 
