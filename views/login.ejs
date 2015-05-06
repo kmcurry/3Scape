@@ -18,16 +18,16 @@
 		        <h3>make and share <br/>interactive 3D</h3>
 		    </center>
 			<!-- show any messages that come back with authentication -->
-			<% if (message.length > 0) { %>
+			<% if (typeof message != 'undefined' && message.length > 0) { %>
+					<div class="alert alert-info"><%= message %></div>
+				<% } %>
+			<% if (typeof info_message != 'undefined' && info_message.length > 0) { %>
 					<div class="alert alert-info"><%= info_message %></div>
 				<% } %>
-			<% if (info_message.length > 0) { %>
-					<div class="alert alert-info"><%= info_message %></div>
-				<% } %>
-				<% if (error_message.length > 0) { %>
+				<% if (typeof error_message != 'undefined' && error_message.length > 0) { %>
 					<div class="alert alert-danger"><%= error_message %><a href="/forgot">  Forgot Password?</a></div>
 				<% } %>
-				<% if (success_message.length > 0) { %>
+				<% if (typeof success_message != 'undefined' && success_message.length > 0) { %>
 					<div class="alert alert-success"><%= success_message %></div>
 				<% } %>
 
@@ -46,9 +46,10 @@
 			</form>
 
 			<hr>
-
-			<p class="link-list">Need an account? <a href="/signup">Signup</a> | <a href="/privacy">Privacy Policy</a></p>
-
+			<center>
+				<p><a href="/forgot">Forgot your password?</a></p>
+				<p class="link-list">Need an account? <a href="/signup">Signup</a> | <a href="/privacy">Privacy Policy</a></p>
+			</center>
 		</div>
 		<div class="col-xs-2 col-sm-4"></div>
 </div>

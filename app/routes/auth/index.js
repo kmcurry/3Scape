@@ -163,9 +163,9 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
       if (!creator) {
         console.log("NO CREATOR");
-        req.flash('signupMessage', 'There was a problem creating your 3Scape profile.');
-        req.flash('error_message', 'There was a problem creating your 3Scape profile.');
-        return res.redirect('/login'); // redirect fails in other callbacks
+        return res.render('login', {
+          message: "You already have an account. Please log in."
+          } ); // redirect fails in other callbacks
                                         // with 'cannot set headers after they're sent' - KMC
       }
 

@@ -10,13 +10,14 @@
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="css/actionsbar.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/raphael/raphael-min.js"></script>
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="js/jogDial.js"></script>
-    <script src="bower_components/raphael/raphael-min.js"></script>
-    <script src="js/colorwheel.js"></script>
-    <script src="js/tablet-resize.js" ></script>
-    <script src="js/barscroll.js"></script>
+		<script type="text/javascript" src="js/colorwheel.js"></script>
+    <script type="text/javascript" src="js/jogDial.js"></script>
+    <script type="text/javascript" src="js/tablet-resize.js" ></script>
+    <script type="text/javascript" src="js/barscroll.js"></script>
+
 	</head>
     <script src="js/hammer-min.js"></script>
 	</head>
@@ -63,15 +64,12 @@
 
 					addControls();
 
-					document.onmousemove = handleDocMove;
-
-
-					document.onkeydown = handleKey;
+					document.onmousemove 	= handleDocMove;
+					document.onkeydown 		= handleKey;
 
 					<% if (typeof isAnonymous != 'undefined') { %>
-						console.log("IS ANON");
 						setTimeout(function () {
-							document.onkeydown = "";
+							document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
 							$(".registration").modal("show");
 						}, 6000);
 					<% } %>
@@ -87,8 +85,8 @@
 		<script type="text/javascript" src="js/scenes.js"></script>
 		<script type="text/javascript" src="js/MapControls.js"></script>
 		<script type="text/javascript" src="js/objectmode.js"></script>
-		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 
 		<script>
