@@ -24,7 +24,7 @@ $(document).ready(function(){
     var labelDiv = document.createElement("div");
     labelDiv.setAttribute('class', 'labelDiv');
     document.body.appendChild(labelDiv);
-    $("div.labelDiv").html("<h3>Inclined Planes Experiment</h3><p>3 spheres of the same size are hovering above 3 inclined planes.</p><p>The first inclined plane is shallow, the second is a little steeper, and the third is the steepest.</p><p>When the spheres drop, <b>which one will roll the farthest</b>?</p><p>Push the <i>Gravity On</i> button to find out!</p>");
+    $("div.labelDiv").html("<h3>Inclined Planes Experiment</h3><p>3 spheres of the same size are hovering above 3 inclined planes of different heights.</p><p>When the spheres drop, <b>which one will roll the farthest</b>?</p><p>Push the <i>Gravity On</i> button to find out!</p>");
   };
   
   addLabel();
@@ -52,9 +52,9 @@ $(document).ready(function(){
     sphere1.physicsEnabled.setValueDirect(false);
     sphere2.physicsEnabled.setValueDirect(false);
     sphere3.physicsEnabled.setValueDirect(false);
-    sphere1.position.setValueDirect(-10,7,102);
-    sphere2.position.setValueDirect(0,7,102);
-    sphere3.position.setValueDirect(10,7,102);
+    sphere1.position.setValueDirect(-10,8,102);
+    sphere2.position.setValueDirect(0,8,102);
+    sphere3.position.setValueDirect(10,8,102);
   });
 });
 

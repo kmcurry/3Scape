@@ -30,6 +30,14 @@
   outline:none;
 }
 
+.gravity:focus{
+  background:#30CA37;
+}
+
+.reset:focus{
+  background:#4FBFEF;
+}
+
 .gravity{
   bottom:30%;
 }
@@ -55,7 +63,7 @@
   opacity:0;
 }
 
-.labelDiv.hideLabel{
+.labelDiv.showLabel.hideLabel{
   opacity:0;
 }
 
