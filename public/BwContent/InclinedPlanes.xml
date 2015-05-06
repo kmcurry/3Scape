@@ -93,7 +93,7 @@
       <Model name="Sphere1" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="true" physicsEnabled="false" detectCollision="true">
         <scale x="4" y="4" z="4"/>
         <color r=".75" g="0.3" b="0.73" a="1"/>
-        <position x="-10" y="5" z="102"/>
+        <position x="-10" y="8" z="102"/>
         <physicalProperties>
           <rollingFriction>.8</rollingFriction>
           <linearDamping>1</linearDamping>
@@ -107,7 +107,7 @@
       <Model name="Sphere2" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="false"  physicsEnabled="false" detectCollision="true">
         <scale x="4" y="4" z="4"/>
         <color r=".1" g="0.5" b="0.5" a="1"/>
-        <position x="0" y="5" z="102"/>
+        <position x="0" y="8" z="102"/>
         <physicalProperties>
           <rollingFriction>.8</rollingFriction>
           <linearDamping>1</linearDamping>
@@ -121,7 +121,7 @@
       <Model name="Sphere3" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="false" physicsEnabled="false" detectCollision="true">
         <scale x="4" y="4" z="4"/>
         <color r=".75" g="0.35" b="0.05" a="1"/>
-        <position x="10" y="7" z="102"/>
+        <position x="10" y="8" z="102"/>
         <physicalProperties>
           <rollingFriction>.8</rollingFriction>
           <linearDamping>1</linearDamping>
@@ -168,15 +168,13 @@
   </Isolator>
     <RenderDirective name="RenderDirective" highlightType="2" backgroundColor r="1" g="1" b="1" a="1" shadowsEnabled="false"/>
     <Animations>
-<!--      <KeyframeInterpolator name="CameraMotion" url="InclinedPlanesAnimations/motions/camera.mot" target="Camera" />-->
+      <KeyframeInterpolator name="CameraMotion" url="InclinedPlanesAnimations/motions/camera.mot" target="Camera" />
     </Animations>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
    
     <Set target="ShadowDirective">
       <casterWorldPosition x="0" y="10" z="0"/>
     </Set>
-<!--
     <Set trigger="CameraMotion/time=5" target="Intro" show="true"></Set>
-    <Pause name="IntroPause" trigger="CameraMotion/time=5" />
--->
+<!--    <Pause name="IntroPause" trigger="CameraMotion/time=5" />-->
 </Scene>
