@@ -29,6 +29,12 @@ $(document).ready(function(){
   
   addLabel();
   
+  setTimeout(function(){
+    $(".labelDiv").addClass("showLabel"); 
+  }, 10000);
+  
+  
+  
   $("button.gravity").click(function(){
     $(".labelDiv").addClass("hideLabel");
     sphere1 = bridgeworks.get("Sphere1"),
