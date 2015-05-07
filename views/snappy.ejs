@@ -23,13 +23,14 @@
 	</head>
 	<body class="container-fluid" onresize="resize();">
 
-		<%- include('dialogs/registration') %>
 
-		<%- include('dialogs/payment') %>
-		
 		<div class="navbar-fixed-top" >
     	   <%- include('viewcontrols/partsbar'); %>
 		</div>
+
+		<%- include('dialogs/registration') %>
+
+		<%- include('dialogs/payment') %>
 
 
 		<div id="BwContainer" onclick="handleMouse(event);"
