@@ -196,7 +196,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
         if (req.isAuthenticated()) {
           req.user.verified = true;
           req.user.save();
-          return res.render('snappy');
+          return res.redirect('/');
         }
       }
     });
