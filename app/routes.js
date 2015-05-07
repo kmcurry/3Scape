@@ -147,7 +147,7 @@ module.exports = function(app, config) {
 
       if (req.user.verified == false &&
         ((new Date()) - req.user.joined) > ONE_DAY) {
-          console.log("Not Verifiedg");
+          console.log("Not Verified");
           return res.render('snappy', {
             verified: false,
             paymentKey: config.payment.pubKey
