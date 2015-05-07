@@ -70,7 +70,7 @@ function new3Scape() {
     reset();
     bridgeworks.contentDir = '/BwContent';
     bridgeworks.onLoadModified();
-    bridgeworks.updateScene('grid-50.xml');
+    bridgeworks.updateScene('InclinedPlanes.xml');
 
     // QTP: post to server right away or wait until an autosave event?
     /*
@@ -179,6 +179,7 @@ function processModelXML(name, copy) {
 
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
     g_selectedModel.getAttribute("detectObstruction").setValueDirect(true);
+  
 
     if (copy) {
         // TODO: g_copyModel.copyModel();
@@ -216,6 +217,7 @@ function processModelXML(name, copy) {
     g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);
 
     $(".menu").removeClass("active");
+  
 }
 
 
@@ -231,3 +233,5 @@ function reset() {
 
 
 }
+ 
+

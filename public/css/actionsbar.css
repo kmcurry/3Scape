@@ -37,10 +37,10 @@
   position: relative;
   -webkit-transition: margin-top 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
           transition: margin-top 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-  -webkit-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-     -moz-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-       -o-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-          animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+  -webkit-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+     -moz-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+       -o-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+          animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
 }
 
 .navbar-fixed-top:focus .parts-bar {
@@ -201,10 +201,10 @@ button.parts-btn {
   box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
   background: rgba(0,0,0,0.6);
   width: 100%;
-  -webkit-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-     -moz-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-       -o-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-          animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+  -webkit-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+     -moz-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+       -o-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+          animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
 }
 
 /*-- Actions Bar Column --*/
@@ -340,10 +340,10 @@ li.action {
   bottom: 0;
   -webkit-transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
           transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-  -webkit-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-     -moz-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-       -o-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
-          animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 10s;
+  -webkit-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+     -moz-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+       -o-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+          animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
 }
 
 .scroll-right:focus,

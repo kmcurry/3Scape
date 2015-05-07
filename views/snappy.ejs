@@ -10,8 +10,12 @@
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="css/actionsbar.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
+
 		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="bower_components/raphael/raphael-min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/inclinedplanes.css">
+
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
 		<script type="text/javascript" src="js/colorwheel.js"></script>
     <script type="text/javascript" src="js/jogDial.js"></script>
@@ -46,6 +50,7 @@
 		<%- include('dialogs/payment') %>
 
 		<script type="text/javascript" src="js/snappy.js"></script>
+    <script type="text/javascript" src="js/inclinedplanes.js"></script>
 
 
 		<script type="text/javascript">
@@ -74,12 +79,12 @@
 						document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
 						$(".payment").modal("show");
 					<% } %>
-
+					// These will not both be defined at the same time ^^ vv
 					<% if (typeof anonymous != 'undefined') { %>
 						setTimeout(function () {
 							document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
 							$(".registration").modal("show");
-						}, 6000);
+						}, 1000); // set to 600000 for production
 					<% } %>
 
 
