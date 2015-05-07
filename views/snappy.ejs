@@ -25,6 +25,7 @@
 
 		<%- include('dialogs/registration') %>
 
+
 		<div class="navbar-fixed-top" >
     	   <%- include('viewcontrols/partsbar'); %>
 		</div>
@@ -41,6 +42,8 @@
 		<div class="navbar-fixed-bottom">
 			<%- include('viewcontrols/actionsbar') %>
 		</div>
+
+		<%- include('dialogs/payment') %>
 
 		<script type="text/javascript" src="js/snappy.js"></script>
 
@@ -67,7 +70,12 @@
 					document.onmousemove 	= handleDocMove;
 					document.onkeydown 		= handleKey;
 
-					<% if (typeof isAnonymous != 'undefined') { %>
+					<% if (typeof verified != 'undefined') { %>
+						document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
+						$(".payment").modal("show");
+					<% } %>
+
+					<% if (typeof anonymous != 'undefined') { %>
 						setTimeout(function () {
 							document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
 							$(".registration").modal("show");

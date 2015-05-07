@@ -8,15 +8,14 @@ var Schema = mongoose.Schema
 // define the schema for our creator model
 var CreatorSchema = mongoose.Schema({
 
-    dateJoined: Date,
     email: String,
+    joined: Date,
     name: String,
     password: String,
     resetPasswordToken: String,
     resetPasswordExpires: Number,
-
-    scapes         : []
-
+    verified: Boolean,
+    scapes: []
 });
 
 // methods ======================

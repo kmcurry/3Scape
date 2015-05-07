@@ -130,12 +130,32 @@ module.exports = function(app, config) {
 
     // if creator is authenticated in the session, carry on
     if (req.isAuthenticated()) {
-      return next();
+      // if time since date joined is > X and
+      // the 3scaper hasn't registered a payment option
+      // set the request payment flag
+
+      // if req.user.joined is undefined then error
+
+      var ONE_DAY = 3600000 * 24; /* ms */
+
+      console.log("Is 3Scaper Verified? " + req.user.verified + " joined: " + req.user.joined + " elapsed: " + (new Date() - req.user.joined) + " ONE_DAY: " + ONE_DAY);
+
+      if (req.user.verified == false &&
+        ((new Date()) - req.user.joined) > ONE_DAY) {
+          console.log("NEED VERIFIED");
+          return res.render('snappy', {
+            verified: false,
+            pubKey: config.payment.pubKey
+          });
+      }
+      else {
+        return next();
+      }
     }
 
     // if they aren't then set registration timer for anonymous
     res.status(200).render('snappy', {
-      isAnonymous: true
+      anonymous: true
     });
 
   }
