@@ -75,8 +75,13 @@ module.exports = function(app, config) {
     res.render('classroom')
   });
 
+
   app.get('/nowebgl', function (req, res) {
       res.render('NoWebGL')
+  });
+
+  app.get('/opt-out', function (req, res) {
+    res.render('opt-out')
   });
 
   app.get('/privacy', function (req, res) {
@@ -142,7 +147,7 @@ module.exports = function(app, config) {
 
       if (req.user.verified == false &&
         ((new Date()) - req.user.joined) > ONE_DAY) {
-          console.log("NEED VERIFIED");
+          console.log("Not Verifiedg");
           return res.render('snappy', {
             verified: false,
             paymentKey: config.payment.pubKey
