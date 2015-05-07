@@ -145,7 +145,7 @@ module.exports = function(app, config) {
           console.log("NEED VERIFIED");
           return res.render('snappy', {
             verified: false,
-            pubKey: config.payment.pubKey
+            paymentKey: config.payment.pubKey
           });
       }
       else {

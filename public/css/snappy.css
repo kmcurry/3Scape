@@ -35,6 +35,11 @@
   z-index: 2;
 }
 
+.payment {
+  top: 400px;
+  right: 800px;
+}
+
 .btn-xlarge {
     padding: 12px 22px;
     font-size: 22px;

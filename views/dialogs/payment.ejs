@@ -1,0 +1,125 @@
+<div class="payment modal modal-dialog fade">
+  <div class="modal-content">
+    <form action="/payment" method="POST" id="payment-form">
+      <div class="modal-header">
+          <h4 class="modal-title">Would you pay for 3Scape?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <div class="col-xs-7 col-sm-7 col-md-7">
+            <label>Card Number</label>
+            <input class="form-control cc-number" data-stripe="number" type="text" maxlength="19" placeholder="•••• •••• •••• ••••"/>
+          </div>
+
+          <div class="col-xs-5 col-sm-5 col-md-5">
+            <label>CVC</label>
+            <input class="form-control cc-cvc" data-stripe="cvc" type="text" maxlength="3" size="5" placeholder="•••"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <label>Expiration</label>
+            <input class="form-control" data-stripe="exp-month" type="text" maxlength="2" size="5" placeholder="MM"/>
+          </div>
+
+          <div class="col-xs-4 col-sm-4 col-md-4">
+            <label><br/></label>
+            <input class="form-control" data-stripe="exp-year" type="text" maxlength="4" size="5" placeholder="YYYY"/>
+          </div>
+
+          <div class="col-xs-5 col-sm-5 col-md-5">
+            <img style="padding-top:20%;" src="images/stripe.png" title="Your payment is secure with Stripe"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-5"></div>
+        <div class="col-sm-1">
+          <button type="submit" class="btn btn-primary">Get Verified</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<!-- Stripe Validation -->
+<script>
+
+  <% if (typeof paymentKey != 'undefined') { %>
+    Stripe.setPublishableKey('<%- paymentKey %>');
+  <% } %>
+
+  $('#payment-form').submit(function(event) {
+    var $form = $(this);
+
+    // Disable the submit button to prevent repeated clicks
+    $form.find('button').prop('disabled', true);
+
+    var err = false;
+    var errText = "";
+
+    $('.cc-number').removeClass("alert-danger");
+    $('.cc-cvc').removeClass("alert-danger");
+
+    if (!Stripe.card.validateCardNumber($('.cc-number').val())) {
+      err = true;
+
+      $('.cc-number').addClass("alert-danger");
+
+      errText += 'The Card number field must contain a valid card number.\n';
+      $form.find('.btn').prop('disabled', false);
+
+    }
+
+    if (!Stripe.card.validateCVC($('.cc-cvc').val())) {
+      err = true;
+
+      $('.cc-cvc').addClass("alert-danger");
+
+      errText += 'The CVC number is invalid.';
+      $form.find('.btn').prop('disabled', false);
+    }
+
+    if (!err) {
+      console.log("creating Stripe token");
+      Stripe.card.createToken($form, stripeResponseHandler);
+    } else {
+      $('.payment-errors').addClass("alert-danger");
+      $('.payment-errors').text(errText);
+    }
+
+    // Prevent the form from submitting with the default action
+    return false;
+  });
+
+  function stripeResponseHandler(status, response) {
+    var $form = $('#payment-form');
+
+    console.log("stripe response...");
+
+    if (response.error) {
+      console.log("stripe response error: " + response.error)
+      // Show the errors on the form
+      $form.find('.payment-errors').text(response.error.message);
+      $form.find('button').prop('disabled', false);
+    } else {
+
+      console.log("stripe success: " + response.id)
+
+      document.onkeydown = handleKey;
+      // response contains id and card, which contains additional card details
+      var token = response.id;
+      // Insert the token into the form so it gets submitted to the server
+      $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+      // and submit
+      $form.submit();
+    }
+  };
+
+</script>
