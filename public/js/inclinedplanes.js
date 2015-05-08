@@ -33,8 +33,22 @@ $(document).ready(function(){
 
   setTimeout(function(){
     $(".labelDiv").addClass("showLabel");
-  }, 10000);
+  }, 13000);
 
+  function spherePhysicsOff(){
+    sphere1 = bridgeworks.get("Sphere1"),
+    sphere2 = bridgeworks.get("Sphere2"),
+    sphere3 = bridgeworks.get("Sphere3");
+    setTimeout(function(){
+      sphere1.physicsEnabled.setValueDirect(false);
+    }, 10000);
+    setTimeout(function(){
+      sphere2.physicsEnabled.setValueDirect(false);
+    }, 15000);
+    setTimeout(function(){
+      sphere3.physicsEnabled.setValueDirect(false);
+    }, 20000);
+  };
 
 
   $("button.gravity").click(function(){
@@ -45,12 +59,10 @@ $(document).ready(function(){
     sphere1.physicsEnabled.setValueDirect(true);
     sphere2.physicsEnabled.setValueDirect(true);
     sphere3.physicsEnabled.setValueDirect(true);
+    spherePhysicsOff();
   });
 
   $("button.reset").click(function(){
-    sphere1 = bridgeworks.get("Sphere1"),
-    sphere2 = bridgeworks.get("Sphere2"),
-    sphere3 = bridgeworks.get("Sphere3");
     sphere1.physicsEnabled.setValueDirect(false);
     sphere2.physicsEnabled.setValueDirect(false);
     sphere3.physicsEnabled.setValueDirect(false);
