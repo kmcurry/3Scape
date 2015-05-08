@@ -52,6 +52,13 @@ module.exports = function(app, config) {
                 });
               }
               break;
+            case 'inclinedplanes':
+              {
+                res.status(200).render('inclinedplanes', {
+                  scape: s
+                });
+              }
+              break
             default:
               {
                 return next('route');

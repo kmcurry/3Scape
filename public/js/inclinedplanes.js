@@ -1,9 +1,11 @@
 $(document).ready(function(){
-  
+
+  console.log("Initializing 3Scape Lesson: Inclined Planes.");
+
   var sphere1 = "",
       sphere2 = "",
       sphere3 = "";
-  
+
   function addButtons(){
     var gravButton = document.createElement("button"),
         resetButton = document.createElement("button");
@@ -19,22 +21,22 @@ $(document).ready(function(){
     $("button.reset").text("Reset Spheres");
   };
   addButtons();
-  
+
   function addLabel(){
     var labelDiv = document.createElement("div");
     labelDiv.setAttribute('class', 'labelDiv');
     document.body.appendChild(labelDiv);
     $("div.labelDiv").html("<h3>Inclined Planes Experiment</h3><p>3 spheres of the same size are hovering above 3 inclined planes of different heights.</p><p>When the spheres drop, <b>which one will roll the farthest</b>?</p><p>Push the <i>Gravity On</i> button to find out!</p>");
   };
-  
+
   addLabel();
-  
+
   setTimeout(function(){
-    $(".labelDiv").addClass("showLabel"); 
+    $(".labelDiv").addClass("showLabel");
   }, 10000);
-  
-  
-  
+
+
+
   $("button.gravity").click(function(){
     $(".labelDiv").addClass("hideLabel");
     sphere1 = bridgeworks.get("Sphere1"),
@@ -44,7 +46,7 @@ $(document).ready(function(){
     sphere2.physicsEnabled.setValueDirect(true);
     sphere3.physicsEnabled.setValueDirect(true);
   });
-  
+
   $("button.reset").click(function(){
     sphere1 = bridgeworks.get("Sphere1"),
     sphere2 = bridgeworks.get("Sphere2"),
@@ -57,5 +59,3 @@ $(document).ready(function(){
     sphere3.position.setValueDirect(10,8,102);
   });
 });
-
-
