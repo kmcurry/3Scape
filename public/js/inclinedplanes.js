@@ -61,7 +61,9 @@ $(document).ready(function(){
   });
   
   $("button.reset").click(function(){
-    spherePhysicsOff();
+    sphere1.physicsEnabled.setValueDirect(false);
+    sphere2.physicsEnabled.setValueDirect(false);
+    sphere3.physicsEnabled.setValueDirect(false);
     sphere1.position.setValueDirect(-10,8,102);
     sphere2.position.setValueDirect(0,8,102);
     sphere3.position.setValueDirect(10,8,102);
