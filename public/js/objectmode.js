@@ -116,15 +116,28 @@ function addRemoveRoam(collides) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
     if (bridgeworks.get('Roaming_' + name)) {
-      cmd = "<Remove target='Roaming_" + name + "'/>";
+      cmd = "<Update>";
+      cmd += "<Remove target='Roaming_" + name + "'/>";
+      cmd += "<Set target='" + name + "'>";
+      cmd += "<color r='"+ g_selectedModel.previousColor.r +"' g='"+ g_selectedModel.previousColor.g +"' b='"+ g_selectedModel.previousColor.b + "' a='"+ g_selectedModel.previousColor.a + "'/>"
+      cmd += "</Set>";
+      cmd += "</Update>";
     } else {
       // handle optional param
       var detectCollision = true;
       var detectObstruction = collides ? false : true;
       cmd = "<Update><AnimalMover name='Roaming_" + name + "' target='" + name
       + "' linearSpeed='1' angularSpeed='10'/>";
-      cmd += "<Set target='" + name + "' detectCollision='" + true + "' detectObstruction='" + detectObstruction + "'/>";
+      cmd += "<Set target='" + name + "' detectCollision='" + true + "' detectObstruction='" + detectObstruction + "'>";
+      if (detectObstruction) {
+        cmd += "<color r='0' g='1' b='0' a='1'/>"
+      } else {
+        cmd += "<color r='1' g='0' b='0' a='1'/>"
+      }
+      cmd += "</Set>"
       cmd += "</Update>";
+
+      g_selectedModel.previousColor = g_selectedModel.color.getValueDirect();
     }
     console.log(cmd);
     bridgeworks.updateScene(cmd);
