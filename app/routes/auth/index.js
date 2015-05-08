@@ -3,7 +3,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   var Creator = require('../../../app/models/creator');
   var Scape = require('../../../app/models/scape');
   var express = require('express');
-
+  var mongoose = require('mongoose');
   var stripe = require('stripe')(config.payment.secKey);
 
   app.get('/forgot', function(req, res) {
@@ -148,6 +148,61 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   });
 
+  app.post("/new", function (req, res) {
+    var scapeId = "";
+
+    if (req.user) {
+      var creator = req.user;
+
+      console.log("Saving a new 3Scape");
+
+      var scape = new Scape();
+      scape.creator = creator.name;
+
+      scape.save(function(err) {
+        if (err) console.log("error saving scape: " + err);
+      });
+
+
+      creator.scapes.push(scape._id);
+
+      creator.save(function(err) {
+        if (err) console.log("error saving creator: " + err);
+      });
+
+      scapeId = scape._id;
+
+    }
+
+    res.json(scapeId);
+
+  });
+
+  app.post("/payment", function(req, res, next) {
+    console.log("Verifying payment for: " + req.user.email);
+
+    stripe.customers.create({
+      source: req.body.stripeToken, // obtained with Stripe.js
+      plan: config.payment.plan,
+      email: req.user.email
+    }, function(err, customer) {
+      if (err || !customer) {
+        console.log("Payment verification error: " + err.message);
+        req.flash('signupMessage', 'There was a problem with your payment. ' + err);
+        return res.render('signup');
+      } else {
+        console.log("authenticating...");
+
+        if (req.isAuthenticated()) {
+          req.user.verified = true;
+          req.user.save();
+          return res.redirect('/');
+        }
+      }
+    });
+
+  });
+
   app.get("/register", function(req, res) {
     res.render("dialogs/registration");
   });
@@ -248,39 +303,6 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
         res.redirect('/login');
       });
     });
-
-  app.post("/new", function (req, res) {
-    var scapeId = "";
-
-    if (req.user) {
-      var creator = req.user;
-
-      console.log("Saving a new 3Scape");
-
-      var scape = new Scape();
-      scape.creator = creator.name;
-
-      scape.save(function(err) {
-        if (err) console.log("error saving scape: " + err);
-      });
-
-
-      creator.scapes.push(scape._id);
-
-      creator.save(function(err) {
-        if (err) console.log("error saving creator: " + err);
-      });
-
-      scapeId = scape._id;
-
-    }
-
-    res.json(scapeId);
-
-  });
-
-
-  var mongoose = require('mongoose');
 
   app.post("/save", function(req, res) {
     if (req.user) {
