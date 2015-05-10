@@ -63,6 +63,10 @@
   opacity:0;
 }
 
+.labelDiv p {
+  font-size:18px;
+}
+
 .labelDiv.showLabel.hideLabel{
   opacity:0;
 }
@@ -70,5 +74,3 @@
 .labelDiv.showLabel{
   opacity:1;
 }
-
-
