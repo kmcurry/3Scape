@@ -2,7 +2,7 @@
 * JogDial.js - v 1.0
 *
 * Copyright (c) 2014 Sean Oh (ohsiwon@gmail.com)
-* Licensed under the MIT license 
+* Licensed under the MIT license
 */
 
 (function (window, undefined) {
@@ -27,7 +27,7 @@
       return;
     }
 
-    // Constants     
+    // Constants
     JogDial.Doc   = window.document;
     JogDial.ToRad   = Math.PI / 180;
     JogDial.ToDeg   = 180 / Math.PI;
@@ -41,7 +41,7 @@
     // Predefined options
     JogDial.Defaults = {
       debug : false,
-      touchMode : 'knob',  // knob | wheel 
+      touchMode : 'knob',  // knob | wheel
       knobSize : '30%',
       wheelSize : '100%',
       zIndex : 9999,
@@ -51,7 +51,7 @@
     };
 
     // Predefined rotation info
-    JogDial.DegInfo = {      
+    JogDial.DegInfo = {
       rotation: 0,
       quadrant: 1
     };
@@ -111,7 +111,7 @@
 
       // Returne the sum of rotation value
       getRotation: function(self, quadrant, newDegree){
-        var rotation, delta = 0, info = self.info;         
+        var rotation, delta = 0, info = self.info;
           if(quadrant == 1 && info.old.quadrant == 2){ //From 360 to 0
             delta = 360;
           }
@@ -122,11 +122,11 @@
         info.old.rotation = newDegree; // return 0 ~ 360
         info.old.quadrant = quadrant; // return 1 ~ 4
         return rotation;
-      },     
+      },
 
-      //Checking collision 
+      //Checking collision
       checkBoxCollision: function (bound ,point) {
-        return bound.x1 < point.x 
+        return bound.x1 < point.x
         && bound.x2 > point.x
         && bound.y1 < point.y
         && bound.y2 > point.y;
@@ -166,7 +166,7 @@
           evt.initEvent(type, true, true);
           el.dispatchEvent(evt);
         }
-        else { // IE7 and 8          
+        else { // IE7 and 8
           evt = JogDial.Doc.createEventObject();
           evt.target = {};
           JogDial.utils.extend(evt.target, el);
@@ -194,13 +194,13 @@
   * return  {JogDial.Instance}
   */
 
-  JogDial.Instance = function (el ,opt) {    
+  JogDial.Instance = function (el ,opt) {
     // Prevent duplication
     if (el.getAttribute('shadow-circle')) {
       window.alert('Please Check your code:\njogDial can not be initialized twice in a same element.');
       return false;
     }
-    
+
     // Set global contant values and functions
     setConstants();
 
@@ -212,7 +212,7 @@
 
     // Set events
     setEvents(this);
-    
+
     // Set angle
     angleTo(this, JogDial.utils.convertClockToUnit(this.opt.degreeStartAt));
 
@@ -277,7 +277,7 @@
 
     //Set position property as relative if it's not predefined in Stylesheet
     if (JogDial.utils.getComputedStyle(self.base, 'position') === 'static') {
-      self.base.style.position = 'relative';      
+      self.base.style.position = 'relative';
     }
 
     //Append to base and extend {object} item
@@ -298,7 +298,7 @@
     K.setAttribute('class', 'shadow-circle_knob');
     KS.margin = -KRad + 'px 0 0 ' + -KRad + 'px';
     KS.zIndex = opt.zIndex;
-      
+
     //Set wheel properties
     W.setAttribute('class', 'shadow-circle_wheel');
 
@@ -317,7 +317,7 @@
     if (opt.debug) setDebug(self);
   };
 
-  function setDebug(self) {    
+  function setDebug(self) {
     var KS = self.knob.style;
     var WS = self.wheel.style;
     KS.backgroundColor = '#00F';
@@ -335,7 +335,7 @@
     * Set events to control elements
     * {HTMLElement}  JogDial.Instance.knob
     * {HTMLElement}  JogDial.Instance.wheel
-    */    
+    */
 
     //Detect event support type and override values
     if (JogDial.PointerEvent) { // Windows 8 touchscreen
@@ -393,8 +393,8 @@
     function mouseDragEvent(e) {
       if (self.pressed) {
         // Prevent default event
-        (e.preventDefault) ? e.preventDefault() : e.returnValue = false; 
-        
+        (e.preventDefault) ? e.preventDefault() : e.returnValue = false;
+
         // var info = self.info, opt = self.opt,
         var offset = JogDial.utils.getCoordinates(e),
         _x = offset.x -self.center.x + W.offsetLeft,
@@ -403,11 +403,11 @@
         quadrant = JogDial.utils.getQuadrant(_x, _y),
         degree = JogDial.utils.convertUnitToClock(radian),
         rotation;
-        
+
         //Calculate the current rotation value based on pointer offset
         info.now.rotation = JogDial.utils.getRotation(self, (quadrant == undefined) ? info.old.quadrant : quadrant  , degree);
         rotation = info.now.rotation;//Math.ceil(info.now.rotation);
-        
+
         if(opt.maxDegree != null && opt.maxDegree <= rotation){
           if(info.snapshot.direction == null){
             info.snapshot.direction = 'right';
@@ -437,16 +437,16 @@
           rotation: rotation,
           degree: degree
         });
-        
+
         // update angle
-        angleTo(self, radian);        
+        angleTo(self, radian);
       }
     };
 
     // mouseDragEvent (MOUSE_UP, MOUSE_OUT)
     function mouseUpEvent() {
       if(self.pressed){
-        self.pressed = false;        
+        self.pressed = false;
         if(self.info.snapshot.direction != null){
           self.info.now = JogDial.utils.extend({},info.snapshot.now);
           self.info.old = JogDial.utils.extend({},info.snapshot.old);
@@ -463,7 +463,7 @@
   * Function
   * @param  {HTMLElement}    self
   * @param  {String}         radian
-  */  
+  */
   function angleTo(self, radian) {
     radian *= JogDial.ToRad;
 
@@ -483,7 +483,7 @@
     }
 
     // Trigger move event
-    JogDial.utils.triggerEvent(self.knob, JogDial.CustomEvent.MOUSE_MOVE);    
+    JogDial.utils.triggerEvent(self.knob, JogDial.CustomEvent.MOUSE_MOVE);
   };
 
   // UMD Wrapper pattern
@@ -500,35 +500,7 @@
       // Browser globals
       window.JogDial = JogDial;
   }
-    
-    
+
+
 
 })(window);
-
-
-window.onload = function(){
-    var dials = document.getElementsByClassName('shadow-circle');
-    console.log("dials.length= " + dials.length);
-    for (var i=dials.length-1; i>=0; i--) {
-               
-        if ( dials[i] != dials[7] ){
-            console.log([i]);
-            var dialOne = JogDial(dials[i],
-            {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:1080, degreeStartAt: 540})
-            .on('mousemove', function(evt){
-            console.log("I'm not the opacity dial!");
-        });
-            
-        }
-        else{
-            console.log(7);
-             var bar = document.getElementById('meter-inner');
-            var dialOne = JogDial(dials[i],
-            {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:1080, degreeStartAt: 0})
-            .on('mousemove', function(evt){
-            bar.style.opacity = Math.abs((evt.target.rotation/1080));
-        });
-        } 
-    }
-}
-

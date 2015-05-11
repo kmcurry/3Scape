@@ -33,9 +33,6 @@ module.exports = function(app, config) {
           switch(s1) {
             case '2dvs3d' :
             case 'egypt' :
-            case 'entymology' :
-            case 'light':
-            case 'physics' :
             case 'twostroke' :
             case 'undersea':
               {
@@ -45,6 +42,7 @@ module.exports = function(app, config) {
                 });
               }
               break;
+            case 'entymology' :
             case 'hi5':
             case 'highfive':
             case 'facepalm':
@@ -54,6 +52,13 @@ module.exports = function(app, config) {
                 });
               }
               break;
+            case 'inclinedplanes':
+              {
+                res.status(200).render('inclinedplanes', {
+                  scape: s
+                });
+              }
+              break
             default:
               {
                 return next('route');
@@ -77,13 +82,17 @@ module.exports = function(app, config) {
     res.render('classroom')
   });
 
-  app.get('/privacy', function (req, res) {
-      res.render('privacy')
-  });
-
 
   app.get('/nowebgl', function (req, res) {
       res.render('NoWebGL')
+  });
+
+  app.get('/opt-out', function (req, res) {
+    res.render('opt-out')
+  });
+
+  app.get('/privacy', function (req, res) {
+      res.render('privacy')
   });
 
   app.get('/profile', isLoggedIn, function (req, res) {
@@ -115,23 +124,51 @@ module.exports = function(app, config) {
       res.sendFile('sitemap.xml', options);
   });
 
+  app.get('/videos', function (req, res) {
+      res.render('videos')
+  });
+
   app.use(function(req, res, next){
-    console.log("rendering 404");
     res.status(404).render('404');
   });
 
   // route middleware to make sure a creator is logged in
   function isLoggedIn(req, res, next) {
 
-    if (req.path !== undefined)
+    // redirect to path after verifying
+    if (req.path !== undefined) {
       req.session.returnTo = req.path;
+    }
 
     // if creator is authenticated in the session, carry on
     if (req.isAuthenticated()) {
-      return next();
+      // if time since date joined is > X and
+      // the 3scaper hasn't registered a payment option
+      // set the request payment flag
+
+      // if req.user.joined is undefined then error
+
+      var ONE_DAY = 3600000 * 24; /* ms */
+
+      console.log("Is 3Scaper Verified? " + req.user.verified + " joined: " + req.user.joined + " elapsed: " + (new Date() - req.user.joined) + " ONE_DAY: " + ONE_DAY);
+
+      if (req.user.verified == false &&
+        ((new Date()) - req.user.joined) > ONE_DAY) {
+          console.log("Not Verified");
+          return res.render('snappy', {
+            verified: false,
+            paymentKey: config.payment.pubKey
+          });
+      }
+      else {
+        return next();
+      }
     }
 
-    // if they aren't redirect them to the login page
-    res.redirect('/login');
+    // if they aren't then set registration timer for anonymous
+    res.status(200).render('snappy', {
+      anonymous: true
+    });
+
   }
 };

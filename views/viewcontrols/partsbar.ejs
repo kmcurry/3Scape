@@ -1,0 +1,92 @@
+<div class="row parts-bar">
+    <div class="col-xs-1 logo"></div>
+    <div class="col-xs-10 parts">
+        <ul class="parts-list list-inline">
+            <li class="part">
+                <button class="parts-btn cube" onclick="loadModel('Cube.xml');" title="Cube"></button>
+            </li>
+            <li class="part">
+                <button class="parts-btn sphere" onclick="loadModel('Sphere.xml');" title="Sphere"></button>
+            </li>
+            <li class="part">
+                <button class="parts-btn pyramid" onclick="loadModel('Pyramid.xml');" title="Pyramid"></button>
+            </li>
+            <li class="part">
+                <button class="parts-btn gear" onclick="loadModel('Gear.xml');" title="Gear"></button>
+            </li>
+            <li class="part">
+                <button class="parts-btn plank" onclick="loadModel('Plank.xml');" title="Plane"></button>
+            </li>
+            <li class="part">
+                <button class="parts-btn wall" onclick="loadModel('Wall.xml');" title="Wall"></button>
+            </li>
+            <li class="part">
+                <button class="parts-btn beam" onclick="loadModel('Beam.xml');" title="Beam"></button>
+            </li>
+            <li class="part">
+                <button class="parts-btn wedge" onclick="loadModel('Wedge.xml');" title="Wedge"></button>
+            </li>
+            <!-- CONCAVE PARTS ARE NOT SUPPORTED BY PHYSICS PACKAGE
+            <li class="part">
+                <button class="parts-btn ring" onclick="loadModel('Ring.xml');" title="Ring"></button>
+            </li>
+            <li class="part">
+                <button class="parts-btn tube" onclick="loadModel('Tube.xml');" title="Tube"></button>
+            </li>
+            <li class="part">
+                <button class="parts-btn elbow" onclick="loadModel('Elbow.xml');" title="Elbow"></button>
+            </li>
+            -->
+        </ul>
+    </div>
+
+  <div id ="dropdownMenu1" class="col-xs-1 nav-menu">
+    <div class="dropdown-toggle fa fa-bars" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    </div>
+    <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
+      <h3>share</h3>
+      <li class="divider"></li>
+      <li>
+        <span class="shape fa fa-facebook fa-2x" title="Share a picture on Facebook" onclick=""></span>
+        <span class="shape fa fa-twitter fa-2x" title="Share a picture on Twitter" onclick=""></span>
+        <span class="shape fa fa-pinterest fa-2x" title="Share a picture on Pinterest" onclick=""></span>
+        <span class="shape fa fa-instagram fa-2x" title="Share a picture on Instagram" onclick=""></span>
+      </li>
+      <li class="divider"></li>
+      <h3>go-to</h3>
+      <li class="divider"></li>
+      <li>
+        <span class="shape fa fa-user">
+          <a href="profile" title="Change your settings. See your saved 3Scapes.">Your Profile</a>
+        </span>
+      </li>
+      <li>
+        <span class="shape fa fa-laptop">
+          <a href="http://blog.3scape.me" title="Our latest updates, tips, and tricks.">3Scape Blog</a>
+        </span>
+      </li>
+      <li class="divider"></li>
+      <h3>3Scape actions</h3>
+      <li class="divider"></li>
+      <li>
+        <span class="shape fa fa-arrows-alt">
+          <a href="javascript:" title="Hide toolbars and extras. Hit ESC or click the exit button to exit full screen.">Full Screen</a>
+        </span>
+      </li>
+      <li>
+        <span class="shape fa fa-plus">
+          <a href="javascript:new3Scape();" title="Create a new 3Scape. Your current one will automatically be saved.">New 3Scape</a>
+        </span>
+      </li>
+      <li class="divider"></li>
+      <li>
+        <span class="shape fa fa-sign-out">
+          <a href="logout" title="Log out of 3Scape.">Sign Out</a>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+

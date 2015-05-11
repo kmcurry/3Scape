@@ -5,13 +5,6 @@ function load2dvs3d() {
   bridgeworks.updateScene('Pyramid.xml');
 }
 
-function loadbrakes() {
-  reset();
-  bridgeworks.contentDir='BwContent/Motorcycle';
-  bridgeworks.onLoadModified();
-  bridgeworks.updateScene('BrakeAssemblyLWS.xml');
-}
-
 function loadegypt() {
   reset();
   bridgeworks.contentDir='BwContent/Egypt';
@@ -30,6 +23,10 @@ function loadentymology() {
   bridgeworks.updateScene('formica_rufa.xml');
 }
 
+function loadfacepalm() {
+  loadhi5();
+}
+
 function loadhi5() {
   reset();
   bridgeworks.contentDir='BwContent';
@@ -41,22 +38,11 @@ function loadhighfive() {
   loadhi5();
 }
 
-function loadfacepalm() {
-  loadhi5();
-}
-
-function loadlight() {
+function loadinclinedplanes() {
   reset();
   bridgeworks.contentDir='BwContent';
   bridgeworks.onLoadModified();
-  bridgeworks.updateScene('Lights.xml');
-}
-
-function loadphysics() {
-  reset();
-  bridgeworks.contentDir='BwContent';
-  bridgeworks.onLoadModified();
-  bridgeworks.updateScene('Physics.xml');
+  bridgeworks.updateScene('InclinedPlanes.xml');
 }
 
 function loadtwostroke() {
@@ -69,7 +55,7 @@ function loadtwostroke() {
 
 function loadundersea() {
   reset();
-  bridgeworks.contentDir='/BwContent/Underwater/';
+  bridgeworks.contentDir='/BwContent/Underwater/BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Underwater.xml');
 }

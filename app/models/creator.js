@@ -9,13 +9,13 @@ var Schema = mongoose.Schema
 var CreatorSchema = mongoose.Schema({
 
     email: String,
+    joined: Date,
     name: String,
     password: String,
     resetPasswordToken: String,
     resetPasswordExpires: Number,
-
-    scapes         : []
-
+    verified: Boolean,
+    scapes: []
 });
 
 // methods ======================

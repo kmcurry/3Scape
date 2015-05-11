@@ -1,16 +1,16 @@
 <!doctype html>
 <html>
 <head>
-	<title>3Scape Login</title>
+	<title>3Scape - Login</title>
 	<meta name="robots" content="noindex">
-	<meta name="description" content="a place to make and share interactive 3D on the web">
+	<meta name="description" content="Kids learn by making 3D contraptions powered by physics.">
 	<meta name=viewport content="width=device-width, initial-scale=1">
 </head>
 <body background="images/login-signup-background.png">
 
 	<div class="row">
-		<div class="col-sm-4"></div>
-		<div class="col-sm-4" style="padding-top:5%;">
+		<div class="col-xs-2 col-sm-4"></div>
+		<div class="col-xs-8 col-sm-4" style="padding-top:5%;">
 
 		    <center>
 		        <img src="images/logo.png" width="250px" height="200px">
@@ -18,16 +18,16 @@
 		        <h3>make and share <br/>interactive 3D</h3>
 		    </center>
 			<!-- show any messages that come back with authentication -->
-			<% if (message.length > 0) { %>
+			<% if (typeof message != 'undefined' && message.length > 0) { %>
+					<div class="alert alert-info"><%= message %></div>
+				<% } %>
+			<% if (typeof info_message != 'undefined' && info_message.length > 0) { %>
 					<div class="alert alert-info"><%= info_message %></div>
 				<% } %>
-			<% if (info_message.length > 0) { %>
-					<div class="alert alert-info"><%= info_message %></div>
-				<% } %>
-				<% if (error_message.length > 0) { %>
+				<% if (typeof error_message != 'undefined' && error_message.length > 0) { %>
 					<div class="alert alert-danger"><%= error_message %><a href="/forgot">  Forgot Password?</a></div>
 				<% } %>
-				<% if (success_message.length > 0) { %>
+				<% if (typeof success_message != 'undefined' && success_message.length > 0) { %>
 					<div class="alert alert-success"><%= success_message %></div>
 				<% } %>
 
@@ -35,7 +35,7 @@
 			<form action="/login" method="post">
 				<div class="form-group">
 					<label>Email</label>
-					<input type="text" class="form-control" name="email">
+					<input type="email" class="form-control" name="email">
 				</div>
 				<div class="form-group">
 					<label>Password</label>
@@ -46,10 +46,12 @@
 			</form>
 
 			<hr>
-
-			<p class="link-list">Need an account? <a href="/signup">Signup</a> | <a href="/privacy">Privacy Policy</a></p>
-
+			<center>
+				<p><a href="/forgot">Forgot your password?</a></p>
+				<p class="link-list">Need an account? <a href="/signup">Signup</a> | <a href="/privacy">Privacy Policy</a></p>
+			</center>
 		</div>
+		<div class="col-xs-2 col-sm-4"></div>
 </div>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/snappy.css">

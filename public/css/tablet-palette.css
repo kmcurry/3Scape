@@ -1,32 +1,34 @@
+/*
 body{
     box-sizing: border-box;
 }
+*/
 
-.ipad-mini{
+
+.nav-menu {
+/*  font-size: 4em;*/
+  color: #BBBBBB;
+  background: rgba(0,0,0,0.6);
+  text-align: center;
+  margin-left:-8px;
+  padding-top: 10px;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  background-size:contain;
 }
 
-/* --- Palette --- */
-
-.navbar-fixed-bottom{
-    z-index: 50000;
+.navbar-fixed-bottom {
+  height:35px;
+  z-index: 50000;
 }
 
-ul.pans{
-    padding:20px;
-    width:100%;
-    background: #2c6ba4;
-    text-align: center;
-    margin:0;
-    font-size:0;
+.navbar-fixed-top {
+  height:35px;
+  z-index: 50000;
 }
 
-.list-inline > li.pan{
-    padding:0;
-}
-li.pan{
-    width:11.11%;
-    max-width: 120px;
-    padding:0;
+.palette{
+    overflow-y:hidden;
+    overflow-x: scroll;
 }
 
 
@@ -44,143 +46,84 @@ li.pan{
   position: relative;
   width: 95%;
   max-width:100px;
-  background: #fff;
+  background: #54BA56
     display:inline-block;
   -webkit-border-radius:50%;
      -moz-border-radius:50%;
       -ms-border-radius:50%;
        -o-border-radius:50%;
           border-radius:50%;
-} 
-
-.colorwheel{
-    position: relative;
-    width:100%;
-    max-width:120px;
 }
+
+
 
 .shadow-circle_knob {
     position:relative;
     background: rgba(255,255,255,0.4);
     box-shadow: inset 0 0 3px rgba(0,0,0,0.4);
-    border:1px solid #fff;  
+    border:1px solid #fff;
     -webkit-border-radius: 50%;
        -moz-border-radius: 50%;
         -ms-border-radius: 50%;
          -o-border-radius: 50%;
             border-radius: 50%;
-    
 }
 
-span.fa{
-    position:absolute;
-    width:100%;
-    text-align: center;
-    color:#2c6ba4;
-    left:1%;
+.shadow-circle {
+    position: relative;
+    border-radius: 50%;
+    top: 7.5%;
+    left: 7.5%;
+    width: 85%;
+    height: 85%;
+    box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:95%;
+/*    z-index:9985;*/
 }
 
-/*
-.innerdial:active{
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
-}
-*/
 
-.shadow{
-    position:relative;
-    width:80%;
-    height:80%;
-    top:10%;
-    left:10%;
-    border-radius:50%;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
-}
 
-.shadow:active{
+/*-- Scroll --*/
+
+.scroll-right, .scroll-left{
+    font-size:40px;
+    position:fixed;
+    width:5%;
+    height:inherit;
+    color:#fff;
+    line-height:1;
+    background: #333;
+    border:none;
+    z-index:10000000;
+}
+.scroll-right:focus, .scroll-left:focus{
+    border:none;
     box-shadow: none;
+    outline: none;
 }
 
-.colorwheel svg{
-    vertical-align: -40%;
+.scroll-active{
+    color:#9ed6ec;
 }
 
-.meter-outer {
-  width: 100%;
-    max-width: 100px;
-  position:absolute;
-    bottom:0;
-  overflow: hidden;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
-  border-radius: 50%;
-    background: #fff;
+.scroll-active:active{ /* on .active b/c I don't want grayed out ones to highlight */
+    margin-top:1px;
 }
 
-#meter-inner {
-    position: absolute;
-    bottom:0;
-    width: 100%;
-    max-width: 100px;
-    background-color: #ccc;
-    background-image: linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 75%, gray), 
-    linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 75%, gray);
-    background-size:10px 10px;
-    background-position:0 0, 5px 5px;
-    opacity:0;
+.scroll-active:hover{
+   color:#5fcaf5;
 }
 
-.shadow-circle { 
-position: relative;
- border-radius: 50%;
- top: 7.5%;
- left: 7.5%;
- width: 85%;
- height: 85%;
- -webkit-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.75);
- -moz-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.75);
- box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.75);
- background-repeat: no-repeat;
- background-position: center;
-    z-index:9985;
+.scroll-right{
+    right:0px;
 }
 
-.shadow-circle:active {
--webkit-box-shadow: none;
--moz-box-shadow: none;
-box-shadow: none;
+.scroll-left{
+    left:0px;
 }
 
-.spin {
- background-image: url("../images/spin-rotate.png");
- background-size: 80%;
-}
-
-.orbit {
- background-image: url("../images/orbit.png");
- background-size: 85%;
-}
-
-.bounce {
- background-image: url("../images/bounce.png");
- background-size: 75%;
-}
-
-.collide {
- background-image: url("../images/collide.png");
- background-size: 88%;
-}
-
-.dive-surface {
- background-image: url("../images/dive-surface.png");
- background-size: 88%;
-}
-
-.define-a-path {
- background-image: url("../images/define-a-path.png");
- background-size: 85%;
-}
 
 
 
@@ -199,5 +142,3 @@ only screen and (min-resolution: 2dppx) and (max-device-width: 1024px) and (orie
         max-height:90px;
     }
 }
-
-

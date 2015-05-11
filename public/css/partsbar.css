@@ -1,0 +1,52 @@
+
+
+
+
+
+
+
+
+
+
+
+
+/*-- slide button ---*/
+
+/*
+button.view-parts{
+    position:relative;
+    width:100%;
+    font-size:20px;
+    color:#fff;
+    background:none;
+    border:none;
+}
+*/
+
+
+
+
+
+
+
+/* --------- Animate Out After Page Load ------------ */
+
+
+
+/** Retina iPad **/
+/*
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (-moz-min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (-o-min-device-pixel-ratio: 2/1) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (min-resolution: 192dpi) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (min-resolution: 2dppx) and (max-device-width: 1024px) and (orientation: landscape){
+    .nav-logo {
+        width:95%;
+        max-width:90px;
+        max-height:90px;
+    }
+}
+*/
+

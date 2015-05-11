@@ -3,10 +3,8 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   var Creator = require('../../../app/models/creator');
   var Scape = require('../../../app/models/scape');
   var express = require('express');
-  var bodyParser = require('body-parser');
-
-  //var app = express();
-  app.use(bodyParser.urlencoded({extended: true}));
+  var mongoose = require('mongoose');
+  var stripe = require('stripe')(config.payment.secKey);
 
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
@@ -95,6 +93,156 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     res.redirect('login');
   });
 
+  app.post('/auth/new', function (req, res) {
+    console.log("Welcome new 3Scaper!");
+
+    var striper = req.body;
+    striper = striper.data.object;
+    console.log(striper.email);
+
+
+    // find a user whose email is the same as the forms email
+    // we are checking to see if the user trying to login already exists
+    Creator.findOne({ 'email' :  striper.email }, function(err, user) {
+        // if there are any errors, return the error
+        if (err)
+          res.status(200).send("Error");
+
+        // check to see if theres already a user with that email
+        if (user) {
+            console.log("3Scaper already exists");
+            res.status(200).send("3Scaper already exists");
+        } else {
+
+            // if there is no user with that email
+            // create the user
+            var new3Scaper            = new Creator();
+
+            var tempPass = crypto.randomBytes(8).toString('hex');
+
+            // set the user's local credentials
+            new3Scaper.email    = striper.email;
+            new3Scaper.name     = striper.email;
+            new3Scaper.password = new3Scaper.generateHash(tempPass);
+
+            // save the user
+            new3Scaper.save(function(err) {
+                if (err)
+                    throw err;
+            });
+
+            // email
+            if (config.email.smtpUser) {
+              console.log("Sending welcome mailer.");
+              utilities.emailer.send({
+                to: new3Scaper.email,
+                tempPass: tempPass,
+                templateId: config.email.welcome
+              });
+            }
+
+            res.sendStatus(201);
+        }
+
+    });
+
+  });
+
+  app.post("/new", function (req, res) {
+    var scapeId = "";
+
+    if (req.user) {
+      var creator = req.user;
+
+      console.log("Saving a new 3Scape");
+
+      var scape = new Scape();
+      scape.creator = creator.name;
+
+      scape.save(function(err) {
+        if (err) console.log("error saving scape: " + err);
+      });
+
+
+      creator.scapes.push(scape._id);
+
+      creator.save(function(err) {
+        if (err) console.log("error saving creator: " + err);
+      });
+
+      scapeId = scape._id;
+
+    }
+
+    res.json(scapeId);
+
+  });
+
+  app.post("/payment", function(req, res, next) {
+    console.log("Verifying payment for: " + req.user.email);
+
+    stripe.customers.create({
+      source: req.body.stripeToken, // obtained with Stripe.js
+      plan: config.payment.plan,
+      email: req.user.email
+    }, function(err, customer) {
+      if (err || !customer) {
+        console.log("Payment verification error: " + err.message);
+        req.flash('signupMessage', 'There was a problem with your payment. ' + err);
+        return res.render('signup');
+      } else {
+        console.log("authenticating...");
+
+        if (req.isAuthenticated()) {
+          req.user.verified = true;
+          req.user.save();
+          return res.redirect('/');
+        }
+      }
+    });
+
+  });
+
+  app.get("/register", function(req, res) {
+    res.render("dialogs/registration");
+  });
+
+  app.post("/register", function(req, res, next) {
+
+    passport.authenticate('local-signup', function (err, creator, info) {
+      if (err) {
+        console.log(err.message);
+        req.flash('signupMessage', 'There was a problem logging you in. ' + err);
+        return next(err);
+      }
+
+      if (!creator) {
+        console.log("NO CREATOR");
+        return res.render('login', {
+          message: "You already have an account. Please log in."
+          } ); // redirect fails in other callbacks
+                                        // with 'cannot set headers after they're sent' - KMC
+      }
+
+
+      req.logIn(creator, function(err) {
+        if (err) {
+          console.log("There was a problem logging you in");
+          return next(err);
+        }
+        // email
+        if (config.email.smtpUser) {
+          console.log("Sending welcome mailer.");
+          utilities.emailer.send({
+            to: creator.email,
+            templateId: config.email.welcome
+          });
+        }
+        return res.redirect('/');
+      });
+    })(req, res, next);
+  });
+
   // RESET
 
   app.get('/reset/:token', function(req, res) {
@@ -156,39 +304,6 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
       });
     });
 
-  app.post("/new", function (req, res) {
-    var scapeId = "";
-
-    if (req.user) {
-      var creator = req.user;
-
-      console.log("Saving a new 3Scape");
-
-      var scape = new Scape();
-      scape.creator = creator.name;
-
-      scape.save(function(err) {
-        if (err) console.log("error saving scape: " + err);
-      });
-
-
-      creator.scapes.push(scape._id);
-
-      creator.save(function(err) {
-        if (err) console.log("error saving creator: " + err);
-      });
-
-      scapeId = scape._id;
-
-    }
-
-    res.json(scapeId);
-
-  });
-
-
-  var mongoose = require('mongoose');
-
   app.post("/save", function(req, res) {
     if (req.user) {
       console.log("saving scape: " + req.body.scapeId);
@@ -226,9 +341,6 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   //process the signup form
   app.post('/signup', function (req, res, next) {
 
-
-
-    var stripe = require('stripe')(config.payment.secKey);
 
     stripe.customers.create({
       source: req.body.stripeToken, // obtained with Stripe.js

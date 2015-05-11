@@ -14,23 +14,15 @@ var bridgeworks = null;
 
 // functions are organized by alpha until refactored
 
-function applyColor(hex)
-{
-    if (g_selectedModel) {
-        var r = parseInt(hex.substring(0, 2), 16) / 256;
-        var g = parseInt(hex.substring(2, 4), 16) / 256;
-        var b = parseInt(hex.substring(4, 6), 16) / 256;
-        var color = g_selectedModel.color.getValueDirect();
-        g_selectedModel.color.setValueDirect(r, g, b, color.a);
-    }
-}
+function autoSave(){
 
-function autoSaveScene(){
-  serializedScene = "";
+  if (true) {
+    serializedScene = "";
 
-  var command = "<Serialize target='Root'/>";
-  bridgeworks.updateScene(command);
-  localStorage.setItem("autoSave",serializedScene);
+    var command = "<Serialize target='Root'/>";
+    bridgeworks.updateScene(command);
+    localStorage.setItem("autoSave",serializedScene);
+  }
 }
 
 function copy()
@@ -79,7 +71,9 @@ function new3Scape() {
     bridgeworks.contentDir = '/BwContent';
     bridgeworks.onLoadModified();
     bridgeworks.updateScene('grid-50.xml');
-    autoSaveScene();
+
+    // QTP: post to server right away or wait until an autosave event?
+    /*
     $.ajax({
       url: 'new',
       type: 'POST',
@@ -87,6 +81,8 @@ function new3Scape() {
       data: JSON.stringify({scape:localStorage.getItem('autoSave')}),
       success: updateLocalStorage
     });
+    window.location.pathname = "/";
+    */
 }
 
 function updateLocalStorage(scapeId) {
@@ -110,6 +106,9 @@ var onHoldFunction = function(id, method, time) {
 }
 
 function save3Scape() {
+
+  autoSave();
+
   $.ajax({
     url: 'save',
     type: 'POST',
@@ -139,10 +138,7 @@ function start3Scape(scape, scapeId) {
     }
   }
 
-  addContextMenu();
-  addEventHandlers();
-
-  var saveInterval = setInterval(autoSaveScene, 10000);
+  //var saveInterval = setInterval(autoSave, 30000);
 
   window.addEventListener("beforeunload", save3Scape);
 
@@ -164,7 +160,12 @@ function paste()
 // callback for loadFile
 function processModelXML(name, copy) {
 
-    var model = this.responseXML.getElementsByTagName("Model")[0];
+    var model = this.responseXML.getElementsByTagName("Model")[0] ||
+                this.responseXML.getElementsByTagName("Box")[0] ||
+                this.responseXML.getElementsByTagName("Ball")[0] ||
+                this.responseXML.getElementsByTagName("Beam")[0] ||
+                this.responseXML.getElementsByTagName("Plank")[0] ||
+                this.responseXML.getElementsByTagName("Wall")[0];
 
     var n = model.attributes["name"];
     n.value = name;
@@ -177,6 +178,8 @@ function processModelXML(name, copy) {
     g_selectedModel = bridgeworks.registry.find(name);
 
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
+    g_selectedModel.getAttribute("detectObstruction").setValueDirect(true);
+
 
     if (copy) {
         // TODO: g_copyModel.copyModel();
@@ -213,12 +216,8 @@ function processModelXML(name, copy) {
                                 pointWorld.z - normalWorld.z);
     g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);
 
-    var physics = bridgeworks.get("PhysicsSimulator");
-    if (physics && g_selectedModel) {
-        physics.bodies.push_back(g_selectedModel.getAttribute("name"));
-    }
-
     $(".menu").removeClass("active");
+
 }
 
 
@@ -230,44 +229,7 @@ function reset() {
     g_objectInspector = null;
 
     g_selectedModel = null;
+    g_selectPointModel = null;
 
-    $("#model-menu").toggleClass('active', false);
 
-}
-
-function roam(name) {
-    if (!name) {
-        name = g_selectedModel.name.getValueDirect().join("");
-    }
-
-    if (g_selectedModel.moveable.getValueDirect()) {
-
-        var cmd = "\<AnimalMover name='" + name + "_roam' target='" + name + "' linearSpeed='1' angularSpeed='20'/>";
-        console.log(cmd);
-        bridgeworks.updateScene(cmd);
-    }
-}
-
-function setModelScale(value) {
-
-    if (g_selectedModel) {
-        g_selectedModel.scale.setValueDirect(value, value, value);
-    }
-}
-
-function spinZ() {
-    if (!g_selectedModel)
-        return false;
-
-    var name = g_selectedModel.name.getValueDirect().join("");
-
-    var xml = "<AutoInterpolate target='" + name + "'>";
-    xml += "<rotation x='0' y='0' z='360'/>";
-    xml += "</AutoInterpolate>";
-
-    console.log(xml);
-
-    bridgeworks.updateScene(xml);
-
-    return true;
 }

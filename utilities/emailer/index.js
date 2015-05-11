@@ -19,6 +19,8 @@ function send(sendOptions) {
     email = new sendgridInstance.Email(emailParameters),
     context = this;
 
+    email.addSubstitution("-tempPass-", sendOptions.tempPass)
+
     email.addFilter("templates", "enable", 1);
     email.addFilter("templates", "template_id", sendOptions.templateId)
 

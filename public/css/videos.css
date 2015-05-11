@@ -1,0 +1,87 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face {
+  font-family: 'robotolight';
+  src: url('../fonts/roboto-light-webfont.eot');
+  src: url('../fonts/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/roboto-light-webfont.woff2') format('woff2'),
+       url('../fonts/roboto-light-webfont.woff') format('woff'),
+       url('../fonts/roboto-light-webfont.ttf') format('truetype'),
+       url('../fonts/roboto-light-webfont.svg#robotolight') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'robotobold';
+  src: url('../fonts/roboto-bold-webfont.eot');
+  src: url('../fonts/roboto-bold-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/roboto-bold-webfont.woff2') format('woff2'),
+       url('../fonts/roboto-bold-webfont.woff') format('woff'),
+       url('../fonts/roboto-bold-webfont.ttf') format('truetype'),
+       url('../fonts/roboto-bold-webfont.svg#robotobold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+body {
+  background-image: url("../images/login-signup-background.png")
+}
+
+
+.container {
+  padding-bottom: 15px;
+  -moz-box-shadow: 3px 3px 5px 6px #ccc;
+   -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+   box-shadow: 3px 3px 5px 6px #ccc;
+}
+
+.row {
+  margin: 0 auto;
+  width: 100%;
+}
+
+
+.banner {
+  background-color: white;
+  width: 100%;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+}
+
+.video {
+  background-color: white;
+  margin: 0 auto;
+  padding-top: 5%;
+}
+
+.video iframe {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10%;
+}
+
+.video h1 {
+  font-family: 'robotobold';
+  text-align: center;
+  color: #1C75BB;
+  font-size: 72px;
+  padding-bottom: 2%;
+}
+
+.youtube-link {
+text-align: center;
+background-color: #57B955;
+height: 150px;
+padding-right: 2%;
+}
+
+.youtube-link h2 {
+  font-family: 'robotolight';
+  color: white;
+}

@@ -10,8 +10,10 @@
 *
 */
 $(document).ready(function(){
+
     var color_wheel_width = $(".colorwheel").css("width");
     var color_wheel_size = parseInt(color_wheel_width);
+    /*
     $( window ).resize(function(){
         console.log("css width " + $(".dial").css("width"));
         color_wheel_width = $(".dial").css("width");
@@ -21,8 +23,9 @@ $(document).ready(function(){
         $(".colorwheel").empty().css({'height':color_wheel_size, 'width': color_wheel_size});
         cw = Raphael.colorwheel($(".colorwheel")[0], color_wheel_size, 15);
     });
-    
-            
+    */
+
+
 Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   var canvas,
       current_color,
@@ -42,8 +45,8 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
       offset,
       padding = 2,
       sdim; // holds the dimensions for the saturation square
-    
-      
+
+
 
 
   function point(x, y){ return {x:x, y:y};}
@@ -355,19 +358,19 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   }
 
   return create(target, color_wheel_size);
-    
-};   
+
+};
      var cw = Raphael.colorwheel($(".colorwheel")[0], color_wheel_size, 15);
-    
+
     cw.onchange(function(color){
         var rawColor = cw.color(),
-            rColor = Math.round(rawColor.r),
-            gColor = Math.round(rawColor.g),
-            bColor = Math.round(rawColor.b),
-            thisColor = rColor + ", " + gColor + ", " + bColor; 
+            rColor = rawColor.r/255,
+            gColor = rawColor.g/255,
+            bColor = rawColor.b/255,
+            thisColor = rColor + ", " + gColor + ", " + bColor;
         console.log("rgb(" + thisColor + ")");
+
+        if (g_selectedModel) g_selectedModel.color.setValueDirect(rColor, gColor, bColor, 1);
     });
 
-}); 
-
-
+});

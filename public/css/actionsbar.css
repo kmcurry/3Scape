@@ -1,0 +1,454 @@
+/*------------------------------- Layout --------------------------------------
+* Top Bar / .navbar-fixed-top
+  + Parts Bar Row / .row .parts-bar
+    - Logo Column / .xs-col-1 .logo
+    - Parts Column / .xs-col-10 .parts
+      - Parts List / ul .parts-list .list-inline
+        - Part / li .part
+          - Part Button / button .parts-bttn .[partname]
+    - Hamburger Column / .xs-col-1 .nav-menu
+      - Dropdown Menu / ul .dropdown-menu .shape
+* Bottom Bar / .navbar-fixed-bottom
+  + Actions Bar Row / .row .actions-bar
+    - Actions Column / .col-xs-12 .palette
+      - Actions List / ul .actions-list .list-inline
+        - Action Element / li .action
+          - Action Dial Wrapper / .dial
+            - Action Dial / .inner-dial
+              - Action Button / .shadow-circle .[name of action]
+      - Scroll Buttons / button .scroll .scroll-[direction]
+-----------------------------------------------------------------------------*/
+
+
+/*---------------------------------- Top ------------------------------------*/
+
+/*-- Top Bar --*/
+
+.navbar-fixed-top {
+  height: 35px;
+  z-index: 50000;
+  position: absolute;
+  width: 100%;
+}
+
+/*-- Parts Bar Row --*/
+
+.parts-bar {
+  position: relative;
+  -webkit-transition: margin-top 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+          transition: margin-top 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+  -webkit-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+     -moz-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+       -o-animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+          animation: Close-Top-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+}
+
+.navbar-fixed-top:focus .parts-bar {
+  margin-top: 0;
+}
+
+
+/*-- Logo Column --*/
+
+.logo {
+  background: rgba(0,0,0,0.6);
+  margin-right: -8px;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  background-size: contain;
+  background-image: url('/images/logo-3S.png');
+  background-repeat: no-repeat;
+  min-height: 32px;
+}
+
+.logo,
+.parts,
+.nav-menu {
+  position: relative;
+  top: 0;
+  -webkit-transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+          transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+
+/*-- Hamburger Menu Column --*/
+
+.nav-menu {
+  color: #BBBBBB;
+  background: rgba(0,0,0,0.6);
+  text-align: center;
+  margin-left: -8px;
+  padding-top: 10px;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  background-size: contain;
+}
+
+/*-- Dropdown Menu --*/
+
+ul.dropdown-menu {
+  background-color: #46A8D2;
+  color: white;
+  font-family: 'robotobold';
+}
+
+ul.dropdown-menu h3 {
+  text-transform: uppercase;
+  font-weight:normal;
+  font-size:1em;
+  text-indent: 15px;
+}
+
+ul.dropdown-menu li a {
+  font-family: 'robotolight';
+  margin-left: 5px;
+  color: white;
+}
+
+ul.dropdown-menu li a:hover {
+ color: #1C75BB;
+}
+
+ul.dropdown-menu li a:active {
+  color: rgba(39, 63, 132, 0.7);
+}
+
+.shape.fa {
+  margin-left: 6%;
+}
+
+.shape.fa:not(.fa-2x){
+  text-indent:10px;
+}
+
+
+/*-- Parts Column --*/
+
+.parts {
+  /* Remove white space between inline block elements. Can override on children. */
+  font-size: 0;
+}
+
+/*-- Parts List --*/
+
+ul.parts-list {
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  text-align: center;
+  margin: 0;
+  font-size: 0;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+}
+
+/*-- Part --*/
+
+.list-inline > li.part {
+  padding: 0;
+}
+
+li.part {
+  width: 12%;
+  max-width: 110px;
+  text-align: center;
+}
+
+
+/*-- Part Button --*/
+
+button.parts-btn {
+  width: 80%;
+  max-width: 100px;
+  min-width: 45px;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cube    { background: url("../images/CubeButton.png");    }
+.sphere  { background: url("../images/SphereButton.png");  }
+.pyramid { background: url("../images/PyramidButton.png"); }
+.gear    { background: url("../images/GearButton.png");    }
+.plank   { background: url("../images/PlankButton.png");   }
+.wall    { background: url("../images/WallButton.png");    }
+.beam    { background: url("../images/BeamButton.png");    }
+.ring    { background: url("../images/RingButton.png");    }
+.wedge   { background: url("../images/WedgeButton.png");   }
+.tube    { background: url("../images/TubeButton.png");    }
+.elbow   { background: url("../images/ElbowButton.png");   }
+
+
+
+/*------------------------------- Bottom  -----------------------------------*/
+
+/*-- Bottom Bar --*/
+
+.navbar-fixed-bottom {
+  height: 35px;
+  z-index: 50000;
+}
+
+/*-- Actions Bar Row --*/
+
+.row.actions-bar {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.actions-bar {
+  position: fixed;
+  bottom: 0;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  background: rgba(0,0,0,0.6);
+  width: 100%;
+  -webkit-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+     -moz-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+       -o-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+          animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+}
+
+/*-- Actions Bar Column --*/
+
+.palette {
+  bottom: 0;
+  width: 90%;
+  margin: 0 auto;
+  height: 100px;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  -webkit-transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+          transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+/*-- Actions Bar List --*/
+
+ul.actions-list {
+  padding-bottom: 8px;
+  min-width: 100%;
+  text-align: center;
+  margin: 0;
+  font-size: 0;
+  white-space: nowrap;
+  float: left;
+}
+
+/*-- Actions Bar Elements --*/
+
+.action {
+  font-size: 0;
+  /* ^^ Removes white-space between inline block elements.*/
+}
+
+.list-inline > li.action {
+  padding: 0;
+}
+
+li.action {
+  width: 11.11%;
+  max-width: 100px;
+  padding: 0;
+  min-width: 70px;
+}
+
+/*-- Action Dial Wrapper --*/
+
+.dial {
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+/*-- Action Dial --*/
+
+.innerdial {
+  position: relative;
+  width: 95%;
+  max-width: 100px;
+  background: #54BA56
+  display: inline-block;
+  border-radius: 50%;
+}
+
+/*-- Actions Buttons --*/
+
+.colorwheel {
+  position: relative;
+  width: 100%;
+  max-width: 120px;
+}
+
+.colorwheel svg {
+  vertical-align: -40%;
+}
+
+.shadow-circle_knob { /* class is dynamically added by jogdial.js */
+  position: relative;
+  background: rgba(255,255,255,0.4);
+  box-shadow: inset 0 0 3px rgba(0,0,0,0.4);
+  border: 1px solid #fff;
+  border-radius: 50%;
+}
+
+.shadow-circle {
+  position: relative;
+  border-radius: 50%;
+  top: 7.5%;
+  left: 7.5%;
+  width: 85%;
+  height: 85%;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 95%;
+}
+
+.shadow-circle:active {
+  background-position: center bottom;
+}
+
+.spin          { background-image: url("../images/spin.png");          }
+.orbit         { background-image: url("#");         }
+.bounce        { background-image: url("#");        }
+.collide       { background-image: url("../images/collide.png");       }
+.roam          { background-image: url("../images/roam.png");          }
+.dive-surface  { background-image: url("#");  }
+.define-a-path { background-image: url("../images/define-a-path.png"); }
+.fade-in-out   { background-image: url("../images/fade-in-out.png");   }
+.grow-shrink   { background-image: url("../images/grow-shrink.png");   }
+.opacity       { background-image: url("../images/eye.png");           }
+.mass          { background-image: url("../images/mass.png"); }
+
+
+/*-- Scroll Buttons --*/
+
+.scroll-right,
+.scroll-left {
+  font-size: 40px;
+  position: fixed;
+  width: 5%;
+  height: inherit;
+  color: #fff;
+  line-height: 1;
+  background: #333;
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+  border: none;
+  z-index: 10000000;
+  bottom: 0;
+  -webkit-transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+          transition: all 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+  -webkit-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+     -moz-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+       -o-animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+          animation: Close-Bottom-Drawer 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94) forwards 3s;
+}
+
+.scroll-right:focus,
+.scroll-left:focus {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.scroll-active {
+  color: #9ed6ec;
+}
+
+.scroll-active:hover {
+  color: #5fcaf5;
+}
+
+.scroll-right {
+  right: 0px;
+}
+
+.scroll-left {
+  left: 0px;
+}
+
+
+/*-- Animations --*/
+
+.navbar-fixed-bottom.hover:hover .palette {
+  bottom: 150px;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
+}
+
+.navbar-fixed-bottom.hover:hover .scroll-left,
+.navbar-fixed-bottom.hover:hover .scroll-right {
+  -webkit-transform: translate(0px,-150px);
+      -ms-transform: translate(0px,-150px);
+          transform: translate(0px,-150px);
+}
+
+
+.navbar-fixed-top.hover:hover .logo,
+.navbar-fixed-top.hover:hover .parts,
+.navbar-fixed-top.hover:hover .nav-menu {
+    top: 100px;
+}
+
+
+/*-- Close Bottom Drawer --*/
+@-webkit-keyframes Close-Bottom-Drawer {
+  0%   { bottom:      0; }
+  100% { bottom: -150px; }
+}
+@-moz-keyframes Close-Bottom-Drawer {
+  0%   { bottom:      0; }
+  100% { bottom: -150px; }
+}
+@-o-keyframes Close-Bottom-Drawer {
+  0%   { bottom:      0; }
+  100% { bottom: -150px; }
+}
+@keyframes Close-Bottom-Drawer {
+  0%   { bottom:      0; }
+  100% { bottom: -150px; }
+}
+
+/*-- Close Top Drawer --*/
+@-webkit-keyframes Close-Top-Drawer {
+  0%   { top:      0; }
+  100% { top: -100px; }
+}
+@-moz-keyframes Close-Top-Drawer {
+  0%   { top:      0; }
+  100% { top: -100px; }
+}
+@-o-keyframes Close-Top-Drawer {
+  0%   { top:      0; }
+  100% { top: -100px; }
+}
+@keyframes Close-Top-Drawer {
+  0%   { top:      0; }
+  100% { top: -100px; }
+}
+
+
+/*-- Media Queries --*/
+
+
+/*-- Retina iPad --*/
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (-moz-min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (-o-min-device-pixel-ratio: 2/1) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (min-resolution: 192dpi) and (max-device-width: 1024px) and (orientation: landscape),
+only screen and (min-resolution: 2dppx) and (max-device-width: 1024px) and (orientation: landscape) {
+  .innerdial, #meter-inner, .meter-outer, .colorwheel {
+    width: 95%;
+    max-width: 90px;
+    max-height: 90px;
+  }
+  .nav-logo {
+    width: 95%;
+    max-width: 90px;
+    max-height: 90px;
+  }
+}

@@ -1,24 +1,5 @@
-window.onkeydown = handleKey;
 
-function addEventHandlers() {
-  var bwcontainer = document.getElementById("BwContainer");
-  if (bwcontainer.addEventListener) {
-    console.log("adding mouse handlers");
-    bwcontainer.addEventListener("onclick", handleMouse);
-    bwcontainer.addEventListener("onmousedown", handleMouse);
-    bwcontainer.addEventListener("ondblclick", handleMouse);
-    bwcontainer.addEventListener("onclick", handleMouse);
-    bwcontainer.addEventListener("onmousemove", handleMouse);
-
-  } else {
-    bwcontainer.attachEvent("onclick", handleMouse);
-    bwcontainer.attachEvent("onmousedown", handleMouse);
-    bwcontainer.attachEvent("ondblclick", handleMouse);
-    bwcontainer.attachEvent("onclick", handleMouse);
-    bwcontainer.attachEvent("onmousemove", handleMouse);
-  }
-
-}
+var g_capture = false;
 
 function addKeyEvents()
 {
@@ -66,14 +47,18 @@ function addKeyEvents()
 // continues when the cursor moves out of the Bridgeworks frame.
 function handleDocMove(e)
 {
-  console.log("movin'");
-    if (capture)
-        bridgeworks.handleEvent(e);
+  if (g_capture) {
+    var evt=window.event || e //equalize event object
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+
+    bridgeworks.handleEvent(e);
+  }
 }
 
 function handleMouse(e)
 {
-  if (!bridgeworks)
+  if (bridgeworks == "undefined" || bridgeworks == null)
         return;
 
     if (!g_sceneInspector) {
@@ -90,12 +75,12 @@ function handleMouse(e)
 
         case "mousedown":
             {
-                capture = true;
+              g_capture = true;
             }
             break;
         case "mouseup":
             {
-                capture = false;
+              g_capture = false;
             }
             break;
         case "click":
@@ -130,26 +115,6 @@ function handleMouse(e)
             }
         break;
 
-        case "dblclick":
-          {
-            /*
-            if (g_selectedModel) {
-              var name = g_selectedModel.name.getValueDirect().join("");
-              var pointWorld = bridgeworks.selector.pointWorld.getValueDirect();
-              var cmd = "";
-              if (e.metaKey || e.ctrlKey) {
-                  cmd = "\<AutoInterpolate target='" + name + "'>";
-                  cmd += "\<position x='" + pointWorld.x + "' y='" + pointWorld.y + "' z='" + pointWorld.z + "'/>"
-                  cmd += "\</AutoInterpolate>";
-              }
-              else {
-                  cmd = "\<Locate target='" + name + "'/>";
-              }
-              bridgeworks.updateScene(cmd);
-            }
-            */
-          }
-        break;
     }
 }
 
@@ -196,7 +161,6 @@ function selectPoint() {
 
 function handleKey(e)
 {
-
     bridgeworks.handleEvent(e);
 
     if (!g_sceneInspector) {
@@ -207,6 +171,8 @@ function handleKey(e)
     if (e.key !== undefined) code = e.key;
     else if (e.keyIdentifier !== undefined) code = e.keyIdentifier;
 
+    console.log(code);
+
     switch (code) {
         case 'C'.charCodeAt(0):
         case 'c':
@@ -216,6 +182,34 @@ function handleKey(e)
                     e.preventDefault();
                     copy();
                 }      // c
+            }
+            break;
+        case 'D'.charCodeAt(0):
+        case 'd':
+        case "U+0044":
+            {
+                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(-10,0,0);
+            }
+            break;
+        case 'A'.charCodeAt(0):
+        case 'a':
+        case "U+0041":
+            {
+                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(10,0,0);
+            }
+            break;
+        case 'S'.charCodeAt(0):
+        case 's':
+        case "U+0053":
+            {
+                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(0,0,-10);
+            }
+            break;
+        case 'W'.charCodeAt(0):
+        case 'w':
+        case "U+0057":
+            {
+                g_sceneInspector.viewRelativeTranslationDelta.setValueDirect(0,0,10);
             }
             break;
         case 'P'.charCodeAt(0):
@@ -245,19 +239,30 @@ function handleKey(e)
           {
             cut();
             e.preventDefault();
-            e.stopPropogation();
+            e.stopPropagation();
           }
           break;
         case "Right": //right
+          if (e.shiftKey) {
+            rotateRight();
+          } else {
             objectRight(1);
+          }
             break;
 
         case "Left": //left
-            objectLeft();
+          if (e.shiftKey) {
+            rotateLeft();
+          } else {
+              objectLeft();
+            }
             break;
 
         case "Down": //down
-            if (e.shiftKey || e.ctrlKey) {
+          if (e.shiftKey) {
+            rotateDown();
+          }
+            else if (e.metaKey || e.ctrlKey) {
                 objectDown(1);
             }
             else {
@@ -265,7 +270,10 @@ function handleKey(e)
             }
             break;
         case "Up": //up
-            if (e.shiftKey || e.ctrlKey) {
+          if (e.shiftKey) {
+            rotateUp();
+          }
+          else if (e.metaKey || e.ctrlKey) {
                 objectUp(1);
             }
             else {
@@ -297,9 +305,12 @@ else if (document.addEventListener) //WC3 browsers
 
 function handleWheel(e) {
 
+
     var evt=window.event || e //equalize event object
     evt.preventDefault();
     evt.stopImmediatePropagation();
+
+
 
     var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta //check for detail first so Opera uses that instead of wheelDelta
 
@@ -307,6 +318,8 @@ function handleWheel(e) {
       if (delta < 0) objectForward();
       else objectBackward();
 
+    } else if (e.metaKey || e.ctrlKey) {
+      scalePart(delta/1000);
     } else {
       if (delta > 0) zoomOut();
       else zoomIn();

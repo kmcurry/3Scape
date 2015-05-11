@@ -2,27 +2,23 @@
 
 // set up ======================================================================
 // get all the tools we need
-var express  = require('express');
-var app      = express();
 
-var compression = require('compression');
-// compress all requests
-app.use(compression());
 
-var mongoose = require('mongoose'),
-    logger = require('morgan'),
-    cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser'),
-    passport = require('passport'),
-    flash = require('connect-flash'),
-    session = require('express-session'),
-    methodOverride = require('method-override'),
-    mongoStore = require('connect-mongodb'),
-    LocalStrategy = require('passport-local').Strategy,
-    bcrypt = require('bcrypt-nodejs'),
-    async = require('async'),
-    crypto = require('crypto');
-
+var mongoose        = require('mongoose'),
+    logger          = require('morgan'),
+    cookieParser    = require('cookie-parser'),
+    passport        = require('passport'),
+    flash           = require('connect-flash'),
+    session         = require('express-session'),
+    methodOverride  = require('method-override'),
+    mongoStore      = require('connect-mongodb'),
+    LocalStrategy   = require('passport-local').Strategy,
+    bcrypt          = require('bcrypt-nodejs'),
+    async           = require('async'),
+    crypto          = require('crypto'),
+    bodyParser      = require('body-parser'),
+    compression     = require('compression'),
+    express         = require('express');
 
 // configuration ===============================================================
 var config = require('./configLoader')(process.env.NODE_ENV || "local") //Environment
@@ -33,11 +29,16 @@ require('./config/passport')(passport); // pass passport for configuration
 
 var utilities = require('./utilities')(config);
 
-// set up our express application
+var app      = express();
+
+
+
+app.use(compression());
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(logger('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser.urlencoded({extended: true})); // get information from html forms
-//app.use(methodOverride()); // simulate DELETE and PUT
 
 app.use(express.static(config.publicPath)); 	// set the static files location /public/img will be /img for users
 
@@ -52,7 +53,6 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 require('./app/routes/auth/index.js')(app, async, config, crypto, passport, utilities);
 require('./app/routes.js')(app, config);
-
 
 
 
