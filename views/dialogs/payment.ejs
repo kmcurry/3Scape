@@ -1,6 +1,33 @@
 <style>
 
-.modal-body {
+.modal-content {
+font-family: 'robotolight';
+}
+
+.modal-title {
+font-family: 'robotobold';
+}
+
+p.cancel-text {
+color: grey;
+font-size: 10px;
+padding-left: 3%;
+padding-right: 3%;
+margin-top: 25%;
+text-align: center;
+}
+
+p.explanation-text {
+text-align: center;
+}
+
+.stripe-logo img {
+display: block;
+margin: 0 auto;
+padding-top: 16%;
+}
+
+.form-group label {
 
 }
 
@@ -11,15 +38,16 @@
   <div class="modal-content">
     <form action="/payment" method="POST" id="payment-form">
       <div class="modal-header">
-          <h4 class="modal-title">Gain Unlimited Access to everything 3Scape offers!</h4>
+          <img src="../images/logo.png" height="100px" width="110px"/>
+          <h3 class="modal-title">Gain Unlimited Access to 3Scape!</h3>
       </div>
 
       <div class="modal-body">
 
-      <p>It's awesome to see you again and we'd like to continue providing the 3Scape experience to you! Because of this,
-      we want to give you 30 days of access for FREE!</p>
-      <p>All you need to do is enter some credit card information below. This will immediately start your 30-day FREE trial.</p>
-      <p>$15 a year is all it takes to gain unlimited access to everything 3Scape has to offer!.</p>
+      <p class="explanation-text">Hello again! It's great to see you come back! We'd like to offer you a FREE 30 day trial of 3Scape!
+      All you need to do is enter your credit card information below. This will immediately start your 30-day FREE trial.</p>
+
+
 
         <div class="form-group">
           <div class="col-xs-7 col-sm-7 col-md-7">
@@ -33,6 +61,8 @@
           </div>
         </div>
 
+
+
         <div class="form-group">
           <div class="col-xs-3 col-sm-3 col-md-3">
             <label>Expiration</label>
@@ -44,24 +74,29 @@
             <input class="form-control" data-stripe="exp-year" type="text" maxlength="4" size="5" placeholder="2022"/>
           </div>
 
-          <div class="col-xs-5 col-sm-5 col-md-5">
-            <img style="padding-top:20%;" src="images/stripe.png" title="Your payment is secure with Stripe"/>
+          <div class="col-xs-5 col-sm-5 col-md-5 stripe-logo">
+            <img src="images/stripe.png" title="Your payment is secure with Stripe"/>
           </div>
         </div>
+
+        <div class="row">
+          <p class="cancel-text">Only at the end of the trial will your card be charged $15. You can cancel your free trial at any time.
+          Cancelling your trial will cause your card to not be charged.</p>
+        </div>
+
       </div>
 
-        <p>Only at the end of the trial will your card be charged. You can cancel your free trial at any time. Cancelling your trial will cause your card to not be charged at the end of the trial period.</p>
 
       <div class="modal-footer">
-        <div class="col-sm-4">
-          <a href="/opt-out">I'd rather not</a>
-        </div>
-        <div class="col-sm-5"></div>
-        <div class="col-sm-1">
+        <div class="col-md-12">
           <button type="submit" class="btn btn-primary">Start my trial!</button>
         </div>
-
+        <div class="col-md-12">
+          <a href="/opt-out">I'd rather not.</a>
+        </div>
       </div>
+
+
     </form>
   </div>
 </div>
