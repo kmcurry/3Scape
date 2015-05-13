@@ -306,9 +306,32 @@ li.action {
   background-size: 95%;
 }
 
-.shadow-circle:active {
-  background-position: center bottom;
+
+.shadow-circle:after {
+  content: "•";
+  height:15px;
+  width:15px;
+  font-size: 30px;
+  color:rgba(0,0,0,0.4);
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  margin-left:-7.5px;
+  
 }
+
+.shadow-circle.active-toggle {
+  box-shadow:inset 0 0 7px 1px rgba(0, 0, 0, 0.8), 0 0 0px 3px rgba(0,0,0,0.8);
+}
+
+
+.shadow-circle.active-toggle:after{
+  color:rgba(255,255, 255, 0.8);
+  text-shadow:0 0 1px rgba(255,255, 255, 0.5);
+}
+
+
+
 
 .spin          { background-image: url("../images/spin.png");          }
 .orbit         { background-image: url("#");         }
