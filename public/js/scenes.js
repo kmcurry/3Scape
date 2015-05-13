@@ -57,7 +57,7 @@ function loadundersea() {
   reset();
   bridgeworks.contentDir='/BwContent/Underwater/BwContent';
   bridgeworks.onLoadModified();
-  bridgeworks.updateScene('Underwater.xml');
+  bridgeworks.updateScene('UnderWater.xml');
 }
 
 
