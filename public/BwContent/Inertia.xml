@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bw onLoad="initialize"?>
+<?bwinclude url="DefaultPreferences.min.xml"?>
+<Scene>
+  <Isolator name="Root">
+    <PerspectiveCamera name="Camera" zoom="3.2" nearDistance="1" farDistance="10000">
+        <position x="0" y="150" z="-250"/>
+        <rotation x="35" y="0" z="0"/>
+    </PerspectiveCamera>
+    <Group name="Lights">
+      <GlobalIllumination name="GlobalLight">
+          <ambient r=".38" g=".38" b=".38"/>
+      </GlobalIllumination>
+      <PointLight name="PointLight1" range="7000">
+          <ambient r="0.25" g="0.25" b="0.25"/>
+          <diffuse r=".85" g=".85" b=".85"/>
+          <specular r=".15" g=".15" b=".15"/>
+          <position x="200" y="200" z="-70"/>
+      </PointLight>
+    </Group>
+    <Group name="Models">
+
+      <Model name="Grid" url="objects/Grid.lwo" moveable="false" detectCollision="true" physicsEnabled="true">
+          <scale x="50" y="1" z="50"/>
+          <position x="0" y="0" z="0"/>
+          <physicalProperties>
+            <rollingFriction>1</rollingFriction>
+            <restitution>-1</restitution>
+            <friction>1</friction>
+          </physicalProperties>
+      </Model>
+
+      <!-- Wedge -->
+       <Model name="Wedge" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="false" detectCollision="true">
+        <scale x="5" y="5" z="7"/>
+        <color r=".75" g="0.35" b="0.05" a="1"/>
+        <position x="0" y="1" z="100"/>
+        <physicalProperties>
+          <mass>1</mass>
+          <friction>1</friction>
+        </physicalProperties>
+      </Model>
+
+      <!-- Wall -->
+      <Model name="Wall" url="objects/Wall.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="true" detectCollision="true">
+        <scale x="5" y="5" z="5"/>
+        <color r=".75" g="0.3" b="0.73" a="1"/>
+        <position x="0" y="0.5" z="30"/>
+        <physicalProperties>
+          <mass>1</mass>
+          <friction>1</friction>
+        </physicalProperties>
+      </Model>
+
+      <!-- Sphere -->
+      <Model name="Sphere" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="true" physicsEnabled="false" detectCollision="true">
+        <scale x="4" y="4" z="4"/>
+        <color r=".1" g="0.5" b="0.5" a="1"/>
+        <position x="0" y="9" z="104"/>
+        <physicalProperties>
+          <rollingFriction>.8</rollingFriction>
+          <linearDamping>1</linearDamping>
+          <angularDamping>1</angularDamping>
+          <mass>1</mass>
+          <friction>0.025</friction>
+          <restitution>-1</restitution>
+        </physicalProperties>
+      </Model>
+
+
+      <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
+        <MediaTexture name="ScreenCaptureTexture"/>
+        <ScreenRect name="ScreenCaptureRect" enabled="false"/>
+      </Isolator>
+    </Group>
+
+  </Isolator>
+    <RenderDirective name="RenderDirective" highlightType="2" backgroundColor r="1" g="1" b="1" a="1" shadowsEnabled="false"/>
+    <Animations>
+      <KeyframeInterpolator name="CameraMotion" url="InclinedPlanesAnimations/motions/camera.mot" target="Camera" />
+    </Animations>
+    <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+
+    <Set target="ShadowDirective">
+      <casterWorldPosition x="0" y="10" z="0"/>
+    </Set>
+    <Set trigger="CameraMotion/time=5" target="Intro" show="true"></Set>
+<!--    <Pause name="IntroPause" trigger="CameraMotion/time=5" />-->
+</Scene>

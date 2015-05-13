@@ -70,7 +70,7 @@ function new3Scape() {
     reset();
     bridgeworks.contentDir = '/BwContent';
     bridgeworks.onLoadModified();
-    bridgeworks.updateScene('grid-50.xml');
+    bridgeworks.updateScene('Inertia.xml');
 
     // QTP: post to server right away or wait until an autosave event?
     /*
