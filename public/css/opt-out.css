@@ -64,6 +64,11 @@ body {
   padding-left: 3%;
 }
 
+#survey-form {
+  margin: 0 auto;
+  text-align: center;
+}
+
 .delete {
   height: 200px;
   text-align: center;
@@ -123,6 +128,7 @@ a.survey-btn {
   text-decoration: none;
   display: inline-block;
   margin-top: 1%;
+  cursor: pointer;
 }
 
 a.survey-btn:hover {

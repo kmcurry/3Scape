@@ -6,6 +6,9 @@
 	<meta name=viewport content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/opt-out.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -33,12 +36,21 @@
 
 		<div class="row survey">
 			<div class="col-md-12">
-				<p>However, if your mind is made up, then continue.
+				<p>However, if your mind is made up, then continue.</p>
 				<p>But before you go, we would greatly appreciate it if you would be willing to complete
-					a 2 minute survey about why you're leaving.</p>
-				<a class="survey-btn" href="https://docs.google.com/forms/d/17Vv2rZCEzfD70_-H6rbdXnDxmL1QdMvbBEwjt-0A0N0/viewform">Survey</a>
+					a short 1 minute survey about why you're leaving.</p>
+					<a class="survey-btn" onClick="$('#survey-form').slideToggle('slow');">Survey</a>
 			</div>
 		</div>
+
+
+		<div>
+		  	<div id="survey-form" class="collapse">
+					<iframe src="https://docs.google.com/forms/d/17Vv2rZCEzfD70_-H6rbdXnDxmL1QdMvbBEwjt-0A0N0/viewform?embedded=true"
+					width="760" height="640" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+		  	</div>
+		</div>
+
 
 		<div class="row delete">
 			<div class="col-md-12">
