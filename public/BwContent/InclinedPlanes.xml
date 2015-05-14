@@ -29,21 +29,9 @@
             <angularDamping>1</angularDamping>
             <restitution>-1</restitution>
             <friction>1</friction>
-          </physicalProperties>  
+          </physicalProperties>
       </Model>
 
-      <Model name="GridTop" url="objects/Grid.lwo" moveable="false" detectCollision="true" physicsEnabled="true">
-          <scale x="50" y="1" z="50"/>
-          <position x="0" y=".025" z="0"/>
-          <physicalProperties>
-            <mass>1</mass>
-            <restitution>-0.05</restitution>
-            <friction>1</friction>
-            <rollingFriction>1</rollingFriction>
-            <angularDamping>1</angularDamping>
-            <linearDamping>1</linearDamping>
-           </physicalProperties> 
-      </Model>
   <!--Wedges -->
 
       <Model name="Wedge1" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="false" detectCollision="true">
@@ -57,7 +45,7 @@
           <rollingFriction>1</rollingFriction>
           <linearDamping>1</linearDamping>
           <angularDamping>1</angularDamping>
-        </physicalProperties> 
+        </physicalProperties>
       </Model>
 
       <Model name="Wedge2" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="fase" physicsEnabled="false" detectCollision="true">
@@ -71,7 +59,7 @@
           <rollingFriction>1</rollingFriction>
           <linearDamping>1</linearDamping>
           <angularDamping>1</angularDamping>
-        </physicalProperties> 
+        </physicalProperties>
       </Model>
 
       <Model name="Wegde3" url="objects/Wedge.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="false" detectCollision="true">
@@ -85,7 +73,7 @@
           <rollingFriction>1</rollingFriction>
           <linearDamping>1</linearDamping>
           <angularDamping>1</angularDamping>
-        </physicalProperties> 
+        </physicalProperties>
       </Model>
 
       <!--Spheres -->
@@ -137,41 +125,14 @@
         <ScreenRect name="ScreenCaptureRect" enabled="false"/>
       </Isolator>
     </Group>
-  <!--
-  <Group name="Labels">
-    <Label name="InclinedPlanesIntro" parent="Wedge1" text="3 Inclined Planes at Different Heights" show="true">
-     <position x="0" y="0" z="0"/>
-      <labelStyle>
-        <backgroundColor r="0" g="0" b="0" a="0.4"/> 
-        <backgroundOpacity>1</backgroundOpacity>
-        <padding>5</padding>
-        <fontStyle>
-          <size>24</size>
-          <borderColor r="0" g="0" b="0" a="0"/> 
-        </fontStyle>
-      </labelStyle>
-    </Label>
-    <Label name="InviteToExplore" parent="GridTop" text="Check out the setup, and when you're ready, hit the 'Gravity Button' to start the demo" show="true">
-    <labelStyle>
-      <backgroundColor r="0" g="0" b="0" a="0.4"/> 
-      <backgroundOpacity>1</backgroundOpacity>
-      <padding>5</padding>
-      <textAlign>middleLeft</textAlign>
-      <fontStyle>
-        <size>14</size>
-        <borderColor r="0" g="0" b="0" a="0"/> 
-      </fontStyle>
-    </labelStyle>
-    </Label>
-  </Group>
-  -->
+
   </Isolator>
     <RenderDirective name="RenderDirective" highlightType="2" backgroundColor r="1" g="1" b="1" a="1" shadowsEnabled="false"/>
     <Animations>
       <KeyframeInterpolator name="CameraMotion" url="InclinedPlanesAnimations/motions/camera.mot" target="Camera" />
     </Animations>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
-   
+
     <Set target="ShadowDirective">
       <casterWorldPosition x="0" y="10" z="0"/>
     </Set>

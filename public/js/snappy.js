@@ -32,6 +32,29 @@ function copy()
     }
 }
 
+function countParts() {
+  var parts = "undefined";
+  var partCount = 0;
+  parts = bridgeworks.registry.getByType(eAttrType.Ball);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Beam);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Box);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Gear);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Plank);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Pyramid);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Wall);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Wedge);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  console.log("Counted " + partCount + " parts");
+  return partCount;
+}
+
 function cut()
 {
     if (g_selectedModel) {
@@ -57,8 +80,7 @@ function loadModel(url, copy)
     }
 
     var name = url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
-    name = g_modelCount.toString() + ". " + name;
-    g_modelCount++;
+    name = (++g_modelCount).toString() + ". " + name;
 
 
     loadFile("BwContent/" + url, processModelXML, name, copy);
@@ -105,44 +127,6 @@ var onHoldFunction = function(id, method, time) {
     });
 }
 
-function save3Scape() {
-
-  autoSave();
-
-  $.ajax({
-    url: 'save',
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({
-      scapeId: localStorage.getItem('scapeId'),
-      scape: localStorage.getItem('autoSave')
-      })
-  });
-}
-
-function start3Scape(scape, scapeId) {
-  bridgeworks = init(document.getElementById("BwContainer"));
-
-  if (scape && scape != "") {
-    console.log("setting storage for: " + scapeId);
-    localStorage.setItem('scapeId', scapeId);
-    bridgeworks.updateScene(scape);
-  } else {
-    var localScape = getWorkInProgress();
-    if (localScape && localScape != ""){
-      console.log("Loading from local storage. Scape id is: " + localStorage.getItem("scapeId"));
-      bridgeworks.updateScene(localScape);
-    }
-    else {
-      new3Scape();
-    }
-  }
-
-  //var saveInterval = setInterval(autoSave, 30000);
-
-  window.addEventListener("beforeunload", save3Scape);
-
-}
 
 
 function paste()
@@ -183,7 +167,6 @@ function processModelXML(name, copy) {
 
     if (copy) {
         // TODO: g_copyModel.copyModel();
-        console.log("copying...");
 
         var s = g_copyModel.scale.getValueDirect();
         var r = g_copyModel.rotation.getValueDirect();
@@ -218,6 +201,8 @@ function processModelXML(name, copy) {
 
     $(".menu").removeClass("active");
 
+    console.log("Part added: '" + name + "'");
+
 }
 
 
@@ -231,5 +216,46 @@ function reset() {
     g_selectedModel = null;
     g_selectPointModel = null;
 
+
+}
+
+function save3Scape() {
+
+  autoSave();
+
+  $.ajax({
+    url: 'save',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      scapeId: localStorage.getItem('scapeId'),
+      scape: localStorage.getItem('autoSave')
+      })
+  });
+}
+
+function start3Scape(scape, scapeId) {
+  bridgeworks = init(document.getElementById("BwContainer"));
+
+  if (scape && scape != "") {
+    console.log("setting storage for: " + scapeId);
+    localStorage.setItem('scapeId', scapeId);
+    bridgeworks.updateScene(scape);
+  } else {
+    var localScape = getWorkInProgress();
+    if (localScape && localScape != ""){
+      console.log("Loading from local storage. Scape id is: " + localStorage.getItem("scapeId"));
+      bridgeworks.updateScene(localScape);
+    }
+    else {
+      new3Scape();
+    }
+  }
+
+  g_modelCount = countParts();
+
+  //var saveInterval = setInterval(autoSave, 30000);
+
+  window.addEventListener("beforeunload", save3Scape);
 
 }
