@@ -96,6 +96,8 @@ function handleMouse(e)
                   g_sceneInspector.enabled.setValueDirect(false);
                   g_objectInspector.enabled.setValueDirect(true);
 
+                  updateActionControls(g_selectedModel);
+
                   // if the shift key is down switch from move to rotate object
                   if (e.shiftKey) {
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
@@ -125,7 +127,6 @@ function selectObject(){
   {
       g_selectedModel.getAttribute("highlight").setValueDirect(false);
       g_selectedModel = null;
-      $("#model-menu").toggleClass('active', false);
   }
   // verify selector has models
   if (bridgeworks.selector.selections.models.length > 0)
@@ -140,7 +141,6 @@ function selectObject(){
   }
   else {
     g_selectedModel = null;
-    $("#model-menu").toggleClass('active',false);
   }//turn off context menu on deselect
 
   return true;
