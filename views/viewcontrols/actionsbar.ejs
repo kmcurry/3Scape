@@ -49,7 +49,7 @@
               </div>
           </li>
 
-            
+
             <li class="action">
                 <div class="dial">
                     <div  class="innerdial">
@@ -77,11 +77,15 @@
 
   var g_foo = false;
 
-  function addControls() {
-    console.log("Adding controls...");
+  var g_actionControlElements = [];
+
+  function addActionControls() {
 
     // OPACITY
     var elem = document.getElementsByClassName('opacity')[0];
+
+    g_actionControlElements.push(elem);
+
     var dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
 
@@ -97,9 +101,12 @@
 
     var wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
 
+    g_actionControlElements.push(elem);
+
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         showHideSelected();
+        $(this.parentElement).toggleClass('active-toggle');
       }
       g_foo = false;
     });
@@ -107,6 +114,9 @@
 
     // ROAMER
     elem = document.getElementsByClassName('roam')[0];
+
+    g_actionControlElements.push(elem);
+
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
 
@@ -124,12 +134,16 @@
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveRoam();
+        $(this.parentElement).toggleClass('active-toggle');
       }
       g_foo = false;
     });
 
     // COLLIDER
     elem = document.getElementsByClassName('collide')[0];
+
+    g_actionControlElements.push(elem);
+
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
 
@@ -147,19 +161,23 @@
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveRoam(true);
+        $(this.parentElement).toggleClass('active-toggle');
       }
       g_foo = false;
     });
 
     // FADER
     elem = document.getElementsByClassName('fade-in-out')[0];
+
+    g_actionControlElements.push(elem);
+
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
 
     dial.on('mousemove', function(evt){
-      var duration = Math.round(evt.target.degree/10);
-      console.log("fading..." + duration);
-      setFaderDuration(duration);
+      var opacity = evt.target.degree/360;
+      console.log("fading..." + opacity);
+      setFaderValue(opacity);
     });
 
     dial.on('mouseup', function(e) {
@@ -170,19 +188,23 @@
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveFader();
+        $(this.parentElement).toggleClass('active-toggle');
       }
       g_foo = false;
     });
 
     // GROWER
     elem = document.getElementsByClassName('grow-shrink')[0];
+
+    g_actionControlElements.push(elem);
+
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
 
     dial.on('mousemove', function(evt){
-      var duration = Math.round(evt.target.degree/10);
-      console.log("growing..." + duration);
-      setGrowerDuration(duration);
+      var size = evt.target.degree/10;
+      console.log("growing..." + size);
+      setGrowerValue(size);
     });
 
     dial.on('mouseup', function(e) {
@@ -193,12 +215,16 @@
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveGrower();
+        $(this.parentElement).toggleClass('active-toggle');
       }
       g_foo = false;
     });
 
     // SPINNER
     elem = document.getElementsByClassName('spin')[0];
+
+    g_actionControlElements.push(elem);
+
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
 
@@ -216,12 +242,16 @@
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveSpinner();
+        $(this.parentElement).toggleClass('active-toggle');
       }
       g_foo = false;
     });
 
     // MASS
     elem = document.getElementsByClassName('mass')[0];
+
+    g_actionControlElements.push(elem);
+
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
 
@@ -239,9 +269,26 @@
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemovePhysics();
+        $(this.parentElement).toggleClass('active-toggle');
       }
       g_foo = false;
     });
 
+  }
+
+  function updateActionControls(part) {
+    if (part == null || part == "undefined") return;
+
+    console.log("updating controls for: " + part.getAttribute("name").getValueDirect().join(""));
+
+    var elem = null;
+    var className = "";
+    var attr = null;
+    for (i = 0; i < g_actionControlElements.length; ++i) {
+      elem = g_actionControlElements[i];
+      className = elem.className.split(" ");
+      className = className[1];
+      
+    }
   }
 </script>
