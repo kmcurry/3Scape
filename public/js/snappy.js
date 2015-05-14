@@ -63,7 +63,6 @@ function cut()
         var c = "\<Remove target='" + name + "'/>"
         bridgeworks.updateScene(c);
 
-        $('#model-menu').toggleClass('active', false);
     }
 }
 
