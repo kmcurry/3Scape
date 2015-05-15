@@ -1,0 +1,80 @@
+.inertia-btn{
+  position:fixed;
+  right:10px;
+  z-index:1000000000;
+  font-family:'Helvetica', arial, sans-serif;
+  font-weight:200;
+  font-size:20px;
+  color:#fff;
+  background:#55af59;
+  border-radius:20px;
+  border:none;
+  padding:10px;
+  box-shadow:0 0 3px rgba(0,0,0,0.4);
+  min-width:200px;
+  text-align:center;
+  outline:none;
+  text-transform: uppercase;
+}
+
+.inertia-btn:active{
+  outline:none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.inertia-btn:visited{
+  outline:none;
+}
+
+.inertia-btn:focus{
+  outline:none;
+}
+
+.gravity:focus{
+  background:#30CA37;
+}
+
+.reset:focus{
+  background:#4FBFEF;
+}
+
+.gravity{
+  bottom:30%;
+}
+
+.reset{
+  background:#46A8D2;
+  bottom:20%;
+}
+
+.add-mass{
+  bottom:10%;
+}
+
+.labelDiv{
+  position:fixed;
+  top:35%;
+  left:50%;
+  margin-left:-300px;
+  z-index:1000000000;
+  width:600px;
+  background:#46A8D2;
+  box-shadow: 0 0 3px rgba(0,0,0,0.4);
+  color:#fff;
+  text-align: center;
+  padding:10px 10px 30px 10px;
+  transition: all 500ms;
+  opacity:0;
+}
+
+.labelDiv p {
+  font-size:18px;
+}
+
+.labelDiv.showLabel.hideLabel{
+  opacity:0;
+}
+
+.labelDiv.showLabel{
+  opacity:1;
+}

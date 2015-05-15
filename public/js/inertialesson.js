@@ -1,10 +1,8 @@
 $(document).ready(function(){
 
-  console.log("Initializing 3Scape Lesson: Inclined Planes.");
+  console.log("Initializing 3Scape Lesson: Weight and Inertia.");
 
-  var sphere1 = "",
-      sphere2 = "",
-      sphere3 = "";
+  var sphere = "";
 
   function addButtons(){
     var gravButton = document.createElement("button"),
@@ -32,7 +30,7 @@ $(document).ready(function(){
     var labelDiv = document.createElement("div");
     labelDiv.setAttribute('class', 'labelDiv');
     document.body.appendChild(labelDiv);
-    $("div.labelDiv").html("<h3>Inclined Planes Experiment</h3><p>3 spheres of the same size are hovering above 3 inclined planes of different heights.</p><p>When the spheres drop, <b>which one will roll the farthest</b>?</p><p>Push the <i>GRAVITY ON</i> button to find out!</p>");
+    $("div.labelDiv").html("<h3>Inertia Experiment</h3><p>A heavy sphere is hovering above an inclined plane that's in front of a light weight wall.</p><p>When the sphere drops, <b>what will happen to the wall</b>?</p><p>Push the <i>GRAVITY ON</i> button to find out!</p>");
   };
 
   addLabel();
@@ -42,38 +40,21 @@ $(document).ready(function(){
   }, 13000);
 
   function spherePhysicsOff(){
-    sphere1 = bridgeworks.get("Sphere1"),
-    sphere2 = bridgeworks.get("Sphere2"),
-    sphere3 = bridgeworks.get("Sphere3");
-    setTimeout(function(){
-      sphere1.physicsEnabled.setValueDirect(false);
-    }, 10000);
-    setTimeout(function(){
-      sphere2.physicsEnabled.setValueDirect(false);
-    }, 15000);
-    setTimeout(function(){
-      sphere3.physicsEnabled.setValueDirect(false);
-    }, 20000);
+    sphere = bridgeworks.get("Sphere"),
+      sphere.physicsEnabled.setValueDirect(false);
   };
 
 
   $("button.gravity").click(function(){
+    console.log("clicked gravity button");
     $(".labelDiv").addClass("hideLabel");
-    sphere1 = bridgeworks.get("Sphere1"),
-    sphere2 = bridgeworks.get("Sphere2"),
-    sphere3 = bridgeworks.get("Sphere3");
-    sphere1.physicsEnabled.setValueDirect(true);
-    sphere2.physicsEnabled.setValueDirect(true);
-    sphere3.physicsEnabled.setValueDirect(true);
+    sphere = bridgeworks.get("Sphere");
+    sphere.physicsEnabled.setValueDirect(true);
     spherePhysicsOff();
   });
 
   $("button.reset").click(function(){
-    sphere1.physicsEnabled.setValueDirect(false);
-    sphere2.physicsEnabled.setValueDirect(false);
-    sphere3.physicsEnabled.setValueDirect(false);
-    sphere1.position.setValueDirect(-10,8,102);
-    sphere2.position.setValueDirect(0,8,102);
-    sphere3.position.setValueDirect(10,8,102);
+    sphere.physicsEnabled.setValueDirect(false);
+    sphere.position.setValueDirect(-10,8,102);
   });
 });
