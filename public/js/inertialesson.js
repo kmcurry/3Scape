@@ -1,28 +1,33 @@
-$(document).ready(function(){
+$(window).load(function(){
 
   console.log("Initializing 3Scape Lesson: Weight and Inertia.");
 
-  var sphere = "";
+  var sphere = "",
+      wall = "";
 
   function addButtons(){
     var gravButton = document.createElement("button"),
         resetButton = document.createElement("button"),
-        addMassButton = document.createElement("button");
+        slider = document.createElement("input");
     gravButton.type = "submit";
     gravButton.value = "gravity";
     resetButton.type = "submit";
     resetButton.value = "reset";
-    addMassButton.type = "submit";
-    addMassButton.value = "addMass";
+    slider.type = "range";
+    slider.id = "addMass";
+    slider.min = 0.0001;
+    slider.max = 1000;
+    slider.value = 0.0001;
+    slider.step = 999.9999;
+//    slider.onchange = setMass;
     document.body.appendChild(gravButton);
     document.body.appendChild(resetButton);
-    document.body.appendChild(addMassButton);
+    document.body.appendChild(slider);
     $("button[value='gravity']").addClass("gravity inertia-btn");
     $("button.gravity").text("Gravity On");
     $("button[value='reset']").addClass("reset inertia-btn");
-    $("button.reset").text("Reset Spheres");
-    $("button[value='addMass']").addClass("add-mass inertia-btn");
-    $("button.add-mass").text("Make Wall Heavier");
+    $("button.reset").text("Reset Sphere");
+    $("input#addMass").addClass("add-mass inertia-btn");
   };
   addButtons();
 
@@ -40,7 +45,7 @@ $(document).ready(function(){
   }, 13000);
 
   function spherePhysicsOff(){
-    sphere = bridgeworks.get("Sphere"),
+      sphere = bridgeworks.get("Sphere");
       sphere.physicsEnabled.setValueDirect(false);
   };
 
@@ -50,11 +55,30 @@ $(document).ready(function(){
     $(".labelDiv").addClass("hideLabel");
     sphere = bridgeworks.get("Sphere");
     sphere.physicsEnabled.setValueDirect(true);
-    spherePhysicsOff();
+    
   });
 
   $("button.reset").click(function(){
+    sphere = bridgeworks.get("Sphere");
+    wall = bridgeworks.get("Wall");
     sphere.physicsEnabled.setValueDirect(false);
-    sphere.position.setValueDirect(-10,8,102);
+    sphere.position.setValueDirect(0,12,104);
+    wall.position.setValueDirect(0,0.5,30);
+    wall.rotation.setValueDirect(0, 0, 0);
+  });
+  
+  function changeMass(){
+    var mass = $("#addMass").val();
+    console.log(mass);
+    var cmd = "<Set target='Wall'>";
+    cmd += "<physicalProperties><mass>" + mass + "</mass></physicalProperties>";
+    cmd += "</Set>";
+    bridgeworks.updateScene(cmd);
+  };
+  
+  changeMass();
+  
+  $("input#addMass").on('change', function(){
+    changeMass();
   });
 });
