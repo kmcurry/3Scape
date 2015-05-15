@@ -8,26 +8,31 @@ $(window).load(function(){
   function addButtons(){
     var gravButton = document.createElement("button"),
         resetButton = document.createElement("button"),
-        slider = document.createElement("input");
+        slider = document.createElement("input"),
+        sliderLabel = document.createElement("label");
+    sliderLabel.setAttribute("for", "addMass");
+    sliderLabel.innerHTML = "-  Mass  +";
+    sliderLabel.id = "sliderLabel";
     gravButton.type = "submit";
     gravButton.value = "gravity";
     resetButton.type = "submit";
     resetButton.value = "reset";
     slider.type = "range";
     slider.id = "addMass";
-    slider.min = 0.0001;
-    slider.max = 1000;
-    slider.value = 0.0001;
-    slider.step = 999.9999;
-//    slider.onchange = setMass;
+    slider.name = "addMass";
+    slider.min = 0;
+    slider.max = 1;
+    slider.value = 0;
+    slider.step = 1;
     document.body.appendChild(gravButton);
     document.body.appendChild(resetButton);
     document.body.appendChild(slider);
+    document.body.appendChild(sliderLabel);
     $("button[value='gravity']").addClass("gravity inertia-btn");
     $("button.gravity").text("Gravity On");
     $("button[value='reset']").addClass("reset inertia-btn");
     $("button.reset").text("Reset Sphere");
-    $("input#addMass").addClass("add-mass inertia-btn");
+    $("input#addMass").addClass("add-mass inertia-slider");
   };
   addButtons();
 
@@ -67,18 +72,31 @@ $(window).load(function(){
     wall.rotation.setValueDirect(0, 0, 0);
   });
   
-  function changeMass(){
-    var mass = $("#addMass").val();
-    console.log(mass);
-    var cmd = "<Set target='Wall'>";
-    cmd += "<physicalProperties><mass>" + mass + "</mass></physicalProperties>";
-    cmd += "</Set>";
-    bridgeworks.updateScene(cmd);
+  function toggleMass(){
+    var sliderVal = $("#addMass").val();
+    console.log(sliderVal);
+    if (sliderVal == 0){
+      var cmd = "<Update>";
+      cmd += "<Set target='Wall' url='objects/Sphere.lwo'>";
+      cmd += "<physicalProperties><mass>1</mass></physicalProperties>";
+      cmd += "</Set>";
+      cmd += "</Update>";
+      bridgeworks.updateScene(cmd);
+    }
+    else{
+      var cmd = "<Update>";
+      cmd += "<Set target='Wall' url='objects/Wall.lwo'>";
+      cmd += "<physicalProperties><mass>100</mass></physicalProperties>";
+      cmd += "</Set>";
+      cmd += "</Update>";
+      bridgeworks.updateScene(cmd);
+    }
+    
   };
   
-  changeMass();
+  
   
   $("input#addMass").on('change', function(){
-    changeMass();
+    toggleMass();
   });
 });
