@@ -76,25 +76,27 @@ $(window).load(function(){
     var sliderVal = $("#addMass").val();
     console.log(sliderVal);
     if (sliderVal == 0){
-      var cmd = "<Update>";
-      cmd += "<Set target='Wall' url='objects/Sphere.lwo'>";
-      cmd += "<physicalProperties><mass>1</mass></physicalProperties>";
-      cmd += "</Set>";
-      cmd += "</Update>";
+     
+      var cmd =  "<Set target='Wall'>";
+          cmd += "<color r='1' g='1' b='1' a='1'/>";
+          cmd += "<physicalProperties>";
+          cmd += "<mass>1</mass>";
+          cmd += "</physicalProperties>";
+          cmd += "</Set>";
+      
       bridgeworks.updateScene(cmd);
     }
     else{
-      var cmd = "<Update>";
-      cmd += "<Set target='Wall' url='objects/Wall.lwo'>";
-      cmd += "<physicalProperties><mass>100</mass></physicalProperties>";
-      cmd += "</Set>";
-      cmd += "</Update>";
+      var cmd =  "<Set target='Wall'>";
+          cmd += "<color r='0.5' g='1' b='0.5' a='1'/>";
+          cmd += "<physicalProperties>";
+          cmd += "<mass>1000</mass>";
+          cmd += "</physicalProperties>";
+          cmd += "</Set>";
       bridgeworks.updateScene(cmd);
     }
     
   };
-  
-  
   
   $("input#addMass").on('change', function(){
     toggleMass();
