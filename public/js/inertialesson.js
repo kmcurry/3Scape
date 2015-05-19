@@ -11,7 +11,7 @@ $(window).load(function(){
         slider = document.createElement("input"),
         sliderLabel = document.createElement("label");
     sliderLabel.setAttribute("for", "addMass");
-    sliderLabel.innerHTML = "-  Mass  +";
+    sliderLabel.innerHTML = "mass";
     sliderLabel.id = "sliderLabel";
     gravButton.type = "submit";
     gravButton.value = "gravity";
@@ -40,7 +40,7 @@ $(window).load(function(){
     var labelDiv = document.createElement("div");
     labelDiv.setAttribute('class', 'labelDiv');
     document.body.appendChild(labelDiv);
-    $("div.labelDiv").html("<h3>Inertia Experiment</h3><p>A heavy sphere is hovering above an inclined plane that's in front of a light weight wall.</p><p>When the sphere drops, <b>what will happen to the wall</b>?</p><p>Push the <i>GRAVITY ON</i> button to find out!</p>");
+    $("div.labelDiv").html("<h3>Inertia Experiment</h3><p>A heavy sphere is hovering above an inclined plane that's in front of a wall. You can make the wall lighter or heavier with the <i>MASS</i> switch.<h4><u>Question</u></h4></p><p>When the sphere drops, <b>what will happen to the wall</b>? What will happen to the wall if you increase its mass and then drop the sphere?</p><p>Push the <i>GRAVITY ON</i> button to find out!</p>");
   };
 
   addLabel();
@@ -76,19 +76,15 @@ $(window).load(function(){
     var sliderVal = $("#addMass").val();
     console.log(sliderVal);
     if (sliderVal == 0){
-     
       var cmd =  "<Set target='Wall'>";
-          cmd += "<color r='1' g='1' b='1' a='1'/>";
           cmd += "<physicalProperties>";
           cmd += "<mass>1</mass>";
           cmd += "</physicalProperties>";
           cmd += "</Set>";
-      
       bridgeworks.updateScene(cmd);
     }
     else{
       var cmd =  "<Set target='Wall'>";
-          cmd += "<color r='0.5' g='1' b='0.5' a='1'/>";
           cmd += "<physicalProperties>";
           cmd += "<mass>1000</mass>";
           cmd += "</physicalProperties>";

@@ -5,10 +5,10 @@
   font-family:'Helvetica', arial, sans-serif;
   font-weight:200;
   font-size:20px;
-  color:#fff;
-  background:#55af59;
+  color:#55af59;
+  background:#fff;
+  border:1px solid #55af59;
   border-radius:20px;
-  border:none;
   padding:10px;
   box-shadow:0 0 3px rgba(0,0,0,0.4);
   min-width:200px;
@@ -37,25 +37,28 @@
   outline:none;
 }
 
-.gravity:focus{
-  background:#30CA37;
-}
-
-.reset:focus{
-  background:#4FBFEF;
-}
-
 .gravity{
-  bottom:30%;
+  bottom:200px;;
 }
 
 .reset{
-  background:#46A8D2;
-  bottom:20%;
+  border:1px solid #46A8D2;
+  bottom:125px;
+  color:#46A8D2;
+}
+
+.reset:focus{
+  color:#4FBFEF;
+  border:1px solid #4FBFEF;
+}
+
+.gravity:focus{
+  border:1px solid #30CA37;
+  color:#30CA37;
 }
 
 .add-mass{
-  bottom:10%;
+  bottom:75px;
 }
 
 .labelDiv{
@@ -96,7 +99,11 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 input[type=range]:focus {
-  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  outline: none;/* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-moz-focus-outer {
+    border: 0;
 }
 
 input[type=range]::-ms-track {
@@ -195,6 +202,8 @@ input[type=range]:focus::-ms-fill-upper {
   background: #367ebd;
 }
 
+
+
 #sliderLabel{
   position:fixed;
   right:10px;
@@ -208,4 +217,18 @@ input[type=range]:focus::-ms-fill-upper {
   width:200px;
   text-align: center;
   text-transform: uppercase;
+}
+
+#sliderLabel:before{
+  content:"1";
+  font-size: 14px;
+  position: relative;
+  float:left;
+}
+
+#sliderLabel:after{
+  content:"100";
+  font-size: 14px;
+  position: relative;
+  float:right;
 }
