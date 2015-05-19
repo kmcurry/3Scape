@@ -60,6 +60,40 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   // LOGIN & LOGOUT
 
+  // DELETING
+  app.post('/delete', function (req, res, next) {
+        if (req.user.validPassword(req.body.password)) {
+
+            Creator.findOne({'email' : req.user.email} , function(err,creator)
+            {
+              if(err)
+              {
+                console.log(err.message);
+                res.redirect('/profile');
+              }
+              if(!creator)
+              {
+                console.log('creator not found');
+                res.redirect('/profile');
+              }
+              else
+              {
+                console.log('removing 3scaper');
+                creator.remove();
+                res.redirect('http://3scape.me');
+              }
+
+            });
+          }
+            else
+            {
+              req.flash('error_message', 'Incorrect password. Please try again.');
+              res.redirect('/profile');
+
+            }
+
+  });
+
   // GET
   app.get('/login', function (req, res) {
     //render the page and pass in any flash data if it exists

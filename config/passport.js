@@ -125,4 +125,28 @@ module.exports = function(passport) {
 
     }));
 
+    //Deleting an account locally
+    passport.use('local-delete', new LocalStrategy({ usernameField : 'email', passwordField : 'password'},
+    function(req,email,password,done){
+              console.log('before user findone');
+        User.findOne({'email' : email }, function(err,user){
+            // if there are any errors, return the error before anything else
+
+            if(err){
+              console.log(err.message);
+              return done(err);
+}
+              //if no user is found, return error message
+            if(!user)
+            {
+              console.log('no useer found');
+              return done(null,false,req.flash('error', 'Account not found.'));
+            }
+
+            return User.findOne({'email' : email} , function(err,user){
+              console.log('removing user with email');
+              user.remove();
+            });
+        })
+    }))
 };

@@ -1,0 +1,87 @@
+<style>
+form {
+margin: 0;
+}
+
+.modal-content {
+font-family: 'robotolight';
+background-image: url("../images/signup-login-background.png");
+}
+
+.modal-title {
+font-family: 'robotobold';
+color: #57B955;
+text-align: center;
+}
+
+.modal-header img {
+margin: 0 auto;
+margin-bottom: 1%;
+display: block;
+}
+
+.modal-footer {
+text-align: center;
+margin: 0;
+}
+
+.signed-up {
+ margin-top: 1%;
+}
+
+.continue {
+padding: 0;
+}
+</style>
+
+<div class="delete modal modal-dialog fade">
+  <div class="modal-content">
+    <form action="/delete" method="POST" id="delete-form">
+
+    <div class="modal-header">
+          <img src="../images/logo.png" height="100px" width="110px"/>
+          <h3 class="modal-title">Welcome! We're glad you're here!</h3>
+    </div>
+
+      <div class="modal-body">
+
+          <p>Please provide your password to confirm this action.</p>
+
+          <!-- show any messages that come back with authentication -->
+          <% if (typeof message != 'undefined' && message.length > 0) { %>
+              <div class="alert alert-danger"><%= message %></div>
+          <% } %>
+
+          <div class="form-group">
+              <label>Password</label>
+              <input class="form-control" id="password" type="password" name="password" >
+          </div>
+
+        <a href="https://go.3scape.me/privacy">Privacy Policy</a>
+
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-12 continue">
+          <button type="submit" class="btn btn-primary" onclick="document.onkeydown = handleKey;">Continue &raquo</button>
+        </div>s
+      </div>
+    </form>
+  </div>
+  <div id="errorDiv"></div>
+</div>
+<!--Signup Validation-->
+<script>
+  $("#delete-form").validate({
+    rules: {
+        password: {
+            required: true,
+            minlength: 8
+        }
+    },
+    messages: {
+        password: {
+          required: "Please provide a password"
+        }
+    }
+  });
+</script>
