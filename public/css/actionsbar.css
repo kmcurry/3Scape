@@ -317,7 +317,7 @@ li.action {
   bottom:10px;
   left:50%;
   margin-left:-7.5px;
-  
+
 }
 
 .shadow-circle.active-toggle {
@@ -333,7 +333,7 @@ li.action {
 
 
 
-.spin          { background-image: url("../images/spin.png");          }
+.spin          { background-image: url("../images/friction-icon.png");          }
 .orbit         { background-image: url("#");         }
 .bounce        { background-image: url("#");        }
 .collide       { background-image: url("../images/collide.png");       }
