@@ -9,9 +9,12 @@
 	<meta name=viewport content="width=device-width, initial-scale=1">
 	<meta name="robots" content="noindex">
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+
+	<%- include('dialogs/delete') %>
 <div class="container">
 
 	<h1 class="row">
@@ -20,9 +23,12 @@
 			<img src="images/minimal-banner-template-blue.png" class="banner hidden-lg" alt="3Scape Banner" />
 		</a>
 	</h1>
-
+		<% if (typeof error_message != 'undefined' && error_message.length > 0) { %>
+		<div class="alert alert-danger"><%= error_message %></div>
+		<% } %>
 		<div class="row">
 			<a class="edit pull-right" href="logout">Sign Out</a>
+			<a class="edit pull-left" onclick='deleteProfile()'>Delete Profile</a>
 			<a class="edit pull-left" href="#">Edit Profile</a>
 			<a class="edit" href="/">Go 3Scape</a>
 		</div>
@@ -52,4 +58,10 @@
 </div>
 
 </body>
+<script>
+
+function deleteProfile () {
+	$(".delete").modal("show");
+}
+</script>
 </html>
