@@ -20,7 +20,7 @@ $(document).ready(function(){
     $("button[value='reset']").addClass("reset wedges-btn");
     $("button.reset").text("Reset Spheres");
   };
-  addButtons();
+  addButtons(); 
 
   function addLabel(){
     var labelDiv = document.createElement("div");
