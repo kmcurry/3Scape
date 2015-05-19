@@ -31,7 +31,7 @@ $(window).load(function(){
     $("button[value='gravity']").addClass("gravity inertia-btn");
     $("button.gravity").text("Gravity On");
     $("button[value='reset']").addClass("reset inertia-btn");
-    $("button.reset").text("Reset Sphere");
+    $("button.reset").text("Reset Parts");
     $("input#addMass").addClass("add-mass inertia-slider");
   };
   addButtons();
