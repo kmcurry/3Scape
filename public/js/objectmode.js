@@ -158,10 +158,12 @@ function addRemoveFader() {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
     if (bridgeworks.get('Fader_' + name + '_AutoInterpolator')) {
-      cmd = "<Update><Remove target='Fader_" + name + "_AutoInterpolator'/><Set target='" + name + "' opacity='1'/></Update>";
+      cmd = "<Update><Remove target='Fader_" + name + "_AutoInterpolator'/></Update>";
     } else {
       cmd = "<AutoInterpolate name='Fader_" + name + "' postBehavior='3' target='" + name + "' opacity='0'/>";
     }
+
+    console.log(cmd);
 
     bridgeworks.updateScene(cmd);
   }
@@ -172,6 +174,19 @@ function setFaderDuration(duration) {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "<Set target='Fader_" + name + "_AutoInterpolator' duration='" + duration + "'/>";
 
+    console.log(cmd);
+
+    bridgeworks.updateScene(cmd);
+  }
+}
+
+function setFaderValue(opacity) {
+  if (g_selectedModel) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "<Set target='" + name + "' opacity='" + opacity + "'/>";
+
+    console.log(cmd);
+
     bridgeworks.updateScene(cmd);
   }
 }
@@ -181,7 +196,7 @@ function addRemoveGrower() {
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "";
     if (bridgeworks.get('Grower_' + name + '_AutoInterpolator')) {
-      cmd = "<Update><Remove target='Grower_" + name + "_AutoInterpolator'/><Set target='" + name + "' opacity='1'/></Update>";
+      cmd = "<Update><Remove target='Grower_" + name + "_AutoInterpolator'/></Update>";
     } else {
       cmd = "<AutoInterpolate name='Grower_" + name + "' postBehavior='3' target='" + name + "'><scale x='3' y='3' z='3'/></AutoInterpolate>";
     }
@@ -199,13 +214,27 @@ function setGrowerDuration(duration) {
   }
 }
 
+function setGrowerValue(size) {
+  if (g_selectedModel) {
+    var name = g_selectedModel.name.getValueDirect().join("");
+    var cmd = "<Set target='" + name + "'>";
+    cmd += "<scale x='" + size + "' y='" + size + "' z='" + size + "'/>";
+    cmd += "</Set>"
+
+    console.log(cmd);
+
+    bridgeworks.updateScene(cmd);
+  }
+}
+
 function addRemovePhysics() {
   if (g_selectedModel) {
-    console.log("got physics?");
 
     var hasPhysics = g_selectedModel.physicsEnabled.getValueDirect();
 
     g_selectedModel.physicsEnabled.setValueDirect(!hasPhysics);
+
+    console.log("got physics? " + !hasPhysics);
   }
 }
 
