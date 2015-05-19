@@ -45,6 +45,13 @@ function loadinclinedplanes() {
   bridgeworks.updateScene('InclinedPlanes.xml');
 }
 
+function loadinertia() {
+ reset();
+ bridgeworks.contentDir='BwContent';
+ bridgeworks.onLoadModified();
+ bridgeworks.updateScene('Inertia.xml');
+}
+
 function loadtwostroke() {
   reset();
   bridgeworks.contentDir='/BwContent/Engine/BwContent';

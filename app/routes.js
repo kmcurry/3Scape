@@ -54,7 +54,14 @@ module.exports = function(app, config) {
               break;
             case 'inclinedplanes':
               {
-                res.status(200).render('inclinedplanes', {
+                res.status(200).render('physicslessons', {
+                  scape: s
+                });
+              }
+              break
+              case 'inertia':
+              {
+                res.status(200).render('physicslessons', {
                   scape: s
                 });
               }

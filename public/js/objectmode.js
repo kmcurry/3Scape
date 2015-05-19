@@ -305,4 +305,4 @@ function showHideSelected() {
     var show = g_selectedModel.show.getValueDirect();
     g_selectedModel.show.setValueDirect(!show);
   }
-}
+} 
