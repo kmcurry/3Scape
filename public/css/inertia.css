@@ -73,7 +73,7 @@
   color:#fff;
   text-align: center;
   padding:10px 10px 30px 10px;
-  transition: all 500ms;
+  
   opacity:0;
 }
 
@@ -83,10 +83,12 @@
 
 .labelDiv.showLabel.hideLabel{
   opacity:0;
+  transition: all 500ms;
 }
 
 .labelDiv.showLabel{
   opacity:1;
+  transition: all 500ms;
 }
 
 input[type=range] {

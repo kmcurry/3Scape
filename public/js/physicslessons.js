@@ -69,10 +69,7 @@ $(window).load(function(){
     $("div.labelDiv").html("<h3>Inclined Planes Experiment</h3><p>3 spheres of the same size are hovering above 3 inclined planes of different heights.</p><p>When the spheres drop, <b>which one will roll the farthest</b>?</p><p>Push the <i>GRAVITY ON</i> button to find out!</p>");
   };
   
-//  function spherePhysicsOff(){
-//      sphere = bridgeworks.get("Sphere");
-//      sphere.physicsEnabled.setValueDirect(false);
-//  };
+
   function sphere3PhysicsOff(){
     sphere1 = bridgeworks.get("Sphere1"),
     sphere2 = bridgeworks.get("Sphere2"),
