@@ -285,12 +285,18 @@ function scalePart(delta) {
 
 function setMass(mass) {
   if (g_selectedModel) {
+    /*
     var name = g_selectedModel.name.getValueDirect().join("");
     var cmd = "<Set target='" + name + "'>";
     cmd += "<physicalProperties><mass>" + mass + "</mass></physicalProperties>";
     cmd += "</Set>";
 
     bridgeworks.updateScene(cmd);
+    */
+
+    g_selectedModel.physicalProperties.mass.setValueDirect(mass);
+    console.log("massing..." + g_selectedModel.physicalProperties.mass.getValueDirect());
+
   }
 }
 
@@ -299,4 +305,4 @@ function showHideSelected() {
     var show = g_selectedModel.show.getValueDirect();
     g_selectedModel.show.setValueDirect(!show);
   }
-}
+} 

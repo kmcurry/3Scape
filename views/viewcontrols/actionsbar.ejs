@@ -77,17 +77,17 @@
 
   var g_foo = false;
 
-  var g_actionControlElements = [];
+  var g_actionControlDials = [];
 
   function addActionControls() {
 
     // OPACITY
     var elem = document.getElementsByClassName('opacity')[0];
 
-    g_actionControlElements.push(elem);
-
     var dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    g_actionControlDials.push(dial);
 
     dial.on('mousemove', function(evt){
         var oValue = (evt.target.degree/360);
@@ -101,8 +101,6 @@
 
     var wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
 
-    g_actionControlElements.push(elem);
-
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         showHideSelected();
@@ -115,10 +113,10 @@
     // ROAMER
     elem = document.getElementsByClassName('roam')[0];
 
-    g_actionControlElements.push(elem);
-
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    g_actionControlDials.push(dial);
 
     dial.on('mousemove', function(evt){
       var speed = Math.round(evt.target.degree/10);
@@ -131,6 +129,7 @@
     });
 
     wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveRoam();
@@ -142,10 +141,10 @@
     // COLLIDER
     elem = document.getElementsByClassName('collide')[0];
 
-    g_actionControlElements.push(elem);
-
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    g_actionControlDials.push(dial);
 
     dial.on('mousemove', function(evt){
       var speed = Math.round(evt.target.degree/10);
@@ -158,6 +157,7 @@
     });
 
     wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveRoam(true);
@@ -169,10 +169,10 @@
     // FADER
     elem = document.getElementsByClassName('fade-in-out')[0];
 
-    g_actionControlElements.push(elem);
-
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    g_actionControlDials.push(dial);
 
     dial.on('mousemove', function(evt){
       var opacity = evt.target.degree/360;
@@ -185,6 +185,7 @@
     });
 
     wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveFader();
@@ -196,10 +197,10 @@
     // GROWER
     elem = document.getElementsByClassName('grow-shrink')[0];
 
-    g_actionControlElements.push(elem);
-
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    g_actionControlDials.push(dial);
 
     dial.on('mousemove', function(evt){
       var size = evt.target.degree/10;
@@ -212,6 +213,7 @@
     });
 
     wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveGrower();
@@ -223,10 +225,10 @@
     // SPINNER
     elem = document.getElementsByClassName('spin')[0];
 
-    g_actionControlElements.push(elem);
-
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
+
+    g_actionControlDials.push(dial);
 
     dial.on('mousemove', function(evt){
       var velocity = Math.round(evt.target.degree/10);
@@ -239,6 +241,7 @@
     });
 
     wheel = elem.getElementsByClassName('shadow-circle_wheel')[0];
+
     wheel.addEventListener('click', function(e) {
       if (!g_foo) {
         addRemoveSpinner();
@@ -250,14 +253,13 @@
     // MASS
     elem = document.getElementsByClassName('mass')[0];
 
-    g_actionControlElements.push(elem);
-
     dial = JogDial(elem,
       {debug:false, wheelSize:'100%', knobSize:'40%', minDegree:0, maxDegree:360, degreeStartAt: 0});
 
+    g_actionControlDials.push(dial);
+
     dial.on('mousemove', function(evt){
       var mass = Math.round(evt.target.degree/10);
-      console.log("massing..." + mass);
       setMass(mass);
     });
 
@@ -281,14 +283,13 @@
 
     console.log("updating controls for: " + part.getAttribute("name").getValueDirect().join(""));
 
-    var elem = null;
-    var className = "";
-    var attr = null;
-    for (i = 0; i < g_actionControlElements.length; ++i) {
-      elem = g_actionControlElements[i];
-      className = elem.className.split(" ");
-      className = className[1];
-      
+    console.log("Part opacity: " + part.opacity.getValueDirect());
+
+    //g_actionControlDials[0].angle(Math.round(part.opacity.getValueDirect()*360));
+
+    if (part.physicsEnabled.getValueDirect() == true) {
+      $('.mass').addClass('active-toggle');
+      g_actionControlDials[6].angle(part.physicalProperties.mass.getValueDirect()*10);
     }
   }
 </script>
