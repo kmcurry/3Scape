@@ -333,7 +333,7 @@ li.action {
 
 
 
-.spin          { background-image: url("../images/friction-icon.png");          }
+.spin          { background-image: url("../images/spin.png");          }
 .orbit         { background-image: url("#");         }
 .bounce        { background-image: url("#");        }
 .collide       { background-image: url("../images/collide.png");       }
