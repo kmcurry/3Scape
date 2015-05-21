@@ -238,7 +238,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   });
 
   app.get("/register", function(req, res) {
-    res.render("dialogs/registration");
+    res.render("signup");
   });
 
   app.post("/register", function(req, res, next) {
