@@ -279,17 +279,19 @@
   }
 
   function updateActionControls(part) {
+
     if (part == null || part == "undefined") return;
 
     console.log("updating controls for: " + part.getAttribute("name").getValueDirect().join(""));
 
-    console.log("Part opacity: " + part.opacity.getValueDirect());
-
-    //g_actionControlDials[0].angle(Math.round(part.opacity.getValueDirect()*360));
-
     if (part.physicsEnabled.getValueDirect() == true) {
       $('.mass').addClass('active-toggle');
-      g_actionControlDials[6].angle(part.physicalProperties.mass.getValueDirect()*10);
+      g_actionControlDials[6].knob.degree = Math.round(part.physicalProperties.mass.getValueDirect())*10;
+      g_actionControlDials[6].angle(Math.round(part.physicalProperties.mass.getValueDirect())*10);
+    } else {
+      $('.mass').removeClass('active-toggle');
+      g_actionControlDials[6].knob.degree = 0;
+      g_actionControlDials[6].angle(0);
     }
   }
 </script>
