@@ -96,8 +96,6 @@ function handleMouse(e)
                   g_sceneInspector.enabled.setValueDirect(false);
                   g_objectInspector.enabled.setValueDirect(true);
 
-                  updateActionControls(g_selectedModel);
-
                   // if the shift key is down switch from move to rotate object
                   if (e.shiftKey) {
                     bridgeworks.get("Object.Move").listen.setValueDirect(false);
@@ -137,6 +135,7 @@ function selectObject(){
   if (!g_selectedModel) return false;
 
   if (g_selectedModel.moveable.getValueDirect()) {
+    updateActionControls(g_selectedModel);
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
   }
   else {
