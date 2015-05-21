@@ -90,9 +90,8 @@
     g_actionControlDials.push(dial);
 
     dial.on('mousemove', function(evt){
-        var oValue = (evt.target.degree/360);
-        var reverseO = 1 - oValue;
-        if (g_selectedModel) g_selectedModel.opacity.setValueDirect(reverseO);
+        var percent = 1 - (evt.target.degree/360);
+        setOpacity(percent);
     });
 
     dial.on('mouseup', function(e) {
@@ -284,14 +283,29 @@
 
     console.log("updating controls for: " + part.getAttribute("name").getValueDirect().join(""));
 
+    // MASS
+    var angle = 0;
+
+    angle = Math.round(part.physicalProperties.mass.getValueDirect())*10;
+
     if (part.physicsEnabled.getValueDirect() == true) {
       $('.mass').addClass('active-toggle');
-      g_actionControlDials[6].knob.degree = Math.round(part.physicalProperties.mass.getValueDirect())*10;
-      g_actionControlDials[6].angle(Math.round(part.physicalProperties.mass.getValueDirect())*10);
+      g_actionControlDials[6].knob.degree = angle; // due to mousemove trigger in JogDial angle function
+      g_actionControlDials[6].angle(angle);
     } else {
       $('.mass').removeClass('active-toggle');
       g_actionControlDials[6].knob.degree = 0;
       g_actionControlDials[6].angle(0);
     }
+
+    angle = 0;
+
+    // OPACITY
+    angle = (1 - part.opacity.getValueDirect())*360;
+
+    console.log("opacity angle: " + angle);
+
+    g_actionControlDials[0].knob.degree = angle; // due to mousemove trigger in JogDial angle function
+    g_actionControlDials[0].angle(angle);
   }
 </script>

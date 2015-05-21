@@ -293,6 +293,13 @@ function setMass(mass) {
   }
 }
 
+function setOpacity(percent) {
+  console.log("fading..." + g_selectedModel.opacity.getValueDirect());
+  
+  if (g_selectedModel) g_selectedModel.opacity.setValueDirect(percent);
+
+}
+
 function showHideSelected() {
   if (g_selectedModel) {
     var show = g_selectedModel.show.getValueDirect();
