@@ -78,14 +78,11 @@
 
       <!--Spheres -->
 
-      <Model name="Sphere1" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="true" physicsEnabled="false" detectCollision="true">
+      <Model name="Sphere1" url="objects/Sphere.lwo" moveable="true" opacity="1" selectable="false" physicsEnabled="false" detectCollision="true">
         <scale x="4" y="4" z="4"/>
         <color r=".75" g="0.3" b="0.73" a="1"/>
         <position x="-10" y="8" z="102"/>
         <physicalProperties>
-          <rollingFriction>.8</rollingFriction>
-          <linearDamping>1</linearDamping>
-          <angularDamping>1</angularDamping>
           <mass>1</mass>
           <friction>0.025</friction>
           <restitution>-1</restitution>
@@ -97,9 +94,6 @@
         <color r=".1" g="0.5" b="0.5" a="1"/>
         <position x="0" y="8" z="102"/>
         <physicalProperties>
-          <rollingFriction>.8</rollingFriction>
-          <linearDamping>1</linearDamping>
-          <angularDamping>1</angularDamping>
           <mass>1</mass>
           <friction>0.025</friction>
           <restitution>-1</restitution>
@@ -111,9 +105,6 @@
         <color r=".75" g="0.35" b="0.05" a="1"/>
         <position x="10" y="8" z="102"/>
         <physicalProperties>
-          <rollingFriction>.8</rollingFriction>
-          <linearDamping>1</linearDamping>
-          <angularDamping>1</angularDamping>
           <mass>1</mass>
           <friction>0.025</friction>
           <restitution>-1</restitution>
