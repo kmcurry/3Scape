@@ -10,7 +10,7 @@ background-image: url("../images/signup-login-background.png");
 
 .modal-title {
 font-family: 'robotobold';
-color: #57B955;
+color: #ff0000;
 text-align: center;
 }
 
@@ -31,6 +31,7 @@ margin: 0;
 
 .continue {
 padding: 0;
+
 }
 </style>
 
@@ -40,7 +41,8 @@ padding: 0;
 
     <div class="modal-header">
           <img src="../images/logo.png" height="100px" width="110px"/>
-          <h3 class="modal-title">Welcome! We're glad you're here!</h3>
+          <h3 class="modal-title">This will delete your profile on 3Scape.<br>
+          This cannot be undone.</h3>
     </div>
 
       <div class="modal-body">
@@ -57,14 +59,16 @@ padding: 0;
               <input class="form-control" id="password" type="password" name="password" >
           </div>
 
-        <a href="https://go.3scape.me/privacy">Privacy Policy</a>
-
       </div>
-      <div class="modal-footer">
-        <div class="col-md-12 continue">
+      <div class ="modal-footer">
+        <div class = "pull-left back">
+          <input action="action"class="btn btn-primary" type="button" value="Back" onclick="history.go(-1);" />
+        </div>
+        <div class="pull-right continue">
           <button type="submit" class="btn btn-primary" onclick="document.onkeydown = handleKey;">Continue &raquo</button>
-        </div>s
+        </div>
       </div>
+
     </form>
   </div>
   <div id="errorDiv"></div>

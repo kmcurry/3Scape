@@ -142,10 +142,11 @@ module.exports = function(passport) {
               console.log('no useer found');
               return done(null,false,req.flash('error', 'Account not found.'));
             }
-
+            else{
             return User.findOne({'email' : email} , function(err,user){
               console.log('removing user with email');
               user.remove();
+            }
             });
         })
     }))
