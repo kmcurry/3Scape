@@ -194,7 +194,7 @@ function processModelXML(name, copy) {
     normalWorld.multiplyVector(bbox_min);
     // formulate position (always shift by bbox_min.y in Y-axis)
     var position = new Vector3D(pointWorld.x - normalWorld.x,
-                                pointWorld.y - bbox_min.y,//normalWorld.y,
+                                pointWorld.y - bbox_min.y + 0.1,//normalWorld.y,
                                 pointWorld.z - normalWorld.z);
     g_selectedModel.getAttribute("position").setValueDirect(position.x, position.y, position.z);
 
