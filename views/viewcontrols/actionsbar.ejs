@@ -81,7 +81,7 @@
 
   function addActionControls() {
 
-    // OPACITY
+    // 0. OPACITY
     var elem = document.getElementsByClassName('opacity')[0];
 
     var dial = JogDial(elem,
@@ -109,7 +109,7 @@
     });
 
 
-    // ROAMER
+    // 1. ROAMER
     elem = document.getElementsByClassName('roam')[0];
 
     dial = JogDial(elem,
@@ -137,7 +137,7 @@
       g_foo = false;
     });
 
-    // COLLIDER
+    // 2. COLLIDER
     elem = document.getElementsByClassName('collide')[0];
 
     dial = JogDial(elem,
@@ -165,7 +165,7 @@
       g_foo = false;
     });
 
-    // FADER
+    // 3. FADER
     elem = document.getElementsByClassName('fade-in-out')[0];
 
     dial = JogDial(elem,
@@ -193,7 +193,7 @@
       g_foo = false;
     });
 
-    // GROWER
+    // 4. GROWER
     elem = document.getElementsByClassName('grow-shrink')[0];
 
     dial = JogDial(elem,
@@ -221,7 +221,7 @@
       g_foo = false;
     });
 
-    // SPINNER
+    // 5. SPINNER
     elem = document.getElementsByClassName('spin')[0];
 
     dial = JogDial(elem,
@@ -249,7 +249,7 @@
       g_foo = false;
     });
 
-    // MASS
+    // 6. MASS
     elem = document.getElementsByClassName('mass')[0];
 
     dial = JogDial(elem,
@@ -307,5 +307,8 @@
 
     g_actionControlDials[0].knob.degree = angle; // due to mousemove trigger in JogDial angle function
     g_actionControlDials[0].angle(angle);
+
+    // COLOR
+
   }
 </script>
