@@ -11,9 +11,20 @@ $(window).load(function(){
     bridgeworks.updateScene(cmd);
   }
   
-  function makeCollider(){
+  function collide(nameCount){
+    console.log("start collide");
+      cmd = "<Update><AnimalMover name='Roaming_collider" + nameCount + "' target='collider" + nameCount + "' linearSpeed='1' angularSpeed='10'/>";
+      cmd += "<Set target='collider" + nameCount + "' detectCollision='" + true + "' detectObstruction='true'>";
+      cmd += "</Set>"
+      cmd += "</Update>";
+    bridgeworks.updateScene(cmd);
+    console.log("end collide");
+  }
+  
+  
+  function makeCollider(nameCount){
     console.log("start collider");
-    var cmd =  "<Model name='collider' url='objects/pyramid.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
+    var cmd =  "<Model name='collider" + nameCount + "' url='objects/pyramid.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
         cmd += "<color r='0.00' g='0.00' b='0.00' a='1'/>";
         cmd += "<scale x='5' y='5' z='5' />"; 
         cmd += "<position x='-50' y='10' z='0' />";  
@@ -22,27 +33,15 @@ $(window).load(function(){
         cmd += "</physicalProperties>";
         cmd += "</Model>";
     bridgeworks.updateScene(cmd);
+      collide(count);
     console.log("end collider");
   }
-  
-  
-  
-  function collide(){
-    console.log("start collide");
-      cmd = "<Update><AnimalMover name='Roaming_collider' target='collider' linearSpeed='1' angularSpeed='10'/>";
-      cmd += "<Set target='collider' detectCollision='" + true + "' detectObstruction='true'>";
-      cmd += "</Set>"
-      cmd += "</Update>";
-    bridgeworks.updateScene(cmd);
-    console.log("end collide");
-  }
-  
+
   makeJewel();
-  
-  setTimeout(function(){
-    makeCollider();
-    collide();
-  
-  }, 1000);
+  var count = 0;
+  setInterval(function(){
+    count = count + 1;
+    makeCollider(count);
+  }, 15000);
   
 });
