@@ -5,7 +5,7 @@ $(window).load(function(){
         cmd += "<scale x='5' y='5' z='5' />"; 
         cmd += "<position x='0' y='10' z='0' />";  
         cmd += "<physicalProperties>";
-        cmd += "<mass>1</mass>";
+        cmd += "<mass>0.5</mass>";
         cmd += "</physicalProperties>";
         cmd += "</Model>";
     bridgeworks.updateScene(cmd);
