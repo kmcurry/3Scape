@@ -27,9 +27,9 @@ $(window).load(function(){
     var cmd =  "<Model name='collider" + nameCount + "' url='objects/pyramid.lwo' moveable='true' opacity='1' selectable='false' physicsEnabled='true' detectCollision='true'>";
         cmd += "<color r='0.00' g='0.00' b='0.00' a='1'/>";
         cmd += "<scale x='5' y='7' z='5' />"; 
-        cmd += "<position x='" + xPos + "' y='15' z='" + zPos + "' />";  
+        cmd += "<position x='" + xPos + "' y='12' z='" + zPos + "' />";  
         cmd += "<physicalProperties>";
-        cmd += "<mass>1</mass>";
+        cmd += "<mass>5</mass>";
         cmd += "</physicalProperties>";
         cmd += "</Model>";
     bridgeworks.updateScene(cmd);
