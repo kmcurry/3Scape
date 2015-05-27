@@ -30,7 +30,7 @@
             <rollingFriction>0.025</rollingFriction>
             <linearDamping>0.025</linearDamping>
             <angularDamping>1</angularDamping>
-            <restitution>2</restitution>
+            <restitution>1</restitution>
             <friction>0.0025</friction>
           </physicalProperties>
       </Model>

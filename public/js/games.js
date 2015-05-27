@@ -13,7 +13,7 @@ $(window).load(function(){
   
   function collide(nameCount){
     console.log("start collide");
-      cmd = "<Update><AnimalMover name='Roaming_collider" + nameCount + "' target='collider" + nameCount + "' linearSpeed='1' angularSpeed='10'/>";
+      cmd = "<Update><AnimalMover name='Roaming_collider" + nameCount + "' target='collider" + nameCount + "' linearSpeed='1' angularSpeed='15'/>";
       cmd += "<Set target='collider" + nameCount + "' detectCollision='" + true + "' detectObstruction='true'>";
       cmd += "</Set>"
       cmd += "</Update>";
@@ -22,12 +22,12 @@ $(window).load(function(){
   }
   
   
-  function makeCollider(nameCount){
+  function makeCollider(nameCount, xPos, zPos){
     console.log("start collider");
-    var cmd =  "<Model name='collider" + nameCount + "' url='objects/pyramid.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
+    var cmd =  "<Model name='collider" + nameCount + "' url='objects/pyramid.lwo' moveable='true' opacity='1' selectable='false' physicsEnabled='true' detectCollision='true'>";
         cmd += "<color r='0.00' g='0.00' b='0.00' a='1'/>";
-        cmd += "<scale x='5' y='5' z='5' />"; 
-        cmd += "<position x='-50' y='10' z='0' />";  
+        cmd += "<scale x='5' y='7' z='5' />"; 
+        cmd += "<position x='" + xPos + "' y='15' z='" + zPos + "' />";  
         cmd += "<physicalProperties>";
         cmd += "<mass>1</mass>";
         cmd += "</physicalProperties>";
@@ -36,12 +36,22 @@ $(window).load(function(){
       collide(count);
     console.log("end collider");
   }
-
+  
+  function randomNumber(){
+    var num = Math.floor(Math.random()*75) + 1; // this will get a number between 1 and 99;
+    num *= Math.floor(Math.random()*2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
+//    console.log(num);
+    return num;
+  };
+  
   makeJewel();
   var count = 0;
   setInterval(function(){
+    var randomX = randomNumber(),
+        randomZ = randomNumber();
+    console.log(randomX + " " + randomZ);
     count = count + 1;
-    makeCollider(count);
-  }, 15000);
+    makeCollider(count, randomX, randomZ);
+  }, 7000);
   
 });

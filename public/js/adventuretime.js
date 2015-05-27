@@ -56,7 +56,7 @@ var now = moment().startOf('hour');
 		// d is for day of week and A is for AM/PM
     
       var formatted = now.format("mmss");
-      console.log("now inside" +now);
+      
       digits.m1.attr('class', digit_to_name[formatted[0]]);
       digits.m2.attr('class', digit_to_name[formatted[1]]);
       digits.s1.attr('class', digit_to_name[formatted[2]]);
