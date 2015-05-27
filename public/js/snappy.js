@@ -6,8 +6,6 @@ var g_sceneInspector = null;
 var g_objectInspector = null;
 var g_selectedModel = null;
 
-var g_modelCount = 1;
-
 var bridgeworks = null;
 
 
@@ -78,11 +76,9 @@ function loadModel(url, copy)
         g_selectedModel.getAttribute("highlight").setValueDirect(false);
     }
 
-    var name = url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
-    name = (++g_modelCount).toString() + ". " + name;
 
+    loadFile("BwContent/" + url, processModelXML, copy);
 
-    loadFile("BwContent/" + url, processModelXML, name, copy);
 }
 
 
@@ -141,7 +137,7 @@ function paste()
 }
 
 // callback for loadFile
-function processModelXML(name, copy) {
+function processModelXML(copy) {
 
     var model = this.responseXML.getElementsByTagName("Model")[0] ||
                 this.responseXML.getElementsByTagName("Box")[0] ||
@@ -150,8 +146,13 @@ function processModelXML(name, copy) {
                 this.responseXML.getElementsByTagName("Plank")[0] ||
                 this.responseXML.getElementsByTagName("Wall")[0];
 
+    var type = "eAttrType." + model.tagName;
+    var count = bridgeworks.registry.getByType(type);
+    console.log("Part type: " + type + " count: " + count);
+
     var n = model.attributes["name"];
-    n.value = name;
+    console.log(n.value);
+    //n.value = name + count.toString();
 
 
     var xstr = (new XMLSerializer()).serializeToString(model);
@@ -207,14 +208,11 @@ function processModelXML(name, copy) {
 
 function reset() {
 
-    g_modelCount = 1;
-
     g_sceneInspector = null;
     g_objectInspector = null;
 
     g_selectedModel = null;
     g_selectPointModel = null;
-
 
 }
 
