@@ -9,18 +9,28 @@
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
     <link rel="stylesheet" type="text/css" href="css/actionsbar.css">
+    <link rel="stylesheet" type="text/css" href="css/adventuretime.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
 		<link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
 		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
-		<script type="text/javascript" src="js/scenes.js"></script>
     <script type="text/javascript" src="js/tablet-resize.js" ></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+    <script type="text/javascript" src="js/adventuretime.js" ></script>
 	</head>
 	<body class="container-fluid" onresize="resize();">
 
 
 		<div class="navbar-fixed-top" >
     	   <%- include('viewcontrols/partsbar'); %>
+		</div>
+    <div id="clock" class="light">
+			<div class="display">
+				<div class="weekdays"></div>
+				<div class="ampm"></div>
+				<div class="alarm"></div>
+				<div class="digits"></div>
+			</div>
 		</div>
 
 		<div id="BwContainer" onclick="handleMouse(event);"
@@ -54,13 +64,16 @@
 
 		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
 		<script type="text/javascript" src="js/BwHelper.js"></script>
+    <script type="text/javascript" src="js/crossbrowser.js"></script>
+    <script type="text/javascript" src="js/scenes.js"></script>
 		<script type="text/javascript" src="js/MapControls.js"></script>
 		<script type="text/javascript" src="js/objectmode.js"></script>
+    <script type="text/javascript" src="js/bootstrap-slider.js"></script>
     <script type="text/javascript" src="js/games.js"></script>
-		<script type="text/javascript" src="js/crossbrowser.js"></script>
-		<script type="text/javascript" src="js/slidemode.js"></script>
+	
+<!--		<script type="text/javascript" src="js/slidemode.js"></script>-->
 		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap-slider.js"></script>
+
 		<link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/base/jquery-ui.css"/>
 		<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 

@@ -23,20 +23,21 @@
               <scale x=".1" y=".1" z=".1"/>
               <color r="1" g="0" b="0" a="1"/>
             </Model>
-      <Model name="Grid" url="objects/Grid.lwo" moveable="false" detectCollision="true" physicsEnabled="true" opacity="0">
+      <Model name="Grid" url="objects/Grid.lwo" moveable="false" detectCollision="true" physicsEnabled="true" opacity="1">
           <scale x="50" y="1" z="50"/>
           <position x="0" y="0" z="0"/>
           <physicalProperties>
-            <rollingFriction>1</rollingFriction>
-            <linearDamping>1</linearDamping>
+            <rollingFriction>0.025</rollingFriction>
+            <linearDamping>0.025</linearDamping>
             <angularDamping>1</angularDamping>
-            <restitution>-1</restitution>
-            <friction>1</friction>
+            <restitution>2</restitution>
+            <friction>0.0025</friction>
           </physicalProperties>
       </Model>
 
   <!--Volcano-->
 
+<!--
       <Model name="Mountain1" url="objects/Pyramid.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="true" detectCollision="true">
         <scale x="25" y="25" z="25"/>
         <color r=".25" g="0.25" b="0.25" a="1"/>
@@ -63,9 +64,11 @@
           <angularDamping>1</angularDamping>
         </physicalProperties>
       </Model>
+-->
 
       <!--Ice -->
       
+<!--
       <Model name="Ice1" url="objects/cube.lwo" moveable="false" opacity="0.5" selectable="false" physicsEnabled="true" detectCollision="true">
         <scale x="50" y="1" z="50"/>
         <color r=".1" g="0.40" b="0.65" a="1"/>
@@ -86,8 +89,10 @@
           <restitution>-1</restitution>
         </physicalProperties>
       </Model>
+-->
      <!-- Sand -->
       
+<!--
        <Model name="Sand1" url="objects/cube.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="true" detectCollision="true">
         <scale x="50" y="1" z="50"/>
         <color r=".75" g="0.70" b="0.65" a="1"/>
@@ -109,8 +114,10 @@
         </physicalProperties>
       </Model>
       
+-->
       <!-- Rock -->
       
+<!--
        <Model name="Rock1" url="objects/cube.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="true" detectCollision="true">
         <scale x="25" y="2" z="65"/>
         <color r=".55" g="0.55" b="0.55" a="1"/>
@@ -142,8 +149,10 @@
         </physicalProperties>
       </Model>
       
+-->
       <!-- Bushes -->
       
+<!--
        <Model name="Bush1" url="objects/sphere.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="true" detectCollision="true">
         <scale x="3" y="2" z="3"/>
         <color r=".25" g="0.55" b="0.25" a="1"/>
@@ -234,8 +243,10 @@
           <restitution>-1</restitution>
         </physicalProperties>
       </Model>
+-->
       
       <!-- railing -->
+<!--
        <Model name="Rail1" url="objects/cube.lwo" moveable="false" opacity="1" selectable="false" physicsEnabled="true" detectCollision="true">
         <scale x="2" y="8" z="125"/>
         <color r=".55" g="0.55" b="0.55" a="1"/>
@@ -277,6 +288,7 @@
           <restitution>-1</restitution>
         </physicalProperties>
       </Model>
+-->
       
       
       
