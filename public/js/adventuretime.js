@@ -14,7 +14,7 @@ $(function(){
 
 	// Positions for the hours, minutes, and seconds
 	var positions = [
-		'h1', 'h2', ':', 'm1', 'm2', ':', 's1', 's2'
+		'm1', 'm2', ':', 's1', 's2'
 	];
 
 	// Generate the digits with the needed markup,
@@ -44,65 +44,28 @@ $(function(){
 
 	});
 
-	// Add the weekday names
-
-//	var weekday_names = 'MON TUE WED THU FRI SAT SUN'.split(' '),
-//		weekday_holder = clock.find('.weekdays');
-//
-//	$.each(weekday_names, function(){
-//		weekday_holder.append('<span>' + this + '</span>');
-//	});
-//
-//	var weekdays = clock.find('.weekdays span');
-
 
 	// Run a timer every second and update the clock
-
+var now = moment().startOf('hour');
+   
 	(function update_time(){
-
+    
 		// Use moment.js to output the current time as a string
 		// hh is for the hours in 12-hour format,
 		// mm - minutes, ss-seconds (all with leading zeroes),
 		// d is for day of week and A is for AM/PM
-
-      var now = moment().format("hhmmss");
-//    var now = moment("001000", "hhmmss").fromNow();
-
-		digits.h1.attr('class', digit_to_name[now[0]]);
-		digits.h2.attr('class', digit_to_name[now[1]]);
-		digits.m1.attr('class', digit_to_name[now[2]]);
-		digits.m2.attr('class', digit_to_name[now[3]]);
-		digits.s1.attr('class', digit_to_name[now[4]]);
-		digits.s2.attr('class', digit_to_name[now[5]]);
-
-		// The library returns Sunday as the first day of the week.
-		// Stupid, I know. Lets shift all the days one position down, 
-		// and make Sunday last
-
-		var dow = now[6];
-		dow--;
-		
-		// Sunday!
-		if(dow < 0){
-			// Make it last
-			dow = 6;
-		}
-
-		// Mark the active day of the week
-//		weekdays.removeClass('active').eq(dow).addClass('active');
-
-		// Set the am/pm text:
-//		ampm.text(now[7]+now[8]);
-
+    
+      var formatted = now.format("mmss");
+      console.log("now inside" +now);
+      digits.m1.attr('class', digit_to_name[formatted[0]]);
+      digits.m2.attr('class', digit_to_name[formatted[1]]);
+      digits.s1.attr('class', digit_to_name[formatted[2]]);
+      digits.s2.attr('class', digit_to_name[formatted[3]]);
+  
+    now = now.add(1, 's');
 		// Schedule this function to be run again in 1 sec
 		setTimeout(update_time, 1000);
 
 	})();
-
-	// Switch the theme
-
-//	$('a.button').click(function(){
-//		clock.toggleClass('light dark');
-//	});
 
 });
