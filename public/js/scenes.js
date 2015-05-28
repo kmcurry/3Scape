@@ -1,14 +1,21 @@
 function load2dvs3d() {
   reset();
-  bridgeworks.contentDir='/BwContent/2Dvs3D/';
+  bridgeworks.contentDir='/BwContent/2Dvs3D';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Pyramid.xml');
+}
+
+function loadbarnville() {
+  console.log("Loading Barnville...");
+  reset();
+  bridgeworks.contentDir='BwContent/Barnville';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('Terrain.xml');
 }
 
 function loadegypt() {
   reset();
   bridgeworks.contentDir='BwContent/Egypt';
-  // don't call onloadModified b/c XML doesn't reset Bw
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('Egypt.xml');
   g_numSlides = 10;

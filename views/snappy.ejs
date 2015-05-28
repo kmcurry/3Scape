@@ -67,6 +67,9 @@
 					<% if (typeof scape != 'undefined') { %>
 						s = '<%- scape %>';
 						s = s.replace('\\', '');
+					<% } %>
+
+					<% if (typeof scapeId != 'undefined') { %>
 						i = '<%- scapeId %>';
 					<% } %>
 

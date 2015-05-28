@@ -16,7 +16,7 @@ module.exports = function(app, config) {
 
     if (req.params.scape) {
 
-      // check the database
+      // Check the database. If this is a scape in our DB then authenticate
       Scape.findOne({ _id: req.params.scape }, function(err, scape) {
         if (scape) {
           if (req.isAuthenticated()) {
@@ -31,6 +31,15 @@ module.exports = function(app, config) {
           var s1 = s.replace(/\"/g, "");  // strip quotes for switch
 
           switch(s1) {
+            case 'barnville':
+              {
+                if (req.isAuthenticated()) {
+                  res.status(200).render('snappy', {
+                    scape: s
+                  });
+                } else (console.log("You must be logged in"));
+              }
+              break;
             case '2dvs3d' :
             case 'egypt' :
             case 'twostroke' :

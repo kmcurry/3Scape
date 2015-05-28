@@ -234,10 +234,19 @@ function save3Scape() {
 function start3Scape(scape, scapeId) {
   bridgeworks = init(document.getElementById("BwContainer"));
 
+  console.log("Starting 3Scape with scape: " + scape + " and scapeId: " + scapeId);
+
   if (scape && scape != "") {
-    console.log("setting storage for: " + scapeId);
-    localStorage.setItem('scapeId', scapeId);
-    bridgeworks.updateScene(scape);
+    if (scapeId && scapeId != "") {
+      console.log("setting storage for: " + scapeId);
+      localStorage.setItem('scapeId', scapeId);
+    }
+    if (scape == "\"barnville\"") {
+      console.log("BARNVILLE COMING UP!");
+      loadbarnville();
+    } else {
+      bridgeworks.updateScene(scape);
+    }
   } else {
     var localScape = getWorkInProgress();
     if (localScape && localScape != ""){
