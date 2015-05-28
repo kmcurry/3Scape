@@ -9,13 +9,13 @@
         </PerspectiveCamera>
         <Group name="Lights">
             <GlobalIllumination name="GlobalLight">
-                <ambient r="1" g="1" b="1"/>
+                <ambient r=".35" g=".35" b=".35"/>
             </GlobalIllumination>
             <PointLight name="PointLight" parent="Camera">
                 <ambient r="0.5" g="0.5" b="0.5"/>
                 <diffuse r=".6" g=".6" b=".6"/>
                 <specular r=".5" g=".5" b=".5"/>
-                <position x="0" y="8900" z="-800"/>
+                <position x="0" y="8900" z="0"/>
             </PointLight>
         </Group>
         <Group name="Models">
