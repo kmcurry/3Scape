@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?bw onLoad="initialize"?>
-<?bwinclude url="DefaultPreferences.xml"?>
+<?bwinclude url="DefaultPreferences.min.xml"?>
 <Scene>
     <Isolator name="Root">
         <PerspectiveCamera name="Camera" zoom="3.2" nearDistance=".1" farDistance="100000">
@@ -19,12 +19,12 @@
             </PointLight>
         </Group>
         <Group name="Models">
-            <Model name="Terrain" url="objects/Terrain.lwo" moveable="false" detectCollision="true">
+            <Model name="Ground" url="objects/Terrain.lwo" moveable="false" detectCollision="true">
                 <physicalProperties>
                     <mass>0</mass>
                     <restitution>1.3</restitution>
                     <friction>3.2</friction>
-                </physicalProperties>  
+                </physicalProperties>
             </Model>
             <Model name="SelectPoint" url="objects/Sphere.lwo" moveable="false" opacity="0" selectable="false" physicsEnabled="false">
               <scale x=".1" y=".1" z=".1"/>
