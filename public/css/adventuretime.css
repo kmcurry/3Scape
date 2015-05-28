@@ -318,108 +318,33 @@ section, footer, header, aside{
 	top:34px;
 }
 
-
-/*-------------------------
-	The Alarm
---------------------------*/
-
-
-/*
-#clock .alarm{
-	width:16px;
-	height:16px;
-	bottom:20px;
-	background:url('../images/alarm_light.jpg');
-	position:absolute;
-	opacity:0.2;
+.winnerMessage{
+  position:absolute;
+  width:500px;
+  left:50%;
+  margin-left: -250px;
+  top:50px;
+  z-index: 1;
+  background-color:#46A8D2;
+  color:#fff;
+  opacity:0;
+  transition: opacity 1s ease;
+  text-align:center;
+  padding:20px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.3);
 }
 
-#clock .alarm.active{
-	opacity:1;
-}
-*/
-
-
-/*-------------------------
-	Weekdays
---------------------------*/
-
-
-/*
-#clock .weekdays{
-	font-size:12px;
-	position:absolute;
-	width:100%;
-	top:10px;
-	left:0;
-	text-align:center;
+.winnerMessage.winner{
+  z-index:5000000;
+  opacity:1;
 }
 
-
-#clock .weekdays span{
-	opacity:0.2;
-	padding:0 10px;
+.winnerMessage button{
+  border:none;
+  padding:9px;
+  border-radius:0;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  background:#fff;
+  color:#46A8D2;
+  text-transform: uppercase;
 }
-
-#clock .weekdays span.active{
-	opacity:1;
-}
-*/
-
-
-/*-------------------------
-		AM/PM
---------------------------*/
-
-
-/*
-#clock .ampm{
-	position:absolute;
-	bottom:20px;
-	right:20px;
-	font-size:12px;
-}
-*/
-
-
-/*-------------------------
-		Button
---------------------------*/
-
-
-/*
-.button-holder{
-	text-align:center;
-	padding-bottom:100px;
-}
-
-a.button{
-	background-color:#f6a7b3;
-	
-	background-image:-webkit-linear-gradient(top, #f6a7b3, #f0a3af);
-	background-image:-moz-linear-gradient(top, #f6a7b3, #f0a3af);
-	background-image:linear-gradient(top, #f6a7b3, #f0a3af);
-
-	border:1px solid #eb9ba7;
-	border-radius:2px;
-
-	box-shadow:0 2px 2px #ccc;
-
-	color:#fff;
-	text-decoration: none !important;
-	padding:15px 20px;
-	display:inline-block;
-	cursor:pointer;
-}
-
-a.button:hover{
-	opacity:0.9;
-}
-*/
-
-
-/*----------------------------
-	The Demo Footer
------------------------------*/
-
-

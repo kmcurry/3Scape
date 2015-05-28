@@ -1,25 +1,13 @@
 $(function(){
 
-	// Cache some selectors
-
 	var clock = $('#clock'),
 		alarm = clock.find('.alarm'),
 		ampm = clock.find('.ampm');
-
-	// Map digits to their names (this will be an array)
 	var digit_to_name = 'zero one two three four five six seven eight nine'.split(' ');
-
-	// This object will hold the digit elements
 	var digits = {};
-
-	// Positions for the hours, minutes, and seconds
 	var positions = [
 		'm1', 'm2', ':', 's1', 's2'
 	];
-
-	// Generate the digits with the needed markup,
-	// and add them to the clock
-
 	var digit_holder = clock.find('.digits');
 
 	$.each(positions, function(){
@@ -43,12 +31,19 @@ $(function(){
 		}
 
 	});
-
+  function checkTime(){
+    if ( $(".digits div:nth-child(4)").hasClass("two")){
+      console.log("two minutes!");
+      $(".digits").addClass("winner");
+      $(".winnerMessage").addClass("winner");
+      clearInterval(handle);
+    };
+  } 
 
 	// Run a timer every second and update the clock
 var now = moment().startOf('hour');
    
-	(function update_time(){
+	function update_time(){
     
 		// Use moment.js to output the current time as a string
 		// hh is for the hours in 12-hour format,
@@ -64,8 +59,8 @@ var now = moment().startOf('hour');
   
     now = now.add(1, 's');
 		// Schedule this function to be run again in 1 sec
-		setTimeout(update_time, 1000);
-
-	})();
+    checkTime();
+	};
+  var handle = setInterval(update_time, 1000);
 
 });

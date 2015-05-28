@@ -57,22 +57,14 @@ $(window).load(function(){
     count = count + 1;
     makeCollider(count, randomX, randomZ);
   }, 7000);
-  
-//  function removeCollider(){
-//    if ( positionY < 0 ){
-//      allColliders.indexOf()
-//    }
-//  };
+
   
   function checkY(partY){
     var partToCheck = bridgeworks.get(partY),
         positionXYZ = partToCheck.position.getValueDirect(),
         positionY = positionXYZ.y;
-        return positionY;
-//    console.log(partY + " position Y " + positionY);
+    return positionY;
   };
-  
-  
   
   setInterval(function(){
     for (i=0; i < allColliders.length; i++){
@@ -83,7 +75,6 @@ $(window).load(function(){
       }
     };
   }, 7000);
-  
-  
+
   
 });
