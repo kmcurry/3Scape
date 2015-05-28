@@ -2,11 +2,11 @@ $(window).load(function(){
   function startGame(){
     var allColliders = [];
 
-    function makeJewel(){
+    function makeJewel(xPos, zPos){
       var cmd =  "<Model name='jewel' url='objects/cube.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
           cmd += "<color r='0.45' g='0.025' b='0.34' a='1'/>";
           cmd += "<scale x='5' y='5' z='5' />"; 
-          cmd += "<position x='0' y='10' z='0' />";  
+          cmd += "<position x='" + xPos + "' y='10' z='" + zPos + "' />";  
           cmd += "<physicalProperties>";
           cmd += "<mass>0.5</mass>";
           cmd += "</physicalProperties>";
@@ -16,7 +16,7 @@ $(window).load(function(){
 
     function collide(nameCount){
       console.log("start collide");
-        cmd = "<Update><AnimalMover name='Roaming_collider" + nameCount + "' target='collider" + nameCount + "' linearSpeed='1' angularSpeed='15'/>";
+        cmd = "<Update><AnimalMover name='Roaming_collider" + nameCount + "' target='collider" + nameCount + "' linearSpeed='3' angularSpeed='20'/>";
         cmd += "<Set target='collider" + nameCount + "' detectCollision='" + true + "' detectObstruction='true'>";
         cmd += "</Set>"
         cmd += "</Update>";
@@ -30,7 +30,7 @@ $(window).load(function(){
       var cmd =  "<Model name='" + colliderName + "' url='objects/pyramid.lwo' moveable='true' opacity='1' selectable='false' physicsEnabled='true' detectCollision='true'>";
           cmd += "<color r='0.00' g='0.00' b='0.00' a='1'/>";
           cmd += "<scale x='5' y='7' z='5' />"; 
-          cmd += "<position x='" + xPos + "' y='12' z='" + zPos + "' />";  
+          cmd += "<position x='" + xPos + "' y='10' z='" + zPos + "' />";  
           cmd += "<physicalProperties>";
           cmd += "<mass>5</mass>";
           cmd += "</physicalProperties>";
@@ -49,7 +49,7 @@ $(window).load(function(){
       return num;
     };
 
-    makeJewel();
+    makeJewel(randomNumber(), randomNumber());
     var count = 0;
     var placeColliders = setInterval(function(){
       var randomX = randomNumber(),
