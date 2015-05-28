@@ -78,6 +78,15 @@ $(window).load(function(){
         $(".loseMessage").addClass("lose");
       }
   }, 7000);
+  
+  $(".loseMessage button, .winnerMessage button").click(function(){
+    bridgeworks.contentDir = '/BwContent';
+    bridgeworks.onLoadModified();
+    bridgeworks.updateScene('AdventureTime.xml');
+    $(".loseMessage").removeClass("lose");
+    $(".winnerMessage").removeClass("winner");
+    makeJewel();
+  });
 
   
 });
