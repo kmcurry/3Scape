@@ -74,6 +74,9 @@ $(window).load(function(){
         allColliders.splice(i, 1);
       }
     };
+    if ( checkY("jewel") < 0 ){
+        $(".loseMessage").addClass("lose");
+      }
   }, 7000);
 
   

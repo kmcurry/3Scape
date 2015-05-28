@@ -32,7 +32,7 @@ $(function(){
 
 	});
   function checkTime(){
-    if ( $(".digits div:nth-child(4)").hasClass("two")){
+    if ( $(".digits div:nth-child(2)").hasClass("two")){
       console.log("two minutes!");
       $(".digits").addClass("winner");
       $(".winnerMessage").addClass("winner");
