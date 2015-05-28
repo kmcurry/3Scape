@@ -68,7 +68,10 @@ function runTimer(){
 	};
   handle = setInterval(update_time, 1000);
 };
-  runTimer();
+  $(".startGame button").click(function(){
+    $(".startGame").removeClass("winner");
+    runTimer();
+  });
   $(".loseMessage button, .winnerMessage button").click(function(){
     clearInterval(handle);
    runTimer();

@@ -81,7 +81,11 @@ $(window).load(function(){
         }
     }, 7000);
   };
-  startGame();
+  
+  $(".startGame button").click(function(){
+    startGame();
+  });
+
     $(".loseMessage button, .winnerMessage button").click(function(){
       bridgeworks.contentDir = '/BwContent';
       bridgeworks.onLoadModified();

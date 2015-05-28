@@ -318,7 +318,8 @@ section, footer, header, aside{
 	top:34px;
 }
 
-.winnerMessage{
+.winnerMessage,
+.startGame{
   position:absolute;
   width:500px;
   left:50%;
@@ -334,12 +335,14 @@ section, footer, header, aside{
   box-shadow: 0 1px 5px rgba(0,0,0,0.3);
 }
 
-.winnerMessage.winner{
+.winnerMessage.winner,
+.startGame.winner{
   z-index:5000000;
   opacity:1;
 }
 
-.winnerMessage button{
+.winnerMessage button,
+.startGame button{
   border:none;
   padding:9px;
   border-radius:0;
