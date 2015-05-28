@@ -62,16 +62,19 @@
 				if (document.readyState == "complete") {
 
 					var s = "";
-					var i = "";
+					var r = "";
 
 					<% if (typeof scape != 'undefined') { %>
 						s = '<%- scape %>';
 						s = s.replace('\\', '');
-						i = '<%- scapeId %>';
+					<% } %>
+
+					<% if (typeof scapeRef != 'undefined') { %>
+						r = '<%- scapeRef %>';
 					<% } %>
 
 
-					start3Scape(s, i);
+					start3Scape(s, r);
 
 					addActionControls();
 

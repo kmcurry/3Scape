@@ -62,35 +62,35 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   // DELETING
   app.post('/delete', function (req, res, next) {
-        if (req.user.validPassword(req.body.password)) {
+    if (req.user.validPassword(req.body.password)) {
 
-            Creator.findOne({'email' : req.user.email} , function(err,creator)
-            {
-              if(err)
-              {
-                console.log(err.message);
-                res.redirect('/profile');
-              }
-              if(!creator)
-              {
-                console.log('creator not found');
-                res.redirect('/profile');
-              }
-              else
-              {
-                console.log('removing 3scaper');
-                creator.remove();
-                res.redirect('http://3scape.me');
-              }
-
-            });
+        Creator.findOne({'email' : req.user.email} , function(err,creator)
+        {
+          if(err)
+          {
+            console.log(err.message);
+            res.redirect('/profile');
           }
-            else
-            {
-              req.flash('error_message', 'Incorrect password. Please try again.');
-              res.redirect('/profile');
+          if(!creator)
+          {
+            console.log('creator not found');
+            res.redirect('/profile');
+          }
+          else
+          {
+            console.log('removing 3scaper');
+            creator.remove();
+            res.render('/opt-out');
+          }
 
-            }
+        });
+      }
+      else
+      {
+        req.flash('error_message', 'Incorrect password. Please try again.');
+        res.redirect('/profile');
+
+      }
 
   });
 
@@ -127,12 +127,13 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     res.redirect('login');
   });
 
+  // WRITTEN FOR WooCommmerce shopping cart
+  // But not used
   app.post('/auth/new', function (req, res) {
     console.log("Welcome new 3Scaper!");
 
     var striper = req.body;
     striper = striper.data.object;
-    console.log(striper.email);
 
 
     // find a user whose email is the same as the forms email
@@ -182,8 +183,13 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   });
 
+  app.get("/new", function (req, res) {
+    var scapeRef: process.pid + (+new Date()).toString(36);
+    res.json(scapeRef);
+  });
+
   app.post("/new", function (req, res) {
-    var scapeId = "";
+    var scapeRef = "";
 
     if (req.user) {
       var creator = req.user;
@@ -192,23 +198,24 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
       var scape = new Scape();
       scape.creator = creator.name;
+      scape.scapeRef = process.pid + (+new Date()).toString(36);
 
       scape.save(function(err) {
         if (err) console.log("error saving scape: " + err);
       });
 
 
-      creator.scapes.push(scape._id);
+      creator.scapes.push(scape.scapeRef);
 
       creator.save(function(err) {
         if (err) console.log("error saving creator: " + err);
       });
 
-      scapeId = scape._id;
+      scapeRef = scape.scapeRef;
 
     }
 
-    res.json(scapeId);
+    res.json(scapeRef);
 
   });
 
@@ -340,13 +347,13 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   app.post("/save", function(req, res) {
     if (req.user) {
-      console.log("saving scape: " + req.body.scapeId);
+      console.log("saving scape: " + req.body.scapeRef);
 
       var creator = req.user;
 
-      if (req.body.scapeId) {
+      if (req.body.scapeRef) {
 
-        Scape.findOne( { _id: mongoose.Types.ObjectId(req.body.scapeId) }, function(err, scape) {
+        Scape.findOne( { scapeRef: req.body.scapeRef }, function(err, scape) {
           if (scape) {
             scape.content = req.body.scape;
 

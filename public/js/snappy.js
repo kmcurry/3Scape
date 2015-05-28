@@ -10,18 +10,17 @@ var g_modelCount = 1;
 
 var bridgeworks = null;
 
+var g_scapeRef = "";
+
 
 
 // functions are organized by alpha until refactored
 
 function autoSave(){
 
-  if (true) {
-    serializedScene = "";
-
-    var command = "<Serialize target='Root'/>";
-    bridgeworks.updateScene(command);
-    localStorage.setItem("autoSave",serializedScene);
+  if (g_scapeRef != "") {
+    serializeBw();
+    localStorage.setItem(g_scapeRef,serializedScene);
   }
 }
 
@@ -67,7 +66,7 @@ function cut()
 }
 
 function getWorkInProgress() {
-  return localStorage.getItem("autoSave");
+  return localStorage.getItem("scape");
 }
 
 function loadModel(url, copy)
@@ -88,27 +87,26 @@ function loadModel(url, copy)
 
 function new3Scape() {
     save3Scape();
-    reset();
-    bridgeworks.contentDir = '/BwContent';
-    bridgeworks.onLoadModified();
-    bridgeworks.updateScene('grid-50.xml');
+
+    loadgrid50();
 
     // QTP: post to server right away or wait until an autosave event?
 
     $.ajax({
       url: 'new',
-      type: 'POST',
+      type: 'GET',
       contentType: 'application/json',
-      data: JSON.stringify({scape:localStorage.getItem('autoSave')}),
       success: updateLocalStorage
     });
+
     window.location.pathname = "/";
 
 }
 
-function updateLocalStorage(scapeId) {
-  console.log("Updating local storage for scape: " + scapeId);
-  localStorage.setItem("scapeId", scapeId);
+function updateLocalStorage(scapeRef) {
+  console.log("Updating local storage for scape: " + scapeRef);
+  g_scapeRef = scapeRef;
+  localStorage.setItem(scapeRef, serializeBw());
 }
 
 var onHoldInterval = null;
@@ -207,18 +205,20 @@ function processModelXML(name, copy) {
 
 function reset() {
 
-    g_modelCount = 1;
+  g_modelCount = 0;
 
-    g_sceneInspector = null;
-    g_objectInspector = null;
+  g_sceneInspector = null;
+  g_objectInspector = null;
 
-    g_selectedModel = null;
-    g_selectPointModel = null;
+  g_selectedModel = null;
+  g_selectPointModel = null;
 
-
+  g_scapeRef = "";
 }
 
 function save3Scape() {
+
+  if (g_scapeRef == "") return;
 
   autoSave();
 
@@ -227,26 +227,30 @@ function save3Scape() {
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
-      scapeId: localStorage.getItem('scapeId'),
-      scape: localStorage.getItem('autoSave')
+      scapeRef: g_scapeRef,
+      scape: localStorage.getItem(g_scapeRef)
       })
   });
 }
 
-function start3Scape(scape, scapeId) {
+function start3Scape(scape, scapeRef) {
   bridgeworks = init(document.getElementById("BwContainer"));
 
-  if (scape && scape != "") {
-    console.log("setting storage for: " + scapeId);
-    localStorage.setItem('scapeId', scapeId);
+  if (scape && scape != "") { // if the url included a scape ref id...
+    if (scapeRef && scapeRef != "") { // this *shouldn't* ever be empty here
+      console.log("setting storage for: " + scapeRef);
+      g_scapeRef = scapeRef;
+      localStorage.setItem(scapeRef, scape);
+    }
     bridgeworks.updateScene(scape);
-  } else {
+  } else { // ...or if there's something in local storage...
     var localScape = getWorkInProgress();
     if (localScape && localScape != ""){
-      console.log("Loading from local storage. Scape id is: " + localStorage.getItem("scapeId"));
+      console.log("Loading from local storage. Scape Ref is: " + localStorage.getItem("scapeRef"));
       bridgeworks.updateScene(localScape);
     }
-    else {
+    else { // ...otherwise this is a new 3scape.
+      console.log("This is a new 3Scape!");
       new3Scape();
     }
   }
@@ -257,4 +261,11 @@ function start3Scape(scape, scapeId) {
 
   window.addEventListener("beforeunload", save3Scape);
 
+}
+
+function serializeBw(){
+  serializedScene = ""; // WARNING: GLOBAL VAR SHARED WITH BRIDGEWORKS!
+
+  var command = "<Serialize target='Root'/>";
+  bridgeworks.updateScene(command);
 }
