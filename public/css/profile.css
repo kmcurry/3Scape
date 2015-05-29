@@ -207,28 +207,17 @@
 
 }
 
-body { word-wrap:break-word;
-}
 
-#container {
-margin: 0 auto;
-}
-
-h1 { margin: 0 auto;
-}
-
-h1.row {
-  margin-bottom: 1%;
-}
 
 .banner { width: 100%;
+
 }
 
 /* Edit Profile Button */
-a.edit {color: white;
+a.edit-btn { color: white;
 text-decoration: none;
 display: inline-block;
-padding: 10px;
+padding: 5px 10px;
 background:linear-gradient( 90deg, rgb(87,186,85) , rgb(186,213,50) , rgb(87,186,85) );
 background-size: 200% 100%;
 border-radius: 20px;
@@ -237,13 +226,54 @@ font-family: "robotobold";
 
 }
 
-a.edit:hover { background-position: -100% 0;
+a.edit-btn:hover { background-position: -100% 0;
 
 }
 
-a.edit:active { border-radius: 0;
+a.edit-btn:active { border-radius: 0;
 }
 
+
+a.btn { color: white;
+text-decoration: none;
+display: inline-block;
+padding: 5px 10px;
+background:linear-gradient( 90deg, rgb(28,117,187) , rgb(70,168,210) , rgb(28,117,187) );
+background-size: 200% 100%;
+border-radius: 20px;
+transition: all ease 0.2s;
+font-family: "robotobold";
+
+}
+
+a.btn:hover { color: white;
+  background-position: -100% 0;
+
+}
+
+a.btn:active { border-radius: 0;
+
+}
+
+a.delete-btn {
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 10px;
+  background:linear-gradient( 90deg, rgb(255,0,0) , rgb(161,0,0) , rgb(255,0,0) );
+  background-size: 200% 100%;
+  border-radius: 20px;
+  transition: all ease 0.2s;
+  font-family: "robotobold";
+  cursor: pointer;
+}
+
+a.delete-btn:hover {
+  background-position: -100% 0;
+}
+
+a.delete-btn:active { border-radius: 0;
+}
 
 /* Place profile pics here */
 
@@ -295,11 +325,12 @@ text-align: center;
 
 
 #category { margin: 0 auto;
+display: inline-block;
 margin-bottom: 1%;
-background-image:url(../images/category-3scapes.png);
-width: 80%;
-height: 85px;
-clear: both;
+background-image: url(../images/category-3scapes.png);
+background-repeat: no-repeat;
+height: 86px;
+width: 100%;
 }
 
 #scapes { margin: 0 auto;
