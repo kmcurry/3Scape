@@ -66,7 +66,7 @@ $(window).load(function(){
 
     function makeJewel(xPos, zPos){
       var cmd =  "<Model name='jewel' url='objects/jewel.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
-          cmd += "<color r='0.40' g='0.025' b='0.25' a='1'/>";
+          cmd += "<color r='0.50' g='0.025' b='0.35' a='1'/>";
           cmd += "<scale x='10' y='10' z='10' />";
           cmd += "<rotation x='0' y='150.0' z='0' />";
           cmd += "<position x='" + xPos + "' y='10' z='" + zPos + "' />";  
