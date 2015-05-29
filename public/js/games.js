@@ -3,9 +3,9 @@ $(window).load(function(){
     var allColliders = [];
 
     function makeJewel(xPos, zPos){
-      var cmd =  "<Model name='jewel' url='objects/cube.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
-          cmd += "<color r='0.45' g='0.025' b='0.34' a='1'/>";
-          cmd += "<scale x='5' y='5' z='5' />"; 
+      var cmd =  "<Model name='jewel' url='objects/jewel.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
+          cmd += "<color r='0.40' g='0.025' b='0.34' a='1'/>";
+          cmd += "<scale x='10' y='10' z='10' />"; 
           cmd += "<position x='" + xPos + "' y='10' z='" + zPos + "' />";  
           cmd += "<physicalProperties>";
           cmd += "<mass>0.5</mass>";
@@ -28,8 +28,8 @@ $(window).load(function(){
     function makeCollider(nameCount, xPos, zPos){
       var colliderName = "collider" + nameCount;
       var cmd =  "<Model name='" + colliderName + "' url='objects/pyramid.lwo' moveable='true' opacity='1' selectable='false' physicsEnabled='true' detectCollision='true'>";
-          cmd += "<color r='0.00' g='0.00' b='0.00' a='1'/>";
-          cmd += "<scale x='5' y='7' z='5' />"; 
+          cmd += "<color r='0.1' g='0.1' b='0.1' a='1'/>";
+          cmd += "<scale x='8' y='8' z='8' />"; 
           cmd += "<position x='" + xPos + "' y='10' z='" + zPos + "' />";  
           cmd += "<physicalProperties>";
           cmd += "<mass>5</mass>";
