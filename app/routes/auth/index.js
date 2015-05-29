@@ -6,6 +6,63 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   var mongoose = require('mongoose');
   var stripe = require('stripe')(config.payment.secKey);
 
+  // WRITTEN FOR WooCommmerce shopping cart
+  // But not used
+  app.post('/auth/new', function (req, res) {
+    console.log("Welcome new 3Scaper!");
+
+    var striper = req.body;
+    striper = striper.data.object;
+
+
+    // find a user whose email is the same as the forms email
+    // we are checking to see if the user trying to login already exists
+    Creator.findOne({ 'email' :  striper.email }, function(err, user) {
+        // if there are any errors, return the error
+        if (err)
+          res.status(200).send("Error");
+
+        // check to see if theres already a user with that email
+        if (user) {
+            console.log("3Scaper already exists");
+            res.status(200).send("3Scaper already exists");
+        } else {
+
+            // if there is no user with that email
+            // create the user
+            var new3Scaper            = new Creator();
+
+            var tempPass = crypto.randomBytes(8).toString('hex');
+
+            // set the user's local credentials
+            new3Scaper.email    = striper.email;
+            new3Scaper.name     = striper.email;
+            new3Scaper.password = new3Scaper.generateHash(tempPass);
+
+            // save the user
+            new3Scaper.save(function(err) {
+                if (err)
+                    throw err;
+            });
+
+            // email
+            if (config.email.smtpUser) {
+              console.log("Sending welcome mailer.");
+              utilities.emailer.send({
+                to: new3Scaper.email,
+                tempPass: tempPass,
+                templateId: config.email.welcome
+              });
+            }
+
+            res.sendStatus(201);
+        }
+
+    });
+
+  });
+
+
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
       creator: req.creator,
@@ -127,88 +184,37 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     res.redirect('login');
   });
 
-  // WRITTEN FOR WooCommmerce shopping cart
-  // But not used
-  app.post('/auth/new', function (req, res) {
-    console.log("Welcome new 3Scaper!");
-
-    var striper = req.body;
-    striper = striper.data.object;
-
-
-    // find a user whose email is the same as the forms email
-    // we are checking to see if the user trying to login already exists
-    Creator.findOne({ 'email' :  striper.email }, function(err, user) {
-        // if there are any errors, return the error
-        if (err)
-          res.status(200).send("Error");
-
-        // check to see if theres already a user with that email
-        if (user) {
-            console.log("3Scaper already exists");
-            res.status(200).send("3Scaper already exists");
-        } else {
-
-            // if there is no user with that email
-            // create the user
-            var new3Scaper            = new Creator();
-
-            var tempPass = crypto.randomBytes(8).toString('hex');
-
-            // set the user's local credentials
-            new3Scaper.email    = striper.email;
-            new3Scaper.name     = striper.email;
-            new3Scaper.password = new3Scaper.generateHash(tempPass);
-
-            // save the user
-            new3Scaper.save(function(err) {
-                if (err)
-                    throw err;
-            });
-
-            // email
-            if (config.email.smtpUser) {
-              console.log("Sending welcome mailer.");
-              utilities.emailer.send({
-                to: new3Scaper.email,
-                tempPass: tempPass,
-                templateId: config.email.welcome
-              });
-            }
-
-            res.sendStatus(201);
-        }
-
-    });
-
-  });
-
-  app.get("/new", function (req, res) {
-    var scapeRef: process.pid + (+new Date()).toString(36);
-    res.json(scapeRef);
-  });
 
   app.post("/new", function (req, res) {
-    var scapeRef = "";
+
+    var scapeRef = process.pid + (+new Date()).toString(36);
 
     if (req.user) {
       var creator = req.user;
 
-      console.log("Saving a new 3Scape");
+      console.log("Creating a new 3Scape for " + creator.name + " with ref: " + scapeRef);
 
       var scape = new Scape();
       scape.creator = creator.name;
-      scape.scapeRef = process.pid + (+new Date()).toString(36);
+      scape.scapeRef = scapeRef;
+      scape.title = "Untitled 3Scape";
+      scape.content = "";
 
       scape.save(function(err) {
-        if (err) console.log("error saving scape: " + err);
+        if (err) {
+          console.log("error saving scape: " + err);
+          res.sendStatus(500);
+        }
       });
 
 
       creator.scapes.push(scape.scapeRef);
 
       creator.save(function(err) {
-        if (err) console.log("error saving creator: " + err);
+        if (err) {
+          console.log("error saving creator: " + err);
+          res.sendStatus(500);
+        }
       });
 
       scapeRef = scape.scapeRef;
@@ -349,22 +355,30 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     if (req.user) {
       console.log("saving scape: " + req.body.scapeRef);
 
-      var creator = req.user;
-
       if (req.body.scapeRef) {
 
+        // a scape must exist from /new in order to be saved, else error
         Scape.findOne( { scapeRef: req.body.scapeRef }, function(err, scape) {
           if (scape) {
+            console.log("Found existing scape for " + scape.scapeRef + " while saving. Updating...");
             scape.content = req.body.scape;
 
             scape.save(function(err) {
-              if (err) console.log("Save scape error: " + err);
+              if (err) {
+                console.log("Save scape error: " + err);
+                res.sendStatus(500);
+              } else {
+                res.sendStatus(200);
+              }
             });
           } else {
             console.log("no scape: " + err);
+            res.sendStatus(500);
           }
 
         });
+      } else {
+        res.sendStatus(500);
       }
 
     }

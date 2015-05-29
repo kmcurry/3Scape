@@ -22,9 +22,12 @@ module.exports = function(app, config) {
           if (req.isAuthenticated()) {
             res.status(200).render('snappy', {
               scape: scape.content,
-              scapeRef: req.params.scape
+              scapeRef: scape.scapeRef
             });
-          } else (console.log("You must be logged in"));
+          } else {
+            console.log("Unauthorized request for scape " + req.params.scape);
+            res.redirect("/login");
+          }
 
         } else {
           s = JSON.stringify(req.params.scape).toLowerCase();
@@ -100,7 +103,7 @@ module.exports = function(app, config) {
 
       if (req.user) {
 
-        Scape.find({ creator : req.user.email }, {_id : 1}, function(err, scapes) {
+        Scape.find({ creator : req.user.email }, {scapeRef : 1}, function(err, scapes) {
           if (err) {
             return err;
           }
@@ -150,8 +153,6 @@ module.exports = function(app, config) {
       // if req.user.joined is undefined then error
 
       var ONE_DAY = 3600000 * 24; /* ms */
-
-      req.user.joined) + " ONE_DAY: " + ONE_DAY);
 
       if (req.user.verified == false &&
         ((new Date()) - req.user.joined) > ONE_DAY) {

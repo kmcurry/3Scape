@@ -16,18 +16,21 @@ var g_scapeRef = "";
 
 // functions are organized by alpha until refactored
 
-function autoSave(){
+function autoSave() {
 
   if (g_scapeRef != "") {
+    console.log("autoSaving: " + g_scapeRef);
     serializeBw();
     localStorage.setItem(g_scapeRef,serializedScene);
+  } else {
+    console.log("autoSave failed. scapeRef is empty.");
   }
 }
 
 function copy()
 {
     if (g_selectedModel) {
-        g_copyModel = g_selectedModel;
+        g_copyModel = g_selectedModel; // loadModel handles the rest
     }
 }
 
@@ -66,7 +69,7 @@ function cut()
 }
 
 function getWorkInProgress() {
-  return localStorage.getItem("scape");
+  return localStorage.getItem(g_scapeRef);
 }
 
 function loadModel(url, copy)
@@ -86,27 +89,18 @@ function loadModel(url, copy)
 
 
 function new3Scape() {
-    save3Scape();
+
+    console.log("Client is creating a new 3Scape.");
 
     loadgrid50();
 
-    // QTP: post to server right away or wait until an autosave event?
-
     $.ajax({
       url: 'new',
-      type: 'GET',
+      type: 'POST',
       contentType: 'application/json',
       success: updateLocalStorage
     });
 
-    window.location.pathname = "/";
-
-}
-
-function updateLocalStorage(scapeRef) {
-  console.log("Updating local storage for scape: " + scapeRef);
-  g_scapeRef = scapeRef;
-  localStorage.setItem(scapeRef, serializeBw());
 }
 
 var onHoldInterval = null;
@@ -200,6 +194,7 @@ function processModelXML(name, copy) {
 
     console.log("Part added: '" + name + "'");
 
+    autoSave();
 }
 
 
@@ -222,6 +217,8 @@ function save3Scape() {
 
   autoSave();
 
+  console.log("Client is saving a scape: " + g_scapeRef);
+
   $.ajax({
     url: 'save',
     type: 'POST',
@@ -234,7 +231,7 @@ function save3Scape() {
 }
 
 function start3Scape(scape, scapeRef) {
-  bridgeworks = init(document.getElementById("BwContainer"));
+  bridgeworks = initBw(document.getElementById("BwContainer"));
 
   if (scape && scape != "") { // if the url included a scape ref id...
     if (scapeRef && scapeRef != "") { // this *shouldn't* ever be empty here
@@ -257,10 +254,6 @@ function start3Scape(scape, scapeRef) {
 
   g_modelCount = countParts();
 
-  //var saveInterval = setInterval(autoSave, 30000);
-
-  window.addEventListener("beforeunload", save3Scape);
-
 }
 
 function serializeBw(){
@@ -268,4 +261,10 @@ function serializeBw(){
 
   var command = "<Serialize target='Root'/>";
   bridgeworks.updateScene(command);
+}
+
+function updateLocalStorage(scapeRef) {
+  console.log("Updating local storage for scape: " + scapeRef);
+  g_scapeRef = scapeRef;
+  localStorage.setItem(g_scapeRef, serializeBw());
 }
