@@ -5,7 +5,6 @@ margin: 0;
 
 .modal-content {
 font-family: 'robotolight';
-background-image: url("../images/signup-login-background.png");
 }
 
 .modal-title {
@@ -36,16 +35,16 @@ padding: 0;
 
 <div class="delete modal modal-dialog fade">
   <div class="modal-content">
-    <form action="/delete" method="POST" id="delete-form">
+    <form action="/delete3Scaper" method="POST" id="delete-form">
 
     <div class="modal-header">
           <img src="../images/logo.png" height="100px" width="110px"/>
-          <h3 class="modal-title">Welcome! We're glad you're here!</h3>
+          <h3 class="modal-title" style="color:red">THIS WILL DELETE YOUR 3SCAPE PROFILE!</h3>
     </div>
 
       <div class="modal-body">
 
-          <p>Please provide your password to confirm this action.</p>
+          <p class="alert alert-danger">Please provide your password to confirm this action.</p>
 
           <!-- show any messages that come back with authentication -->
           <% if (typeof message != 'undefined' && message.length > 0) { %>
@@ -57,17 +56,14 @@ padding: 0;
               <input class="form-control" id="password" type="password" name="password" >
           </div>
 
-        <a href="https://go.3scape.me/privacy">Privacy Policy</a>
-
       </div>
       <div class="modal-footer">
         <div class="col-md-12 continue">
           <button type="submit" class="btn btn-primary" onclick="document.onkeydown = handleKey;">Continue &raquo</button>
-        </div>s
+        </div>
       </div>
     </form>
   </div>
-  <div id="errorDiv"></div>
 </div>
 <!--Signup Validation-->
 <script>

@@ -118,7 +118,32 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   // LOGIN & LOGOUT
 
   // DELETING
-  app.post('/delete', function (req, res, next) {
+  app.post('/cancelDestroy3Scaper', function (req, res, next) {
+    Creator.findOne({'email' : req.user.email} , function(err,creator)
+    {
+      if(err)
+      {
+        console.log(err.message);
+        res.redirect('/opt-out');
+      }
+      if(!creator)
+      {
+        console.log('creator not found');
+        res.redirect('/opt-out');
+      }
+      else
+      {
+        creator.markedForDestruction = false;
+        creator.save();
+
+        console.log('3scaper destruction was canceled. Hooray!');
+        res.sendStatus(200);
+      }
+
+    });
+  });
+
+  app.post('/delete3Scaper', function (req, res, next) {
     if (req.user.validPassword(req.body.password)) {
 
         Creator.findOne({'email' : req.user.email} , function(err,creator)
@@ -126,18 +151,20 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
           if(err)
           {
             console.log(err.message);
-            res.redirect('/profile');
+            res.sendStatus(500);
           }
           if(!creator)
           {
             console.log('creator not found');
-            res.redirect('/profile');
+            res.sendStatus(500);
           }
           else
           {
-            console.log('removing 3scaper');
-            creator.remove();
-            res.render('/opt-out');
+            creator.markedForDestruction = true;
+            creator.save();
+
+            console.log('3scaper marked for destruction. Awaiting confirmation or cancelation.');
+            res.redirect('/opt-out');
           }
 
         });
@@ -148,6 +175,51 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
         res.redirect('/profile');
 
       }
+
+  });
+
+  app.post('/destroy3Scaper', function (req, res, next) {
+
+      Creator.findOne({'email' : req.user.email, 'markedForDestruction' : true} , function(err,creator)
+      {
+        if(err)
+        {
+          console.log(err.message);
+          res.sendStatus(500);
+        }
+        if(!creator)
+        {
+          console.log('creator not found or not marked for destruction');
+          res.sendStatus(500);
+        }
+        else
+        {
+          var email = creator.email;
+
+          Scape.find({'creator' : email}, function(err, scapes) {
+            if (err) {
+              console.log(err.message);
+              res.sendStatus(500);
+            }
+            if (!scapes) {
+              console.log('scapes not found for ' + email);
+              res.sendStatus(500);
+            } else {
+              for (s in scapes) {
+                console.log("Erasing scape: " + scapes[s].scapeRef);
+                scapes[s].remove();
+              }
+              console.log("This 3Scaper\'s 3Scapes escaped.")
+            }
+          });
+
+          creator.remove();
+
+          console.log('3scaper permanently removed. :^(');
+          res.sendStatus(200);
+        }
+
+      });
 
   });
 
@@ -192,10 +264,10 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     if (req.user) {
       var creator = req.user;
 
-      console.log("Creating a new 3Scape for " + creator.name + " with ref: " + scapeRef);
+      console.log("Creating a new 3Scape for " + creator.email + " with ref: " + scapeRef);
 
       var scape = new Scape();
-      scape.creator = creator.name;
+      scape.creator = creator.email;
       scape.scapeRef = scapeRef;
       scape.title = "Untitled 3Scape";
       scape.content = "";

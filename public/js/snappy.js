@@ -193,8 +193,6 @@ function processModelXML(name, copy) {
     $(".menu").removeClass("active");
 
     console.log("Part added: '" + name + "'");
-
-    autoSave();
 }
 
 
