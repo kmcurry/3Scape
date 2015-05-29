@@ -25,21 +25,25 @@
       </PointLight>
     </Group>
     <Group name="Models">
-      
-      <Model name="SelectPoint" url="objects/Sphere.lwo" moveable="false" opacity="0" selectable="false" physicsEnabled="false">
-              <scale x=".1" y=".1" z=".1"/>
-              <color r="1" g="0" b="0" a="1"/>
-            </Model>
+<!--
       <Model name="Ground" url="objects/Grid.lwo" moveable="false" detectCollision="true" physicsEnabled="true" opacity="1">
           <scale x="50" y="1" z="50"/>
-          
           <position x="0" y="0" z="0"/>
           <physicalProperties>
             <rollingFriction>0.0</rollingFriction>
             <restitution>1</restitution>
             <friction>0.00025</friction>
           </physicalProperties>
-      </Model>    
+      </Model>   
+-->
+      <Model name="WinJewel" url="objects/jewel.lwo" moveable="false" detectCollision="true" physicsEnabled="false" opacity="1">
+          <scale x="50" y="50" z="50"/>
+          <color r='0.55' g='0.025' b='0.30' a='1'/>
+<!--          <rotation x="45" y="0" z="0"/>-->
+          <physicalProperties>
+            <mass>1</mass>
+          </physicalProperties>
+      </Model>   
       <Isolator name="ScreenCaptureIsolator" isolateTextures="true">
         <MediaTexture name="ScreenCaptureTexture"/>
         <ScreenRect name="ScreenCaptureRect" enabled="false"/>
@@ -48,15 +52,14 @@
 
   </Isolator>
     <RenderDirective name="RenderDirective" highlightType="2" backgroundColor r="1" g="1" b="1" a="1" shadowsEnabled="false"/>
-<!--
+
     <Animations>
-      <KeyframeInterpolator name="CameraMotion" url="InclinedPlanesAnimations/motions/camera.mot" target="Camera" />
+      <KeyframeInterpolator name="JewelMotion" url="motions/spin-jewel.mot" target="WinJewel" />
     </Animations>
--->
+
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
 
     <Set target="ShadowDirective">
       <casterWorldPosition x="0" y="10" z="0"/>
     </Set>
-<!--    <Set trigger="CameraMotion/time=5" target="Intro" show="true"></Set>-->
 </Scene>

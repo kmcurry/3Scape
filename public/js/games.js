@@ -1,4 +1,5 @@
 $(window).load(function(){
+$(".startGame").fadeIn(1000);
   
   // ----------- MAKE TIMER --------------
   var handle;
@@ -27,9 +28,6 @@ $(window).load(function(){
 			digit_holder.append(pos);
 		}
 	});
-  
-  //Check time - if 2 minutes stop timer and display Win message
-  
 
 	// Run a timer every second and update the clock
 
@@ -46,17 +44,7 @@ $(window).load(function(){
     };
     handle = setInterval(update_time, 1000);
   };
-  
-//  $(".startGame button").click(function(){
-//    $(".startGame").removeClass("winner");
-//    runTimer();
-//  });
-//  
-//  $(".loseMessage button, .winnerMessage button").click(function(){
-//    clearInterval(handle);
-//    runTimer();
-//  });
-  
+ 
   
   // ------------ START GAME ----------------
   
@@ -66,10 +54,10 @@ $(window).load(function(){
 
     function makeJewel(xPos, zPos){
       var cmd =  "<Model name='jewel' url='objects/jewel.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
-          cmd += "<color r='0.50' g='0.025' b='0.35' a='1'/>";
+          cmd += "<color r='0.55' g='0.025' b='0.30' a='1'/>";
           cmd += "<scale x='10' y='10' z='10' />";
-          cmd += "<rotation x='0' y='150.0' z='0' />";
-          cmd += "<position x='" + xPos + "' y='10' z='" + zPos + "' />";  
+          cmd += "<rotation x='45' y='150.0' z='0' />";
+          cmd += "<position x='" + xPos + "' y='25' z='" + zPos + "' />";  
           cmd += "<physicalProperties>";
           cmd += "<mass>0.5</mass>";
           cmd += "<friction>0.0</friction>";
@@ -140,7 +128,8 @@ $(window).load(function(){
       
       //Lose Game
       if ( checkY("jewel") < 0 ){
-          $(".loseMessage").addClass("lose");
+          $(".loseMessage").fadeIn(1000);
+//          $(".loseMessage").addClass("lose");
           stopColliders();
           clearInterval(handle);
         }
@@ -152,26 +141,30 @@ $(window).load(function(){
     };
     
     var checkTime = setInterval (function checkTime(){
-      if ( $(".digits div:nth-child(2)").hasClass("two")){
+      if ( $(".digits div:nth-child(4)").hasClass("two")){
         console.log("two minutes!");
         winGame();
       };
     }, 1000);
     
     function winGame(){
-      $(".digits").addClass("winner");
-      $(".winnerMessage").addClass("winner");
       clearInterval(handle);
       clearInterval(placeColliders);
       clearInterval(checkColliders);
       clearInterval(checkTime);
+      bridgeworks.contentDir = '/BwContent';
+      bridgeworks.onLoadModified();
+      bridgeworks.updateScene('Winner.xml');
+      $(".winnerMessage").fadeIn(4000);
+//      $(".winnerMessage").addClass("winner");
     }
     
-  }; //END START GAME
-  
+  }; //END of START GAME
+
   
   $(".startGame button").click(function(){
-    $(".startGame").removeClass("winner");
+//    $(".startGame").removeClass("winner");
+    $(".startGame").fadeOut(2000);    
     startGame();
     runTimer();
   });
@@ -181,11 +174,12 @@ $(window).load(function(){
     bridgeworks.contentDir = '/BwContent';
     bridgeworks.onLoadModified();
     bridgeworks.updateScene('AdventureTime.xml');
-    $(".loseMessage").removeClass("lose");
-    $(".winnerMessage").removeClass("winner");
+//    $(".loseMessage").removeClass("lose");
+//    $(".winnerMessage").removeClass("winner");
+      $(".loseMessage").fadeOut(2000);
+      $(".winnerMessage").fadeOut(2000);
     runTimer();
     startGame();
-    
   });
 
 });

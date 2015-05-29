@@ -325,21 +325,21 @@ section, footer, header, aside{
   left:50%;
   margin-left: -250px;
   top:50px;
-  z-index: 1;
+  z-index: 500000;
   background-color:#46A8D2;
   color:#fff;
-  opacity:0;
-  transition: opacity 1s ease;
   text-align:center;
   padding:20px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  display: none;
 }
 
+/*
 .winnerMessage.winner,
 .startGame.winner{
-  z-index:5000000;
   opacity:1;
 }
+*/
 
 .winnerMessage button,
 .startGame button{
@@ -358,20 +358,20 @@ section, footer, header, aside{
   left:50%;
   margin-left: -250px;
   top:50px;
-  z-index: 1;
+  z-index: 500000;
   background-color:#D24D57 ;
   color:#fff;
-  opacity:0;
-  transition: opacity 1s ease;
   text-align:center;
   padding:20px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  display: none;
 }
 
+/*
 .loseMessage.lose{
-  z-index:5000000;
   opacity:1;
 }
+*/
 
 .loseMessage button{
   border:none;
