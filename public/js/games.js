@@ -5,10 +5,12 @@ $(window).load(function(){
     function makeJewel(xPos, zPos){
       var cmd =  "<Model name='jewel' url='objects/jewel.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
           cmd += "<color r='0.40' g='0.025' b='0.34' a='1'/>";
-          cmd += "<scale x='10' y='10' z='10' />"; 
+          cmd += "<scale x='10' y='10' z='10' />";
+          cmd += "<rotation x='0' y='150.0' z='0' />";
           cmd += "<position x='" + xPos + "' y='10' z='" + zPos + "' />";  
           cmd += "<physicalProperties>";
           cmd += "<mass>0.5</mass>";
+          cmd += "<friction>0.0</friction>";
           cmd += "</physicalProperties>";
           cmd += "</Model>";
       bridgeworks.updateScene(cmd);
@@ -66,8 +68,9 @@ $(window).load(function(){
           positionY = positionXYZ.y;
       return positionY;
     };
+    
 
-    setInterval(function(){
+    var checkColliders = setInterval(function(){
       for (i=0; i < allColliders.length; i++){
         if ( checkY(allColliders[i]) < 0 ){
           var c = "\<Remove target='" + allColliders[i] + "'/>"
@@ -77,10 +80,17 @@ $(window).load(function(){
       };
       if ( checkY("jewel") < 0 ){
           $(".loseMessage").addClass("lose");
-          clearInterval(handel);
+          stopColliders();
+          console.log("made it past stop colliders call");
         }
     }, 7000);
+    
+    function stopColliders(){
+      console.log("stop colliders is being executed");
+      window.clearInterval(placeColliders);
+    };
   };
+  
   
   $(".startGame button").click(function(){
     startGame();

@@ -43,8 +43,6 @@
           <position x="0" y="0" z="0"/>
           <physicalProperties>
             <rollingFriction>0.0</rollingFriction>
-            <linearDamping>0.0025</linearDamping>
-            <angularDamping>0.025</angularDamping>
             <restitution>1</restitution>
             <friction>0.00025</friction>
           </physicalProperties>
