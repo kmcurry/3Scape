@@ -155,15 +155,15 @@ $(".startGame").fadeIn(1000);
       bridgeworks.contentDir = '/BwContent';
       bridgeworks.onLoadModified();
       bridgeworks.updateScene('Winner.xml');
-      $(".winnerMessage").fadeIn(4000);
-//      $(".winnerMessage").addClass("winner");
+      setTimeout(function(){
+        $(".winnerMessage").fadeIn(4000);
+      },1500);
     }
     
   }; //END of START GAME
 
   
   $(".startGame button").click(function(){
-//    $(".startGame").removeClass("winner");
     $(".startGame").fadeOut(2000);    
     startGame();
     runTimer();
@@ -174,10 +174,8 @@ $(".startGame").fadeIn(1000);
     bridgeworks.contentDir = '/BwContent';
     bridgeworks.onLoadModified();
     bridgeworks.updateScene('AdventureTime.xml');
-//    $(".loseMessage").removeClass("lose");
-//    $(".winnerMessage").removeClass("winner");
-      $(".loseMessage").fadeOut(2000);
-      $(".winnerMessage").fadeOut(2000);
+    $(".loseMessage").fadeOut(2000);
+    $(".winnerMessage").fadeOut(2000);
     runTimer();
     startGame();
   });
