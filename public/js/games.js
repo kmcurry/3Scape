@@ -53,7 +53,7 @@ $(".startGame").fadeIn(1000);
     var count = 0;
 
     function makeJewel(xPos, zPos){
-      var cmd =  "<Model name='jewel' url='objects/jewel.lwo' moveable='true' opacity='1' selectable='true' physicsEnabled='true' detectCollision='true'>";
+      var cmd =  "<Model name='jewel' url='objects/jewel.lwo' moveable='false' opacity='1' selectable='false' physicsEnabled='true' detectCollision='true'>";
           cmd += "<color r='0.55' g='0.025' b='0.30' a='1'/>";
           cmd += "<scale x='10' y='10' z='10' />";
           cmd += "<rotation x='45' y='150.0' z='0' />";
@@ -141,7 +141,7 @@ $(".startGame").fadeIn(1000);
     };
     
     var checkTime = setInterval (function checkTime(){
-      if ( $(".digits div:nth-child(4)").hasClass("two")){
+      if ( $(".digits div:nth-child(2)").hasClass("two")){
         console.log("two minutes!");
         winGame();
       };
