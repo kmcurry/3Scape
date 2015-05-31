@@ -287,7 +287,7 @@ function setMass(mass) {
   if (g_selectedModel) {
     console.log(g_selectedModel.name.getValueDirect().join(""));
 
-    g_selectedModel.physicalProperties.mass.setValueDirect(mass);
+    //g_selectedModel.physicalProperties.mass.setValueDirect(mass);
     console.log("massing..." + g_selectedModel.physicalProperties.mass.getValueDirect());
 
   }
