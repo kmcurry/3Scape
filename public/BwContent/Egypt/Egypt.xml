@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?bw onLoad="initialize"?>
-<?bwinclude url="DefaultPreferences.xml"?>
+<?bwinclude url="DefaultPreferences.min.xml"?>
 <Scene>
 	<Isolator name="Root">
 		<Selector name="Cameras">
