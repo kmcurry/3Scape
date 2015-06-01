@@ -27,6 +27,13 @@ function loadfacepalm() {
   loadhi5();
 }
 
+function loadgrid50() {
+  reset();
+  bridgeworks.contentDir = '/BwContent';
+  bridgeworks.onLoadModified();
+  bridgeworks.updateScene('grid-50.xml');
+}
+
 function loadhi5() {
   reset();
   bridgeworks.contentDir='BwContent';

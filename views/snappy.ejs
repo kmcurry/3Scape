@@ -57,21 +57,26 @@
 				if (document.readyState == "complete") {
 
 					var s = "";
-					var i = "";
+					var r = "";
 
 					<% if (typeof scape != 'undefined') { %>
 						s = '<%- scape %>';
 						s = s.replace('\\', '');
-						i = '<%- scapeId %>';
+					<% } %>
+
+					<% if (typeof scapeRef != 'undefined') { %>
+						r = '<%- scapeRef %>';
 					<% } %>
 
 
-					start3Scape(s, i);
+					start3Scape(s, r);
 
 					addActionControls();
 
 					document.onmousemove 	= handleDocMove;
 					document.onkeydown 		= handleKey;
+
+					window.addEventListener("beforeunload", save3Scape);
 
 					<% if (typeof verified != 'undefined') { %>
 						document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys

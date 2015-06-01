@@ -10,25 +10,27 @@ var g_modelCount = 1;
 
 var bridgeworks = null;
 
+var g_scapeRef = "";
+
 
 
 // functions are organized by alpha until refactored
 
-function autoSave(){
+function autoSave() {
 
-  if (true) {
-    serializedScene = "";
-
-    var command = "<Serialize target='Root'/>";
-    bridgeworks.updateScene(command);
-    localStorage.setItem("autoSave",serializedScene);
+  if (g_scapeRef != "") {
+    console.log("autoSaving: " + g_scapeRef);
+    serializeBw();
+    localStorage.setItem(g_scapeRef,serializedScene);
+  } else {
+    console.log("autoSave failed. scapeRef is empty.");
   }
 }
 
 function copy()
 {
     if (g_selectedModel) {
-        g_copyModel = g_selectedModel;
+        g_copyModel = g_selectedModel; // loadModel handles the rest
     }
 }
 
@@ -67,7 +69,7 @@ function cut()
 }
 
 function getWorkInProgress() {
-  return localStorage.getItem("autoSave");
+  return localStorage.getItem(g_scapeRef);
 }
 
 function loadModel(url, copy)
@@ -87,28 +89,18 @@ function loadModel(url, copy)
 
 
 function new3Scape() {
-    save3Scape();
-    reset();
-    bridgeworks.contentDir = '/BwContent';
-    bridgeworks.onLoadModified();
-    bridgeworks.updateScene('grid-50.xml');
 
-    // QTP: post to server right away or wait until an autosave event?
-    /*
+    console.log("Client is creating a new 3Scape.");
+
+    loadgrid50();
+
     $.ajax({
       url: 'new',
       type: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({scape:localStorage.getItem('autoSave')}),
       success: updateLocalStorage
     });
-    window.location.pathname = "/";
-    */
-}
 
-function updateLocalStorage(scapeId) {
-  console.log("Updating local storage for scape: " + scapeId);
-  localStorage.setItem("scapeId", scapeId);
 }
 
 var onHoldInterval = null;
@@ -201,60 +193,76 @@ function processModelXML(name, copy) {
     $(".menu").removeClass("active");
 
     console.log("Part added: '" + name + "'");
-
 }
 
 
 function reset() {
 
-    g_modelCount = 1;
+  g_modelCount = 0;
 
-    g_sceneInspector = null;
-    g_objectInspector = null;
+  g_sceneInspector = null;
+  g_objectInspector = null;
 
-    g_selectedModel = null;
-    g_selectPointModel = null;
+  g_selectedModel = null;
+  g_selectPointModel = null;
 
-
+  g_scapeRef = "";
 }
 
 function save3Scape() {
 
+  if (g_scapeRef == "") return;
+
   autoSave();
+
+  console.log("Client is saving a scape: " + g_scapeRef);
 
   $.ajax({
     url: 'save',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
-      scapeId: localStorage.getItem('scapeId'),
-      scape: localStorage.getItem('autoSave')
+      scapeRef: g_scapeRef,
+      scape: localStorage.getItem(g_scapeRef)
       })
   });
 }
 
-function start3Scape(scape, scapeId) {
-  bridgeworks = init(document.getElementById("BwContainer"));
+function start3Scape(scape, scapeRef) {
+  bridgeworks = initBw(document.getElementById("BwContainer"));
 
-  if (scape && scape != "") {
-    console.log("setting storage for: " + scapeId);
-    localStorage.setItem('scapeId', scapeId);
+  if (scape && scape != "") { // if the url included a scape ref id...
+    if (scapeRef && scapeRef != "") { // this *shouldn't* ever be empty here
+      console.log("setting storage for: " + scapeRef);
+      g_scapeRef = scapeRef;
+      localStorage.setItem(scapeRef, scape);
+    }
     bridgeworks.updateScene(scape);
-  } else {
+  } else { // ...or if there's something in local storage...
     var localScape = getWorkInProgress();
     if (localScape && localScape != ""){
-      console.log("Loading from local storage. Scape id is: " + localStorage.getItem("scapeId"));
+      console.log("Loading from local storage. Scape Ref is: " + localStorage.getItem("scapeRef"));
       bridgeworks.updateScene(localScape);
     }
-    else {
+    else { // ...otherwise this is a new 3scape.
+      console.log("This is a new 3Scape!");
       new3Scape();
     }
   }
 
   g_modelCount = countParts();
 
-  //var saveInterval = setInterval(autoSave, 30000);
+}
 
-  window.addEventListener("beforeunload", save3Scape);
+function serializeBw(){
+  serializedScene = ""; // WARNING: GLOBAL VAR SHARED WITH BRIDGEWORKS!
 
+  var command = "<Serialize target='Root'/>";
+  bridgeworks.updateScene(command);
+}
+
+function updateLocalStorage(scapeRef) {
+  console.log("Updating local storage for scape: " + scapeRef);
+  g_scapeRef = scapeRef;
+  localStorage.setItem(g_scapeRef, serializeBw());
 }

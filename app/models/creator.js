@@ -11,6 +11,7 @@ var CreatorSchema = mongoose.Schema({
     email: String,
     joined: Date,
     name: String,
+    markedForDestruction: false,
     password: String,
     resetPasswordToken: String,
     resetPasswordExpires: Number,
