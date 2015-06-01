@@ -61,7 +61,7 @@
 
 			document.onreadystatechange = function () {
 				if (document.readyState == "complete") {
-					bridgeworks = init(document.getElementById("BwContainer"));
+					bridgeworks = initBw(document.getElementById("BwContainer"));
 
 					// this loads a named 3Scape passed in with the URL
 					// ex., http://3Scape.me/egypt
@@ -84,7 +84,7 @@
 		<script type="text/javascript" src="js/objectmode.js"></script>
     <script type="text/javascript" src="js/bootstrap-slider.js"></script>
     <script type="text/javascript" src="js/games.js"></script>
-	
+
 <!--		<script type="text/javascript" src="js/slidemode.js"></script>-->
 		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -103,7 +103,7 @@
 
 		</script>
 -->
-    
+
     <script>
             $(document).ready(function(){
                 //prevent hover animation until initial animation completes
