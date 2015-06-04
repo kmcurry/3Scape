@@ -15,21 +15,21 @@
 <body>
 
 	<%- include('dialogs/delete') %>
+<div class="container">
 
-	<div class="row banner">
+	<h1 class="row">
 		<a href="#">
 			<img src="images/minimal-banner-template-large.png" class="banner" alt="3Scape Banner" />
 		</a>
-	</div>
-
+	</h1>
 		<% if (typeof error_message != 'undefined' && error_message.length > 0) { %>
 		<div class="alert alert-danger"><%= error_message %></div>
 		<% } %>
+
 		<div class="row">
-			<a class="edit-btn" href="#">Edit Profile</a>
-			<a class="btn" href="/">Go 3Scape</a>
-			<a class="btn" href="logout">Sign Out</a>
-			<a class="delete-btn" onclick='deleteProfile()'>Delete Profile</a>
+			<a class="profile-btn" href="logout">Sign Out</a>
+			<a class="profile-btn" href="/">Go 3Scape</a>
+			<a class="edit-profile pull-right" href="#">Edit Profile</a>
 		</div>
 
 		<div id="hexagon" class="row">
@@ -43,21 +43,20 @@
 		<div id="category" class="row">
 		</div>
 
-			<div id="scapes">
+		<div id="scapes">
 
 				<% for (i = 0; i < scapes.length; i++) { %>
 
 						<div class="scape col-md-4 col-sm-6">
-							<a href="/<%- scapes[i]._id %>"><img src="images/puppy.jpg" class="img-thumbnail"/></a>
+							<a href="/<%- scapes[i].scapeRef %>"><img src="images/puppy.jpg" class="img-thumbnail"/></a>
+							<a class="delete-scape" onclick='deleteScape()'>Delete Scape</a>
 						</div>
-
-
 				<% } %>
-			</div>
+		</div>
 
 
-
-
+</div>
+<a class="delete-profile" onclick='deleteProfile()'>Delete Profile</a>
 </body>
 <script>
 

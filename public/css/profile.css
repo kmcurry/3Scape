@@ -207,73 +207,110 @@
 
 }
 
+body { word-wrap:break-word;
+}
 
+#container {
+margin: 0 auto;
+}
+
+h1 { margin: 0 auto;
+}
+
+h1.row {
+  margin-bottom: 1%;
+}
 
 .banner { width: 100%;
+}
+
+/* Profile Buttons */
+a.profile-btn {color: white;
+text-decoration: none;
+display: inline-block;
+padding: 10px;
+background:linear-gradient( 90deg, rgb(70,168,210) , rgb(28,117,187) , rgb(70,168,210) );
+background-size: 200% 100%;
+border-radius: 20px;
+transition: all ease 0.2s;
+font-family: "robotobold";
+cursor: pointer;
+}
+
+a.profile-btn:hover { background-position: -100% 0;
 
 }
 
-/* Edit Profile Button */
-a.edit-btn { color: white;
+a.profile-btn:active { border-radius: 0;
+}
+
+a.edit-profile {color: white;
 text-decoration: none;
 display: inline-block;
-padding: 5px 10px;
+padding: 10px;
 background:linear-gradient( 90deg, rgb(87,186,85) , rgb(186,213,50) , rgb(87,186,85) );
 background-size: 200% 100%;
 border-radius: 20px;
 transition: all ease 0.2s;
 font-family: "robotobold";
+cursor: pointer;
+}
+
+a.edit-profile:hover { background-position: -100% 0;
 
 }
 
-a.edit-btn:hover { background-position: -100% 0;
-
+a.edit-profile:active { border-radius: 0;
 }
 
-a.edit-btn:active { border-radius: 0;
-}
-
-
-a.btn { color: white;
+a.delete-scape {color: white;
 text-decoration: none;
-display: inline-block;
-padding: 5px 10px;
-background:linear-gradient( 90deg, rgb(28,117,187) , rgb(70,168,210) , rgb(28,117,187) );
+text-align: center;
+display: block;
+margin: 2% auto;
+padding: 5px;
+width: 75px;
+background:linear-gradient( 90deg, rgb(237,28,36) , rgb(139,14,26) , rgb(237,28,36) );
 background-size: 200% 100%;
 border-radius: 20px;
 transition: all ease 0.2s;
 font-family: "robotobold";
+font-size: 10px;
+cursor: pointer;
+}
+
+a.delete-scape:hover { background-position: -100% 0;
 
 }
 
-a.btn:hover { color: white;
-  background-position: -100% 0;
+a.delete-scape:active { border-radius: 0;
+}
+
+
+a.delete-profile {color: white;
+text-decoration: none;
+text-align: center;
+display: block;
+margin: 5% auto;
+width: 110px;
+padding: 10px;
+background:linear-gradient( 90deg, rgb(237,28,36) , rgb(139,14,26) , rgb(237,28,36) );
+background-size: 200% 100%;
+border-radius: 20px;
+transition: all ease 0.2s;
+font-family: "robotobold";
+cursor: pointer;
+}
+
+a.delete-profile:hover { background-position: -100% 0;
 
 }
 
-a.btn:active { border-radius: 0;
-
+a.delete-profile:active { border-radius: 0;
 }
 
-a.delete-btn {
-  color: white;
-  text-decoration: none;
-  display: inline-block;
-  padding: 5px 10px;
-  background:linear-gradient( 90deg, rgb(255,0,0) , rgb(161,0,0) , rgb(255,0,0) );
-  background-size: 200% 100%;
-  border-radius: 20px;
-  transition: all ease 0.2s;
-  font-family: "robotobold";
-  cursor: pointer;
-}
 
-a.delete-btn:hover {
-  background-position: -100% 0;
-}
 
-a.delete-btn:active { border-radius: 0;
-}
 
 /* Place profile pics here */
 
@@ -325,12 +362,11 @@ text-align: center;
 
 
 #category { margin: 0 auto;
-display: inline-block;
 margin-bottom: 1%;
-background-image: url(../images/category-3scapes.png);
-background-repeat: no-repeat;
-height: 86px;
-width: 100%;
+background-image:url(../images/category-3scapes.png);
+width: 80%;
+height: 85px;
+clear: both;
 }
 
 #scapes { margin: 0 auto;
