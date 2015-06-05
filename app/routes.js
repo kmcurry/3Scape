@@ -116,6 +116,7 @@ module.exports = function(app, config) {
           }
 
           if (scapes) {
+            console.log("Found scapes " + scapes.length + " for " + req.user.email);
             res.render('profile', {
                 creator: req.user,
                 scapes: scapes
