@@ -107,6 +107,7 @@ function processModelXML(copy) {
                 this.responseXML.getElementsByTagName("Plank")[0] ||
                 this.responseXML.getElementsByTagName("Wall")[0];
 
+    var name =  (+new Date()).toString(36);
     var n = model.attributes["name"];
     n.value = name;
 
