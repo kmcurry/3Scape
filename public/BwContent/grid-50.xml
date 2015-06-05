@@ -27,7 +27,6 @@
                     <friction>3.2</friction>
                 </physicalProperties>
             </Model>
-
             <Model name="SelectPoint" url="objects/Sphere.lwo" moveable="false" opacity="0" selectable="false" snapEnabled="false" physicsEnabled="false">
               <scale x=".1" y=".1" z=".1"/>
               <color r="1" g="0" b="0" a="1"/>
