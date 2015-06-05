@@ -165,12 +165,12 @@ button.parts-btn {
   padding: 0;
 }
 
-.cube    { background: url("../images/CubeButton.png");    }
-.sphere  { background: url("../images/SphereButton.png");  }
-.pyramid { background: url("../images/PyramidButton.png"); }
-.gear    { background: url("../images/GearButton.png");    }
-.plank   { background: url("../images/PlankButton.png");   }
-.wall    { background: url("../images/WallButton.png");    }
+.cube    { background: url("../images/cow-glow.png");  background-position: center; }
+.sphere  { background: url("../images/church-glow.png"); background-position: center; }
+.pyramid { background: url("../images/barn-glow.png"); background-position: center; }
+.gear    { background: url("../images/street-glow.png"); background-position: center; }
+.plank   { background: url("../images/well-glow.png"); background-position: center; }
+.wall    { background: url("../images/stonewall-glow.png"); background-position: center; }
 .beam    { background: url("../images/BeamButton.png");    }
 .ring    { background: url("../images/RingButton.png");    }
 .wedge   { background: url("../images/WedgeButton.png");   }
