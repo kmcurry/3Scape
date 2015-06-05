@@ -20,8 +20,8 @@
     <script src="js/hammer-min.js"></script>
 
 	</head>
-    
-	
+
+
 	<body class="container-fluid" onresize="resize();">
 
 
@@ -50,7 +50,7 @@
 
 
 		<script type="text/javascript" src="js/snappy.js"></script>
-		
+
     <script type="text/javascript">
 
 			document.onreadystatechange = function () {
@@ -75,8 +75,6 @@
 
 					document.onmousemove 	= handleDocMove;
 					document.onkeydown 		= handleKey;
-
-					window.addEventListener("beforeunload", save3Scape);
 
 					<% if (typeof verified != 'undefined') { %>
 						document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
