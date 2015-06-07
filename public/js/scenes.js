@@ -59,6 +59,13 @@ function loadinertia() {
  bridgeworks.updateScene('Inertia.xml');
 }
 
+function loadadventuretime() {
+ reset();
+ bridgeworks.contentDir='BwContent';
+ bridgeworks.onLoadModified();
+ bridgeworks.updateScene('AdventureTime.xml');
+}
+
 function loadtwostroke() {
   reset();
   bridgeworks.contentDir='/BwContent/Engine/BwContent';

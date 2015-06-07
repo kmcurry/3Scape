@@ -62,61 +62,6 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   });
 
-
-  app.get('/forgot', function(req, res) {
-    res.render('forgot', {
-      creator: req.creator,
-      info_message: req.flash('info'),
-      error_message: req.flash('error'),
-      success_message: req.flash('success')
-    });
-  });
-
-  app.post('/forgot', function(req, res, next) {
-    async.waterfall([
-      function(done) {
-        crypto.randomBytes(20, function(err, buf) {
-          var token = buf.toString('hex');
-          done(err, token);
-        });
-      },
-      function(token, done) {
-        Creator.findOne({ email: req.body.email }, function(err, creator) {
-          if (!creator) {
-            req.flash('error', 'No account with that email address exists.');
-            return res.redirect('/forgot');
-          }
-
-          creator.resetPasswordToken = token;
-          creator.resetPasswordExpires = Date.now() + 3600000; //1 hour
-
-          creator.save(function(err) {
-            done(err, token, creator);
-          });
-        });
-      },
-      function(token, creator, done) {
-
-        if (config.email.smtpCreator) {
-          utilities.emailer.send({
-            to: creator.email,
-            tokenUrl: 'http://' + req.headers.host + '/reset/' + token,
-            templateId: config.email.forgot
-          });
-
-          req.flash('info', 'An email has been sent to ' + creator.email + ' with further instructions.');
-          done(null, 'done');
-        }
-
-      }
-      ], function(err) {
-        if (err) return next(err);
-        res.redirect('/forgot');
-      });
-    });
-
-  // LOGIN & LOGOUT
-
   // DELETING
   app.post('/cancelDestroy3Scaper', function (req, res, next) {
     Creator.findOne({'email' : req.user.email} , function(err,creator)
@@ -223,6 +168,58 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   });
 
+  app.get('/forgot', function(req, res) {
+    res.render('forgot', {
+      creator: req.creator,
+      info_message: req.flash('info'),
+      error_message: req.flash('error'),
+      success_message: req.flash('success')
+    });
+  });
+
+  app.post('/forgot', function(req, res, next) {
+    async.waterfall([
+      function(done) {
+        crypto.randomBytes(20, function(err, buf) {
+          var token = buf.toString('hex');
+          done(err, token);
+        });
+      },
+      function(token, done) {
+        Creator.findOne({ email: req.body.email }, function(err, creator) {
+          if (!creator) {
+            req.flash('error', 'No account with that email address exists.');
+            return res.redirect('/forgot');
+          }
+
+          creator.resetPasswordToken = token;
+          creator.resetPasswordExpires = Date.now() + 3600000; //1 hour
+
+          creator.save(function(err) {
+            done(err, token, creator);
+          });
+        });
+      },
+      function(token, creator, done) {
+
+        if (config.email.smtpCreator) {
+          utilities.emailer.send({
+            to: creator.email,
+            tokenUrl: 'http://' + req.headers.host + '/reset/' + token,
+            templateId: config.email.forgot
+          });
+
+          req.flash('info', 'An email has been sent to ' + creator.email + ' with further instructions.');
+          done(null, 'done');
+        }
+
+      }
+      ], function(err) {
+        if (err) return next(err);
+        res.redirect('/forgot');
+      });
+    });
+
   // GET
   app.get('/login', function (req, res) {
     //render the page and pass in any flash data if it exists
@@ -256,46 +253,20 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     res.redirect('login');
   });
 
-
   app.post("/new", function (req, res) {
 
-    var scapeRef = process.pid + (+new Date()).toString(36);
+    var scapeRef = null;
 
     if (req.user) {
-      var creator = req.user;
 
-      console.log("Creating a new 3Scape for " + creator.email + " with ref: " + scapeRef);
-
-      var scape = new Scape();
-      scape.creator = creator.email;
-      scape.scapeRef = scapeRef;
-      scape.title = "Untitled 3Scape";
-      scape.content = "";
-
-      scape.save(function(err) {
-        if (err) {
-          console.log("error saving scape: " + err);
-          res.sendStatus(500);
-        }
-      });
-
-
-      creator.scapes.push(scape.scapeRef);
-
-      creator.save(function(err) {
-        if (err) {
-          console.log("error saving creator: " + err);
-          res.sendStatus(500);
-        }
-      });
-
-      scapeRef = scape.scapeRef;
+      scapeRef = process.pid + (+new Date()).toString(36);
 
     }
 
     res.json(scapeRef);
 
   });
+
 
   app.post("/payment", function(req, res, next) {
     console.log("Verifying payment for: " + req.user.email);
@@ -424,36 +395,35 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     });
 
   app.post("/save", function(req, res) {
-    if (req.user) {
-      console.log("saving scape: " + req.body.scapeRef);
+      if (req.user) {
 
-      if (req.body.scapeRef) {
+        if (req.body.scapeRef) {
 
-        // a scape must exist from /new in order to be saved, else error
-        Scape.findOne( { scapeRef: req.body.scapeRef }, function(err, scape) {
-          if (scape) {
-            console.log("Found existing scape for " + scape.scapeRef + " while saving. Updating...");
-            scape.content = req.body.scape;
-
-            scape.save(function(err) {
-              if (err) {
-                console.log("Save scape error: " + err);
-                res.sendStatus(500);
-              } else {
+          Scape.findOne( { scapeRef : req.body.scapeRef }, function(err, scape) {
+            if (err) {
+              console.log(err.message);
+              res.sendStatus(500);
+            }
+            if (scape) {
+              scape.content = req.body.scape;
+              scape.save();
+              res.sendStatus(200);
+            } else {
+              if (new3Scape(req)) {
                 res.sendStatus(200);
               }
-            });
-          } else {
-            console.log("no scape: " + err);
-            res.sendStatus(500);
-          }
+            }
+          });
 
-        });
+        } else {
+          console.log("Cannot save. No scapeRef");
+          res.sendStatus(500);
+        }
+
       } else {
+        console.log("Cannot save. Not authorized");
         res.sendStatus(500);
       }
-
-    }
   });
 
   //SignUp============================
@@ -511,6 +481,51 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     });
 
   });
+
+  function new3Scape(req) {
+
+    var success = false;
+
+    if (req.user && req.user.email) {
+
+      Creator.findOne({ email : req.user.email }, function (err, creator) {
+        if (err) {
+          console.log(err.message);
+        }
+
+        if (creator) {
+
+          var scape = new Scape();
+          scape.creator = creator.email;
+          scape.title = "Untitled 3Scape";
+          scape.scapeRef = req.body.scapeRef;
+          scape.content = req.body.scape;
+
+          scape.save(function(err) {
+            if (err) {
+              console.log("error saving scape: " + err);
+            } else {
+              success = true;
+            }
+          });
+
+          creator.scapes.push(scape.scapeRef);
+
+          creator.save(function(err) {
+            if (err) {
+              console.log("error saving creator: " + err);
+              success = false;
+            }
+          });
+
+        }
+
+      });
+
+    }
+
+    return success;
+  }
 
   app.use(express.static(__dirname));
 

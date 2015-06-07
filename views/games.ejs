@@ -1,0 +1,121 @@
+<html>
+	<head>
+		<title>3Scape Mini Game</title>
+		<meta name="description" content="Kids learn by making 3D worlds of fun contraptions powered by physics">
+		<meta http-equiv="x-ua-compatible" content="IE=10">
+		<meta name="robots" content="noindex">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/snappy.css"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" type="text/css" href="css/actionsbar.css">
+    <link rel="stylesheet" type="text/css" href="css/adventuretime.css">
+		<link rel="stylesheet" type="text/css" href="css/slider.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery.qtip.css"/>
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="js/eventHandlers.js"></script>
+    <script type="text/javascript" src="js/tablet-resize.js" ></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+    <script type="text/javascript" src="js/adventuretime.js" ></script>
+	</head>
+	<body class="container-fluid" onresize="resize();">
+
+
+		<div class="navbar-fixed-top" >
+    	   <%- include('viewcontrols/partsbar'); %>
+		</div>
+    <div class="startGame winner">
+      <h3>Protect the Jewel!</h3>
+      <p>Keep the jewel from being pushed over the edge for two minutes.</p>
+      <p>Use the parts bar at the top of the screen to place parts, build walls, and protect your jewel from the roaming pyramid sharks. Click on the ground to set a spawn point, then click the part in the parts bar to spawn it.</p>
+      <p>Ready?</p>
+      <button>Play</button>
+    </div>
+    <div class="winnerMessage">
+      <h3>You Win!</h3>
+      <p>You protected the jewel for two minutes!</p>
+      <button>Play Again</button>
+    </div>
+    <div class="loseMessage">
+      <h3>You Lose</h3>
+      <p>Sorry, you didn't protect the jewel for two minutes.</p>
+      <button>Play Again</button>
+    </div>
+    <div id="clock" class="light">
+			<div class="display">
+				<div class="digits"></div>
+			</div>
+		</div>
+
+		<div id="BwContainer" onclick="handleMouse(event);"
+				 onmousedown="handleMouse(event);" onmouseup="handleMouse(event);"
+				 onmousemove="handleMouse(event);" ondblclick="handleMouse(event);">
+			<canvas id="Canvas">
+			</canvas>
+		</div>
+    <script type="text/javascript" src="js/snappy.js"></script>
+    <script type="text/javascript">
+			var bridgeworks = null;
+
+
+
+			document.onreadystatechange = function () {
+				if (document.readyState == "complete") {
+					bridgeworks = initBw(document.getElementById("BwContainer"));
+
+					// this loads a named 3Scape passed in with the URL
+					// ex., http://3Scape.me/egypt
+					<% if (typeof scape != 'undefined') { %>
+						var s = <%- scape %>.toLowerCase();
+						var f = "load" + s + "()";
+						console.log(f);
+						eval(f);
+					<% } %>
+
+				}
+			}
+		</script>
+
+		<script type="text/javascript" src="js/Bridgeworks-min.js"></script>
+		<script type="text/javascript" src="js/BwHelper.js"></script>
+    <script type="text/javascript" src="js/crossbrowser.js"></script>
+    <script type="text/javascript" src="js/scenes.js"></script>
+		<script type="text/javascript" src="js/MapControls.js"></script>
+		<script type="text/javascript" src="js/objectmode.js"></script>
+    <script type="text/javascript" src="js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="js/games.js"></script>
+
+<!--		<script type="text/javascript" src="js/slidemode.js"></script>-->
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/base/jquery-ui.css"/>
+		<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+
+<!--
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-26989160-5', 'auto');
+			ga('send', 'pageview');
+
+		</script>
+-->
+
+    <script>
+            $(document).ready(function(){
+                //prevent hover animation until initial animation completes
+                var hoverable = $('.navbar-fixed-bottom, .navbar-fixed-top'),
+                    animated = $('.actions-bar, .parts-bar');
+                animated.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function(e) {
+                // code to execute after animation ends
+                    hoverable.addClass('hover');
+                });
+            });
+
+        </script>
+	</body>
+</html>

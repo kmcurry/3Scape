@@ -62,7 +62,14 @@ module.exports = function(app, config) {
                   scape: s
                 });
               }
-              break
+              break;
+              case 'adventuretime':
+              {
+                res.status(200).render('games', {
+                  scape: s
+                });
+              }
+              break;
             default:
               {
                 return next('route');
@@ -109,6 +116,7 @@ module.exports = function(app, config) {
           }
 
           if (scapes) {
+            console.log("Found scapes " + scapes.length + " for " + req.user.email);
             res.render('profile', {
                 creator: req.user,
                 scapes: scapes
