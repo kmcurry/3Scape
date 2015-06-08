@@ -262,10 +262,10 @@ function handleKey(e)
             rotateDown();
           }
             else if (e.metaKey || e.ctrlKey) {
-                objectDown(1);
+              objectBackward(1);
             }
             else {
-                objectBackward(1);
+              objectDown(1);
             }
             break;
         case "Up": //up
@@ -273,10 +273,10 @@ function handleKey(e)
             rotateUp();
           }
           else if (e.metaKey || e.ctrlKey) {
-                objectUp(1);
+            objectForward(1);
             }
             else {
-                objectForward(1);
+              objectUp(1);
             }
             break;
         case 'X'.charCodeAt(0):
