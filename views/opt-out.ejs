@@ -12,16 +12,16 @@
 	<script>
 		function cancel3ScaperDestruction() {
 			$.ajax({
-				url: 'cancelDestroy3Scaper',
+				url: 'cancelDestroyCreator',
 				type: 'POST',
 				success: redirectToProfile
 			});
 		}
 
-		function destroy3Scaper() {
+		function destroyCreator() {
 			alert('This is the point of no return.');
 			$.ajax({
-				url: 'destroy3Scaper',
+				url: 'destroyCreator',
 				type: 'POST',
 				success: confirm3ScaperDestruction
 			});
@@ -84,7 +84,7 @@
 			<div class="col-md-12">
 				<p>By pressing the delete button below, you will be permanently erasing your account and all 3Scapes you have ever created.</p>
 				<h2>There is no going back from here.</h2>
-				<a class="delete-btn" style="cursor:pointer" onclick="destroy3Scaper();">Delete Account</a>
+				<a class="delete-btn" style="cursor:pointer" onclick="destroyCreator();">Delete Account</a>
 			</div>
 		</div>
 

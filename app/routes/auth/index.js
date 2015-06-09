@@ -63,7 +63,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   });
 
   // DELETING
-  app.post('/cancelDestroy3Scaper', function (req, res, next) {
+  app.post('/cancelDestroyCreator', function (req, res, next) {
     Creator.findOne({'email' : req.user.email} , function(err,creator)
     {
       if(err)
@@ -88,7 +88,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     });
   });
 
-  app.post('/delete3Scaper', function (req, res, next) {
+  app.post('/deleteCreator', function (req, res, next) {
     if (req.user.validPassword(req.body.password)) {
 
         Creator.findOne({'email' : req.user.email} , function(err,creator)
@@ -123,7 +123,7 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
 
   });
 
-  app.post('/destroy3Scaper', function (req, res, next) {
+  app.post('/destroyCreator', function (req, res, next) {
 
       Creator.findOne({'email' : req.user.email, 'markedForDestruction' : true} , function(err,creator)
       {
@@ -165,6 +165,10 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
         }
 
       });
+
+  });
+
+  app.post('/deleteScape', function (req, res, next) {
 
   });
 
