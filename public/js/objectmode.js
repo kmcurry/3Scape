@@ -284,10 +284,10 @@ function scalePart(delta) {
 }
 
 function setMass(mass) {
-  if (g_selectedModel) {
+  if (g_selectedModel && mass > 0) {
     console.log(g_selectedModel.name.getValueDirect().join(""));
 
-    //g_selectedModel.physicalProperties.mass.setValueDirect(mass);
+    g_selectedModel.physicalProperties.mass.setValueDirect(mass);
     console.log("massing..." + g_selectedModel.physicalProperties.mass.getValueDirect());
 
   }
@@ -295,7 +295,7 @@ function setMass(mass) {
 
 function setOpacity(percent) {
   console.log("fading..." + g_selectedModel.opacity.getValueDirect());
-  
+
   if (g_selectedModel) g_selectedModel.opacity.setValueDirect(percent);
 
 }
@@ -305,4 +305,4 @@ function showHideSelected() {
     var show = g_selectedModel.show.getValueDirect();
     g_selectedModel.show.setValueDirect(!show);
   }
-} 
+}
