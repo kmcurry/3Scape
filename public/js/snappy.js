@@ -10,23 +10,13 @@ var bridgeworks = null;
 
 
 
+
 // functions are organized by alpha until refactored
-
-function autoSave(){
-
-  if (true) {
-    serializedScene = "";
-
-    var command = "<Serialize target='Root'/>";
-    bridgeworks.updateScene(command);
-    localStorage.setItem("autoSave",serializedScene);
-  }
-}
 
 function copy()
 {
     if (g_selectedModel) {
-        g_copyModel = g_selectedModel;
+        g_copyModel = g_selectedModel; // loadModel handles the rest
     }
 }
 
@@ -64,10 +54,6 @@ function cut()
     }
 }
 
-function getWorkInProgress() {
-  return localStorage.getItem("autoSave");
-}
-
 function loadModel(url, copy)
 {
     copy = copy || false;
@@ -78,50 +64,25 @@ function loadModel(url, copy)
 
 
     loadFile("BwContent/" + url, processModelXML, copy);
-
 }
 
 
 function new3Scape() {
-    save3Scape();
-    reset();
-    bridgeworks.contentDir = '/BwContent';
-    bridgeworks.onLoadModified();
-    bridgeworks.updateScene('grid-50.xml');
 
-    // QTP: post to server right away or wait until an autosave event?
+    post3Scape();
+
+    console.log("Client is creating a new 3Scape.");
+
+    loadgrid50();
 
     $.ajax({
       url: 'new',
       type: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({scape:localStorage.getItem('autoSave')}),
-      success: updateLocalStorage
+      success: synchLocalScapeRef
     });
-    window.location.pathname = "/";
 
 }
-
-function updateLocalStorage(scapeId) {
-  console.log("Updating local storage for scape: " + scapeId);
-  localStorage.setItem("scapeId", scapeId);
-}
-
-var onHoldInterval = null;
-var onHoldFunction = function(id, method, time) {
-    $(id).on({
-        mousedown: function() {
-            method(); // Still works on a single click
-            onHoldInterval = window.setInterval(function() {
-                method();
-            }, time); //Repeats every (time) miliseconds
-        },
-        mouseup: function() {
-            window.clearInterval(onHoldInterval);
-        }
-    });
-}
-
 
 
 function paste()
@@ -146,9 +107,8 @@ function processModelXML(copy) {
                 this.responseXML.getElementsByTagName("Plank")[0] ||
                 this.responseXML.getElementsByTagName("Wall")[0];
 
-    var type = "eAttrType." + model.tagName;
-    var count = bridgeworks.registry.getByType(type);
-    console.log("Part type: " + type + " count: " + count);
+
+    var name =  (+new Date()).toString(36);
 
     var n = model.attributes["name"];
     console.log(n.value);
@@ -202,66 +162,96 @@ function processModelXML(copy) {
     $(".menu").removeClass("active");
 
     console.log("Part added: '" + name + "'");
-
 }
 
 
 function reset() {
 
-    g_sceneInspector = null;
-    g_objectInspector = null;
+  g_sceneInspector = null;
+  g_objectInspector = null;
 
-    g_selectedModel = null;
-    g_selectPointModel = null;
+  g_selectedModel = null;
+  g_selectPointModel = null;
 
 }
 
-function save3Scape() {
+function post3Scape() {
 
-  autoSave();
+  if (synchLocalScape()) {
 
-  $.ajax({
-    url: 'save',
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({
-      scapeId: localStorage.getItem('scapeId'),
-      scape: localStorage.getItem('autoSave')
-      })
-  });
+    $.ajax({
+      url: 'save',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        scape: serializedScene, // WARNING: GLOBAL VAR SHARED WITH BRIDGEWORKS!
+        scapeRef: localStorage.getItem("scapeRef")
+      })/*,
+      success: function (scapeRef) {
+        localStorage.removeItem(scapeRef);
+      }*/
+    });
+  }
 }
 
-function start3Scape(scape, scapeId) {
-  bridgeworks = init(document.getElementById("BwContainer"));
+function start3Scape(scape, scapeRef) {
 
-  console.log("Starting 3Scape with scape: " + scape + " and scapeId: " + scapeId);
+  bridgeworks = initBw(document.getElementById("BwContainer"));
 
-  if (scape && scape != "") {
-    if (scapeId && scapeId != "") {
-      console.log("setting storage for: " + scapeId);
-      localStorage.setItem('scapeId', scapeId);
+
+  if (!bridgeworks) { console.log("halted and caught fire"); return; }
+
+  if (scape && scape != "") { // if the url included a scape
+    bridgeworks.updateScene(scape);
+    if (scapeRef) {
+      localStorage.setItem("scapeRef", scapeRef);
     }
-    if (scape == "\"barnville\"") {
-      console.log("BARNVILLE COMING UP!");
-      loadbarnville();
-    } else {
-      bridgeworks.updateScene(scape);
-    }
-  } else {
-    var localScape = getWorkInProgress();
-    if (localScape && localScape != ""){
-      console.log("Loading from local storage. Scape id is: " + localStorage.getItem("scapeId"));
+  } else { // ...try the last thing in local storage
+    var localScape = localStorage.getItem("3Scape");
+    if (localScape) {
+      console.log("We've scaped this scape before");
       bridgeworks.updateScene(localScape);
     }
-    else {
+    else { // ...otherwise this is a new 3scape.
+      console.log("Starting 3Scape with a shiny new 3Scape!");
       new3Scape();
     }
   }
 
-  g_modelCount = countParts();
+  window.addEventListener("beforeunload", unload3Scape);
 
-  //var saveInterval = setInterval(autoSave, 30000);
+}
 
-  window.addEventListener("beforeunload", save3Scape);
+function serializeBw(){
+  serializedScene = ""; // WARNING: GLOBAL VAR SHARED WITH BRIDGEWORKS!
 
+  var command = "<Serialize target='Root'/>";
+  bridgeworks.updateScene(command);
+}
+
+function unload3Scape() {
+  synchLocalStorage();
+  post3Scape();
+  localStorage.removeItem("scapeRef");
+}
+
+function synchLocalScape(scapeRef) {
+
+  var success = false;
+
+  if (countParts() > 0) {
+    console.log("Updating localStorage");
+    serializeBw();
+    localStorage.setItem("3scape",serializedScene); // WARNING: GLOBAL VAR SHARED WITH BRIDGEWORKS!
+    success = true;
+  }
+
+  return success;
+
+}
+
+function synchLocalScapeRef(scapeRef) {
+  if (scapeRef) {
+    localStorage.setItem("scapeRef", scapeRef);
+  }
 }

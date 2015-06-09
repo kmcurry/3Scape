@@ -16,7 +16,6 @@
     "angular": "latest",
     "angular-route": "latest",
     "lodash": "latest",
-    "moment": "latest",
     "q": "latest",
     "fontawesome": "~4.3.0",
     "jquery": "~2.1.3",

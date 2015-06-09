@@ -15,16 +15,18 @@ module.exports = function(app, config) {
     var err = null;
 
     if (req.params.scape) {
-
-      // Check the database. If this is a scape in our DB then authenticate
-      Scape.findOne({ _id: req.params.scape }, function(err, scape) {
+      // check the database
+      Scape.findOne({ scapeRef: req.params.scape }, function(err, scape) {
         if (scape) {
           if (req.isAuthenticated()) {
             res.status(200).render('snappy', {
               scape: scape.content,
-              scapeId: req.params.scape
+              scapeRef: scape.scapeRef
             });
-          } else (console.log("You must be logged in"));
+          } else {
+            console.log("Unauthorized request for scape " + req.params.scape);
+            res.redirect("/login");
+          }
 
         } else {
           s = JSON.stringify(req.params.scape).toLowerCase();
@@ -68,7 +70,14 @@ module.exports = function(app, config) {
                   scape: s
                 });
               }
-              break
+              break;
+              case 'adventuretime':
+              {
+                res.status(200).render('games', {
+                  scape: s
+                });
+              }
+              break;
             default:
               {
                 return next('route');
@@ -89,7 +98,7 @@ module.exports = function(app, config) {
   });
 
   app.get('/classroom', function (req, res) {
-    res.render('classroom')
+    res.redirect('http://3Scape.me/lesson-plans')
   });
 
 
@@ -109,12 +118,13 @@ module.exports = function(app, config) {
 
       if (req.user) {
 
-        Scape.find({ creator : req.user.email }, {_id : 1}, function(err, scapes) {
+        Scape.find({ creator : req.user.email }, {scapeRef : 1}, function(err, scapes) {
           if (err) {
             return err;
           }
 
           if (scapes) {
+            console.log("Found scapes " + scapes.length + " for " + req.user.email);
             res.render('profile', {
                 creator: req.user,
                 scapes: scapes
@@ -159,8 +169,6 @@ module.exports = function(app, config) {
       // if req.user.joined is undefined then error
 
       var ONE_DAY = 3600000 * 24; /* ms */
-
-      console.log("Is 3Scaper Verified? " + req.user.verified + " joined: " + req.user.joined + " elapsed: " + (new Date() - req.user.joined) + " ONE_DAY: " + ONE_DAY);
 
       if (req.user.verified == false &&
         ((new Date()) - req.user.joined) > ONE_DAY) {

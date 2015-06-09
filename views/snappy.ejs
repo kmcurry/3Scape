@@ -10,20 +10,18 @@
 		<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="css/actionsbar.css">
 		<link rel="stylesheet" type="text/css" href="css/slider.css">
-
 		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="bower_components/raphael/raphael-min.js"></script>
-
 		<script type="text/javascript" src="js/eventHandlers.js"></script>
 		<script type="text/javascript" src="js/colorwheel.js"></script>
     <script type="text/javascript" src="js/jogDial.js"></script>
     <script type="text/javascript" src="js/tablet-resize.js" ></script>
     <script type="text/javascript" src="js/barscroll.js"></script>
-
-
-	</head>
     <script src="js/hammer-min.js"></script>
+
 	</head>
+
+
 	<body class="container-fluid" onresize="resize();">
 
 
@@ -52,29 +50,26 @@
 
 
 		<script type="text/javascript" src="js/snappy.js"></script>
-<!--    <script type="text/javascript" src="js/inclinedplanes.js"></script>-->
 
-
-
-		<script type="text/javascript">
+    <script type="text/javascript">
 
 			document.onreadystatechange = function () {
 				if (document.readyState == "complete") {
 
 					var s = "";
-					var i = "";
+					var r = "";
 
 					<% if (typeof scape != 'undefined') { %>
 						s = '<%- scape %>';
 						s = s.replace('\\', '');
 					<% } %>
 
-					<% if (typeof scapeId != 'undefined') { %>
-						i = '<%- scapeId %>';
+					<% if (typeof scapeRef != 'undefined') { %>
+						r = '<%- scapeRef %>';
 					<% } %>
 
 
-					start3Scape(s, i);
+					start3Scape(s, r);
 
 					addActionControls();
 
@@ -90,7 +85,7 @@
 						setTimeout(function () {
 							document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
 							$(".registration").modal("show");
-						}, 600); // set to 600000 for production
+						}, 300000); // set to 300000 for production (5 mins)
 
 					<% } %>
 

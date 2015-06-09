@@ -9,6 +9,33 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script>
+		function cancel3ScaperDestruction() {
+			$.ajax({
+				url: 'cancelDestroy3Scaper',
+				type: 'POST',
+				success: redirectToProfile
+			});
+		}
+
+		function destroy3Scaper() {
+			alert('This is the point of no return.');
+			$.ajax({
+				url: 'destroy3Scaper',
+				type: 'POST',
+				success: confirm3ScaperDestruction
+			});
+		}
+
+		function confirm3ScaperDestruction() {
+			location.href = "http://3Scape.me";
+		}
+
+		function redirectToProfile() {
+			location.href = "/profile";
+		}
+
+	</script>
 </head>
 <body>
 
@@ -28,9 +55,10 @@
 
 		<div class="row return">
 			<div class="col-md-12">
+				<h2>Please confirm this permanent action</h2>
 				<p>3Scape is an awesome place to create and experiement with objects in 3D.</p>
 				<p>If you leave us, you'll be missing out! You really wouldn't want that now would you?</p>
-				<a class="return-btn" href="#">Wait! Take me back!</a>
+				<a class="return-btn" style="cursor:pointer" onclick="cancel3ScaperDestruction();">Wait! Take me back!</a>
 			</div>
 		</div>
 
@@ -55,25 +83,10 @@
 		<div class="row delete">
 			<div class="col-md-12">
 				<p>By pressing the delete button below, you will be permanently erasing your account and all 3Scapes you have ever created.</p>
-				<p>There is no going back. A confirmation will pop-up to make sure this is really what you want to do.</p>
-				<a class="delete-btn" href="#">Delete Account</a>
+				<h2>There is no going back from here.</h2>
+				<a class="delete-btn" style="cursor:pointer" onclick="destroy3Scaper();">Delete Account</a>
 			</div>
 		</div>
 
-
-
-
-
-	<a href="https://plus.google.com/112246128134687979668" rel="publisher"></a>
-	<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-		ga('create', 'UA-26989160-5', 'auto');
-		ga('send', 'pageview');
-
-	</script>
 </body>
 </html>

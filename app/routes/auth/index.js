@@ -6,6 +6,168 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
   var mongoose = require('mongoose');
   var stripe = require('stripe')(config.payment.secKey);
 
+  // WRITTEN FOR WooCommmerce shopping cart
+  // But not used
+  app.post('/auth/new', function (req, res) {
+    console.log("Welcome new 3Scaper!");
+
+    var striper = req.body;
+    striper = striper.data.object;
+
+
+    // find a user whose email is the same as the forms email
+    // we are checking to see if the user trying to login already exists
+    Creator.findOne({ 'email' :  striper.email }, function(err, user) {
+        // if there are any errors, return the error
+        if (err)
+          res.status(200).send("Error");
+
+        // check to see if theres already a user with that email
+        if (user) {
+            console.log("3Scaper already exists");
+            res.status(200).send("3Scaper already exists");
+        } else {
+
+            // if there is no user with that email
+            // create the user
+            var new3Scaper            = new Creator();
+
+            var tempPass = crypto.randomBytes(8).toString('hex');
+
+            // set the user's local credentials
+            new3Scaper.email    = striper.email;
+            new3Scaper.name     = striper.email;
+            new3Scaper.password = new3Scaper.generateHash(tempPass);
+
+            // save the user
+            new3Scaper.save(function(err) {
+                if (err)
+                    throw err;
+            });
+
+            // email
+            if (config.email.smtpUser) {
+              console.log("Sending welcome mailer.");
+              utilities.emailer.send({
+                to: new3Scaper.email,
+                tempPass: tempPass,
+                templateId: config.email.welcome
+              });
+            }
+
+            res.sendStatus(201);
+        }
+
+    });
+
+  });
+
+  // DELETING
+  app.post('/cancelDestroy3Scaper', function (req, res, next) {
+    Creator.findOne({'email' : req.user.email} , function(err,creator)
+    {
+      if(err)
+      {
+        console.log(err.message);
+        res.redirect('/opt-out');
+      }
+      if(!creator)
+      {
+        console.log('creator not found');
+        res.redirect('/opt-out');
+      }
+      else
+      {
+        creator.markedForDestruction = false;
+        creator.save();
+
+        console.log('3scaper destruction was canceled. Hooray!');
+        res.sendStatus(200);
+      }
+
+    });
+  });
+
+  app.post('/delete3Scaper', function (req, res, next) {
+    if (req.user.validPassword(req.body.password)) {
+
+        Creator.findOne({'email' : req.user.email} , function(err,creator)
+        {
+          if(err)
+          {
+            console.log(err.message);
+            res.sendStatus(500);
+          }
+          if(!creator)
+          {
+            console.log('creator not found');
+            res.sendStatus(500);
+          }
+          else
+          {
+            creator.markedForDestruction = true;
+            creator.save();
+
+            console.log('3scaper marked for destruction. Awaiting confirmation or cancelation.');
+            res.redirect('/opt-out');
+          }
+
+        });
+      }
+      else
+      {
+        req.flash('error_message', 'Incorrect password. Please try again.');
+        res.redirect('/profile');
+
+      }
+
+  });
+
+  app.post('/destroy3Scaper', function (req, res, next) {
+
+      Creator.findOne({'email' : req.user.email, 'markedForDestruction' : true} , function(err,creator)
+      {
+        if(err)
+        {
+          console.log(err.message);
+          res.sendStatus(500);
+        }
+        if(!creator)
+        {
+          console.log('creator not found or not marked for destruction');
+          res.sendStatus(500);
+        }
+        else
+        {
+          var email = creator.email;
+
+          Scape.find({'creator' : email}, function(err, scapes) {
+            if (err) {
+              console.log(err.message);
+              res.sendStatus(500);
+            }
+            if (!scapes) {
+              console.log('scapes not found for ' + email);
+              res.sendStatus(500);
+            } else {
+              for (s in scapes) {
+                console.log("Erasing scape: " + scapes[s].scapeRef);
+                scapes[s].remove();
+              }
+              console.log("This 3Scaper\'s 3Scapes escaped.")
+            }
+          });
+
+          creator.remove();
+
+          console.log('3scaper permanently removed. :^(');
+          res.sendStatus(200);
+        }
+
+      });
+
+  });
+
   app.get('/forgot', function(req, res) {
     res.render('forgot', {
       creator: req.creator,
@@ -58,42 +220,6 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
       });
     });
 
-  // LOGIN & LOGOUT
-
-  // DELETING
-  app.post('/delete', function (req, res, next) {
-        if (req.user.validPassword(req.body.password)) {
-
-            Creator.findOne({'email' : req.user.email} , function(err,creator)
-            {
-              if(err)
-              {
-                console.log(err.message);
-                res.redirect('/profile');
-              }
-              if(!creator)
-              {
-                console.log('creator not found');
-                res.redirect('/profile');
-              }
-              else
-              {
-                console.log('removing 3scaper');
-                creator.remove();
-                res.redirect('http://3scape.me');
-              }
-
-            });
-          }
-            else
-            {
-              req.flash('error_message', 'Incorrect password. Please try again.');
-              res.redirect('/profile');
-
-            }
-
-  });
-
   // GET
   app.get('/login', function (req, res) {
     //render the page and pass in any flash data if it exists
@@ -127,90 +253,20 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     res.redirect('login');
   });
 
-  app.post('/auth/new', function (req, res) {
-    console.log("Welcome new 3Scaper!");
-
-    var striper = req.body;
-    striper = striper.data.object;
-    console.log(striper.email);
-
-
-    // find a user whose email is the same as the forms email
-    // we are checking to see if the user trying to login already exists
-    Creator.findOne({ 'email' :  striper.email }, function(err, user) {
-        // if there are any errors, return the error
-        if (err)
-          res.status(200).send("Error");
-
-        // check to see if theres already a user with that email
-        if (user) {
-            console.log("3Scaper already exists");
-            res.status(200).send("3Scaper already exists");
-        } else {
-
-            // if there is no user with that email
-            // create the user
-            var new3Scaper            = new Creator();
-
-            var tempPass = crypto.randomBytes(8).toString('hex');
-
-            // set the user's local credentials
-            new3Scaper.email    = striper.email;
-            new3Scaper.name     = striper.email;
-            new3Scaper.password = new3Scaper.generateHash(tempPass);
-
-            // save the user
-            new3Scaper.save(function(err) {
-                if (err)
-                    throw err;
-            });
-
-            // email
-            if (config.email.smtpUser) {
-              console.log("Sending welcome mailer.");
-              utilities.emailer.send({
-                to: new3Scaper.email,
-                tempPass: tempPass,
-                templateId: config.email.welcome
-              });
-            }
-
-            res.sendStatus(201);
-        }
-
-    });
-
-  });
-
   app.post("/new", function (req, res) {
-    var scapeId = "";
+
+    var scapeRef = null;
 
     if (req.user) {
-      var creator = req.user;
 
-      console.log("Saving a new 3Scape");
-
-      var scape = new Scape();
-      scape.creator = creator.name;
-
-      scape.save(function(err) {
-        if (err) console.log("error saving scape: " + err);
-      });
-
-
-      creator.scapes.push(scape._id);
-
-      creator.save(function(err) {
-        if (err) console.log("error saving creator: " + err);
-      });
-
-      scapeId = scape._id;
+      scapeRef = process.pid + (+new Date()).toString(36);
 
     }
 
-    res.json(scapeId);
+    res.json(scapeRef);
 
   });
+
 
   app.post("/payment", function(req, res, next) {
     console.log("Verifying payment for: " + req.user.email);
@@ -339,28 +395,35 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     });
 
   app.post("/save", function(req, res) {
-    if (req.user) {
-      console.log("saving scape: " + req.body.scapeId);
+      if (req.user) {
 
-      var creator = req.user;
+        if (req.body.scapeRef) {
 
-      if (req.body.scapeId) {
+          Scape.findOne( { scapeRef : req.body.scapeRef }, function(err, scape) {
+            if (err) {
+              console.log(err.message);
+              res.sendStatus(500);
+            }
+            if (scape) {
+              scape.content = req.body.scape;
+              scape.save();
+              res.sendStatus(200);
+            } else {
+              if (new3Scape(req)) {
+                res.sendStatus(200);
+              }
+            }
+          });
 
-        Scape.findOne( { _id: mongoose.Types.ObjectId(req.body.scapeId) }, function(err, scape) {
-          if (scape) {
-            scape.content = req.body.scape;
+        } else {
+          console.log("Cannot save. No scapeRef");
+          res.sendStatus(500);
+        }
 
-            scape.save(function(err) {
-              if (err) console.log("Save scape error: " + err);
-            });
-          } else {
-            console.log("no scape: " + err);
-          }
-
-        });
+      } else {
+        console.log("Cannot save. Not authorized");
+        res.sendStatus(500);
       }
-
-    }
   });
 
   //SignUp============================
@@ -418,6 +481,51 @@ module.exports = function(app, async, config, crypto, passport, utilities) {
     });
 
   });
+
+  function new3Scape(req) {
+
+    var success = false;
+
+    if (req.user && req.user.email) {
+
+      Creator.findOne({ email : req.user.email }, function (err, creator) {
+        if (err) {
+          console.log(err.message);
+        }
+
+        if (creator) {
+
+          var scape = new Scape();
+          scape.creator = creator.email;
+          scape.title = "Untitled 3Scape";
+          scape.scapeRef = req.body.scapeRef;
+          scape.content = req.body.scape;
+
+          scape.save(function(err) {
+            if (err) {
+              console.log("error saving scape: " + err);
+            } else {
+              success = true;
+            }
+          });
+
+          creator.scapes.push(scape.scapeRef);
+
+          creator.save(function(err) {
+            if (err) {
+              console.log("error saving creator: " + err);
+              success = false;
+            }
+          });
+
+        }
+
+      });
+
+    }
+
+    return success;
+  }
 
   app.use(express.static(__dirname));
 
