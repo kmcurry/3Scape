@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Update>
     <Set target="NodeMgr" sgPointer="Models"/>
-    <Model name="Tube" url="objects/Tube.lwo" detectCollision="true">
+    <Tube name="Tube" url="objects/Tube.lwo" detectCollision="true">
         <position x="0" y="0" z="0"/>
         <rotation x="0" y="0" z="0"/>
         <scale x="1" y="1" z="1" />
@@ -10,49 +10,5 @@
             <restitution>0.3</restitution>
             <friction>1.2</friction>
         </physicalProperties>
-        <genericConnectors>
-            <genericConnector name="PositiveX" type="default">
-                <normal x="1" y="0" z="0"/>
-                <point>
-                    <center x="1" y="0" z="0"/>
-                    <radius>0.25</radius>
-                </point>
-            </genericConnector>
-            <genericConnector name="PositiveY" type="default">
-                <normal x="0" y="1" z="0"/>
-                <point>
-                    <center x="0" y="1" z="0"/>
-                    <radius>0.25</radius>
-                </point>
-            </genericConnector>
-            <genericConnector name="PositiveZ" type="default">
-                <normal x="0" y="0" z="1"/>
-                <point>
-                    <center x="0" y="0" z="1"/>
-                    <radius>0.25</radius>
-                </point>
-            </genericConnector>
-            <genericConnector name="NegativeX" type="default">
-                <normal x="-1" y="0" z="0"/>
-                <point>
-                    <center x="-1" y="0" z="0"/>
-                    <radius>0.25</radius>
-                </point>
-            </genericConnector>
-            <genericConnector name="NegativeY" type="default">
-                <normal x="0" y="-1" z="0"/>
-                <point>
-                    <center x="0" y="-1" z="0"/>
-                    <radius>0.25</radius>
-                </point>
-            </genericConnector>
-            <genericConnector name="NegativeZ" type="default">
-                <normal x="0" y="0" z="-1"/>
-                <point>
-                    <center x="0" y="0" z="-1"/>
-                    <radius>0.25</radius>
-                </point>
-            </genericConnector>
-        </genericConnectors>
-    </Model>
+    </Tube>
 </Update>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Update>
     <Set target="NodeMgr" sgPointer="Models"/>
-    <Model name="Elbow" url="objects/Elbow.lwo" detectCollision="true">
+    <Elbow name="Elbow" url="objects/Elbow.lwo" detectCollision="true">
         <position x="0" y="0" z="0"/>
         <rotation x="0" y="0" z="0"/>
         <scale x="1" y="1" z="1" />
@@ -10,21 +10,5 @@
             <restitution>0.3</restitution>
             <friction>1.2</friction>
         </physicalProperties>
-        <genericConnectors>
-          <genericConnector name="NegativeZ" type="default">
-              <normal x="0" y="0" z="-1"/>
-              <point>
-                  <center x="0" y="0.42" z="-1.3"/>
-                  <radius>0.25</radius>
-              </point>
-          </genericConnector>
-          <genericConnector name="NegativeY" type="default">
-              <normal x="0" y="-1" z="0"/>
-              <point>
-                  <center x="0" y="-1.42" z="0.3"/>
-                  <radius>0.25</radius>
-              </point>
-          </genericConnector>
-      </genericConnectors>
-    </Model>
+    </Elbow>
 </Update>
