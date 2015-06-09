@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Update>
     <Set target="NodeMgr" sgPointer="Models"/>
-    <Model name="Beam" url="objects/Beam.lwo" detectCollision="true">
+    <Beam name="Beam" url="objects/Beam.lwo" detectCollision="true">
         <position x="0" y="0" z="0"/>
         <rotation x="0" y="0" z="0"/>
         <scale x="1" y="4" z="1" />
@@ -10,5 +10,5 @@
             <restitution>0.3</restitution>
             <friction>1.2</friction>
         </physicalProperties>
-    </Model>
+    </Beam>
 </Update>

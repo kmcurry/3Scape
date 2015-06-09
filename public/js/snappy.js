@@ -29,11 +29,17 @@ function countParts() {
   partCount += (parts == undefined) ? 0 : parts.length;
   parts = bridgeworks.registry.getByType(eAttrType.Box);
   partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Elbow);
+  partCount += (parts == undefined) ? 0 : parts.length;
   parts = bridgeworks.registry.getByType(eAttrType.Gear);
   partCount += (parts == undefined) ? 0 : parts.length;
   parts = bridgeworks.registry.getByType(eAttrType.Plank);
   partCount += (parts == undefined) ? 0 : parts.length;
   parts = bridgeworks.registry.getByType(eAttrType.Pyramid);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Ring);
+  partCount += (parts == undefined) ? 0 : parts.length;
+  parts = bridgeworks.registry.getByType(eAttrType.Tube);
   partCount += (parts == undefined) ? 0 : parts.length;
   parts = bridgeworks.registry.getByType(eAttrType.Wall);
   partCount += (parts == undefined) ? 0 : parts.length;
@@ -98,14 +104,20 @@ function paste()
 }
 
 // callback for loadFile
-function processModelXML(copy) {
-
+function processModelXML(copy) 
+{
     var model = this.responseXML.getElementsByTagName("Model")[0] ||
-                this.responseXML.getElementsByTagName("Box")[0] ||
                 this.responseXML.getElementsByTagName("Ball")[0] ||
                 this.responseXML.getElementsByTagName("Beam")[0] ||
+                this.responseXML.getElementsByTagName("Box")[0] ||
+                this.responseXML.getElementsByTagName("Elbow")[0] ||
+                this.responseXML.getElementsByTagName("Gear")[0] ||
                 this.responseXML.getElementsByTagName("Plank")[0] ||
-                this.responseXML.getElementsByTagName("Wall")[0];
+                this.responseXML.getElementsByTagName("Pyramid")[0] ||
+                this.responseXML.getElementsByTagName("Ring")[0] ||
+                this.responseXML.getElementsByTagName("Tube")[0] ||
+                this.responseXML.getElementsByTagName("Wall")[0] ||
+                this.responseXML.getElementsByTagName("Wedge")[0];
 
     var name =  (+new Date()).toString(36);
     var n = model.attributes["name"];
