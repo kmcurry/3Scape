@@ -45,7 +45,7 @@ module.exports = function(app, config) {
                 });
               }
               break;
-            case 'entymology' :
+            case 'entomology' :
             case 'hi5':
             case 'highfive':
             case 'facepalm':
