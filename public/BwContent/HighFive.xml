@@ -5,4 +5,6 @@
 <Update>
     <Set target="RenderDirective" highlightType="2"/>
     <ConnectOutputs sourceEvaluator="SceneInspector" targetContainer="Camera" connectionType="sceneInspection"/>
+    <Set target="Hand" physicsEnabled="false"/>
+    <Set target="PhysicsSimulator" evaluate="false"/>
 </Update>
