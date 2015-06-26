@@ -123,16 +123,19 @@ function processModelXML(copy)
     var n = model.attributes["name"];
     n.value = name;
 
-
     var xstr = (new XMLSerializer()).serializeToString(model);
     bridgeworks.updateScene(xstr);
 
+    if (g_selectedModel)
+    {
+        // clear previous highlight
+        g_selectedModel.getAttribute("highlight").setValueDirect(false);
+    }
+    
     // set this here now so that controllers work on the loaded model
     g_selectedModel = bridgeworks.registry.find(name);
 
     g_selectedModel.getAttribute("highlight").setValueDirect(true);
-    g_selectedModel.getAttribute("detectObstruction").setValueDirect(true);
-
 
     if (copy) {
         // TODO: g_copyModel.copyModel();
