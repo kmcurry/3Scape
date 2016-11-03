@@ -19,7 +19,7 @@
     "lodash": "latest",
     "method-override": "latest",
     "moment": "latest",
-    "mongoose": "latest",
+    "mongoose": "3.8.23",
     "morgan": "latest",
     "passport": "^0.2.1",
     "passport-local": "^0.1.6",
