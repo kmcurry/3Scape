@@ -20,5 +20,6 @@
     "lodash": "latest",
     "q": "latest",
     "fontawesome": "~4.3.0",
+    "raphael": "^2.2.7"
   }
 }
