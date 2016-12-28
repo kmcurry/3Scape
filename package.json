@@ -20,7 +20,7 @@
     "method-override": "latest",
     "moment": "latest",
     "mongodb": "^2.2.16",
-    "mongoose": "3.8.23",
+    "mongoose": "^4.6.x",
     "morgan": "latest",
     "passport": "^0.2.1",
     "passport-local": "^0.1.6",
