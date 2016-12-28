@@ -19,6 +19,7 @@
     "lodash": "latest",
     "method-override": "latest",
     "moment": "latest",
+    "mongodb": "^2.2.16",
     "mongoose": "3.8.23",
     "morgan": "latest",
     "passport": "^0.2.1",
