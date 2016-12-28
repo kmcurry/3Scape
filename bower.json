@@ -15,10 +15,10 @@
     "animate.css": "latest",
     "angular": "latest",
     "angular-route": "latest",
+    "jquery": "latest",
+    "jquery-ui": "latest",
     "lodash": "latest",
     "q": "latest",
     "fontawesome": "~4.3.0",
-    "jquery": "~2.1.3",
-    "jquery-ui": "~1.11.2"
   }
 }
