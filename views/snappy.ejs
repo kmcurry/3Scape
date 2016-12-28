@@ -29,9 +29,11 @@
     	   <%- include('viewcontrols/partsbar'); %>
 		</div>
 
+		<!--
 		<%- include('dialogs/registration') %>
 
 		<%- include('dialogs/payment') %>
+	-->
 
 
 		<div id="BwContainer" onclick="handleMouse(event);"
@@ -76,18 +78,6 @@
 					document.onmousemove 	= handleDocMove;
 					document.onkeydown 		= handleKey;
 
-					<% if (typeof verified != 'undefined') { %>
-						document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
-						$(".payment").modal("show");
-					<% } %>
-					// These will not both be defined at the same time ^^ vv
-					<% if (typeof anonymous != 'undefined') { %>
-						setTimeout(function () {
-							document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
-							$(".registration").modal("show");
-						}, 300000); // set to 300000 for production (5 mins)
-
-					<% } %>
 
 					setTimeout(function () {
 						if (countParts() == 0) {	// If there aren't any parts after 20 seconds prompt 3Scaper.
