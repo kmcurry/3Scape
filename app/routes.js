@@ -90,7 +90,7 @@ module.exports = function(app, config) {
   });
 
   app.get('/classroom', function (req, res) {
-    res.redirect('http://3Scape.me/lesson-plans')
+    res.render('classroom')
   });
 
 
