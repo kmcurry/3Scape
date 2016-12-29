@@ -16,9 +16,9 @@ function loadegypt() {
   //loadSlides(10);
 }
 
-function loadentymology() {
+function loadentomology() {
   reset();
-  bridgeworks.contentDir='/BwContent/Entymology/BwContent';
+  bridgeworks.contentDir='/BwContent/Entomology/BwContent';
   bridgeworks.onLoadModified();
   bridgeworks.updateScene('formica_rufa.xml');
 }
