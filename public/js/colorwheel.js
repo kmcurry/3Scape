@@ -63,7 +63,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     center   = size/2;
     parent   = $(target);
     canvas   = Raphael(parent[0],size, size);
-    canvas.safari();
+    //canvas.safari();
 
     create_bs_square();
     create_hue_ring();
