@@ -1,7 +1,7 @@
 {
-  "name": "3Scape",
-  "version": "1.0.0",
-  "homepage": "https://3Scape.me",
+  "name": "3scape",
+  "version": "0.1.0",
+  "homepage": "http://go.3Scape.me",
   "moduleType": [
     "node"
   ],
