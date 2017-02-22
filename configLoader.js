@@ -1,5 +1,5 @@
 var configLoader = function (env) {
-    var config = require('./config'),
+    var config = require('config'),
         loadedConfig = config[env];
 
     console.log("Loaded the configuration for " + env);
