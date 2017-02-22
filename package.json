@@ -34,9 +34,9 @@
   },
   "scripts": {
     "start": "node server.js",
-    "postinstall": "bower install",
     "pretest": "npm install",
-    "preupdate-webdriver": "npm install"
+    "preupdate-webdriver": "npm install",
+    "postinstall": "bower install"
   },
 
   "description": "3Scape is a way to unlock your imagination by making and sharing interactive, 3D contraptions over the web.",
