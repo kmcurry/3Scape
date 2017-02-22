@@ -1,5 +1,9 @@
 {
   "name": "3scape",
+  "version": "0.1.0",
+  "engines": {
+    "node": "6.9.4"
+  },
   "main": "server.js",
   "dependencies": {
     "async": "latest",
@@ -32,7 +36,6 @@
     "start": "node server.js"
   },
   "description": "3Scape is a way to unlock your imagination by making and sharing interactive, 3D contraptions over the web.",
-  "version": "0.1.0",
   "devDependencies": {
     "grunt": "latest",
     "grunt-svgstore": "latest"
