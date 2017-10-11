@@ -1,0 +1,8 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.7.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:uglify-js:20151024':
+    - grunt-svgstore > handlebars > uglify-js:
+        patched: '2017-10-11T15:19:29.887Z'
