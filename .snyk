@@ -6,3 +6,6 @@ patch:
   'npm:uglify-js:20151024':
     - grunt-svgstore > handlebars > uglify-js:
         patched: '2017-11-01T16:45:38.261Z'
+  'npm:uglify-js:20150824':
+    - grunt-svgstore > handlebars > uglify-js:
+        patched: '2017-11-22T18:50:14.313Z'
