@@ -2,7 +2,7 @@
   "name": "3scape",
   "version": "0.1.0",
   "engines": {
-    "node": "6.9.4"
+    "node": "14.5.5"
   },
   "main": "server.js",
   "dependencies": {
