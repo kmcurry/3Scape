@@ -7,7 +7,7 @@
   "main": "server.js",
   "dependencies": {
     "async": "latest",
-    "bcrypt": "latest",
+    "bcrypt": "^5.0.1",
     "body-parser": "latest",
     "bson": "latest",
     "compression": "latest",
