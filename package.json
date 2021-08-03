@@ -30,15 +30,18 @@
     "passport-local": "latest",
     "q": "latest",
     "sendgrid": "latest",
-    "stripe": "latest"
+    "stripe": "latest",
+    "snyk": "^1.49.5"
   },
   "scripts": {
     "start": "node server.js",
     "pretest": "npm install",
     "preupdate-webdriver": "npm install",
     "postinstall": "node bower install"
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
-
+  "version": "0.1.0",
   "description": "3Scape is a way to unlock your imagination by making and sharing interactive, 3D contraptions over the web.",
   "devDependencies": {
     "grunt": "latest",
@@ -53,5 +56,6 @@
   "bugs": {
     "url": "https://github.com/kmcurry/3Scape/issues"
   },
-  "homepage": "http://go.3Scape.me"
+  "homepage": "http://go.3Scape.me",
+  "snyk": true
 }
