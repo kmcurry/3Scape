@@ -16,7 +16,7 @@
     "cookie-parser": "^1.4.5",
     "ejs": "latest",
     "express": "latest",
-    "express-session": "latest",
+    "express-session": "^1.17.2",
     "grunt": "latest",
     "grunt-svgstore": "latest",
     "handlebars": "latest",
