@@ -24,14 +24,14 @@
     "method-override": "latest",
     "moment": "latest",
     "mongodb": "latest",
-    "mongoose": "latest",
+    "mongoose": "^5.13.5",
     "morgan": "latest",
     "passport": "latest",
     "passport-local": "latest",
     "q": "latest",
     "sendgrid": "latest",
-    "stripe": "latest",
-    "snyk": "^1.49.5"
+    "snyk": "^1.49.5",
+    "stripe": "latest"
   },
   "scripts": {
     "start": "node server.js",
