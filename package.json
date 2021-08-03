@@ -41,7 +41,6 @@
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"
   },
-  "version": "0.1.0",
   "description": "3Scape is a way to unlock your imagination by making and sharing interactive, 3D contraptions over the web.",
   "devDependencies": {
     "grunt": "latest",
