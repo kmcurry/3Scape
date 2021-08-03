@@ -25,7 +25,7 @@
     "moment": "latest",
     "mongodb": "latest",
     "mongoose": "^5.13.5",
-    "morgan": "latest",
+    "morgan": "^1.10.0",
     "passport": "latest",
     "passport-local": "latest",
     "q": "latest",
