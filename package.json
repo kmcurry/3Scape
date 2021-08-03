@@ -11,7 +11,7 @@
     "body-parser": "latest",
     "bson": "latest",
     "compression": "latest",
-    "connect-flash": "latest",
+    "connect-flash": "^0.1.1",
     "connect-mongo": "latest",
     "cookie-parser": "^1.4.5",
     "ejs": "latest",
