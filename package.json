@@ -21,7 +21,7 @@
     "grunt-svgstore": "latest",
     "handlebars": "latest",
     "lodash": "latest",
-    "method-override": "latest",
+    "method-override": "^3.0.0",
     "moment": "latest",
     "mongodb": "latest",
     "mongoose": "^5.13.5",
