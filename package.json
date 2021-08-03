@@ -13,7 +13,7 @@
     "compression": "latest",
     "connect-flash": "latest",
     "connect-mongo": "latest",
-    "cookie-parser": "latest",
+    "cookie-parser": "^1.4.5",
     "ejs": "latest",
     "express": "latest",
     "express-session": "latest",
