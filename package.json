@@ -8,7 +8,7 @@
   "dependencies": {
     "async": "latest",
     "bcrypt": "^5.0.1",
-    "body-parser": "latest",
+    "body-parser": "^1.19.0",
     "bson": "latest",
     "compression": "latest",
     "connect-flash": "^0.1.1",
