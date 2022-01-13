@@ -24,13 +24,13 @@
     "method-override": "latest",
     "moment": "latest",
     "mongodb": "latest",
-    "mongoose": "^5.13.5",
+    "mongoose": "^5.13.9",
     "morgan": "^1.10.0",
     "passport": "latest",
     "passport-local": "latest",
     "q": "latest",
     "sendgrid": "latest",
-    "snyk": "^1.49.5",
+    "snyk": "^1.685.0",
     "stripe": "latest"
   },
   "scripts": {
