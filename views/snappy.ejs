@@ -73,13 +73,13 @@
 					document.onkeydown 		= handleKey;
 
 
-					setTimeout(function () {
-						if (countParts() == 0) {	// If there aren't any parts after 20 seconds prompt 3Scaper.
-																			// There might be better or other indicators.
-							document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
-							$(".getstarted").modal("show");
-						}
-					}, 20000);
+					// setTimeout(function () {
+					// 	if (countParts() == 0) {	// If there aren't any parts after 20 seconds prompt 3Scaper.
+					// 														// There might be better or other indicators.
+					// 		document.onkeydown = ""; 	// keep 3Scape from grabbing all the keys
+					// 		$(".getstarted").modal("show");
+					// 	}
+					// }, 20000);
 
 				}
 			}
