@@ -93,6 +93,10 @@ module.exports = function(app, config) {
     res.render('classroom')
   });
 
+  app.get('/conway', function (req, res) {
+    res.render('conway')
+  });
+
 
   app.get('/nowebgl', function (req, res) {
       res.render('NoWebGL')
