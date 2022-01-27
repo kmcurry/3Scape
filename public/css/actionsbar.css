@@ -148,8 +148,6 @@ li.part {
   width: 12%;
   max-width: 110px;
   text-align: center;
-  margin: 0;
-  padding: 0;
   float: left;
 }
 
@@ -166,7 +164,6 @@ button.parts-btn {
   border: none;
   margin: 0;
   padding: 0;
-  float: left;
 }
 
 .cube    { background: url("../images/CubeButton.png");    }
