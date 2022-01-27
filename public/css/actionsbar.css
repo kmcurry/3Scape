@@ -8,7 +8,7 @@
           - Part Button / button .parts-bttn .[partname]
     - Hamburger Column / .xs-col-1 .nav-menu
       - Dropdown Menu / ul .dropdown-menu .shape
-* Bottom Bar / .navbar-fixed-bottom
+* Bottom Bar / .navbar-fixed-bottom_
   + Actions Bar Row / .row .actions-bar
     - Actions Column / .col-xs-12 .palette
       - Actions List / ul .actions-list .list-inline
@@ -184,7 +184,7 @@ button.parts-btn {
 
 /*-- Bottom Bar --*/
 
-.navbar-fixed-bottom {
+.navbar-fixed-bottom_ {
   height: 35px;
   z-index: 50000;
 }
@@ -396,7 +396,7 @@ li.action {
 
 /*-- Animations --*/
 
-.navbar-fixed-bottom.hover:hover .palette {
+.navbar-fixed-bottom_.hover:hover .palette {
   bottom: 150px;
   background: rgba(0,0,0,0.6);
   box-shadow: 0px 0px 1px 3px rgba(0,0,0,1);
@@ -404,8 +404,8 @@ li.action {
           transition: bottom 400ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
 }
 
-.navbar-fixed-bottom.hover:hover .scroll-left,
-.navbar-fixed-bottom.hover:hover .scroll-right {
+.navbar-fixed-bottom_.hover:hover .scroll-left,
+.navbar-fixed-bottom_.hover:hover .scroll-right {
   -webkit-transform: translate(0px,-150px);
       -ms-transform: translate(0px,-150px);
           transform: translate(0px,-150px);

@@ -38,11 +38,9 @@
 			</canvas>
 		</div>
 
-		<div class="navbar-fixed-bottom">
+		<div class="navbar-fixed-bottom_">
 			<%- include('viewcontrols/actionsbar') %>
 		</div>
-
-		<%- include('dialogs/getstarted') %>
 
 
 		<script type="text/javascript" src="js/snappy.js"></script>
@@ -109,7 +107,7 @@
             //add hammer.js swipe functions to actions and parts bars
             $(document).ready(function(){
                 var topbar = $('.navbar-fixed-top'),
-                    bottombar = $('.navbar-fixed-bottom'),
+                    bottombar = $('.navbar-fixed-bottom_'),
                     hammertop = new Hammer(topbar.get(0)),
                     hammerbottom = new Hammer(bottombar.get(0));
                 hammertop.get('pan').set({ direction: Hammer.DIRECTION_ALL });
@@ -137,7 +135,7 @@
         <script>
             $(document).ready(function(){
                 //prevent hover animation until initial animation completes
-                var hoverable = $('.navbar-fixed-bottom, .navbar-fixed-top'),
+                var hoverable = $('.navbar-fixed-bottom_, .navbar-fixed-top'),
                     animated = $('.actions-bar, .parts-bar');
                 animated.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
                 function(e) {
