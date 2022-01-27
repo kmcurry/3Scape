@@ -147,6 +147,11 @@ module.exports = function(app, config) {
   // route middleware to make sure a creator is logged in
   function isLoggedIn(req, res, next) {
 
+    //
+    //
+    // vvvvvvvvvv spurious return for testing purposes vvvvvvvvvvvv
+    return next();
+
     // redirect to path after verifying
     if (req.path !== undefined) {
       req.session.returnTo = req.path;
