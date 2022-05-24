@@ -42,7 +42,7 @@
   },
   "description": "3Scape is a way to unlock your imagination by making and sharing interactive, 3D contraptions over the web.",
   "devDependencies": {
-    "grunt": "^1.4.1"
+    "grunt": "^1.5.2"
   },
   "repository": {
     "type": "git",
