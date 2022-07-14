@@ -25,7 +25,7 @@
     "mongodb": "^4.1.0",
     "mongoose": "^5.13.5",
     "morgan": "^1.10.0",
-    "passport": "^0.4.1",
+    "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "q": "^1.5.1",
     "sendgrid": "^5.2.3",
