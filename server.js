@@ -23,7 +23,7 @@ var mongoose        = require('mongoose'),
 // configuration ===============================================================
 var config = require('./configLoader')(process.env.NODE_ENV || "local") //Environment
 var port = config.port;
-mongoose.connect(config.dbConnectionString); // connect to our database
+//mongoose.connect(config.dbConnectionString); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
