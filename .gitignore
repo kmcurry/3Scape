@@ -3,5 +3,6 @@ Thumbs.db
 web.config
 .idea/
 node_modules/
+public/bower_components/
 schemaNote.md
 npm-debug.log
